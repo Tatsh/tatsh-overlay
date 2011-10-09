@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<layman>
+  <overlay
+    status = "unofficial"
+    type = "git"
+    src  = "git://github.com/corec/cc-overlay.git"
+    contact = "ddrtist@gmail.com"
+    name = "tatsh-overlay">
+    <link></link>
+    <description>Tatsh's personal portage overlay</description>
+  </overlay>
+</layman>
