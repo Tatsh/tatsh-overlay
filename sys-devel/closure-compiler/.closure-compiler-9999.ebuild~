@@ -18,8 +18,7 @@ IUSE=""
 
 RDEPEND="virtual/jre"
 DEPEND="${RDEPEND}
-	virtual/jdk
-	dev-java/ant-nodeps"
+	virtual/jdk"
 
 src_compile() {
 	cd "${S}"
