@@ -45,4 +45,5 @@ src_configure() {
 
 src_install() {
 	emake DESTDIR="${D}" install
+	mv "${D}/usr/bin/arm-apple-darwin-ld" "${D}/usr/bin/arm-apple-darwin-ld.old"
 }
