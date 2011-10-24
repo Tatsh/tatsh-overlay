@@ -3,7 +3,7 @@
 
 EAPI=3
 
-inherit eutils linux-info
+inherit eutils
 
 DESCRIPTION="Apple's libraries and headers for iOS 5."
 HOMEPAGE="https://github.com/tatsh/xchain"
@@ -13,16 +13,13 @@ RESTRICT="fetch"
 LICENSE="EULA APSL-1 APSL-2 GPL-2 MIT BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="kernel_linux"
+IUSE=""
 
 RDEPEND=""
 DEPEND="${RDEPEND}
 	app-arch/p7zip
-	app-arch/dmgextractor
 	app-arch/cpio
 	app-arch/xar"
-	
-CONFIG_CHECK="HFSPLUS_FS"
 
 pkg_nofetch() {
 	elog "You must download the Xcode 4.2 DMG from Apple's developer site."
@@ -32,44 +29,35 @@ pkg_nofetch() {
 }
 
 src_unpack() {
-	# TODO Patch dmgextractor to not have any GUI whatosever
-	elog "Click OK in any dialog boxes that appear."
-	
 	cd "${DISTDIR}"
-	dmgextractor "${DISTDIR}/xcode_4.2_and_ios_5_sdk_for_snow_leopard.dmg" \
-		"${DISTDIR}/xcode-4.2.iso"
-	7z x -o"${S}" -y "${DISTDIR}/xcode-4.2.iso" || die "Failed to extract ISO!"
+	7z x -o"${WORKDIR}" "${DISTDIR}/xcode_4.2_and_ios_5_sdk_for_snow_leopard.dmg"
 	
-	cd "${S}"
-	# Guide says these should not be necesssary and should use addpredict
-	# but that does not work
-	addwrite /dev
-	addwrite /etc
-	mkdir -p tmpmount
-	mount -t hfsplus "disk image.hfs" tmpmount || die "Could not mount!"
-	cp -v tmpmount/packages/iPhoneSDK5_0.pkg .
-	cp -v tmpmount/packages/iPhoneSDKTools.pkg .
-	umount tmpmount || die "Could not unmount!"
-	rmdir tmpmount
+	cd "${WORKDIR}"
+	7z x 5.hfs
+	rm 5.hfs
 	
-	xar -x -f iPhoneSDK5_0.pkg Payload
-	mv -v Payload Payload.gz
-	gunzip Payload.gz
-	cpio -i < Payload
-	rm Payload
-	
-	xar -x -f iPhoneSDKTools.pkg Payload
-	mv -v Payload Payload.gz
-	gunzip Payload.gz
-	cpio -i < Payload
-	rm Payload
+	for i in \
+		iPhoneSDK5_0 \
+		iPhoneSDKTools \
+		iPhoneSimulatorSDK5_0; do
+		cp -v Xcode/Packages/$i.pkg .
+		xar -x -f "$i.pkg" Payload
+		mv -v Payload Payload.gz
+		gunzip Payload.gz
+		cpio -i < Payload
+		rm Payload
+	done
 	
 	mv -v Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk arm-apple-darwin
 	mv -vf Platforms/iPhoneOS.platform/Developer/usr arm-apple-darwin/usr2
+	mv -v Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.0.sdk/usr/include sim-include
 }
 
 src_prepare() {
-	cd "${S}"
+	cd "${WORKDIR}"
+	
+	cp -Rfv sim-include/* arm-apple-darwin/usr/include
+	rm -vR sim-include
 	
 	# Clean up and fixes
 	cd arm-apple-darwin/usr/lib
@@ -107,10 +95,10 @@ src_prepare() {
 	rm -vf libexec/gcc/arm-apple-darwin10/4.2.1/cc*
 	rm -vf libexec/gcc/arm-apple-darwin10/4.2.1/collect2
 	rm -vf libexec/gcc/arm-apple-darwin10/4.2.1/ld
-	rm -vf libexec/gcc/arm-apple-darwin10/4.2.1/lib*
+	rm -vf libexec/gcc/*.dylib
 	
 	
-	cd "${S}/arm-apple-darwin/Developer"
+	cd "${WORKDIR}/arm-apple-darwin/Developer"
 	mv -f Library/Frameworks/* ../System/Library/Frameworks
 	mv -f Library/PrivateFrameworks/* ../System/Library/PrivateFrameworks
 	rm -vR Library
@@ -124,8 +112,6 @@ src_prepare() {
 }
 
 src_install() {
-	cd "${S}"
-	
 	mkdir -p "${D}/usr"
-	cp -vR "${S}/arm-apple-darwin" "${D}/usr"
+	cp -vR "${WORKDIR}/arm-apple-darwin" "${D}/usr"
 }
