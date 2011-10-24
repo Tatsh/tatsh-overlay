@@ -43,7 +43,24 @@ src_install() {
 	cd "${S}/llvm-obj"
 	emake DESTDIR="${D}" install
 	mkdir -p "${D}/usr/bin"
-	for i in "${D}/usr/arm-apple-darwin/usr/bin/*"; do
-		ln -s "$i" "${D}/usr/bin/arm-apple-darwin-$i"
+	for i in bugpoint \
+		llc \
+		lli \
+		llvm-ar \
+		llvm-as \
+		llvm-bcanalyzer \
+		llvmc \
+		llvm-config \
+		llvm-dis \
+		llvm-extract \
+		llvm-ld \
+		llvm-link \
+		llvm-nm \
+		llvm-prof \
+		llvm-ranlib \
+		llvm-stub \
+		opt \
+		tblgen; do
+		ln -s "${D}/usr/arm-apple-darwin/usr/bin/$i" "${D}/usr/bin/arm-apple-darwin-$i"
 	done
 }
