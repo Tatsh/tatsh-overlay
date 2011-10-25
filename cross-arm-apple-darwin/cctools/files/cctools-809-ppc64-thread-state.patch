@@ -1,0 +1,49 @@
+diff -urN cctools-806-old/include/mach/ppc/_structs.h cctools-806/include/mach/ppc/_structs.h
+--- cctools-806-old/include/mach/ppc/_structs.h	1969-12-31 18:00:00.000000000 -0600
++++ cctools-809/include/mach/ppc/_structs.h	2011-09-07 01:45:04.000000000 -0500
+@@ -136,7 +136,7 @@
+ };
+ #endif /* __DARWIN_UNIX03 */
+ 
+-#if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
++#ifdef _POSIX_C_SOURCE
+ 
+ #pragma pack(4)			/* Make sure the structure stays as we defined it */
+ 
+@@ -187,7 +187,8 @@
+ 	unsigned int __vrsave;		/* Vector Save Register */
+ };
+ #else /* !__DARWIN_UNIX03 */
+-#define _STRUCT_PPC_THREAD_STATE64	struct ppc_thread_state64
++/* #define _STRUCT_PPC_THREAD_STATE64	struct ppc_thread_state64 */
++#define _STRUCT_PPC_THREAD_STATE64 struct __darwin_ppc_thread_state64
+ _STRUCT_PPC_THREAD_STATE64
+ {
+ 	unsigned long long srr0;	/* Instruction address register (PC) */
+@@ -236,7 +237,7 @@
+ 
+ #pragma pack()
+ 
+-#endif /* (_POSIX_C_SOURCE && !_DARWIN_C_SOURCE) */
++#endif /* _POSIX_C_SOURCE */
+ 
+ /* This structure should be double-word aligned for performance */
+  
+diff -urN cctools-806-old/include/mach/ppc/thread_status.h cctools-806/include/mach/ppc/thread_status.h
+--- cctools-806-old/include/mach/ppc/thread_status.h	1969-12-31 18:00:00.000000000 -0600
++++ cctools-809/include/mach/ppc/thread_status.h	2011-09-07 01:45:04.000000000 -0500
+@@ -70,9 +70,11 @@
+ */
+ 
+ typedef _STRUCT_PPC_THREAD_STATE	ppc_thread_state_t;
+-#if !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
+-typedef _STRUCT_PPC_THREAD_STATE64	ppc_thread_state64_t;
+-#endif /* (_POSIX_C_SOURCE && !_DARWIN_C_SOURCE) */
++#ifndef _POSIX_C_SOURCE
++typedef struct ppc_thread_state64		ppc_thread_state64_t;
++#else /* _POSIX_C_SOURCE */
++typedef struct __darwin_ppc_thread_state64  ppc_thread_state64_t;
++#endif /* _POSIX_C_SOURCE */
+ typedef _STRUCT_PPC_FLOAT_STATE		ppc_float_state_t;
+ typedef _STRUCT_PPC_VECTOR_STATE	ppc_vector_state_t;
+ 

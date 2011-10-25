@@ -21,12 +21,16 @@ RDEPEND="${DEPEND}"
 
 src_prepare() {
 	# TODO
-	# Fix the big patch!
 	# Figure out how to have LLVM support
 	# Figure out the correct way to add the type definition
-	epatch "${FILESDIR}"/${PN}-809-nondarwin.patch.gz
-	epatch "${FILESDIR}"/${PN}-809-remove-llvm-support.patch
+	epatch "${FILESDIR}"/${PN}-809-ar-time-and-format.patch
 	epatch "${FILESDIR}"/${PN}-809-force-arm-thread-state.patch
+	epatch "${FILESDIR}"/${PN}-809-ld.patch
+	epatch "${FILESDIR}"/${PN}-809-libtool.patch
+	epatch "${FILESDIR}"/${PN}-809-ppc64-thread-state.patch
+	epatch "${FILESDIR}"/${PN}-809-private-extern.patch
+	epatch "${FILESDIR}"/${PN}-809-remove-llvm-support.patch
+	epatch "${FILESDIR}"/${PN}-809-add-autoconf.patch.gz
 }
 
 src_configure() {

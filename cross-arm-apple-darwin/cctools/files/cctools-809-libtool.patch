@@ -1,0 +1,12 @@
+diff -urN cctools-806-old/misc/libtool.c cctools-806/misc/libtool.c
+--- cctools-806-old/misc/libtool.c	1969-12-31 18:00:00.000000000 -0600
++++ cctools-809/misc/libtool.c	2011-09-07 01:45:04.000000000 -0500
+@@ -2554,7 +2554,7 @@
+ 		}
+ 		memcpy(p, arch->members[j].object_addr,
+ 		       arch->members[j].object_size);
+-#ifdef VM_SYNC_DEACTIVATE
++#if defined(VM_SYNC_DEACTIVATE) && !defined(_POSIX_C_SOURCE) && !defined(__CYGWIN__)
+ 		vm_msync(mach_task_self(),
+ 			 (vm_address_t)arch->members[j].object_addr,
+ 			 (vm_size_t)arch->members[j].object_size, 
