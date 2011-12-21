@@ -3,7 +3,7 @@
   <overlay
     status = "unofficial"
     type = "git"
-    src  = "git://github.com/corec/cc-overlay.git"
+    src  = "git://github.com/tatsh/tatsh-overlay.git"
     contact = "ddrtist@gmail.com"
     name = "tatsh-overlay">
     <link></link>
