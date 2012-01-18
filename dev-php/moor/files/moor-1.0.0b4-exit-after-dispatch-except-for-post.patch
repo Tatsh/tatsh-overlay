@@ -1,0 +1,98 @@
+diff --git a/Moor.php b/Moor.php
+index be56c28..2b7cb2c 100644
+--- Moor.php
++++ Moor.php
+@@ -788,7 +788,7 @@ class Moor {
+ 						? self::$active_proxy_uri . $try_path
+ 						: $try_path;
+ 					header('Location: ' . $new_location, TRUE, 301);
+-					exit();
++					return;
+ 				}
+ 			}
+ 
+@@ -808,13 +808,21 @@ class Moor {
+ 		self::$messages[] = 'Generated Callback: ' . $callback_string;
+ 		
+ 		self::$active_callback = $callback_string;
++		$is_post = strtolower($_SERVER['REQUEST_METHOD']) == 'post';
+ 		
+ 		// dispatch closure
+ 		if ($route->function instanceof Closure) {
+ 			self::$active_function = $callback_string;
+ 			self::$messages[] = 'Calling assigned closure';
+ 			call_user_func(self::compat($route->function));
+-			exit();
++			/** SUTRA **/
++			if (!$is_post) {
++				exit;
++			}
++			else {
++			  return;
++			}
++			/** END SUTRA */
+ 			
+ 		// dispatch function
+ 		} else if (function_exists($callback_string)) {
+@@ -833,11 +841,23 @@ class Moor {
+ 			
+ 			self::$messages[] = 'Calling function: ' . $callback_string;
+ 			call_user_func($callback_string);
+-			exit();
++			/** SUTRA **/
++			if (!$is_post) {
++			  exit;
++			}
++			else {
++			  return;
++			}
++			/** END SUTRA **/
+ 			
+ 		// dispatch method
+ 		} else {
+-			self::validateMethodCallback($callback_string);
++			try {
++				self::validateMethodCallback($callback_string);
++			}
++			catch (MoorContinueException $e) {
++				return;
++			}
+ 			$method = new ReflectionMethod($callback_string);
+ 			
+ 			$class = self::compat($callback_string);
+@@ -854,11 +874,26 @@ class Moor {
+ 			if ($method->isStatic()) {
+ 				self::$messages[] = 'Calling static method: ' . $callback_string;
+ 				call_user_func(self::compat($callback_string));
+-				exit();
++				/** SUTRA **/
++				if (!$is_post) {
++					exit;
++				}
++				else {
++					return;
++				}
++				/** END SUTRA **/
+ 			} else {
+ 				self::$messages[] = 'Instantiating class for ' . $callback_string;
+ 				new $class();
+-				exit();
++
++				/** SUTRA **/
++				if (!$is_post) {
++					exit;
++				}
++				else {
++				  return;
++				}
++				/** END SUTRA **/
+ 			}
+ 		}
+ 		
+@@ -1378,4 +1413,4 @@ if (!class_exists('MoorActionController', FALSE)) {
+ // HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+-// OTHER DEALINGS IN THE SOFTWARE.
+\ No newline at end of file
++// OTHER DEALINGS IN THE SOFTWARE.
