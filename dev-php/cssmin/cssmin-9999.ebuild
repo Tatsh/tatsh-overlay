@@ -10,7 +10,7 @@ DESCRIPTION="A CSS parser and minifier."
 HOMEPAGE="http://code.google.com/p/cssmin/"
 ESVN_REPO_URI="http://cssmin.googlecode.com/svn/trunk/build"
 
-LICENSE=""
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
