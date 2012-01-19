@@ -8,17 +8,29 @@ inherit subversion depend.php
 
 DESCRIPTION="A CSS parser and minifier."
 HOMEPAGE="http://code.google.com/p/cssmin/"
-ESVN_REPO_URI="http://cssmin.googlecode.com/svn/trunk/build"
+ESVN_REPO_URI="http://cssmin.googlecode.com/svn/trunk/"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND=""
-RDEPEND=">=dev-lang/php-5.2.3"
+DEPEND=">=dev-lang/php-5.2.3"
+RDEPEND=""
+
+src_prepare() {
+	epatch "${FILESDIR}"/${PN}-3.0.1-at-keyframes-ms-opera.patch
+	epatch "${FILESDIR}"/${PN}-3.0.1-builder-support-cli.patch
+	epatch "${FILESDIR}"/${PN}-3.0.1-no-quotes-moz-keyframes.patch
+}
+
+src_compile() {
+	cd tools
+	php build.php || die "Build failed."
+}
 
 src_install() {
+	cd "${S}"
 	insinto /usr/share/php
-	doins CssMin.php
+	doins build/CssMin.php
 }

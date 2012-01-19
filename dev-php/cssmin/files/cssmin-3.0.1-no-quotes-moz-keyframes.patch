@@ -1,0 +1,19 @@
+Index: source/tokens/CssAtKeyframesStartToken.php
+===================================================================
+--- source/tokens/CssAtKeyframesStartToken.php	(revision 167)
++++ source/tokens/CssAtKeyframesStartToken.php	(working copy)
+@@ -44,7 +44,12 @@
+ 	 */
+ 	public function __toString()
+ 		{
++		/* Firefox ignores quoted names for some reason */
++		if ($this->AtRuleName === "-moz-keyframes")
++			{
++			return "@-moz-keyframes " . $this->Name . " {";
++			}
+ 		return "@" . $this->AtRuleName . " \"" . $this->Name . "\"{";
+ 		}
+ 	}
+-?>
+\ No newline at end of file
++?>
