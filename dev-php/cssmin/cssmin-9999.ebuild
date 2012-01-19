@@ -16,7 +16,7 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=">=dev-lang/php-5.2.3"
-RDEPEND=""
+RDEPEND="${DEPEND}"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${PN}-3.0.1-at-keyframes-ms-opera.patch
