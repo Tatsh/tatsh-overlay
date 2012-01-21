@@ -26,6 +26,7 @@ src_prepare() {
 		epatch "${FILESDIR}"/${PN}-r1041-fhtml-allow-dashes-in-attributes.patch
 		epatch "${FILESDIR}"/${PN}-r1041-ignore-warning-sortbycallback.patch
 		epatch "${FILESDIR}"/${PN}-r1041-protected-determineprocessor.patch
+		epatch "${FILESDIR}"/${PN}-r1042-add-minifyjavascript-static-method.patch
 	fi
 }
 

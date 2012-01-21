@@ -1,0 +1,45 @@
+Index: flourish/fTemplating.php
+===================================================================
+--- flourish/fTemplating.php	(revision 1042)
++++ flourish/fTemplating.php	(working copy)
+@@ -833,12 +833,14 @@
+ 	 * preserving /*! comment blocks for things like licenses. Some other
+ 	 * versions of JSMin change the contents of special comment blocks, but
+ 	 * this version does not.
++	 *
++	 * @internal
+ 	 * 
+ 	 * @param string $code  The code to minify
+ 	 * @param string $type  The type of code, 'css' or 'js'
+ 	 * @return string  The minified code
+ 	 */
+-	protected function minify($code, $type)
++	public function minify($code, $type)
+ 	{
+ 		$output = '';
+ 		$buffer = '';
+@@ -907,6 +909,17 @@
+ 		
+ 		return $output;
+ 	}
++
++	/**
++	 * Minifies JS (static version).
++	 * 
++	 * @param string   $code JavaScript code.
++	 * @return string  The minified code.
++	 */
++	public static function minifyJavaScript($code) {
++		$temp = new self('.');
++		return $temp->minify($code, 'js');
++	}
+ 	
+ 	
+ 	/**
+@@ -1516,4 +1529,4 @@
+  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  * THE SOFTWARE.
+- */
+\ No newline at end of file
++ */
