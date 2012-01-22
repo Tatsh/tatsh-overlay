@@ -22,16 +22,22 @@ RDEPEND=">=dev-lang/php-5.2.3
 
 src_prepare() {
 	mkdir sutra
+	cp -R classes model routers scripts sutra
+	
+	mkdir bin
+	cp -R "${FILESDIR}"/sutra-jsccd bin
+	cp -R "${FILESDIR}"/sutra-jscc bin
+	# cp -R "${FILESDIR}"/sutra-install-schema bin
 	
 	if use site ; then
-		cp -R classes model routers sutra
 		mv site htdocs
-	else
-		cp -R classes/*.php sutra
 	fi
 }
 
 src_install() {
+	dobin bin/sutra-jsccd || die "install sutra-jsccd failed"
+	dobin bin/sutra-jscc || die "install sutra-jscc failed"
+	
 	insinto /usr/share/php
 	doins -r sutra
 	
