@@ -25,7 +25,7 @@ src_prepare() {
 	
 	einfo "Adding CssUrlPrefixMinifierPlugin"
 	cp "${FILESDIR}"/${PN}-3.0.1-CssUrlPrefixMinifierPlugin-issue-30.php \
-		source/minifier/plugins || die "Failed add plugin"
+		source/minifier/plugins || die "Failed to add plugin"
 }
 
 src_compile() {
