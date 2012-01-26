@@ -9,12 +9,7 @@ inherit cmake-utils eutils flag-o-matic games git-2 wxwidgets
 
 DESCRIPTION="Free. open source emulator for Nintendo GameCube and Wii"
 HOMEPAGE="http://www.dolphin-emu.com/"
-# SRC_URI=""
-# ESVN_REPO_URI="http://dolphin-emu.googlecode.com/svn/trunk/"
-# ESVN_PROJECT="dolphin-emu-read-only"
-
 EGIT_REPO_URI="https://code.google.com/p/dolphin-emu/"
-
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
@@ -28,7 +23,7 @@ RDEPEND=">=media-libs/glew-1.5
 	>=x11-libs/wxGTK-2.8
 	ao? ( media-libs/libao )
 	alsa? ( media-libs/alsa-lib )
-	bluetooth? ( <=net-wireless/bluez-4.96 )
+	bluetooth? ( net-wireless/bluez )
 	encode? ( media-video/ffmpeg[encode] )
 	lzo? ( dev-libs/lzo )
 	openal? ( media-libs/openal )
@@ -61,8 +56,11 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
+# Current bluez-4.98 issue
+# http://permalink.gmane.org/gmane.linux.bluez.kernel/20275
 src_compile() {
-	cmake-utils_src_make
+	cmake-utils_src_make || die "If build failed with inclusion of bluetooth.h \
+(around 75%), see http://permalink.gmane.org/gmane.linux.bluez.kernel/20275"
 }
 
 src_install() {
