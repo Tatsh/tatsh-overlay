@@ -7,22 +7,17 @@ inherit git-2 depend.php
 EAPI="3"
 
 DESCRIPTION="A URL Routing/Linking/Controller library for PHP 5.1+."
-HOMEPAGE="https://github.com/jeffturcotte/moor"
-EGIT_REPO_URI="https://github.com/jeffturcotte/moor.git"
+HOMEPAGE="https://github.com/tatsh/moor"
+EGIT_REPO_URI="git://github.com/tatsh/moor.git"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="sutra-patches"
+IUSE=""
 
-DEPEND=">=dev-lang/php-5.2.3"
-RDEPEND="${DEPEND}"
-
-src_prepare() {
-	if use sutra-patches ; then
-		epatch "${FILESDIR}"/${PN}-1.0.0b4-exit-after-dispatch-except-for-post.patch
-	fi
-}
+DEPEND=""
+RDEPEND="${DEPEND}
+>=dev-lang/php-5.2.3"
 
 src_install() {
 	mkdir moor
