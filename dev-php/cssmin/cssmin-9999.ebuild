@@ -4,7 +4,7 @@
 
 EAPI=3
 
-inherit subversion depend.php
+inherit subversion
 
 DESCRIPTION="A CSS parser and minifier."
 HOMEPAGE="http://code.google.com/p/cssmin/"

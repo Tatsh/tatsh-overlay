@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit subversion depend.php
+inherit subversion
 
 EAPI=3
 

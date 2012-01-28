@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit git-2 depend.php
+inherit git-2
 
 EAPI=4
 
