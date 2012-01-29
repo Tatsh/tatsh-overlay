@@ -75,6 +75,10 @@ src_install() {
 		insinto /etc
 		doins -r sutra
 	fi
-	
-	# einfo "To begin a site, copy /usr/share/webapps/${PV}/htdocs to where your site roots are."
+}
+
+pkg_postinst() {
+	elog
+	elog "To begin a site, copy /usr/share/webapps/${PN}/${PV}/htdocs to where your site roots are."
+	elog
 }
