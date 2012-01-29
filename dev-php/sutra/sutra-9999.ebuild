@@ -18,7 +18,7 @@ IUSE="site"
 DEPEND=""
 RDEPEND=">=dev-lang/php-5.2.3
 				 dev-php/flourish[sutra-patches]
-				 dev-php/moor[sutra-patches]"
+				 dev-php/moor"
 
 src_prepare() {
 	mkdir sutra
