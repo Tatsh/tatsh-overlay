@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit git-2
+inherit eutils git-2
 
 EAPI=4
 
@@ -23,17 +23,14 @@ RDEPEND=">=dev-lang/php-5.2.3
 src_prepare() {
 	mkdir sutra
 	cp -R classes model routers scripts sutra
+	mv scripts/compile-javascript.inc sutra
 	
-	mkdir bin
-	cp -R "${FILESDIR}"/sutra-jsccd bin
-	cp -R "${FILESDIR}"/sutra-jscc bin
-	# cp -R "${FILESDIR}"/sutra-install-schema bin
-	# cp -R "${FILESDIR}"/sutra-install-schema bin
+	cd sutra
+	epatch "${FILESDIR}"/${PN}-${PV}-jscc-fix-include-path.patch
+	cd ..
 	
 	if use site ; then
 		mv site htdocs
-		
-		rm sutra/scripts/js-*
 		
 		# Scripts for sites
 		# for now
@@ -41,10 +38,13 @@ src_prepare() {
 		# end
 		
 		# Create sutra-create-category, sutra-create-router-alias,
-		#   sutra-fsql
+		#   sutra-fsql, sutra-jscc, sutra-jsccd
+		mkdir bin
 		for i in sutra/scripts/*.php; do
 			mv "$i" "bin/sutra-$(basename ${i%.*})"
 		done
+		mv bin/sutra-js-compiler bin/sutra-jscc
+		mv bin/sutra-js-compiler-daemon bin/sutra-jsccd
 		rm -R sutra/scripts
 		
 		mv htdocs/routes htdocs/config .

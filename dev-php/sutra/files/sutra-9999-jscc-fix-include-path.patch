@@ -1,0 +1,26 @@
+diff --git a/scripts/js-compiler-daemon.php b/scripts/js-compiler-daemon.php
+index 605f8e8..7d59e9a 100755
+--- a/scripts/js-compiler-daemon.php
++++ b/scripts/js-compiler-daemon.php
+@@ -35,7 +35,7 @@ require './global.php';
+ 
+ sDatabase::getInstance();
+ 
+-require dirname(__FILE__).'/compile-javascript.inc';
++require '/usr/share/php/sutra/compile-javascript.inc';
+ 
+ for (;;) {
+   try {
+diff --git a/scripts/js-compiler.php b/scripts/js-compiler.php
+index c250a8e..eebd246 100755
+--- a/scripts/js-compiler.php
++++ b/scripts/js-compiler.php
+@@ -36,7 +36,7 @@ try {
+ 
+   sDatabase::getInstance();
+ 
+-  require dirname(__FILE__).'/compile-javascript.inc';
++  require '/usr/share/php/sutra/compile-javascript.inc';
+ 
+   print compileJavaScript();
+ }
