@@ -26,14 +26,14 @@ src_prepare() {
 	mv scripts/compile-javascript.inc sutra
 	
 	cd sutra
-	epatch "${FILESDIR}"/${PN}-${PV}-jscc-fix-include-path.patch
+		epatch "${FILESDIR}"/${PN}-${PV}-jscc-fix-include-path.patch
 	cd ..
 	
 	if use site ; then
 		mv site htdocs
 		
 		# Scripts for sites
-		# for now
+		# for now just delete them
 		rm sutra/scripts/install-*
 		# end
 		
@@ -46,8 +46,6 @@ src_prepare() {
 		mv bin/sutra-js-compiler bin/sutra-jscc
 		mv bin/sutra-js-compiler-daemon bin/sutra-jsccd
 		rm -R sutra/scripts
-		
-		mv htdocs/routes htdocs/config .
 	fi
 }
 
@@ -74,6 +72,9 @@ src_install() {
 		mv config sutra/sample-config
 		insinto /etc
 		doins -r sutra
+		
+		insinto /usr/share/php/sutra/templates
+		doins -r template/default
 	fi
 }
 
