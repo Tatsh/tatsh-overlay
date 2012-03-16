@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /usr/share/jsdoc-toolkit
+java -jar jsrun.jar app/run.js
