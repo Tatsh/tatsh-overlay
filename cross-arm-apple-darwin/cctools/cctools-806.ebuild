@@ -26,7 +26,7 @@ src_prepare() {
 src_configure() {
 	chmod +x configure
 	local target="arm-apple-darwin"
-	
+
 	# No optimisations!
 	filter-flags -fomit-frame-pointer
 	filter-flags -pipe
@@ -35,11 +35,11 @@ src_configure() {
 	filter-flags -msse*
 	filter-flags -march=*
 	replace-cpu-flags
-	
+
 	# Must be built in 32-bit mode
 	append-flags "-m32 -w"
 	append-ldflags "-m32"
-	
+
 	econf --target=${target}
 }
 

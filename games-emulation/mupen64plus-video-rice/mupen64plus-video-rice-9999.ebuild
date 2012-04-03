@@ -3,7 +3,7 @@
 # $Header: $
 EAPI="3"
 
-inherit eutils games mercurial 
+inherit eutils games mercurial
 
 DESCRIPTION="Video plugin for Mupen64plus utilizing OpenGL."
 HOMEPAGE="https://code.google.com/p/mupen64plus"

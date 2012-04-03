@@ -21,7 +21,7 @@ RDEPEND="${DEPEND}"
 src_prepare() {
 	mkdir flourish
 	mv *.php *.rev flourish
-	
+
 	if use sutra-patches ; then
 		epatch "${FILESDIR}"/${PN}-r1041-fhtml-allow-dashes-in-attributes.patch
 		epatch "${FILESDIR}"/${PN}-r1041-ignore-warning-sortbycallback.patch

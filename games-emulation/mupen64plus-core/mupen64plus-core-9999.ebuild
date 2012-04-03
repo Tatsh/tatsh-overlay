@@ -3,7 +3,7 @@
 # $Header: $
 EAPI="3"
 
-inherit eutils games mercurial 
+inherit eutils games mercurial
 
 DESCRIPTION="Free open source emulator of Nintendo 64 based on original Mupen64 sources."
 HOMEPAGE="https://code.google.com/p/mupen64plus"

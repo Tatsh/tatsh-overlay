@@ -22,7 +22,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/${PN}-3.0.1-at-keyframes-ms-opera.patch
 	epatch "${FILESDIR}"/${PN}-3.0.1-builder-support-cli.patch
 	epatch "${FILESDIR}"/${PN}-3.0.1-no-quotes-moz-keyframes.patch
-	
+
 	einfo "Adding CssUrlPrefixMinifierPlugin"
 	cp "${FILESDIR}"/${PN}-3.0.1-CssUrlPrefixMinifierPlugin-issue-30.php \
 		source/minifier/plugins || die "Failed to add plugin"

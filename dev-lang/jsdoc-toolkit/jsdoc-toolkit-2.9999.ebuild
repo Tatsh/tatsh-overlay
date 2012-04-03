@@ -18,17 +18,17 @@ DEPEND="${RDEPEND}
   virtual/jdk"
 
 src_install() {
-  insinto /usr/share
-  doins -r jsdoc-toolkit
-  
-  insinto /usr/bin
-  doins "${FILESDIR}"/jsdoc
-  fperms a+x /usr/bin/jsdoc
+	insinto /usr/share
+	doins -r jsdoc-toolkit
+
+	insinto /usr/bin
+	doins "${FILESDIR}"/jsdoc
+	fperms a+x /usr/bin/jsdoc
 }
 
 pkg_postinst() {
-  elog
-  elog "Templates are located at: /usr/share/jsdoc-toolkit/templates"
-  elog "Example usage: jsdoc -t /usr/share/jsdoc-toolkit/templates"
-  elog
+	elog
+	elog "Templates are located at: /usr/share/jsdoc-toolkit/templates"
+	elog "Example usage: jsdoc -t /usr/share/jsdoc-toolkit/templates"
+	elog
 }

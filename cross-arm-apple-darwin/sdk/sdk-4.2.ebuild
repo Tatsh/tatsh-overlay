@@ -31,11 +31,11 @@ pkg_nofetch() {
 src_unpack() {
 	cd "${DISTDIR}"
 	7z x -o"${WORKDIR}" "${DISTDIR}/xcode_4.2_and_ios_5_sdk_for_snow_leopard.dmg"
-	
+
 	cd "${WORKDIR}"
 	7z x 5.hfs
 	rm 5.hfs
-	
+
 	for i in \
 		iPhoneSDK5_0 \
 		iPhoneSDKTools \
@@ -47,7 +47,7 @@ src_unpack() {
 		cpio -i < Payload
 		rm Payload
 	done
-	
+
 	mv -v Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk arm-apple-darwin
 	mv -vf Platforms/iPhoneOS.platform/Developer/usr arm-apple-darwin/usr2
 	mv -v Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator5.0.sdk/usr/include sim-include
@@ -55,25 +55,25 @@ src_unpack() {
 
 src_prepare() {
 	cd "${WORKDIR}"
-	
+
 	cp -Rfv sim-include/* arm-apple-darwin/usr/include
 	rm -vR sim-include
-	
+
 	# Clean up and fixes
 	cd arm-apple-darwin/usr/lib
 	ln -s libgcc_s.1.dylib libgcc_s.10.4.dylib
-	
+
 	cd ..
 	mkdir -p bin
 	mkdir -p libexec
-	
+
 	# arm-apple-darwin
 	cd ..
 	mv -vf usr2/include/* usr/include
 	mv -vf usr2/lib/* usr/lib
 	mv -vf usr2/llvm-gcc-4.2 usr
 	rm -Rfv usr2
-	
+
 	cd usr/llvm-gcc-4.2
 	rm -Rvf bin
 	ln -s ../bin
@@ -87,7 +87,7 @@ src_prepare() {
 	ln -s ../libexec
 	mv share ..
 	ln -s ../share
-	
+
 	# arm-apple-darwin/usr
 	cd ..
 	rm -vf libexec/gcc/arm-apple-darwin10/4.2.1/install-tools/fixincl
@@ -96,8 +96,7 @@ src_prepare() {
 	rm -vf libexec/gcc/arm-apple-darwin10/4.2.1/collect2
 	rm -vf libexec/gcc/arm-apple-darwin10/4.2.1/ld
 	rm -vf libexec/gcc/*.dylib
-	
-	
+
 	cd "${WORKDIR}/arm-apple-darwin/Developer"
 	mv -f Library/Frameworks/* ../System/Library/Frameworks
 	mv -f Library/PrivateFrameworks/* ../System/Library/PrivateFrameworks
@@ -106,7 +105,7 @@ src_prepare() {
 	mv -v usr/lib/* ../usr/lib
 	rm -vR usr
 	ln -s ../usr
-	
+
 	cd ..
 	rm -vf *.plist
 }

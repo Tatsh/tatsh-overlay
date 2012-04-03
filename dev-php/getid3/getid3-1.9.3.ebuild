@@ -23,7 +23,7 @@ RDEPEND="${DEPEND}
 src_install() {
 	insinto /usr/share/php
 	doins -r getid3
-	
+
 	dodoc README \
 		changelog.txt \
 		dependencies.txt \

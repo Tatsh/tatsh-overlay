@@ -20,7 +20,7 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-${PV}-crossdev-i686-pc-mingw32.patch
+	epatch "${FILESDIR}"/"${PN}"-"${PV}"-crossdev-i686-pc-mingw32.patch
 	cp "${FILESDIR}"/mingw32-cross.sh ms
 }
 
@@ -31,10 +31,10 @@ src_compile() {
 src_install() {
 	dobin libeay32.dll || die "Install libeay32.dll failed"
 	dobin libssl32.dll || die "Install libssl32.dll failed"
-	
+
 	insinto /usr/include
 	doins -r outinc/openssl
-	
+
 	insinto /usr/lib
 	doins -r out/*.a
 }

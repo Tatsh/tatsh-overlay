@@ -24,7 +24,7 @@ src_configure() {
 	local target="arm-apple-darwin"
 	mkdir -p "${S}"
 	cd "${S}"
-	
+
 	mkdir llvm-obj
 	cd llvm-obj
 	econf \

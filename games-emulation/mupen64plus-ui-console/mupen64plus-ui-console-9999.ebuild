@@ -3,7 +3,7 @@
 # $Header: $
 EAPI="3"
 
-inherit eutils games mercurial 
+inherit eutils games mercurial
 
 DESCRIPTION="Command line interface for Mupen64plus."
 HOMEPAGE="https://code.google.com/p/mupen64plus"
