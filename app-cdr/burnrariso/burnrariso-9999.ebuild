@@ -1,3 +1,4 @@
+# kate: replace-tabs false;
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
@@ -17,9 +18,9 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}
-app-arch/unrar
->=app-arch/cksfv-1.3.12
->=app-cdr/cdrkit-1.1.11
+	app-arch/unrar
+	>=app-arch/cksfv-1.3.12
+	>=app-cdr/cdrkit-1.1.11
 "
 
 src_install() {
