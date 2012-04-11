@@ -36,5 +36,5 @@ Index: tools/build.php
 +	exit(1);
 +}
 +
-+print "Sucessfully built.\n";
++print "Successfully built.\n";
 +?>

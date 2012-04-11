@@ -9,7 +9,7 @@ inherit subversion
 
 DESCRIPTION="A CSS parser and minifier."
 HOMEPAGE="http://code.google.com/p/cssmin/"
-ESVN_REPO_URI="http://cssmin.googlecode.com/svn/trunk/"
+ESVN_REPO_URI="http://cssmin.googlecode.com/svn/trunk/@167"
 
 LICENSE="MIT"
 SLOT="0"
@@ -23,6 +23,7 @@ src_prepare() {
 	epatch "${FILESDIR}"/${PN}-3.0.1-at-keyframes-ms-opera.patch
 	epatch "${FILESDIR}"/${PN}-3.0.1-builder-support-cli.patch
 	epatch "${FILESDIR}"/${PN}-3.0.1-no-quotes-moz-keyframes.patch
+	epatch "${FILESDIR}"/${PN}-3.0.1-initialize-performance.patch
 
 	einfo "Adding CssUrlPrefixMinifierPlugin"
 	cp "${FILESDIR}"/${PN}-3.0.1-CssUrlPrefixMinifierPlugin-issue-30.php \
