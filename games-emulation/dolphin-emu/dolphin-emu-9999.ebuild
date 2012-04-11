@@ -36,7 +36,7 @@ RDEPEND=">=media-libs/glew-1.5
 	portaudio? ( media-libs/portaudio )
 	pulseaudio? ( media-sound/pulseaudio )
 	xrandr? ( x11-libs/libXrandr )
-	media-libs/jpeg
+	virtual/jpeg
 	sys-libs/zlib
 	x11-libs/cairo
 	x11-libs/libXxf86vm"
