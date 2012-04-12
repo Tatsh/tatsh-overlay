@@ -28,6 +28,7 @@ src_prepare() {
 		epatch "${FILESDIR}"/${PN}-r1041-ignore-warning-sortbycallback.patch
 		epatch "${FILESDIR}"/${PN}-r1041-protected-determineprocessor.patch
 		epatch "${FILESDIR}"/${PN}-r1042-add-minifyjavascript-static-method.patch
+		epatch "${FILESDIR}"/${PN}-r1042-tsvector-pgsql.patch
 	fi
 }
 
