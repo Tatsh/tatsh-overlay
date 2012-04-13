@@ -29,7 +29,6 @@ src_prepare() {
 	epatch "${FILESDIR}"/${PN}-r1042-add-minifyjavascript-static-method.patch
 	epatch "${FILESDIR}"/${PN}-r1042-tsvector-pgsql.patch
 	epatch "${FILESDIR}"/${PN}-r1042-fupload-size-var.patch
-	epatch "${FILESDIR}"/${PN}-r1042-fvalidation-addoneormore.patch
 }
 
 src_install() {
