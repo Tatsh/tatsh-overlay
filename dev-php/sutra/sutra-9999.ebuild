@@ -18,7 +18,7 @@ IUSE=""
 
 DEPEND=""
 RDEPEND=">=dev-lang/php-5.2.3
-				 dev-php/flourish[sutra-patches]"
+				 dev-php/flourish"
 
 src_prepare() {
 	mv classes sutra
