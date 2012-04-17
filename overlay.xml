@@ -1,12 +1,17 @@
-<?xml version="1.0"?>
-<layman>
-  <overlay
-    status = "unofficial"
-    type = "git"
-    src  = "git://github.com/tatsh/tatsh-overlay.git"
-    contact = "ddrtist@gmail.com"
-    name = "tatsh-overlay">
-    <link></link>
-    <description>Tatsh's personal portage overlay</description>
-  </overlay>
-</layman>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE repositories SYSTEM "http://www.gentoo.org/dtd/repositories.dtd">
+<repositories xmlns="" version="1.0">
+  <repo quality="experimental" status="unofficial">
+    <name><![CDATA[ Tatsh ]]></name>
+    <description lang="en"><![CDATA[Tatsh overlay]]></description>
+    <homepage>https://github.com/tatsh/tatsh-overlay</homepage>
+    <owner type="person">
+      <email>ddrtist@gmail.com</email>
+      <name>
+        <![CDATA[ Andrew Udvare ]]>
+      </name>
+    </owner>
+    <source type="git">git://github.com/tatsh/tatsh-overlay.git</source>
+    <feed>https://github.com/feeds/tatsh/commits/tatsh-overlay/master</feed>
+  </repo>
+</repositories>
