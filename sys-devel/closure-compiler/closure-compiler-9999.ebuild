@@ -24,6 +24,12 @@ DEPEND="${RDEPEND}
 src_compile() {
 	cd "${S}"
 	ant
+
+	if use bash-completion; then
+		cp "${FILESDIR}/ListCharsets.java" .
+		javac ListCharsets.java || die "Failed to compile ListCharsets.java"
+		java ListCharsets | sort > charsets.txt
+	fi
 }
 
 src_install() {
@@ -44,6 +50,8 @@ src_install() {
 
 	if use bash-completion; then
 		newbashcomp "${FILESDIR}/closure-compiler" closure-compiler
+		insinto /usr/share/closure-compiler
+		doins "${S}/charsets.txt"
 	fi
 }
 

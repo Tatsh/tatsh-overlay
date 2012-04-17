@@ -60,30 +60,7 @@ _closure_compiler() {
 
 	case "${prev}" in
 		--charset)
-			# http://docs.oracle.com/javase/1.4.2/docs/guide/intl/encoding.doc.html
-			# NOTE These may not be supported by every implementation
-			# TODO Somehow get from the implementation
-			# http://www.java2s.com/Code/Java/I18N/ListtheCharsetinyoursystem.htm
-			local charsets="US-ASCII
-				windows-1250
-				windows-1251
-				windows-1252
-				windows-1253
-				windows-1254
-				windows-1257
-				ISO-8859-1
-				ISO-8859-2
-				ISO-8859-4
-				ISO-8859-5
-				ISO-8859-7
-				ISO-8859-9
-				ISO-8859-13
-				ISO-8859-15
-				KOI8-R
-				UTF-8
-				UTF-16
-				UTF-16BE
-				UTF-16LE"
+			local charsets="$(cat /usr/share/closure-compiler/charsets.txt)"
 			COMPREPLY=( $(compgen -W "${charsets}" -- ${cur}) )
 			return 0
 			;;
