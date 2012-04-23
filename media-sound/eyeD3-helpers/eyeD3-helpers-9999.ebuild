@@ -21,5 +21,5 @@ RDEPEND="${DEPEND}
 >=dev-python/eyeD3-0.6.17"
 
 src_install() {
-	dobin addcover fixcovers
+	dobin addcover fixcovers addlyrics
 }
