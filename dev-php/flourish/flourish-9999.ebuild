@@ -3,13 +3,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit subversion
+inherit git-2 eutils
 
-EAPI=3
+EAPI="3"
 
 DESCRIPTION="A PHP un-framework focusing on solving problems intrinsic to web development."
-HOMEPAGE="http://flourishlib.com/"
-ESVN_REPO_URI="http://svn.flourishlib.com/trunk/classes"
+HOMEPAGE="https://github.com/tatsh/flourish-classes"
+EGIT_REPO_URI="git://github.com/tatsh/flourish-classes.git"
 
 LICENSE="MIT"
 SLOT="0"
@@ -23,12 +23,9 @@ src_prepare() {
 	mkdir flourish
 	mv *.php *.rev flourish
 
-	epatch "${FILESDIR}"/${PN}-r1041-fhtml-allow-dashes-in-attributes.patch
 	epatch "${FILESDIR}"/${PN}-r1041-ignore-warning-sortbycallback.patch
 	epatch "${FILESDIR}"/${PN}-r1041-protected-determineprocessor.patch
-	epatch "${FILESDIR}"/${PN}-r1042-add-minifyjavascript-static-method.patch
 	epatch "${FILESDIR}"/${PN}-r1042-tsvector-pgsql.patch
-	epatch "${FILESDIR}"/${PN}-r1042-fupload-size-var.patch
 }
 
 src_install() {
