@@ -14,7 +14,7 @@ EGIT_COMMIT="3629b75ba667435e3fcb0e5b8277ca83647f940e"
 
 LICENSE="Apache-2.0 GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="audio +c +cpp examples fakenect opencv python"
 
 DEPEND="dev-util/pkgconfig
