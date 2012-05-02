@@ -5,12 +5,11 @@
 
 EAPI=4
 
-inherit eutils cmake-utils git-2
+inherit eutils cmake-utils
 
 DESCRIPTION="Core library for accessing the Microsoft Kinect USB camera."
 HOMEPAGE="https://github.com/OpenKinect/libfreenect"
-EGIT_REPO_URI="git://github.com/OpenKinect/libfreenect.git"
-EGIT_COMMIT="3629b75ba667435e3fcb0e5b8277ca83647f940e"
+SRC_URI="https://github.com/OpenKinect/${PN}/tarball/v${PV} -> ${PN}-${PV}.tar.gz"
 
 LICENSE="Apache-2.0 GPL-2"
 SLOT="0"
@@ -28,6 +27,8 @@ DEPEND="dev-util/pkgconfig
 	opencv? ( media-libs/opencv )
 	python? ( dev-python/cython )"
 RDEPEND="${DEPEND}"
+
+S="${WORKDIR}/OpenKinect-libfreenect-d311908"
 
 pkg_setup() {
 	if use audio; then
