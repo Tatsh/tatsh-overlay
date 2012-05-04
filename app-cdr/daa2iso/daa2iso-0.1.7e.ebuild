@@ -26,4 +26,7 @@ src_compile() {
 
 src_install() {
   dobin "$PN"
+
+  cd ..
+  dodoc COPYING "$PN.txt"
 }
