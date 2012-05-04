@@ -1,4 +1,3 @@
-# kate: replace-tabs false;
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
@@ -24,7 +23,6 @@ src_prepare() {
 	mv *.php *.rev flourish
 
 	epatch "${FILESDIR}"/${PN}-r1041-ignore-warning-sortbycallback.patch
-	epatch "${FILESDIR}"/${PN}-r1041-protected-determineprocessor.patch
 	epatch "${FILESDIR}"/${PN}-r1042-tsvector-pgsql.patch
 }
 
