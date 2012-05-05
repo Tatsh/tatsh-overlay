@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cd "/opt/pcsx2"
+if [ -n "/opt/pcsx2" ] ; then
+	if [ "${LD_LIBRARY_PATH+set}" = "set" ] ; then
+		export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/lib32:/opt/nvidia-cg-toolkit/lib32"
+	else
+		export LD_LIBRARY_PATH="/usr/lib32:/opt/nvidia-cg-toolkit/lib32"
+	fi
+fi
+exec ./pcsx2 "$@"
