@@ -55,6 +55,8 @@ src_configure() {
 		-Dplugindir=$(games_get_libdir)/${PN}
 		$(cmake-utils_use !wxwidgets DISABLE_WX)
 		$(cmake-utils_use encode ENCODE_FRAMEDUMPS)"
+	append-cppflags -I/opt/nvidia-cg-toolkit/include
+	append-ldflags -L/opt/nvidia-cg-toolkit/lib
 	cmake-utils_src_configure
 }
 
