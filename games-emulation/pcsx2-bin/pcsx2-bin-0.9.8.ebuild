@@ -3,9 +3,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils multilib
+inherit eutils multilib games
 
-EAPI=4
+EAPI=3
 
 DESCRIPTION="A PlayStation 2 emulator."
 HOMEPAGE="http://pcsx2.net/"
@@ -51,6 +51,6 @@ src_install() {
 	exeinto /opt/pcsx2
 	doexe pcsx2
 
-	exeinto /usr/bin
+	exeinto /usr/games/bin
 	doexe "${FILESDIR}/pcsx2"
 }
