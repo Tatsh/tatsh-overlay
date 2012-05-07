@@ -28,8 +28,8 @@ RDEPEND="amd64? ( >=app-emulation/emul-linux-x86-wxGTK-20120505 )
 		virtual/glu
 		x11-libs/wxGTK
 	)
-	>=media-gfx/nvidia-cg-toolkit-2.1.0012"
-	
+	>=media-gfx/nvidia-cg-toolkit-2.1.0017"
+
 S="${WORKDIR}/pcsx2-0.9.8-r4594-linux"
 
 src_install() {
