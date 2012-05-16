@@ -9,7 +9,7 @@ EAPI="3"
 
 DESCRIPTION="Flourish ORM plugin for tagging."
 HOMEPAGE="https://github.com/tatsh/fpORMTagging"
-EGIT_REPO_URI="git@github.com:tatsh/fpORMTagging.git"
+EGIT_REPO_URI="git://github.com/tatsh/fpORMTagging.git"
 
 LICENSE="MIT"
 SLOT="0"
