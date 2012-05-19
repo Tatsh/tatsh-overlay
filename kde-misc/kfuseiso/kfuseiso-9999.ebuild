@@ -17,7 +17,8 @@ IUSE=""
 
 # TODO Find correct list of dependencies
 DEPEND="kde-base/dolphin
-kde-base/kdialog"
+kde-base/kdialog
+sys-fs/fuseiso"
 RDEPEND="${DEPEND}"
 
 src_install() {
