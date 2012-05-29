@@ -3,5 +3,5 @@ This is stuff I make randomly. There is no real (free) support whatsoever, but i
 ## To install with layman
 
 ```bash
-layman -o http://tatsh.github.com/tatsh-overlay/layman.xml -a tatsh-overlay
+layman -o http://tatsh.github.com/tatsh-overlay/layman.xml -fa tatsh-overlay
 ```
