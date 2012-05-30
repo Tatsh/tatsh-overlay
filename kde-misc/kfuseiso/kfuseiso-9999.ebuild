@@ -7,8 +7,8 @@ EAPI=4
 inherit git-2
 
 DESCRIPTION="Desktop entry file to easily mount disc images."
-HOMEPAGE="https://github.com/tatsh/kfuseiso"
-EGIT_REPO_URI="git://github.com/tatsh/kfuseiso.git"
+HOMEPAGE="https://github.com/Tatsh/kfuseiso"
+EGIT_REPO_URI="git://github.com/Tatsh/kfuseiso.git"
 
 LICENSE="MIT"
 SLOT="0"

@@ -8,8 +8,8 @@ EAPI=3
 inherit eutils flag-o-matic toolchain-funcs git-2
 
 DESCRIPTION="Apple's Linker tool."
-HOMEPAGE="https://github.com/tatsh/xchain"
-EGIT_REPO_URI="git://github.com/tatsh/xchain.git"
+HOMEPAGE="https://github.com/Tatsh/xchain"
+EGIT_REPO_URI="git://github.com/Tatsh/xchain.git"
 
 LICENSE="GPL-2"
 SLOT="0"

@@ -7,8 +7,8 @@ inherit git-2 eutils
 EAPI="3"
 
 DESCRIPTION="A PHP un-framework focusing on solving problems intrinsic to web development."
-HOMEPAGE="https://github.com/tatsh/flourish-classes"
-EGIT_REPO_URI="git://github.com/tatsh/flourish-classes.git"
+HOMEPAGE="https://github.com/Tatsh/flourish-classes"
+EGIT_REPO_URI="git://github.com/Tatsh/flourish-classes.git"
 
 LICENSE="MIT"
 SLOT="0"

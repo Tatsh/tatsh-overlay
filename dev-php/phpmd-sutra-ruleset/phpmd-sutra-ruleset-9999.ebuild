@@ -8,8 +8,8 @@ inherit eutils git-2
 EAPI=4
 
 DESCRIPTION="PHPMD Rule set specific to Sutra and related projects."
-HOMEPAGE="https://github.com/tatsh/sutra-pmd-rules"
-EGIT_REPO_URI="git://github.com/tatsh/sutra-pmd-rules.git"
+HOMEPAGE="https://github.com/Tatsh/sutra-pmd-rules"
+EGIT_REPO_URI="git://github.com/Tatsh/sutra-pmd-rules.git"
 
 LICENSE="MIT"
 SLOT="0"

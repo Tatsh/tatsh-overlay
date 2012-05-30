@@ -9,7 +9,7 @@ EAPI="3"
 
 DESCRIPTION="PHP Compatibility check for PHP_CodeSniffer."
 HOMEPAGE="http://techblog.wimgodden.be/tag/codesniffer"
-EGIT_REPO_URI="git://github.com/tatsh/PHPCompatibility.git"
+EGIT_REPO_URI="git://github.com/Tatsh/PHPCompatibility.git"
 
 LICENSE="Apache-2.0"
 SLOT="0"

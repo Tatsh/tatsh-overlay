@@ -8,8 +8,8 @@ inherit git-2
 EAPI="3"
 
 DESCRIPTION="Flourish ORM plugin for tagging."
-HOMEPAGE="https://github.com/tatsh/fpORMTagging"
-EGIT_REPO_URI="git://github.com/tatsh/fpORMTagging.git"
+HOMEPAGE="https://github.com/Tatsh/fpORMTagging"
+EGIT_REPO_URI="git://github.com/Tatsh/fpORMTagging.git"
 
 LICENSE="MIT"
 SLOT="0"

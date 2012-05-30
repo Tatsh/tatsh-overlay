@@ -9,7 +9,7 @@ EAPI="3"
 
 DESCRIPTION="A PHP class to interact with the Mollom API."
 HOMEPAGE="http://mollom.crsolutions.be/"
-EGIT_REPO_URI="git://github.com/tatsh/mollom.git"
+EGIT_REPO_URI="git://github.com/Tatsh/mollom.git"
 
 LICENSE="BSD"
 SLOT="0"

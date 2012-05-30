@@ -8,7 +8,7 @@ EAPI=3
 inherit eutils
 
 DESCRIPTION="Apple's libraries and headers for iOS 5."
-HOMEPAGE="https://github.com/tatsh/xchain"
+HOMEPAGE="https://github.com/Tatsh/xchain"
 SRC_URI="xcode_4.2_and_ios_5_sdk_for_snow_leopard.dmg"
 RESTRICT="fetch"
 
@@ -27,7 +27,7 @@ pkg_nofetch() {
 	elog "You must download the Xcode 4.2 DMG from Apple's developer site."
 	elog "Visit http://developer.apple.com/ and sign in, then download the Xcode 4.2 DMG for Snow Leopard (not Lion)."
 	elog "Place the file 'xcode_4.2_and_ios_5_sdk_for_snow_leopard.dmg' in ${DISTDIR}"
-	elog "If this file is no longer available, please report a bug at https://github.com/tatsh/tatsh-overlay/issues"
+	elog "If this file is no longer available, please report a bug at https://github.com/Tatsh/tatsh-overlay/issues"
 }
 
 src_unpack() {

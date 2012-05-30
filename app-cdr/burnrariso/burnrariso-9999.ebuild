@@ -8,8 +8,8 @@ inherit git-2
 EAPI="3"
 
 DESCRIPTION="Burn an ISO out of a set of RARs."
-HOMEPAGE="https://github.com/tatsh/misc-scripts"
-EGIT_REPO_URI="git://github.com/tatsh/misc-scripts.git"
+HOMEPAGE="https://github.com/Tatsh/misc-scripts"
+EGIT_REPO_URI="git://github.com/Tatsh/misc-scripts.git"
 
 LICENSE="MIT"
 SLOT="0"

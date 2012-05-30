@@ -8,7 +8,7 @@ EAPI=3
 inherit eutils
 
 DESCRIPTION="Apple's LLVM GCC core."
-HOMEPAGE="https://github.com/tatsh/xchain"
+HOMEPAGE="https://github.com/Tatsh/xchain"
 SRC_URI="http://opensource.apple.com/tarballs/llvmgcc42/llvmgcc42-2335.15.tar.gz"
 RESTRICT="mirror"
 

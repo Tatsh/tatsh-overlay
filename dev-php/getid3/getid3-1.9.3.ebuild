@@ -9,7 +9,7 @@ EAPI="3"
 
 DESCRIPTION="A PHP script that extracts useful information from many file formats."
 HOMEPAGE="http://getid3.sourceforge.net/"
-EGIT_REPO_URI="git://github.com/tatsh/getid3.git"
+EGIT_REPO_URI="git://github.com/Tatsh/getid3.git"
 EGIT_COMMIT="dd6ae769ff16fe80971c2b3b364e2061221e41a1"
 
 LICENSE="GPL-2"

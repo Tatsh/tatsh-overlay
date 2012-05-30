@@ -8,7 +8,7 @@ EAPI=3
 inherit eutils
 
 DESCRIPTION=""
-HOMEPAGE="https://github.com/tatsh/cross-pc-mingw32-openssl"
+HOMEPAGE="https://github.com/Tatsh/cross-pc-mingw32-openssl"
 SRC_URI="http://www.openssl.org/source/openssl-0.9.8n.tar.gz"
 RESTRICT="mirror"
 

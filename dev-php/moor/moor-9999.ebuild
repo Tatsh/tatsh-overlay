@@ -8,8 +8,8 @@ inherit git-2
 EAPI="3"
 
 DESCRIPTION="A URL Routing/Linking/Controller library for PHP 5.1+ (tatsh fork)."
-HOMEPAGE="https://github.com/tatsh/moor"
-EGIT_REPO_URI="git://github.com/tatsh/moor.git"
+HOMEPAGE="https://github.com/Tatsh/moor"
+EGIT_REPO_URI="git://github.com/Tatsh/moor.git"
 
 LICENSE="MIT"
 SLOT="0"
