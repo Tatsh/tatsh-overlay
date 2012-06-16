@@ -38,7 +38,7 @@ src_install() {
 	cp ${S}/build/compiler.jar "${sharedir}"
 
 	if use externs; then
-		cp -R ${S}/externs "${sharedir}"
+		cp -R ${S}/externs ${S}/contrib/externs "${sharedir}"
 	fi
 	insinto /usr
 	doins -r share
