@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit git-2 eutils
+EAPI=3
 
-EAPI="3"
+inherit git-2 eutils
 
 DESCRIPTION="A PHP un-framework focusing on solving problems intrinsic to web development."
 HOMEPAGE="https://github.com/Tatsh/flourish-classes"

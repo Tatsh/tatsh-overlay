@@ -3,9 +3,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=3
+
 inherit eutils subversion toolchain-funcs
 
-EAPI=3
 ESVN_REPO_URI="http://okcupid-pidgin.googlecode.com/svn/trunk/"
 DESCRIPTION="An OkCupid plugin for Pidgin."
 HOMEPAGE="http://code.google.com/p/okcupid-pidgin/"
