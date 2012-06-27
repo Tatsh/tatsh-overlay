@@ -3,9 +3,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils git-2
-
 EAPI=4
+
+inherit eutils git-2
 
 DESCRIPTION="Sutra functions."
 HOMEPAGE="https://github.com/Tatsh/sutra-functions"

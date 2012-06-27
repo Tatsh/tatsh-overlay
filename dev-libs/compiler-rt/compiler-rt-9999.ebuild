@@ -3,9 +3,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=3
+
 inherit eutils cmake-utils subversion
 
-EAPI=3
 ESVN_REPO_URI="http://llvm.org/svn/llvm-project/compiler-rt/trunk"
 DESCRIPTION="A simple library that provides an implementation of the low-level target-specific hooks required by code generation and other runtime components."
 HOMEPAGE="http://compiler-rt.llvm.org/"

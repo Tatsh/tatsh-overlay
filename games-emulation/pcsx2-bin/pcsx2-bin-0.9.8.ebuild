@@ -3,9 +3,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils multilib games
-
 EAPI=3
+
+inherit eutils multilib games
 
 DESCRIPTION="A PlayStation 2 emulator."
 HOMEPAGE="http://pcsx2.net/"
