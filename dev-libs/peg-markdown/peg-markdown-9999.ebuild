@@ -24,7 +24,7 @@ src_compile() {
 }
 
 src_install() {
-	dodoc LICENSE README
+	dodoc LICENSE
 	emake DESTDIR="${D}/usr" install
 }
 
