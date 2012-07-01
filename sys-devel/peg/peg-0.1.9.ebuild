@@ -24,6 +24,7 @@ src_compile() {
 }
 
 src_install() {
+	doman peg.1
 	mkdir -p "${D}/usr/bin"
 	emake PREFIX="${D}/usr" install
 }
