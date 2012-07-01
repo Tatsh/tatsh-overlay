@@ -20,6 +20,6 @@ LICENSE="MIT GPL-2 BSD"
 SLOT="0"
 IUSE=""
 
-DEPEND=">=dev-libs/glib-2.32.3"
+DEPEND="dev-libs/peg-markdown"
 RDEPEND="${DEPEND}"
 SRC_URI="http://files.tatsh.net/$PN-$PV.tar.bz2"
