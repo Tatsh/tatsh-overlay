@@ -3,11 +3,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=3
+
 inherit eutils subversion bash-completion-r1
 
 # TODO Patch out distributed Rhino (unless not possible) and use dev-java/rhino
 
-EAPI=3
 ESVN_REPO_URI="http://closure-compiler.googlecode.com/svn/trunk/"
 DESCRIPTION="JavaScript optimising compiler."
 HOMEPAGE="http://code.google.com/p/closure-compiler/"

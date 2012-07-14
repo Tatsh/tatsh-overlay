@@ -3,9 +3,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit git-2
+EAPI=3
 
-EAPI="3"
+inherit git-2
 
 DESCRIPTION="Add a self-signed certificate to your local NSS trusted certificates database."
 HOMEPAGE="https://github.com/Tatsh/misc-scripts"

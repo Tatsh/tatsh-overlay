@@ -3,9 +3,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=3
+
 inherit eutils subversion
 
-EAPI=3
 ESVN_REPO_URI="http://jsdoc-toolkit.googlecode.com/svn/trunk"
 DESCRIPTION="A documentation generator for JavaScript."
 HOMEPAGE="http://code.google.com/p/jsdoc-toolkit/"
