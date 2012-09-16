@@ -25,6 +25,7 @@ src_prepare() {
 
 src_compile() {
 	cd "${S}/src"
+
 	for i in bin2iso \
 		bincomp \
 		brrrip \
@@ -48,6 +49,7 @@ src_compile() {
 
 src_install() {
 	cd "${S}/src"
+
 	for i in bin2iso \
 		bincomp \
 		brrrip \
@@ -67,6 +69,8 @@ src_install() {
 		zerofill; do
 			dobin "$i"
 		done
+
+		dosym /usr/bin/ecm /usr/bin/unecm
 }
 
 # kate: replace-tabs false;
