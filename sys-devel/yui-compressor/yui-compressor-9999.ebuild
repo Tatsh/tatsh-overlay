@@ -36,8 +36,7 @@ src_install() {
 	jar=$(basename "$jar")
 	echo "#!/bin/sh" > "$bin"
 	echo "java -jar /usr/share/yui-compressor/$jar \$@" >> "$bin"
-	exeinto /usr/bin
-	doexe "$bin"
+	dobin "$bin"
 }
 
 src_test() {
