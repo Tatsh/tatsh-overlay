@@ -45,8 +45,9 @@ src_install() {
 	doins -r share
 
 	local bin="closure-compiler"
+	local jar="/usr/share/closure-compiler/compiler.jar"
 	echo "#!/bin/sh" > "${bin}"
-	echo "java -jar /usr/share/closure-compiler/compiler.jar \$@" >> "${bin}"
+	echo "java -classpath $jar -jar $jar \$@" >> "${bin}"
 	dobin closure-compiler
 
 	if use bash-completion; then
