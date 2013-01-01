@@ -47,9 +47,9 @@ diff -r 01e2906a1f72 src/Makefile.am
  
 -Rage = $(PCRE) $(Lua) $(jsoncpp) $(RageFile) $(RageSoundFileReaders) \
 +Rage += $(Lua) $(jsoncpp) $(RageFile) $(RageSoundFileReaders) \
- RageBitmapTexture.cpp RageBitmapTexture.h RageDisplay.cpp RageDisplay.h RageDisplay_OGL.cpp RageDisplay_OGL.h \
- RageDisplay_OGL_Helpers.cpp RageDisplay_OGL_Helpers.h glext.h \
- RageDisplay_Null.cpp RageDisplay_Null.h RageException.cpp RageException.h RageInput.cpp RageInput.h \
+ RageBitmapTexture.cpp RageBitmapTexture.h \
+ RageDisplay.cpp RageDisplay.h \
+ RageDisplay_OGL.cpp RageDisplay_OGL.h \
 @@ -650,9 +655,8 @@
  GtkModule_so_SOURCES = arch/LoadingWindow/LoadingWindow_GtkModule.cpp
  endif
