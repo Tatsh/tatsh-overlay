@@ -1,4 +1,3 @@
-# kate: replace-tabs false;
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
@@ -15,7 +14,7 @@ EGIT_REPO_URI="https://code.google.com/p/dolphin-emu/"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="alsa ao bluetooth doc encode +lzo openal opencl opengl portaudio pulseaudio +wxwidgets +xrandr"
+IUSE="alsa ao bluetooth doc encode +lzo openal opencl opengl portaudio pulseaudio +wxwidgets +xrandr +wiimote-plus-patch"
 RESTRICT=""
 
 RDEPEND=">=media-libs/glew-1.5
@@ -45,6 +44,12 @@ DEPEND="${RDEPEND}
 	dev-util/pkgconfig
 	media-gfx/nvidia-cg-toolkit"
 
+src_prepare() {
+	if use wiimote-plus-patch; then
+		epatch "${FILESDIR}"/RVL-CNT-01-TR.patch
+	fi
+}
+
 src_configure() {
 	# Configure cmake
 	mycmakeargs="
@@ -56,7 +61,7 @@ src_configure() {
 		$(cmake-utils_use !wxwidgets DISABLE_WX)
 		$(cmake-utils_use encode ENCODE_FRAMEDUMPS)"
 	append-cppflags -I/opt/nvidia-cg-toolkit/include
-	append-ldflags -L/opt/nvidia-cg-toolkit/lib
+	append-ldflags -L/opt/nvidia-cg-toolkit/$(get_libdir)
 	cmake-utils_src_configure
 }
 
@@ -103,5 +108,12 @@ pkg_postinst() {
 		echo
 	fi
 
+	if use wiimote-plus-patch; then
+		einfo "Please note this build is patched with a fix for the Wii Remote Plus (RVL-CNT-01-TR). There are still issues, such as after remote auto-disconnection and re-connection, Dolphin may crash. Please see http://code.google.com/p/dolphin-emu/issues/detail?id=5011 for more information."
+		echo
+	fi
+
 	games_pkg_postinst
 }
+
+# kate: replace-tabs false;
