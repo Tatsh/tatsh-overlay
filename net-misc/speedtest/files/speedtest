@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cd /usr/share/speedtest-cli
+
+PYTHON=$(which python)
+if [[ $(python -V 2>&1 | awk '{print $2}' | cut -b -1) -eq 3 ]]; then
+  python speedtest-cli-3
+else
+  python speedtest-cli
+fi

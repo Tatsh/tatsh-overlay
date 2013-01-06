@@ -8,7 +8,7 @@ inherit git-2 eutils
 
 DESCRIPTION="Command line interface for testing internet bandwidth using speedtest.net"
 HOMEPAGE="https://github.com/sivel/speedtest-cli"
-EGIT_REPO_URI="https://github.com/sivel/speedtest-cli.git"
+EGIT_REPO_URI="https://github.com/sivel/${PN}-cli.git"
 
 LICENSE="EULA" # No license specified
 SLOT="0"
@@ -19,12 +19,11 @@ DEPEND=""
 RDEPEND="dev-lang/python:2.7
 ${DEPEND}"
 
-src_prepare() {
-	epatch "${FILESDIR}"/${PN}-python2.7.patch
-}
-
 src_install() {
-	dobin "$PN"
+	insinto /usr/share/${PN}-cli
+	doins "${PN}-cli" "${PN}-cli-3"
+
+	dobin "${FILESDIR}/$PN"
 	dodoc README.md
 }
 

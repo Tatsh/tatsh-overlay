@@ -1,8 +1,0 @@
---- speedtest-cli.bak	2012-12-22 21:16:06.000000000 -0800
-+++ speedtest-cli	2012-12-24 12:40:36.000000000 -0800
-@@ -1,4 +1,4 @@
--#!/usr/bin/env python
-+#!/usr/bin/env python2.7
- 
- import urllib
- import math
