@@ -10,7 +10,7 @@ DESCRIPTION="Command line interface for testing internet bandwidth using speedte
 HOMEPAGE="https://github.com/sivel/speedtest-cli"
 EGIT_REPO_URI="https://github.com/sivel/${PN}-cli.git"
 
-LICENSE="EULA" # No license specified
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
