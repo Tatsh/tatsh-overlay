@@ -23,13 +23,20 @@ CONFIG_CHECK="!USB_IPHETH !COMPAT_NET_DEV_OPS"
 MODULE_NAMES="ipheth(usb:${S}/${PN}-driver:${S}/${PN}-driver)"
 BUILD_TARGETS="all"
 
+src_prepare() {
+	cd ${S}/${PN}-driver
+	# Avoid "make jobserver unavailable" warning and -Werror problems
+	sed -e 's:\tmake:\t+make:g' \
+		-i Makefile || die "sed failed"
+}
+
 src_compile() {
 	linux-mod_src_compile
 
 	if use udev; then
 		pushd ${S}/${PN}-pair 2>&1 > /dev/null
 		sed -e 's/^CFLAGS\s\+.*//' -i Makefile # Strip the unwanted CFLAGS out
-		emake
+		emake || die "emake failed"
 		popd 2>&1 > /dev/null
 	fi
 }
