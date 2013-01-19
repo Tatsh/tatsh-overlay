@@ -14,7 +14,7 @@ EGIT_REPO_URI="https://code.google.com/p/dolphin-emu/"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="alsa ao bluetooth doc encode +lzo openal opencl opengl portaudio pulseaudio +wxwidgets +xrandr +wiimote-plus-patch"
+IUSE="alsa ao bluetooth doc encode +lzo openal opencl opengl portaudio pulseaudio +wxwidgets +xrandr"
 RESTRICT=""
 
 RDEPEND=">=media-libs/glew-1.5
@@ -43,12 +43,6 @@ DEPEND="${RDEPEND}
 	dev-util/cmake
 	dev-util/pkgconfig
 	media-gfx/nvidia-cg-toolkit"
-
-src_prepare() {
-	if use wiimote-plus-patch; then
-		epatch "${FILESDIR}"/RVL-CNT-01-TR.patch
-	fi
-}
 
 src_configure() {
 	# Configure cmake
@@ -105,11 +99,6 @@ pkg_postinst() {
 	if ! use wxwidgets; then
 		ewarn "Note: It is not currently possible to configure Dolphin without the GUI."
 		ewarn "Rebuild with USE=wxwidgets to enable the GUI if needed."
-		echo
-	fi
-
-	if use wiimote-plus-patch; then
-		einfo "Please note this build is patched with a fix for the Wii Remote Plus (RVL-CNT-01-TR). There are still issues, such as after remote auto-disconnection and re-connection, Dolphin may crash. Please see http://code.google.com/p/dolphin-emu/issues/detail?id=5011 for more information."
 		echo
 	fi
 
