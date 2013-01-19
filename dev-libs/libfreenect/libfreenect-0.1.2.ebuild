@@ -5,7 +5,7 @@
 
 EAPI=4
 
-inherit eutils cmake-utils
+inherit eutils cmake-utils python
 
 DESCRIPTION="Core library for accessing the Microsoft Kinect USB camera."
 HOMEPAGE="https://github.com/OpenKinect/libfreenect"
@@ -19,7 +19,7 @@ IUSE="audio +c +cpp examples fakenect opencv python"
 DEPEND="dev-util/pkgconfig
 	dev-util/cmake
 	virtual/libusb:1
-	examples? ( 
+	examples? (
 		media-libs/freeglut
 		x11-libs/libXi
 		x11-libs/libXmu
@@ -27,10 +27,13 @@ DEPEND="dev-util/pkgconfig
 	opencv? ( media-libs/opencv )
 	python? ( dev-python/cython )"
 RDEPEND="${DEPEND}"
+PYTHON_DEPEND="2"
 
 S="${WORKDIR}/OpenKinect-libfreenect-d311908"
 
 pkg_setup() {
+	python_set_active_version 2
+
 	if use audio; then
 		elog "You have enabled the audio USE flag. Resulting binaries may not be legal to re-distribute."
 	fi
