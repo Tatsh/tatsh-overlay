@@ -6,11 +6,9 @@ start() {
 	ebegin "Starting Jetty"
 	start-stop-daemon --start --quiet \
 		--chdir /usr/share/jetty \
-		--user jetty:jetty \
-		--make-pidfile \
-		-- background \
-		--pidfile ${JETTY_PID} \
-		--exec java -jar start.jar --ini=/etc/jetty/start.ini --daemon
+		--user jetty:jetty --pidfile ${JETTY_PID} \
+		--make-pidfile --background \
+		--exec java -- -jar start.jar --ini=/etc/jetty/start.ini --daemon
 
 	eend $? || return 1
 }
