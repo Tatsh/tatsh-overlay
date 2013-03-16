@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit linux-mod git-2
+inherit linux-info linux-mod git-2
 
 DESCRIPTION="iPhone USB ethernet driver (personal hotspot)"
 HOMEPAGE="https://github.com/Tatsh/ipheth"
@@ -36,7 +36,7 @@ src_compile() {
 	if use udev; then
 		pushd ${S}/${PN}-pair 2>&1 > /dev/null
 		sed -e 's/^CFLAGS\s\+.*//' -i Makefile # Strip the unwanted CFLAGS out
-		emake || die "emake failed"
+		emake KERNELDIR=/lib/modules/${KV_FULL}/build || die "emake failed"
 		popd 2>&1 > /dev/null
 	fi
 }
