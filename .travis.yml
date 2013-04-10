@@ -1,0 +1,6 @@
+language: c
+compiler:
+  - gcc
+before_script:
+  - ./travis-portage.sh
+script: ./travis-test.sh
