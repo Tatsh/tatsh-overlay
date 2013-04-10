@@ -5,11 +5,11 @@
 
 EAPI=3
 
-inherit eutils subversion bash-completion-r1
+inherit eutils git-2 bash-completion-r1
 
 # TODO Patch out distributed Rhino (unless not possible) and use dev-java/rhino
 
-ESVN_REPO_URI="http://closure-compiler.googlecode.com/svn/trunk/"
+EGIT_REPO_URI="https://code.google.com/p/closure-compiler/"
 DESCRIPTION="JavaScript optimising compiler."
 HOMEPAGE="http://code.google.com/p/closure-compiler/"
 SLOT="0"
