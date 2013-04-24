@@ -16,7 +16,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="pax_kernel"
 RESTRICT="strip" # Who knows if strip will cause problems..
 
-DEPEND="app-arch/unzip"
+DEPEND="app-arch/unzip
+net-misc/wget"
 RDEPEND="
 	amd64? (
 	sys-devel/gcc[multilib]
@@ -29,20 +30,10 @@ URI="http://www.radioactivepages.com/downloading.ashx?file=${PN}/${PN}linux${PV}
 
 src_unpack() {
 	# evil stuff below
-	local DISTFILES="${S}" # Cannot write to $DISTDIR even if it was readable here
+	local DISTDIR="${S}" # Cannot write to $DISTDIR even if it was readable here
 	local fn="$PN-$PV.zip"
 
-	grep -s "^\s*FETCHCOMMAND=" /etc/make.globals > myenv
-	grep -s "^\s*FETCHCOMMAND=" /etc/make.conf >> myenv
-
-	if grep -s wget myenv 2>&1 > /dev/null; then
-		sed -i myenv -r -e "s#(\/)?wget\s#\1wget --referer=${HOMEPAGE} -O $fn #"
-	else
-		echo "FETCHCOMMAND=\"/usr/bin/wget --referer=${HOMEPAGE} \${URI} -O $fn -P \${DISTFILES}\"" > myenv
-	fi
-
-	. myenv
-	eval ${FETCHCOMMAND}
+	wget --referer=${HOMEPAGE} ${URI} -O $fn
 	unzip -qq "$fn" || die "Failed to unpack"
 }
 
