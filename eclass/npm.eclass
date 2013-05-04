@@ -27,9 +27,7 @@ npm_pkg_setup() {
 	if [ -z "$SRC_URI" ]; then
 		tarball=$(echo "$json" | jq .dist.tarball | cut -b 2- | sed -e 's/\"$//')
 
-		if [[ ! $tarball ]]; then
-			die "Tarball URI not found"
-		fi
+		[ -n "$tarball" ] || die "Tarball URI not found: '$json'"
 
 		wget --unlink "$tarball" -P "${DISTDIR}"
 		tarball="$DISTDIR/$(echo "$tarball" | sed -e 's/.*\///')"
