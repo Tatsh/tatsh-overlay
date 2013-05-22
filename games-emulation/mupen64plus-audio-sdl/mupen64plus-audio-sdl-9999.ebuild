@@ -22,12 +22,13 @@ EHG_REPO_URI="https://bitbucket.org/richard42/mupen64plus-audio-sdl"
 
 src_compile() {
 	cd ${S}/projects/unix
-	emake V=1 APIDIR="${GAMES_PREFIX}/include/mupen64plus" all
+	emake OPTFLAGS="" V=1 APIDIR="${GAMES_PREFIX}/include/mupen64plus" all
 }
 
 src_install() {
 	cd ${S}/projects/unix
 	emake V=1 \
+		INSTALL_STRIP_FLAG="" \
 		APIDIR="${GAMES_PREFIX}/include/mupen64plus" \
 		PREFIX="${D}${GAMES_PREFIX}" \
 		install

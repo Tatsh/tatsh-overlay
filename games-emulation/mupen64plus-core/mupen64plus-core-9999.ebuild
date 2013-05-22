@@ -23,11 +23,11 @@ EHG_REPO_URI="https://bitbucket.org/richard42/mupen64plus-core"
 
 src_compile() {
 	cd ${S}/projects/unix
-	emake V=1 all
+	emake OPTFLAGS="" V=1 all
 }
 
 src_install() {
 	cd ${S}/projects/unix
-	emake PREFIX="${D}${GAMES_PREFIX}" install
+	emake INSTALL_STRIP_FLAG="" PREFIX="${D}${GAMES_PREFIX}" install
 	prepgamesdirs
 }
