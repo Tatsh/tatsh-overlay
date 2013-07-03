@@ -14,7 +14,7 @@ EGIT_REPO_URI="git://github.com/opensky/Symfony2-coding-standard.git"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE=""
+IUSE="+control-signature"
 
 DEPEND=""
 RDEPEND=">=dev-lang/php-5.2.3
@@ -22,6 +22,11 @@ dev-php/PEAR-PHP_CodeSniffer"
 
 src_prepare() {
 	mkdir Symfony2
+
+	if ! use control-signature; then
+		epatch "${FILESDIR}/Symfony2-coding-standard-no-control-signature.patch"
+	fi
+
 	cp -R Docs \
 		Sniffs \
 		Tests \
