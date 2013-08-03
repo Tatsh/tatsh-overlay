@@ -2,29 +2,28 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-inherit git-2 eutils
+PYTHON_COMPAT=(python{2_5,2_6,2_7,3_1,3_2,3_3})
+DISTUTILS_SINGLE_IMPL=true
+inherit git-2 eutils distutils-r1
 
 DESCRIPTION="Command line interface for testing internet bandwidth using speedtest.net"
 HOMEPAGE="https://github.com/sivel/speedtest-cli"
-EGIT_REPO_URI="https://github.com/sivel/${PN}-cli.git"
+EGIT_REPO_URI="https://github.com/sivel/${PN}.git"
 
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND=""
-RDEPEND="dev-lang/python:2.7
-${DEPEND}"
+DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
+RDEPEND="${DEPEND}"
 
 src_install() {
-	insinto /usr/share/${PN}-cli
-	doins "${PN}-cli" "${PN}-cli-3"
-
-	dobin "${FILESDIR}/$PN"
-	dodoc README.md
+	python_domodule speedtest_cli.py
+	dobin speedtest_cli.py
+	dosym speedtest_cli.py /usr/bin/speedtest
+	dodoc LICENSE README.md
+	python_fix_shebang "${ED}"
 }
-
-# kate: replace-tabs false;
