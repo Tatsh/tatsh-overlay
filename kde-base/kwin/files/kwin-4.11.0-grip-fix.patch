@@ -1,0 +1,48 @@
+From d035524a49352ffffb2beccb18bbffddc50942b6 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Thomas=20L=C3=BCbking?= <thomas.luebking@gmail.com>
+Date: Thu, 15 Aug 2013 11:54:46 +0200
+Subject: [PATCH 3/4] snap to deco, not client on inner screen borders
+
+client snapping is for fitt's law and inner borders
+are not infinite
+
+BUG: 323504
+FIXED-IN: 4.11
+---
+ kwin/geometry.cpp | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/kwin/geometry.cpp b/kwin/geometry.cpp
+index 480f97d..c816695 100644
+--- a/kwin/geometry.cpp
++++ b/kwin/geometry.cpp
+@@ -427,16 +427,21 @@ QPoint Workspace::adjustClientPosition(Client* c, QPoint pos, bool unrestricted,
+             const QPoint cp = c->clientPos();
+             const QSize cs = c->geometry().size() - c->clientSize();
+             int padding[4] = { cp.x(), cs.width() - cp.x(), cp.y(), cs.height() - cp.y() };
++            const QRect fullRect = workspace()->clientArea(FullArea, c);
+ 
+-            // snap to titlebar
++            // snap to titlebar / snap to window borders on inner screen edges
+             Position titlePos = c->titlebarPosition();
+-            if (titlePos == PositionLeft || (c->maximizeMode() & MaximizeHorizontal))
++            if (cx > xmin || titlePos == PositionLeft ||
++               (c->maximizeMode() & MaximizeHorizontal) || maxRect.x() != fullRect.x())
+                 padding[0] = 0;
+-            if (titlePos == PositionRight || (c->maximizeMode() & MaximizeHorizontal))
++            if (rx < xmax || titlePos == PositionRight ||
++               (c->maximizeMode() & MaximizeHorizontal) || maxRect.right() != fullRect.right())
+                 padding[1] = 0;
+-            if (titlePos == PositionTop || (c->maximizeMode() & MaximizeVertical))
++            if (cy > ymin || titlePos == PositionTop ||
++               (c->maximizeMode() & MaximizeVertical) || maxRect.y() != fullRect.y())
+                 padding[2] = 0;
+-            if (titlePos == PositionBottom || (c->maximizeMode() & MaximizeVertical))
++            if (ry < ymax || titlePos == PositionBottom ||
++               (c->maximizeMode() & MaximizeVertical) || maxRect.bottom() != fullRect.bottom())
+                 padding[3] = 0;
+ 
+             if ((sOWO ? (cx < xmin) : true) && (qAbs(xmin - cx) < snapX)) {
+-- 
+1.8.3.4
+
