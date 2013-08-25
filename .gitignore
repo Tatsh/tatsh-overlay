@@ -4,3 +4,4 @@
 # These get randomly added by crossdev unfortunately
 cross-avr/
 cross-i686-pc-mingw32/
+profiles/categories
