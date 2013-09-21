@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="5"
 
 inherit games autotools eutils mercurial
 
@@ -59,7 +59,7 @@ src_prepare() {
 		remove_bundled_lib "vorbis"
 		remove_bundled_lib "zlib"
 	fi
-	
+
 	# Remove dev themes
 	remove_dev_theme "default-dev-midi"
 	remove_dev_theme "HelloWorld"

@@ -1,8 +1,8 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI="5"
 
 WX_GTK_VER="2.8"
 
@@ -41,7 +41,7 @@ RDEPEND=">=media-libs/glew-1.5
 	x11-libs/libXxf86vm"
 DEPEND="${RDEPEND}
 	dev-util/cmake
-	dev-util/pkgconfig
+	virtual/pkgconfig
 	media-gfx/nvidia-cg-toolkit"
 
 src_configure() {

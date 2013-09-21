@@ -1,9 +1,8 @@
-# kate: replace-tabs false;
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI="5"
 
 inherit eutils games mercurial
 
@@ -20,12 +19,12 @@ DEPEND="${RDEPEND}
 EHG_REPO_URI="https://bitbucket.org/richard42/mupen64plus-rsp-hle"
 
 src_compile() {
-	cd ${S}/projects/unix
-	emake V=1 OPTFLAGS=""  APIDIR="${GAMES_PREFIX}/include/mupen64plus" all
+	cd "${S}/projects/unix"
+	emake V=1 OPTFLAGS="" APIDIR="${GAMES_PREFIX}/include/mupen64plus" all
 }
 
 src_install() {
-	cd ${S}/projects/unix
+	cd "${S}/projects/unix"
 	emake V=1 \
 		INSTALL_STRIP_FLAG="" \
 		APIDIR="${GAMES_PREFIX}/include/mupen64plus" \
@@ -33,3 +32,5 @@ src_install() {
 		install
 	prepgamesdirs
 }
+
+# kate: replace-tabs false;

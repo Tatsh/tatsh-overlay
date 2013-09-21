@@ -1,9 +1,8 @@
-# kate: replace-tabs false;
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI="5"
 
 inherit eutils subversion
 
@@ -34,3 +33,5 @@ pkg_postinst() {
 	elog "Example usage: jsdoc -t /usr/share/jsdoc-toolkit/templates"
 	elog
 }
+
+# kate: replace-tabs false;

@@ -1,9 +1,8 @@
-# kate: replace-tabs false;
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="3"
+EAPI="5"
 
 inherit eutils games mercurial
 
@@ -34,3 +33,5 @@ src_install() {
 		install
 	prepgamesdirs
 }
+
+# kate: replace-tabs false;

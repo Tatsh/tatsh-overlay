@@ -1,13 +1,10 @@
-# kate: replace-tabs false;
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=3
+EAPI="5"
 
 inherit eutils git-2 bash-completion-r1
-
-# TODO Patch out distributed Rhino (unless not possible) and use dev-java/rhino
 
 EGIT_REPO_URI="https://code.google.com/p/closure-compiler/"
 DESCRIPTION="JavaScript optimising compiler."
@@ -64,3 +61,5 @@ pkg_postinst() {
 		elog
 	fi
 }
+
+# kate: replace-tabs false;
