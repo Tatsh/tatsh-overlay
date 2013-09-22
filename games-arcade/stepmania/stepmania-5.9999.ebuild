@@ -24,7 +24,7 @@ DEPEND="gtk? ( x11-libs/gtk+:2 )
 	media-libs/libpng
 	jpeg? ( virtual/jpeg )
 	ffmpeg? ( >=virtual/ffmpeg-0.5 )
-	virtual/glu
+	media-libs/glew
 	x11-libs/libXrandr
 	virtual/opengl
 	!bundled-libs? ( dev-libs/libpcre )"
