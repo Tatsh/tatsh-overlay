@@ -29,6 +29,9 @@ src_install() {
 	cd "${S}/projects/unix"
 	emake INSTALL_STRIP_FLAG="" PREFIX="${D}${GAMES_PREFIX}" install
 	prepgamesdirs
+
+	# prepgamesdirs needs to ignore /usr/games/include because Portage needs access
+	fperms 0644 /usr/games/include/mupen64plus/*
 }
 
 # kate: replace-tabs false;
