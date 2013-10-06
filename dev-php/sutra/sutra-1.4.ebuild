@@ -10,6 +10,7 @@ inherit eutils git-2
 DESCRIPTION="An extension upon Flourish."
 HOMEPAGE="https://github.com/Tatsh/sutra"
 EGIT_REPO_URI="git://github.com/Tatsh/sutra.git"
+EGIT_COMMIT="09d6c5199eee443a945a4243092be14d3d00ae59"
 
 LICENSE="MIT"
 SLOT="0"
