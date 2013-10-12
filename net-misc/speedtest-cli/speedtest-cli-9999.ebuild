@@ -24,6 +24,6 @@ src_install() {
 	python_domodule speedtest_cli.py
 	dobin speedtest_cli.py
 	dosym speedtest_cli.py /usr/bin/speedtest
-	dodoc LICENSE README.md
+	dodoc LICENSE README.rst
 	python_fix_shebang "${ED}"
 }
