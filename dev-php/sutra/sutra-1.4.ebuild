@@ -23,6 +23,7 @@ dev-php/flourish"
 
 src_prepare() {
 	mv classes sutra
+	mv functions sutra
 }
 
 src_install() {
