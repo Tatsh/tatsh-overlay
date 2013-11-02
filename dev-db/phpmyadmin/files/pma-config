@@ -19,14 +19,13 @@ server_storage_config = [
     ('pdf_pages', ('pdf_pages', '__allow_input__')),
     ('column_info', ('column_info', '__allow_input__')),
     ('history', ('history', '__allow_input__')),
-# $cfg['Servers'][$i]['history'] = 'pma__history';
-# $cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
-# $cfg['Servers'][$i]['tracking'] = 'pma__tracking';
-# $cfg['Servers'][$i]['designer_coords'] = 'pma__designer_coords';
-# $cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
-# $cfg['Servers'][$i]['recent'] = 'pma__recent';
-#/* Contrib / Swekey authentication */
-# $cfg['Servers'][$i]['auth_swekey_config'] = '/etc/swekey-pma.conf';
+    ('table_uiprefs', ('table_uiprefs', '__allow_input__')),
+    ('tracking', ('tracking', '__allow_input__')),
+    ('designer_coords', ('designer_coords', '__allow_input__')),
+    ('userconfig', ('userconfig', '__allow_input__')),
+    ('recent', ('recent', '__allow_input__')),
+    # Contrib / Swekey authentication
+    ('auth_swekey_config', ('auth_swekey_config', '__allow_input__')),
 ]
 other_config = (
     ('blowfish_secret', ('a8b7c6d', '__allow_input__')),
