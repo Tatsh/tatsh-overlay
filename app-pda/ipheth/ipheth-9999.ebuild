@@ -21,7 +21,7 @@ RDEPEND="${DEPEND}
 
 CONFIG_CHECK="!USB_IPHETH !COMPAT_NET_DEV_OPS"
 MODULE_NAMES="ipheth(usb:${S}/${PN}-driver:${S}/${PN}-driver)"
-BUILD_TARGETS="all"
+BUILD_TARGETS='all'
 
 src_prepare() {
 	cd ${S}/${PN}-driver
@@ -31,12 +31,12 @@ src_prepare() {
 }
 
 src_compile() {
-	linux-mod_src_compile
+	KERNEL_DIR="/lib/modules/${KV_FULL}/build" linux-mod_src_compile
 
 	if use udev; then
 		pushd ${S}/${PN}-pair 2>&1 > /dev/null
 		sed -e 's/^CFLAGS\s\+.*//' -i Makefile # Strip the unwanted CFLAGS out
-		emake KERNELDIR=/lib/modules/${KV_FULL}/build || die "emake failed"
+		emake KERNELDIR=/lib/modules/${KV_FULL}/build || die "emake failed (udev)"
 		popd 2>&1 > /dev/null
 	fi
 }
