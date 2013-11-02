@@ -1,0 +1,74 @@
+#!/usr/bin/env python2
+
+print('Note that the configuration generated here is only for one server. It will have to be modified if more than one server is necessary')
+
+server_config = [
+    ('auth_type', ('cookie', 'http'))
+    ('host', ('localhost', '__allow_input__')),
+    ('connect_type', ('tcp', 'socket')),
+    ('compress', (False, True)),
+    ('extension', ('mysqli', 'mysql')),
+    ('AllowNoPassword', (False, True)),
+]
+server_storage_config = [
+    ('pmadb', ('phpmyadmin', '__allow_input__')),
+    ('bookmarktable', ('bookmark', '__allow_input__')),
+    ('relation', ('relation', '__allow_input')),
+    ('table_info', ('table_info', '__allow_input__')),
+    ('table_coords', ('table_coords', '__allow_input__')),
+    ('pdf_pages', ('pdf_pages', '__allow_input__')),
+    ('column_info', ('column_info', '__allow_input__')),
+    ('history', ('history', '__allow_input__')),
+# $cfg['Servers'][$i]['history'] = 'pma__history';
+# $cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
+# $cfg['Servers'][$i]['tracking'] = 'pma__tracking';
+# $cfg['Servers'][$i]['designer_coords'] = 'pma__designer_coords';
+# $cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
+# $cfg['Servers'][$i]['recent'] = 'pma__recent';
+#/* Contrib / Swekey authentication */
+# $cfg['Servers'][$i]['auth_swekey_config'] = '/etc/swekey-pma.conf';
+]
+other_config = (
+    ('blowfish_secret', ('a8b7c6d', '__allow_input__')),
+    ('UploadDir', ('', '__allow_input__')),
+    ('SaveDir', ('', '__allow_input__')),
+    ('ShowAll', (False, True)),
+    ('MaxRows', (50, '__allow_input__')),
+    ('ProtectBinary', ('blob', 'noblob', 'all', False)),
+    ('DefaultLang', ('en', '__allow_input__')),
+    ('PropertiesNumColumns', (2, '__allow_input__')),
+    ('QueryHistoryDB', (False, True)),
+    ('QueryHistoryMax', (25, 100,'__allow_input__')),
+)
+
+print('Press RETN to accept default value')
+
+config = {
+    'Servers': {
+        '1': {},
+    },
+}
+
+for (key, possible_values) in server_config:
+    if '__allow_input__' in possible_values:
+        value = raw_input('Server: \'%s\' (%s) ' % (key, possible_values[0]))
+    else:
+        index = 0
+        options = []
+
+        for item in possible_values:
+            options.append('%d - %s' % (index, item))
+            index += 1
+
+        value = raw_input('Server: \'%s\' %s' % (key, '\n'.join(options)))
+
+        if not value:
+            value = possible_values[0]
+        if value not in range(0, len(possible_values)):
+            value = possible_values[0]
+
+        value = int(value)
+
+        config['Servers']['1'][key] = value
+
+print(config)
