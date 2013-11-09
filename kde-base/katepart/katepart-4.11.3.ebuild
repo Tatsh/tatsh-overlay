@@ -1,6 +1,6 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/kde-base/katepart/katepart-4.10.5.ebuild,v 1.1 2013/07/02 16:47:39 johu Exp $
+# $Header: /var/cvsroot/gentoo-x86/kde-base/katepart/katepart-4.11.3.ebuild,v 1.1 2013/11/05 22:22:45 dilfridge Exp $
 
 EAPI=5
 
@@ -10,15 +10,18 @@ KMMODULE="part"
 inherit kde4-meta
 
 DESCRIPTION="KDE Editor KPart"
-KEYWORDS=" ~amd64 ~arm ~ppc ~ppc64 ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
+HOMEPAGE+=" http://kate-editor.org/about-katepart/"
+KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
 IUSE="debug"
 
 RESTRICT="test"
 # bug 392993
 
-add_blocker kdelibs 4.6.50
-
 PATCHES=( "${FILESDIR}/${PN}-4.10.0-trailing-behaviour.patch" )
+
+KMEXTRA="
+	addons/ktexteditor
+"
 
 src_configure() {
 	local mycmakeargs=(
