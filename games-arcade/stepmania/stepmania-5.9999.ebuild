@@ -15,7 +15,7 @@ EHG_REPO_URI="https://sm-ssc.googlecode.com/hg/"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug X gtk +jpeg +mad +vorbis +network +ffmpeg bundled-libs"
+IUSE="debug X gtk +jpeg +mad +vorbis +network +ffmpeg bundled-libs beat kb7 ppp piu bundled-songs bundled-courses extra-noteskins"
 
 DEPEND="gtk? ( x11-libs/gtk+:2 )
 	media-libs/alsa-lib
@@ -45,8 +45,21 @@ remove_dev_theme() {
 	rm -rf "${theme_dir}/$1" || die "Failed removing dev theme $1"
 }
 
-src_prepare() {
+remove_noteskin_for_game() {
+	local noteskin_dir
+	noteskin_dir="${S}/NoteSkins"
+	einfo "Removing note skins for game $2 ..."
+	rm -rf "${noteskin_dir}/$1" || die "Failed removing noteskin directory $1"
+}
 
+remove_dance_noteskin() {
+	local noteskin_dir
+	noteskin_dir="${S}/NoteSkins/dance"
+	einfo "Removing dance note skin $1 ..."
+	rm -rf "${noteskin_dir}/$1" || die "Failed removing noteskin directory ${noteskin_dir}/$1"
+}
+
+src_prepare() {
 	# Remove bundled libs, to know if they become forked as lua already is.
 	if ! use bundled-libs; then
 		remove_bundled_lib "ffmpeg"
@@ -65,6 +78,54 @@ src_prepare() {
 	remove_dev_theme "HelloWorld"
 	remove_dev_theme "MouseTest"
 	remove_dev_theme "rsr"
+	remove_dev_theme "home"
+	remove_dev_theme "_Installer"
+	remove_dev_theme "new"
+	remove_dev_theme "_portKit-sm4"
+	remove_dev_theme "test"
+	remove_dev_theme "themekit"
+	remove_dev_theme "_themekit-piu"
+
+	einfo 'Removing useless instructions.txt files ...'
+	find . -type f -iname 'instructions.txt' -exec rm -f {} \;
+
+	einfo 'Removing useless _assets directory ...'
+	rm -fR _assets
+
+	# Noteskins
+	if ! use beat; then
+		remove_noteskin_for_game "beat" "beatmania/beatmaniaIIDX/beatmaniaIII"
+	fi
+	if ! use kb7; then
+		remove_noteskin_for_game "kb7" "Keyboardmania"
+	fi
+	if ! use ppp; then
+		remove_noteskin_for_game "Para" "ParaParaParadise"
+	fi
+	if ! use piu; then
+		remove_noteskin_for_game "pump" "Pump It Up"
+	fi
+	remove_noteskin_for_game "lights" "(n/a)"
+	remove_noteskin_for_game "techno" "(Unknown)"
+	# Dance noteskins, keep everything except default
+	if ! use extra-noteskins; then
+		for dir in "${S}/NoteSkins/dance"/*; do
+			if [[ "$dir" = *default ]]; then
+				continue
+			fi
+			remove_dance_noteskin "$(basename "$dir")"
+		done
+	fi
+
+	# Built-in songs and courses
+	if ! use bundled-courses; then
+		einfo 'Removing bundled courses'
+		rm -rf "${S}/Courses/Default"
+	fi
+	if ! use bundled-songs; then
+		einfo 'Removing bundled songs'
+		rm -rf "${S}/Songs/StepMania 5"
+	fi
 
 	# Apply various patches
 	#	00 - 09: Filepath changes
@@ -106,7 +167,8 @@ src_install() {
 	if use gtk ; then
 		doins src/GtkModule.so || die "doins GtkModule.so failed"
 	fi
-	doins -r Announcers _assets BackgroundEffects BackgroundTransitions \
+	[ ! -d Announcers ] && mkdir Announcers
+	doins -r Announcers BackgroundEffects BackgroundTransitions \
 		BGAnimations Characters Courses Data NoteSkins Songs Themes || die "doins failed"
 	#dodoc -r Docs || die "dodoc failed"
 
