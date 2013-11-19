@@ -8,19 +8,23 @@ SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils
 
-MY_PN="LangUtil"
+MY_PN="WebAppManager"
 MY_P="${MY_PN}-${PV}"
 
-DESCRIPTION="Helpers for generating code."
-HOMEPAGE="http://pypi.python.org/pypi/LangUtil/"
-SRC_URI="https://pypi.python.org/packages/source/L/LangUtil/${MY_P}.tar.gz"
+DESCRIPTION="Management of common web apps (Drupal, WordPress)."
+HOMEPAGE="https://github.com/Appdynamics/python-webappman"
+SRC_URI="https://pypi.python.org/packages/source/W/WebAppManager/${MY_P}.tar.gz"
 
 LICENSE=""
 KEYWORDS="~amd64"
 SLOT="0"
 IUSE=""
 
+S="${WORKDIR}/${MY_P}"
+PYTHON_MODNAME="webappman"
+
 PYTHON_DEPEND="2::2.6"
 RESTRICT_PYTHON_ABIS="3.*"
 
-S="${WORKDIR}/${MY_P}"
+RDEPEND="dev-python/langutil"
+DEPEND="${RDEPEND}"
