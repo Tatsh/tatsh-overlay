@@ -24,3 +24,8 @@ IUSE=""
 S="${WORKDIR}/${MY_P}"
 PYTHON_MODNAME="webappman"
 
+PYTHON_DEPEND="2::2.6"
+RESTRICT_PYTHON_ABIS="3.*"
+
+RDEPEND="dev-python/langutil"
+DEPEND="${RDEPEND}"
