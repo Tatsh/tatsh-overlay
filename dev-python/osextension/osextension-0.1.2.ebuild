@@ -8,12 +8,12 @@ SUPPORT_PYTHON_ABIS="1"
 
 inherit distutils
 
-MY_PN="WebAppManager"
+MY_PN="OSExtension"
 MY_P="${MY_PN}-${PV}"
 
-DESCRIPTION="Management of common web apps (Drupal, WordPress)."
-HOMEPAGE="https://github.com/Appdynamics/python-webappman"
-SRC_URI="https://pypi.python.org/packages/source/W/WebAppManager/${MY_P}.tar.gz"
+DESCRIPTION="Extension for os module, for POSIX systems only"
+HOMEPAGE="http://pypi.python.org/pypi/OSExtension/"
+SRC_URI="https://pypi.python.org/packages/source/O/OSExtension/${MY_P}.tar.gz"
 
 LICENSE=""
 KEYWORDS="~amd64"
@@ -22,10 +22,7 @@ IUSE=""
 
 
 S="${WORKDIR}/${MY_P}"
-PYTHON_MODNAME="webappman"
+PYTHON_MODNAME="osext"
 
 PYTHON_DEPEND="2::2.6"
 RESTRICT_PYTHON_ABIS="3.*"
-
-RDEPEND="dev-python/langutil"
-DEPEND="${RDEPEND}"
