@@ -20,7 +20,6 @@ KEYWORDS="~amd64"
 SLOT="0"
 IUSE=""
 
-
 S="${WORKDIR}/${MY_P}"
 PYTHON_MODNAME="webappman"
 
