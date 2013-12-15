@@ -1,0 +1,23 @@
+#!/sbin/runscript
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+PID_FILE=/var/run/setperms.pid
+
+start() {
+	if [ -f "$PID_FILE" ]; then
+		rm "$PID_FILE"
+	fi
+
+	ebegin 'Starting permission daemon'
+	start-stop-daemon --start --pidfile "$PID_FILE" --exec /usr/bin/setpermsd \
+		-- --pid-file "$PID_FILE"
+	eend $?
+}
+
+stop() {
+	ebegin 'Stopping permission daemon'
+	start-stop-daemon --stop --pidfile "$PID_FILE"
+	eend $?
+}
