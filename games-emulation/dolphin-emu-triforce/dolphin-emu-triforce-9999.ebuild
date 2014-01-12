@@ -11,6 +11,7 @@ inherit cmake-utils eutils flag-o-matic games git-2 wxwidgets
 DESCRIPTION="Free. open source emulator for Nintendo GameCube and Wii"
 HOMEPAGE="http://www.dolphin-emu.com/"
 EGIT_REPO_URI="https://code.google.com/p/dolphin-emu/"
+EGIT_MASTER="Triforce"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
@@ -43,8 +44,8 @@ DEPEND="${RDEPEND}
 	dev-util/cmake
 	virtual/pkgconfig
 	media-gfx/nvidia-cg-toolkit
-	!games-emulation/dolphin
-	!games-emulation/dolphin-emu-triforce"
+	!games-emulation/dolphin-emu
+	!games-emulation/dolphin"
 
 src_configure() {
 	# Configure cmake
