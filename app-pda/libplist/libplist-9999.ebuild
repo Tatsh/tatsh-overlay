@@ -17,10 +17,8 @@ IUSE="python"
 
 RDEPEND="dev-libs/libxml2"
 DEPEND="${RDEPEND}
-	python? (
-		${PYTHON_DEPS}
-		>=dev-python/cython-0.14.1-r1[${PYTHON_USEDEP}]
-		)"
+	${PYTHON_DEPS}
+	>=dev-python/cython-0.14.1-r1[${PYTHON_USEDEP}]"
 
 DOCS=( AUTHORS NEWS README )
 
