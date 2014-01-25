@@ -4,7 +4,7 @@
 
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
-inherit autotools python-r1 git-2
+inherit autotools autotools-utils python-r1 git-2
 
 DESCRIPTION="Support library to deal with Apple Property Lists (Binary & XML)"
 HOMEPAGE="http://www.libimobiledevice.org/"
@@ -24,9 +24,23 @@ DOCS=( AUTHORS NEWS README )
 
 MAKEOPTS+=" -j1" #406365
 
+# Cannot build this out of source yet
+# https://github.com/libimobiledevice/libplist/issues/7
+AUTOTOOLS_IN_SOURCE_BUILD=1
+
 src_prepare() {
-	use python && python_export_best
+	# Solving chicken and egg problem
+	# https://github.com/libimobiledevice/libplist/pull/6
+	sed -i configure.ac -e '93s/CYTHON_PLIST_INCLUDE_DIR=.*/CYTHON_PLIST_INCLUDE_DIR=./' || exit 1
+
 	eautoreconf
+}
+
+src_configure() {
+    use python && python_export_best
+    local myconf
+    use python || myconf+=' --without-cython'
+    autotools-utils_src_configure
 }
 
 src_test() {
@@ -37,3 +51,5 @@ src_test() {
 		LD_LIBRARY_PATH=src ./test/plist_test "${testfile}" || die
 	done
 }
+
+# kate: replace-tabs false;
