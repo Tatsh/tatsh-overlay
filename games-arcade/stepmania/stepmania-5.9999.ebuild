@@ -4,13 +4,13 @@
 
 EAPI="5"
 
-inherit games autotools eutils mercurial
+inherit games autotools eutils git-2
 
 DESCRIPTION="Stepmania 5 sm-ssc branch"
 HOMEPAGE="http://sm-ssc.googlecode.com"
 SRC_URI=""
 
-EHG_REPO_URI="https://sm-ssc.googlecode.com/hg/"
+EGIT_REPO_URI="git://github.com/stepmania/stepmania.git"
 
 LICENSE="MIT"
 SLOT="0"
@@ -28,8 +28,6 @@ DEPEND="gtk? ( x11-libs/gtk+:2 )
 	x11-libs/libXrandr
 	virtual/opengl
 	!bundled-libs? ( dev-libs/libpcre )"
-
-S="${WORKDIR}/hg"
 
 remove_bundled_lib() {
 	local blib_prefix
