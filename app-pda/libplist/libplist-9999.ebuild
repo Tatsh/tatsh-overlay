@@ -3,12 +3,13 @@
 # $Header: /var/cvsroot/gentoo-x86/app-pda/libplist/libplist-1.10.ebuild,v 1.3 2013/11/24 18:48:48 ago Exp $
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python2_7 python3_{2,3} )
 inherit autotools autotools-utils python-r1 git-2
 
 DESCRIPTION="Support library to deal with Apple Property Lists (Binary & XML)"
 HOMEPAGE="http://www.libimobiledevice.org/"
-EGIT_REPO_URI="git://github.com/libimobiledevice/libplist.git"
+EGIT_REPO_URI="git://github.com/Tatsh/libplist.git"
+EGIT_BRANCH="python-3-support"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
@@ -29,10 +30,6 @@ MAKEOPTS+=" -j1" #406365
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
 src_prepare() {
-	# Solving chicken and egg problem
-	# https://github.com/libimobiledevice/libplist/pull/6
-	sed -i configure.ac -e '93s/CYTHON_PLIST_INCLUDE_DIR=.*/CYTHON_PLIST_INCLUDE_DIR=./' || exit 1
-
 	eautoreconf
 }
 
