@@ -11,6 +11,7 @@ DESCRIPTION="Support library to communicate with Apple iPhone/iPod Touch devices
 HOMEPAGE="http://www.libimobiledevice.org/"
 SRC_URI=""
 EGIT_REPO_URI="https://github.com/Tatsh/libimobiledevice.git"
+EGIT_BRANCH="python-3-support"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0/6"
