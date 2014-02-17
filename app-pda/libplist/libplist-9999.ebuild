@@ -9,7 +9,6 @@ inherit autotools autotools-utils python-r1 git-2
 DESCRIPTION="Support library to deal with Apple Property Lists (Binary & XML)"
 HOMEPAGE="http://www.libimobiledevice.org/"
 EGIT_REPO_URI="git://github.com/Tatsh/libplist.git"
-EGIT_BRANCH="python-3-support"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
@@ -29,15 +28,60 @@ MAKEOPTS+=" -j1" #406365
 # https://github.com/libimobiledevice/libplist/issues/7
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
+_setup_dir_for_python_impl() {
+	[ ! -d "$BUILD_DIR" ] && mkdir "$BUILD_DIR"
+	cp -R . "$BUILD_DIR"
+	cd "$BUILD_DIR" && eautoreconf
+}
+
+_configure_for_python_impl() {
+	cd "$BUILD_DIR"
+	ECONF_SOURCE="$BUILD_DIR" autotools-utils_src_configure
+}
+
 src_prepare() {
-	eautoreconf
+	if use python; then
+		python_foreach_impl _setup_dir_for_python_impl
+	else
+		eautoreconf
+	fi
 }
 
 src_configure() {
-    use python && python_export_best
     local myconf
-    use python || myconf+=' --without-cython'
+
+	# Have to do multiple builds if there are more than one Python version given
+	if use python; then
+		python_foreach_impl _configure_for_python_impl
+		return
+	fi
+
+	myconf+=' --without-cython'
+
     autotools-utils_src_configure
+}
+
+src_compile() {
+	if use python; then
+		python_foreach_impl autotools-utils_src_compile
+		return
+	fi
+
+	autotools-utils_src_compile
+}
+
+_install_with_plist_module() {
+	cd "$BUILD_DIR"
+	autotools-utils_src_install
+}
+
+src_install() {
+	if use python; then
+		python_foreach_impl _install_with_plist_module
+		return
+	fi
+
+	autotools-utils_src_install
 }
 
 src_test() {
