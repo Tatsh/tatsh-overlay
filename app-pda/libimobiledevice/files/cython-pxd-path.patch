@@ -1,0 +1,13 @@
+diff --git a/configure.ac b/configure.ac
+index 5711659..d156700 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -97,7 +97,7 @@ else
+ fi
+ if [test "x$CYTHON" != "xfalse"]; then
+             AC_MSG_CHECKING([for libplist Cython bindings])
+-            CYTHON_PLIST_INCLUDE_DIR=$($PKG_CONFIG --variable=includedir libplist)/plist/cython
++            CYTHON_PLIST_INCLUDE_DIR=$($PKG_CONFIG --variable=libdir libplist)/python${PYTHON_VERSION}/site-packages/libplist/includes
+             if [test ! -d "$CYTHON_PLIST_INCLUDE_DIR"]; then
+                 CYTHON=false
+                 CYTHON_SUB=

@@ -5,7 +5,7 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 python3_{2,3} )
 EGIT_MASTER="master"
-inherit autotools eutils git-2 python-r1 multilib
+inherit autotools autotools-utils eutils git-2 python-r1 multilib
 
 DESCRIPTION="Support library to communicate with Apple iPhone/iPod Touch devices"
 HOMEPAGE="http://www.libimobiledevice.org/"
@@ -42,22 +42,65 @@ pkg_setup() {
 	fi
 }
 
+_setup_dir_for_python_impl() {
+	[ ! -d "$BUILD_DIR" ] && mkdir "$BUILD_DIR"
+	cp -R . "$BUILD_DIR"
+	cd "$BUILD_DIR" && eautoreconf
+}
+
+_configure_for_python_impl() {
+	local myconf="$1"
+	cd "$BUILD_DIR"
+	ECONF_SOURCE="$BUILD_DIR" autotools-utils_src_configure
+}
+
 src_prepare() {
-	eautoreconf
+	if use python; then
+		epatch "${FILESDIR}/cython-pxd-path.patch"
+		python_foreach_impl _setup_dir_for_python_impl
+	else
+		eautoreconf
+	fi
 }
 
 src_configure() {
-	use python && python_export_best
-
 	local myconf
-	use gnutls && myconf='--disable-openssl'
-	use python || myconf+=' --without-cython'
 
-	econf --disable-static ${myconf}
+	use gnutls && myconf='--disable-openssl'
+
+	myconf+=' --enable-static=no'
+
+	# Have to do multiple builds if there are more than one Python version given
+	if use python; then
+		python_foreach_impl _configure_for_python_impl "$myconf"
+		return
+	fi
+
+	myconf+=' --without-cython'
+	autotools-utils_src_configure
+}
+
+src_compile() {
+	if use python; then
+		python_foreach_impl autotools-utils_src_compile
+		return
+	fi
+
+	autotools-utils_src_compile
+}
+
+_install_with_module() {
+	cd "$BUILD_DIR"
+	autotools-utils_src_install
+	prune_libtool_files --all
 }
 
 src_install() {
-	default
+	if use python; then
+		python_foreach_impl _install_with_module
+		return
+	fi
 
+	default
 	prune_libtool_files --all
 }
