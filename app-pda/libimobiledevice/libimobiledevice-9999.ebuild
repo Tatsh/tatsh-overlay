@@ -93,6 +93,10 @@ _install_with_module() {
 	cd "$BUILD_DIR"
 	autotools-utils_src_install
 	prune_libtool_files --all
+
+	# pxd file for further dependent packages
+	insinto /usr/$(get_libdir)/$(basename $PYTHON)/site-packages/${PN}/includes
+	doins "${BUILD_DIR}/cython/imobiledevice.pxd"
 }
 
 src_install() {
