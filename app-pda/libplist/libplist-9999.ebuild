@@ -73,15 +73,21 @@ src_compile() {
 _install_with_plist_module() {
 	cd "$BUILD_DIR"
 	autotools-utils_src_install
+
+	# Install pxd file for building libimobiledevice properly
+	insinto /usr/$(get_libdir)/$(basename $PYTHON)/site-packages/${PN}/includes
+	doins "${BUILD_DIR}/cython/plist.pxd"
 }
 
 src_install() {
 	if use python; then
 		python_foreach_impl _install_with_plist_module
+		dosym /usr/bin/plistutil /usr/bin/plutil
 		return
 	fi
 
 	autotools-utils_src_install
+	dosym /usr/bin/plistutil /usr/bin/plutil
 }
 
 src_test() {
