@@ -11,14 +11,12 @@ SRC_URI="https://lastpass.com/lplinux.tar.bz2 https://lastpass.com/lp_linux.xpi 
 LICENSE="EULA"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="firefox +chromium"
+IUSE="+chromium"
 RESTRICT="strip"
 
 DEPEND=""
 RDEPEND="${DEPEND}
 	chromium? ( >=www-client/chromium-32.0.1700.102 )
-	firefox? ( || ( >=www-client/firefox-24.1.1
-		>=www-client/firefox-bin-24.1.1 ) )
 "
 
 S="${WORKDIR}"
@@ -37,16 +35,17 @@ src_install() {
 		doexe "$bin"
 		insinto /etc/chromium/native-messaging-hosts
 		doins com.lastpass.nplastpass.json
-
-		unzip -qq -o "${DISTDIR}/lpchrome_linux.crx" -d .
-		exeinto /usr/lib64/mozilla/plugins
-
-		if use amd64; then
-			doexe libnplastpass64.so
-		else
-			doexe libnplastpass.so
-		fi
 	fi
+
+	unzip -qq -o "${DISTDIR}/lpchrome_linux.crx" -d .
+	exeinto /usr/lib64/mozilla/plugins
+
+	if use amd64; then
+		doexe libnplastpass64.so
+	else
+		doexe libnplastpass.so
+	fi
+
 }
 
 pkg_postinst() {
