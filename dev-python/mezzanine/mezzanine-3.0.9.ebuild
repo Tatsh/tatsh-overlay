@@ -18,7 +18,8 @@ IUSE="twitter"
 
 DEPEND=""
 RDEPEND="${DEPEND}
-	>=dev-python/future-0.11.3
+	=dev-python/future-0.9.0
+	=dev-python/tzlocal-1.0
 	>=dev-python/bleach-1.4
 	>=dev-python/filebrowser-safe-0.3.2
 	>=dev-python/grappelli-safe-0.3.6
