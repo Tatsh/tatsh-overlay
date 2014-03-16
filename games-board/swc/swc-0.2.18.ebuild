@@ -31,10 +31,10 @@ src_install() {
 	insinto /usr/games/share/swc
 	doins -r sounds
 
-	dodir /var/log/swc/handhistories
-	dodir /var/log/swc/lobbychat
-	dosym /var/log/swc/handhistories /usr/games/share/swc/handhistories
-	dosym /var/log/swc/lobbychat /usr/games/share/swc/lobbychat
+	keepdir /var/lib/swc/handhistories
+	keepdir /var/lib/swc/lobbychat
+	dosym /var/lib/swc/handhistories /usr/games/share/swc/handhistories
+	dosym /var/lib/swc/lobbychat /usr/games/share/swc/lobbychat
 
 	exeinto /usr/games/share/swc
 	if use amd64; then
@@ -47,10 +47,10 @@ src_install() {
 	doexe "${FILESDIR}/swc"
 
 	fowners root:games /usr/games/bin/swc
-	fowners -R root:games /usr/games/share/swc /var/log/swc
+	fowners -R root:games /usr/games/share/swc /var/lib/swc
 	fperms 0750 /usr/games/bin/swc
-	fperms 0770 /var/log/swc/handhistories
-	fperms 0770 /var/log/swc/lobbychat
+	fperms 0770 /var/lib/swc/handhistories
+	fperms 0770 /var/lib/swc/lobbychat
 }
 
 pkg_postinst() {
