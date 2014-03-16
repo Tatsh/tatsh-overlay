@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cd /usr/games/share/swc
+exe=$(find . -maxdepth 1 -name 'swc_client*' -perm 0755 | head -n 1)
+"$exe"
