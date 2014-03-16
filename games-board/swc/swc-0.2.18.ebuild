@@ -51,6 +51,9 @@ src_install() {
 	fperms 0750 /usr/games/bin/swc
 	fperms 0770 /var/lib/swc/handhistories
 	fperms 0770 /var/lib/swc/lobbychat
+
+	newicon -s 16 "${FILESDIR}/swc-16.png" swc.png
+	make_desktop_entry swc 'Seals with Clubs'
 }
 
 pkg_postinst() {
