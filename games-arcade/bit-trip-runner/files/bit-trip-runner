@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd /opt/bit.trip.runner
+./bit.trip.runner
