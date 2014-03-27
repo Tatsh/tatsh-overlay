@@ -14,7 +14,7 @@ DESCRIPTION="Helpers for downloading files."
 HOMEPAGE="http://pypi.python.org/pypi/HttpExt/"
 SRC_URI="https://pypi.python.org/packages/source/H/${MY_P}/${MY_P}-${PV}.tar.gz"
 
-LICENSE=""
+LICENSE="MIT"
 KEYWORDS="~amd64"
 SLOT="0"
 IUSE=""
