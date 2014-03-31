@@ -8,7 +8,7 @@ inherit autotools autotools-utils python-r1 git-2
 
 DESCRIPTION="Support library to deal with Apple Property Lists (Binary & XML)"
 HOMEPAGE="http://www.libimobiledevice.org/"
-EGIT_REPO_URI="git://github.com/Tatsh/libplist.git"
+EGIT_REPO_URI="git://github.com/libimobiledevice/${PN}.git"
 
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
