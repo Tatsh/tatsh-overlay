@@ -3,7 +3,7 @@ This is stuff I make randomly. There is no real (free) support whatsoever, but i
 # To install with layman
 
 ```bash
-layman -o http://tatsh.github.com/tatsh-overlay/layman.xml -fa tatsh-overlay
+layman -o https://raw.githubusercontent.com/Tatsh/tatsh-overlay/master/layman.xml -fa tatsh-overlay
 ```
 
 # `media-video/gpac` and `dev-libs/libfreenect`
