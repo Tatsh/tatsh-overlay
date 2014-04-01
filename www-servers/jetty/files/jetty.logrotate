@@ -1,5 +1,0 @@
-/var/log/jetty/*.log {
-  weekly
-  maxage 14
-  missing ok
-}
