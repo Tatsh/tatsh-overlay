@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
-RDEPEND=">=app-pda/libimobiledevice-1.1.4:=
+RDEPEND=">=app-pda/libimobiledevice-1.1.4
 	>app-pda/libplist-1.10
 	>=dev-libs/libzip-0.8"
 DEPEND="${RDEPEND}
