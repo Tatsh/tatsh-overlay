@@ -101,9 +101,10 @@ _install_with_module() {
 src_install() {
 	if use python; then
 		python_foreach_impl _install_with_module
+		pwd -P
 		return
 	fi
 
-	default
+	autotools-utils_src_install
 	prune_libtool_files --all
 }
