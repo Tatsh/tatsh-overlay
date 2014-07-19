@@ -17,7 +17,8 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-RDEPEND=">=dev-python/osextension-0.1.2"
+RDEPEND=">=dev-python/osextension-0.1.2
+	>=dev-python/sh-1.09"
 DEPEND="${DEPEND}"
 
 # TODO Install for each Python implementation
@@ -25,3 +26,5 @@ src_install () {
 	exeinto /usr/bin
 	doexe "${PN}"
 }
+
+# kate: replace-tabs false
