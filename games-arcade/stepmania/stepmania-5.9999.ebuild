@@ -17,19 +17,17 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug +X +gtk +jpeg +mad +vorbis +network ffmpeg bundled-libs beat kb7 ppp piu bundled-songs bundled-courses extra-noteskins"
 
-# For now, only --without-ffmpeg and --with-system-ffmpeg work, so ffmpeg must be installed regardless
 DEPEND="gtk? ( x11-libs/gtk+:2 )
 	media-libs/alsa-lib
 	mad? ( media-libs/libmad )
 	vorbis? ( media-libs/libvorbis )
 	media-libs/libpng
 	jpeg? ( virtual/jpeg )
+	ffmpeg? ( >=virtual/ffmpeg-9-r1 )
 	media-libs/glew
 	x11-libs/libXrandr
 	virtual/opengl
-	!bundled-libs? ( dev-libs/libpcre )
-	>=virtual/ffmpeg-9-r1" # FIXME
-#ffmpeg? ( >=virtual/ffmpeg-9-r1 )
+	!bundled-libs? ( dev-libs/libpcre )"
 
 remove_bundled_lib() {
 	local blib_prefix
@@ -60,11 +58,24 @@ remove_dance_noteskin() {
 }
 
 src_prepare() {
-	# TODO This cannot be removed later when bundled-libs is fully supported again
-	remove_bundled_lib "ffmpeg"
+	if use ffmpeg; then
+		ewarn
+		ewarn "You have enabled the ffmpeg USE flag which uses system"
+		ewarn "ffmpeg rather than bundled, an unsupported configuration that"
+		ewarn "is prone to crashing randomly that upstream does not support."
+		ewarn "Please do not file bugs to me (@Tatsh) or to StepMania upstream"
+		ewarn "regarding songs with videos unless you can confirm that the"
+		ewarn "song crashes for other reasons"
+		ewarn
+	fi
+
+	if use bundled-libs && use ffmpeg; then
+		die "Cannot use USE flags bundled-libs and ffmpeg together. Disable one or both"
+	fi
 
 	# Remove bundled libs, to know if they become forked as lua already is.
 	if ! use bundled-libs; then
+		remove_bundled_lib "ffmpeg"
 		remove_bundled_lib "libjpeg"
 		remove_bundled_lib "libpng"
 		#remove_bundled_lib "libtomcrypt"
@@ -73,6 +84,10 @@ src_prepare() {
 		remove_bundled_lib "pcre"
 		remove_bundled_lib "vorbis"
 		remove_bundled_lib "zlib"
+	else
+		einfo
+		einfo 'If this build fails, try with USE="-bundled-libs"'
+		einfo
 	fi
 
 	# Remove dev themes
@@ -142,11 +157,7 @@ src_prepare() {
 }
 
 src_configure() {
-	# FIXME system-ffmpeg has to be added because there are some missing
-	#       files in the repository, even when --without-ffmpeg is used:
-	# make[2]: Entering directory `/var/tmp/portage/games-arcade/stepmania-5.9999/work/stepmania-5.9999/bundle/ffmpeg'
-	# Makefile:2: config.mak: No such file or directory
-	myconf="--with-system-ffmpeg"
+	myconf=""
 
 	if ! use bundled-libs; then
 		einfo "Disabling bundled libraries.."
@@ -164,8 +175,7 @@ src_configure() {
 		$(use_with mad mp3) \
 		$(use_with vorbis) \
 		$(use_with network) \
-		$(use_with ffmpeg) \
-		${myconf}
+		$(use_with ffmpeg system-ffmpeg)
 }
 
 src_install() {
@@ -187,20 +197,6 @@ src_install() {
 
 	# Ensure that game can write to Data folder
 	fperms -R 775 "${GAMES_DATADIR}"/${PN}/Data
-}
-
-pkg_postinst() {
-	if use ffmpeg; then
-		ewarn
-		ewarn "You have enabled the ffmpeg USE flag which only uses system"
-		ewarn "ffmpeg rather than bundled, an unsupported configuration that"
-		ewarn "is prone to crashing randomly. Please do not file bugs to me"
-		ewarn "(@Tatsh) or to StepMania upstream regarding songs with videos"
-		ewarn "unless you can confirm that the song crashes for other reasons"
-		ewarn "than the video contained with it (build with USE='-ffmpeg',"
-		ewarn "which is the default)."
-		ewarn
-	fi
 }
 
 # kate: replace-tabs false
