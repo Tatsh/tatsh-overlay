@@ -18,7 +18,8 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 RDEPEND=">=dev-python/osextension-0.1.2
-	>=dev-python/sh-1.09"
+	>=dev-python/sh-1.09
+	>=app-pda/libimobiledevice-1.1.6"
 DEPEND="${DEPEND}"
 
 # TODO Install for each Python implementation
