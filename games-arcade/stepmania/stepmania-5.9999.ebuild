@@ -175,7 +175,8 @@ src_configure() {
 		$(use_with mad mp3) \
 		$(use_with vorbis) \
 		$(use_with network) \
-		$(use_with ffmpeg system-ffmpeg)
+		$(use_with ffmpeg system-ffmpeg) \
+		${myconf}
 }
 
 src_install() {
