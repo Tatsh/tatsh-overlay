@@ -15,7 +15,7 @@ EGIT_REPO_URI="git://github.com/stepmania/stepmania.git"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug +X +gtk +jpeg +mad +vorbis +network ffmpeg bundled-libs beat kb7 ppp piu bundled-songs bundled-courses extra-noteskins"
+IUSE="debug +X +gtk +jpeg +mad +vorbis +network +ffmpeg bundled-libs beat kb7 ppp piu bundled-songs bundled-courses extra-noteskins"
 
 DEPEND="gtk? ( x11-libs/gtk+:2 )
 	media-libs/alsa-lib
@@ -58,24 +58,9 @@ remove_dance_noteskin() {
 }
 
 src_prepare() {
-	if use ffmpeg; then
-		ewarn
-		ewarn "You have enabled the ffmpeg USE flag which uses system"
-		ewarn "ffmpeg rather than bundled, an unsupported configuration that"
-		ewarn "is prone to crashing randomly that upstream does not support."
-		ewarn "Please do not file bugs to me (@Tatsh) or to StepMania upstream"
-		ewarn "regarding songs with videos unless you can confirm that the"
-		ewarn "song crashes for other reasons"
-		ewarn
-	fi
-
-	if use bundled-libs && use ffmpeg; then
-		die "Cannot use USE flags bundled-libs and ffmpeg together. Disable one or both"
-	fi
-
 	# Remove bundled libs, to know if they become forked as lua already is.
 	if ! use bundled-libs; then
-		remove_bundled_lib "ffmpeg"
+		#remove_bundled_lib "ffmpeg"
 		remove_bundled_lib "libjpeg"
 		remove_bundled_lib "libpng"
 		#remove_bundled_lib "libtomcrypt"
@@ -175,7 +160,7 @@ src_configure() {
 		$(use_with mad mp3) \
 		$(use_with vorbis) \
 		$(use_with network) \
-		$(use_with ffmpeg system-ffmpeg) \
+		$(use_with ffmpeg) \
 		${myconf}
 }
 
@@ -193,6 +178,18 @@ src_install() {
 
 	newicon "Themes/default/Graphics/Common window icon.png" ${PN}.png
 	make_desktop_entry ${PN} Stepmania
+
+	# This is possible because the RPATH in stepmania has '.'
+	if use ffmpeg ; then
+		einfo 'Adding the bundled ffmpeg shared object files'
+		insinto "${GAMES_DATADIR}"/${PN}
+		for i in bundle/ffmpeg/libavutil/libavutil.so* \
+				 bundle/ffmpeg/libswscale/libswscale.so* \
+				 bundle/ffmpeg/libavcodec/libavcodec.so* \
+				 bundle/ffmpeg/libavformat/libavformat.so*; do
+			doins "$i"
+		done
+	fi
 
 	prepgamesdirs
 
