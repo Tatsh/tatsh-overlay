@@ -153,6 +153,7 @@ src_configure() {
 		--disable-dependency-tracking \
 		--enable-lua-binaries \
 		--with-extdatadir \
+		--with-ffmpeg-rpath="${GAMES_DATADIR}"/${PN} \
 		$(use_enable gtk gtk2) \
 		$(use_with debug) \
 		$(use_with X x) \
