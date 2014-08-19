@@ -19,5 +19,6 @@ DEPEND=">=dev-lang/vala-0.18.1
 	>=dev-util/cmake-2.8.7
 	>=dev-libs/json-glib-0.14
 	>=x11-libs/gtk+-3.4
-	>=dev-db/sqlite-3.7"
+	>=dev-db/sqlite-3.7
+	net-im/toxcore"
 RDEPEND="${DEPEND}"

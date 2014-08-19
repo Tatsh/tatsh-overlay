@@ -6,8 +6,8 @@ EAPI=5
 
 inherit autotools git-r3
 
-DESCRIPTION=""
-HOMEPAGE=""
+DESCRIPTION="Privacy-oriented on-line communication library"
+HOMEPAGE="https://tox.im/"
 EGIT_REPO_URI="git://github.com/irungentoo/ProjectTox-Core.git"
 
 LICENSE="GPL-3"
