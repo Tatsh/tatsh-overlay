@@ -13,10 +13,9 @@ EGIT_REPO_URI="git://github.com/jgm/stmd"
 LICENSE="BSD-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc"
+IUSE=""
 
-DEPEND=">=dev-util/re2c-0.13.5-r1
-	doc? ( app-text/pandoc )"
+DEPEND=">=dev-util/re2c-0.13.5-r1"
 RDEPEND="${DEPEND}"
 
 src_compile() {
