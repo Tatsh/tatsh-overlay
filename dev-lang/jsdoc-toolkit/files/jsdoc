@@ -1,4 +1,0 @@
-#!/bin/sh
-
-DIRNAME="/usr/share/jsdoc-toolkit"
-PWD=/usr/share/jsdoc-toolkit java -jar "$DIRNAME/jsrun.jar" "$DIRNAME/app/run.js" $@
