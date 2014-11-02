@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index 8ebefce..a47e32c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -69,7 +69,7 @@ $(SRCDIR)/html/html_unescape.h: $(SRCDIR)/html/html_unescape.gperf
+ 	gperf -I -t -N find_entity -H hash_entity -K entity -C -l --null-strings -m5 $< > $@
+
+ libcmark.so: $(HTML_OBJ) $(CMARK_OBJ)
+-	$(CC) $(LDFLAGS) -shared -o $@ $^
++	$(CC) $(LDFLAGS) -fPIC -shared -o $@ $^
+
+ install: libcmark.so $(cmark_HDR) $(HTML_HDR)
+ 	install -d $(PREFIX)/lib $(PREFIX)/include/cmark/html
