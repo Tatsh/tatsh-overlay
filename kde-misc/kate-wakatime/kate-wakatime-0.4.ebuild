@@ -14,6 +14,7 @@ SLOT="4"
 KEYWORDS="~x86 ~amd64"
 IUSE="debug"
 
+DEPEND=">=dev-libs/qjson-0.8.1"
 RDEPEND="
         $(add_kdebase_dep kate)
 "
