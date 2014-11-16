@@ -7,7 +7,7 @@ inherit kde4-base
 
 DESCRIPTION="Time tracking with WakaTime for Kate."
 HOMEPAGE="https://github.com/tatsh/kate-wakatime"
-SRC_URI="https://github.com/Tatsh/kate-wakatime/archive/v0.4.tar.gz -> ${PN}-v${PV}.tar.gz"
+SRC_URI="https://github.com/Tatsh/kate-wakatime/archive/v${PV}.tar.gz -> ${PN}-v${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="4"
