@@ -4,13 +4,11 @@
 
 EAPI="5"
 
-inherit games autotools eutils git-2
+inherit games autotools eutils
 
-DESCRIPTION="Stepmania 5 sm-ssc branch"
-HOMEPAGE="http://sm-ssc.googlecode.com"
-SRC_URI=""
-
-EGIT_REPO_URI="git://github.com/stepmania/stepmania.git"
+DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
+HOMEPAGE="http://www.stepmania.com/"
+SRC_URI="https://github.com/stepmania/stepmania/archive/SM5-beta4a.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -28,6 +26,8 @@ DEPEND="gtk? ( x11-libs/gtk+:2 )
 	x11-libs/libXrandr
 	virtual/opengl
 	!bundled-libs? ( dev-libs/libpcre )"
+
+S="${WORKDIR}/${PN}-SM5-beta4a"
 
 remove_bundled_lib() {
 	local blib_prefix
