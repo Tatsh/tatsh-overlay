@@ -7,8 +7,8 @@ inherit rpm
 
 DESCRIPTION="Binary distribution of Vagrant."
 HOMEPAGE="https://www.vagrantup.com/"
-SRC_URI="amd64? ( https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.1_x86_64.rpm )
-x86? ( https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.1_i686.rpm )"
+SRC_URI="amd64? ( https://dl.bintray.com/mitchellh/vagrant/vagrant_${PV}_x86_64.rpm )
+x86? ( https://dl.bintray.com/mitchellh/vagrant/vagrant_${PV}_i686.rpm )"
 RESTRICT="mirror strip"
 
 LICENSE="MIT"
