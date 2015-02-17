@@ -45,7 +45,7 @@ src_install() {
 	default
 
 	if ! use udev; then
-		rm "${ED}"/$(udev_get_udevdir)/rules.d/39-usbmuxd.rules
-		rmdir -p "${ED}"/$(udev_get_udevdir)/rules.d
+		rm "${ED}"/$(get_udevdir)/rules.d/39-usbmuxd.rules
+		rmdir -p "${ED}"/$(get_udevdir)/rules.d
 	fi
 }
