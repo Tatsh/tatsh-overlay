@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/app-pda/libplist/libplist-1.10.ebuild,v 1.3 2013/11/24 18:48:48 ago Exp $
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 python3_{2,3} )
+PYTHON_COMPAT=( python2_7 python3_{3,4} )
 inherit autotools autotools-utils python-r1 git-2
 
 DESCRIPTION="Support library to deal with Apple Property Lists (Binary & XML)"
