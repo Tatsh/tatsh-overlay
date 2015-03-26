@@ -9,7 +9,7 @@ inherit distutils-r1
 
 MY_P="${PN}-${PV}"
 
-DESCRIPTION="Extension for os module, for POSIX systems only"
+DESCRIPTION="Syncs all GitHub fork default branches against upstream"
 HOMEPAGE="http://pypi.python.org/pypi/sync-github-forks/"
 SRC_URI="https://pypi.python.org/packages/source/s/${PN}/${MY_P}.tar.gz"
 
