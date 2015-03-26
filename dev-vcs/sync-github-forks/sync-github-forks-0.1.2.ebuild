@@ -7,18 +7,14 @@ PYTHON_COMPAT=( python2_7 python3_{3,4} )
 
 inherit distutils-r1
 
-MY_P="${PN}-${PV}"
-
 DESCRIPTION="Syncs all GitHub fork default branches against upstream"
 HOMEPAGE="http://pypi.python.org/pypi/sync-github-forks/"
-SRC_URI="https://pypi.python.org/packages/source/s/${PN}/${MY_P}.tar.gz"
+SRC_URI="https://pypi.python.org/packages/source/s/${PN}/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
-
-S="${WORKDIR}/${MY_P}"
 
 DEPEND=""
 RDEPEND="${DEPEND}
