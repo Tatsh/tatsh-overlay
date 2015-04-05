@@ -9,7 +9,7 @@ inherit distutils-r1
 
 DESCRIPTION="Tools for Xirvik servers."
 HOMEPAGE="https://github.com/Tatsh/xirvik-tools"
-SRC_URI="https://github.com/Tatsh/xirvik-tools/archive/v0.0.1.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/Tatsh/xirvik-tools/archive/v0.0.2.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPLv3"
 SLOT="0"
