@@ -15,9 +15,9 @@ EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0/6"
 KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86"
-IUSE="gnutls python"
+IUSE="gnutls"
 
-RDEPEND=">=app-pda/libplist-1.10[python?,${PYTHON_USEDEP}]
+RDEPEND=">=app-pda/libplist-1.10[${PYTHON_USEDEP}]
 	>=app-pda/libusbmuxd-1.0.9
 	gnutls? (
 		dev-libs/libgcrypt
@@ -27,10 +27,8 @@ RDEPEND=">=app-pda/libplist-1.10[python?,${PYTHON_USEDEP}]
 	!gnutls? ( dev-libs/openssl:0 )"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
-	python? (
-		${PYTHON_DEPS}
-		>=dev-python/cython-0.17[${PYTHON_USEDEP}]
-	)"
+	${PYTHON_DEPS}
+	>=dev-python/cython-0.17[${PYTHON_USEDEP}]"
 
 DOCS=( AUTHORS NEWS README )
 
@@ -54,12 +52,9 @@ _configure_for_python_impl() {
 }
 
 src_prepare() {
-	if use python; then
-		epatch "${FILESDIR}/cython-pxd-path.patch"
-		python_foreach_impl _setup_dir_for_python_impl
-	else
-		eautoreconf
-	fi
+	epatch "${FILESDIR}/cython-pxd-path.patch"
+	python_foreach_impl _setup_dir_for_python_impl
+	eautoreconf
 }
 
 src_configure() {
@@ -70,28 +65,18 @@ src_configure() {
 	myconf+=' --enable-static=no'
 
 	# Have to do multiple builds if there are more than one Python version given
-	if use python; then
-		python_foreach_impl _configure_for_python_impl "$myconf"
-		return
-	fi
-
-	myconf+=' --without-cython'
-	autotools-utils_src_configure
+	python_foreach_impl _configure_for_python_impl "$myconf"
 }
 
 src_compile() {
-	if use python; then
-		python_foreach_impl autotools-utils_src_compile
-		return
-	fi
-
-	autotools-utils_src_compile
+	python_foreach_impl autotools-utils_src_compile
 }
 
 _install_with_module() {
 	cd "$BUILD_DIR"
 	autotools-utils_src_install
 	prune_libtool_files --all
+ls -la
 
 	# pxd file for further dependent packages
 	insinto /usr/$(get_libdir)/$(basename $PYTHON)/site-packages/${PN}/includes
@@ -99,11 +84,7 @@ _install_with_module() {
 }
 
 src_install() {
-	if use python; then
-		python_foreach_impl _install_with_module
-		pwd -P
-		return
-	fi
+	python_foreach_impl _install_with_module
 
 	autotools-utils_src_install
 	prune_libtool_files --all
