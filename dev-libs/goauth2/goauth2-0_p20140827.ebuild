@@ -7,7 +7,7 @@ EAPI=5
 DESCRIPTION="Go OAuth 2.0"
 HOMEPAGE="https://code.google.com/p/goauth2/"
 EHG_COMMIT="afe77d958c701557ec5dc56f6936fcc194d15520"
-SRC_URI="http://files.tatsh.net/goauth2-0_p20140827.tar.gz"
+SRC_URI="http://files.tatsh.net/${P}.tar.gz"
 GO_PN=code.google.com/p/${PN}
 RESTRICT="strip"
 
