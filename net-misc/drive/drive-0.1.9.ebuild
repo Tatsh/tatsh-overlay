@@ -17,7 +17,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND="dev-libs/goauth2
+DEPEND=">=dev-lang/go-1.4.2
+dev-libs/goauth2
 dev-libs/pb
 dev-libs/go-isatty
 dev-libs/go-cli-spinner

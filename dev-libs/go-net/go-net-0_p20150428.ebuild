@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND=""
+DEPEND=">=dev-lang/go-1.4.2"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}
