@@ -11,7 +11,7 @@ DESCRIPTION="Library to interact with Git repositories."
 HOMEPAGE="https://gitpython.readthedocs.org/en/stable/"
 SRC_URI="https://pypi.python.org/packages/source/G/${PN}/${P}.tar.gz"
 
-LICENSE=""
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
