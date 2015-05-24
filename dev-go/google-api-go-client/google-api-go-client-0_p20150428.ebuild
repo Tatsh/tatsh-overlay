@@ -19,7 +19,7 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=">=dev-lang/go-1.4.2
-dev-libs/go-net"
+dev-go/go-net"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}

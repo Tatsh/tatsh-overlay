@@ -18,15 +18,15 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=">=dev-lang/go-1.4.2
-dev-libs/goauth2
-dev-libs/pb
-dev-libs/go-isatty
-dev-libs/go-cli-spinner
-dev-libs/statos
-dev-libs/pkger
-dev-libs/odeke-log
-dev-libs/google-api-go-client
-dev-libs/go-command"
+dev-go/goauth2
+dev-go/pb
+dev-go/go-isatty
+dev-go/go-cli-spinner
+dev-go/statos
+dev-go/pkger
+dev-go/odeke-log
+dev-go/google-api-go-client
+dev-go/go-command"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}
