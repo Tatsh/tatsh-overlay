@@ -15,9 +15,11 @@ EGIT_BRANCH="udev"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="X"
+IUSE=""
 
-DEPEND=">=dev-libs/hidapi-0.8.0_pre20130121"
+DEPEND=">=dev-libs/hidapi-0.8.0_pre20130121
+dev-qt/qtcore:4
+dev-qt/qtgui:4"
 RDEPEND="${DEPEND}"
 
 src_compile () {
@@ -26,10 +28,7 @@ src_compile () {
 }
 
 src_install () {
-	dobin OpenCorsairLinkCli
-	if use X; then
-		dobin OpenCorsairLinkGui
-	fi
+	dobin OpenCorsairLink{Cli,Gui}
 
 	udev_dorules udev/99-corsair-link.rules
 	udev_reload
