@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-inherit kde4-base
+inherit kde4-functions
 
 DESCRIPTION="Time tracking with WakaTime for Kate."
 HOMEPAGE="https://github.com/tatsh/kate-wakatime"
@@ -12,9 +12,9 @@ SRC_URI="https://github.com/Tatsh/kate-wakatime/archive/v${PV}.tar.gz -> ${PN}-v
 LICENSE="GPL-3"
 SLOT="4"
 KEYWORDS="~x86 ~amd64"
-IUSE="debug"
+IUSE="aqua debug"
 
 DEPEND=">=dev-libs/qjson-0.8.1"
 RDEPEND="
-        $(add_kdebase_dep kate)
+        $(add_kdebase_dep katepart)
 "
