@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
-inherit git-2
+inherit git-2 kde4-base
 
 DESCRIPTION="Desktop entry file to easily mount disc images."
 HOMEPAGE="https://github.com/Tatsh/kfuseiso"
@@ -16,10 +16,22 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 # TODO Find correct list of dependencies
-DEPEND="kde-base/dolphin
-kde-base/kdialog
+DEPEND="$(add_kdeapps_dep dolphin)
+$(add_kdeapps_dep kdialog)
 sys-fs/fuseiso"
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+	einfo 'Skipping CMake ...'
+}
+
+src_configure() {
+	einfo 'Skipping CMake ...'
+}
+
+src_compile() {
+	einfo 'Skipping CMake ...'
+}
 
 src_install() {
 	insinto /usr/share/kde4/services/ServiceMenus
