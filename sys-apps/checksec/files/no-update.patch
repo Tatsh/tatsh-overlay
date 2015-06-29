@@ -1,0 +1,52 @@
+diff --git a/checksec b/checksec
+index 4810fa5..992fa1f 100755
+--- a/checksec
++++ b/checksec
+@@ -122,7 +122,6 @@ help() {
+   echo "  --fortify-proc <process ID>"
+   echo "  --version"
+   echo "  --help"
+-  echo "  --update"
+   echo
+   echo "For more information, see:"
+   echo "  http://github.com/slimm609/checksec.sh"
+@@ -865,39 +864,6 @@ do
+     help
+     exit 0
+     ;;
+-  --update)
+-	umask 027
+-	TMP_FILE=$(mktemp /tmp/checksec.XXXXXXXXXX)
+-	SIG_FILE=$(mktemp /tmp/checksec_sig.XXXXXXXX)
+-	PUBKEY_FILE=$(mktemp /tmp/checksec_pubkey.XXXXXXXXXX)
+-    fetch "${SCRIPT_URL}" "${TMP_FILE}"
+-    fetch "${SIG_URL}" "${SIG_FILE}"
+-	echo ${PUBKEY} | base64 -d > ${PUBKEY_FILE}
+-	if ! $(openssl dgst -sha256 -verify ${PUBKEY_FILE} -signature ${SIG_FILE} ${TMP_FILE} >/dev/null 2>&1); then
+-		echo "file signature does not match. Update may be tampered"
+-		rm -f ${TMP_FILE} ${SIG_FILE} ${PUBKEY_FILE} >/dev/null 2>&1
+-		exit 1
+-	fi
+-	UPDATE_VERSION=$(grep "^SCRIPT_VERSION" ${TMP_FILE} | awk -F"=" '{ print $2 }')
+-    if [ ${SCRIPT_VERSION} != ${UPDATE_VERSION} ]; then
+-		PERMS=$(stat -c "%a" $0)
+-		rm -f ${SIG_FILE} ${PUBKEY_FILE} >/dev/null 2>&1
+-		mv ${TMP_FILE} $0 >/dev/null 2>&1
+-		if [ $? == 0 ]; then
+-			echo "checksec.sh updated - Rev. $UPDATE_VERSION"
+-			chmod $PERMS $0
+-		else
+-			echo "Error: Could not update... Please check permissions"
+-			rm -f $TMP_FILE >/dev/null 2>&1
+-			exit 1
+-		fi
+-	else
+-		echo "checksec.sh not updated... Already on latest version"
+-		rm -f ${TMP_FILE} ${SIG_FILE} ${PUBKEY_FILE} >/dev/null 2>&1
+-		exit 1
+-    fi
+-    exit 0
+-    ;;
+   --format)
+     list="cli csv xml json"
+     if [ -n "$2" ]; then
