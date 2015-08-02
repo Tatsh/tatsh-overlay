@@ -4,12 +4,12 @@
 
 EAPI=5
 
-inherit git-2
+inherit git-r3
 
 DESCRIPTION="A Git extension to make it easy to use GitFlow with GitHub."
 HOMEPAGE="https://github.com/datasift/gitflow"
 EGIT_REPO_URI="git://github.com/datasift/gitflow.git"
-EGIT_HAS_SUBMODULES="x"
+EGIT_BRANCH="release/1.6.0"
 
 LICENSE="BSD MIT"
 SLOT="0"
