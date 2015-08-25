@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=5
-inherit kde4-base kde4-functions
+inherit kde4-base
 
 DESCRIPTION="Time tracking with WakaTime for Kate."
 HOMEPAGE="https://github.com/tatsh/kate-wakatime"
