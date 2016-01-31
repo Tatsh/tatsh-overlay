@@ -18,7 +18,7 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}
->=dev-lang/php-5.2.3"
+net-misc/openssh"
 
 src_install() {
 	dobin smv
