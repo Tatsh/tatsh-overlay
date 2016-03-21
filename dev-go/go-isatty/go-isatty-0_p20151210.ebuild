@@ -30,7 +30,7 @@ src_prepare() {
 	rm -f "${prefix}/doc.go" "${prefix}/.gitignore" \
 		"${prefix}/.travis.yml"
 	if ! use example; then
-		rm -f "${prefix}/_example"
+		rm -fR "${prefix}/_example"
 	fi
 	if ! use appengine; then
 		rm -f "${prefix}/isatty_appengine.go"
@@ -42,6 +42,7 @@ src_prepare() {
 	fi
 	! [[ ${CHOST} == *-solaris* ]] && rm -f "${prefix}/isatty_solaris.go"
 	! [[ ${CHOST} == *-winnt* ]] && rm -f "${prefix}/isatty_windows.go"
+	! [[ ${CHOST} == *-linux* ]] && rm -f "${prefix}/isatty_linux.go"
 
 	default
 }
