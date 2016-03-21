@@ -9,6 +9,7 @@ popd
 
 for i in app-portage/gcruft/*.ebuild; do
     patch -p1 "$i" update-gcruft-config-protect.patch
+    ebuild "$i" manifest
 done
 
 git add app-portage/gcruft
