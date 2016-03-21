@@ -2,47 +2,49 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
-DESCRIPTION="Progress trackable reader and writer utility for Go"
+EGO_SRC=github.com/odeke-em/statos
+EGO_PN=${EGO_SRC}/...
+
+if [[ ${PV} = *9999* ]]; then
+	inherit golang-vcs
+else
+	KEYWORDS="~amd64 ~arm64"
+	EGIT_COMMIT="f27d6ab69b62abd9d9fe80d355e23a3e45d347d6"
+	SRC_URI="https://${EGO_SRC}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
+	inherit golang-vcs-snapshot
+fi
+inherit golang-build
+
+DESCRIPTION="Progress trackable reader and writer utility"
 HOMEPAGE="https://github.com/odeke-em/statos"
-EGIT_COMMIT="f27d6ab69b62abd9d9fe80d355e23a3e45d347d6"
-GO_PN=github.com/odeke-em/${PN}
-SRC_URI="https://${GO_PN}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
-RESTRICT="strip"
-
 LICENSE="MIT"
-SLOT="0"
-KEYWORDS="~amd64"
+SLOT="0/${PV}"
 IUSE=""
-
 DEPEND=""
-RDEPEND="${DEPEND}"
+RDEPEND=""
 
-S=${WORKDIR}
-
-src_unpack() {
-	default_src_unpack
-	mkdir -p src/${GO_PN%/*} || die
-	mv ${PN}-${EGIT_COMMIT} src/${GO_PN} || die
-}
-
-src_compile() {
-	# Create a filtered GOROOT tree out of symlinks,
-	# excluding this package, for bug #503324.
-	cp -sR /usr/lib/go goroot || die
-	rm -rf goroot/src/${GO_PN} || die
-	rm -rf goroot/pkg/linux_${ARCH}/${GO_PN} || die
-	GOROOT=${WORKDIR}/goroot GOPATH=${WORKDIR} \
-		go install -x ${GO_PN} || die
+src_prepare() {
+	local prefix="${WORKDIR}/${P}/src/${EGO_SRC}"
+	rm -f "${prefix}/.gitignore"
+	default
 }
 
 src_install() {
-	insinto /usr/lib/go
-	doins -r pkg
-	insinto /usr/lib/go/src
-	find src/${GO_PN} '(' -name '.git*' -o -name '.travis.yml' ')' -delete
-	dodoc src/${GO_PN}/LICENSE
-	rm src/${GO_PN}/LICENSE
-	doins -r src/*
+	local prefix="${WORKDIR}/${P}/src/${EGO_SRC}"
+	dodoc "${prefix}/LICENSE"
+	rm "${prefix}/LICENSE"
+
+	# This is implemented because golang_install_pkgs assumes a pkg and src
+	# directory. There is no pkg directory.
+	ego_pn_check
+	set -- env GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
+		go install -v -work -x ${EGO_BUILD_FLAGS} "${EGO_PN}"
+	echo "$@"
+	"$@" || die
+
+	insinto "$(get_golibdir)"
+	insopts -m0644 -p # preserve timestamps for bug 551486
+	doins -r src
 }
