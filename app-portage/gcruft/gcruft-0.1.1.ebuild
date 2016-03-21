@@ -52,6 +52,9 @@ src_install() {
 	insinto $cfdir
 	doins "${S}"/config.pm
 	dodir $cfdir/exceptions
+
+	echo "CONFIG_PROTECT=\"${cfdir}\"" > 99gcruft
+	doenvd 99gcruft
 }
 
 pkg_postinst() {
