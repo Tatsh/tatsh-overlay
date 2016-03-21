@@ -2,47 +2,41 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
-DESCRIPTION="Get OS, Go and Git commit information of a Go package"
-HOMEPAGE="https://github.com/odeke-em/xon"
-EGIT_COMMIT="d580be739d723da4f6378083128f93017b8ab295"
-GO_PN=github.com/odeke-em/xon/${PN}
-SRC_URI="https://${GO_PN/pkger/}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
-RESTRICT="strip"
+MY_EGO_SRC=github.com/odeke-em/xon
+EGO_SRC=github.com/odeke-em/xon/pkger/src
+EGO_PN=${EGO_SRC}/...
 
+if [[ ${PV} = *9999* ]]; then
+	inherit golang-vcs
+else
+	KEYWORDS="~amd64 ~arm64"
+	EGIT_COMMIT="0af932ae72e246898c3a49eab51137bb38ccdbf0"
+	SRC_URI="https://${MY_EGO_SRC}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
+	inherit golang-vcs-snapshot
+fi
+inherit golang-build
+
+DESCRIPTION="Get OS, Go and Git commit information of a Go package."
+HOMEPAGE="https://github.com/odeke-em/xon/pkger"
 LICENSE="MIT"
-SLOT="0"
-KEYWORDS="~amd64"
+SLOT="0/${PV}"
 IUSE=""
-
 DEPEND=""
-RDEPEND="${DEPEND}"
+RDEPEND=""
+STRIP_MASK="*.a"
 
-S=${WORKDIR}
-
-src_unpack() {
-	default_src_unpack
-	mkdir -p src/${GO_PN%/*} || die
-	mv xon-${EGIT_COMMIT}/$PN src/${GO_PN} || die
-}
-
-src_compile() {
-	# Create a filtered GOROOT tree out of symlinks,
-	# excluding this package, for bug #503324.
-	cp -sR /usr/lib/go goroot || die
-	rm -rf goroot/src/${GO_PN} || die
-	rm -rf goroot/pkg/linux_${ARCH}/${GO_PN} || die
-	GOROOT=${WORKDIR}/goroot GOPATH=${WORKDIR} \
-		go install -x ${GO_PN}/src || die
+src_prepare() {
+	local prefix="${WORKDIR}/${P}/src/${EGO_SRC}"
+	rm -f "${prefix}/.gitignore"
+	rm -fR "${prefix}/cprefix"
+	default
 }
 
 src_install() {
-	insinto /usr/lib/go
-	doins -r pkg
-	insinto /usr/lib/go/src
-	find src/${GO_PN} '(' -name '.git*' -o -name '.travis.yml' ')' -delete
-	dodoc src/${GO_PN}/README.md
-	rm src/${GO_PN}/README.md
-	doins -r src/*
+	local prefix="${WORKDIR}/${P}/src/${EGO_SRC}"
+	dodoc "${prefix}/LICENSE" "${prefix}/pkger/README.md"
+	rm -f "${prefix}/LICENSE" "${prefix}/pkger/README.md"
+	golang-build_src_install
 }
