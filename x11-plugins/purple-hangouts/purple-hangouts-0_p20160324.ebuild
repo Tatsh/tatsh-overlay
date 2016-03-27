@@ -3,7 +3,6 @@
 # $Id$
 
 EAPI=6
-inherit eutils
 
 DESCRIPTION="Hangouts plugin for Pidgin."
 HOMEPAGE="https://bitbucket.org/EionRobb/purple-hangouts"
@@ -36,6 +35,7 @@ src_install() {
 	dodoc README.md
 
 	for size in 16 22 24 48; do
-		doicon -s "$size" "hangouts${size}.png"
+		insinto /usr/share/pixmaps/pidgin/protocols/$size
+		newins "hangouts${size}.png" 'hangouts.png'
 	done
 }
