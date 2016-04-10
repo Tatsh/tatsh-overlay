@@ -41,7 +41,7 @@ src_install() {
 	exeinto /opt/bin
 	doexe "${FILESDIR}/zoom"
 	sofiles=$(< "${FILESDIR}/zoom-1.1.38634.0127-so-files")
-	fperms 0755 $sofiles /opt/zoom/*.sh /opt/zoom/zoom /opt/zoom/ZoomLauncher /opt/zoom/QtWebProcess
+	fperms 0755 $sofiles /opt/zoom/{zoom,config-dump}.sh /opt/zoom/zoom /opt/zoom/ZoomLauncher /opt/zoom/QtWebProcess
 	dosym /opt/zoom/ZoomLauncher /opt/bin/ZoomLauncher
 
 	make_desktop_entry 'ZoomLauncher %u' ZoomLauncher /opt/zoom/application-x-zoom.png Network 'Path=/opt/zoom\nTerminal=false\nEncoding=UTF-8\nMimeType=x-scheme-handler/zoommtg;\nX-KDE-Protocols=zoommtg'
