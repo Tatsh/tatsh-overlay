@@ -15,12 +15,13 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=">=media-libs/alsa-lib-1.0.29
+DEPEND=">=dev-python/python-evdev-0.6.1
+	>=media-libs/alsa-lib-1.0.29
 	>=x11-base/xorg-server-1.12.4-r5"
 RDEPEND="${DEPEND}"
 
 src_compile () {
-	emake -C shell/linux platform=x64
+	emake -C shell/linux
 }
 
 src_install () {
@@ -29,6 +30,7 @@ src_install () {
 	domenu "${PN}.desktop"
 	exeinto /usr/bin
 	cp reicast.elf reicast
-	doexe reicast tools/reicast-joyconfig.py
+	cp tools/reicast-joyconfig.py reicast-joyconfig
+	doexe reicast reicast-joyconfig
 	doicon "${PN}.png"
 }
