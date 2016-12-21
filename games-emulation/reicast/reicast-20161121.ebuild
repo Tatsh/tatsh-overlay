@@ -13,24 +13,28 @@ EGIT_COMMIT="aca9cb6919206ef104f4827e04106a1312f0ab71"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="+alsa +evdev joystick oss"
 
 DEPEND=">=dev-python/python-evdev-0.6.1
 	>=media-libs/alsa-lib-1.0.29
 	>=x11-base/xorg-server-1.12.4-r5"
 RDEPEND="${DEPEND}"
 
+src_prepare () {
+	default
+	! use alsa && sed -e '/^USE_ALSA.*/d' -i shell/linux/Makefile
+	! use evdev && sed -e '/^USE_EVDEV.*/d' -i shell/linux/Makefile
+	! use joystick && sed -e '/^USE_JOYSTICK.*/d' -i shell/linux/Makefile
+	! use oss && sed -e '/^USE_OSS.*/d' -i shell/linux/Makefile
+	sed -e "s/^LDFLAGS :=.*/LDFLAGS := $LDFLAGS/" -i shell/linux/Makefile
+	sed -e "s/^CFLAGS :=.*/CFLAGS := $CFLAGS/" -i shell/linux/Makefile
+	sed -e "s/^CXXFLAGS :=.*/CXXFLAGS := $CXXFLAGS/" -i shell/linux/Makefile
+}
+
 src_compile () {
 	emake -C shell/linux
 }
 
 src_install () {
-	cd "${S}/shell/linux"
-	doman man/*.1
-	domenu "${PN}.desktop"
-	exeinto /usr/bin
-	cp reicast.elf reicast
-	cp tools/reicast-joyconfig.py reicast-joyconfig
-	doexe reicast reicast-joyconfig
-	doicon "${PN}.png"
+	emake -C shell/linux PREFIX="${D}/usr" install
 }
