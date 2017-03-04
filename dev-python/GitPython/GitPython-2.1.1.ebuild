@@ -3,18 +3,18 @@
 # $Header: $
 
 EAPI=5
-PYTHON_COMPAT=( python2_{6,7} python3_{3,4} )
+PYTHON_COMPAT=( python2_7 python3_{4,5,6} )
 
 inherit distutils-r1
 
 DESCRIPTION="Library to interact with Git repositories."
 HOMEPAGE="https://gitpython.readthedocs.org/en/stable/"
-SRC_URI="https://pypi.python.org/packages/source/G/${PV}/${P}.tar.gz"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-RDEPEND=">=dev-python/gitdb-0.6.2"
+RDEPEND=">=dev-python/gitdb-2.0.0"
 DEPEND="${RDEPEND}"
