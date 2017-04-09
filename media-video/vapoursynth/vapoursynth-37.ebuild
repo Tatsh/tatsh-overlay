@@ -7,7 +7,7 @@ inherit autotools
 
 DESCRIPTION="A video processing framework with simplicity in mind."
 HOMEPAGE="http://www.vapoursynth.com/"
-SRC_URI="https://github.com/vapoursynth/${PN}/archive/R${PV}.tar.gz"
+SRC_URI="https://github.com/vapoursynth/${PN}/archive/R${PV}.tar.gz -> ${P}.tar.gz"
 RESTRICT="mirror"
 
 LICENSE="LGPL-2.1"
@@ -26,7 +26,7 @@ DEPEND=">=media-libs/zimg-2.4
 		imwri? ( media-gfx/imagemagick )
 		vsscript? ( >=dev-lang/python-3.4:3.4 )"
 REQUIRED_USE="vspipe? ( vsscript )"
-RDEPEND="${DEPEND}"
+RDEPEND=""
 
 S="${WORKDIR}/${PN}-R${PV}"
 

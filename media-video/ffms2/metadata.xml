@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+	</maintainer>
+	<longdescription lang="en">
+	An FFmpeg based library and VapourSynth plugin for easy frame accurate access
+	</longdescription>
+</pkgmetadata>

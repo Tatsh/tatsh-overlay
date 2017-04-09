@@ -27,7 +27,7 @@ src_prepare () {
 
 src_install () {
 	# TODO Documentation based on the *.md in doc/ directory; convert to HTML?
-	dodoc COPYING README.md
+	dodoc README.md
 	default
 	keepdir /usr/lib/vapoursynth/
 	dosym "/usr/lib/libffms2.so" "/usr/lib/vapoursynth/libffms2.so"

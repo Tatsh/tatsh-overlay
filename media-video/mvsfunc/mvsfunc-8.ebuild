@@ -11,7 +11,7 @@ HOMEPAGE="https://github.com/HomeOfVapourSynthEvolution/mvsfunc"
 SRC_URI="https://github.com/HomeOfVapourSynthEvolution/mvsfunc/archive/r8.tar.gz -> ${P}.tar.gz"
 RESTRICT="mirror"
 
-LICENSE=""
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""

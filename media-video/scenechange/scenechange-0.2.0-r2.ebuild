@@ -3,7 +3,7 @@
 
 EAPI=6
 
-DESCRIPTION=""
+DESCRIPTION="Scene change detection plugin for VapourSynth"
 HOMEPAGE="https://forum.doom9.org/showthread.php?t=166769"
 SRC_URI="https://raw.githubusercontent.com/Tatsh/${PN}/60c6ad25f33950ac3f11803197d915b110e32458/src/Makefile -> ${P}-Makefile
 	https://github.com/Tatsh/${PN}/archive/v0.2.0-2.tar.gz -> ${P}.tar.gz"

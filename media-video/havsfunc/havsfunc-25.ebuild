@@ -11,7 +11,7 @@ HOMEPAGE="http://forum.doom9.org/showthread.php?t=166582"
 SRC_URI="https://github.com/HomeOfVapourSynthEvolution/${PN}/archive/r25.tar.gz -> ${P}.tar.gz"
 RESTRICT="mirror"
 
-LICENSE=""
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
@@ -29,7 +29,7 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/${PN}-r${PV}"
 
 src_prepare () {
-	# Removes `import adjust`; TODO Figure out what this module is
+	# TODO Add https://github.com/dubhater/vapoursynth-adjust
 	sed -e '3s/.*//' -i havsfunc.py
 	default
 }
