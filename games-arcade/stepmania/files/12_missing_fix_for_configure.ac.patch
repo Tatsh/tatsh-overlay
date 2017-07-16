@@ -1,0 +1,23 @@
+diff --git a/Makefile.am b/Makefile.am
+index 408a11fa6f..49316d9427 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1,6 +1,6 @@
+ ## Need 1.7 for subdir support.  (Well, 1.4 doesn't work, I don't know if anything between does.)
+ AUTOMAKE_OPTIONS = 1.7 foreign
+-SUBDIRS = bundle src
++SUBDIRS = src
+ ACLOCAL_AMFLAGS = -I autoconf/m4
+ 
+ installFiles = src/stepmania
+diff --git a/configure.ac b/configure.ac
+index e0a66a8d72..dd83ca953d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -404,6 +404,5 @@ if test "$with_system_pcre" == "yes"; then
+ fi
+ 
+ AC_CONFIG_FILES(Makefile)
+-AC_CONFIG_FILES(bundle/Makefile)
+ AC_CONFIG_FILES(src/Makefile)
+ AC_OUTPUT
