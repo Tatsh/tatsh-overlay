@@ -21,7 +21,7 @@ QA_EXECSTACK="opt/zoom/zoom"
 
 RDEPEND=""
 DEPEND="${RDEPEND} dev-qt/qtpositioning:5
-	dev-qt/qtwebengine:5
+	dev-qt/qtwebengine:5[-system-ffmpeg]
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtwebchannel:5[qml]
