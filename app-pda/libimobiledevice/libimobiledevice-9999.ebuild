@@ -3,7 +3,7 @@
 # $Header: app-pda/libimobiledevice/libimobiledevice-9999.ebuild,v 1.0 2013/10/31 16:38:49 srcs Exp $
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 python3_{3,4} )
+PYTHON_COMPAT=( python2_7 python3_{4,5,6} )
 EGIT_MASTER="master"
 inherit autotools autotools-utils eutils git-2 python-r1 multilib
 
