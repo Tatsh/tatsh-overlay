@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-cd /usr/lib/hda-analyzer
-python2 hda_analyzer.py
