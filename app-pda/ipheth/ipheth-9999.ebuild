@@ -8,7 +8,7 @@ inherit linux-info linux-mod git-2
 
 DESCRIPTION="iPhone USB ethernet driver (personal hotspot)"
 HOMEPAGE="https://github.com/dgiagio/ipheth"
-EGIT_REPO_URI="git://github.com/Tatsh/ipheth.git"
+EGIT_REPO_URI="https://github.com/Tatsh/ipheth.git"
 
 LICENSE="GPL-2 BSD"
 SLOT="0"

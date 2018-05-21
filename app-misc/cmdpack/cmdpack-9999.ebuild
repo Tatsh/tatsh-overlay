@@ -8,7 +8,7 @@ inherit git-2 eutils
 
 DESCRIPTION="Neill Corlett's command-Line pack."
 HOMEPAGE="http://www.neillcorlett.com/cmdpack/"
-EGIT_REPO_URI="git://github.com/Tatsh/cmdpack.git"
+EGIT_REPO_URI="https://github.com/Tatsh/cmdpack.git"
 
 LICENSE="GPL-3"
 SLOT="0"

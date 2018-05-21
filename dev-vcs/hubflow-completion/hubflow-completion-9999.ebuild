@@ -8,7 +8,7 @@ inherit bash-completion-r1 git-2
 
 DESCRIPTION="A fork of the git-flow bash completions to provide completions for DataSift's hubflow fork of git-flow."
 HOMEPAGE="https://github.com/ladyrassilon/git-hubflow-completion"
-EGIT_REPO_URI="git://github.com/ladyrassilon/git-hubflow-completion.git"
+EGIT_REPO_URI="https://github.com/ladyrassilon/git-hubflow-completion.git"
 
 LICENSE="MIT"
 SLOT="0"

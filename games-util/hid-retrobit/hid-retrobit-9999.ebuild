@@ -8,7 +8,7 @@ inherit git-r3 linux-mod udev
 
 DESCRIPTION="Linux driver for the Retro-bit controller adapter USB cable"
 HOMEPAGE="https://github.com/retuxx/hid-retrobit"
-EGIT_REPO_URI="git://github.com/retuxx/hid-retrobit.git"
+EGIT_REPO_URI="https://github.com/retuxx/hid-retrobit.git"
 
 LICENSE="GPL-2"
 SLOT="0"

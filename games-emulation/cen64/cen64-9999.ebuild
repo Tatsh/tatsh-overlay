@@ -7,7 +7,7 @@ inherit git-r3 cmake-utils
 
 DESCRIPTION="Cycle-accurate Nintendo 64 emulator."
 HOMEPAGE="https://github.com/tj90241/cen64"
-EGIT_REPO_URI="git://github.com/tj90241/cen64"
+EGIT_REPO_URI="https://github.com/tj90241/cen64"
 
 LICENSE="BSD-3"
 SLOT="0"

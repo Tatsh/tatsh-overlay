@@ -9,7 +9,7 @@ inherit eutils git-2
 
 DESCRIPTION="Helper utility to enable charging with Apple mobile devices such as the iPad."
 HOMEPAGE="https://github.com/mkorenkov/ipad_charge"
-EGIT_REPO_URI="git://github.com/Tatsh/ipad_charge.git"
+EGIT_REPO_URI="https://github.com/Tatsh/ipad_charge.git"
 
 LICENSE="GPL-2"
 SLOT="0"

@@ -7,7 +7,7 @@ inherit git-r3 toolchain-funcs
 
 DESCRIPTION="Hack for Apple's Superdrive to work with other systems than OS X."
 HOMEPAGE="https://github.com/onmomo/superdrive-enabler"
-EGIT_REPO_URI="git://github.com/onmomo/superdrive-enabler.git"
+EGIT_REPO_URI="https://github.com/onmomo/superdrive-enabler.git"
 EGIT_COMMIT="809e81ed19af1acc776b88f91c05c4763f3665ac"
 
 LICENSE="MIT" # ? https://github.com/onmomo/superdrive-enabler/issues/1

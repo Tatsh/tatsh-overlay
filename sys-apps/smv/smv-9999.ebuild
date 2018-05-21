@@ -9,7 +9,7 @@ inherit git-2
 
 DESCRIPTION="Like scp, but moves files across machines."
 HOMEPAGE="https://github.com/Tatsh/misc-scripts"
-EGIT_REPO_URI="git://github.com/Tatsh/misc-scripts.git"
+EGIT_REPO_URI="https://github.com/Tatsh/misc-scripts.git"
 
 LICENSE="MIT"
 SLOT="0"

@@ -8,7 +8,7 @@ inherit git-2 toolchain-funcs
 
 DESCRIPTION="A fork of Jongware's pngdefry (for converting iOS PNGs to normal ones)"
 HOMEPAGE="https://github.com/Tatsh/pngdefry"
-EGIT_REPO_URI="git://github.com/Tatsh/pngdefry.git"
+EGIT_REPO_URI="https://github.com/Tatsh/pngdefry.git"
 EGIT_COMMIT="875c4456ebdc2827a0f19a3ca4c39c46dc662e7e"
 
 LICENSE="public-domain"
