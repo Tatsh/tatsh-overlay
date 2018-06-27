@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A Git extension to make it easy to use GitFlow with GitHub."
 HOMEPAGE="https://github.com/datasift/gitflow"
