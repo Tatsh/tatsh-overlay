@@ -2,9 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
-
-inherit bash-completion-r1 git-2
+EAPI=6
+inherit git-r3
 
 DESCRIPTION="A fork of the git-flow bash completions to provide completions for DataSift's hubflow fork of git-flow."
 HOMEPAGE="https://github.com/ladyrassilon/git-hubflow-completion"
@@ -16,10 +15,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
-RDEPEND="${DEPEND}
-	dev-vcs/git
-"
+RDEPEND="${DEPEND}"
 
 src_install() {
-	newbashcomp git-hubflow-completion.bash hubflow
+	insinto /etc/bash_completion.d
+	cp git-hubflow-completion.bash "$PN"
+	doins "$PN"
 }
