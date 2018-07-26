@@ -1,0 +1,33 @@
+diff -urN a/extensions/Module_extensions.mk b/extensions/Module_extensions.mk
+--- a/extensions/Module_extensions.mk	2018-07-25 05:27:54.389181908 -0400
++++ b/extensions/Module_extensions.mk	2018-07-25 05:28:13.587737559 -0400
+@@ -16,7 +16,6 @@
+ ifneq ($(filter-out IOS ANDROID,$(OS)),)
+ $(eval $(call gb_Module_add_targets,extensions,\
+ 	Library_abp \
+-	Library_ldapbe2 \
+ 	Library_log \
+ 	Library_scn \
+ 	UIConfig_sabpilot \
+diff -urN a/postprocess/Rdb_services.mk b/postprocess/Rdb_services.mk
+--- a/postprocess/Rdb_services.mk	2018-07-25 05:38:56.179829417 -0400
++++ b/postprocess/Rdb_services.mk	2018-07-25 05:39:09.769513649 -0400
+@@ -298,7 +298,6 @@
+ 	desktop/source/offacc/offacc \
+ 	$(if $(ENABLE_HEADLESS),,desktop/source/splash/spl) \
+ 	extensions/source/abpilot/abp \
+-	extensions/source/config/ldap/ldapbe2 \
+ 	extensions/source/logging/log \
+ 	extensions/source/scanner/scn \
+ 	extensions/source/update/feed/updatefeed \
+diff -urN a/Repository.mk b/Repository.mk
+--- a/Repository.mk	2018-07-25 05:16:41.963651312 -0400
++++ b/Repository.mk	2018-07-25 05:16:50.974445880 -0400
+@@ -383,7 +383,6 @@
+ 	hyphen \
+     icg \
+ 	$(if $(ENABLE_JAVA),jdbc) \
+-	ldapbe2 \
+ 	localebe1 \
+ 	log \
+ 	lng \
