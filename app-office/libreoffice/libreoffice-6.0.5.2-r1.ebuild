@@ -312,7 +312,7 @@ src_prepare() {
 	default
 
 	# Disable the LDAP backend extension used in Base
-	! use ldap && epatch "${FILESDIR}/${PN}-6.0.5.2-no-openldap.patch"
+	! use ldap && eapply "${FILESDIR}/${PN}-6.0.5.2-no-openldap.patch"
 
 	# sandbox violations on many systems, we don't need it. Bug #646406
 	sed -i \
