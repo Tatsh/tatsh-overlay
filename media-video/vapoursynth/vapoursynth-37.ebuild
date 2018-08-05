@@ -24,7 +24,7 @@ DEPEND=">=media-libs/zimg-2.4
 		x86-asm? ( >=dev-lang/yasm-1.3.0 )
 		ocr? ( app-text/tesseract )
 		imwri? ( media-gfx/imagemagick )
-		vsscript? ( >=dev-lang/python-3.4:3.4 )"
+		vsscript? ( >=dev-lang/python-3.4 )"
 REQUIRED_USE="vspipe? ( vsscript )"
 RDEPEND=""
 
