@@ -8,7 +8,7 @@ inherit distutils-r1
 
 DESCRIPTION="Helper commands to automate updating with Portage."
 HOMEPAGE="https://github.com/Tatsh/pezu"
-SRC_URI="https://github.com/Tatsh/upkeep/archive/v1.0.0.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/Tatsh/upkeep/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 RESTRICT="mirror"
 
 LICENSE="MIT"
