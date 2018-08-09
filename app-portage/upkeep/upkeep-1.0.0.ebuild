@@ -4,11 +4,12 @@
 EAPI=6
 PYTHON_COMPAT=( python3_{4,5,6,7} )
 
-inherit distutils-r1 git-r3
+inherit distutils-r1
 
 DESCRIPTION="Helper commands to automate updating with Portage."
 HOMEPAGE="https://github.com/Tatsh/pezu"
-EGIT_REPO_URI="https://github.com/Tatsh/pezu"
+SRC_URI="https://github.com/Tatsh/upkeep/archive/v1.0.0.tar.gz -> ${P}.tar.gz"
+RESTRICT="mirror"
 
 LICENSE="MIT"
 SLOT="0"
