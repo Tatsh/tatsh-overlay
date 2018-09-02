@@ -1,9 +1,0 @@
-[Desktop Entry]
-Categories=AudioVideo;Audio;Video;Network;Presentation;VideoConference;Qt;
-Comment=Zoom video conference client
-Exec=zoom
-Icon=Zoom
-Name=Zoom
-TryExec=zoom
-Type=Application
-Path=/opt/zoom/

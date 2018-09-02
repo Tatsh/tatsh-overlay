@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=ZoomLauncher
-Comment=Zoom Video Conference
-Exec=/opt/zoom/ZoomLauncher %U
-Path=/opt/zoom/
-Type=Application
-Categories=Network;VideoConference;Qt;
-MimeType=x-scheme-handler/zoommtg;application/x-zoom;
-X-KDE-Protocols=zoommtg
