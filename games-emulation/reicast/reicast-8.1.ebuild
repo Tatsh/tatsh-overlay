@@ -48,6 +48,5 @@ src_compile () {
 }
 
 src_install () {
-	ls
 	emake -C shell/linux PREFIX="${D}/usr" install
 }
