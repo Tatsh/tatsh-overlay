@@ -9,7 +9,7 @@ inherit distutils-r1
 
 DESCRIPTION="A Sony DualShock 4 userspace driver for Linux"
 HOMEPAGE="https://pypi.python.org/pypi/ds4drv"
-SRC_URI="https://pypi.python.org/packages/source/d/ds4drv/ds4drv-${PV}.tar.gz"
+SRC_URI="https://github.com/chrippa/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
