@@ -9,7 +9,7 @@ inherit bash-completion-r1 distutils-r1
 
 DESCRIPTION="Open files by MIME-type or file name using regular expressions."
 HOMEPAGE="http://xyne.archlinux.ca/projects/mimeo/index.html"
-SRC_URI="http://xyne.archlinux.ca/projects/mimeo/src/mimeo-2017.2.9.tar.xz"
+SRC_URI="http://xyne.archlinux.ca/projects/${PN}/src/${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
