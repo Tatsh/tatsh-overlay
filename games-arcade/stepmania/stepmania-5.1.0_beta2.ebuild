@@ -2,18 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="5"
+EAPI=6
 
 inherit cmake-utils autotools eutils
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
 HOMEPAGE="http://www.stepmania.com/"
-SRC_URI="https://github.com/stepmania/stepmania/archive/v${PV/_alpha/a}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/stepmania/stepmania/archive/v${PV/_beta/-b}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +ogg +network +sse2 +wav +xinerama bundled-songs bundled-courses minimaid parallel-port profiling"
+IUSE="+crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +ogg +sse2 +wav +xinerama bundled-songs bundled-courses minimaid parallel-port profiling"
 
 # TODO
 DEPEND="gtk? ( x11-libs/gtk+:2 )
@@ -27,7 +27,7 @@ DEPEND="gtk? ( x11-libs/gtk+:2 )
 	x11-libs/libXrandr
 	virtual/opengl"
 
-S="${WORKDIR}/${P/_alpha/a}"
+S="${WORKDIR}/${P/_beta/-b}"
 
 src_prepare() {
 	einfo 'Removing useless instructions.txt files ...'
@@ -45,6 +45,8 @@ src_prepare() {
 		einfo 'Removing bundled songs'
 		rm -rf "${S}/Songs/StepMania 5"
 	fi
+
+	default
 }
 
 src_configure() {
@@ -53,35 +55,34 @@ src_configure() {
 		-DWITH_SYSTEM_FFMPEG=ON
 		-DWITH_FULL_RELEASE=ON
 		-DWITH_PORTABLE_TOMCRYPT=OFF
-		$(cmake-utils_use_with crash-handler CRASH_HANDLER)
-		$(cmake-utils_use_with gles2)
-		$(cmake-utils_use_with gpl GPL_LIBS)
-		$(cmake-utils_use_with gtk GTK2)
-		$(cmake-utils_use_with jpeg)
-		$(cmake-utils_use_with mp3)
-		$(cmake-utils_use_with ogg)
-		$(cmake-utils_use_with network)
-		$(cmake-utils_use_with sse2)
-		$(cmake-utils_use_with wav)
-		$(cmake-utils_use_with xinerama)
-		$(cmake-utils_use_with minimaid)
-		$(cmake-utils_use_with parallel-port PARALLEL_PORT)
-		$(cmake-utils_use_with profiling)
+		-DWITH_CRASH_HANDLER=$(usex crash-handler)
+		-DWITH_GLES2=$(usex gles2)
+		-DWITH_GPL_LIBS=$(usex gpl)
+		-DWITH_GTK2=$(usex gtk)
+		-DWITH_JPEG=$(usex jpeg)
+		-DWITH_MP3=$(usex mp3)
+		-DWITH_OGG=$(usex ogg)
+		-DWITH_SSE2=$(usex sse2)
+		-DWITH_WAV=$(usex wav)
+		-DWITH_XINERAMA=$(usex xinerama)
+		-DWITH_MINIMAID=$(usex minimaid)
+		-DWITH_PARALLEL_PORT=$(usex parallel-port)
+		-DWITH_PROFILING=$(usex profiling)
 	)
 	cmake-utils_src_configure
 }
 
 src_install() {
-	dobin src/${PN} || die "dobin $sm-ssc failed"
+	dobin ${PN} || die "dobin failed"
 
-	insinto "${GAMES_DATADIR}"/${PN}
-	if use gtk ; then
-		doins src/GtkModule.so || die "doins GtkModule.so failed"
+	insinto /usr/share/${PN}
+	if use gtk; then
+		doins GtkModule.so || die "doins GtkModule.so failed"
 	fi
-	[ ! -d Announcers ] && mkdir Announcers
+	! [ -d Announcers ] && mkdir Announcers
 	doins -r Announcers BackgroundEffects BackgroundTransitions \
 		BGAnimations Characters Courses Data NoteSkins Songs Themes || die "doins failed"
-	#dodoc -r Docs || die "dodoc failed"
+	dodoc -r Docs/* || die "dodoc failed"
 
 	newicon "Themes/default/Graphics/Common window icon.png" ${PN}.png
 	make_desktop_entry ${PN} Stepmania
