@@ -15,7 +15,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +ogg +sse2 +wav +xinerama bundled-songs bundled-courses minimaid parallel-port profiling"
 
-# TODO
 DEPEND="gtk? ( x11-libs/gtk+:2 )
 	media-libs/alsa-lib
 	mp3? ( media-libs/libmad )
@@ -73,12 +72,14 @@ src_configure() {
 }
 
 src_install() {
-	dobin ${PN} || die "dobin failed"
-
-	insinto /usr/share/${PN}
+	into /usr
+	dobin "${FILESDIR}/${PN}"
+	exeinto /usr/share/${PN}
+	doexe "${PN}" || die "dobin failed"
 	if use gtk; then
-		doins GtkModule.so || die "doins GtkModule.so failed"
+		doexe GtkModule.so || die "doexe GtkModule.so failed"
 	fi
+	insinto /usr/share/${PN}
 	! [ -d Announcers ] && mkdir Announcers
 	doins -r Announcers BackgroundEffects BackgroundTransitions \
 		BGAnimations Characters Courses Data NoteSkins Songs Themes || die "doins failed"
