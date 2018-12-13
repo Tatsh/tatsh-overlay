@@ -25,6 +25,5 @@ python_install_all() {
 	distutils-r1_python_install_all
 	exeinto /usr/bin
 	doexe "${FILESDIR}/mimeo"
-
 	newbashcomp "${FILESDIR}/mimeo-completion.sh" mimeo
 }
