@@ -4,11 +4,11 @@
 
 EAPI=5
 
-inherit git-r3 linux-mod udev
+inherit linux-mod udev
 
 DESCRIPTION="Linux driver for the Retro-bit controller adapter USB cable"
 HOMEPAGE="https://github.com/retuxx/hid-retrobit"
-EGIT_REPO_URI="https://github.com/retuxx/hid-retrobit.git"
+SRC_URI="https://github.com/msteinbeck/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
