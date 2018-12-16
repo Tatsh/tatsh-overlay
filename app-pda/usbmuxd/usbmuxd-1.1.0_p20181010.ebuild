@@ -9,7 +9,8 @@ if [[ "$PV" = 9999 ]]; then
 else
 	KEYWORDS="amd64 ~arm ~ppc ~ppc64 x86"
 	MY_HASH="96e4aabe0b9a46ea9da4955a10c774a8e58fe677"
-	SRC_URI="https://github.com/libimobiledevice/${PN}/archive/${MY_HASH}.tar.gz"
+	SRC_URI="https://github.com/libimobiledevice/${PN}/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
+	S="${WORKDIR}/${PN}-${MY_HASH}"
 fi
 inherit autotools udev user "$GIT_ECLASS"
 
