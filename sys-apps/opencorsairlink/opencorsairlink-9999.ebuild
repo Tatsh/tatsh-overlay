@@ -15,7 +15,7 @@ else
 fi
 inherit udev "$GIT_ECLASS"
 
-DESCRIPTION="Linux support for the Corsair H80i and H100i water cooler."
+DESCRIPTION="Linux support for Corsair water coolers."
 HOMEPAGE="https://github.com/audiohacked/OpenCorsairLink"
 
 LICENSE="GPL-2"
