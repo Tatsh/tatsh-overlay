@@ -1,8 +1,0 @@
-[Unit]
-Description=Timed tester for bandwidth speed
-
-[Timer]
-OnCalendar=*-*-* 0/12:00:00
-
-[Install]
-WantedBy=multi-user.target

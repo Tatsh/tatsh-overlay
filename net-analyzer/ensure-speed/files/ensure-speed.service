@@ -1,6 +1,0 @@
-[Unit]
-Description=Speed tester
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/ensure-speed -s -d 50 -u 10 -p 15 -l /var/log/ensure-speed.log
