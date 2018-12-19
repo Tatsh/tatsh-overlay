@@ -9,7 +9,7 @@ if [[ "$PV" = 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/Tatsh/ipheth.git"
 else
 	MY_HASH="02ac9b07cac719830bc41f15adf212e69a2590fb"
-	SRC_URI="https://github.com/Tatsh/ipheth/archive/${MY_HASH}.tar.gz"
+	SRC_URI="https://github.com/Tatsh/ipheth/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
 	S="${WORKDIR}/${PN}-${MY_HASH}"
 	KEYWORDS="~amd64 ~x86"
 fi
@@ -58,7 +58,7 @@ src_install() {
 		dobin ${PN}-pair
 		insinto /lib/udev/rules.d
 		doins 90-iphone-tether.rules
-		/sbin/udevadm control --reload-rules
+		udevadm control --reload-rules
 
 		popd 2>&1 > /dev/null
 	fi
