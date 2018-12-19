@@ -1,0 +1,1 @@
+ENV{DEVTYPE}=="disk", ACTION=="add", SUBSYSTEM=="block", ENV{ID_VENDOR_ID}=="05ac", ENV{ID_MODEL_ID}=="1500", ENV{ID_USB_DRIVER}=="usb-storage", RUN+="/usr/bin/superdrive-enabler '%E{DEVNAME}'"
