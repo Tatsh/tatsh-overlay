@@ -20,7 +20,7 @@ IUSE=""
 RDEPEND=">=dev-python/gitpython-2.1.1
 >=dev-python/colorama-0.3.7
 >=dev-python/termcolor-1.1.0
->=dev-python/click-7.0.0
+>=dev-python/click-7.0
 >=dev-python/six-1.10.0"
 DEPEND="${RDEPEND}"
 
