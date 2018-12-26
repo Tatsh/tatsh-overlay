@@ -9,8 +9,7 @@ inherit distutils-r1
 
 DESCRIPTION="Python implementation of git-up"
 HOMEPAGE="https://github.com/msiemens/PyGitUp"
-MY_HASH="448d31edefac4ab53965f207e8f1feea4f1f88e3"
-SRC_URI="https://github.com/msiemens/PyGitUp/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://files.pythonhosted.org/packages/46/45/32dc0bf07c620644a8ed899e381309f4f25b50f20a91e555285522592833/git-up-1.6.1.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -23,5 +22,3 @@ RDEPEND=">=dev-python/gitpython-2.1.1
 >=dev-python/click-7.0
 >=dev-python/six-1.10.0"
 DEPEND="${RDEPEND}"
-
-S="${WORKDIR}/PyGitUp-${MY_HASH}"
