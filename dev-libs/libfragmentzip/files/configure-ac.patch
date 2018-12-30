@@ -1,0 +1,25 @@
+diff -urN a/configure.ac b/configure.ac
+--- a/configure.ac	2018-10-02 08:49:35.000000000 -0400
++++ b/configure.ac	2018-12-29 23:37:26.721762885 -0500
+@@ -1,17 +1,17 @@
+ AC_PREREQ([2.69])
+-AC_INIT([libfragmentzip], m4_esyscmd([git rev-list --count HEAD | tr -d '\n']), [tihmstar@gmail.com])
++AC_INIT([libfragmentzip], 42, [tihmstar@gmail.com])
+
+ AC_CONFIG_HEADERS([config.h])
+ AM_PROG_LIBTOOL
+
+ AC_CANONICAL_SYSTEM
+-AM_INIT_AUTOMAKE(libfragmentzip, m4_esyscmd([git rev-list --count HEAD | tr -d '\n']))
++AM_INIT_AUTOMAKE(libfragmentzip, 42)
+
+ # Checks for programs.
+ AC_PROG_CC
+ CFLAGS+=" -std=c11 -D_GNU_SOURCE"
+-CFLAGS+=" -D LIBFRAGMENTZIP_VERSION_COMMIT_COUNT=\\\"$(git rev-list --count HEAD | tr -d '\n')\\\""
+-CFLAGS+=" -D LIBFRAGMENTZIP_VERSION_COMMIT_SHA=\\\"$(git rev-parse HEAD | tr -d '\n')\\\""
++CFLAGS+=" -D LIBFRAGMENTZIP_VERSION_COMMIT_COUNT=\\\"42\\\""
++CFLAGS+=" -D LIBFRAGMENTZIP_VERSION_COMMIT_SHA=\\\"7f67a7a3d3380330900a293ee651abc96691dbac\\\""
+
+
+ AC_LANG_C
