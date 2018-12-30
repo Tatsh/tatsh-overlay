@@ -26,6 +26,8 @@ BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_HASH}"
 
+PATCHES=( "${FILESDIR}/saveblobs.patch" )
+
 DOCS=( LICENSE README.md )
 
 src_prepare() {
