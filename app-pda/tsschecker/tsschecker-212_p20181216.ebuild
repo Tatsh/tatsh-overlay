@@ -20,7 +20,8 @@ IUSE=""
 DEPEND="dev-libs/libfragmentzip
 	app-pda/libplist
 	net-misc/curl
-	dev-libs/openssl:0"
+	dev-libs/openssl:0
+	app-pda/libirecovery"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
