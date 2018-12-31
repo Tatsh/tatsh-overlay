@@ -28,7 +28,10 @@ BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_HASH}"
 
-PATCHES=( "${FILESDIR}/saveblobs.patch" )
+PATCHES=(
+	"${FILESDIR}/saveblobs.patch"
+	"${FILESDIR}/xopen-source-500.patch"
+)
 
 DOCS=( LICENSE README.md )
 
