@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python{3_4,3_5,3_6,3_7} )
+PYTHON_COMPAT=( python3_{4..6} )
 inherit python-r1
 
 DESCRIPTION="Windows Hello™ style authentication for Linux"
@@ -14,28 +14,35 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND="media-libs/opencv:0/3.4.1[cuda,$(python_gen_usedep 'python3*')]
+RDEPEND="${PYTHON_DEPS}
+	media-libs/opencv:0/3.4.1[cuda]
 	sci-libs/hdf5
+	dev-python/numpy[$(python_gen_usedep 'python3*')]
 	dev-python/pillow[$(python_gen_usedep 'python3*')]
 	dev-python/click[$(python_gen_usedep 'python3*')]
-	dev-python/face_recognition_models[$(python_gen_usedep 'python3*')]
-	sci-libs/dlib[$(python_gen_usedep 'python3*')]
-	dev-python/numpy[$(python_gen_usedep 'python3*')]"
+	dev-python/face_recognition[$(python_gen_usedep 'python3*')]
+	sci-libs/dlib[cuda,python]
+	dev-python/pam-python"
 DEPEND="${RDEPEND}"
 BDEPEND=""
 
-DOCS=( LICENSE README.md )
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
+DOCS=( LICENSE README.md debian/changelog )
 
 src_compile() {
-	einfo
+	:
 }
 
 src_install() {
-	chmod -R 0600 src
-	chmod 0700 src/cli.py
+	einstalldocs
 	insinto /lib/security/howdy
 	doins -r src/*
-	dosym /lib/security/howdy/cli.py /usr/bin/howdy
 	insinto /usr/share/bash-completion/completions
 	doins autocomplete/howdy
+	doman debian/howdy.1
+	exeopts -m 0700
+	exeinto /lib/security/howdy
+	doexe src/cli.py
+	dosym /lib/security/howdy/cli.py /usr/bin/howdy
 }
