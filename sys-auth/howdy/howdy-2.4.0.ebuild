@@ -28,6 +28,8 @@ BDEPEND=""
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
+CONFIG_PROTECT="/lib/security/howdy/config.ini"
+
 DOCS=( LICENSE README.md debian/changelog )
 
 src_compile() {
@@ -41,8 +43,8 @@ src_install() {
 	insinto /usr/share/bash-completion/completions
 	doins autocomplete/howdy
 	doman debian/howdy.1
-	exeopts -m 0700
 	exeinto /lib/security/howdy
 	doexe src/cli.py
 	dosym /lib/security/howdy/cli.py /usr/bin/howdy
+	keepdir /lib/security/howdy/models
 }
