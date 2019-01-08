@@ -15,13 +15,13 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="${PYTHON_DEPS}
-	media-libs/opencv:0/3.4.1[cuda]
+	media-libs/opencv:0/3.4.1[cuda,$(python_gen_usedep 'python3*')]
 	sci-libs/hdf5
 	dev-python/numpy[$(python_gen_usedep 'python3*')]
 	dev-python/pillow[$(python_gen_usedep 'python3*')]
 	dev-python/click[$(python_gen_usedep 'python3*')]
 	dev-python/face_recognition[$(python_gen_usedep 'python3*')]
-	sci-libs/dlib[cuda,python]
+	sci-libs/dlib[cuda,python,$(python_gen_usedep 'python3*')]
 	dev-python/pam-python"
 DEPEND="${RDEPEND}"
 BDEPEND=""
