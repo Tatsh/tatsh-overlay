@@ -10,7 +10,6 @@ EGIT_REPO_URI="https://github.com/Tatsh/gcrud.git"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-libs/glib:2"
