@@ -10,7 +10,7 @@ EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 
 LICENSE="GPL-3 BitstreamVera OFL-1.1"
 SLOT="0"
-IUSE="devtools ffmpeg +opengl qt +sdl +vulkan"
+IUSE="devtools ffmpeg +opengl qt5 +sdl +vulkan"
 
 DEPEND="net-misc/curl
 	dev-libs/openssl
@@ -20,7 +20,7 @@ DEPEND="net-misc/curl
 	vulkan? (
 		>=dev-util/glslang-7.10.2984
 		>=media-libs/vulkan-loader-1.1.92.1 )
-	qt? (
+	qt5? (
 		dev-qt/qtsvg:5
 		dev-qt/qtwidgets:5 )
 	opengl? ( virtual/opengl )"
@@ -35,7 +35,7 @@ RDEPEND="${DEPEND}"
 BDEPEND="dev-util/cmake"
 
 # It will not build without Vulkan enabled
-REQUIRED_USE="qt? ( sdl )
+REQUIRED_USE="qt5? ( sdl )
 	devtools? ( sdl )
 	vulkan"
 
@@ -62,7 +62,7 @@ decaf-use() {
 
 src_configure() {
 	local mycmakeargs=(
-		$(decaf-use qt)
+		$(decaf-use qt5 qt)
 		$(decaf-use opengl gl)
 		$(decaf-use sdl)
 		$(decaf-use ffmpeg)
