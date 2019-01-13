@@ -13,4 +13,23 @@
 		<email>pacho@gentoo.org</email>
 		<name>Pacho Ramos</name>
 	</maintainer>
+	<use>
+		<flag name="brahmi">Install font for Brahmi script</flag>
+		<flag name="music">Install font for music notation</flag>
+		<flag name="cuneiform">Install Cuneiform font</flag>
+		<flag name="cypriot">Install Cypriot font</flag>
+		<flag name="deseret">Install Deseret font</flag>
+		<flag name="duployan">Install Duployan font</flag>
+		<flag name="display">Install Display variant fonts</flag>
+		<flag name="symbols">Install Symbols fonts</flag>
+		<flag name="runic">Install Runic font</flag>
+		<flag name="pau-cin-hau">Install font for Pau Cin Hau script</flag>
+		<flag name="phagspa">Install for 'Phags-pa script</flag>
+		<flag name="old-arabian">Install fonts for Old North and Old South Arabian</flag>
+		<flag name="hieroglyphs">Install fonts for hieroglyphs</flag>
+		<flag name="mono">Install monospace fonts</flag>
+		<flag name="emoji">Install emoji font</flag>
+		<flag name="coptic">Install Coptic font</flag>
+		<flag name="linear">Install Linear (Minoan) fonts</flag>
+	</use>
 </pkgmetadata>
