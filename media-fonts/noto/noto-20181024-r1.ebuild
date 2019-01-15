@@ -60,7 +60,6 @@ src_prepare() {
 	! use l10n_lep && find . -iname '*lepcha*.ttf' -delete
 	! use l10n_bho && find . -iname '*kaithi*' -delete
 	! use l10n_eky && find . -iname '*kayahli*' -delete
-	! use l10n_xpr && find . -iname '*inscriptional*.ttf' -delete
 	! use brahmi && find . -iname '*brahmi*.ttf' -delete
 	! use l10n_iu && find . -iname '*canadianaboriginal*.ttf' -delete
 	! use l10n_hnn && find . -iname '*hanunoo*.ttf' -delete
