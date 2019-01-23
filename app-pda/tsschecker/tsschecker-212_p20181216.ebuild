@@ -10,7 +10,7 @@ MY_COMMIT_COUNT="263"
 MY_HASH="4339d71fb0ebb671aeda9061979dd5e7ab87f3d3"
 JSSY_HASH="ba6256448344799247d2c858cf2db879e62043f6"
 SRC_URI="https://github.com/tihmstar/tsschecker/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz
-https://github.com/tihmstar/jssy/archive/${JSSY_HASH}.tar.gz -> ${P}-jssy.tar.gz"
+	https://github.com/tihmstar/jssy/archive/${JSSY_HASH}.tar.gz -> ${P}-jssy.tar.gz"
 
 # jssy is MIT
 LICENSE="LGPL-3 MIT"
@@ -50,7 +50,7 @@ src_install() {
 	default
 	einstalldocs
 	dobin saveblobs.sh
-	insinto /usr/share/${PN}
+	insinto /etc/${PN}
 	doins devices.txt
 	rm "${D}/usr/lib64/libjssy.a"
 	rmdir "${D}/usr/lib64"
