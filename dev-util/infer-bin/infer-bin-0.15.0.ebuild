@@ -14,8 +14,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-DEPEND=""
-RDEPEND="${DEPEND}"
+RDEPEND=""
+DEPEND="${RDEPEND}
+	sys-libs/ncurses:5[tinfo]"
 BDEPEND=""
 
 S="${WORKDIR}/${MY_PN}-linux64-v${PV}"
@@ -28,7 +29,6 @@ src_prepare() {
 	for i in share/man/man*/*.gz; do
 		gzip -d "$i"
 	done
-	find -iname '*.dylib' -delete
 	default
 }
 
