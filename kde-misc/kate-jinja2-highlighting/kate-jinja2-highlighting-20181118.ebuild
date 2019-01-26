@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND="kde-apps/kate"
+RDEPEND=""
 DEPEND="${RDEPEND}"
 BDEPEND=""
 
