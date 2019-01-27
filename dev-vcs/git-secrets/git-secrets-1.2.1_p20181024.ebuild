@@ -2,11 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=6
+EAPI=7
 
 DESCRIPTION="Prevents you from committing passwords and other sensitive information to a git repository."
 HOMEPAGE="https://github.com/awslabs/git-secrets"
-SRC_URI="https://github.com/awslabs/git-secrets/archive/1.2.1.tar.gz -> ${P}.tar.gz"
+MY_HASH="c11c229a8eebb3545e5fd3bab4e8aa55a7f19383"
+SRC_URI="https://github.com/awslabs/git-secrets/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -16,11 +17,15 @@ IUSE=""
 RDEPEND=">=dev-vcs/git-2.10.2"
 DEPEND="${RDEPEND}"
 
+S="${WORKDIR}/${PN}-${MY_HASH}"
+DOCS=( CHANGELOG.md CONTRIBUTING.md LICENSE.txt NOTICE.txt README.rst )
+
 src_compile () {
-	einfo 'Nothing to compile'
+	emake man
 }
 
 src_install () {
 	default
-	dodoc *.txt *.md
+	doman "${PN}.1"
+	einstalldocs
 }
