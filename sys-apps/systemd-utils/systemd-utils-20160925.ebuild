@@ -16,6 +16,7 @@ IUSE="amazon cmsis-dap bitcoind btrfs crashplan ipv6 rssh storj tahoe kodi youtu
 
 DEPEND=""
 RDEPEND="${DEPEND}
+	sys-apps/systemd
 	cmsis-dap? ( dev-embedded/openocd[cmsis-dap] )
 	btrfs? ( sys-fs/btrfs-progs )
 	kodi? ( media-tv/kodi )
