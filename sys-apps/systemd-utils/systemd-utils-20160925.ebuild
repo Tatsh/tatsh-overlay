@@ -12,7 +12,7 @@ SRC_URI="https://github.com/kylemanna/systemd-utils/archive/${MY_HASH}.tar.gz ->
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="amazon cmsis-dap bitcoind btrfs crashplan ipv6 rssh storj tahoe kodi youtube papertrail"
+IUSE="amazon cmsis-dap btrfs crashplan ipv6 rssh storj tahoe kodi youtube papertrail"
 
 DEPEND=""
 RDEPEND="${DEPEND}
@@ -20,7 +20,6 @@ RDEPEND="${DEPEND}
 	cmsis-dap? ( dev-embedded/openocd[cmsis-dap] )
 	btrfs? ( sys-fs/btrfs-progs )
 	kodi? ( media-tv/kodi )
-	bitcoind? ( net-p2p/bitcoind )
 	youtube? ( www-client/chromium )"
 BDEPEND=""
 
@@ -41,7 +40,6 @@ src_prepare() {
 src_install() {
 	insinto /$(get_libdir)/systemd/system
 	use amazon && doins units/amazon-cloud-drive.service
-	use bitcoind && doins units/bitcoind.service
 	use btrfs && doins units/btrfs*
 	use crashplan && doins units/crashplan.timer
 	use ipv6 && doins units/ipv6*.service units/ping6*
