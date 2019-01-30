@@ -22,10 +22,9 @@ S="${WORKDIR}/${PN}-${MY_HASH}"
 DOCS=( README.asciidoc )
 
 src_install() {
-	for i in templates kwin-rules schema; do
-		insinto "/usr/share/${PN}/${i}"
-		doins "${i}/"*
-	done
+	insinto /usr/share/${PN}
+	doins kwin-rules/*
+	doins schema/*.kateschema
 	insinto /usr/share/org.kde.syntax-highlighting/syntax
 	doins syntax/*.xml
 	insinto /usr/share/apps/ktexteditor_snippets/data
