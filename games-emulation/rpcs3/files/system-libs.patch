@@ -161,18 +161,23 @@ index 37ba0da32..e86c27795 100644
  
  # TODO: do real installation, including copying directory structure
 diff --git a/Vulkan/CMakeLists.txt b/Vulkan/CMakeLists.txt
-index 03d681280..ca52d0e22 100644
+index 03d681280..049c5abc1 100644
 --- a/Vulkan/CMakeLists.txt
 +++ b/Vulkan/CMakeLists.txt
-@@ -1,4 +1,11 @@
+@@ -1,4 +1,16 @@
 -set(SKIP_GLSLANG_INSTALL ON CACHE BOOL "Skip installation" FORCE)
 -set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "Builds glslangValidator and spirv-remap" FORCE)
 -set(ENABLE_HLSL OFF CACHE BOOL "Enables HLSL input support" FORCE)
 -add_subdirectory(glslang)
 +if(USE_SYSTEM_GLSLANG)
-+  find_file(GLSLANG_LIBRARIES
-+    NAMES libHLSL.a libglslang.a libOGLCompiler.a libOSDependent.a libSPIRV.a libSPVRemapper.a
++  find_file(GLSLANG_LIBRARY
++    NAMES libglslang.a
 +    HINTS /usr/lib)
++  find_file(GLSLANG_LIBRARY_HLSL NAMES libHLSL.a HINTS /usr/lib)
++  find_file(GLSLANG_LIBRARY_OGLCOMPILER NAMES libOGLCompiler.a HINTS /usr/lib)
++  find_file(GLSLANG_LIBRARY_OSDEPENDENT NAMES libOSDependent.a HINTS /usr/lib)
++  find_file(GLSLANG_LIBRARY_SPIRV NAMES libSPIRV.a HINTS /usr/lib)
++  find_file(GLSLANG_LIBRARY_SPVREMAPPER NAMES libSPVRemapper.a HINTS /usr/lib)
 +  find_file(GLSLANG_INCLUDE ShaderLang.h HINTS /usr/include/glslang/Public)
 +else()
 +  set(SKIP_GLSLANG_INSTALL ON CACHE BOOL "Skip installation" FORCE)
@@ -198,7 +203,7 @@ index e2429d116..63ce3473a 100644
  # ASMJIT should have a option for disabling installing and this wouldnt
  # be required to avoid installing ASMJIT...
 diff --git a/rpcs3/CMakeLists.txt b/rpcs3/CMakeLists.txt
-index d08771780..1a0aea215 100644
+index d08771780..5c6e30df9 100644
 --- a/rpcs3/CMakeLists.txt
 +++ b/rpcs3/CMakeLists.txt
 @@ -60,8 +60,9 @@ set_target_properties(rpcs3
@@ -208,7 +213,7 @@ index d08771780..1a0aea215 100644
 +target_include_directories(rpcs3 PUBLIC "${GLEW_INCLUDE_DIRS}")
  target_link_libraries(rpcs3 rpcs3_emu rpcs3_ui)
 -target_link_libraries(rpcs3 3rdparty::discord-rpc 3rdparty::qt5 3rdparty::hidapi)
-+target_link_libraries(rpcs3 3rdparty::discord-rpc 3rdparty::qt5 hidapi-libusb hidapi-hidraw GLEW)
++target_link_libraries(rpcs3 3rdparty::discord-rpc 3rdparty::qt5 hidapi-libusb hidapi-hidraw GLEW "${GLSLANG_LIBRARY}" "${GLSLANG_LIBRARY_HLSL}" "${GLSLANG_LIBRARY_OGLCOMPILER}" "${GLSLANG_LIBRARY_OSDEPENDENT}" "${GLSLANG_LIBRARY_SPIRV}" "${GLSLANG_LIBRARY_SPVREMAPPER}")
  target_link_libraries(rpcs3 ${ADDITIONAL_LIBS})
  
  # Win resource file
