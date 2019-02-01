@@ -20,6 +20,7 @@ REQUIRED_USE="wayland? ( vulkan )"
 
 DEPEND="virtual/jpeg:=
 	media-libs/libpng:=
+	sys-devel/asmjit
 	pulseaudio? ( media-sound/pulseaudio )
 	evdev? ( dev-libs/libevdev )
 	vulkan? ( dev-util/vulkan-headers )
