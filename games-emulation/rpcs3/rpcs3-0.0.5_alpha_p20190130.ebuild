@@ -67,23 +67,24 @@ src_configure() {
 		-DUSE_PULSE=$(usex pulseaudio)
 		-DUSE_LIBEVDEV=$(usex evdev)
 		-DUSE_VULKAN=$(usex vulkan)
-		-DUSE_SYSTEM_ZLIB=ON
-		-DUSE_SYSTEM_LIBPNG=ON
-		-DUSE_SYSTEM_FFMPEG=ON
-		-DWITH_LLVM=ON
-		-DBUILD_LLVM_SUBMODULE=ON
-		-DUSE_SYSTEM_PUGIXML=ON
-		-DUSE_SYSTEM_HIDAPI=ON
-		-DUSE_SYSTEM_YAMLCPP=ON
+		-DUSE_SYSTEM_ZLIB=yes
+		-DUSE_SYSTEM_LIBPNG=yes
+		-DUSE_SYSTEM_FFMPEG=yes
+		-DWITH_LLVM=yes
+		-DBUILD_LLVM_SUBMODULE=yes
+		-DUSE_SYSTEM_PUGIXML=yes
+		-DUSE_SYSTEM_HIDAPI=yes
+		-DUSE_SYSTEM_YAMLCPP=yes
 		# FIXME Discord RPC is packaged as static libs
 		# Should be built https://github.com/discordapp/discord-rpc
 		-DUSE_DISCORD_RPC=OFF
-		-DUSE_SYSTEM_GLSLANG=ON
-		-DUSE_SYSTEM_ASMJIT=ON
-		-DUSE_SYSTEM_XXHASH=ON
+		-DUSE_SYSTEM_GLSLANG=yes
+		-DUSE_SYSTEM_ASMJIT=yes
+		-DUSE_SYSTEM_XXHASH=yes
+		-DBUILD_SHARED_LIBS=no
 	)
 	if use wayland; then
-		mycmakeargs+=( -DUSE_WAYLAND=ON )
+		mycmakeargs+=( -DUSE_WAYLAND=yes )
 	fi
 	cmake-utils_src_configure
 }
