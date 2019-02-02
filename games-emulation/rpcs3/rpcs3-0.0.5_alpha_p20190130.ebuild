@@ -14,7 +14,7 @@ SRC_URI="https://github.com/RPCS3/rpcs3/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="alsa pulseaudio evdev vulkan +dbus wayland"
+IUSE="alsa pulseaudio evdev vulkan +dbus wayland discord-presence"
 
 REQUIRED_USE="wayland? ( vulkan )"
 
@@ -39,7 +39,8 @@ DEPEND="virtual/jpeg:=
 	dev-qt/qtcore:5
 	dbus? ( dev-qt/qtdbus )
 	dev-qt/qtgui
-	wayland? ( dev-libs/wayland )"
+	wayland? ( dev-libs/wayland )
+	discord-presence? ( dev-libs/discord-rpc )"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
@@ -78,7 +79,7 @@ src_configure() {
 		-DUSE_SYSTEM_YAMLCPP=yes
 		# FIXME Discord RPC is packaged as static libs
 		# Should be built https://github.com/discordapp/discord-rpc
-		-DUSE_DISCORD_RPC=OFF
+		-DUSE_DISCORD_RPC=$(usex discord-presence)
 		-DUSE_SYSTEM_GLSLANG=yes
 		-DUSE_SYSTEM_ASMJIT=yes
 		-DUSE_SYSTEM_XXHASH=yes
@@ -100,4 +101,13 @@ export XDG_CURRENT_DESKTOP=qt
 EOF
 	newbin rpcs3.sh rpcs3
 	einstalldocs
+}
+
+pkg_postinst() {
+	if use discord-presence; then
+		einfo
+		einfo 'Discord presence requires a running Discord client.'
+		einfo 'To install the official client, emerge net-im/discord-bin'
+		einfo
+	fi
 }
