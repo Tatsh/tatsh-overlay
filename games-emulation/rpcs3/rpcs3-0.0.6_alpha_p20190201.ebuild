@@ -6,7 +6,7 @@ inherit cmake-utils
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/"
-MY_HASH="039f8e1f9d6afe8df6ff47af894e07e702c38fc1"
+MY_HASH="8920eda3217f5e320b26588662825ca10b244f85"
 LLVM_HASH="5c906fd1694e3c8f0b9548581d275ef01dc0972a"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/llvm/archive/${LLVM_HASH}.tar.gz -> ${P}-llvm.tar.gz"
