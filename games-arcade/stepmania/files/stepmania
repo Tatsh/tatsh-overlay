@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd /usr/share/stepmania
+cd /usr/lib/stepmania
 ./stepmania

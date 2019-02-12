@@ -7,26 +7,33 @@ EAPI=6
 inherit cmake-utils autotools eutils
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
+MY_HASH="4f008c4483f94f8d31191dbf5fc7e5116b40e42a"
 HOMEPAGE="http://www.stepmania.com/"
-SRC_URI="https://github.com/stepmania/stepmania/archive/v${PV/_beta/-b}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/Tatsh/stepmania/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +ogg +sse2 +wav +xinerama bundled-songs bundled-courses minimaid parallel-port profiling"
+IUSE="+alsa +crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +networking +ogg
+	+wav +xinerama +sdl bundled-songs bundled-courses lto minimaid
+	parallel-port profiling pulseaudio"
 
 DEPEND="gtk? ( x11-libs/gtk+:2 )
-	media-libs/alsa-lib
+	alsa? ( media-libs/alsa-lib )
 	mp3? ( media-libs/libmad )
-	ogg? ( media-libs/libvorbis )
+	ogg? ( media-libs/libogg media-libs/libvorbis )
+	pulseaudio? ( media-sound/pulseaudio )
 	media-libs/libpng
 	jpeg? ( virtual/jpeg )
+	xinerama? ( x11-libs/libXinerama )
+	sdl? ( media-libs/libsdl2 )
 	>=virtual/ffmpeg-9-r1
 	media-libs/glew
 	x11-libs/libXrandr
 	virtual/opengl"
 
-S="${WORKDIR}/${P/_beta/-b}"
+S="${WORKDIR}/${PN}-${MY_HASH}"
+CMAKE_MAKEFILE_GENERATOR=ninja
 
 src_prepare() {
 	einfo 'Removing useless instructions.txt files ...'
@@ -54,6 +61,8 @@ src_configure() {
 		-DWITH_SYSTEM_FFMPEG=ON
 		-DWITH_FULL_RELEASE=ON
 		-DWITH_PORTABLE_TOMCRYPT=OFF
+		-DWITH_ALSA=$(usex alsa)
+		-DWITH_PULSEAUDIO=$(usex pulse)
 		-DWITH_CRASH_HANDLER=$(usex crash-handler)
 		-DWITH_GLES2=$(usex gles2)
 		-DWITH_GPL_LIBS=$(usex gpl)
@@ -61,32 +70,42 @@ src_configure() {
 		-DWITH_JPEG=$(usex jpeg)
 		-DWITH_MP3=$(usex mp3)
 		-DWITH_OGG=$(usex ogg)
-		-DWITH_SSE2=$(usex sse2)
 		-DWITH_WAV=$(usex wav)
 		-DWITH_XINERAMA=$(usex xinerama)
 		-DWITH_MINIMAID=$(usex minimaid)
 		-DWITH_PARALLEL_PORT=$(usex parallel-port)
 		-DWITH_PROFILING=$(usex profiling)
+		-DWITH_SDL=$(usex sdl)
+		-DWITH_SYSTEM_GLEW=yes
+		-DWITH_SYSTEM_TOMMATH=yes
+		-DWITH_SYSTEM_MAD=yes
+		-DWITH_SYSTEM_ZLIB=yes
+		-DWITH_SYSTEM_JSONCPP=no # dev-libs/jsoncpp is not a valid version
+		-DWITH_SYSTEM_PNG=no  # crashes with 1.6
+		-DWITH_SYSTEM_JPEG=yes
+		-DWITH_SYSTEM_PCRE=yes
+		-DWITH_SYSTEM_OGG=yes
+		-DWITH_NETWORKING=$(usex networking)
+		-DWITH_LTO=$(usex lto)
 	)
 	cmake-utils_src_configure
 }
 
 src_install() {
-	into /usr
 	dobin "${FILESDIR}/${PN}"
-	exeinto /usr/share/${PN}
+	exeinto /usr/$(get_libdir)/${PN}
 	doexe "${PN}" || die "dobin failed"
 	if use gtk; then
 		doexe GtkModule.so || die "doexe GtkModule.so failed"
 	fi
-	insinto /usr/share/${PN}
+	insinto /usr/$(get_libdir)/${PN}
 	! [ -d Announcers ] && mkdir Announcers
 	doins -r Announcers BackgroundEffects BackgroundTransitions \
 		BGAnimations Characters Courses Data NoteSkins Songs Themes || die "doins failed"
 	dodoc -r Docs/* || die "dodoc failed"
 
 	newicon "Themes/default/Graphics/Common window icon.png" ${PN}.png
-	make_desktop_entry ${PN} Stepmania
+	make_desktop_entry ${PN} StepMania
 }
 
 # kate: replace-tabs false
