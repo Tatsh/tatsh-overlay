@@ -15,8 +15,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+alsa +crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +networking +ogg
-	+wav +xinerama +sdl bundled-songs bundled-courses lto minimaid
-	parallel-port profiling pulseaudio"
+	+wav +xinerama +sdl +xrandr +X bundled-songs bundled-courses lto minimaid
+	parallel-port profiling pulseaudio jack"
 
 DEPEND="gtk? ( x11-libs/gtk+:2 )
 	alsa? ( media-libs/alsa-lib )
@@ -29,7 +29,9 @@ DEPEND="gtk? ( x11-libs/gtk+:2 )
 	sdl? ( media-libs/libsdl2 )
 	>=virtual/ffmpeg-9-r1
 	media-libs/glew
-	x11-libs/libXrandr
+	xrandr? ( x11-libs/libXrandr )
+	X? ( x11-libs/libX11 )
+	jack? ( virtual/jack )
 	virtual/opengl"
 
 S="${WORKDIR}/${PN}-${MY_HASH}"
@@ -57,12 +59,12 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs=(
-		-DWITH_FFMPEG=OFF
-		-DWITH_SYSTEM_FFMPEG=ON
-		-DWITH_FULL_RELEASE=ON
-		-DWITH_PORTABLE_TOMCRYPT=OFF
+		-DWITH_FFMPEG=yes
+		-DWITH_SYSTEM_FFMPEG=yes
+		-DWITH_FULL_RELEASE=yes
+		-DWITH_PORTABLE_TOMCRYPT=no
 		-DWITH_ALSA=$(usex alsa)
-		-DWITH_PULSEAUDIO=$(usex pulse)
+		-DWITH_PULSEAUDIO=$(usex pulseaudio)
 		-DWITH_CRASH_HANDLER=$(usex crash-handler)
 		-DWITH_GLES2=$(usex gles2)
 		-DWITH_GPL_LIBS=$(usex gpl)
@@ -87,6 +89,9 @@ src_configure() {
 		-DWITH_SYSTEM_OGG=yes
 		-DWITH_NETWORKING=$(usex networking)
 		-DWITH_LTO=$(usex lto)
+		-DWITH_XRANDR=$(usex xrandr)
+		-DWITH_JACK=$(usex jack)
+		-DWITH_X11=$(usex X)
 	)
 	cmake-utils_src_configure
 }
