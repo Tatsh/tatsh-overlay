@@ -7,9 +7,9 @@ EAPI=6
 inherit cmake-utils autotools eutils
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
-MY_HASH="9382d139a21150fe495ee3c326443d70b135f869"
+MY_HASH="b8a79cd0f61c0109b68a23a324c45891851bcc4c"
 HOMEPAGE="http://www.stepmania.com/"
-SRC_URI="https://github.com/Tatsh/stepmania/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
