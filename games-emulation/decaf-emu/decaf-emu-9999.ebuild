@@ -10,7 +10,7 @@ EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 
 LICENSE="GPL-3 BitstreamVera OFL-1.1"
 SLOT="0"
-IUSE="devtools ffmpeg +opengl qt5 +sdl +vulkan"
+IUSE="devtools ffmpeg +opengl qt5 +sdl +vulkan +X"
 
 DEPEND="net-misc/curl
 	dev-libs/openssl
@@ -23,14 +23,11 @@ DEPEND="net-misc/curl
 	qt5? (
 		dev-qt/qtsvg:5
 		dev-qt/qtwidgets:5 )
-	opengl? ( virtual/opengl )"
-# >=dev-libs/cereal-1.2.2
-# >=dev-libs/glbinding-2.1.4
-# >=dev-libs/imgui-1.6.2
-# >=dev-libs/libbinrec-0.1
-# >=dev-libs/libfmt-5.2.0
-# >=dev-libs/pugixml-1.9
-# >=dev-libs/spdlog-1.1.0
+	opengl? ( virtual/opengl )
+	X? ( media-gfx/icoutils )
+	dev-libs/libfmt
+	dev-libs/glbinding
+	dev-libs/pugixml"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-util/cmake"
 
@@ -39,16 +36,8 @@ REQUIRED_USE="qt5? ( sdl )
 	devtools? ( sdl )
 	vulkan"
 
-CMAKE_MAKEFILE_GENERATOR=emake
-
-DOCS=(
-	README.md
-	LICENSE.md
-	resources/fonts/DejaVuSansMono.LICENSE
-	resources/fonts/NotoSansCJK.LICENSE )
-
 PATCHES=(
-	"${FILESDIR}/${PN}-527.patch"
+	"${FILESDIR}/system-libs.patch"
 )
 
 decaf-use() {
@@ -60,6 +49,11 @@ decaf-use() {
 	echo "-DDECAF_${out}=${state}"
 }
 
+src_prepare() {
+	rm -fR libraries/{fmt,glbinding,glslang,ovsocket,pugixml}
+	cmake-utils_src_prepare
+}
+
 src_configure() {
 	local mycmakeargs=(
 		$(decaf-use qt5 qt)
@@ -68,6 +62,7 @@ src_configure() {
 		$(decaf-use ffmpeg)
 		$(decaf-use vulkan)
 		$(decaf-use devtools build_tools)
+		-DDECAF_INSTALL_DOCSDIR_OVERRIDE=/usr/share/doc/${P}
 	)
 	cmake-utils_src_configure
 }

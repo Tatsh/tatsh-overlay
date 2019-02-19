@@ -1,0 +1,362 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2cf3f067..30990ee3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -49,6 +49,10 @@ else()
+     set(DECAF_INSTALL_RESOURCESDIR "${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/resources")
+ endif()
+ 
++if(DECAF_INSTALL_DOCSDIR_OVERRIDE)
++    set(DECAF_INSTALL_DOCSDIR "${DECAF_INSTALL_DOCSDIR_OVERRIDE}")
++endif()
++
+ if(DECAF_JIT_ALLOW_PROFILING)
+     add_definitions(-DDECAF_JIT_ALLOW_PROFILING)
+ endif()
+diff --git a/libraries/CMakeLists.txt b/libraries/CMakeLists.txt
+index 900ef06f..3650ee0a 100644
+--- a/libraries/CMakeLists.txt
++++ b/libraries/CMakeLists.txt
+@@ -45,11 +45,13 @@ set_target_properties(fixed_point PROPERTIES
+     INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/fixed_point/include")
+ 
+ # fmt
+-add_subdirectory(fmt)
+-set_target_properties(fmt PROPERTIES FOLDER libraries)
++find_library(FMTLIB fmt)
++if(FMTLIB MATCHES "FMTLIB-NOTFOUND")
++    message(FATAL_ERROR "Need library")
++endif()
+ 
+ # glbinding
+-find_package(glbinding QUIET)
++find_package(glbinding REQUIRED)
+ 
+ if(NOT glbinding_FOUND)
+     set(GLBINDING_DIR "glbinding")
+@@ -117,29 +119,15 @@ endif()
+ 
+ # glslang
+ if(DECAF_VULKAN)
+-    set(GLSLANG_DIR "glslang")
+-    externalproject_add(glslang
+-        SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/${GLSLANG_DIR}"
+-        CMAKE_CACHE_ARGS
+-            -DCMAKE_C_COMPILER:string=${CMAKE_C_COMPILER}
+-            -DCMAKE_C_FLAGS:string=${CMAKE_C_FLAGS}
+-            -DCMAKE_CXX_COMPILER:string=${CMAKE_CXX_COMPILER}
+-            -DCMAKE_CXX_FLAGS:string=${CMAKE_CXX_FLAGS}
+-            -DBUILD_SHARED_LIBS:string=off
+-            -DENABLE_HLSL:string=off
+-            -DENABLE_GLSLANG_BINARIES:string=off
+-            -DENABLE_OPT:string=on
+-            -DENABLE_SPVREMAPPER:string=off
+-            -DSKIP_GLSLANG_INSTALL:string=on
+-        INSTALL_COMMAND ""
+-        )
+-    externalproject_get_property(glslang BINARY_DIR)
+-    externalproject_add_step(glslang
+-        copy_to_binary
+-        DEPENDEES build
+-        DEPENDERS install
+-        COMMAND ${CMAKE_COMMAND} -E copy_directory "${BINARY_DIR}/SPIRV/${CMAKE_CFG_INTDIR}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CMAKE_CFG_INTDIR}")
+-    set_target_properties(glslang PROPERTIES FOLDER libraries)
++    # HLSL OGLCompiler OSDependent SPVRemapper
++    find_library(GLSLANG glslang)
++    if(GLSLANG MATCHES "GLSLANG-NOTFOUND")
++        message(FATAL_ERROR "Need glslang")
++    endif()
++    find_library(SPIRV SPIRV)
++    if (SPIRV MATCHES "SPIRV-NOTFOUND")
++        message(FATAL_ERROR "Need SPIRV")
++    endif()
+ 
+     if (MSVC)
+         set(SPIRV_IMPORTED_LOCATION
+@@ -149,7 +137,7 @@ if(DECAF_VULKAN)
+             IMPORTED_LOCATION_MINSIZEREL "${BINARY_DIR}/SPIRV/MinSizeRel/${CMAKE_FIND_LIBRARY_PREFIXES}SPIRV${CMAKE_FIND_LIBRARY_SUFFIXES}")
+     else ()
+         set(SPIRV_IMPORTED_LOCATION
+-            IMPORTED_LOCATION "${BINARY_DIR}/SPIRV/${CMAKE_FIND_LIBRARY_PREFIXES}SPIRV.a")
++            IMPORTED_LOCATION "${SPIRV}")
+     endif ()
+ 
+     add_library(spirv_import STATIC IMPORTED GLOBAL)
+@@ -189,11 +177,10 @@ set_target_properties(peglib PROPERTIES
+     INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/cpp-peglib")
+ 
+ # pugixml
+-add_library(pugixml STATIC
+-    "pugixml/src/pugixml.cpp")
+-set_target_properties(pugixml PROPERTIES
+-    FOLDER libraries
+-    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/pugixml/src")
++find_library(PUGIXML pugixml)
++if(PUGIXML MATCHES "PUGIXML-NOTFOUND")
++    message(FATAL_ERROR "Need pugixml")
++endif()
+ 
+ # spdlog
+ add_library(spdlog INTERFACE IMPORTED GLOBAL)
+diff --git a/src/common-sdl/decafsdl_opengl.cpp b/src/common-sdl/decafsdl_opengl.cpp
+index 433c9b33..2513f509 100644
+--- a/src/common-sdl/decafsdl_opengl.cpp
++++ b/src/common-sdl/decafsdl_opengl.cpp
+@@ -6,7 +6,7 @@
+ #include <common/platform_dir.h>
+ #include <fmt/format.h>
+ #include <glbinding/Binding.h>
+-#include <glbinding/Meta.h>
++#include <glbinding-aux/Meta.h>
+ #include <libdecaf/decaf_log.h>
+ #include <libgpu/gpu_opengldriver.h>
+ #include <libgpu/gpu_config.h>
+@@ -29,7 +29,7 @@ getGlDebugSource(gl::GLenum source)
+    case gl::GL_DEBUG_SOURCE_OTHER:
+       return "OTHER";
+    default:
+-      return glbinding::Meta::getString(source);
++      return glbinding::aux::Meta::getString(source);
+    }
+ }
+ 
+@@ -56,7 +56,7 @@ getGlDebugType(gl::GLenum severity)
+    case gl::GL_DEBUG_TYPE_OTHER:
+       return "OTHER";
+    default:
+-      return glbinding::Meta::getString(severity);
++      return glbinding::aux::Meta::getString(severity);
+    }
+ }
+ 
+@@ -73,7 +73,7 @@ getGlDebugSeverity(gl::GLenum severity)
+    case gl::GL_DEBUG_SEVERITY_NOTIFICATION:
+       return "NOTIF";
+    default:
+-      return glbinding::Meta::getString(severity);
++      return glbinding::aux::Meta::getString(severity);
+    }
+ }
+ 
+@@ -143,31 +143,20 @@ DecafSDLOpenGL::debugMessageCallback(gl::GLenum source,
+ void
+ DecafSDLOpenGL::initialiseContext()
+ {
+-   glbinding::Binding::initialize();
++   glbinding::Binding::initialize(nullptr);
+ 
+    if (gpu::config()->debug.debug_enabled) {
+-      glbinding::setCallbackMaskExcept(glbinding::CallbackMask::After | glbinding::CallbackMask::ParametersAndReturnValue, { "glGetError" });
+-      glbinding::setAfterCallback([&](const glbinding::FunctionCall &call) {
++      glbinding::Binding::setCallbackMaskExcept(glbinding::CallbackMask::After | glbinding::CallbackMask::ParametersAndReturnValue, { "glGetError" });
++      glbinding::Binding::setAfterCallback([&](const glbinding::FunctionCall &call) {
+          auto error = glbinding::Binding::GetError.directCall();
+ 
+          if (error != gl::GL_NO_ERROR) {
+             fmt::memory_buffer out;
+             fmt::format_to(out, "{}(", call.function->name());
+ 
+-            for (unsigned i = 0; i < call.parameters.size(); ++i) {
+-               fmt::format_to(out, "{}", call.parameters[i]->asString());
+-               if (i < call.parameters.size() - 1) {
+-                  fmt::format_to(out, ", ");
+-               }
+-            }
+-
+             fmt::format_to(out, ")");
+ 
+-            if (call.returnValue) {
+-               fmt::format_to(out, " -> {}", call.returnValue->asString());
+-            }
+-
+-            mLog->error("OpenGL error: {} with {}", glbinding::Meta::getString(error), out.data());
++            mLog->error("OpenGL error: {} with {}", glbinding::aux::Meta::getString(error), out.data());
+          }
+       });
+ 
+diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
+index 7970d763..068f4952 100644
+--- a/src/common/CMakeLists.txt
++++ b/src/common/CMakeLists.txt
+@@ -10,7 +10,7 @@ GroupSources(src)
+ 
+ target_link_libraries(common
+     fixed_point
+-    fmt::fmt
++    "${FMTLIB}"
+     gsl
+     spdlog)
+ 
+diff --git a/src/decaf-cli/CMakeLists.txt b/src/decaf-cli/CMakeLists.txt
+index c59f0d3f..03fc83f4 100644
+--- a/src/decaf-cli/CMakeLists.txt
++++ b/src/decaf-cli/CMakeLists.txt
+@@ -5,13 +5,18 @@ include_directories(".")
+ file(GLOB_RECURSE SOURCE_FILES *.cpp)
+ file(GLOB_RECURSE HEADER_FILES *.h)
+ 
+-add_executable(decaf-cli ${SOURCE_FILES} ${HEADER_FILES})
++find_library(GLBINDING_AUX glbinding-aux)
++if(GLBINDING_AUX MATCHES "GLBINDING_AUX-NOTFOUND")
++    message(FATAL_ERROR "Need glbinding-aux")
++endif()
+ 
++add_executable(decaf-cli ${SOURCE_FILES} ${HEADER_FILES})
+ target_link_libraries(decaf-cli
+     common
+     libconfig
+     libdecaf
+     cpptoml
+-    excmd)
++    excmd
++    ${GLBINDING_AUX})
+ 
+ install(TARGETS decaf-cli RUNTIME DESTINATION "${DECAF_INSTALL_BINDIR}")
+diff --git a/src/decaf-qt/CMakeLists.txt b/src/decaf-qt/CMakeLists.txt
+index 0aa3d4b3..4cbf2350 100644
+--- a/src/decaf-qt/CMakeLists.txt
++++ b/src/decaf-qt/CMakeLists.txt
+@@ -33,6 +33,11 @@ GroupSources(ui)
+ target_include_directories(decaf-qt PRIVATE
+    ${SDL2_INCLUDE_DIRS})
+ 
++find_library(GLBINDING_AUX glbinding-aux)
++if(GLBINDING_AUX MATCHES "GLBINDING_AUX-NOTFOUND")
++    message(FATAL_ERROR "Need glbinding-aux")
++endif()
++
+ target_link_libraries(decaf-qt
+    common
+    common-sdl
+@@ -44,7 +49,8 @@ target_link_libraries(decaf-qt
+    ${EXCMD_LIBRARIES}
+    ${SDL2_LIBRARIES}
+    Qt5::Svg
+-   Qt5::Widgets)
++   Qt5::Widgets
++   ${GLBINDING_AUX})
+ 
+ if(MSVC)
+    target_link_libraries(decaf-qt
+diff --git a/src/decaf-sdl/CMakeLists.txt b/src/decaf-sdl/CMakeLists.txt
+index 5b09bb88..34b17e40 100644
+--- a/src/decaf-sdl/CMakeLists.txt
++++ b/src/decaf-sdl/CMakeLists.txt
+@@ -28,7 +28,8 @@ target_link_libraries(decaf-sdl
+     libdecaf
+     cpptoml
+     excmd
+-    ${SDL2_LIBRARIES})
++    ${SDL2_LIBRARIES}
++    ${GLBINDING_AUX})
+ 
+ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+     target_link_libraries(decaf-sdl X11)
+diff --git a/src/libgpu/src/opengl/opengl_draw.cpp b/src/libgpu/src/opengl/opengl_draw.cpp
+index 82e222d9..151def18 100644
+--- a/src/libgpu/src/opengl/opengl_draw.cpp
++++ b/src/libgpu/src/opengl/opengl_draw.cpp
+@@ -5,7 +5,7 @@
+ #include <common/decaf_assert.h>
+ #include <fmt/format.h>
+ #include <glbinding/gl/gl.h>
+-#include <glbinding/Meta.h>
++#include <glbinding-aux/Meta.h>
+ 
+ namespace opengl
+ {
+@@ -65,7 +65,6 @@ bool GLDriver::checkReadyDraw()
+       auto fbStatus = gl::glCheckFramebufferStatus(gl::GL_FRAMEBUFFER);
+ 
+       if (fbStatus != gl::GL_FRAMEBUFFER_COMPLETE) {
+-         gLog->warn("Draw attempted with an incomplete framebuffer, status {}.", glbinding::Meta::getString(fbStatus));
+          return false;
+       }
+ 
+@@ -358,12 +357,11 @@ GLDriver::decafClearColor(const latte::pm4::DecafClearColor &data)
+    auto status = gl::glCheckNamedFramebufferStatus(mColorClearFrameBuffer, gl::GL_DRAW_FRAMEBUFFER);
+ 
+    if (status != gl::GL_FRAMEBUFFER_COMPLETE) {
+-      gLog->warn("Skipping clear with invalid color buffer, status {}.", glbinding::Meta::getString(status));
+       return;
+    }
+ 
+    // Clear color buffer
+-   glColorMaski(0, gl::GL_TRUE, gl::GL_TRUE, gl::GL_TRUE, gl::GL_TRUE);
++   gl::glColorMaski(0, gl::GL_TRUE, gl::GL_TRUE, gl::GL_TRUE, gl::GL_TRUE);
+    mColorBufferCache[0].mask = 0xF; // Recheck mask on next color buffer update
+    gl::glDisable(gl::GL_SCISSOR_TEST);
+ 
+@@ -397,7 +395,6 @@ GLDriver::decafClearDepthStencil(const latte::pm4::DecafClearDepthStencil &data)
+    auto status = gl::glCheckNamedFramebufferStatus(mDepthClearFrameBuffer, gl::GL_DRAW_FRAMEBUFFER);
+ 
+    if (status != gl::GL_FRAMEBUFFER_COMPLETE) {
+-      gLog->warn("Skipping clear with invalid depth buffer, status {}.", glbinding::Meta::getString(status));
+       return;
+    }
+ 
+diff --git a/src/libgpu/src/opengl/opengl_surface.cpp b/src/libgpu/src/opengl/opengl_surface.cpp
+index 8049bb6d..f863f2fe 100644
+--- a/src/libgpu/src/opengl/opengl_surface.cpp
++++ b/src/libgpu/src/opengl/opengl_surface.cpp
+@@ -9,7 +9,7 @@
+ #include <common/murmur3.h>
+ #include <fmt/format.h>
+ #include <glbinding/gl/gl.h>
+-#include <glbinding/Meta.h>
++#include <glbinding-aux/Meta.h>
+ #include <libcpu/mem.h>
+ 
+ namespace opengl
+diff --git a/src/libgpu/src/spirv/spirv_spvbuilder.h b/src/libgpu/src/spirv/spirv_spvbuilder.h
+index 1bdf2198..1a5cecef 100644
+--- a/src/libgpu/src/spirv/spirv_spvbuilder.h
++++ b/src/libgpu/src/spirv/spirv_spvbuilder.h
+@@ -1,7 +1,7 @@
+ #pragma once
+ #ifdef DECAF_VULKAN
+-#include <SpvBuilder.h>
+-#include <GLSL.std.450.h>
++#include <SPIRV/SpvBuilder.h>
++#include <SPIRV/GLSL.std.450.h>
+ 
+ namespace spirv
+ {
+diff --git a/src/libgpu/src/spirv/spirv_transpiler.cpp b/src/libgpu/src/spirv/spirv_transpiler.cpp
+index 9749a857..3a6534f1 100644
+--- a/src/libgpu/src/spirv/spirv_transpiler.cpp
++++ b/src/libgpu/src/spirv/spirv_transpiler.cpp
+@@ -1,7 +1,7 @@
+ #ifdef DECAF_VULKAN
+ #include "spirv_transpiler.h"
+ 
+-#include <disassemble.h>
++#include <SPIRV/disassemble.h>
+ #include <regex>
+ 
+ namespace spirv
+diff --git a/tools/pm4-replay/CMakeLists.txt b/tools/pm4-replay/CMakeLists.txt
+index a3dd847c..8b7ffd32 100644
+--- a/tools/pm4-replay/CMakeLists.txt
++++ b/tools/pm4-replay/CMakeLists.txt
+@@ -10,6 +10,10 @@ file(GLOB_RECURSE HEADER_FILES *.h)
+ 
+ add_executable(pm4-replay ${SOURCE_FILES} ${HEADER_FILES})
+ set_target_properties(pm4-replay PROPERTIES FOLDER tools)
++find_library(GLBINDING_AUX glbinding-aux)
++if(GLBINDING_AUX MATCHES "GLBINDING_AUX-NOTFOUND")
++    message(FATAL_ERROR "Need glbinding-aux")
++endif()
+ 
+ target_include_directories(pm4-replay PRIVATE
+     ${SDL2_INCLUDE_DIRS})
+@@ -20,7 +24,8 @@ target_link_libraries(pm4-replay
+     libdecaf
+     cpptoml
+     excmd
+-    ${SDL2_LIBRARIES})
++    ${SDL2_LIBRARIES}
++    ${GLBINDING_AUX})
+ 
+ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+     target_link_libraries(pm4-replay X11)
