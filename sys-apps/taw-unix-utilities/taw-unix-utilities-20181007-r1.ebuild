@@ -31,16 +31,8 @@ EXTRAS=(
 	xnorm
 )
 
-ruby_add_rdepend "dev-ruby/color
-	dev-ruby/fileutils
-	dev-ruby/nokogiri
-	dev-ruby/optimist
-	dev-ruby/pry
-	dev-ruby/rake
-	dev-ruby/sqlite3
-	google? ( dev-ruby/hpricot )
-	extras? ( dev-ruby/moneta )"
-RDEPEND="git? ( dev-vcs/git )
+RDEPEND="
+	git? ( dev-vcs/git )
 	google? ( dev-ruby/hpricot )
 	kindle? ( app-text/calibre )
 	mp3? ( media-video/ffmpeg[mp3] media-sound/id3v2 media-sound/sox )
@@ -56,6 +48,15 @@ RDEPEND="git? ( dev-vcs/git )
 		sys-apps/file
 		sys-apps/groff
 		virtual/man )"
+ruby_add_rdepend "dev-ruby/color
+	dev-ruby/fileutils
+	dev-ruby/nokogiri
+	dev-ruby/optimist
+	dev-ruby/pry
+	dev-ruby/rake
+	dev-ruby/sqlite3
+	google? ( dev-ruby/hpricot )
+	extras? ( dev-ruby/moneta )"
 DEPEND="${RDEPEND}"
 BDEPEND=""
 
@@ -80,7 +81,8 @@ all_ruby_prepare() {
 	rm "${prefix}/bin/rename" "${prefix}/bin/tac" \
 		"${prefix}/bin/terminal_title" "${prefix}/bin/volume" \
 		"${prefix}/bin/xrmdir" "${prefix}/bin/osx"* "${prefix}/bin/flickr"*
-	! use git && rm "${prefix}/bin/git_hash"
+	mv "${prefix}/bin/git_hash" "${prefix}/bin/git-hash"
+	! use git && rm "${prefix}/bin/git-hash"
 	! use kindle && rm "${prefix}/bin/kindle_sync"
 	! use lastfm && rm "${prefix}/bin/lastfm_status"
 	! use youtube && rm "${prefix}/bin/open_youtube"
