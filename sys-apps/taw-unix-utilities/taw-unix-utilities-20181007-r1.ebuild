@@ -16,14 +16,13 @@ SRC_URI="https://github.com/taw/unix-utilities/archive/${MY_HASH}.tar.gz -> ${P}
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="git kindle lastfm youtube ruby google progress soup nine-gag tfl extras mp3"
+IUSE="git kindle lastfm youtube ruby google progress soup jpeg tfl extras mp3
+	png zlib"
 
 EXTRAS=(
 	annotate_sgf
-	convert_to_png
 	countdown
 	e
-	gzip_stream
 	media_size
 	rot13
 	unall
@@ -36,7 +35,7 @@ RDEPEND="
 	google? ( dev-ruby/hpricot )
 	kindle? ( app-text/calibre )
 	mp3? ( media-video/ffmpeg[mp3] media-sound/id3v2 media-sound/sox )
-	nine-gag? ( media-gfx/imagemagick )
+	jpeg? ( media-gfx/imagemagick )
 	progress? ( !sys-apps/progress )
 	youtube? ( x11-misc/xdg-utils )
 	extras? (
@@ -90,9 +89,11 @@ all_ruby_prepare() {
 	! use google && rm "${prefix}/bin/process_gplus_takeout"
 	! use progress && rm "${prefix}/bin/progress"
 	! use soup && rm "${prefix}/bin/since_soup"
-	! use nine-gag && rm "${prefix}/bin/strip_9gag"
+	! use jpeg && rm "${prefix}/bin/strip_9gag"
 	! use tfl && rm "${prefix}/bin/tfl_travel_time"
 	! use mp3 && rm "${prefix}/bin/speedup_mp3"
+	! use png && rm "${prefix}/bin/convert_to_png"
+	! use zlib && rm "${prefix}/bin/gzip_stream"
 	if ! use extras; then
 		for name in ${EXTRAS[*]}; do
 			rm "${prefix}/bin/${name}"
