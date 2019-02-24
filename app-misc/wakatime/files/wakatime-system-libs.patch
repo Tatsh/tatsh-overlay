@@ -1,0 +1,179 @@
+diff --git a/wakatime/api.py b/wakatime/api.py
+index a98ebeb..ec56398 100644
+--- a/wakatime/api.py
++++ b/wakatime/api.py
+@@ -19,23 +19,16 @@ from .compat import u, is_py3, json
+ from .constants import API_ERROR, AUTH_ERROR, SUCCESS, UNKNOWN_ERROR
+ 
+ from .offlinequeue import Queue
+-from .packages.requests.exceptions import RequestException
++from requests.exceptions import RequestException
+ from .session_cache import SessionCache
+ from .utils import get_hostname, get_user_agent
+-from .packages import tzlocal
++import tzlocal
+ 
+ 
+ log = logging.getLogger('WakaTime')
+ 
+ 
+-try:
+-    from .packages import requests
+-except ImportError:  # pragma: nocover
+-    log.traceback(logging.ERROR)
+-    print(traceback.format_exc())
+-    log.error('Please upgrade Python to the latest version.')
+-    print('Please upgrade Python to the latest version.')
+-    sys.exit(UNKNOWN_ERROR)
++import requests
+ 
+ 
+ def send_heartbeats(heartbeats, args, configs, use_ntlm_proxy=False):
+@@ -88,7 +81,7 @@ def send_heartbeats(heartbeats, args, configs, use_ntlm_proxy=False):
+     proxies = {}
+     if args.proxy:
+         if use_ntlm_proxy:
+-            from .packages.requests_ntlm import HttpNtlmAuth
++            from requests_ntlm import HttpNtlmAuth
+             username = args.proxy.rsplit(':', 1)
+             password = ''
+             if len(username) == 2:
+diff --git a/wakatime/arguments.py b/wakatime/arguments.py
+index d02b57a..794c9a7 100644
+--- a/wakatime/arguments.py
++++ b/wakatime/arguments.py
+@@ -21,7 +21,7 @@ from .__about__ import __version__
+ from .compat import basestring
+ from .configs import parseConfigFile
+ from .constants import AUTH_ERROR, DEFAULT_SYNC_OFFLINE_ACTIVITY
+-from .packages import argparse
++import argparse
+ 
+ 
+ class FileAction(argparse.Action):
+diff --git a/wakatime/compat.py b/wakatime/compat.py
+index 18dc141..3369d5e 100644
+--- a/wakatime/compat.py
++++ b/wakatime/compat.py
+@@ -98,10 +98,7 @@ except ImportError:  # pragma: nocover
+         return sys.modules[name]
+ 
+ 
+-try:
+-    from .packages import simplejson as json
+-except (ImportError, SyntaxError):  # pragma: nocover
+-    import json
++import json
+ 
+ 
+ class Popen(subprocess.Popen):
+diff --git a/wakatime/configs.py b/wakatime/configs.py
+index a9060b1..d1880d9 100644
+--- a/wakatime/configs.py
++++ b/wakatime/configs.py
+@@ -19,10 +19,7 @@ from .compat import open
+ from .constants import CONFIG_FILE_PARSE_ERROR
+ 
+ 
+-try:
+-    import configparser
+-except ImportError:  # pragma: nocover
+-    from .packages import configparser
++import configparser
+ 
+ 
+ def getConfigFile():
+diff --git a/wakatime/logger.py b/wakatime/logger.py
+index 9bb51fe..f2dd0c3 100644
+--- a/wakatime/logger.py
++++ b/wakatime/logger.py
+@@ -14,15 +14,9 @@ import os
+ import traceback
+ 
+ from .compat import u
+-from .packages.requests.packages import urllib3
+-try:
+-    from collections import OrderedDict  # pragma: nocover
+-except ImportError:  # pragma: nocover
+-    from .packages.ordereddict import OrderedDict
+-try:
+-    from .packages import simplejson as json  # pragma: nocover
+-except (ImportError, SyntaxError):  # pragma: nocover
+-    import json
++import urllib3
++from collections import OrderedDict
++import json
+ 
+ 
+ class JsonFormatter(logging.Formatter):
+diff --git a/wakatime/main.py b/wakatime/main.py
+index a1a6dca..895f632 100644
+--- a/wakatime/main.py
++++ b/wakatime/main.py
+@@ -19,7 +19,6 @@ import traceback
+ 
+ pwd = os.path.dirname(os.path.abspath(__file__))
+ sys.path.insert(0, os.path.dirname(pwd))
+-sys.path.insert(0, os.path.join(pwd, 'packages'))
+ 
+ from .__about__ import __version__
+ from .api import send_heartbeats
+diff --git a/wakatime/projects/subversion.py b/wakatime/projects/subversion.py
+index ac6487b..e05f7c4 100644
+--- a/wakatime/projects/subversion.py
++++ b/wakatime/projects/subversion.py
+@@ -16,10 +16,7 @@ from subprocess import PIPE
+ 
+ from .base import BaseProject
+ from ..compat import u, open, Popen
+-try:
+-    from collections import OrderedDict
+-except ImportError:  # pragma: nocover
+-    from ..packages.ordereddict import OrderedDict  # pragma: nocover
++from collections import OrderedDict
+ 
+ 
+ log = logging.getLogger('WakaTime')
+diff --git a/wakatime/session_cache.py b/wakatime/session_cache.py
+index dbbfd9b..7a5270a 100644
+--- a/wakatime/session_cache.py
++++ b/wakatime/session_cache.py
+@@ -21,9 +21,7 @@ try:
+ except ImportError:  # pragma: nocover
+     HAS_SQL = False
+ 
+-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'packages'))
+-
+-from .packages import requests
++import requests
+ 
+ 
+ log = logging.getLogger('WakaTime')
+diff --git a/wakatime/stats.py b/wakatime/stats.py
+index 258e343..1466c56 100644
+--- a/wakatime/stats.py
++++ b/wakatime/stats.py
+@@ -20,7 +20,7 @@ from .dependencies import DependencyParser
+ from .exceptions import SkipHeartbeat
+ from .language_priorities import LANGUAGES
+ 
+-from .packages.pygments.lexers import (
++from pygments.lexers import (
+     _iter_lexerclasses,
+     _fn_matches,
+     basename,
+@@ -28,12 +28,8 @@ from .packages.pygments.lexers import (
+     find_lexer_class,
+     get_lexer_by_name,
+ )
+-from .packages.pygments.modeline import get_filetype_from_buffer
+-
+-try:
+-    from .packages import simplejson as json  # pragma: nocover
+-except (ImportError, SyntaxError):  # pragma: nocover
+-    import json
++from pygments.modeline import get_filetype_from_buffer
++import json
+ 
+ 
+ log = logging.getLogger('WakaTime')
