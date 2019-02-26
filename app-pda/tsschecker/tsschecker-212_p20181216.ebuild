@@ -52,6 +52,6 @@ src_install() {
 	dobin saveblobs.sh
 	insinto /etc/${PN}
 	doins devices.txt
-	rm "${D}/usr/lib64/libjssy.a"
+	rm "${D}/usr/$(get_libdir)/libjssy.a"
 	rmdir "${D}/usr/lib64"
 }
