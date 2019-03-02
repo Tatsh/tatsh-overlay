@@ -2,13 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=6
 
 inherit font
 
 DESCRIPTION="High quality Arabic Naskh-style font"
 HOMEPAGE="http://www.amirifont.org/"
-SRC_URI="http://files.tatsh.net/${PN}-${PV}.tar.bz2"
+DISTNAME_PN="Amiri"
+SRC_URI="https://github.com/alif-type/${PN}/releases/download/${PV}/${DISTNAME_PN}-${PV}.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -19,4 +20,5 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 FONT_SUFFIX="ttf"
-DOCS="documentation/NEWS-Arabic.txt documentation/README-Arabic.txt"
+
+S="${WORKDIR}/${DISTNAME_PN}-${PV}"
