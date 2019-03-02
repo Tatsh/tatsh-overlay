@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=6
+EAPI=7
 PYTHON_COMPAT=( python3_{4,5,6,7} )
 
 inherit bash-completion-r1 distutils-r1
@@ -16,14 +16,14 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND=">=dev-python/pyxdg-0.25-r1"
+RDEPEND=">=dev-python/pyxdg-0.25-r1[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 
 DOCS=( COPYING CHANGELOG )
 
+PATCHES=( "${FILESDIR}/${PN}-script.patch" )
+
 python_install_all() {
 	distutils-r1_python_install_all
-	exeinto /usr/bin
-	doexe "${FILESDIR}/mimeo"
 	newbashcomp "${FILESDIR}/mimeo-completion.sh" mimeo
 }
