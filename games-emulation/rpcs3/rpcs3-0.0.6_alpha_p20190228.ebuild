@@ -6,7 +6,7 @@ inherit cmake-utils
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/"
-MY_HASH="8920eda3217f5e320b26588662825ca10b244f85"
+MY_HASH="ebb24375d15e96a3c0a7a49a02d1ad6e5832d8e8"
 LLVM_HASH="5c906fd1694e3c8f0b9548581d275ef01dc0972a"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/llvm/archive/${LLVM_HASH}.tar.gz -> ${P}-llvm.tar.gz"
@@ -14,7 +14,7 @@ SRC_URI="https://github.com/RPCS3/rpcs3/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="alsa pulseaudio evdev vulkan +dbus wayland discord-presence"
+IUSE="alsa pulseaudio evdev vulkan +dbus wayland"
 
 REQUIRED_USE="wayland? ( vulkan )"
 
@@ -40,7 +40,7 @@ DEPEND="virtual/jpeg:=
 	dbus? ( dev-qt/qtdbus )
 	dev-qt/qtgui
 	wayland? ( dev-libs/wayland )
-	discord-presence? ( dev-libs/discord-rpc )"
+	dev-libs/discord-rpc"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
@@ -77,9 +77,9 @@ src_configure() {
 		-DUSE_SYSTEM_PUGIXML=yes
 		-DUSE_SYSTEM_HIDAPI=yes
 		-DUSE_SYSTEM_YAMLCPP=yes
-		# FIXME Discord RPC is packaged as static libs
-		# Should be built https://github.com/discordapp/discord-rpc
-		-DUSE_DISCORD_RPC=$(usex discord-presence)
+		# FIXME Need patch to add back discord-presence USE flag
+		# -DUSE_DISCORD_RPC=$(usex discord-presence)
+		-DUSE_DISCORD_RPC=yes
 		-DUSE_SYSTEM_GLSLANG=yes
 		-DUSE_SYSTEM_ASMJIT=yes
 		-DUSE_SYSTEM_XXHASH=yes
@@ -103,11 +103,11 @@ EOF
 	einstalldocs
 }
 
-pkg_postinst() {
-	if use discord-presence; then
-		einfo
-		einfo 'Discord presence requires a running Discord client.'
-		einfo 'To install the official client, emerge net-im/discord-bin'
-		einfo
-	fi
-}
+# pkg_postinst() {
+# 	if use discord-presence; then
+# 		einfo
+# 		einfo 'Discord presence requires a running Discord client.'
+# 		einfo 'To install the official client, emerge net-im/discord-bin'
+# 		einfo
+# 	fi
+# }
