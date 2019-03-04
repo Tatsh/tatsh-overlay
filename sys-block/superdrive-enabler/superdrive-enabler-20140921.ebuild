@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=7
-inherit toolchain-funcs
+inherit linux-info toolchain-funcs
 
 DESCRIPTION="Hack for Apple's Superdrive to work with other systems than OS X."
 HOMEPAGE="https://github.com/onmomo/superdrive-enabler"
@@ -11,7 +11,7 @@ MY_HASH="809e81ed19af1acc776b88f91c05c4763f3665ac"
 SRC_URI="https://github.com/onmomo/superdrive-enabler/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}-${MY_HASH}"
 
-LICENSE="MIT" # ? https://github.com/onmomo/superdrive-enabler/issues/1
+LICENSE="public-domain" # https://github.com/onmomo/superdrive-enabler/issues/1
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="+udev"
@@ -19,14 +19,20 @@ IUSE="+udev"
 DEPEND=""
 RDEPEND="${DEPEND}"
 
+DOCS=( README.md )
+
+CONFIG_CHECK="~BLK_DEV_SR"
+
 src_prepare() {
 	sed -e '7s/\(.*\)/#include <unistd.h>/' -i src/superdriveEnabler.c
 	default
 }
 
 src_compile() {
-	# Makefile does too much, so compile manually here
-	$(tc-getCC) -o ${PN} ${CFLAGS} ${LDFLAGS} src/superdriveEnabler.c
+	emake CCMD=$(tc-getCC) \
+		OUTPUT_PATH="$(pwd -P)/" \
+		CXXFLAGS="$CXXFLAGS" \
+		LDFLAGS="$LDFLAGS"
 }
 
 src_install() {
