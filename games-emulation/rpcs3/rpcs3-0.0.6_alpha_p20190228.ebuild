@@ -30,6 +30,7 @@ DEPEND="virtual/jpeg:=
 	dev-util/glslang
 	sys-libs/zlib
 	dev-cpp/yaml-cpp
+	dev-libs/pugixml
 	dev-libs/xxhash
 	dev-libs/hidapi
 	virtual/ffmpeg
