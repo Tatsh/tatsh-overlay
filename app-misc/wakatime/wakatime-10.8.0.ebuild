@@ -26,8 +26,6 @@ DEPEND="${RDEPEND}"
 PATCHES=( "${FILESDIR}/${PN}-system-libs.patch" )
 
 python_prepare_all() {
-	ls -la
-	pwd -P
 	rm -fR wakatime/packages/
 	distutils-r1_python_prepare_all
 }
