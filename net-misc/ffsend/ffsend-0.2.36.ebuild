@@ -261,9 +261,7 @@ RDEPEND=""
 
 DOCS=( README.md )
 
-cargo_src_install() {
-	cargo install --path . -j $(makeopts_jobs) --root="${D}/usr" $(usex debug --debug "") "$@" \
-		|| die "cargo install failed"
-	rm -f "${D}/usr/.crates.toml"
+src_install() {
+	cargo_src_install --path ./
 	einstalldocs
 }
