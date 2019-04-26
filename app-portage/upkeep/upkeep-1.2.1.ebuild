@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_{5,6,7} )
 inherit distutils-r1
 
 DESCRIPTION="Helper commands to automate updating with Portage."
-HOMEPAGE="https://github.com/Tatsh/pezu"
+HOMEPAGE="https://github.com/Tatsh/upkeep"
 SRC_URI="https://github.com/Tatsh/upkeep/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 RESTRICT="mirror"
 
