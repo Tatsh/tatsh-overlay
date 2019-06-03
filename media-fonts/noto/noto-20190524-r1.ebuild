@@ -1,4 +1,4 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -7,15 +7,17 @@ inherit font
 DESCRIPTION="Google's font family that aims to support all the world's languages"
 HOMEPAGE="https://www.google.com/get/noto/ https://github.com/googlei18n/noto-fonts"
 
-COMMIT="d7af81e614086435102cca95961b141b3530a027"
+COMMIT="34e98229863e627d0f841e124a8657d5d0348b04"
 SRC_URI="https://github.com/googlei18n/noto-fonts/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="OFL-1.1"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~mips ~ppc ~ppc64 ~sparc ~x86"
+# Extra allows to optionally reduce disk usage even returning to tofu
+# issue as described in https://www.google.com/get/noto/
 IUSE="brahmi music coptic cuneiform cypriot deseret duployan linear
 	+display +symbols runic phagspa pau-cin-hau old-arabian hieroglyphs
-	+mono ancient"
+	+mono ancient +extra"
 IUSE_IL10N=( ar ban bax ber bku blt bn bo bsq bug bya ccp chr cja cmr dv
 	eo ff gu he hi hoc hy ii ja jv ka khb km kn ko kv lo mai men mjl ml mn mni
 	mww my new nod nqo or osa pa rej sa sat saz sd si so sq srb su syc syl ta
@@ -172,4 +174,8 @@ src_install() {
 	# Don't install in separate subdirs
 	FONT_S="${S}/unhinted/" font_src_install
 	FONT_S="${S}/hinted/" font_src_install
+
+	# Allow to drop some fonts optionally for people that want to save
+	# disk space. Following ArchLinux options.
+	use extra || rm -rf "${ED}"/usr/share/fonts/noto/Noto*{Condensed,SemiBold,Extra}*.ttf
 }
