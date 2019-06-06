@@ -15,14 +15,11 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND} virtual/jre:1.8"
 BDEPEND=""
 RESTRICT="strip"
 
 DOCS=(
-	lib/jre/ASSEMBLY_EXCEPTION
-	lib/jre/LICENSE
-	lib/jre/THIRD_PARTY_README
 	doc/licenses/bounce-license.txt
 	doc/licenses/jakarta-oro-license.txt
 	doc/EULA.rtf
@@ -30,13 +27,16 @@ DOCS=(
 
 S="${WORKDIR}/charles"
 
+src_prepare() {
+	rm -fR lib/jre
+	default
+}
+
 src_install() {
-	dodir /opt/${PN}
-	cp -a lib/ "${D}"/opt/${PN}/
-	exeinto /opt/${PN}/bin
-	doexe bin/${PN} bin/add-to-java-cacerts.sh
-	dosym /opt/${PN}/bin/${PN} /usr/bin/${PN}
-	dosym /opt/${PN}/bin/add-to-java-cacerts.sh /usr/bin/${PN}-add-to-java-cacerts.sh
+	dobin bin/${PN} bin/add-to-java-cacerts.sh
+
+	dodir /usr/share/java/${PN}
+	cp -a lib/* "${D}"/usr/share/java/${PN}/
 
 	make_desktop_entry "${PN} %F" Charles charles-proxy 'Network;Development;WebDevelopment;Java' 'GenericName=Web Debugging Proxy\nStartupNotify=true\nTerminal=false\nStartupWMClass=com-xk72-charles-gui-MainWithClassLoader\nMimeType=application/x-charles-savedsession;application/x-charles-savedsession+xml;application/x-charles-savedsession+json;application/har+json;application/vnd.tcpdump.pcap;application/x-charles-trace'
 
