@@ -25,7 +25,7 @@ src_compile () {
 }
 
 src_install () {
-	default
+	emake DESTDIR="${D}" PREFIX=/usr install
 	doman "${PN}.1"
 	einstalldocs
 }
