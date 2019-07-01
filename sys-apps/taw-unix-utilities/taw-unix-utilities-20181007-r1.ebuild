@@ -50,7 +50,7 @@ RDEPEND="
 ruby_add_rdepend "dev-ruby/color
 	dev-ruby/fileutils
 	dev-ruby/nokogiri
-	dev-ruby/optimist
+	dev-ruby/optimist:3
 	dev-ruby/pry
 	dev-ruby/rake
 	dev-ruby/sqlite3
