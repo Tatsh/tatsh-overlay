@@ -22,18 +22,15 @@ SLOT="0"
 IUSE="udev +worker"
 
 RDEPEND=">=app-pda/libplist-1.9
-	virtual/libusb:1"
+	virtual/libusb:1
+	acct-group/plugdev
+	acct-user/usbmuxd"
 DEPEND="${RDEPEND}
 	worker? ( >=app-pda/libusbmuxd-1.0.9 )
 	>=app-pda/libimobiledevice-1.1.6
 	virtual/pkgconfig"
 
 DOCS=( AUTHORS README )
-
-pkg_setup() {
-	enewgroup plugdev
-	enewuser usbmux -1 -1 -1 "usb,plugdev"
-}
 
 src_prepare() {
 	eautoreconf
