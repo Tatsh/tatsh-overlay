@@ -5,8 +5,8 @@ EAPI=7
 
 inherit acct-user
 
-DESCRIPTION="usbmuxd user"
-ACCT_USER_ID=106
+DESCRIPTION="usbmux user"
+ACCT_USER_ID=107
 ACCT_USER_GROUPS=( plugdev )
 
 acct-user_add_deps
