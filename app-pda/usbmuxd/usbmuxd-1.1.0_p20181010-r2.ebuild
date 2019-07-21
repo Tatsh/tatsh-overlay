@@ -24,7 +24,7 @@ IUSE="udev +worker"
 RDEPEND=">=app-pda/libplist-1.9
 	virtual/libusb:1
 	acct-group/plugdev
-	acct-user/usbmuxd"
+	acct-user/usbmux"
 DEPEND="${RDEPEND}
 	worker? ( >=app-pda/libusbmuxd-1.0.9 )
 	>=app-pda/libimobiledevice-1.1.6
