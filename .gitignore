@@ -5,3 +5,5 @@
 cross-avr/
 cross-i686-pc-mingw32/
 profiles/categories
+# Ignore for now
+dev-util/electron/
