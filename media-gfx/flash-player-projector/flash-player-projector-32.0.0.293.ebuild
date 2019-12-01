@@ -29,7 +29,12 @@ src_install() {
 	for s in 48 32 24 16; do
 		newicon -s "$s" "usr/share/icons/hicolor/${s}x${s}/apps/flash-player-properties.png" "${PN}.png"
 	done
-	make_desktop_entry flashplayer 'Flash Player Projector' "$PN" AudioVideo
+	make_desktop_entry \
+		'flashplayer %F' \
+		'Flash Player Projector' \
+		"$PN" \
+		AudioVideo \
+		"GenericName=Video player\nMimeType=application/x-shockwave-flash;x-scheme-handler/http;x-scheme-handler/https;"
 	einstalldocs
 }
 
