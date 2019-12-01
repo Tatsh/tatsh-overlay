@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit desktop
+inherit desktop xdg-utils
 
 DESCRIPTION="Stand-alone viewer of SWF files."
 HOMEPAGE="https://www.adobe.com/support/flashplayer/debug_downloads.html"
@@ -24,10 +24,19 @@ QA_PREBUILT="/usr/bin/flashplayer"
 DOCS=( LGPL/LGPL.txt LGPL/notice.txt license.pdf )
 
 src_install() {
+	local s
 	dobin flashplayer
 	for s in 48 32 24 16; do
 		newicon -s "$s" "usr/share/icons/hicolor/${s}x${s}/apps/flash-player-properties.png" "${PN}.png"
 	done
 	make_desktop_entry flashplayer 'Flash Player Projector' "$PN" AudioVideo
 	einstalldocs
+}
+
+pkg_postinst() {
+	xdg_icon_cache_update
+}
+
+pkg_postrm() {
+	xdg_icon_cache_update
 }
