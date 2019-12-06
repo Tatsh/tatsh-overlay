@@ -97,7 +97,9 @@ src_configure() {
 }
 
 src_install() {
-	dobin "${FILESDIR}/${PN}"
+	cp "${FILESDIR}/${PN}" "${PN}-script"
+	sed -i -e "s:@LIBDIR@:$(get_libdir):" "${PN}-script"
+	newexe "${PN}-script" "${PN}"
 	exeinto /usr/$(get_libdir)/${PN}
 	doexe "${PN}" || die "dobin failed"
 	if use gtk; then
@@ -107,6 +109,12 @@ src_install() {
 	! [ -d Announcers ] && mkdir Announcers
 	doins -r Announcers BackgroundEffects BackgroundTransitions \
 		BGAnimations Characters Courses Data NoteSkins Songs Themes || die "doins failed"
+	if ! use bundled-songs; then
+		keepdir /usr/$(get_libdir)/${PN}/Songs
+	fi
+	if ! use bundled-courses; then
+		keepdir /usr/$(get_libdir)/${PN}/Courses
+	fi
 	dodoc -r Docs/* || die "dodoc failed"
 
 	newicon "Themes/default/Graphics/Common window icon.png" ${PN}.png

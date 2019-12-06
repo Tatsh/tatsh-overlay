@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd /usr/lib/stepmania
+cd /usr/@LIBDIR@/stepmania
 ./stepmania
