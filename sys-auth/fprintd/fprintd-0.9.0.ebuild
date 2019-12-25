@@ -8,7 +8,7 @@ inherit autotools pam systemd
 DESCRIPTION="D-Bus service to access fingerprint readers"
 HOMEPAGE="https://cgit.freedesktop.org/libfprint/fprintd/"
 MY_PV="V_$(ver_rs 0- _)"
-SRC_URI="https://cgit.freedesktop.org/libfprint/${PN}/snapshot/${MY_PV}.tar.bz2 -> ${P}.tar.bz2"
+SRC_URI="https://gitlab.freedesktop.org/libfprint/${PN}/-/archive/${MY_PV}/${PN}-${MY_PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -29,7 +29,7 @@ DEPEND="${RDEPEND}
 	doc? ( dev-libs/libxml2 dev-libs/libxslt )
 "
 
-S=${WORKDIR}/${MY_PV}
+S="${WORKDIR}/${PN}-${MY_PV}"
 
 src_prepare() {
 	default
