@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
-PYTHON_COMPAT=( python2_7 python3_{4,5} )
+EAPI=7
+PYTHON_COMPAT=( python3_{5,6,7} )
 
 inherit distutils-r1
 
@@ -16,8 +16,16 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-RDEPEND=">=dev-python/cached-property-1.0.0
->=dev-python/osextension-0.1.5
->=dev-python/requests-2.6.0
->=dev-python/sh-1.09"
-DEPEND="${RDEPEND}"
+DEPEND="dev-python/argcomplete
+dev-python/bencodepy
+dev-python/cached-property
+dev-python/lockfile
+dev-python/paramiko
+dev-python/requests
+dev-python/requests-futures
+dev-python/six
+dev-python/unidecode"
+RDEPEND="${DEPEND}"
+BDEPEND=""
+
+DISTUTILS_USE_SETUPTOOLS="rdepend"
