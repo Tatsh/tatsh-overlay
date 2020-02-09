@@ -28,7 +28,7 @@ RDEPEND="${DEPEND}
 	virtual/opengl"
 BDEPEND=""
 
-QA_PREBUILT="/opt/${PN}/R${PN:1}"
+QA_PREBUILT="/opt/${PN}/R${PN:1} /opt/${PN}/plugins/*/*.so"
 DOCS=( additional_license_information.txt )
 
 S="${WORKDIR}"
@@ -41,8 +41,8 @@ src_unpack() {
 }
 
 src_install() {
-	cd "${WORKDIR}/squashfs-root" || die "Failed to install"
-	sed -r -e 's/libsodium\.so\.18/libsodium.so.23/g' -i Ripcord
+	cd "${WORKDIR}/squashfs-root" || die "Failed to cd"
+	sed -r -e 's/libsodium\.so\.18/libsodium.so.23/g' -i Ripcord || die "Failed to patch"
 	exeinto /opt/${PN}
 	doexe "R${PN:1}"
 	insinto /opt/${PN}
@@ -56,4 +56,14 @@ EOF
 	newbin "${PN}.sh" "${PN}"
 	make_desktop_entry "${PN}" "R${PN:1}" "$PN" "Network;InstantMessaging;"
 	einstalldocs
+	dodir /opt/${PN}/plugins/iconengines
+	cp plugins/iconengines/libqsvgicon.so "${ED}/opt/${PN}/plugins/iconengines" || die "Copy failed"
+	dodir /opt/${PN}/plugins/platforms
+	cp plugins/platforms/libqxcb.so "${ED}/opt/${PN}/plugins/platforms" || die "Copy failed"
+	cat > ${ED}/opt/${PN}/qt.conf <<EOF
+[Paths]
+Prefix = ./
+Plugins = plugins
+Translations = translations
+EOF
 }
