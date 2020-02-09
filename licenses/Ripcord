@@ -1,0 +1,35 @@
+Shareware Redistribution Rules for Ripcord
+Last updated 2019-11-04 12:25 UTC
+Ripcord is shareware, which means users are given permission to redistribute it to other users, with a few restrictions. This page describes what you are allowed to do and not allowed to do when redistributing Ripcord.
+
+This page uses the term “release” as a noun to refer to the downloadable copies of Ripcord that are available on the main page of the Ripcord website. For Windows and Mac, these are .zip files which contain the software. For Linux, this is a .AppImage file, which is a type of executable self-mounting or self-extracting zip-like file which contains more software within.
+
+This page uses the term “bundle” as a verb to refer to: wrapping Ripcord in an installer with something else, modifying the Ripcord release files to add something else, directly modifying the Ripcord program binary to add something else, and other common uses of the term “bundle” when applied to software.
+
+You are allowed to:
+
+Redistribute any of the releases of Ripcord, unmodified.
+Example: you may host a copy of an official Ripcord release on your website or a package manager.
+Automate the installation, updating, and removal of Ripcord using package management software.
+Example: a command-line utility in a Linux distribution that provides a way to install and uninstall releases of Ripcord in some distribution-specific way.
+You are not allowed to:
+
+Modify a release of Ripcord and then redistribute the modified copy.
+Claim that you created or own the rights to Ripcord.
+Misrepresent or obscure the origin or authorship of Ripcord.
+Bundle Ripcord with malware, adware, or software intended to gather and sell or profit from user data.
+Bundle Ripcord with something that bypasses or interferes with the shareware trial and licensing mechanism within Ripcord.
+Bundle Ripcord with a license key for Ripcord.
+Charge money for a redistributed copy of Ripcord, or charge money for use of Ripcord with a package manager.
+On Linux, a special exception which allows you to redistribute modified copies of Ripcord is granted for the following case:
+
+For the Linux releases of Ripcord, when using Ripcord with a package management system, you are allowed to extract the contents of the AppImage and create a package of the software with equivalent or updated versions of shared library files (typically .so) for the purpose of improved compatibility with a Linux distribution or that package management system, to modify the Ripcord program binary to change the paths from which dynamic libraries are loaded for use in that package management system, and to redistribute that package.
+But you are not allowed to use shared library files which bypass or interfere with the shareware trial and licensing mechanism in Ripcord, or which break any of the other rules above.
+Similarly, you are not allowed to modify the Ripcord program binary to bypass the licensing mechanism, add malware, or break any of the other rules above.
+If you need additional special exceptions—for example, to patch the main Ripcord binary in a way not allowed above in order to provide compatibility with a particular Linux distribution—please get in touch with me via email.
+
+If you do not follow these rules, your permission to redistribute and/or repackage Ripcord is revoked. These rules are intended to protect Ripcord’s quality, safety, and viability as a product and source of income.
+
+As long as you follow to these, you have permission to redistribute Ripcord, unless I (the owner of Ripcord) have revoked your permission. These rules may be changed without notice.
+
+—Andrew Richards cancel@cancel.fm Acyclic Systems LLC
