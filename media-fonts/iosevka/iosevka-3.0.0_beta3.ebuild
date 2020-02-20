@@ -12,7 +12,7 @@ MY_P="${MY_P/_/-}"
 MY_PV="${PV/beta/beta.}"
 MY_PV="${MY_PV/_/-}"
 SRC_URI="https://github.com/be5invis/${PN}/releases/download/v${MY_PV}/01-${MY_P}.zip
-https://github.com/be5invis/${PN}/releases/download/v${MY_PV}/02-${PN}-term-${MY_PV}.zip"
+https://github.com/be5invis/${PN}/releases/download/v${MY_PV}/04-${PN}-term-lig-${MY_PV}.zip"
 
 LICENSE="OFL-1.1"
 SLOT="0"
