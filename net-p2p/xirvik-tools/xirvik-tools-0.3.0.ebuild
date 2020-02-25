@@ -17,14 +17,16 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 DEPEND="dev-python/argcomplete
-dev-python/bencodepy
 dev-python/cached-property
 dev-python/lockfile
 dev-python/paramiko
 dev-python/requests
 dev-python/requests-futures
-dev-python/six
-dev-python/unidecode"
+dev-python/unidecode
+dev-python/humanize
+dev-python/importlib_metadata
+dev-python/typing-extensions
+dev-python/benc"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
