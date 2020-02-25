@@ -25,7 +25,7 @@ dev-python/requests-futures
 dev-python/unidecode
 dev-python/humanize
 dev-python/importlib_metadata
-dev-python/typing-extensions
+>=dev-python/typing-extensions-3.7.4.1
 dev-python/benc"
 RDEPEND="${DEPEND}"
 BDEPEND=""
