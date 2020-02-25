@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_7 )
+PYTHON_COMPAT=( python3_{6..8} )
 inherit distutils-r1
 
 DESCRIPTION="Asynchronous Python HTTP for Humans."
