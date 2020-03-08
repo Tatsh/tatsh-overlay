@@ -51,7 +51,7 @@ src_install() {
 	cat > "${PN}.sh" <<EOF
 #!/usr/bin/env bash
 cd /opt/${PN}
-./R${PN:1}
+exec ./R${PN:1}
 EOF
 	newbin "${PN}.sh" "${PN}"
 	make_desktop_entry "${PN}" "R${PN:1}" "$PN" "Network;InstantMessaging;"
