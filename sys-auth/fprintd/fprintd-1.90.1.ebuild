@@ -41,7 +41,7 @@ src_configure() {
 	local emesonargs=(
 		-Dsystemd_system_unit_dir=$(systemd_get_systemunitdir)
 		-Dman=true
-		-Dgtk_doc=false
+		-Dgtk_doc=$(usex gtk-doc true false)
 	)
 	meson_src_configure
 }
