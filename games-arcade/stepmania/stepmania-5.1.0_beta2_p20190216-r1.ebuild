@@ -99,6 +99,7 @@ src_configure() {
 src_install() {
 	cp "${FILESDIR}/${PN}" "${PN}-script"
 	sed -i -e "s:@LIBDIR@:$(get_libdir):" "${PN}-script"
+	exeinto /usr/bin
 	newexe "${PN}-script" "${PN}"
 	exeinto /usr/$(get_libdir)/${PN}
 	doexe "${PN}" || die "dobin failed"
