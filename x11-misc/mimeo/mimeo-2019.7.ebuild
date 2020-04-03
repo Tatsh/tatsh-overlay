@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI=7
-PYTHON_COMPAT=( python3_{4,5,6,7} )
+PYTHON_COMPAT=( python3_{6..8} )
 
 inherit bash-completion-r1 distutils-r1
 
