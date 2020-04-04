@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=7
-PYTHON_COMPAT=( python2_7 python3_{6..8} )
+PYTHON_COMPAT=( python3_{6..8} )
 
 inherit distutils-r1
 
@@ -16,8 +16,7 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="ntlm"
 
-RDEPEND="dev-python/configparser[${PYTHON_USEDEP}]
-	dev-python/pygments[${PYTHON_USEDEP}]
+RDEPEND="dev-python/pygments[${PYTHON_USEDEP}]
 	dev-python/pytz[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
 	dev-python/simplejson[${PYTHON_USEDEP}]
