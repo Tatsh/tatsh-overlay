@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python2_7 python3_{4..7} )
+PYTHON_COMPAT=( python2_7 python3_{6..8} )
 inherit distutils-r1
 
 DESCRIPTION="An anti-forensic kill-switch that waits for a change on your USB ports and then immediately shuts down your computer."
