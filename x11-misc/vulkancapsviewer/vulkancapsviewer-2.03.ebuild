@@ -13,11 +13,13 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-qt/qtcore dev-qt/qtnetwork dev-qt/qtwidgets dev-qt/qtgui"
+DEPEND="dev-qt/qtcore
+	dev-qt/qtnetwork
+	dev-qt/qtwidgets
+	dev-qt/qtgui
+	>=media-libs/vulkan-loader-1.2.133"
 RDEPEND="${DEPEND}"
 BDEPEND=""
-
-PATCHES=( "${FILESDIR}/55.patch" )
 
 S="${WORKDIR}/VulkanCapsViewer-${PV}"
 
@@ -27,7 +29,5 @@ src_prepare() {
 }
 
 src_install() {
-	exeinto /usr/bin/
-	doexe Win32/Release/vulkanCapsViewer
-	default
+	emake INSTALL_ROOT="${D}" install
 }
