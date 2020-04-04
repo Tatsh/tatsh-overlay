@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
-PYTHON_COMPAT=( python2_7 python3_{4,5,6,7} )
+EAPI=7
+PYTHON_COMPAT=( python2_7 python3_{6..8} )
 
 inherit distutils-r1
 
@@ -16,16 +16,22 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="ntlm"
 
-RDEPEND="dev-python/requests[${PYTHON_USEDEP}]
+RDEPEND="dev-python/configparser[${PYTHON_USEDEP}]
 	dev-python/pygments[${PYTHON_USEDEP}]
 	dev-python/pytz[${PYTHON_USEDEP}]
+	dev-python/requests[${PYTHON_USEDEP}]
+	dev-python/simplejson[${PYTHON_USEDEP}]
 	dev-python/tzlocal[${PYTHON_USEDEP}]
 	ntlm? ( dev-python/requests-ntlm[${PYTHON_USEDEP}] )"
 DEPEND="${RDEPEND}"
 
-PATCHES=( "${FILESDIR}/${PN}-system-libs.patch" )
-
 python_prepare_all() {
+	while IFS=$'\n' read -r name
+	do
+		sed -r -e 's/from \.packages (import.*)/\1/g' \
+			   -e 's/from \.+packages\.(py2[67]\.)?(.*)/from \2/g' \
+			-i "$name"
+	done < <(fgrep -RHn .packages wakatime | cut -d : -f 1)
 	rm -fR wakatime/packages/
 	distutils-r1_python_prepare_all
 }
