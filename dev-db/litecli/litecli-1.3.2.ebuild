@@ -2,13 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python2_7 python3_{4..7} )
+PYTHON_COMPAT=( python2_7 python3_{6..8} )
 inherit distutils-r1
 
 DESCRIPTION="CLI for SQLite Databases with auto-completion and syntax highlighting."
 HOMEPAGE="https://github.com/dbcli/litecli"
-MY_HASH="61d408272db7f7229f05dcaa4c54d28978000ec3"
-SRC_URI="https://github.com/dbcli/litecli/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/dbcli/litecli/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD-3"
 SLOT="0"
@@ -26,5 +25,3 @@ RDEPEND="${DEPEND}
 	>=dev-python/cli_helpers-1.0.1"
 RDEPEND="${DEPEND}"
 BDEPEND=""
-
-S="${WORKDIR}/${PN}-${MY_HASH}"
