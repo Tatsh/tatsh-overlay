@@ -14,10 +14,10 @@ RESTRICT="mirror"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="grub"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}
 	app-portage/gentoolkit
 	sys-kernel/dracut
-	sys-boot/grub:2"
+	grub? ( sys-boot/grub:2 ) "
