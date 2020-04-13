@@ -8,7 +8,7 @@ if [[ "$PV" = 9999 ]]; then
 	GIT_ECLASS="git-r3"
 	EGIT_REPO_URI="https://github.com/Tatsh/ipheth.git"
 else
-	MY_HASH="02ac9b07cac719830bc41f15adf212e69a2590fb"
+	MY_HASH="08a7b63a0f67c35a96a4a2d0d612533b2175c7df"
 	SRC_URI="https://github.com/Tatsh/ipheth/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
 	S="${WORKDIR}/${PN}-${MY_HASH}"
 	KEYWORDS="~amd64 ~x86"
