@@ -4,7 +4,7 @@
 EAPI=7
 inherit linux-info linux-mod
 
-SUFFIX=4068
+SUFFIX=4177
 DESCRIPTION="Magewell Pro Capture driver."
 HOMEPAGE="https://www.magewell.com/downloads/pro-capture#/driver/linux-x86"
 SRC_URI="http://www.magewell.com/files/drivers/ProCaptureForLinux_${SUFFIX}.tar.gz"
@@ -12,7 +12,7 @@ SRC_URI="http://www.magewell.com/files/drivers/ProCaptureForLinux_${SUFFIX}.tar.
 LICENSE="EULA"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="doc weave"
 
 DEPEND=""
 RDEPEND="${DEPEND}"
@@ -25,8 +25,9 @@ DOCS=(quick_start.txt docs/Readme.txt docs/ProCaptureSeriesCardUserGuideforLinux
 
 src_prepare() {
 	sed -e 's:/local::g' -e 's:/src::g' -i scripts/ProCapture.conf || die 'Failed to patch!'
-	# TODO Make a 'weave' USE flag (force interlaced mode)
-#	sed -e 's/MWCAP_VIDEO_DEINTERLACE_(BLEND|TOP_FIELD|BOTTOM_FIELD)/MWCAP_VIDEO_DEINTERLACE_WEAVE/g' -i src/sources/avstream/v4l2.c || die 'Failed to patch!'
+	if use weave; then
+		sed -e 's/MWCAP_VIDEO_DEINTERLACE_(BLEND|TOP_FIELD|BOTTOM_FIELD)/MWCAP_VIDEO_DEINTERLACE_WEAVE/g' -i src/sources/avstream/v4l2.c || die 'Failed to patch!'
+	fi
 	default
 }
 
@@ -59,5 +60,10 @@ src_install() {
 	insinto /etc/modprobe.d/
 	doins scripts/ProCapture.conf
 
-	einstalldocs
+	if use doc; then
+		insinto /usr/share/doc/${P}
+		doins -r docs/*
+	else
+		einstalldocs
+	fi
 }
