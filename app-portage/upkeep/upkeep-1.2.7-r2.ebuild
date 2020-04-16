@@ -19,5 +19,10 @@ IUSE="grub"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}
 	app-portage/gentoolkit
-	sys-kernel/dracut
-	grub? ( sys-boot/grub:2 ) "
+	sys-kernel/dracut"
+
+pkg_postinst() {
+	einfo
+	einfo 'If you want GRUB support, you must have sys-boot/grub:2 installed.'
+	einfo
+}
