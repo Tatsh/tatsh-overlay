@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=7
-inherit kde.org
+inherit ecm
 
 DESCRIPTION="Time tracking with WakaTime for Kate."
 HOMEPAGE="https://github.com/tatsh/kate-wakatime"
@@ -14,5 +14,5 @@ SLOT="5"
 KEYWORDS="~x86 ~amd64"
 IUSE="aqua debug"
 
-DEPEND="kde-frameworks/ktexteditor-${KFMIN}:5"
+DEPEND=">=kde-frameworks/ktexteditor-${KFMIN}:5"
 RDEPEND="${DEPEND}"
