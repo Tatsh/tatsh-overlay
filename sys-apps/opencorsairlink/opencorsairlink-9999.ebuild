@@ -5,11 +5,11 @@ EAPI=7
 MY_PN="OpenCorsairLink"
 if [[ "$PV" = 9999 ]]; then
 	GIT_ECLASS="git-r3"
-	EGIT_REPO_URI="https://github.com/audiohacked/OpenCorsairLink.git"
+	EGIT_REPO_URI="https://github.com/audiohacked/${MY_PN}.git"
 	EGIT_BRANCH="testing"
 else
 	MY_HASH="acb2cebef29d03c9953f43cb06ae94873110cde7"
-	SRC_URI="https://github.com/audiohacked/OpenCorsairLink/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/audiohacked/${MY_PN}/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
 	S="${WORKDIR}/${MY_PN}-${MY_HASH}"
 	KEYWORDS="~x86 ~amd64"
 fi
