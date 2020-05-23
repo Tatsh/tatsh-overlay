@@ -1,0 +1,6 @@
+[Unit]
+Description=Prelink
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemd-prelink
