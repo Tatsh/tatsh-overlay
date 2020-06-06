@@ -8,7 +8,7 @@ if [[ "$PV" = 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/audiohacked/${MY_PN}.git"
 	EGIT_BRANCH="testing"
 else
-	MY_HASH="acb2cebef29d03c9953f43cb06ae94873110cde7"
+	MY_HASH="57652888664db0a61c9b914277c6c921b15a3a7e"
 	SRC_URI="https://github.com/audiohacked/${MY_PN}/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
 	S="${WORKDIR}/${MY_PN}-${MY_HASH}"
 	KEYWORDS="~x86 ~amd64"
