@@ -24,9 +24,9 @@ BDEPEND=""
 S="${WORKDIR}/${PN}-${MY_SHA}"
 
 python_prepare_all() {
+	sed -e 's/, TAG+=".*/, GROUP="plugdev", MODE="0660"/g' \
+		-i extra/linux/71-${PN}.rules || die "Failed to patch"
 	distutils-r1_python_prepare_all
-	sed -r 's/, TAG+=".*/, GROUP="plugdev", MODE="0660"/' \
-		-i extra/linux/71-${PN}.rules
 }
 
 python_install_all() {
