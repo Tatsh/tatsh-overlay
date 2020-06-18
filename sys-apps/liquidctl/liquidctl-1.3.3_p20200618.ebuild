@@ -7,7 +7,7 @@ inherit distutils-r1 udev
 
 DESCRIPTION="Cross-platform CLI and Python drivers for AIO liquid coolers and other devices."
 HOMEPAGE="https://github.com/jonasmalacofilho/liquidctl"
-MY_SHA="d18301a97da8e3459a84552c7aa7cd61a39a551f"
+MY_SHA="1f73bd07b853cfb95861e80314f1c350ef546bc3"
 SRC_URI="https://github.com/jonasmalacofilho/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
@@ -16,12 +16,20 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
-RDEPEND="${DEPEND} dev-python/docopt[${PYTHON_USEDEP}] dev-python/pyusb[${PYTHON_USEDEP}] dev-python/hidapi[${PYTHON_USEDEP}]"
+RDEPEND="dev-python/docopt[${PYTHON_USEDEP}]
+	dev-python/pyusb[${PYTHON_USEDEP}]
+	dev-python/hidapi[${PYTHON_USEDEP}]"
 BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA}"
 
-distutils-r1_python_install_all() {
+python_prepare_all() {
+	distutils-r1_python_prepare_all
+	sed -r 's/, TAG+=".*/, GROUP="plugdev", MODE="0660"/' \
+		-i extra/linux/71-${PN}.rules
+}
+
+python_install_all() {
 	default
 	doman liquidctl.8
 	udev_dorules extra/linux/71-${PN}.rules
