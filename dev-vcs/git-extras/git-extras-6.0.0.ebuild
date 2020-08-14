@@ -5,7 +5,7 @@ EAPI=7
 
 DESCRIPTION="Git utilties: repo summary, repl, changelog population, author commit percentages and more."
 HOMEPAGE="https://github.com/tj/git-extras"
-SRC_URI="https://github.com/tj/git-extras/archive/4.6.0.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/tj/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -21,5 +21,5 @@ src_compile() {
 }
 
 src_install() {
-	emake install PREFIX="${D}/usr" SYSCONFIGDIR="${D}/etc"
+	emake install PREFIX="${D}/usr" SYSCONFDIR="${D}/etc"
 }
