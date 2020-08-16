@@ -6,7 +6,7 @@ inherit cmake-utils
 
 DESCRIPTION="A dynamic recompiler for ARM."
 HOMEPAGE="https://github.com/MerryMage/dynarmic"
-MY_SHA="8d1699ba2db216e569e998ea318d5cde47720e97"
+MY_SHA="0e1112b7df77ae55a62a51622940d5c8f9e8c84c"
 SRC_URI="https://github.com/MerryMage/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD-0"
@@ -34,7 +34,6 @@ src_configure() {
 	CXX=${CHOST}-clang++
 	local mycmakeargs=(
 		-DDYNARMIC_TESTS=OFF
-		-DDYNARMIC_FRONTENDS="A32"
 		-DBUILD_SHARED_LIBS=OFF
 	)
 	cmake-utils_src_configure
