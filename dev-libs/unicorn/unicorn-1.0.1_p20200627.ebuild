@@ -12,7 +12,12 @@ SRC_URI="https://github.com/unicorn-engine/unicorn/archive/${MY_SHA}.tar.gz -> $
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="cpu-x86 +cpu-arm +cpu-aarch64 cpu-m68k cpu-mips cpu-sparc"
+IUSE="unicorn_targets_x86
+	+unicorn_targets_arm
+	+unicorn_targets_aarch64
+	unicorn_targets_m68k
+	unicorn_targets_mips
+	unicorn_targets_sparc"
 
 DEPEND=""
 RDEPEND="${DEPEND}"
@@ -24,12 +29,12 @@ PATCHES=( "${FILESDIR}/${PN}-yuzu-reg_esr.patch" )
 
 src_configure() {
 	local archs=()
-	use cpu-x86 && archs+=( x86 )
-	use cpu-arm && archs+=( arm )
-	use cpu-aarch64 && archs+=( aarch64 )
-	use cpu-m68k && archs+=( m68k )
-	use cpu-mips && arch+=( mips )
-	use cpu-sparc && arch+=( sparc )
+	use unicorn_targets_x86 && archs+=( x86 )
+	use unicorn_targets_arm && archs+=( arm )
+	use unicorn_targets_aarch64 && archs+=( aarch64 )
+	use unicorn_targets_m68k && archs+=( m68k )
+	use unicorn_targets_mips && arch+=( mips )
+	use unicorn_targets_sparc && arch+=( sparc )
 	local mycmakeargs=( -DUNICORN_ARCH=${archs[*]} -DBUILD_SHARED_LIBS=OFF )
 	cmake-utils_src_configure
 }
