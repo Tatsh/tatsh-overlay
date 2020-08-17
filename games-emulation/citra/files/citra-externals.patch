@@ -1,8 +1,8 @@
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index c3297571f..62c83fbe5 100644
+index c3297571f..b67f05fc7 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -1,54 +1,5 @@
+@@ -1,54 +1,14 @@
  # Definitions for all external bundled libraries
  
 -# Suppress warnings from external libraries
@@ -35,16 +35,16 @@ index c3297571f..62c83fbe5 100644
 -# Crypto++
 -add_subdirectory(cryptopp)
 -
--# Dynarmic
--if (ARCHITECTURE_x86_64)
--    # Dynarmic will skip defining xbyak if it's already defined, we then define it below
+ # Dynarmic
+ if (ARCHITECTURE_x86_64)
+     # Dynarmic will skip defining xbyak if it's already defined, we then define it below
 -    add_library(xbyak INTERFACE)
--    option(DYNARMIC_TESTS OFF)
--    set(DYNARMIC_NO_BUNDLED_FMT ON)
--    set(DYNARMIC_FRONTENDS "A32")
--    add_subdirectory(dynarmic)
--endif()
--
+     option(DYNARMIC_TESTS OFF)
+     set(DYNARMIC_NO_BUNDLED_FMT ON)
+     set(DYNARMIC_FRONTENDS "A32")
+     add_subdirectory(dynarmic)
+ endif()
+ 
 -# libfmt
 -add_subdirectory(fmt)
 -add_library(fmt::fmt ALIAS fmt)
@@ -57,7 +57,7 @@ index c3297571f..62c83fbe5 100644
  # Glad
  add_subdirectory(glad)
  
-@@ -71,31 +22,6 @@ add_subdirectory(soundtouch)
+@@ -71,31 +31,6 @@ add_subdirectory(soundtouch)
  # The SoundTouch target doesn't export the necessary include paths as properties by default
  target_include_directories(SoundTouch INTERFACE ./soundtouch/include)
  
@@ -89,7 +89,7 @@ index c3297571f..62c83fbe5 100644
  # DiscordRPC
  if (USE_DISCORD_PRESENCE)
      add_subdirectory(discord-rpc EXCLUDE_FROM_ALL)
-@@ -131,4 +57,4 @@ if (ENABLE_WEB_SERVICE)
+@@ -131,4 +66,4 @@ if (ENABLE_WEB_SERVICE)
  endif()
  
  # lodepng
