@@ -25,6 +25,7 @@ MODULE_NAMES="ProCapture(video:src:src)"
 DOCS=(quick_start.txt docs/Readme.txt docs/ProCaptureSeriesCardUserGuideforLinux.{eng,chs}.pdf)
 
 src_prepare() {
+	sed -e 's:/local::g' -e 's:/src::g' -i scripts/ProCapture.conf || die 'Failed to patch!'
 	if use weave; then
 		sed -e 's/MWCAP_VIDEO_DEINTERLACE_(BLEND|TOP_FIELD|BOTTOM_FIELD)/MWCAP_VIDEO_DEINTERLACE_WEAVE/g' -i src/sources/avstream/v4l2.c || die 'Failed to patch!'
 	fi
