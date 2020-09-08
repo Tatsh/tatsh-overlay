@@ -23,6 +23,6 @@ fetch() {
 }
 
 src_install() {
-	insinto /usr/share/cursors/xorg-x11/Shere_Khan_X/cursors/
+	insinto /usr/share/icons/Shere_Khan_X/cursors/
 	doins cursors/*
 }
