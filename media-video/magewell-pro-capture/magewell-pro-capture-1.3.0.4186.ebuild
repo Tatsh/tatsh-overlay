@@ -21,6 +21,7 @@ BDEPEND=""
 S="${WORKDIR}/ProCaptureForLinux_${SUFFIX}"
 
 BUILD_TARGETS="all" # no clean because a file has to be hacked in src_prepare() that would otherwise get deleted; the archive is clean anyway
+BUILD_PARAMS="KERNELDIR=${KERNEL_DIR}"
 MODULE_NAMES="ProCapture(video:src:src)"
 DOCS=(quick_start.txt docs/Readme.txt docs/ProCaptureSeriesCardUserGuideforLinux.{eng,chs}.pdf)
 
