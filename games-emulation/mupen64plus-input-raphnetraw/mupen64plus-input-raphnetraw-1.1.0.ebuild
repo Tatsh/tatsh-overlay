@@ -23,7 +23,7 @@ src_prepare() {
 
 src_compile() {
 	cd projects/unix
-	emake all
+	emake OPTFLAGS="${CFLAGS}" WARNFLAGS= all
 }
 
 src_install() {
