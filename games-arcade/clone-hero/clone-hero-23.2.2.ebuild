@@ -9,7 +9,7 @@ SRC_URI="http://dl.clonehero.net/clonehero-v.${PV}/clonehero-linux.tar.gz"
 
 LICENSE="EULA"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
 RESTRICT="strip"
 
