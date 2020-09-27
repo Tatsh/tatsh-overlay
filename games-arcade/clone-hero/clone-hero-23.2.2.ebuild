@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+inherit desktop
 
 DESCRIPTION="Clone of Guitar Hero and similar games."
 HOMEPAGE="https://clonehero.net/"
@@ -27,11 +28,21 @@ src_install() {
 	rm README.txt || die
 	mkdir -p "${D}/opt/clonehero" || die
 	cp -R ./* "${D}/opt/clonehero/" || die
-	mkdir "${D}/opt/bin" || die
-	cat > ${D}/opt/bin/clonehero <<EOF
-#!/usr/bin/env bash
-cd /opt/clonehero
-./clonehero "\$@"
-EOF
-	fperms 0755 /opt/bin/clonehero /opt/clonehero/clonehero
+	keepdir /opt/clonehero/{Screenshots,Songs}
+	insinto /opt/clonehero
+	doins "${FILESDIR}/settings.ini"
+	doenvd "${FILESDIR}/99${PN}"
+	exeinto /opt/bin
+	doexe "${FILESDIR}/clonehero"
+	fperms 0755 /opt/clonehero/clonehero
+	fperms 0777 /opt/clonehero/{Custom,Screenshots,Songs}
+	for size in 128 64 48 32 16; do
+		newicon -s "${size}" "${FILESDIR}/${PN}-icon-${size}.png" "${PN}.png"
+	done
+	make_desktop_entry clonehero 'Clone Hero' "${PN}"
+}
+
+pkg_postinst() {
+	elog "You may need to give settings.ini world-writable permissions:"
+	elog "chmod 0666 /opt/clonehero/settings.ini"
 }
