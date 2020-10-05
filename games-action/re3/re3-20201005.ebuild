@@ -5,9 +5,9 @@ EAPI=7
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3"
-MY_RE3_HASH="8235fe08d116366964577a8ddb0367b96b718531"
+MY_RE3_HASH="fa94ee2e08ac7e54e9add83025a7b1aeb4bd215f"
 MY_LIBRW_HASH="30b77b0b32b4113b5dce2b67813ce9b85d1e1e57"
-SRC_URI="https://github.com/GTAmodding/re3/archive/${MY_RE3_HASH}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/Tatsh/re3/archive/${MY_RE3_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
 
 LICENSE="MIT"
@@ -41,7 +41,8 @@ src_prepare() {
 	echo '#define NEW_WALK_AROUND_ALGORITHM' >> src/core/config.h
 	echo '#define PEDS_REPORT_CRIMES_ON_PHONE' >> src/core/config.h
 	echo '#define SIMPLIER_MISSIONS' >> src/core/config.h
-	echo '#define VC_PED_PORTS' >> src/core.config.h
+	echo '#define VC_PED_PORTS' >> src/core/config.h
+	echo '#define XDG_ROOT' >> src/core/config.h
 }
 
 src_configure() {
@@ -51,13 +52,13 @@ src_configure() {
 src_compile() {
 	cd build
 	if use amd64; then
-		emake config=release_linux-amd64-librw_gl3_glfw-oal
+		emake config=release_linux-amd64-librw_gl3_glfw-oal verbose=1
 	elif use x86; then
-		emake config=release_linux-x86-librw_gl3_glfw-oal
+		emake config=release_linux-x86-librw_gl3_glfw-oal verbose=1
 	elif use arm; then
-		emake config=release_linux-arm-librw_gl3_glfw-oal
+		emake config=release_linux-arm-librw_gl3_glfw-oal verbose=1
 	elif use arm64; then
-		emake config=release_linux-arm64-librw_gl3_glfw-oal
+		emake config=release_linux-arm64-librw_gl3_glfw-oal verbose=1
 	fi
 }
 
@@ -72,11 +73,9 @@ src_install() {
 
 pkg_postinst() {
 	einfo
-	einfo "Make a symbolic link in your GTA III root directory to re3 and run"
-	einfo "it from within."
+	einfo "Store your GTA III game files from an installation in the"
+	einfo "following directory (create if necessary):"
 	einfo
-	einfo "    cd \"$GTA_III_ROOT\""
-	einfo "    ln -s /usr/bin/re3"
-	einfo "    ./re3"
+	einfo "~/.local/share/re3"
 	einfo
 }
