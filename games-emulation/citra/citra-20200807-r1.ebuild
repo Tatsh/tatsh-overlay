@@ -36,7 +36,7 @@ DEPEND="app-arch/zstd
 	>=dev-libs/xbyak-5.941
 	media-libs/libsdl2
 	net-libs/enet
-	virtual/ffmpeg"
+	media-video/ffmpeg"
 RDEPEND="${DEPEND}"
 BDEPEND=">=sys-devel/clang-10"
 
