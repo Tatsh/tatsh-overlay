@@ -18,8 +18,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-libs/libfragmentzip
-	app-pda/libplist
+DEPEND=">=dev-libs/libfragmentzip-48
+	>=app-pda/libplist-2.2.0
 	net-misc/curl
 	dev-libs/openssl:0
 	>=app-pda/libirecovery-1.0.0"
