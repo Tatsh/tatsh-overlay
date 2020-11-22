@@ -22,7 +22,7 @@ DEPEND="dev-libs/libfragmentzip
 	app-pda/libplist
 	net-misc/curl
 	dev-libs/openssl:0
-	app-pda/libirecovery"
+	>=app-pda/libirecovery-1.0.0"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
