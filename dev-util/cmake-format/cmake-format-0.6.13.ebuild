@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python3_{6..8} )
+DISTUTILS_USE_SETUPTOOLS=rdepend
+PYTHON_COMPAT=( python3_{6..9} )
 inherit distutils-r1
 
 DESCRIPTION="Source code formatter for CMake files."
 HOMEPAGE="https://github.com/cheshirekow/cmake_format"
-MY_P="${PN/-/_}-${PV}"
-SRC_URI="mirror://pypi/${P:0:1}/${PN/-/_}/${MY_P}.tar.gz"
+SRC_URI="https://github.com/cheshirekow/cmake_format/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -21,4 +21,4 @@ RDEPEND="dev-python/pyyaml
 DEPEND="${RDEPEND}"
 BDEPEND=""
 
-S="${WORKDIR}/${MY_P}"
+S="${WORKDIR}/${PN/-/_}-${PV}"
