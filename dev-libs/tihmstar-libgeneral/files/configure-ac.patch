@@ -1,0 +1,26 @@
+diff -urN a/configure.ac b/configure.ac
+--- a/configure.ac	2018-10-02 08:49:35.000000000 -0400
++++ b/configure.ac	2018-12-29 23:37:26.721762885 -0500
+@@ -1,17 +1,17 @@
+ AC_PREREQ([2.69])
+-AC_INIT([libgeneral], m4_esyscmd([git rev-list --count HEAD | tr -d '\n']), [tihmstar@gmail.com])
++AC_INIT([libgeneral], 40, [tihmstar@gmail.com])
+
+ AC_CANONICAL_SYSTEM
+ AC_CANONICAL_HOST
+ AM_PROG_LIBTOOL
+
+ AM_INIT_AUTOMAKE
+ AC_CONFIG_HEADERS([config.h])
+ AC_CONFIG_MACRO_DIRS([m4])
+
+-AC_DEFINE([VERSION_COMMIT_COUNT], "m4_esyscmd([git rev-list --count HEAD | tr -d '\n'])", [Git commit count])
+-AC_DEFINE([VERSION_COMMIT_SHA], "m4_esyscmd([git rev-parse HEAD | tr -d '\n'])", [Git commit sha])
+-AC_SUBST([VERSION_COMMIT_COUNT], ["m4_esyscmd([git rev-list --count HEAD | tr -d '\n'])"])
+-AC_SUBST([VERSION_COMMIT_SHA], ["m4_esyscmd([git rev-parse HEAD | tr -d '\n'])"])
++AC_DEFINE([VERSION_COMMIT_COUNT], "40", [Git commit count])
++AC_DEFINE([VERSION_COMMIT_SHA], "210aa949151ce9851a44ab8623667dc749a5c74e", [Git commit sha])
++AC_SUBST([VERSION_COMMIT_COUNT], ["40"])
++AC_SUBST([VERSION_COMMIT_COUNT], ["210aa949151ce9851a44ab8623667dc749a5c74e"])
+
+ # Checks for programs.
