@@ -17,6 +17,7 @@ HOMEPAGE="https://github.com/mattn/go-isatty"
 LICENSE="MIT"
 SLOT="0"
 IUSE=""
+KEYWORDS="~amd64 ~x86"
 
 S="${WORKDIR}/${PN}-28b35a325e89623a31764c9bcfb74f4e6c9f105c"
 
