@@ -7,7 +7,7 @@ EGO_PN=github.com/mattn/go-colorable
 if [[ ${PV} = *9999* ]]; then
 	inherit golang-vcs
 else
-	EGIT_COMMIT=efa5899
+	EGIT_COMMIT=f6c0098
 	SRC_URI="https://${EGO_PN}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64"
 	inherit golang-vcs-snapshot
