@@ -7,7 +7,7 @@ EGO_PN=github.com/schachmat/wego
 if [[ ${PV} = *9999* ]]; then
 	inherit golang-vcs
 else
-	EGIT_COMMIT=415efdf
+	EGIT_COMMIT=994e4f1
 	SRC_URI="https://${EGO_PN}/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64"
 	inherit golang-vcs-snapshot
@@ -27,8 +27,6 @@ DEPEND="dev-go/go-colorable
 DOCS=( "src/${EGO_PN}/README.md" )
 
 src_install() {
-	mkdir pkg
-	golang-build_src_install
 	einstalldocs
-	dobin bin/*
+	dobin ${PN}
 }
