@@ -6,7 +6,8 @@ EAPI=7
 
 DESCRIPTION="A heads up display for Git."
 HOMEPAGE="https://github.com/michaeldfallen/git-radar"
-SRC_URI="https://github.com/michaeldfallen/git-radar/releases/download/v0.6/git-radar-0.6.tar.gz"
+MY_SHA="2ac25e3d1047cdf19f15bc894ff39449b83d65d4"
+SRC_URI="https://github.com/michaeldfallen/git-radar/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -16,10 +17,10 @@ IUSE=""
 RDEPEND="dev-vcs/git"
 DEPEND="${RDEPEND}"
 
-DOCS=( LICENSE README.md )
+S="${WORKDIR}/${PN}-${MY_SHA}"
 
 src_compile() {
-	einfo 'Nothing to compile'
+	:
 }
 
 src_install() {
