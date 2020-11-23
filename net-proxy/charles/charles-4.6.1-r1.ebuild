@@ -6,12 +6,11 @@ inherit desktop
 
 DESCRIPTION="Web debugging proxy application."
 HOMEPAGE="https://www.charlesproxy.com/"
-SRC_URI="amd64? ( https://www.charlesproxy.com/assets/release/4.2.8/charles-proxy-4.2.8_amd64.tar.gz )
-	x86? ( https://www.charlesproxy.com/assets/release/4.2.8/charles-proxy-4.2.8.tar.gz )"
+SRC_URI="https://www.charlesproxy.com/assets/release/${PV}/${PN}-proxy-${PV}_amd64.tar.gz"
 
 LICENSE="EULA Apache-2.0 MIT GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=""
