@@ -5,8 +5,8 @@ EAPI=7
 
 DESCRIPTION="Updated and improved Kate editor syntax files and code snippets."
 HOMEPAGE="https://github.com/zaufi/kate-stuff"
-MY_HASH="bfb1b68ab5927a58ae1c5464b3909c8e70d4b8d2"
-SRC_URI="https://github.com/zaufi/kate-stuff/archive/bfb1b68ab5927a58ae1c5464b3909c8e70d4b8d2.tar.gz -> ${P}.tar.gz"
+MY_SHA="8c0866290744c70b56638e62a5a2039f795c8fa6"
+SRC_URI="https://github.com/zaufi/kate-stuff/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE=""
 SLOT="0"
@@ -17,7 +17,7 @@ RDEPEND="kde-apps/kate"
 DEPEND="${RDEPEND}"
 BDEPEND=""
 
-S="${WORKDIR}/${PN}-${MY_HASH}"
+S="${WORKDIR}/${PN}-${MY_SHA}"
 
 DOCS=( README.asciidoc )
 
