@@ -7,7 +7,7 @@ inherit font
 DESCRIPTION="Google's font family that aims to support all the world's languages"
 HOMEPAGE="https://www.google.com/get/noto/ https://github.com/googlei18n/noto-fonts"
 
-COMMIT="49313785484cd4d1f4c0329ee3a8801f158f5ba1"
+COMMIT="725acad90efba063890acb942c02e0caf0ed3c5c"
 SRC_URI="https://github.com/googlei18n/noto-fonts/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="OFL-1.1"
@@ -172,8 +172,8 @@ src_prepare() {
 
 src_install() {
 	mkdir install-unhinted install-hinted || die
-	mv unhinted/*/* install-unhinted/. ||  die
-	mv hinted/*/* install-hinted/. || die
+	mv unhinted/ttf/*/* install-unhinted/. ||  die
+	mv hinted/ttf/*/* install-hinted/. || die
 	FONT_S="${S}/install-unhinted/" font_src_install
 	FONT_S="${S}/install-hinted/" font_src_install
 	# Allow to drop some fonts optionally for people that want to save
