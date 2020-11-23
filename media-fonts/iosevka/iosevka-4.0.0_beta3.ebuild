@@ -7,8 +7,10 @@ inherit font
 
 DESCRIPTION="Slender typeface for code, from code"
 HOMEPAGE="https://be5invis.github.io/Iosevka/"
-SRC_URI="https://github.com/be5invis/${PN}/releases/download/v${PV}/ttf-${P}.zip
-https://github.com/be5invis/${PN}/releases/download/v${PV}/ttf-${PN}-fixed-${PV}.zip"
+MY_PV="${PV/_/-}"
+MY_PV="${MY_PV/beta/beta.}"
+SRC_URI="https://github.com/be5invis/${PN}/releases/download/v${MY_PV}/ttf-${PN}-${MY_PV}.zip
+https://github.com/be5invis/${PN}/releases/download/v${MY_PV}/ttf-${PN}-fixed-${MY_PV}.zip"
 
 LICENSE="OFL-1.1"
 SLOT="0"
@@ -17,5 +19,5 @@ KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 DEPEND="app-arch/unzip"
 
 S=${WORKDIR}
-FONT_S="${S}/ttf"
+FONT_S="${S}"
 FONT_SUFFIX="ttf"
