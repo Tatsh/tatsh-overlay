@@ -4,15 +4,8 @@
 
 EAPI=7
 
-if [[ "$PV" = 9999 ]]; then
-	GIT_ECLASS="git-r3"
-	EGIT_REPO_URI="https://github.com/libimobiledevice/ifuse.git"
-else
-	KEYWORDS="amd64 x86"
-	MY_HASH="3b00243682962fec4f78f03d96cdded730cae38b"
-	SRC_URI="https://github.com/libimobiledevice/ifuse/archive/3b00243682962fec4f78f03d96cdded730cae38b.tar.gz -> ${P}.tar.gz"
-	S="${WORKDIR}/${PN}-${MY_HASH}"
-fi
+KEYWORDS="amd64 x86"
+SRC_URI="https://github.com/libimobiledevice/${PN}/releases/download/${PV}/${P}.tar.bz2"
 inherit autotools udev user "$GIT_ECLASS"
 
 DESCRIPTION="A fuse filesystem implementation to access the contents of iOS devices."
@@ -29,8 +22,6 @@ RDEPEND="${DEPEND}
 	>=sys-fs/fuse-2.7.0
 	virtual/libusb:1
 	virtual/pkgconfig"
-
-DOCS="AUTHORS NEWS README COPYING"
 
 src_prepare() {
 	eautoreconf
