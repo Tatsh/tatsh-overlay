@@ -3,8 +3,8 @@
 # $Id$
 
 EAPI=7
-PYTHON_COMPAT=( python3_{6..8} )
-
+PYTHON_COMPAT=( python3_{6..9} )
+DISTUTILS_USE_SETUPTOOLS=rdepend
 inherit bash-completion-r1 distutils-r1
 
 DESCRIPTION="Open files by MIME-type or file name using regular expressions."
