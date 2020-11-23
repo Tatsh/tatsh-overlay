@@ -6,7 +6,7 @@ inherit cmake-utils
 
 DESCRIPTION="Emulator, (dis-)assembler, tools and documentation for XpertTeak, the DSP used by DSi/3DS."
 HOMEPAGE="https://github.com/wwylele/teakra"
-MY_SHA="3e032a73d7e97eb434a053391d95029eebd7e189"
+MY_SHA="d4bea3ec3acd5ea9cc23f096ed0af4de1c002201"
 SRC_URI="https://github.com/wwylele/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE=""
