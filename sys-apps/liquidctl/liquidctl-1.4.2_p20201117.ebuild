@@ -2,12 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+DISTUTILS_USE_SETUPTOOLS=rdepend
 PYTHON_COMPAT=( python3_{7,8} )
 inherit distutils-r1 udev
 
 DESCRIPTION="Cross-platform CLI and Python drivers for AIO liquid coolers and other devices."
 HOMEPAGE="https://github.com/jonasmalacofilho/liquidctl"
-MY_SHA="8f0813292b2cbee49ed0774a3e2f1524441ee618"
+MY_SHA="41cdbc45962d4c9d3a80845585e24aa3ddf1a172"
 SRC_URI="https://github.com/jonasmalacofilho/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
