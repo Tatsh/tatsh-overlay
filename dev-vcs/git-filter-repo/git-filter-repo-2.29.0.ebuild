@@ -19,10 +19,10 @@ RDEPEND="${PYTHON_DEPS}
 	dev-vcs/git"
 BDEPEND=""
 
-DOCS=( COPYING COPYING.gpl COPYING.mit README.md
+DOCS=(
+	README.md
 	Documentation/converting-from-bfg-repo-cleaner.md
 	Documentation/converting-from-filter-branch.md
-	Documentation/Contributing.md
 )
 
 src_prepare() {
