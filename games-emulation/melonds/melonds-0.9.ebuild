@@ -6,8 +6,7 @@ inherit cmake-utils
 
 DESCRIPTION="A fast and accurate Nintendo DS emulator."
 HOMEPAGE="http://melonds.kuribo64.net/"
-MY_SHA="e27d55505f7cc7b1d351647777f0af45055050bc"
-SRC_URI="https://github.com/Arisotura/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/Arisotura/melonDS/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -18,7 +17,7 @@ DEPEND="net-libs/libslirp"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
-S="${WORKDIR}/melonDS-${MY_SHA}"
+S="${WORKDIR}/melonDS-${PV}"
 
 src_prepare() {
 	sed -e 's/^Exec=.*/Exec=env -u QT_SCREEN_SCALE_FACTORS melonDS/' -i net.kuribo64.melonDS.desktop
