@@ -6,8 +6,8 @@ inherit multilib udev
 
 DESCRIPTION="Random systemd utilities."
 HOMEPAGE="https://github.com/kylemanna/systemd-utils"
-MY_HASH="597ced328341d6741cc5768e568d64d516822ce6"
-SRC_URI="https://github.com/kylemanna/systemd-utils/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
+MY_SHA="f9917695629350effdea8a86f650a71a7d4b6a23"
+SRC_URI="https://github.com/kylemanna/systemd-utils/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -25,7 +25,7 @@ BDEPEND=""
 
 DOCS=( LICENSE README.md )
 
-S="${WORKDIR}/${PN}-${MY_HASH}"
+S="${WORKDIR}/${PN}-${MY_SHA}"
 
 src_prepare() {
 	default
