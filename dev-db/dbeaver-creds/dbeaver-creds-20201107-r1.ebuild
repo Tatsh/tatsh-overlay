@@ -5,7 +5,7 @@ EAPI=7
 
 DESCRIPTION="Recover your DBeaver saved credentials."
 HOMEPAGE="https://github.com/Tatsh/dbeaver-creds"
-MY_SHA="0fd0f8fe1fcfc1ddcfd60300126174f0cb62454c"
+MY_SHA="dc2306fe715d1c925b3da747b2153e56e4b65257"
 SRC_URI="https://github.com/Tatsh/dbeaver-creds/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
