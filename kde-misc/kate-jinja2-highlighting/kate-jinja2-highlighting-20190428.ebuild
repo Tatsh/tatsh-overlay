@@ -5,7 +5,7 @@ EAPI=7
 
 DESCRIPTION="Improved Jinja2 syntax highlighting for Kate."
 HOMEPAGE="https://github.com/Pitmairen/kate-jinja2-highlighting"
-MY_HASH="b0e25e00af4927030594b5813aaf90d728c6d442"
+MY_HASH="8ab9b0d40c54425d6a6b3e5f5ca9bf9f163389d9"
 SRC_URI="https://github.com/Pitmairen/${PN}/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
 
 LICENSE=""
