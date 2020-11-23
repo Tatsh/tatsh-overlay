@@ -7,7 +7,8 @@ inherit pam systemd meson
 
 DESCRIPTION="D-Bus service to access fingerprint readers"
 HOMEPAGE="https://cgit.freedesktop.org/libfprint/fprintd/"
-SRC_URI="https://gitlab.freedesktop.org/libfprint/${PN}/-/archive/${PV}/${PN}-${PV}.tar.gz"
+MY_SHA="38ba7199b733e653f0e89f9264335fb3a3902fde"
+SRC_URI="https://gitlab.freedesktop.org/libfprint/${PN}/-/archive/${MY_SHA}/${PN}-${MY_SHA}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -29,15 +30,22 @@ DEPEND="${RDEPEND}
 		dev-util/gtk-doc-am
 		dev-libs/libxml2
 	)
+	sys-libs/pam_wrapper
 "
 
-src_configure() {
+S="${WORKDIR}/${PN}-${MY_SHA}"
+
+src_prepare() {
 	# Remove test dep checks
-	for i in {132..137}; do
+	for i in {131..136}; do
 		sed -e "${i}s/.*//" -i meson.build || die "sed failed"
 	done
 	sed -e '/^pam_wrapper_dep =.*/d' -i meson.build || die "sed failed"
 	# End remove test dep checks
+	default
+}
+
+src_configure() {
 	local emesonargs=(
 		-Dsystemd_system_unit_dir=$(systemd_get_systemunitdir)
 		-Dman=true
