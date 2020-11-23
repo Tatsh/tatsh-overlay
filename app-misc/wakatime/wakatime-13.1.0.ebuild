@@ -3,8 +3,8 @@
 # $Header: $
 
 EAPI=7
-PYTHON_COMPAT=( python3_{6..8} )
-
+DISTUTILS_USE_SETUPTOOLS=rdepend
+PYTHON_COMPAT=( python3_{6..9} )
 inherit distutils-r1
 
 DESCRIPTION="Fully automatic time tracking for programmers"
