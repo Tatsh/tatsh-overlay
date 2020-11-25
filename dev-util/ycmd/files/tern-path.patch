@@ -1,0 +1,24 @@
+diff --git ycmd/completers/javascript/tern_completer.py ycmd/completers/javascript/tern_completer.py
+index cb8d3f75..ffa1cf8b 100644
+--- ycmd/completers/javascript/tern_completer.py
++++ ycmd/completers/javascript/tern_completer.py
+@@ -26,18 +26,7 @@ from ycmd.completers.completer import Completer
+ from ycmd.completers.completer_utils import GetFileLines
+ from ycmd.utils import LOGGER
+ 
+-PATH_TO_TERN_BINARY = os.path.abspath(
+-  os.path.join(
+-    os.path.dirname( __file__ ),
+-    '..',
+-    '..',
+-    '..',
+-    'third_party',
+-    'tern_runtime',
+-    'node_modules',
+-    'tern',
+-    'bin',
+-    'tern' ) )
++PATH_TO_TERN_BINARY = utils.FindExecutable( 'tern' )
+ 
+ PATH_TO_NODE = utils.FindExecutable( 'node' )
+ 

@@ -1,0 +1,30 @@
+diff --git ycmd/utils.py ycmd/utils.py
+index 8ca112aa..67fd4976 100644
+--- ycmd/utils.py
++++ ycmd/utils.py
+@@ -29,7 +29,7 @@ import threading
+ LOGGER = logging.getLogger( 'ycmd' )
+ ROOT_DIR = os.path.normpath( os.path.join( os.path.dirname( __file__ ), '..' ) )
+ DIR_OF_THIRD_PARTY = os.path.join( ROOT_DIR, 'third_party' )
+-LIBCLANG_DIR = os.path.join( DIR_OF_THIRD_PARTY, 'clang', 'lib' )
++LIBCLANG_DIR = '@LIBCLANG_DIR@'
+ if hasattr( os, 'add_dll_directory' ):
+   os.add_dll_directory( LIBCLANG_DIR )
+ 
+@@ -470,14 +470,14 @@ def GetModificationTime( path ):
+ 
+ 
+ def ExpectedCoreVersion():
+-  return int( ReadFile( os.path.join( ROOT_DIR, 'CORE_VERSION' ) ) )
++  return @CORE_VERSION@
+ 
+ 
+ def LoadYcmCoreDependencies():
+   for name in ListDirectory( LIBCLANG_DIR ):
+     if name.startswith( 'libclang' ):
+       libclang_path = os.path.join( LIBCLANG_DIR, name )
+-      if os.path.isfile( libclang_path ):
++      if os.path.isfile( libclang_path ) and libclang_path.endswith( '.dylib' ):
+         import ctypes
+         ctypes.cdll.LoadLibrary( libclang_path )
+         return
