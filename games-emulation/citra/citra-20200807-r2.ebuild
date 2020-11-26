@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake-utils xdg-utils
+inherit cmake xdg-utils
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/"
@@ -27,7 +27,7 @@ IUSE=""
 
 DEPEND="app-arch/zstd
 	dev-cpp/catch:0
-	dev-libs/boost:0/1.73.0
+	dev-libs/boost:0
 	dev-libs/crypto++:0/8
 	dev-libs/cubeb
 	dev-libs/libfmt:0/7
@@ -35,19 +35,19 @@ DEPEND="app-arch/zstd
 	dev-libs/teakra
 	>=dev-libs/xbyak-5.941
 	media-libs/libsdl2
-	net-libs/enet
+	net-libs/enet:1.3
 	media-video/ffmpeg"
 RDEPEND="${DEPEND}"
 BDEPEND=">=sys-devel/clang-10"
 
 PATCHES=(
-	${FILESDIR}/${PN}-src-cmake-fixes.patch
-	${FILESDIR}/${PN}-externals.patch
-	${FILESDIR}/${PN}-no-check-submodules.patch
-	${FILESDIR}/${PN}-xbyak.patch
-	${FILESDIR}/dynarmic-cmake-fixes.patch
-	${FILESDIR}/dynarmic-include-path-fixes.patch
-	${FILESDIR}/dynarmic-system-xbyak.patch
+	"${FILESDIR}/${PN}-src-cmake-fixes.patch"
+	"${FILESDIR}/${PN}-externals.patch"
+	"${FILESDIR}/${PN}-no-check-submodules.patch"
+	"${FILESDIR}/${PN}-xbyak.patch"
+	"${FILESDIR}/dynarmic-cmake-fixes.patch"
+	"${FILESDIR}/dynarmic-include-path-fixes.patch"
+	"${FILESDIR}/dynarmic-system-xbyak.patch"
 )
 
 S="${WORKDIR}/${PN}-${MY_SHA}"
@@ -63,7 +63,7 @@ src_prepare() {
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
 	cp "${DISTDIR}/${PN}-compatibility_list.json" "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -76,7 +76,7 @@ src_configure() {
 		-DENABLE_WEB_SERVICE=OFF
 		-DUSE_SYSTEM_BOOST=ON
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 pkg_postinst() {
