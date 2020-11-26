@@ -1,0 +1,14 @@
+diff --git python/ycm/paths.py python/ycm/paths.py
+index 1fa158c5..1b68b577 100644
+--- python/ycm/paths.py
++++ python/ycm/paths.py
+@@ -22,8 +22,7 @@ import re
+
+ # Can't import these from setup.py because it makes nosetests go crazy.
+ DIR_OF_CURRENT_SCRIPT = os.path.dirname( os.path.abspath( __file__ ) )
+-DIR_OF_YCMD = os.path.join( DIR_OF_CURRENT_SCRIPT, '..', '..', 'third_party',
+-                            'ycmd' )
++DIR_OF_YCMD = '@PYTHON_SITE_PACKAGES_DIR@'
+ WIN_PYTHON_PATH = os.path.join( sys.exec_prefix, 'python.exe' )
+ PYTHON_BINARY_REGEX = re.compile(
+   r'python(3(\.[6-9])?)?(.exe)?$', re.IGNORECASE )
