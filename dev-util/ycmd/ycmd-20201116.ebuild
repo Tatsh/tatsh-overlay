@@ -24,6 +24,9 @@ RDEPEND="
 	$(python_gen_cond_dep 'dev-python/waitress[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	|| ( sys-devel/clang:11 sys-devel/clang:10 )
+	|| ( sys-libs/compiler-rt:11.0.0
+		sys-libs/compiler-rt:10.0.1
+		sys-libs/compiler-rt:10.0.0 )
 "
 
 S="${WORKDIR}/${PN}-${MY_SHA}/cpp"
@@ -33,6 +36,7 @@ src_prepare() {
 	eapply --directory="${WORKDIR}/${PN}-${MY_SHA}" -p0 "${FILESDIR}"
 	sed -e "s/@CORE_VERSION@/${CORE_VERSION}/" \
 		-e "s|@LIBCLANG_DIR@|$(llvm-config --libdir)|" \
+		-e "s:CLANG_RESOURCE_DIR =.*:'$(find "${EPREFI}/usr/lib/clang" -mindepth 1 -maxdepth 1 -type d | head -n 1)':" \
 		-i ../ycmd/utils.py
 	cmake_src_prepare
 }

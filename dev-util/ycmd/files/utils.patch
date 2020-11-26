@@ -10,21 +10,21 @@ index 8ca112aa..67fd4976 100644
 +LIBCLANG_DIR = '@LIBCLANG_DIR@'
  if hasattr( os, 'add_dll_directory' ):
    os.add_dll_directory( LIBCLANG_DIR )
- 
+
 @@ -470,14 +470,14 @@ def GetModificationTime( path ):
- 
- 
+
+
  def ExpectedCoreVersion():
 -  return int( ReadFile( os.path.join( ROOT_DIR, 'CORE_VERSION' ) ) )
 +  return @CORE_VERSION@
- 
- 
+
+
  def LoadYcmCoreDependencies():
    for name in ListDirectory( LIBCLANG_DIR ):
      if name.startswith( 'libclang' ):
        libclang_path = os.path.join( LIBCLANG_DIR, name )
 -      if os.path.isfile( libclang_path ):
-+      if os.path.isfile( libclang_path ) and libclang_path.endswith( '.dylib' ):
++      if os.path.isfile( libclang_path ) and libclang_path.endswith( '.so' ):
          import ctypes
          ctypes.cdll.LoadLibrary( libclang_path )
          return
