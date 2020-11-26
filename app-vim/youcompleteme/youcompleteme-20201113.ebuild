@@ -6,9 +6,9 @@ EAPI=7
 PYTHON_COMPAT=( python3_{6..9} )
 inherit python-single-r1
 
-DESCRIPTION="vim plugin: "
-HOMEPAGE="http://www.vim.org/scripts/script.php?script_id="
-LICENSE=""
+DESCRIPTION="A code-completion engine for Vim."
+HOMEPAGE="https://github.com/ycm-core/YouCompleteMe"
+LICENSE="GPL-3"
 KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
