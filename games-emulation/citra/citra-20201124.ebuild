@@ -6,19 +6,19 @@ inherit cmake xdg-utils
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/"
-MY_SHA="f72be7af2dd1706cbbd80a9baae417e17752a1b0"
-INIH_SHA="2023872dfffb38b6a98f2c45a0eb25652aaea91f"
+MY_SHA="a13a23051140aa29e8e8c40999651020df84b2b1"
+INIH_SHA="1e80a47dffbda813604f0913e2ad68c7054c14e4"
 LODEPNG_SHA="31d9704fdcca0b68fb9656d4764fa0fb60e460c2"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
 NIHSTRO_SHA="fd69de1a1b960ec296cc67d32257b0f9e2d89ac6"
 DYNARMIC_SHA="8d1699ba2db216e569e998ea318d5cde47720e97"
 SRC_URI="https://github.com/citra-emu/citra/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz
-	https://github.com/benhoyt/inih/archive/${INIH_SHA}.tar.gz -> ${PN}-inih-2023872.tar.gz
-	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-31d9704.tar.gz
-	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch.tar.gz
-	https://github.com/neobrain/nihstro/archive/${NIHSTRO_SHA}.tar.gz -> ${PN}-nihstro.tar.gz
-	https://api.citra-emu.org/gamedb/ -> ${PN}-compatibility_list.json
-	https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-8d1699b.tar.gz"
+	https://github.com/benhoyt/inih/archive/${INIH_SHA}.tar.gz -> ${PN}-inih-${INIH_SHA:0:7}.tar.gz
+	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
+	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
+	https://github.com/neobrain/nihstro/archive/${NIHSTRO_SHA}.tar.gz -> ${PN}-nihstro-${NIHSTRO_SHA:0:7}.tar.gz
+	https://api.citra-emu.org/gamedb/ -> ${PN}-compatibility_list-${PV}.json
+	https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz"
 
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
@@ -38,9 +38,9 @@ DEPEND="app-arch/zstd
 	net-libs/enet:1.3
 	media-video/ffmpeg"
 RDEPEND="${DEPEND}"
-BDEPEND=">=sys-devel/clang-10"
 
 PATCHES=(
+	"${FILESDIR}/${PN}-boost-174.patch"
 	"${FILESDIR}/${PN}-src-cmake-fixes.patch"
 	"${FILESDIR}/${PN}-externals.patch"
 	"${FILESDIR}/${PN}-no-check-submodules.patch"
@@ -62,13 +62,11 @@ src_prepare() {
 	mv "${WORKDIR}/nihstro-${NIHSTRO_SHA}" "${S}/externals/nihstro" || die
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
-	cp "${DISTDIR}/${PN}-compatibility_list.json" "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
+	cp "${DISTDIR}/${PN}-compatibility_list-${PV}.json" "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
 	cmake_src_prepare
 }
 
 src_configure() {
-	CC=${CHOST}-clang
-	CXX=${CHOST}-clang++
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
 		-DENABLE_FFMPEG_AUDIO_DECODER=ON
