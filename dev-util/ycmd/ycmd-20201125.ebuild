@@ -8,8 +8,8 @@ inherit cmake python-single-r1
 DESCRIPTION="A code-completion & code-comprehension server."
 HOMEPAGE="https://github.com/ycm-core/ycmd"
 CORE_VERSION=44
-MY_SHA="3aa00aea0e26c98091f53583bff833796bf8fc41"
-SRC_URI="https://github.com/ycm-core/ycmd/archive/3aa00aea0e26c98091f53583bff833796bf8fc41.tar.gz -> ${P}.tar.gz"
+MY_SHA="64a4eaf473cb64c3deb5882db151633033e78dd1"
+SRC_URI="https://github.com/ycm-core/ycmd/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -20,7 +20,6 @@ RDEPEND="
 	$(python_gen_cond_dep 'dev-python/bottle[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/jedi[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/regex[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
-	$(python_gen_cond_dep 'dev-python/requests[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/waitress[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	|| ( sys-devel/clang:11 sys-devel/clang:10 )
