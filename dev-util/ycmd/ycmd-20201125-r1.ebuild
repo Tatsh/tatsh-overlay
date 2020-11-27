@@ -22,7 +22,7 @@ RDEPEND="
 	$(python_gen_cond_dep 'dev-python/regex[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/waitress[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
-	|| ( sys-devel/clang:11 sys-devel/clang:10 )
+	|| ( sys-devel/clang:11[static-analyzer] sys-devel/clang:10[static-analyzer] )
 	|| ( sys-libs/compiler-rt:11.0.0
 		sys-libs/compiler-rt:10.0.1
 		sys-libs/compiler-rt:10.0.0 )
@@ -35,15 +35,16 @@ src_prepare() {
 	eapply --directory="${WORKDIR}/${PN}-${MY_SHA}" -p0 "${FILESDIR}"
 	sed -e "s/@CORE_VERSION@/${CORE_VERSION}/" \
 		-e "s|@LIBCLANG_DIR@|$(llvm-config --libdir)|" \
-		-e "s:CLANG_RESOURCE_DIR =.*:'$(find "${EPREFI}/usr/lib/clang" -mindepth 1 -maxdepth 1 -type d | head -n 1)':" \
-		-i ../ycmd/utils.py
+		-e "s:CLANG_RESOURCE_DIR =.*:CLANG_RESOURCE_DIR = '$(find "${EPREFI}/usr/lib/clang" -mindepth 1 -maxdepth 1 -type d | head -n 1)':" \
+		-i ../ycmd/utils.py || die
+	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i \
+		../ycmd/completers/cpp/clangd_completer.py || die
 	cmake_src_prepare
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-DUSE_CLANG_COMPLETER=ON
-		-DUSE_SYSTEM_LIBCLANG=ON
+		-DUSE_CLANG_TIDY=ON
 		-DPYTHON_LIBRARY=${EPREFIX}/usr/$(get_libdir)/libpython3.${PYTHON_MINOR_VERSION}.so
 		-DPYTHON_INCLUDE_DIR=${EPREFIX}/usr/include/python3.${PYTHON_MINOR_VERSION}
 	)

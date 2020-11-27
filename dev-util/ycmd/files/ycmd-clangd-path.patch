@@ -1,0 +1,21 @@
+diff --git ycmd/completers/cpp/clangd_completer.py ycmd/completers/cpp/clangd_completer.py
+index cb42c95e..6a33502c 100644
+--- ycmd/completers/cpp/clangd_completer.py
++++ ycmd/completers/cpp/clangd_completer.py
+@@ -39,15 +39,7 @@ INCLUDE_REGEX = re.compile(
+   '(\\s*#\\s*(?:include|import)\\s*)(?:"[^"]*|<[^>]*)' )
+ NOT_CACHED = 'NOT_CACHED'
+ CLANGD_COMMAND = NOT_CACHED
+-PRE_BUILT_CLANGD_DIR = os.path.abspath( os.path.join(
+-  os.path.dirname( __file__ ),
+-  '..',
+-  '..',
+-  '..',
+-  'third_party',
+-  'clangd',
+-  'output',
+-  'bin' ) )
++PRE_BUILT_CLANGD_DIR = '@EPREFIX@/usr/lib/llvm/11/bin'
+ PRE_BUILT_CLANDG_PATH = os.path.join( PRE_BUILT_CLANGD_DIR, 'clangd' )
+ 
+ 
