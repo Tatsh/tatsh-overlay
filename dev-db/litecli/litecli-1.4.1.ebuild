@@ -21,7 +21,7 @@ RDEPEND="${DEPEND}
 	>=dev-python/pygments-2.0
 	>=dev-python/prompt_toolkit-3.0.3
 	<dev-python/prompt_toolkit-4.0.0
-	<dev-python/python-sqlparse-0.3.0
+	dev-python/python-sqlparse
 	>=dev-python/configobj-5.0.6
 	>=dev-python/cli_helpers-1.0.1"
 RDEPEND="${DEPEND}"
