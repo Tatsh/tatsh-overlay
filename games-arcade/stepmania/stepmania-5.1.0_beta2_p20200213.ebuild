@@ -1,10 +1,9 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils autotools eutils
+inherit cmake autotools eutils
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
 MY_HASH="caf2f6522eaafb30a3369717fcf59ec437f71f56"
@@ -27,7 +26,7 @@ DEPEND="gtk? ( x11-libs/gtk+:2 )
 	jpeg? ( virtual/jpeg )
 	xinerama? ( x11-libs/libXinerama )
 	sdl? ( media-libs/libsdl2 )
-	>=virtual/ffmpeg-9-r1
+	>=media-video/ffmpeg-4.2.4
 	media-libs/glew
 	xrandr? ( x11-libs/libXrandr )
 	X? ( x11-libs/libX11 )
@@ -93,7 +92,7 @@ src_configure() {
 		-DWITH_JACK=$(usex jack)
 		-DWITH_X11=$(usex X)
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
