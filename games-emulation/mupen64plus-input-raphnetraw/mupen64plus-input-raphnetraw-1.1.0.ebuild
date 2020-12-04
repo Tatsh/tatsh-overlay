@@ -18,6 +18,7 @@ BDEPEND=""
 
 src_prepare() {
 	touch src/config.h
+	sed -e '99s/^LDLIBS +=.*/LDLIBS += -lm -lSDL2/' -i projects/unix/Makefile
 	default
 }
 
