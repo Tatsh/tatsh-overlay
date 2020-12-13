@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit go-module
+inherit golang-base go-module
 
 EGO_SUM=(
 	"github.com/mattn/go-isatty v0.0.12"
@@ -27,3 +27,9 @@ DEPEND="dev-go/go-isatty"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}-f6c00982823144337e56cdb71c712eaac151d29c"
+
+src_install() {
+	insinto $(get_golibdir)/src/github.com/mattn/${PN}
+	doins *.go
+	einstalldocs
+}
