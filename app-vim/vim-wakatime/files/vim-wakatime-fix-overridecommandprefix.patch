@@ -1,0 +1,22 @@
+From c725124ae8885ca6da4fe5cd03bda4bd77dc3fd1 Mon Sep 17 00:00:00 2001
+From: Alan Hamlett <alan.hamlett@gmail.com>
+Date: Mon, 2 Nov 2020 12:24:46 -0800
+Subject: [PATCH] fix using g:wakatime_OverrideCommandPrefix override
+
+---
+ plugin/wakatime.vim | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/plugin/wakatime.vim b/plugin/wakatime.vim
+index 271a9cc..45c1a08 100644
+--- a/plugin/wakatime.vim
++++ b/plugin/wakatime.vim
+@@ -314,7 +314,7 @@ let s:VERSION = '8.0.0'
+     endfunction
+ 
+     function! s:GetCommandPrefix()
+-        if exists("g:wakatime_OverrideCommandPrefix") && g:wakatime_OverrideCommandPrefix
++        if exists("g:wakatime_OverrideCommandPrefix") && g:wakatime_OverrideCommandPrefix != ''
+             let prefix = [g:wakatime_OverrideCommandPrefix]
+         else
+             let python_bin = s:GetPythonBinary()

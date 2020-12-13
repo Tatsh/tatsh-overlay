@@ -16,7 +16,10 @@ RDEPEND="${DEPEND} app-misc/wakatime"
 
 VIM_PLUGIN_HELPURI="https://github.com/wakatime/vim-wakatime"
 
-PATCHES=( "${FILESDIR}/${PN}-fix-cli-path.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-fix-cli-path.patch"
+	"${FILESDIR}/${PN}-fix-overridecommandprefix.patch"
+)
 
 src_prepare() {
 	rm -fR packages/
