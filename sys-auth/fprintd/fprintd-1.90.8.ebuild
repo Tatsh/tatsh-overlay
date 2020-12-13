@@ -7,8 +7,8 @@ inherit pam systemd meson
 
 DESCRIPTION="D-Bus service to access fingerprint readers"
 HOMEPAGE="https://cgit.freedesktop.org/libfprint/fprintd/"
-MY_SHA="38ba7199b733e653f0e89f9264335fb3a3902fde"
-SRC_URI="https://gitlab.freedesktop.org/libfprint/${PN}/-/archive/${MY_SHA}/${PN}-${MY_SHA}.tar.gz"
+MY_SHA="7d22a2b5b9d323638bb213aefb8627d897c8e482"
+SRC_URI="https://gitlab.freedesktop.org/libfprint/fprintd/-/archive/v${PV}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -33,15 +33,12 @@ DEPEND="${RDEPEND}
 	sys-libs/pam_wrapper
 "
 
-S="${WORKDIR}/${PN}-${MY_SHA}"
+S="${WORKDIR}/${PN}-v${PV}-${MY_SHA}"
 
 src_prepare() {
 	# Remove test dep checks
-	for i in {131..136}; do
-		sed -e "${i}s/.*//" -i meson.build || die "sed failed"
-	done
+	sed -e "/.*'dbusmock': true.*/d" -i meson.build || die "sed failed"
 	sed -e '/^pam_wrapper_dep =.*/d' -i meson.build || die "sed failed"
-	# End remove test dep checks
 	default
 }
 
