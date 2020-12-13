@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit desktop xdg-utils
+inherit desktop xdg
 
 DESCRIPTION="Stand-alone viewer of SWF files."
 HOMEPAGE="https://www.adobe.com/support/flashplayer/debug_downloads.html"
@@ -21,7 +21,6 @@ BDEPEND=""
 
 S="${WORKDIR}"
 QA_PREBUILT="/usr/bin/flashplayer"
-DOCS=( LGPL/LGPL.txt LGPL/notice.txt license.pdf )
 
 src_install() {
 	local s
@@ -36,12 +35,4 @@ src_install() {
 		AudioVideo \
 		"GenericName=Video player\nMimeType=application/x-shockwave-flash;x-scheme-handler/http;x-scheme-handler/https;"
 	einstalldocs
-}
-
-pkg_postinst() {
-	xdg_icon_cache_update
-}
-
-pkg_postrm() {
-	xdg_icon_cache_update
 }
