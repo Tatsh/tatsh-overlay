@@ -1,29 +1,33 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI=4
+EAPI=7
 
 inherit eutils
 
 DESCRIPTION="Converts DiscJuggler CDI files to various disc image formats."
-HOMEPAGE="http://files.tatsh.net/"
-SRC_URI="http://files.tatsh.net/cdirip062-src.tar.bz2"
+HOMEPAGE="https://web.archive.org/web/20091027063725/http://es.geocities.com/dextstuff/cdirip/down_cdi.html"
+SRC_URI="https://web.archive.org/web/20091027063725/http://es.geocities.com/dextstuff/cdirip/cdirip062-src.zip"
 
-LICENSE="cdirip-eula"
+LICENSE="all-rights-reserved"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/cdirip062-src"
+S="${WORKDIR}"
+
+src_prepare() {
+	sed -e '4s/.*/#include <string.h>/' -i buffer.c
+	default
+}
 
 src_compile() {
-  emake -e
+	emake -f Makefile.linux CFLAGS="${CFLAGS}"
 }
 
 src_install() {
-  dobin cdirip
+	dobin "${PN}"
 }
