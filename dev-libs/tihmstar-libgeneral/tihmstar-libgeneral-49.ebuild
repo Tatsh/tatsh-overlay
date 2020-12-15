@@ -7,7 +7,7 @@ inherit autotools
 DESCRIPTION="Stuff used in tsschecker."
 HOMEPAGE="https://github.com/tihmstar/libgeneral"
 MY_PN="${PN/tihmstar-}"
-MY_SHA="210aa949151ce9851a44ab8623667dc749a5c74e"
+MY_SHA="b7802ee057ef760cced74b6ae68123e7ee7ce75f"
 SRC_URI="https://github.com/tihmstar/${MY_PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
