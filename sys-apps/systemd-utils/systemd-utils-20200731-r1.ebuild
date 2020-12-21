@@ -38,7 +38,7 @@ src_prepare() {
 }
 
 src_install() {
-	insinto /$(get_libdir)/systemd/system
+	insinto /lib/systemd/system
 	use amazon && doins units/amazon-cloud-drive.service
 	use btrfs && doins units/btrfs*
 	use crashplan && doins units/crashplan.timer
