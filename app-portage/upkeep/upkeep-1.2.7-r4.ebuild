@@ -9,12 +9,10 @@ inherit distutils-r1
 DESCRIPTION="Helper commands to automate updating with Portage."
 HOMEPAGE="https://github.com/Tatsh/upkeep"
 SRC_URI="https://github.com/Tatsh/upkeep/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-RESTRICT="mirror"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="grub"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="${DEPEND}
