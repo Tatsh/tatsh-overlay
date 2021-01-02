@@ -13,7 +13,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 DEPEND=""
-RDEPEND="${DEPEND} >=dev-lang/python-3.7.9"
+RDEPEND="${DEPEND}
+	>=dev-lang/python-3.7.9
+	media-video/mpv"
 BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA}"
