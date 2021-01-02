@@ -1,8 +1,8 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
-inherit cmake-utils git-r3
+EAPI=7
+inherit cmake git-r3
 
 DESCRIPTION="Clean up cruft on your file system."
 HOMEPAGE="https://tatsh.github.io/gcrud/"
