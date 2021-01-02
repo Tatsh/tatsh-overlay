@@ -1,4 +1,4 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 2019-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -10,7 +10,7 @@ DESCRIPTION="CLI for SQLite Databases with auto-completion and syntax highlighti
 HOMEPAGE="https://github.com/dbcli/litecli"
 SRC_URI="https://github.com/dbcli/litecli/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="BSD-3"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
