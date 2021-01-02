@@ -1,19 +1,18 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
 EAPI=7
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{6..8} )
 inherit distutils-r1
 
 DESCRIPTION="Fully automatic time tracking for programmers"
 HOMEPAGE="https://github.com/wakatime/wakatime"
 SRC_URI="https://pypi.python.org/packages/source/w/wakatime/${P}.tar.gz"
 
-LICENSE="BSD-3"
+LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="ntlm"
 
 RDEPEND="dev-python/pygments[${PYTHON_USEDEP}]
