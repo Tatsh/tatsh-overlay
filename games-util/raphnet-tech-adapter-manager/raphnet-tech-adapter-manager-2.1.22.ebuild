@@ -1,8 +1,8 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit udev
+inherit udev wxwidgets
 
 DESCRIPTION="Graphical user interface and command-line tools to manage raphnet adapters."
 HOMEPAGE="https://www.raphnet-tech.com/products/adapter_manager/index.php"
@@ -14,7 +14,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-libs/hidapi
-	x11-libs/wxGTK:3.0
+	x11-libs/wxGTK:3.0-gtk3
 	sys-libs/zlib
 	virtual/udev"
 RDEPEND="${DEPEND}"
