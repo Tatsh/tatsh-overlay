@@ -1,4 +1,4 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2020-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -24,8 +24,7 @@ RDEPEND="
 	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	|| ( sys-devel/clang:11[static-analyzer] sys-devel/clang:10[static-analyzer] )
 	|| ( sys-libs/compiler-rt:11.0.0
-		sys-libs/compiler-rt:10.0.1
-		sys-libs/compiler-rt:10.0.0 )
+		sys-libs/compiler-rt:10.0.1 )
 "
 
 S="${WORKDIR}/${PN}-${MY_SHA}/cpp"
@@ -45,8 +44,8 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DUSE_CLANG_TIDY=ON
-		-DPYTHON_LIBRARY=${EPREFIX}/usr/$(get_libdir)/libpython3.${PYTHON_MINOR_VERSION}.so
-		-DPYTHON_INCLUDE_DIR=${EPREFIX}/usr/include/python3.${PYTHON_MINOR_VERSION}
+		"-DPYTHON_LIBRARY=${EPREFIX}/usr/$(get_libdir)/libpython3.${PYTHON_MINOR_VERSION}.so"
+		"-DPYTHON_INCLUDE_DIR=${EPREFIX}/usr/include/python3.${PYTHON_MINOR_VERSION}"
 	)
 	cmake_src_configure
 }
