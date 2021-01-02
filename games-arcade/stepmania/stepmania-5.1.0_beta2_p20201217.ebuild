@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,9 +6,9 @@ EAPI=7
 inherit cmake autotools eutils
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
-MY_HASH="caf2f6522eaafb30a3369717fcf59ec437f71f56"
+MY_SHA="a7f666ecdb987887559b0ed6c7bb85c26cade097"
 HOMEPAGE="http://www.stepmania.com/"
-SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -33,7 +33,7 @@ DEPEND="gtk? ( x11-libs/gtk+:2 )
 	jack? ( virtual/jack )
 	virtual/opengl"
 
-S="${WORKDIR}/${PN}-${MY_HASH}"
+S="${WORKDIR}/${PN}-${MY_SHA}"
 CMAKE_MAKEFILE_GENERATOR=ninja
 
 src_prepare() {
@@ -53,7 +53,7 @@ src_prepare() {
 		rm -rf "${S}/Songs/StepMania 5"
 	fi
 
-	default
+	cmake_src_prepare
 }
 
 src_configure() {
