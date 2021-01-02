@@ -1,4 +1,4 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 2019-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,8 +14,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-RDEPEND="x11-libs/gtk+
-	virtual/jre"
+RDEPEND="x11-libs/gtk+:3
+	virtual/jre:="
 DEPEND="${RDEPEND}"
 BDEPEND=""
 
@@ -34,7 +34,7 @@ src_prepare() {
 }
 
 src_install() {
-	dosym /usr/share/${MY_PN}/${MY_PN} "/usr/bin/${MY_PN}"
+	dosym "${EPREFIX}/usr/share/${MY_PN}/${MY_PN}" "/usr/bin/${MY_PN}"
 	doicon -s 128 "${MY_PN}/${MY_PN}.png"
 	newicon "${MY_PN}/icon.xpm" "${MY_PN}.xpm"
 	domenu "${MY_PN}/${MY_PN}.desktop"
