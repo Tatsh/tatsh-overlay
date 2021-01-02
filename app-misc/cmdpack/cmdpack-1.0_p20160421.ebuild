@@ -1,6 +1,5 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
 EAPI=7
 
@@ -69,7 +68,7 @@ src_install() {
 			dobin "$i"
 		done
 
-	dosym /usr/bin/ecm /usr/bin/unecm
+	dosym "${EPREFIX}/usr/bin/ecm" /usr/bin/unecm
 }
 
 # kate: replace-tabs false;
