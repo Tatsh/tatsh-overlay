@@ -1,8 +1,8 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 2019-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake-utils
+inherit cmake
 
 DESCRIPTION="A C++ binding for the OpenGL API, generated using the gl.xml specification."
 HOMEPAGE="https://glbinding.org"
@@ -16,11 +16,10 @@ IUSE="doc examples tools"
 
 DEPEND="
 	media-libs/mesa
-	doc? ( app-doc/doxygen )
 	examples? ( media-libs/glfw media-libs/glew:0 dev-qt/qtcore )
 	tools? ( media-libs/glfw )"
-RDEPEND="${DEPEND}"
-BDEPEND=""
+RDEPEND=""
+BDEPEND="doc? ( app-doc/doxygen )"
 
 S="${WORKDIR}/${PN}-${MY_HASH}"
 
@@ -33,5 +32,5 @@ src_configure() {
 		-DOPTION_BUILD_TOOLS=$(usex tools)
 		-DOPTION_BUILD_EXAMPLES=$(usex examples)
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
