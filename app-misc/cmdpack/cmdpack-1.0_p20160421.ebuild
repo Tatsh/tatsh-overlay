@@ -4,17 +4,11 @@
 
 EAPI=7
 
-if [[ "$PV" = 9999 ]]; then
-	GIT_ECLASS="git-r3"
-	EGIT_REPO_URI="https://github.com/cmdpack/cmdpack.git"
-	S="${WORKDIR}/${PN}-9999"
-else
-	MY_HASH="480428199a1c92e0ad0d8b1a5f5ddbaaad5d7b64"
-	SRC_URI="https://github.com/cmdpack/cmdpack/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
-	S="${WORKDIR}/${PN}-${MY_HASH}"
-	KEYWORDS="~amd64 ~x86"
-fi
-inherit eutils ${GIT_ECLASS}
+MY_SHA="480428199a1c92e0ad0d8b1a5f5ddbaaad5d7b64"
+SRC_URI="https://github.com/cmdpack/cmdpack/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/${PN}-${MY_SHA}"
+KEYWORDS="~amd64 ~x86"
+inherit eutils
 
 DESCRIPTION="Neill Corlett's command-Line pack."
 HOMEPAGE="http://www.neillcorlett.com/cmdpack/"
