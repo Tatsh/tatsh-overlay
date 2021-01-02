@@ -1,7 +1,5 @@
-# kate: replace-tabs false;
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
 EAPI=7
 
@@ -25,3 +23,4 @@ src_install() {
 	doins udev/95-ipad_charge.rules
 	einstalldocs
 }
+# kate: replace-tabs false;
