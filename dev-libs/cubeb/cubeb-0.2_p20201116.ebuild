@@ -1,8 +1,8 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2020-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake-utils
+inherit cmake
 
 DESCRIPTION="Cross platform audio library."
 HOMEPAGE="https://github.com/kinetiknz/cubeb"
@@ -23,7 +23,7 @@ S="${WORKDIR}/${PN}-${MY_SHA}"
 src_prepare() {
 	sed -e '25s/.*/if(FALSE)/' -e 's/^add_sanitizers(.*//' \
 		-i CMakeLists.txt
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -32,5 +32,5 @@ src_configure() {
 		-DBUILD_TOOLS=OFF
 		-DBUILD_SHARED_LIBS=ON
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
