@@ -8,7 +8,7 @@ inherit distutils-r1
 
 DESCRIPTION="Asynchronous Python HTTP for Humans."
 HOMEPAGE="https://github.com/ross/requests-futures"
-SRC_URI="https://files.pythonhosted.org/packages/47/c4/fd48d1ac5110a5457c71ac7cc4caa93da10a80b8de71112430e439bdee22/${P}.tar.gz"
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
