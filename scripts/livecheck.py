@@ -12,7 +12,7 @@ from portage.versions import catpkgsplit, vercmp
 import portage
 import requests
 
-p = portage.db[portage.root]['porttree'].dbapi
+PropTuple = Tuple[str, str, str, str, str, str, bool]
 
 CUSTOM_LIVECHECKS: Dict[str, Tuple[str, str, bool]] = {
     'dev-db/dbeaver-ce-bin':
@@ -41,56 +41,53 @@ IGNORED_PACKAGES = {
     'app-cdr/cdi2nero', 'app-cdr/cdirip', 'media-sound/yamaha-xg-soundfont',
     'x11-themes/shere-khan-x'
 }
+P = portage.db[portage.root]['porttree'].dbapi
 PREFIX_RE = r'(^[^0-9]+)[0-9]'
 
 
 def get_highest_matches(search_dir: str) -> Iterator[str]:
     for path in glob.glob(f'{search_dir}/**/*.ebuild', recursive=True):
-        pkg_name = basename(dirname(path))
-        category = basename(dirname(dirname(path)))
-        matches = p.xmatch('match-visible', f'{category}/{pkg_name}')
-        if not matches:
-            continue
-        yield matches[-1]
+        dn = dirname(path)
+        if matches := P.xmatch('match-visible',
+                               f'{basename(dirname(dn))}/{basename(dn)}'):
+            yield matches[-1]
 
 
-def get_props(
-        search_dir: str
-) -> Iterator[Tuple[str, str, str, str, str, str, bool]]:
+def catpkg_catpkgsplit(s: str) -> Tuple[str, str, str, str]:
+    cat, pkg, ebuild_version = catpkgsplit(s)[0:3]
+    return '/'.join((cat, pkg)), cat, pkg, ebuild_version
+
+
+def get_props(search_dir: str) -> Iterator[PropTuple]:
     for match in sorted(set(get_highest_matches(search_dir))):
-        cat, pkg, ebuild_version = catpkgsplit(match)[0:3]
-        catpkg = '/'.join((cat, pkg))
+        catpkg, cat, pkg, ebuild_version = catpkg_catpkgsplit(match)
+        src_uri = P.aux_get(match, ['SRC_URI'])[0].split(' ')[0]
         if catpkg in IGNORED_PACKAGES:
             continue
-        if catpkg in CUSTOM_LIVECHECKS:
-            yield cast(Tuple[str, str, str, str, str, str, bool],
-                       (cat, pkg, ebuild_version, ebuild_version) +
-                       CUSTOM_LIVECHECKS[catpkg])
-            continue
-        src_uris = p.aux_get(match, ['SRC_URI'])[0]
-        src_uri = src_uris.split(' ')[0]
-        if src_uri.startswith('https://github.com/'):
+        elif catpkg in CUSTOM_LIVECHECKS:
+            yield cast(  # type: ignore[redundant-cast]
+                PropTuple, (cat, pkg, ebuild_version, ebuild_version) +
+                CUSTOM_LIVECHECKS[catpkg])
+        elif src_uri.startswith('https://github.com/'):
             parsed = urlparse(src_uri)
             github_homepage = ('https://github.com' +
                                '/'.join(parsed.path.split('/')[0:3]))
             filename = basename(parsed.path)
             version = re.split(r'\.(?:tar\.(?:gz|bz2)|zip)$', filename, 2)[0]
-            if re.match(r'^[0-9a-f]{7,}$',
-                        version) and not re.match('^[0-9a-f]{8}$', version):
+            if (re.match(r'^[0-9a-f]{7,}$', version)
+                    and not re.match('^[0-9a-f]{8}$', version)):
                 branch = (GITHUB_BRANCHES[catpkg]
                           if catpkg in GITHUB_BRANCHES else 'master')
-                url = f'{github_homepage}/commits/{branch}.atom'
-                regex = (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' +
-                         str(len(version)) + r'})[0-9a-f]*</id>')
-                yield cat, pkg, ebuild_version, version, url, regex, False
+                yield (cat, pkg, ebuild_version, version,
+                       f'{github_homepage}/commits/{branch}.atom',
+                       (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' +
+                        str(len(version)) + r'})[0-9a-f]*</id>'), False)
             elif ('/releases/download/' in parsed.path
                   or '/archive/' in parsed.path):
                 prefix = ''
-                m = re.match(
-                    PREFIX_RE,
-                    filename) if '/archive/' in parsed.path else re.match(
-                        PREFIX_RE, basename(dirname(parsed.path)))
-                if m:
+                if (m := re.match(PREFIX_RE, filename)
+                        if '/archive/' in parsed.path else re.match(
+                            PREFIX_RE, basename(dirname(parsed.path)))):
                     prefix = m.group(1)
                 url = f'{github_homepage}/tags'
                 regex = f'archive/{prefix}' + r'([^"]+)\.tar\.gz'
@@ -104,17 +101,15 @@ def get_props(
                    f'https://pypi.org/pypi/{dist_name}/json',
                    r'"version":"([^"]+)"[,\}]', True)
         elif src_uri.startswith('https://www.raphnet-tech.com/downloads/'):
-            parsed = urlparse(src_uri)
-            filename = basename(parsed.path)
-            home = p.aux_get(match, ['HOMEPAGE'])[0]
-            pkg_re = pkg.replace('-', r'[-_]')
-            regex = r'\b' + pkg_re + r'-([^"]+)\.tar\.gz'
-            yield cat, pkg, ebuild_version, ebuild_version, home, regex, True
+            yield (cat, pkg, ebuild_version, ebuild_version,
+                   P.aux_get(match, ['HOMEPAGE'])[0],
+                   (r'\b' + pkg.replace('-', r'[-_]') + r'-([^"]+)\.tar\.gz'),
+                   True)
         else:
-            home = p.aux_get(match, ['HOMEPAGE'])[0]
+            home = P.aux_get(match, ['HOMEPAGE'])[0]
             raise RuntimeError(
-                f'Not handled: {catpkg} (non-GitHub/PyPI), homepage: {home}, '
-                f'SRC_URI: {src_uri}')
+                f'Not handled: {catpkg} (non-GitHub/PyPI), homepage: '
+                f'{home}, SRC_URI: {src_uri}')
 
 
 def main(search_dir: str) -> int:
@@ -122,19 +117,13 @@ def main(search_dir: str) -> int:
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
             search_dir):
         r = session.get(url)
-        r.raise_for_status()
         try:
+            r.raise_for_status()
             top_hash = re.findall(regex, r.text)[0]
-        except IndexError as e:
-            print(
-                f'{cat}/{pkg} error: re.findall({regex}, [contents of {url}])',
-                file=sys.stderr)
-            raise e
-        try:
-            if (use_vercmp
-                    and vercmp(top_hash, version) > 0) or top_hash != version:
+            if ((use_vercmp and vercmp(top_hash, version) > 0)
+                    or top_hash != version):
                 print(
-                    f'{cat}/{pkg}: {top_hash} > {version} ({ebuild_version})')
+                    f'{cat}/{pkg}: {version} ({ebuild_version}) -> {top_hash}')
         except Exception as e:
             print(f'Exception while checking {cat}/{pkg}', file=sys.stderr)
             raise e
