@@ -94,7 +94,8 @@ def get_props(
                     prefix = m.group(1)
                 url = f'{github_homepage}/tags'
                 regex = f'archive/{prefix}' + r'([^"]+)\.tar\.gz'
-                yield cat, pkg, ebuild_version, ebuild_version, url, regex, True
+                yield (cat, pkg, ebuild_version, ebuild_version, url, regex,
+                       True)
             else:
                 raise ValueError(f'Unhandled GitHub package: {catpkg}')
         elif src_uri.startswith('mirror://pypi/'):
@@ -111,9 +112,9 @@ def get_props(
             yield cat, pkg, ebuild_version, ebuild_version, home, regex, True
         else:
             home = p.aux_get(match, ['HOMEPAGE'])[0]
-            print(
-                f'Not handled: {catpkg} (non-GitHub/PyPI), homepage: {home}, SRC_URI: {src_uri}'
-            )
+            raise RuntimeError(
+                f'Not handled: {catpkg} (non-GitHub/PyPI), homepage: {home}, '
+                f'SRC_URI: {src_uri}')
 
 
 def main(search_dir: str) -> int:
