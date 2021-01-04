@@ -138,7 +138,6 @@ def main(search_dir: str) -> int:
         except Exception as e:
             print(f'Exception while checking {cat}/{pkg}', file=sys.stderr)
             raise e
-
     return 0
 
 
