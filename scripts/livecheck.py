@@ -1,8 +1,12 @@
 #!/usr/bin/env python
+from dataclasses import dataclass
 from os.path import basename, dirname, join as path_join, realpath
 from urllib.parse import urlparse
-from typing import Dict, Final, Iterator, Mapping, Set, Tuple, cast
+from typing import (Any, Dict, Final, Iterator, Sequence, Set, Tuple, Union,
+                    cast)
 import glob
+import hashlib
+import json
 import re
 import sys
 
@@ -11,36 +15,8 @@ import portage
 import requests
 
 PropTuple = Tuple[str, str, str, str, str, str, bool]
+Response = Union['TextDataResponse', requests.Response]
 
-CUSTOM_LIVECHECKS: Final[Dict[str, Tuple[str, str, bool]]] = {
-    'dev-db/dbeaver-ce-bin':
-    ('https://dbeaver.io/files/', r'"/files/([^/]+)/"', True),
-    'games-arcade/clone-hero':
-    ('https://clonehero.net/', r'"/releases/v([^"]+)"', True),
-    'media-gfx/flash-player-projector':
-    ('https://www.adobe.com/support/flashplayer/debug_downloads.html',
-     'The latest versions are <span>([^<]+)</span>', True),
-    'media-gfx/pngdefry': ('http://www.jongware.com/pngdefry.html',
-                           r'; v([^ ]+), dated', True),
-    'media-video/magewell-pro-capture':
-    ('https://www.magewell.com/downloads/pro-capture',
-     r'data-title="Pro Capture for Linux" data-version="([^"]+)"', True),
-    'net-im/ripcord': ('https://cancel.fm/ripcord/', r'Ripcord Linux ([^ ]+) ',
-                       True),
-    'net-proxy/charles': ('https://www.charlesproxy.com/download/',
-                          r'name="version" value="([^"]+)"', True),
-    'sys-auth/fprintd': ('https://cgit.freedesktop.org/libfprint/fprintd/',
-                         r"\?h=v([^']+)'", True),
-    'x11-misc/mimeo': ('https://xyne.archlinux.ca/projects/mimeo/src/',
-                       r'mimeo-([\d\.]+)\.tar\.xz\b', True),
-}
-GITHUB_BRANCHES: Final[Mapping[str, str]] = {
-    'games-arcade/stepmania': '5_1-new'
-}
-IGNORED_PACKAGES: Final[Set[str]] = {
-    'app-cdr/cdi2nero', 'app-cdr/cdirip', 'media-sound/yamaha-xg-soundfont',
-    'x11-themes/shere-khan-x'
-}
 P = portage.db[portage.root]['porttree'].dbapi
 PREFIX_RE: Final[str] = r'(^[^0-9]+)[0-9]'
 
@@ -58,16 +34,59 @@ def catpkg_catpkgsplit(s: str) -> Tuple[str, str, str, str]:
     return '/'.join((cat, pkg)), cat, pkg, ebuild_version
 
 
-def get_props(search_dir: str) -> Iterator[PropTuple]:
+def chunks(l: Sequence[Any], n: int) -> Iterator[Sequence[Any]]:
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
+
+
+@dataclass
+class LivecheckSettings:
+    branches: Dict[str, str]
+    checksum_livechecks: Set[str]
+    custom_livechecks: Dict[str, Tuple[str, str, bool]]
+    ignored_packages: Set[str]
+
+
+def get_props(search_dir: str,
+              settings: LivecheckSettings) -> Iterator[PropTuple]:
     for match in sorted(set(get_highest_matches(search_dir))):
         catpkg, cat, pkg, ebuild_version = catpkg_catpkgsplit(match)
         src_uri = P.aux_get(match, ['SRC_URI'])[0].split(' ')[0]
-        if catpkg in IGNORED_PACKAGES:
+        if catpkg in settings.ignored_packages:
             continue
-        elif catpkg in CUSTOM_LIVECHECKS:
+        elif catpkg in settings.custom_livechecks:
             yield cast(  # type: ignore[redundant-cast]
                 PropTuple, (cat, pkg, ebuild_version, ebuild_version) +
-                CUSTOM_LIVECHECKS[catpkg])
+                settings.custom_livechecks[catpkg])
+        elif catpkg in settings.checksum_livechecks:
+            manifest_file = path_join(search_dir, catpkg, 'Manifest')
+            bn = basename(src_uri)
+            found = False
+            with open(manifest_file) as f:
+                for line in f.readlines():
+                    if not line.startswith('DIST '):
+                        continue
+                    fields_s = ' '.join(line.strip().split(' ')[-4:])
+                    rest = line.replace(fields_s, '').strip()
+                    filename = rest.replace(f' {rest.strip().split(" ")[-1]}',
+                                            '')[5:]
+                    if filename != bn:
+                        continue
+                    found = True
+                    r = requests.get(src_uri)
+                    r.raise_for_status()
+                    yield (cat, pkg, ebuild_version,
+                           dict(
+                               cast(Sequence[Tuple[str, str]],
+                                    chunks(fields_s.split(' '), 2)))['SHA512'],
+                           f'data:{hashlib.sha512(r.content).hexdigest()}',
+                           r'^[0-9a-f]+$', False)
+                    break
+            if not found:
+                home = P.aux_get(match, ['HOMEPAGE'])[0]
+                raise RuntimeError(
+                    f'Not handled: {catpkg} (checksum), homepage: {home}, '
+                    f'SRC_URI: {src_uri}')
         elif src_uri.startswith('https://github.com/'):
             parsed = urlparse(src_uri)
             github_homepage = ('https://github.com' +
@@ -76,8 +95,8 @@ def get_props(search_dir: str) -> Iterator[PropTuple]:
             version = re.split(r'\.(?:tar\.(?:gz|bz2)|zip)$', filename, 2)[0]
             if (re.match(r'^[0-9a-f]{7,}$', version)
                     and not re.match('^[0-9a-f]{8}$', version)):
-                branch = (GITHUB_BRANCHES[catpkg]
-                          if catpkg in GITHUB_BRANCHES else 'master')
+                branch = (settings.branches[catpkg]
+                          if catpkg in settings.branches else 'master')
                 yield (cat, pkg, ebuild_version, version,
                        f'{github_homepage}/commits/{branch}.atom',
                        (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' +
@@ -108,15 +127,47 @@ def get_props(search_dir: str) -> Iterator[PropTuple]:
         else:
             home = P.aux_get(match, ['HOMEPAGE'])[0]
             raise RuntimeError(
-                f'Not handled: {catpkg} (non-GitHub/PyPI), homepage: '
-                f'{home}, SRC_URI: {src_uri}')
+                f'Not handled: {catpkg} (non-GitHub/PyPI), homepage: {home}, '
+                f'SRC_URI: {src_uri}')
+
+
+def gather_settings(search_dir: str) -> LivecheckSettings:
+    branches = {}
+    checksum_livechecks = set()
+    custom_livechecks = {}
+    ignored_packages = set()
+    for path in glob.glob(f'{search_dir}/**/livecheck.json', recursive=True):
+        with open(path) as f:
+            dn = dirname(path)
+            catpkg = f'{basename(dirname(dn))}/{basename(dn)}'
+            ls = json.load(f)
+            if ls.get('type', None) == 'none':
+                ignored_packages.add(catpkg)
+            elif ls.get('type', None) == 'regex':
+                custom_livechecks[catpkg] = (ls['url'], ls['regex'],
+                                             ls.get('use_vercmp', True))
+            elif ls.get('type', None) == 'checksum':
+                checksum_livechecks.add(catpkg)
+            if ls.get('branch', None):
+                branches[catpkg] = ls['branch']
+    return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
+                             ignored_packages)
+
+
+@dataclass
+class TextDataResponse:
+    text: str
+
+    def raise_for_status(self) -> None:
+        pass
 
 
 def main(search_dir: str) -> int:
     session = requests.Session()
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
-            search_dir):
-        r = session.get(url)
+            search_dir, gather_settings(search_dir)):
+        r: Response = (TextDataResponse(url[5:])
+                       if url.startswith('data:') else session.get(url))
         try:
             r.raise_for_status()
             top_hash = re.findall(regex, r.text)[0]
