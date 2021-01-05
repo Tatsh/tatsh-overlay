@@ -3,7 +3,7 @@ from os.path import basename, dirname
 from os.path import join as path_join
 from os.path import realpath
 from urllib.parse import urlparse
-from typing import Dict, Iterator, Tuple, cast
+from typing import Dict, Final, Iterator, Mapping, Set, Tuple, cast
 import glob
 import re
 import sys
@@ -14,7 +14,7 @@ import requests
 
 PropTuple = Tuple[str, str, str, str, str, str, bool]
 
-CUSTOM_LIVECHECKS: Dict[str, Tuple[str, str, bool]] = {
+CUSTOM_LIVECHECKS: Final[Dict[str, Tuple[str, str, bool]]] = {
     'dev-db/dbeaver-ce-bin':
     ('https://dbeaver.io/files/', r'"/files/([^/]+)/"', True),
     'games-arcade/clone-hero':
@@ -36,13 +36,15 @@ CUSTOM_LIVECHECKS: Dict[str, Tuple[str, str, bool]] = {
     'x11-misc/mimeo': ('https://xyne.archlinux.ca/projects/mimeo/src/',
                        r'mimeo-([\d\.]+)\.tar\.xz\b', True),
 }
-GITHUB_BRANCHES = {'games-arcade/stepmania': '5_1-new'}
-IGNORED_PACKAGES = {
+GITHUB_BRANCHES: Final[Mapping[str, str]] = {
+    'games-arcade/stepmania': '5_1-new'
+}
+IGNORED_PACKAGES: Final[Set[str]] = {
     'app-cdr/cdi2nero', 'app-cdr/cdirip', 'media-sound/yamaha-xg-soundfont',
     'x11-themes/shere-khan-x'
 }
 P = portage.db[portage.root]['porttree'].dbapi
-PREFIX_RE = r'(^[^0-9]+)[0-9]'
+PREFIX_RE: Final[str] = r'(^[^0-9]+)[0-9]'
 
 
 def get_highest_matches(search_dir: str) -> Iterator[str]:
