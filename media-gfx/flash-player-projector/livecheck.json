@@ -1,0 +1,5 @@
+{
+  "type": "regex",
+  "regex": "The latest versions are <span>([^<]+)</span>",
+  "url": "https://www.adobe.com/support/flashplayer/debug_downloads.html"
+}
