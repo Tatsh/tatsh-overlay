@@ -1,0 +1,5 @@
+{
+  "type": "regex",
+  "regex": "data-title=\"Pro Capture for Linux\" data-version=\"([^\"]+)\"",
+  "url": "https://www.magewell.com/downloads/pro-capture"
+}
