@@ -1,0 +1,5 @@
+{
+  "type": "regex",
+  "regex": "\\?h=v([^']+)'",
+  "url": "https://cgit.freedesktop.org/libfprint/fprintd/"
+}
