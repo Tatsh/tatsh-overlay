@@ -1,0 +1,5 @@
+{
+  "type": "regex",
+  "regex": "name=\"version\" value=\"([^\"]+)\"",
+  "url": "https://www.charlesproxy.com/download/"
+}
