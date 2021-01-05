@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-from os.path import realpath, join as path_join, basename, dirname
 from glob import glob
-import os
+from os.path import dirname, join as path_join, realpath
+from typing import Dict
 import subprocess as sp
 import sys
 
+GLOBAL_CACHE: Dict[str, bool] = {}
 TEMPLATE = '''<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
@@ -13,7 +14,6 @@ TEMPLATE = '''<?xml version="1.0" encoding="UTF-8"?>
 \t\t<name>Andrew Udvare</name>
 \t</maintainer>{USE}</pkgmetadata>
 '''
-GLOBAL_CACHE = {}
 
 
 def is_global_flag(name: str) -> bool:
@@ -34,7 +34,7 @@ def main() -> int:
             dirname(x) for x in glob(f'{root}/**/*.ebuild', recursive=True)):
         metadata_xml = path_join(pkg, 'metadata.xml')
         try:
-            with open(metadata_xml) as f:
+            with open(metadata_xml):
                 continue
         except FileNotFoundError:
             metadata_xml = path_join(pkg, 'metadata.xml')
