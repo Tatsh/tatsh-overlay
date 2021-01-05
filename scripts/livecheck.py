@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-from os.path import basename, dirname
-from os.path import join as path_join
-from os.path import realpath
+from os.path import basename, dirname, join as path_join, realpath
 from urllib.parse import urlparse
 from typing import Dict, Final, Iterator, Mapping, Set, Tuple, cast
 import glob
