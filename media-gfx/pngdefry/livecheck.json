@@ -1,0 +1,5 @@
+{
+  "type": "regex",
+  "regex": "; v([^ ]+), dated",
+  "url": "http://www.jongware.com/pngdefry.html"
+}
