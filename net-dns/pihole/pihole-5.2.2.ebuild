@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+inherit bash-completion-r1
 
 DESCRIPTION="Network-wide ad blocking (core)."
 HOMEPAGE="https://pi-hole.net/"
@@ -14,25 +15,25 @@ IUSE="systemd"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
-RDEPEND="${DEPEND} net-dns/pihole-ftl"
+RDEPEND="${DEPEND} net-dns/${PN}-ftl"
 BDEPEND=""
 
 S="${WORKDIR}/pi-hole-${PV}"
 
 src_prepare() {
-	sed -r -e "s:coltable=.*:coltable=${EPREFIX}/usr/share/pihole/COL_TABLE:" \
-		-e "s:/opt/pihole/:${EPREFIX}/usr/libexec/${PN}/:g" \
-		-e "s:/etc/.pihole/.*gravity-db.sh:${EPREFIX}/usr/libexec/${PN}/gravity-db.sh:" \
+	sed -r -e "s:coltable=.*:coltable=${EPREFIX}/usr/share/${PN}/COL_TABLE:" \
+		-e "s:/opt/${PN}/:${EPREFIX}/usr/libexec/${PN}/:g" \
+		-e "s:/etc/.${PN}/.*gravity-db.sh:${EPREFIX}/usr/libexec/${PN}/gravity-db.sh:" \
 		-e "s:/usr/local/bin:${EPREFIX}/usr/bin:g" \
-		-e "s:piholeGitDir=.*:piholeGitDir=${EPREFIX}/usr/share/${PN}:" \
-		-e "s:gravityDBfile=.*:gravityDBfile=${EPREFIX}/var/db/pihole/gravity.db:" \
-		-e "s:gravityTEMPfile=.*:gravityTEMPfile=${EPREFIX}/var/db/pihole/gravity_temp.db:" \
+		-e "s:${PN}GitDir=.*:${PN}GitDir=${EPREFIX}/usr/share/${PN}:" \
+		-e "s:gravityDBfile=.*:gravityDBfile=${EPREFIX}/var/db/${PN}/gravity.db:" \
+		-e "s:gravityTEMPfile=.*:gravityTEMPfile=${EPREFIX}/var/db/${PN}/gravity_temp.db:" \
 		-i gravity.sh || die
 	# Randomise gravity update and update checker time time
 	sed -i "s/59 1 /$((1 + RANDOM % 58)) $((3 + RANDOM % 2))/" \
-		advanced/Templates/pihole.cron || die
+		advanced/Templates/${PN}.cron || die
 	sed -i "s/59 17/$((1 + RANDOM % 58)) $((12 + RANDOM % 8))/" \
-		advanced/Templates/pihole.cron || die
+		advanced/Templates/${PN}.cron || die
 	default
 }
 
@@ -40,7 +41,7 @@ src_install() {
 	# dodir /etc/${PN}/dnsmasq.d
 
 	insinto /etc/logrotate.d
-	newins advanced/Templates/logrotate pihole
+	newins advanced/Templates/logrotate ${PN}
 
 	exeinto /usr/libexec/${PN}
 	doexe gravity.sh \
@@ -53,8 +54,7 @@ src_install() {
 	insinto /etc/${PN}
 	newins advanced/01-${PN}.conf 01-${PN}.conf.default
 
-	insinto /usr/share/bash-completion/completions
-	doins advanced/bash-completion/pihole
+	dobashcomp advanced/bash-completion/${PN}
 
 	if ! use systemd; then
 		insinto /etc/cron.d
@@ -74,10 +74,10 @@ pkg_config() {
 		# - Do you want to log queries? QUERY_LOGGING=true/false
 		# - Select a privacy mode: https://github.com/pi-hole/pi-hole/blob/master/automated%20install/basic-install.sh#L1210
 		#   PRIVACY_LEVEL=0/1/2/3
-		# - PIHOLE_DNS_1 and PIHOLE_DNS_2
+		# - ${PN}_DNS_1 and ${PN}_DNS_2
 		#   https://github.com/pi-hole/pi-hole/blob/master/automated%20install/basic-install.sh#L1107
 		# - Select protocols https://github.com/pi-hole/pi-hole/blob/master/automated%20install/basic-install.sh#L820
-		# - Select interface PIHOLE_INTERFACE
+		# - Select interface ${PN}_INTERFACE
 		# - CACHE_SIZE int, default 10000
 		/usr/libexec/${PN}/gravity.sh --force
 	fi
