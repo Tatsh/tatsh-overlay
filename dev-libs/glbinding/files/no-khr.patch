@@ -1,14 +1,14 @@
-diff --git a/3rdparty/KHR/CMakeLists.txt b/3rdparty/KHR/CMakeLists.txt
+diff --git a/source/3rdparty/KHR/CMakeLists.txt b/source/3rdparty/KHR/CMakeLists.txt
 index 25fac3a7..c8aa7e60 100644
---- a/3rdparty/KHR/CMakeLists.txt
-+++ b/3rdparty/KHR/CMakeLists.txt
+--- a/source/3rdparty/KHR/CMakeLists.txt
++++ b/source/3rdparty/KHR/CMakeLists.txt
 @@ -125,10 +125,6 @@ install(TARGETS ${target}
  )
  
  # Header files
 -install(DIRECTORY
 -    ${CMAKE_CURRENT_SOURCE_DIR}/include/KHR DESTINATION ${INSTALL_INCLUDE}
--    COMPONENT dev
+-    COMPONENT 3rdparty-dev
 -)
  
  # CMake config
