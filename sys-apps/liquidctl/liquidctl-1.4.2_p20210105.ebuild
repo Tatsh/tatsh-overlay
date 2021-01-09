@@ -19,7 +19,8 @@ IUSE=""
 DEPEND=""
 RDEPEND="dev-python/docopt[${PYTHON_USEDEP}]
 	dev-python/pyusb[${PYTHON_USEDEP}]
-	dev-python/hidapi[${PYTHON_USEDEP}]"
+	dev-python/hidapi[${PYTHON_USEDEP}]
+	sys-apps/i2c-tools[${PYTHON_USEDEP},python]"
 BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA}"
