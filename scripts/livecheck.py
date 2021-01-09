@@ -52,7 +52,7 @@ def get_props(search_dir: str,
     for match in sorted(set(get_highest_matches(search_dir))):
         catpkg, cat, pkg, ebuild_version = catpkg_catpkgsplit(match)
         src_uri = P.aux_get(match, ['SRC_URI'])[0].split(' ')[0]
-        if catpkg in settings.ignored_packages:
+        if cat.startswith('acct-') or catpkg in settings.ignored_packages:
             continue
         elif catpkg in settings.custom_livechecks:
             yield cast(  # type: ignore[redundant-cast]
