@@ -3,10 +3,10 @@
 
 EAPI=7
 
-inherit cmake autotools eutils
+inherit cmake autotools eutils desktop
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
-MY_SHA="a7f666ecdb987887559b0ed6c7bb85c26cade097"
+MY_SHA="aab36dae8d1236b90383838b776a95c3218e7f3e"
 HOMEPAGE="http://www.stepmania.com/"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
@@ -17,7 +17,7 @@ IUSE="+alsa +crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +networking +ogg
 	+wav +xinerama +sdl +xrandr +X bundled-songs bundled-courses lto minimaid
 	parallel-port profiling pulseaudio jack"
 
-DEPEND="gtk? ( x11-libs/gtk+:2 )
+DEPEND="x11-libs/gtk+:2
 	alsa? ( media-libs/alsa-lib )
 	mp3? ( media-libs/libmad )
 	ogg? ( media-libs/libogg media-libs/libvorbis )
@@ -67,7 +67,6 @@ src_configure() {
 		-DWITH_CRASH_HANDLER=$(usex crash-handler)
 		-DWITH_GLES2=$(usex gles2)
 		-DWITH_GPL_LIBS=$(usex gpl)
-		-DWITH_GTK2=$(usex gtk)
 		-DWITH_JPEG=$(usex jpeg)
 		-DWITH_MP3=$(usex mp3)
 		-DWITH_OGG=$(usex ogg)
@@ -102,9 +101,7 @@ src_install() {
 	newexe "${PN}-script" "${PN}"
 	exeinto /usr/$(get_libdir)/${PN}
 	doexe "${PN}" || die "dobin failed"
-	if use gtk; then
-		doexe GtkModule.so || die "doexe GtkModule.so failed"
-	fi
+	doexe GtkModule.so || die "doexe GtkModule.so failed"
 	insinto /usr/$(get_libdir)/${PN}
 	! [ -d Announcers ] && mkdir Announcers
 	doins -r Announcers BackgroundEffects BackgroundTransitions \
