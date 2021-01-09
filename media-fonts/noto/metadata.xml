@@ -70,5 +70,6 @@
 		<flag name="l10n_jv">Install fonts for Javanese script</flag>
 		<flag name="l10n_khb">Install fonts for Tai Tham alphabet</flag>
 		<flag name="l10n_iu">Install fonts for Canadian Aboriginal script</flag>
+		<flag name="extra">Keep extra fonts</flag>
 	</use>
 </pkgmetadata>
