@@ -38,6 +38,7 @@ src_prepare() {
 		-i ../ycmd/utils.py || die
 	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i \
 		../ycmd/completers/cpp/clangd_completer.py || die
+	sed -r -e "s|Python3 [0-9\\.]+ REQUIRED COMPONENTS|Python3 3.${PYTHON_MINOR_VERSION} EXACT REQUIRED COMPONENTS|" -i CMakeLists.txt
 	cmake_src_prepare
 }
 
