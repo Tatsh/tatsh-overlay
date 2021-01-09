@@ -8,7 +8,7 @@ inherit cmake python-single-r1
 DESCRIPTION="A code-completion & code-comprehension server."
 HOMEPAGE="https://github.com/ycm-core/ycmd"
 CORE_VERSION=44
-MY_SHA="64a4eaf473cb64c3deb5882db151633033e78dd1"
+MY_SHA="06228007b8ec32f0d1e557c253e490828e289a7f"
 SRC_URI="https://github.com/ycm-core/ycmd/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
@@ -44,14 +44,12 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DUSE_CLANG_TIDY=ON
-		"-DPYTHON_LIBRARY=${EPREFIX}/usr/$(get_libdir)/libpython3.${PYTHON_MINOR_VERSION}.so"
-		"-DPYTHON_INCLUDE_DIR=${EPREFIX}/usr/include/python3.${PYTHON_MINOR_VERSION}"
 	)
 	cmake_src_configure
 }
 
 src_install() {
 	into "$(python_get_sitedir)"
-	cp ../ycm_core.so "${D}/$(python_get_sitedir)"
+	cp ../ycm_core.cpython*.so "${D}/$(python_get_sitedir)"
 	python_domodule ../ycmd
 }
