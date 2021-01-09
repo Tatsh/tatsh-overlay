@@ -6,7 +6,7 @@ inherit cmake
 
 DESCRIPTION="A CPU emulator framework based on QEMU."
 HOMEPAGE="https://github.com/unicorn-engine/unicorn"
-MY_SHA="3134f3302981298e8c53ef6b000959c31c6818af"
+MY_SHA="7ca7e8a79d85ca57bb523be49009b0326b7a5210"
 SRC_URI="https://github.com/unicorn-engine/unicorn/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
