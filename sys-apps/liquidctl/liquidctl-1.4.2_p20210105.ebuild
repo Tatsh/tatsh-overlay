@@ -1,4 +1,4 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2020-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -7,8 +7,8 @@ PYTHON_COMPAT=( python3_{7,8,9} )
 inherit distutils-r1 udev
 
 DESCRIPTION="Cross-platform CLI and Python drivers for AIO liquid coolers and other devices."
-HOMEPAGE="https://github.com/jonasmalacofilho/liquidctl"
-MY_SHA="30dd13e4deff0e4c78f8fb932e87705b705c87a5"
+HOMEPAGE="https://github.com/liquidctl/liquidctl"
+MY_SHA="3ecb6de1e5c99ebbc639a8a87949585f0f1d8a05"
 SRC_URI="https://github.com/jonasmalacofilho/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
