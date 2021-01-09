@@ -1,4 +1,4 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2020-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,7 +6,7 @@ inherit cmake-utils
 
 DESCRIPTION="A new generation, open-source graphics plugin for N64 emulators."
 HOMEPAGE="https://github.com/gonetz/GLideN64"
-MY_SHA="66051912c5f855cdf7b826d03827ad5f2c709e5f"
+MY_SHA="eb8ac40136a3ff3036b26f204d5dd06b26ed57aa"
 SRC_URI="https://github.com/gonetz/GLideN64/archive/${MY_SHA}.tar.gz"
 
 LICENSE="GPL-2"
