@@ -1,9 +1,9 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 2019-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-MY_SHA="5d6c747b15f6b2534e28131be699efa1de634869"
-USE_RUBY="ruby22 ruby23 ruby24 ruby25 ruby26"
+MY_SHA="a9a19c187007bf7a54d7242b359bfd7016fc1dca"
+USE_RUBY="ruby25 ruby26 ruby27"
 RUBY_FAKEGEM_EXTRADOC="${PN:4}-${MY_SHA}/README.md"
 RUBY_FAKEGEM_EXTRAINSTALL="${PN:4}-${MY_SHA}/bin"
 RUBY_S="${PN}-*"
