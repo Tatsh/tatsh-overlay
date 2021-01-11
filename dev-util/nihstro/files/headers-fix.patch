@@ -1,0 +1,81 @@
+diff --git a/include/nihstro/source_tree.h b/include/nihstro/source_tree.h
+index ed3d960..dd79ea3 100644
+--- a/include/nihstro/source_tree.h
++++ b/include/nihstro/source_tree.h
+@@ -27,6 +27,7 @@
+ 
+ #pragma once
+ 
++#include <algorithm>
+ #include <list>
+ #include <string>
+ 
+@@ -86,7 +87,7 @@ struct SourceTreeIterator {
+     using value_type = std::string::iterator::value_type;
+     using pointer = std::string::iterator::pointer;
+     using iterator_category = std::random_access_iterator_tag;
+-    
++
+     SourceTreeIterator() {
+     }
+ 
+diff --git a/src/parser_assembly.cpp b/src/parser_assembly.cpp
+index f63a1fa..03279b9 100644
+--- a/src/parser_assembly.cpp
++++ b/src/parser_assembly.cpp
+@@ -30,6 +30,7 @@
+ // #define BOOST_SPIRIT_DEBUG
+ 
+ #include <boost/fusion/include/adapt_struct.hpp>
++#include <boost/phoenix/core/reference.hpp>
+ #include <boost/spirit/include/qi.hpp>
+ 
+ #include "nihstro/parser_assembly.h"
+diff --git a/src/parser_assembly/compare.cpp b/src/parser_assembly/compare.cpp
+index 8e6f6f8..5147c9f 100644
+--- a/src/parser_assembly/compare.cpp
++++ b/src/parser_assembly/compare.cpp
+@@ -30,6 +30,7 @@
+ // #define BOOST_SPIRIT_DEBUG
+ 
+ #include <boost/fusion/include/adapt_struct.hpp>
++#include <boost/phoenix/core/reference.hpp>
+ #include <boost/spirit/include/qi.hpp>
+ 
+ #include "nihstro/parser_assembly.h"
+diff --git a/src/parser_assembly/declaration.cpp b/src/parser_assembly/declaration.cpp
+index bd0a1e8..9622f38 100644
+--- a/src/parser_assembly/declaration.cpp
++++ b/src/parser_assembly/declaration.cpp
+@@ -27,6 +27,7 @@
+ 
+ 
+ #include <boost/fusion/include/adapt_struct.hpp>
++#include <boost/phoenix/core/reference.hpp>
+ #include <boost/spirit/include/qi.hpp>
+ 
+ #include "nihstro/parser_assembly.h"
+diff --git a/src/parser_assembly/floatop.cpp b/src/parser_assembly/floatop.cpp
+index 2c2568f..ac9c569 100644
+--- a/src/parser_assembly/floatop.cpp
++++ b/src/parser_assembly/floatop.cpp
+@@ -30,6 +30,7 @@
+ // #define BOOST_SPIRIT_DEBUG
+ 
+ #include <boost/fusion/include/adapt_struct.hpp>
++#include <boost/phoenix/core/reference.hpp>
+ #include <boost/spirit/include/qi.hpp>
+ 
+ #include "nihstro/parser_assembly.h"
+diff --git a/src/parser_assembly/flowcontrol.cpp b/src/parser_assembly/flowcontrol.cpp
+index 7698ae3..857b97a 100644
+--- a/src/parser_assembly/flowcontrol.cpp
++++ b/src/parser_assembly/flowcontrol.cpp
+@@ -31,6 +31,7 @@
+ 
+ #include <boost/fusion/include/adapt_struct.hpp>
+ #include <boost/fusion/include/swap.hpp>
++#include <boost/phoenix/core/reference.hpp>
+ #include <boost/spirit/include/qi.hpp>
+ 
+ #include "nihstro/parser_assembly.h"
