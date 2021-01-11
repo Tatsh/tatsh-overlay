@@ -1,0 +1,194 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9fbbb0497..26e37b71f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -40,6 +40,14 @@ CMAKE_DEPENDENT_OPTION(ENABLE_MF "Use Media Foundation decoder (preferred over F
+ CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ON "MINGW" OFF)
+ 
+ option(USE_SYSTEM_BOOST "Use the system Boost libs (instead of the bundled ones)" OFF)
++option(USE_SYSTEM_CUBEB "Use system cubeb libs" OFF)
++option(USE_SYSTEM_ENET "Use system enet libs" OFF)
++option(USE_SYSTEM_FMT "Use system fmt libs" OFF)
++option(USE_SYSTEM_INIH "Use system inih" OFF)
++option(USE_SYSTEM_TEAKRA "Use system Teakra libs" OFF)
++option(USE_SYSTEM_XBYAK "Use system xbyak" OFF)
++option(USE_SYSTEM_ZSTD "Use system zstd libs" OFF)
++option(DISABLE_SUBMODULE_CHECK "Disable check for submodules" OFF)
+ 
+ CMAKE_DEPENDENT_OPTION(ENABLE_FDK "Use FDK AAC decoder" OFF "NOT ENABLE_FFMPEG_AUDIO_DECODER;NOT ENABLE_MF" OFF)
+ 
+@@ -63,7 +71,9 @@ function(check_submodules_present)
+         endif()
+     endforeach()
+ endfunction()
+-check_submodules_present()
++if (NOT DISABLE_SUBMODULE_CHECK)
++    check_submodules_present()
++endif()
+ 
+ configure_file(${PROJECT_SOURCE_DIR}/dist/compatibility_list/compatibility_list.qrc
+                ${PROJECT_BINARY_DIR}/dist/compatibility_list/compatibility_list.qrc
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index 24e881b19..bfee14919 100644
+--- a/externals/CMakeLists.txt
++++ b/externals/CMakeLists.txt
+@@ -10,16 +10,18 @@ include(DownloadExternals)
+ include(ExternalProject)
+ 
+ # Boost
+-set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/externals/boost")
+-set(Boost_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/boost")
+-set(Boost_NO_SYSTEM_PATHS ON)
+-add_library(boost INTERFACE)
+-target_include_directories(boost SYSTEM INTERFACE ${Boost_INCLUDE_DIR})
++if (NOT USE_SYSTEM_BOOST)
++    set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/externals/boost")
++    set(Boost_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/boost")
++    set(Boost_NO_SYSTEM_PATHS ON)
++    add_library(boost INTERFACE)
++    target_include_directories(boost SYSTEM INTERFACE ${Boost_INCLUDE_DIR})
+ 
+ # Boost::serialization
+-file(GLOB boost_serialization_SRC "${CMAKE_SOURCE_DIR}/externals/boost/libs/serialization/src/*.cpp")
+-add_library(boost_serialization STATIC ${boost_serialization_SRC})
+-target_link_libraries(boost_serialization PUBLIC boost)
++    file(GLOB boost_serialization_SRC "${CMAKE_SOURCE_DIR}/externals/boost/libs/serialization/src/*.cpp")
++    add_library(boost_serialization STATIC ${boost_serialization_SRC})
++    target_link_libraries(boost_serialization PUBLIC boost)
++endif()
+ 
+ # Add additional boost libs here; remember to ALIAS them in the root CMakeLists!
+ 
+@@ -28,13 +30,21 @@ add_library(catch-single-include INTERFACE)
+ target_include_directories(catch-single-include INTERFACE catch/single_include)
+ 
+ # Crypto++
+-add_subdirectory(cryptopp)
++if (NOT USE_SYSTEM_CRYPTOPP)
++    add_subdirectory(cryptopp)
++else()
++    find_library(CRYPTOPP_LIBS cryptopp REQUIRED)
++endif()
+ 
+ # Xbyak
+ if (ARCHITECTURE_x86_64)
+-    add_library(xbyak INTERFACE)
+-    target_include_directories(xbyak SYSTEM INTERFACE ./xbyak/xbyak)
+-    target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
++    if (NOT USE_SYSTEM_XBYAK)
++        add_library(xbyak INTERFACE)
++        target_include_directories(xbyak SYSTEM INTERFACE ./xbyak/xbyak)
++        target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
++    else()
++        find_path(XBYAK_INCLUDE xbyak.h PATH_SUFFIXES xbyak REQUIRED)
++    endif()
+ endif()
+ 
+ # Dynarmic
+@@ -46,8 +56,12 @@ if (ARCHITECTURE_x86_64 OR ARCHITECTURE_ARM64)
+ endif()
+ 
+ # libfmt
+-add_subdirectory(fmt)
+-add_library(fmt::fmt ALIAS fmt)
++if (NOT USE_SYSTEM_FMT)
++    add_subdirectory(fmt)
++    add_library(fmt::fmt ALIAS fmt)
++else()
++    find_package(fmt REQUIRED)
++endif()
+ 
+ # getopt
+ if (MSVC)
+@@ -58,7 +72,11 @@ endif()
+ add_subdirectory(glad)
+ 
+ # inih
+-add_subdirectory(inih)
++if (NOT USE_SYSTEM_INIH)
++    add_subdirectory(inih)
++else()
++    find_library(INIH_LIBS INIReader REQUIRED)
++endif()
+ 
+ # MicroProfile
+ add_library(microprofile INTERFACE)
+@@ -77,20 +95,36 @@ add_subdirectory(soundtouch)
+ target_include_directories(SoundTouch INTERFACE ./soundtouch/include)
+ 
+ # Teakra
+-add_subdirectory(teakra EXCLUDE_FROM_ALL)
++if (NOT USE_SYSTEM_TEAKRA)
++    add_subdirectory(teakra EXCLUDE_FROM_ALL)
++else()
++    find_library(TEAKRA_LIBS teakra REQUIRED)
++endif()
+ 
+ # Zstandard
+-add_subdirectory(zstd/build/cmake EXCLUDE_FROM_ALL)
+-target_include_directories(libzstd_static INTERFACE $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/externals/zstd/lib>)
++if (NOT USE_SYSTEM_ZSTD)
++    add_subdirectory(zstd/build/cmake EXCLUDE_FROM_ALL)
++    target_include_directories(libzstd_static INTERFACE $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/externals/zstd/lib>)
++else()
++    find_library(ZSTD_LIBS zstd REQUIRED)
++endif()
+ 
+ # ENet
+-add_subdirectory(enet)
+-target_include_directories(enet INTERFACE ./enet/include)
++if (NOT USE_SYSTEM_ENET)
++    add_subdirectory(enet)
++    target_include_directories(enet INTERFACE ./enet/include)
++else()
++    find_library(ENET_LIBS enet REQUIRED)
++endif()
+ 
+ # Cubeb
+ if (ENABLE_CUBEB)
+-    set(BUILD_TESTS OFF CACHE BOOL "")
+-    add_subdirectory(cubeb EXCLUDE_FROM_ALL)
++    if (NOT USE_SYSTEM_CUBEB)
++        set(BUILD_TESTS OFF CACHE BOOL "")
++        add_subdirectory(cubeb EXCLUDE_FROM_ALL)
++    else()
++        find_package(cubeb REQUIRED)
++    endif()
+ endif()
+ 
+ # DiscordRPC
+diff --git a/src/citra/CMakeLists.txt b/src/citra/CMakeLists.txt
+index 86066dfe9..fadc07e98 100644
+--- a/src/citra/CMakeLists.txt
++++ b/src/citra/CMakeLists.txt
+@@ -16,7 +16,12 @@ add_executable(citra
+ create_target_directory_groups(citra)
+ 
+ target_link_libraries(citra PRIVATE common core input_common network)
+-target_link_libraries(citra PRIVATE inih glad lodepng)
++target_link_libraries(citra PRIVATE glad lodepng)
++if (NOT USE_SYSTEM_INIH)
++    target_link_libraries(citra PRIVATE inih)
++else()
++    target_link_libraries(citra PRIVATE ${INIH_LIBS})
++endif()
+ if (MSVC)
+     target_link_libraries(citra PRIVATE getopt)
+ endif()
+diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
+index 5d65965fa..22519073d 100644
+--- a/src/common/CMakeLists.txt
++++ b/src/common/CMakeLists.txt
+@@ -130,7 +130,11 @@ endif()
+ create_target_directory_groups(common)
+ 
+ target_link_libraries(common PUBLIC fmt microprofile Boost::boost Boost::serialization)
+-target_link_libraries(common PRIVATE libzstd_static)
++if (NOT USE_SYSTEM_ZSTD)
++    target_link_libraries(common PRIVATE libzstd_static)
++else()
++    target_link_libraries(common PUBLIC zstd)
++endif()
+ if (ARCHITECTURE_x86_64)
+     target_link_libraries(common PRIVATE xbyak)
+ endif()
