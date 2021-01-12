@@ -19,7 +19,7 @@ DEPEND="evdev? ( dev-libs/libevdev )
 	ao? ( media-libs/libao )
 	pulseaudio? ( media-sound/pulseaudio )
 	curl? ( net-misc/curl )
-	openmp? ( sys-devel/gcc[openmp] )
+	openmp? ( sys-devel/gcc:=[openmp] )
 	x11-libs/libICE
 	x11-libs/libSM
 	x11-libs/libX11
