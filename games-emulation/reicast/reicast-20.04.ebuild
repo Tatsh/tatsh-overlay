@@ -6,7 +6,7 @@ inherit cmake desktop
 
 DESCRIPTION="Sega Dreamcast emulator."
 HOMEPAGE="http://reicast.com/"
-SRC_URI="https://github.com/${PN}/${PN}-emulator/archive/r${PV}.tar.gz"
+SRC_URI="https://github.com/${PN}/${PN}-emulator/archive/r${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
