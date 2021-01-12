@@ -1,18 +1,18 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2020-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3"
-MY_RE3_HASH="fa94ee2e08ac7e54e9add83025a7b1aeb4bd215f"
-MY_LIBRW_HASH="30b77b0b32b4113b5dce2b67813ce9b85d1e1e57"
-SRC_URI="https://github.com/Tatsh/re3/archive/${MY_RE3_HASH}.tar.gz -> ${P}.tar.gz
+MY_RE3_HASH="be1e09aad465878645768a1e515d6c7fa8a68e89"
+MY_LIBRW_HASH="61b288a9fe72ae4073c0ac5fd2a5815ed510c8c8"
+SRC_URI="https://github.com/GTAmodding/re3/archive/${MY_RE3_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86 ~arm64 ~arm"
+KEYWORDS="~amd64 ~x86"
 IUSE="extra"
 
 DEPEND="media-libs/libsndfile
@@ -24,6 +24,8 @@ RDEPEND="${DEPEND}"
 BDEPEND="dev-util/premake:5"
 
 S="${WORKDIR}/${PN}-${MY_RE3_HASH}"
+
+PATCHES=( "${FILESDIR}/${PN}-xdg.patch" )
 
 src_unpack() {
 	default

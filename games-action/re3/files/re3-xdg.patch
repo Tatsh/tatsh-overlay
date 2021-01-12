@@ -1,0 +1,450 @@
+diff --git a/src/animation/AnimManager.cpp b/src/animation/AnimManager.cpp
+index 557bd842..ac577cd8 100644
+--- a/src/animation/AnimManager.cpp
++++ b/src/animation/AnimManager.cpp
+@@ -763,6 +763,7 @@ CAnimManager::LoadAnimFiles(void)
+ {
+ 	int i, j;
+ 
++	CFileMgr::SetDir("");
+ 	LoadAnimFile("ANIM\\PED.IFP");
+ 
+ 	// Create all assoc groups
+diff --git a/src/animation/CutsceneMgr.cpp b/src/animation/CutsceneMgr.cpp
+index 83c4dbcb..1c710d2f 100644
+--- a/src/animation/CutsceneMgr.cpp
++++ b/src/animation/CutsceneMgr.cpp
+@@ -155,6 +155,7 @@ CCutsceneMgr::Initialise(void)
+ 	ms_cutsceneProcessing = false;
+ 	ms_useLodMultiplier = false;
+ 
++	CFileMgr::SetDir("");
+ 	ms_pCutsceneDir = new CDirectory(CUTSCENEDIRSIZE);
+ 	ms_pCutsceneDir->ReadDirFile("ANIM\\CUTS.DIR");
+ }
+@@ -179,12 +180,14 @@ CCutsceneMgr::LoadCutsceneData(const char *szCutsceneName)
+ 	CTimer::Stop();
+ 
+ 	ms_pCutsceneDir->numEntries = 0;
++	CFileMgr::SetDir("");
+ 	ms_pCutsceneDir->ReadDirFile("ANIM\\CUTS.DIR");
+ 
+ 	CStreaming::RemoveUnusedModelsInLoadedList();
+ 	CGame::DrasticTidyUpMemory(true);
+ 
+ 	strcpy(ms_cutsceneName, szCutsceneName);
++	CFileMgr::SetDir("");
+ 	file = CFileMgr::OpenFile("ANIM\\CUTS.IMG", "rb");
+ 
+ 	// Load animations
+diff --git a/src/audio/sampman_miles.cpp b/src/audio/sampman_miles.cpp
+index db38da64..529340f8 100644
+--- a/src/audio/sampman_miles.cpp
++++ b/src/audio/sampman_miles.cpp
+@@ -16,6 +16,7 @@
+ #include "MusicManager.h"
+ #include "Frontend.h"
+ #include "Timer.h"
++#include "FileMgr.h"
+ 
+ 
+ #pragma comment( lib, "mss32.lib" )
+@@ -450,6 +451,7 @@ _FindMP3s(void)
+ 		return;
+ 	}
+ 	
++	CFileMgr::SetDir("");
+ 	FILE *f = fopen("MP3\\MP3Report.txt", "w");
+ 	
+ 	if ( f )
+@@ -961,6 +963,7 @@ cSampleManager::Initialise(void)
+ 	
+ #ifdef AUDIO_CACHE
+ 	TRACE("cache");
++	CFileMgr::SetDir("");
+ 	FILE *cacheFile = fopen("audio\\sound.cache", "rb");
+ 	if (cacheFile) {
+ 		fread(nStreamLength, sizeof(uint32), TOTAL_STREAMED_SOUNDS, cacheFile);
+@@ -1077,7 +1080,8 @@ cSampleManager::Initialise(void)
+ 		
+ 		strcpy(_aHDDPath, m_szCDRomRootPath);
+ 		rootpath[0] = '\0';
+-		
++
++		CFileMgr::SetDir("");
+ 		FILE *f = fopen(StreamedNameTable[0], "rb");
+ 		
+ 		if ( f )
+@@ -1125,6 +1129,7 @@ cSampleManager::Initialise(void)
+ 	}
+ #endif
+ #ifdef AUDIO_CACHE
++	CFileMgr::SetDir("");
+ 	cacheFile = fopen("audio\\sound.cache", "wb");
+ 	fwrite(nStreamLength, sizeof(uint32), TOTAL_STREAMED_SOUNDS, cacheFile);
+ 	fclose(cacheFile);
+@@ -1311,6 +1316,8 @@ cSampleManager::CheckForAnAudioFileOnCD(void)
+ 
+ 	strcat(filepath, StreamedNameTable[AudioManager.GetRandomNumber(1) % TOTAL_STREAMED_SOUNDS]);
+ 	
++	CFileMgr::SetDir("");
++
+ 	FILE *f = fopen(filepath, "rb");
+ 	
+ 	if ( f )
+@@ -2289,6 +2296,8 @@ cSampleManager::IsStreamPlaying(uint8 nStream)
+ bool
+ cSampleManager::InitialiseSampleBanks(void)
+ {
++	CFileMgr::SetDir("");
++
+ 	int32 nBank = SFX_BANK_0;
+ 	
+ 	fpSampleDescHandle = fopen(SampleBankDescFilename, "rb");
+diff --git a/src/core/AnimViewer.cpp b/src/core/AnimViewer.cpp
+index a888d528..e2f71fd6 100644
+--- a/src/core/AnimViewer.cpp
++++ b/src/core/AnimViewer.cpp
+@@ -117,6 +117,7 @@ CAnimViewer::Initialise(void) {
+ 	CDraw::SetFOV(120.0f);
+ 	CDraw::ms_fLODDistance = 500.0f;
+ 
++	CFileMgr::SetDir("");
+ 	int fd = CFileMgr::OpenFile("DATA\\SPECIAL.TXT", "r");
+ 	char animGroup[32], modelName[32];
+ 	if (fd) {
+diff --git a/src/core/CdStreamPosix.cpp b/src/core/CdStreamPosix.cpp
+index 0854d850..2aa976a4 100644
+--- a/src/core/CdStreamPosix.cpp
++++ b/src/core/CdStreamPosix.cpp
+@@ -15,8 +15,10 @@
+ #include <sys/syscall.h>
+ 
+ #include "CdStream.h"
++#include "FileMgr.h"
+ #include "rwcore.h"
+ #include "MemoryMgr.h"
++#include "RwHelper.h"
+ 
+ #define CDDEBUG(f, ...)   debug ("%s: " f "\n", "cdvd_stream", ## __VA_ARGS__)
+ #define CDTRACE(f, ...)   printf("%s: " f "\n", "cdvd_stream", ## __VA_ARGS__)
+@@ -140,17 +142,28 @@ CdStreamInitThread(void)
+ #endif
+ }
+ 
++static const char *gta3ImgPath = "models/gta3.img";
++
+ void
+ CdStreamInit(int32 numChannels)
+ {
+-	struct statvfs fsInfo;
+-
+-	if((statvfs("models/gta3.img", &fsInfo)) < 0)
+-	{
+-		CDTRACE("can't get filesystem info");
+-		ASSERT(0);
+-		return;
+-	}
++    struct statvfs fsInfo;
++    char imgPath[128] = {'\0'};
++
++#ifdef XDG_ROOT
++    const char *rootDir = CFileMgr::GetRootDirName();
++    strncpy(imgPath, rootDir, strlen(rootDir) - 1);
++    strcat(imgPath, "/");
++    strcat(imgPath, gta3ImgPath);
++#else
++    strcpy(imgPath, gta3ImgPath);
++#endif
++    if((statvfs(imgPath, &fsInfo)) < 0)
++    {
++        CDTRACE("can't get filesystem info");
++        ASSERT(0);
++        return;
++    }
+ #ifdef __linux__
+ 	_gdwCdStreamFlags = O_RDONLY | O_NOATIME;
+ #else
+@@ -483,6 +496,8 @@ CdStreamAddImage(char const *path)
+ 	ASSERT(path != nil);
+ 	ASSERT(gNumImages < MAX_CDIMAGES);
+ 
++	CFileMgr::SetDir("");
++
+ 	gImgFiles[gNumImages] = open(path, _gdwCdStreamFlags);
+ 
+ 	// Fix case sensitivity and backslashes.
+diff --git a/src/core/FileLoader.cpp b/src/core/FileLoader.cpp
+index 22e0159c..dfae3bb1 100644
+--- a/src/core/FileLoader.cpp
++++ b/src/core/FileLoader.cpp
+@@ -210,6 +210,7 @@ CFileLoader::LoadCollisionFile(const char *filename)
+ 	PUSH_MEMID(MEMID_COLLISION);
+ 
+ 	debug("Loading collision file %s\n", filename);
++	CFileMgr::SetDir("");
+ 	fd = CFileMgr::OpenFile(filename, "rb");
+ 
+ 	while(CFileMgr::Read(fd, (char*)&header, sizeof(header))){
+@@ -987,6 +988,7 @@ CFileLoader::LoadObjectTypes(const char *filename)
+ 	mlo = 0;
+ 	debug("Loading object types from %s...\n", filename);
+ 
++	CFileMgr::SetDir("");
+ 	fd = CFileMgr::OpenFile(filename, "rb");
+ 	for(line = CFileLoader::LoadLine(fd); line; line = CFileLoader::LoadLine(fd)){
+ 		if(*line == '\0' || *line == '#')
+@@ -1493,6 +1495,7 @@ CFileLoader::LoadScene(const char *filename)
+ 	pathIndex = -1;
+ 	debug("Creating objects from %s...\n", filename);
+ 
++	CFileMgr::SetDir("");
+ 	fd = CFileMgr::OpenFile(filename, "rb");
+ 	for(line = CFileLoader::LoadLine(fd); line; line = CFileLoader::LoadLine(fd)){
+ 		if(*line == '\0' || *line == '#')
+@@ -1656,6 +1659,7 @@ CFileLoader::LoadMapZones(const char *filename)
+ 	section = NONE;
+ 	debug("Creating zones from %s...\n", filename);
+ 
++	CFileMgr::SetDir("");
+ 	fd = CFileMgr::OpenFile(filename, "rb");
+ 	for(line = CFileLoader::LoadLine(fd); line; line = CFileLoader::LoadLine(fd)){
+ 		if(*line == '\0' || *line == '#')
+@@ -1699,6 +1703,7 @@ CFileLoader::ReloadPaths(const char *filename)
+ 	char pathTypeStr[20];
+ 	debug("Reloading paths from %s...\n", filename);
+ 
++	CFileMgr::SetDir("");
+ 	int fd = CFileMgr::OpenFile(filename, "r");
+ 	for (line = CFileLoader::LoadLine(fd); line; line = CFileLoader::LoadLine(fd)) {
+ 		if (*line == '\0' || *line == '#')
+diff --git a/src/core/FileMgr.cpp b/src/core/FileMgr.cpp
+index 32aa4041..87cb7bb4 100644
+--- a/src/core/FileMgr.cpp
++++ b/src/core/FileMgr.cpp
+@@ -197,10 +197,69 @@ myfeof(int fd)
+ char CFileMgr::ms_rootDirName[128] = {'\0'};
+ char CFileMgr::ms_dirName[128];
+ 
++#ifdef XDG_ROOT
++// Must have char homeDir[PATH_MAX] in scope.
++#define getenvvar(varName)                                  \
++	char **p = environ;                                     \
++	size_t varNameLength = ARRAY_SIZE(varName) - 1;         \
++	for (; *p; p++) {                                       \
++		if (!strncmp(varName "=", *p, varNameLength + 1)) { \
++			strcpy(homeDir, *p + varNameLength + 1);        \
++			break;                                          \
++		}                                                   \
++	}
++
++void
++CFileMgr::GetHomeDirectory(char *homeDir)
++{
++	getenvvar("HOME");
++}
++
++void
++CFileMgr::GetXDGDataHome(char *homeDir)
++{
++	getenvvar("XDG_DATA_HOME");
++}
++#endif
++
+ void
+ CFileMgr::Initialise(void)
+ {
++#ifdef XDG_ROOT
++	char homeDir[255];
++	struct stat buf;
++	memset(homeDir, 0, 255);
++	GetXDGDataHome(homeDir);
++	if (strlen(homeDir) > 0) {
++		strcat(homeDir, "/re3");
++		if (stat(homeDir, &buf) < 0) {
++			int ret = mkdir(homeDir, 0755);
++			assert(ret == 0);
++		}
++	} else {
++		memset(homeDir, 0, 255);
++		GetHomeDirectory(homeDir);
++		// Build up ${HOME}/.local/share/re3
++		strcat(homeDir, "/.local");
++		if (stat(homeDir, &buf) < 0) {
++			int ret = mkdir(homeDir, 0755);
++			assert(ret == 0);
++		}
++		strcat(homeDir, "/share");
++		if (stat(homeDir, &buf) < 0) {
++			int ret = mkdir(homeDir, 0755);
++			assert(ret == 0);
++		}
++		strcat(homeDir, "/re3");
++		if (stat(homeDir, &buf) < 0) {
++			int ret = mkdir(homeDir, 0755);
++			assert(ret == 0);
++		}
++	}
++	strcpy(ms_rootDirName, homeDir);
++#else
+ 	_getcwd(ms_rootDirName, 128);
++#endif
+ 	strcat(ms_rootDirName, "\\");
+ }
+ 
+diff --git a/src/core/FileMgr.h b/src/core/FileMgr.h
+index f70451b7..72f0ebea 100644
+--- a/src/core/FileMgr.h
++++ b/src/core/FileMgr.h
+@@ -20,4 +20,8 @@ public:
+ 	static int CloseFile(int fd);
+ 	static int GetErrorReadWrite(int fd);
+ 	static char *GetRootDirName() { return ms_rootDirName; }
++#ifdef XDG_ROOT
++	static void GetHomeDirectory(char *homeDir);
++	static void GetXDGDataHome(char *homeDir);
++#endif
+ };
+diff --git a/src/core/Game.cpp b/src/core/Game.cpp
+index 7961b981..98c1d877 100644
+--- a/src/core/Game.cpp
++++ b/src/core/Game.cpp
+@@ -811,7 +811,7 @@ void CGame::ReloadIPLs(void)
+ 	CWorld::RemoveStaticObjects();
+ 	ThePaths.Init();
+ 	CCullZones::Init();
+-	CFileLoader::ReloadPaths("GTA3.IDE");
++	CFileLoader::ReloadPaths("DATA\\MAPS\\GTA3.IDE");
+ 	CFileLoader::LoadScene("INDUST.IPL");
+ 	CFileLoader::LoadScene("COMMER.IPL");
+ 	CFileLoader::LoadScene("SUBURBAN.IPL");
+diff --git a/src/core/config.h b/src/core/config.h
+index a2b2b6fc..916a2552 100644
+--- a/src/core/config.h
++++ b/src/core/config.h
+@@ -390,3 +390,6 @@ enum Config {
+ #ifdef LIBRW
+ // these are not supported with librw yet
+ #endif
++
++// Store GTA 3 files in ${HOME}/.local/share/re3
++// #define XDG_ROOT
+diff --git a/src/core/main.cpp b/src/core/main.cpp
+index d43f4a74..f3eb708f 100644
+--- a/src/core/main.cpp
++++ b/src/core/main.cpp
+@@ -131,6 +131,9 @@ bool gbNewRenderer;
+ void
+ ValidateVersion()
+ {
++#ifdef XDG_ROOT
++	CFileMgr::SetDir("");
++#endif
+ 	int32 file = CFileMgr::OpenFile("models\\coll\\peds.col", "rb");
+ 	char buff[128];
+ 
+@@ -1675,6 +1678,7 @@ void
+ InitialiseGame(void)
+ {
+ 	LoadingScreen(nil, nil, "loadsc0");
++	CFileMgr::SetDir("");
+ 	CGame::Initialise("DATA\\GTA3.DAT");
+ }
+ 
+diff --git a/src/render/WaterLevel.cpp b/src/render/WaterLevel.cpp
+index 7aa01f5a..23dda7e2 100644
+--- a/src/render/WaterLevel.cpp
++++ b/src/render/WaterLevel.cpp
+@@ -61,7 +61,7 @@ CWaterLevel::Initialise(Const char *pWaterDat)
+ 
+ #ifdef MASTER
+ 	int32 hFile = -1;
+-
++	CFileMgr::SetDir("");
+ 	do
+ 	{
+ 		hFile = CFileMgr::OpenFile("DATA\\waterpro.dat", "rb");
+diff --git a/src/rw/TexRead.cpp b/src/rw/TexRead.cpp
+index d0addcca..a184e32f 100644
+--- a/src/rw/TexRead.cpp
++++ b/src/rw/TexRead.cpp
+@@ -233,6 +233,7 @@ ReadVideoCardCapsFile(uint32 &cap32, uint32 &cap24, uint32 &cap16, uint32 &cap8)
+ 	cap16 = UINT32_MAX;
+ 	cap8 = UINT32_MAX;
+ 
++	CFileMgr::SetDir("");
+ 	int32 file = CFileMgr::OpenFile("DATA\\CAPS.DAT", "rb");
+ 	if (file != 0) {
+ 		CFileMgr::Read(file, (char*)&cap32, 4);
+diff --git a/src/save/GenericGameStorage.cpp b/src/save/GenericGameStorage.cpp
+index a7cafec8..33236447 100644
+--- a/src/save/GenericGameStorage.cpp
++++ b/src/save/GenericGameStorage.cpp
+@@ -378,6 +378,7 @@ GenericLoad()
+ bool
+ ReadInSizeofSaveFileBuffer(int32 &file, uint32 &size)
+ {
++	CFileMgr::SetDir("");
+ 	file = CFileMgr::OpenFile(LoadFileName, "rb");
+ 	if (file == 0) {
+ 		PcSaveHelper.nErrorCode = SAVESTATUS_ERR_LOAD_OPEN;
+@@ -493,6 +494,7 @@ CheckDataNotCorrupt(int32 slot, char *name)
+ 	eLevelName level = LEVEL_GENERIC;
+ 	CheckSum = 0;
+ 	uint32 bytes_processed = 0;
++	CFileMgr::SetDir("");
+ 	sprintf(filename, "%s%i%s", DefaultPCSaveFileName, slot + 1, ".b");
+ 	int file = CFileMgr::OpenFile(filename, "rb");
+ 	if (file == 0)
+@@ -546,6 +548,7 @@ RestoreForStartLoad()
+ {
+ 	uint8 buf[999];
+ 
++	CFileMgr::SetDir("");
+ 	int file = CFileMgr::OpenFile(LoadFileName, "rb");
+ 	if (file == 0) {
+ 		PcSaveHelper.nErrorCode = SAVESTATUS_ERR_LOAD_OPEN;
+diff --git a/src/save/PCSave.cpp b/src/save/PCSave.cpp
+index d8ede0d3..597058df 100644
+--- a/src/save/PCSave.cpp
++++ b/src/save/PCSave.cpp
+@@ -40,6 +40,7 @@ C_PcSave::SaveSlot(int32 slot)
+ 	MakeValidSaveName(slot);
+ 	PcSaveHelper.nErrorCode = SAVESTATUS_SUCCESSFUL;
+ 	_psGetUserFilesFolder();
++	CFileMgr::SetDir("");
+ 	int file = CFileMgr::OpenFile(ValidSaveName, "wb");
+ 	if (file != 0) {
+ #ifdef MISSION_REPLAY
+@@ -93,6 +94,7 @@ C_PcSave::PopulateSlotInfo()
+ 		SlotFileName[i][0] = '\0';
+ 		SlotSaveDate[i][0] = '\0';
+ 	}
++	CFileMgr::SetDir("");
+ 	for (int i = 0; i < SLOT_COUNT; i++) {
+ #ifdef FIX_BUGS
+ 		char savename[MAX_PATH];
+diff --git a/src/skel/glfw/glfw.cpp b/src/skel/glfw/glfw.cpp
+index 93bfde5a..58c45463 100644
+--- a/src/skel/glfw/glfw.cpp
++++ b/src/skel/glfw/glfw.cpp
+@@ -163,6 +163,7 @@ const char *_psGetUserFilesFolder()
+ #else
+ 	static char szUserFiles[256];
+ 	strcpy(szUserFiles, "userfiles");
++	CFileMgr::SetDir("");
+ 	_psCreateFolder(szUserFiles);
+ 	return szUserFiles;
+ #endif
+diff --git a/src/skel/win/win.cpp b/src/skel/win/win.cpp
+index 388090fc..a47771b6 100644
+--- a/src/skel/win/win.cpp
++++ b/src/skel/win/win.cpp
+@@ -202,6 +202,7 @@ const char *_psGetUserFilesFolder()
+ 	return szUserFiles;
+ #else
+ 	static CHAR szUserFiles[256];
++	CFileMgr::SetDir("");
+ 	strcpy(szUserFiles, "userfiles");
+ 	_psCreateFolder(szUserFiles);
+ 	return szUserFiles;
