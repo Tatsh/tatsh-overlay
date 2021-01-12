@@ -7,9 +7,11 @@ inherit cmake
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/"
 MY_SHA="v0.0.14"
+ASMJIT_SHA="fc251c914e77cd079e58982cdab00a47539d7fc5"
 LLVM_SHA="716bb292ba3b4e5c0ceff72fee911ed2b53232cf"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz
-	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${P}-llvm.tar.gz"
+	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${P}-llvm.tar.gz
+	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${P}-asmjit.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -50,12 +52,12 @@ PATCHES=(
 	"${FILESDIR}/system-libs.patch"
 )
 
-# CMAKE_BUILD_TYPE=RelWithDebInfo
-
 src_prepare() {
 	if ! use dbus; then sed -e '10,+2d' -i 3rdparty/qt5.cmake || die; fi
 	rmdir "${S}/llvm" || die
 	mv "${WORKDIR}/llvm-mirror-${LLVM_SHA}" "${S}/llvm" || die
+	rmdir "${S}/asmjit" || die
+	mv "${WORKDIR}/asmjit-${ASMJIT_SHA}" "${S}/asmjit" || die
 	echo "#define RPCS3_GIT_VERSION \"0000-${MY_SHA}\"" > rpcs3/git-version.h
 	echo '#define RPCS3_GIT_BRANCH "master"' >> rpcs3/git-version.h
 	echo '#define RPCS3_GIT_VERSION_NO_UPDATE 1' >> rpcs3/git-version.h
