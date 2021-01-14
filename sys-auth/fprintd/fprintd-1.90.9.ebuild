@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -7,33 +7,32 @@ inherit pam systemd meson
 
 DESCRIPTION="D-Bus service to access fingerprint readers"
 HOMEPAGE="https://cgit.freedesktop.org/libfprint/fprintd/"
-MY_SHA="7d22a2b5b9d323638bb213aefb8627d897c8e482"
+MY_SHA="da60bddb3e5be024c6c1958437cb13e0ce0ffac8"
 SRC_URI="https://gitlab.freedesktop.org/libfprint/fprintd/-/archive/v${PV}/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="gtk-doc +pam static-libs"
+KEYWORDS="~amd64 ~x86"
+IUSE="gtk-doc +pam static-libs systemd"
+REQUIRED_USE="systemd? ( pam )"
 
-RDEPEND="
-	dev-libs/dbus-glib
+RDEPEND="dev-libs/dbus-glib
 	dev-libs/glib:2
 	>=sys-auth/libfprint-1.90.1
 	sys-auth/polkit
-	sys-apps/systemd
-	pam? ( sys-libs/pam )
-"
+	systemd? ( sys-apps/systemd )
+	pam? ( sys-libs/pam )"
 DEPEND="${RDEPEND}
 	dev-util/intltool
 	gtk-doc? (
 		dev-util/gtk-doc
 		dev-util/gtk-doc-am
 		dev-libs/libxml2
-	)
-	sys-libs/pam_wrapper
-"
+	)"
 
 S="${WORKDIR}/${PN}-v${PV}-${MY_SHA}"
+
+DOCS=( pam/README )
 
 src_prepare() {
 	# Remove test dep checks
@@ -55,8 +54,7 @@ src_install() {
 	meson_src_install
 	keepdir /var/lib/fprint
 	find "${D}" -name "*.la" -delete || die
-	dodoc AUTHORS NEWS README{,.transifex} TODO
-	newdoc pam/README README.pam_fprintd
+	einstalldocs
 	if use gtk-doc; then
 		insinto /usr/share/doc/${PF}/html
 		doins doc/{fprintd-docs,version}.xml
