@@ -70,7 +70,10 @@ def get_props(search_dir: str,
                     rest = line.replace(fields_s, '').strip()
                     filename = rest.replace(f' {rest.strip().split(" ")[-1]}',
                                             '')[5:]
-                    if filename != bn:
+                    m = re.match(
+                        '^' + pkg +
+                        r'-[0-9\.]+(?:_(?:alpha|beta|p)[0-9]+)?(tar\.gz|zip)', filename)
+                    if filename != bn and not m:
                         continue
                     found = True
                     r = requests.get(src_uri)
