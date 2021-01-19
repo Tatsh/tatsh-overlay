@@ -55,13 +55,10 @@ BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA:1}"
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-rpcs3-rpcs3_version-fix-typo.patch"
-	"${FILESDIR}/${PN}-0002-allow-more-system-libs.patch"
-	"${FILESDIR}/${PN}-0004-rpcs3-emu-cell-sputhread-remove-always_inline-for-so.patch"
-	"${FILESDIR}/${PN}-0005-rpcs3-emu-rsx-vk-vkutils-physical_device-add-missing.patch"
-	"${FILESDIR}/${PN}-0006-make-emu-and-ui-static.patch"
-	"${FILESDIR}/${PN}-0007-fix-branch-name.patch"
-	"${FILESDIR}/${PN}-0008-add-use_wayland.patch"
+	"${FILESDIR}/${PN}-0001-allow-more-system-libs.patch"
+	"${FILESDIR}/${PN}-0003-rpcs3-emu-cell-sputhread-remove-always_inline-for-so.patch"
+	"${FILESDIR}/${PN}-0004-add-missing-include-fix-branch-names.patch"
+	"${FILESDIR}/${PN}-0005-add-use_wayland.patch"
 )
 
 src_prepare() {

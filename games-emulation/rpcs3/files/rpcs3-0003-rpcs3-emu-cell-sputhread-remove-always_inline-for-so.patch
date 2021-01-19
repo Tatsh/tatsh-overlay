@@ -1,15 +1,15 @@
-From ee8f9d324d32a409c66e22533a43400e99cb7ca5 Mon Sep 17 00:00:00 2001
+From cebf34e607b9a366d8989fc1f459026da9bd6ec5 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 19 Jan 2021 03:26:44 -0500
-Subject: [PATCH 4/8] rpcs3/Emu/Cell/SPUThread: remove always_inline for some
+Subject: [PATCH 3/5] rpcs3/Emu/Cell/SPUThread: remove always_inline for some
  functions
 
 ---
- rpcs3/Emu/Cell/SPUThread.cpp | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ rpcs3/Emu/Cell/SPUThread.cpp | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/rpcs3/Emu/Cell/SPUThread.cpp b/rpcs3/Emu/Cell/SPUThread.cpp
-index da1e2b74d..265f03567 100644
+index da1e2b74d..60db7bcf2 100644
 --- a/rpcs3/Emu/Cell/SPUThread.cpp
 +++ b/rpcs3/Emu/Cell/SPUThread.cpp
 @@ -133,8 +133,6 @@ static FORCE_INLINE bool cmp_rdata_avx(const __m256i* lhs, const __m256i* rhs)
@@ -30,15 +30,6 @@ index da1e2b74d..265f03567 100644
  #endif
  extern void mov_rdata(spu_rdata_t& _dst, const spu_rdata_t& _src)
  {
-@@ -1332,7 +1328,7 @@ std::string spu_thread::dump_regs() const
- 	fmt::append(ret, "Reservation Data:\n");
- 
- 	be_t<u32> data[32]{};
--	std::memcpy(data, rdata, sizeof(rdata)); // Show the data even if the reservation was lost inside the atomic loop 
-+	std::memcpy(data, rdata, sizeof(rdata)); // Show the data even if the reservation was lost inside the atomic loop
- 
- 	for (usz i = 0; i < std::size(data); i += 4)
- 	{
 -- 
 2.30.0
 
