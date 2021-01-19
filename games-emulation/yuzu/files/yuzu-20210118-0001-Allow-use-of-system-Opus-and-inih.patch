@@ -1,0 +1,98 @@
+From 9429e07923bc8383ba1e18f08e1d2fce1e21faff Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 18 Jan 2021 22:14:10 -0500
+Subject: [PATCH 1/5] Allow use of system Opus and inih
+
+---
+ CMakeLists.txt              |  5 ++++-
+ externals/CMakeLists.txt    | 13 +++++++++++--
+ src/core/CMakeLists.txt     |  5 +++++
+ src/yuzu_cmd/CMakeLists.txt |  3 +++
+ 4 files changed, 23 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index aaf3a90cf..0dfde64f6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -26,6 +26,9 @@ option(ENABLE_CUBEB "Enables the cubeb audio backend" ON)
+ 
+ option(USE_DISCORD_PRESENCE "Enables Discord Rich Presence" OFF)
+ 
++option(USE_SYSTEM_OPUS "Enable system opus" OFF)
++option(USE_SYSTEM_INIH "Enable system inih" OFF)
++
+ if (NOT ENABLE_WEB_SERVICE)
+     set(YUZU_ENABLE_BOXCAT OFF)
+ endif()
+@@ -417,7 +420,7 @@ elseif (WIN32)
+         set(PLATFORM_LIBRARIES ${PLATFORM_LIBRARIES} psapi imm32 version)
+     endif()
+ elseif (CMAKE_SYSTEM_NAME MATCHES "^(Linux|kFreeBSD|GNU|SunOS)$")
+-    set(PLATFORM_LIBRARIES rt)
++    set(PLATFORM_LIBRARIES ${PLATFORM_LIBRARIES} rt)
+ endif()
+ 
+ # Setup a custom clang-format target (if clang-format can be found) that will run
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index c629bbc5c..9eba12c0c 100644
+--- a/externals/CMakeLists.txt
++++ b/externals/CMakeLists.txt
+@@ -1,4 +1,5 @@
+ # Definitions for all external bundled libraries
++include(FindPkgConfig)
+ 
+ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules")
+ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
+@@ -31,7 +32,11 @@ endif()
+ add_subdirectory(glad)
+ 
+ # inih
+-add_subdirectory(inih)
++if (NOT USE_SYSTEM_INIH)
++    add_subdirectory(inih)
++else()
++    pkg_check_modules(INIH REQUIRED inih INIReader)
++endif()
+ 
+ # mbedtls
+ add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
+@@ -97,4 +102,8 @@ if (ENABLE_WEB_SERVICE)
+ endif()
+ 
+ # Opus
+-add_subdirectory(opus)
++if (NOT USE_SYSTEM_OPUS)
++    add_subdirectory(opus)
++else()
++    pkg_check_modules(OPUS REQUIRED opus)
++endif()
+diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
+index 2f6b22747..61ddfa7fd 100644
+--- a/src/core/CMakeLists.txt
++++ b/src/core/CMakeLists.txt
+@@ -679,3 +679,8 @@ if (ARCHITECTURE_x86_64)
+     )
+     target_link_libraries(core PRIVATE dynarmic)
+ endif()
++
++if (USE_SYSTEM_OPUS)
++    find_path(OPUS_H_PATH opus.h PATH_SUFFIXES opus)
++    target_include_directories(core PUBLIC ${OPUS_H_PATH})
++endif()
+diff --git a/src/yuzu_cmd/CMakeLists.txt b/src/yuzu_cmd/CMakeLists.txt
+index 0b3f2cb54..83d5f2c71 100644
+--- a/src/yuzu_cmd/CMakeLists.txt
++++ b/src/yuzu_cmd/CMakeLists.txt
+@@ -22,6 +22,9 @@ target_link_libraries(yuzu-cmd PRIVATE inih glad)
+ if (MSVC)
+     target_link_libraries(yuzu-cmd PRIVATE getopt)
+ endif()
++if (USE_SYSTEM_INIH)
++    set(PLATFORM_LIBRARIES ${PLATFORM_LIBRARIES} ${INIH_LDFLAGS})
++endif()
+ target_link_libraries(yuzu-cmd PRIVATE ${PLATFORM_LIBRARIES} SDL2 Threads::Threads)
+ 
+ target_include_directories(yuzu-cmd PRIVATE ../../externals/Vulkan-Headers/include)
+-- 
+2.30.0
+
