@@ -27,7 +27,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE="alsa pulseaudio evdev faudio vulkan +dbus wayland"
+IUSE="alsa pulseaudio evdev faudio vulkan wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
 DEPEND="dev-libs/discord-rpc
