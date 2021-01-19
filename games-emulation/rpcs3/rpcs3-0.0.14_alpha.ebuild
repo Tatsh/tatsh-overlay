@@ -75,7 +75,9 @@ src_prepare() {
 	echo '#define RPCS3_GIT_VERSION_NO_UPDATE 1' >> rpcs3/git-version.h
 	sed -r \
 		-e 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
-		-i "${S}/llvm/CMakeLists.txt"
+		-i "${S}/llvm/CMakeLists.txt" || die
+	sed -r -e 's/hidapi-hidraw hid.c/hidapi-hidraw STATIC hid.c/' \
+		-i "${S}/3rdparty/hidapi/linux/CMakeLists.txt" || die
 	cmake_src_prepare
 }
 

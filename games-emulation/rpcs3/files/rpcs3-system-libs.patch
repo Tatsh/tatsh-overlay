@@ -1,5 +1,15 @@
+diff --git a/.gitignore b/.gitignore
+index c76518727..4a0cc35a4 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -116,3 +116,5 @@ yaml-cpp.pc
+ 
+ # ssl certificate
+ cacert.pem
++
++.cache/clangd
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index e22ff1647..60dd6252e 100644
+index e22ff1647..733b834b0 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
 @@ -1,4 +1,5 @@
@@ -13,7 +23,7 @@ index e22ff1647..60dd6252e 100644
  # ZLib
  if (USE_SYSTEM_ZLIB)
 -	find_package(ZLIB QUIET)
-+  find_package(ZLIB REQUIRED QUIET)
++  find_package(ZLIB REQUIRED)
  endif()
  
  if (NOT ZLIB_FOUND)
@@ -112,6 +122,16 @@ index 16a029029..c5a1ca4d5 100644
 +else()
 +  find_package(SPIRV-Headers REQUIRED)
 +endif()
+diff --git a/rpcs3/Emu/CMakeLists.txt b/rpcs3/Emu/CMakeLists.txt
+index 247cadbde..f3d40f2a5 100644
+--- a/rpcs3/Emu/CMakeLists.txt
++++ b/rpcs3/Emu/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-﻿add_library(rpcs3_emu
++﻿add_library(rpcs3_emu STATIC
+ 	IdManager.cpp
+ 	localized_string.cpp
+ 	System.cpp
 diff --git a/rpcs3/Emu/Cell/SPUThread.cpp b/rpcs3/Emu/Cell/SPUThread.cpp
 index da1e2b74d..265f03567 100644
 --- a/rpcs3/Emu/Cell/SPUThread.cpp
@@ -181,3 +201,16 @@ index b1abaeffa..d554086dd 100644
  	}
  
  	std::pair<std::string, std::string> get_commit_and_hash()
+diff --git a/rpcs3/rpcs3qt/CMakeLists.txt b/rpcs3/rpcs3qt/CMakeLists.txt
+index 4d01dcc4f..6801a3590 100644
+--- a/rpcs3/rpcs3qt/CMakeLists.txt
++++ b/rpcs3/rpcs3qt/CMakeLists.txt
+@@ -87,7 +87,7 @@ if(WIN32)
+ 	list(APPEND RES_FILES "../windows.qrc")
+ endif()
+ 
+-add_library(rpcs3_ui ${SRC_FILES} ${UI_FILES} ${RES_FILES})
++add_library(rpcs3_ui STATIC ${SRC_FILES} ${UI_FILES} ${RES_FILES})
+ 
+ set_target_properties(rpcs3_ui
+ 	PROPERTIES
