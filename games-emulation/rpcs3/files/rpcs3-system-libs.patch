@@ -1,0 +1,113 @@
+diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
+index e22ff1647..1e7c1cf5c 100644
+--- a/3rdparty/CMakeLists.txt
++++ b/3rdparty/CMakeLists.txt
+@@ -1,4 +1,5 @@
+ find_package(PkgConfig)
++include(CMakeDependentOption)
+ include(ExternalProject)
+ 
+ # Dummy target to use when lib isn't available
+@@ -7,7 +8,7 @@ add_library(3rdparty_dummy_lib INTERFACE)
+ 
+ # ZLib
+ if (USE_SYSTEM_ZLIB)
+-	find_package(ZLIB QUIET)
++  find_package(ZLIB REQUIRED QUIET)
+ endif()
+ 
+ if (NOT ZLIB_FOUND)
+@@ -103,7 +104,11 @@ endif()
+ 
+ 
+ # pugixml
+-add_subdirectory(pugixml EXCLUDE_FROM_ALL)
++if(NOT USE_SYSTEM_PUGIXML)
++  add_subdirectory(pugixml EXCLUDE_FROM_ALL)
++else()
++  find_package(pugixml REQUIRED)
++endif()
+ 
+ 
+ # libusb
+@@ -180,11 +185,15 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX_OLD})
+ 
+ 
+ # xxHash
+-set(XXHASH_BUNDLED_MODE ON)
+-set(XXHASH_BUILD_XXHSUM OFF)
+-set(BUILD_SHARED_LIBS OFF CACHE BOOL "Make xxHash build static libs")
+-add_subdirectory(xxHash/cmake_unofficial EXCLUDE_FROM_ALL)
+-target_include_directories(xxhash INTERFACE xxHash)
++if (NOT USE_SYSTEM_XXHASH)
++  set(XXHASH_BUNDLED_MODE ON)
++  set(XXHASH_BUILD_XXHSUM OFF)
++  set(BUILD_SHARED_LIBS OFF CACHE BOOL "Make xxHash build static libs")
++  add_subdirectory(xxHash/cmake_unofficial EXCLUDE_FROM_ALL)
++  target_include_directories(xxhash INTERFACE xxHash)
++else()
++  pkg_check_modules(XXHASH REQUIRED IMPORTED_TARGET libxxhash)
++endif()
+ 
+ 
+ # cereal
+@@ -271,14 +280,14 @@ if(USE_ALSA)
+ 	if(ALSA_FOUND)
+ 		add_library(3rdparty_alsa INTERFACE)
+ 		target_compile_definitions(3rdparty_alsa INTERFACE -DHAVE_ALSA)
+-		target_include_directories(3rdparty_alsa SYSTEM INTERFACE ${ALSA_INCLUDE_DIRS})
++    target_include_directories(3rdparty_alsa SYSTEM
++                               INTERFACE ${ALSA_INCLUDE_DIRS})
+ 		target_link_libraries(3rdparty_alsa INTERFACE ${ALSA_LIBRARIES})
+ 
+ 		set(ALSA_TARGET 3rdparty_alsa)
+ 	endif()
+ endif()
+ 
+-
+ # Pulse
+ set(PULSE_TARGET 3rdparty_dummy_lib)
+ if(USE_PULSE)
+@@ -485,9 +494,17 @@ endif()
+ add_library(3rdparty::zlib ALIAS 3rdparty_zlib)
+ add_library(3rdparty::7z ALIAS 3rdparty_7z)
+ add_library(3rdparty::flatbuffers ALIAS 3rdparty_flatbuffers)
+-add_library(3rdparty::pugixml ALIAS pugixml)
++if(USE_SYSTEM_PUGIXML)
++  add_library(3rdparty::pugixml ALIAS pugixml::shared)
++else()
++  add_library(3rdparty::pugixml ALIAS pugixml)
++endif()
+ add_library(3rdparty::yaml-cpp ALIAS yaml-cpp)
+-add_library(3rdparty::xxhash ALIAS xxhash)
++if(USE_SYSTEM_XXHASH)
++  add_library(3rdparty::xxhash ALIAS PkgConfig::XXHASH)
++else()
++  add_library(3rdparty::xxhash ALIAS xxhash)
++endif()
+ add_library(3rdparty::hidapi ALIAS 3rdparty_hidapi)
+ add_library(3rdparty::libpng ALIAS ${LIBPNG_TARGET})
+ add_library(3rdparty::cereal ALIAS 3rdparty_cereal)
+diff --git a/Vulkan/CMakeLists.txt b/Vulkan/CMakeLists.txt
+index 16a029029..c5a1ca4d5 100644
+--- a/Vulkan/CMakeLists.txt
++++ b/Vulkan/CMakeLists.txt
+@@ -5,8 +5,16 @@ set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "Builds glslangValidator and spirv-re
+ set(ENABLE_HLSL OFF CACHE BOOL "Enables HLSL input support" FORCE)
+ set(ENABLE_OPT OFF CACHE BOOL "Enables spirv-opt capability if present" FORCE)
+ set(ENABLE_CTEST OFF CACHE BOOL "Enables testing" FORCE)
+-add_subdirectory(glslang)
++if (NOT USE_SYSTEM_GLSLANG)
++  add_subdirectory(glslang)
++else()
++  find_library(GLSLANG_LIB glslang REQUIRED)
++endif()
+ 
+ set(SKIP_SPIRV_TOOLS_INSTALL ON CACHE BOOL "Skip spirv-tools install" FORCE)
+ set(SPIRV-Headers_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/spirv-headers" CACHE STRING "spirv-headers path" FORCE)
+-add_subdirectory(spirv-tools)
++if (NOT USE_SYSTEM_SPIRV_HEADERS)
++  add_subdirectory(spirv-tools)
++else()
++  find_package(SPIRV-Headers REQUIRED)
++endif()

@@ -8,23 +8,27 @@ DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/"
 MY_SHA="v0.0.14"
 ASMJIT_SHA="fc251c914e77cd079e58982cdab00a47539d7fc5"
+HIDAPI_SHA="8961cf86ebc4756992a7cd65c219c743e94bab19"
 LLVM_SHA="716bb292ba3b4e5c0ceff72fee911ed2b53232cf"
+YAML_CPP_SHA="6a211f0bc71920beef749e6c35d7d1bcc2447715"
+WOLFSSL_SHA="39b5448601271b8d1deabde8a0d33dc64d2a94bd"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${P}-llvm.tar.gz
-	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${P}-asmjit.tar.gz"
+	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${P}-asmjit.tar.gz
+	https://github.com/wolfSSL/wolfssl/archive/${WOLFSSL_SHA}.tar.gz -> ${P}-wolfssl.tar.gz
+	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${P}-hidapi.tar.gz
+	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${P}-yaml-cpp.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE="alsa pulseaudio evdev vulkan +dbus wayland"
+IUSE="alsa pulseaudio evdev faudio vulkan +dbus wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
 DEPEND="dev-cpp/ms-gsl
-	dev-cpp/yaml-cpp
 	dev-libs/cereal
 	dev-libs/discord-rpc
-	dev-libs/hidapi
 	dev-libs/pugixml
 	dev-libs/xxhash
 	dev-qt/qtcore:5
@@ -32,12 +36,14 @@ DEPEND="dev-cpp/ms-gsl
 	dev-qt/qtnetwork:5
 	dev-qt/qtwidgets:5
 	dev-util/glslang
+	faudio? ( media-libs/faudio )
 	media-libs/libpng:=
 	media-libs/openal
 	media-video/ffmpeg
 	sys-libs/zlib
 	virtual/jpeg:=
 	virtual/opengl
+	alsa? ( media-libs/alsa-lib )
 	dbus? ( dev-qt/qtdbus )
 	evdev? ( dev-libs/libevdev )
 	pulseaudio? ( media-sound/pulseaudio )
@@ -47,15 +53,16 @@ RDEPEND="${DEPEND}"
 BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA:1}"
-PATCHES=(
-	"${FILESDIR}/use-wayland.patch"
-	"${FILESDIR}/system-libs.patch"
-)
+PATCHES=( "${FILESDIR}/${PN}-system-libs.patch" )
 
 src_prepare() {
-	if ! use dbus; then sed -e '10,+2d' -i 3rdparty/qt5.cmake || die; fi
-	rmdir "${S}/llvm" || die
-	mv "${WORKDIR}/llvm-mirror-${LLVM_SHA}" "${S}/llvm" || die
+	#if ! use dbus; then sed -e '10,+2d' -i 3rdparty/qt5.cmake || die; fi
+	#rmdir "${S}/llvm" || die
+	#mv "${WORKDIR}/llvm-mirror-${LLVM_SHA}" "${S}/llvm" || die
+	rmdir "${S}/3rdparty/"{wolfssl,hidapi,yaml-cpp} || die
+	mv "${WORKDIR}/wolfssl-${WOLFSSL_SHA}" "${S}/3rdparty/wolfssl" || die
+	mv "${WORKDIR}/hidapi-${HIDAPI_SHA}" "${S}/3rdparty/hidapi" || die
+	mv "${WORKDIR}/yaml-cpp-${YAML_CPP_SHA}" "${S}/3rdparty/yaml-cpp" || die
 	rmdir "${S}/asmjit" || die
 	mv "${WORKDIR}/asmjit-${ASMJIT_SHA}" "${S}/asmjit" || die
 	echo "#define RPCS3_GIT_VERSION \"0000-${MY_SHA}\"" > rpcs3/git-version.h
@@ -66,26 +73,22 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs=(
-		-DBUILD_LLVM_SUBMODULE=yes
-		-DBUILD_SHARED_LIBS=no
+		-Wno-dev
+		-DBUILD_EXTERNAL=OFF
+		-DBUILD_LLVM_SUBMODULE=OFF
 		-DUSE_ALSA=$(usex alsa)
-		-DUSE_DISCORD_RPC=yes
+		-DUSE_FAUDIO=$(usex faudio)
 		-DUSE_LIBEVDEV=$(usex evdev)
 		-DUSE_PULSE=$(usex pulseaudio)
-		-DUSE_SYSTEM_ASMJIT=yes
-		-DUSE_SYSTEM_FFMPEG=yes
-		-DUSE_SYSTEM_GLSLANG=yes
-		-DUSE_SYSTEM_HIDAPI=yes
-		-DUSE_SYSTEM_LIBPNG=yes
-		-DUSE_SYSTEM_PUGIXML=yes
-		-DUSE_SYSTEM_XXHASH=yes
-		-DUSE_SYSTEM_YAMLCPP=yes
-		-DUSE_SYSTEM_ZLIB=yes
-		-DUSE_VULKAN=$(usex vulkan)
-		-DUSE_WAYLAND=$(usex wayland)
-		-DWITH_LLVM=yes
-		# FIXME Need patch to add back discord-presence USE flag
-		# -DUSE_DISCORD_RPC=$(usex discord-presence)
+		-DUSE_SYSTEM_CURL=ON
+		-DUSE_SYSTEM_FFMPEG=ON
+		-DUSE_SYSTEM_GLSLANG=ON
+		-DUSE_SYSTEM_LIBPNG=ON
+		-DUSE_SYSTEM_PUGIXML=ON
+		-DUSE_SYSTEM_SPIRV_HEADERS=ON
+		-DUSE_SYSTEM_XXHASH=ON
+		-DUSE_SYSTEM_ZLIB=ON
+		-DUSE_SYS_LIBUSB=ON
 	)
 	cmake_src_configure
 }
