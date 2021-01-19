@@ -30,8 +30,7 @@ KEYWORDS="~amd64"
 IUSE="alsa pulseaudio evdev faudio vulkan wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
-DEPEND="dev-libs/discord-rpc
-	dev-libs/pugixml
+DEPEND="dev-libs/pugixml
 	dev-libs/xxhash
 	dev-qt/qtcore:5
 	dev-qt/qtdbus
@@ -56,8 +55,13 @@ BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA:1}"
 PATCHES=(
-	"${FILESDIR}/${PN}-system-libs.patch"
-	"${FILESDIR}/use-wayland.patch"
+	"${FILESDIR}/${PN}-0001-rpcs3-rpcs3_version-fix-typo.patch"
+	"${FILESDIR}/${PN}-0002-allow-more-system-libs.patch"
+	"${FILESDIR}/${PN}-0004-rpcs3-emu-cell-sputhread-remove-always_inline-for-so.patch"
+	"${FILESDIR}/${PN}-0005-rpcs3-emu-rsx-vk-vkutils-physical_device-add-missing.patch"
+	"${FILESDIR}/${PN}-0006-make-emu-and-ui-static.patch"
+	"${FILESDIR}/${PN}-0007-fix-branch-name.patch"
+	"${FILESDIR}/${PN}-0008-add-use_wayland.patch"
 )
 
 src_prepare() {
@@ -77,8 +81,6 @@ src_prepare() {
 	sed -r \
 		-e 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
 		-i "${S}/llvm/CMakeLists.txt" || die
-	sed -r -e 's/hidapi-hidraw hid.c/hidapi-hidraw STATIC hid.c/' \
-		-i "${S}/3rdparty/hidapi/linux/CMakeLists.txt" || die
 	cmake_src_prepare
 }
 

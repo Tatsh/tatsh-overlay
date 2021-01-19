@@ -1,13 +1,14 @@
-diff --git a/.gitignore b/.gitignore
-index c76518727..4a0cc35a4 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -116,3 +116,5 @@ yaml-cpp.pc
- 
- # ssl certificate
- cacert.pem
-+
-+.cache/clangd
+From c1001c05d0f9f25f91688455a384de60a887eddc Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 19 Jan 2021 03:26:05 -0500
+Subject: [PATCH 2/8] Allow more system libs
+
+---
+ 3rdparty/CMakeLists.txt                 | 40 ++++++++++++++++++-------
+ Vulkan/CMakeLists.txt                   | 12 ++++++--
+ rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp |  2 +-
+ 3 files changed, 40 insertions(+), 14 deletions(-)
+
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
 index e22ff1647..733b834b0 100644
 --- a/3rdparty/CMakeLists.txt
@@ -122,47 +123,6 @@ index 16a029029..c5a1ca4d5 100644
 +else()
 +  find_package(SPIRV-Headers REQUIRED)
 +endif()
-diff --git a/rpcs3/Emu/CMakeLists.txt b/rpcs3/Emu/CMakeLists.txt
-index 247cadbde..f3d40f2a5 100644
---- a/rpcs3/Emu/CMakeLists.txt
-+++ b/rpcs3/Emu/CMakeLists.txt
-@@ -1,4 +1,4 @@
--﻿add_library(rpcs3_emu
-+﻿add_library(rpcs3_emu STATIC
- 	IdManager.cpp
- 	localized_string.cpp
- 	System.cpp
-diff --git a/rpcs3/Emu/Cell/SPUThread.cpp b/rpcs3/Emu/Cell/SPUThread.cpp
-index da1e2b74d..265f03567 100644
---- a/rpcs3/Emu/Cell/SPUThread.cpp
-+++ b/rpcs3/Emu/Cell/SPUThread.cpp
-@@ -133,8 +133,6 @@ static FORCE_INLINE bool cmp_rdata_avx(const __m256i* lhs, const __m256i* rhs)
- 
- #ifdef _MSC_VER
- __forceinline
--#else
--__attribute__((always_inline))
- #endif
- extern bool cmp_rdata(const spu_rdata_t& _lhs, const spu_rdata_t& _rhs)
- {
-@@ -189,8 +187,6 @@ static FORCE_INLINE void mov_rdata_avx(__m256i* dst, const __m256i* src)
- 
- #ifdef _MSC_VER
- __forceinline
--#else
--__attribute__((always_inline))
- #endif
- extern void mov_rdata(spu_rdata_t& _dst, const spu_rdata_t& _src)
- {
-@@ -1332,7 +1328,7 @@ std::string spu_thread::dump_regs() const
- 	fmt::append(ret, "Reservation Data:\n");
- 
- 	be_t<u32> data[32]{};
--	std::memcpy(data, rdata, sizeof(rdata)); // Show the data even if the reservation was lost inside the atomic loop 
-+	std::memcpy(data, rdata, sizeof(rdata)); // Show the data even if the reservation was lost inside the atomic loop
- 
- 	for (usz i = 0; i < std::size(data); i += 4)
- 	{
 diff --git a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
 index 203702f1a..629464e4d 100644
 --- a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
@@ -176,41 +136,6 @@ index 203702f1a..629464e4d 100644
  #include "spirv-tools/optimizer.hpp"
  #ifdef _MSC_VER
  #pragma warning(pop)
-diff --git a/rpcs3/Emu/RSX/VK/vkutils/physical_device.h b/rpcs3/Emu/RSX/VK/vkutils/physical_device.h
-index 6885006cc..a9dabd427 100644
---- a/rpcs3/Emu/RSX/VK/vkutils/physical_device.h
-+++ b/rpcs3/Emu/RSX/VK/vkutils/physical_device.h
-@@ -4,6 +4,7 @@
- #include "chip_class.h"
- #include "pipeline_binding_table.h"
- 
-+#include <string>
- #include <vector>
- #include <unordered_map>
- 
-diff --git a/rpcs3/rpcs3_version.cpp b/rpcs3/rpcs3_version.cpp
-index b1abaeffa..d554086dd 100644
---- a/rpcs3/rpcs3_version.cpp
-+++ b/rpcs3/rpcs3_version.cpp
-@@ -12,7 +12,7 @@ namespace rpcs3
- 
- 	std::string_view get_full_branch()
- 	{
--		return RPCS3_GIT_FULL_BRANCH;
-+		return RPCS3_GIT_BRANCH;
- 	}
- 
- 	std::pair<std::string, std::string> get_commit_and_hash()
-diff --git a/rpcs3/rpcs3qt/CMakeLists.txt b/rpcs3/rpcs3qt/CMakeLists.txt
-index 4d01dcc4f..6801a3590 100644
---- a/rpcs3/rpcs3qt/CMakeLists.txt
-+++ b/rpcs3/rpcs3qt/CMakeLists.txt
-@@ -87,7 +87,7 @@ if(WIN32)
- 	list(APPEND RES_FILES "../windows.qrc")
- endif()
- 
--add_library(rpcs3_ui ${SRC_FILES} ${UI_FILES} ${RES_FILES})
-+add_library(rpcs3_ui STATIC ${SRC_FILES} ${UI_FILES} ${RES_FILES})
- 
- set_target_properties(rpcs3_ui
- 	PROPERTIES
+-- 
+2.30.0
+
