@@ -30,9 +30,7 @@ KEYWORDS="~amd64"
 IUSE="alsa pulseaudio evdev faudio vulkan +dbus wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
-DEPEND="dev-cpp/ms-gsl
-	dev-libs/cereal
-	dev-libs/discord-rpc
+DEPEND="dev-libs/discord-rpc
 	dev-libs/pugixml
 	dev-libs/xxhash
 	dev-qt/qtcore:5
@@ -41,7 +39,6 @@ DEPEND="dev-cpp/ms-gsl
 	dev-qt/qtnetwork:5
 	dev-qt/qtwidgets:5
 	dev-util/glslang
-	faudio? ( media-libs/faudio )
 	media-libs/libpng:=
 	media-libs/openal
 	media-video/ffmpeg
@@ -50,6 +47,7 @@ DEPEND="dev-cpp/ms-gsl
 	virtual/opengl
 	alsa? ( media-libs/alsa-lib )
 	evdev? ( dev-libs/libevdev )
+	faudio? ( app-emulation/faudio )
 	pulseaudio? ( media-sound/pulseaudio )
 	vulkan? ( dev-util/vulkan-headers )
 	wayland? ( dev-libs/wayland )"
@@ -57,7 +55,10 @@ RDEPEND="${DEPEND}"
 BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA:1}"
-PATCHES=( "${FILESDIR}/${PN}-system-libs.patch" "${FILESDIR}/use-wayland.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-system-libs.patch"
+	"${FILESDIR}/use-wayland.patch"
+)
 
 src_prepare() {
 	rmdir "${S}/llvm" || die
@@ -83,7 +84,7 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs=(
-		-Wno-dev
+		-DBUILD_SHARED_LIBS=OFF
 		-DBUILD_EXTERNAL=OFF
 		-DBUILD_LLVM_SUBMODULE=ON
 		-DUSE_ALSA=$(usex alsa)
@@ -105,24 +106,3 @@ src_configure() {
 	)
 	cmake_src_configure
 }
-
-#src_install() {
-#	cmake-utils_src_install
-#	mv "${D}/usr/bin/rpcs3" "${D}/usr/bin/rpcs3.bin"
-#	cat > rpcs3.sh <<EOF
-#!/bin/sh
-#export XDG_CURRENT_DESKTOP=qt
-#/usr/bin/rpcs3.bin "\$@"
-#EOF
-#	newbin rpcs3.sh rpcs3
-#	einstalldocs
-#}
-
-# pkg_postinst() {
-# 	if use discord-presence; then
-# 		einfo
-# 		einfo 'Discord presence requires a running Discord client.'
-# 		einfo 'To install the official client, emerge net-im/discord-bin'
-# 		einfo
-# 	fi
-# }
