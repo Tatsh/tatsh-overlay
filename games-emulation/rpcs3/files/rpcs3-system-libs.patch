@@ -1,5 +1,5 @@
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index e22ff1647..1e7c1cf5c 100644
+index e22ff1647..60dd6252e 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
 @@ -1,4 +1,5 @@
@@ -25,7 +25,7 @@ index e22ff1647..1e7c1cf5c 100644
 +if(NOT USE_SYSTEM_PUGIXML)
 +  add_subdirectory(pugixml EXCLUDE_FROM_ALL)
 +else()
-+  find_package(pugixml REQUIRED)
++  find_package(pugixml REQUIRED NO_MODULE)
 +endif()
  
  
@@ -46,7 +46,7 @@ index e22ff1647..1e7c1cf5c 100644
 +  add_subdirectory(xxHash/cmake_unofficial EXCLUDE_FROM_ALL)
 +  target_include_directories(xxhash INTERFACE xxHash)
 +else()
-+  pkg_check_modules(XXHASH REQUIRED IMPORTED_TARGET libxxhash)
++  pkg_check_modules(XXHASH REQUIRED IMPORTED_TARGET GLOBAL libxxhash)
 +endif()
  
  
@@ -68,13 +68,14 @@ index e22ff1647..1e7c1cf5c 100644
  # Pulse
  set(PULSE_TARGET 3rdparty_dummy_lib)
  if(USE_PULSE)
-@@ -485,9 +494,17 @@ endif()
+@@ -485,9 +494,18 @@ endif()
  add_library(3rdparty::zlib ALIAS 3rdparty_zlib)
  add_library(3rdparty::7z ALIAS 3rdparty_7z)
  add_library(3rdparty::flatbuffers ALIAS 3rdparty_flatbuffers)
 -add_library(3rdparty::pugixml ALIAS pugixml)
 +if(USE_SYSTEM_PUGIXML)
-+  add_library(3rdparty::pugixml ALIAS pugixml::shared)
++  set_target_properties(pugixml::pugixml PROPERTIES IMPORTED_GLOBAL TRUE)
++  add_library(3rdparty::pugixml ALIAS pugixml::pugixml)
 +else()
 +  add_library(3rdparty::pugixml ALIAS pugixml)
 +endif()
@@ -111,3 +112,72 @@ index 16a029029..c5a1ca4d5 100644
 +else()
 +  find_package(SPIRV-Headers REQUIRED)
 +endif()
+diff --git a/rpcs3/Emu/Cell/SPUThread.cpp b/rpcs3/Emu/Cell/SPUThread.cpp
+index da1e2b74d..265f03567 100644
+--- a/rpcs3/Emu/Cell/SPUThread.cpp
++++ b/rpcs3/Emu/Cell/SPUThread.cpp
+@@ -133,8 +133,6 @@ static FORCE_INLINE bool cmp_rdata_avx(const __m256i* lhs, const __m256i* rhs)
+ 
+ #ifdef _MSC_VER
+ __forceinline
+-#else
+-__attribute__((always_inline))
+ #endif
+ extern bool cmp_rdata(const spu_rdata_t& _lhs, const spu_rdata_t& _rhs)
+ {
+@@ -189,8 +187,6 @@ static FORCE_INLINE void mov_rdata_avx(__m256i* dst, const __m256i* src)
+ 
+ #ifdef _MSC_VER
+ __forceinline
+-#else
+-__attribute__((always_inline))
+ #endif
+ extern void mov_rdata(spu_rdata_t& _dst, const spu_rdata_t& _src)
+ {
+@@ -1332,7 +1328,7 @@ std::string spu_thread::dump_regs() const
+ 	fmt::append(ret, "Reservation Data:\n");
+ 
+ 	be_t<u32> data[32]{};
+-	std::memcpy(data, rdata, sizeof(rdata)); // Show the data even if the reservation was lost inside the atomic loop 
++	std::memcpy(data, rdata, sizeof(rdata)); // Show the data even if the reservation was lost inside the atomic loop
+ 
+ 	for (usz i = 0; i < std::size(data); i += 4)
+ 	{
+diff --git a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
+index 203702f1a..629464e4d 100644
+--- a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
++++ b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
+@@ -9,7 +9,7 @@
+ #pragma GCC diagnostic ignored "-Wextra"
+ #pragma GCC diagnostic ignored "-Wold-style-cast"
+ #endif
+-#include "SPIRV/GlslangToSpv.h"
++#include <glslang/SPIRV/GlslangToSpv.h>
+ #include "spirv-tools/optimizer.hpp"
+ #ifdef _MSC_VER
+ #pragma warning(pop)
+diff --git a/rpcs3/Emu/RSX/VK/vkutils/physical_device.h b/rpcs3/Emu/RSX/VK/vkutils/physical_device.h
+index 6885006cc..a9dabd427 100644
+--- a/rpcs3/Emu/RSX/VK/vkutils/physical_device.h
++++ b/rpcs3/Emu/RSX/VK/vkutils/physical_device.h
+@@ -4,6 +4,7 @@
+ #include "chip_class.h"
+ #include "pipeline_binding_table.h"
+ 
++#include <string>
+ #include <vector>
+ #include <unordered_map>
+ 
+diff --git a/rpcs3/rpcs3_version.cpp b/rpcs3/rpcs3_version.cpp
+index b1abaeffa..d554086dd 100644
+--- a/rpcs3/rpcs3_version.cpp
++++ b/rpcs3/rpcs3_version.cpp
+@@ -12,7 +12,7 @@ namespace rpcs3
+ 
+ 	std::string_view get_full_branch()
+ 	{
+-		return RPCS3_GIT_FULL_BRANCH;
++		return RPCS3_GIT_BRANCH;
+ 	}
+ 
+ 	std::pair<std::string, std::string> get_commit_and_hash()
