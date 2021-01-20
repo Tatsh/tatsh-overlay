@@ -14,8 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-RDEPEND="x11-libs/gtk+:3
-	virtual/jre:="
+RDEPEND="x11-libs/gtk+:3"
 DEPEND="${RDEPEND}"
 BDEPEND=""
 
@@ -23,7 +22,9 @@ MY_PN="${PN%-bin*}"
 S="${WORKDIR}/${MY_PN}"
 
 src_prepare() {
-	rm -fR licenses jre
+	rm -fR licenses
+	# FIXME add virtual/jre:= to RDEPEND when this can be done
+	# rm -fR jre
 	sed -e "s/^Icon=.*/Icon=${MY_PN}/" -i "${MY_PN}.desktop"
 	sed -e "/WM_CLASS.*/d" -i "${MY_PN}.desktop"
 	default
@@ -37,5 +38,6 @@ src_install() {
 	rm "${MY_PN}.desktop" "${MY_PN}.png" icon.xpm readme.txt
 	insinto "/opt/${MY_PN}"
 	doins -r *
+	fperms 0755 "/opt/${MY_PN}/${MY_PN}" "/opt/${MY_PN}/jre/bin/"*
 	make_wrapper "${MY_PN}" "/opt/${MY_PN}/${MY_PN}"
 }
