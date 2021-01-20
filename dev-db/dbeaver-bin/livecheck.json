@@ -1,0 +1,5 @@
+{
+  "type": "regex",
+  "regex": "\"/files/([^/]+)/\"",
+  "url": "https://dbeaver.io/files/"
+}
