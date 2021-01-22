@@ -38,10 +38,10 @@ index 83c4dbcb..1c710d2f 100644
  
  	// Load animations
 diff --git a/src/audio/sampman_miles.cpp b/src/audio/sampman_miles.cpp
-index db38da64..529340f8 100644
+index 11e2b0ff..74e0cd7f 100644
 --- a/src/audio/sampman_miles.cpp
 +++ b/src/audio/sampman_miles.cpp
-@@ -16,6 +16,7 @@
+@@ -15,6 +15,7 @@
  #include "MusicManager.h"
  #include "Frontend.h"
  #include "Timer.h"
@@ -49,7 +49,7 @@ index db38da64..529340f8 100644
  
  
  #pragma comment( lib, "mss32.lib" )
-@@ -450,6 +451,7 @@ _FindMP3s(void)
+@@ -449,6 +450,7 @@ _FindMP3s(void)
  		return;
  	}
  	
@@ -57,7 +57,7 @@ index db38da64..529340f8 100644
  	FILE *f = fopen("MP3\\MP3Report.txt", "w");
  	
  	if ( f )
-@@ -961,6 +963,7 @@ cSampleManager::Initialise(void)
+@@ -960,6 +962,7 @@ cSampleManager::Initialise(void)
  	
  #ifdef AUDIO_CACHE
  	TRACE("cache");
@@ -65,7 +65,7 @@ index db38da64..529340f8 100644
  	FILE *cacheFile = fopen("audio\\sound.cache", "rb");
  	if (cacheFile) {
  		fread(nStreamLength, sizeof(uint32), TOTAL_STREAMED_SOUNDS, cacheFile);
-@@ -1077,7 +1080,8 @@ cSampleManager::Initialise(void)
+@@ -1076,7 +1079,8 @@ cSampleManager::Initialise(void)
  		
  		strcpy(_aHDDPath, m_szCDRomRootPath);
  		rootpath[0] = '\0';
@@ -75,7 +75,7 @@ index db38da64..529340f8 100644
  		FILE *f = fopen(StreamedNameTable[0], "rb");
  		
  		if ( f )
-@@ -1125,6 +1129,7 @@ cSampleManager::Initialise(void)
+@@ -1124,6 +1128,7 @@ cSampleManager::Initialise(void)
  	}
  #endif
  #ifdef AUDIO_CACHE
@@ -83,7 +83,7 @@ index db38da64..529340f8 100644
  	cacheFile = fopen("audio\\sound.cache", "wb");
  	fwrite(nStreamLength, sizeof(uint32), TOTAL_STREAMED_SOUNDS, cacheFile);
  	fclose(cacheFile);
-@@ -1311,6 +1316,8 @@ cSampleManager::CheckForAnAudioFileOnCD(void)
+@@ -1310,6 +1315,8 @@ cSampleManager::CheckForAnAudioFileOnCD(void)
  
  	strcat(filepath, StreamedNameTable[AudioManager.GetRandomNumber(1) % TOTAL_STREAMED_SOUNDS]);
  	
@@ -92,7 +92,7 @@ index db38da64..529340f8 100644
  	FILE *f = fopen(filepath, "rb");
  	
  	if ( f )
-@@ -2289,6 +2296,8 @@ cSampleManager::IsStreamPlaying(uint8 nStream)
+@@ -2288,6 +2295,8 @@ cSampleManager::IsStreamPlaying(uint8 nStream)
  bool
  cSampleManager::InitialiseSampleBanks(void)
  {
@@ -306,10 +306,10 @@ index f70451b7..72f0ebea 100644
 +#endif
  };
 diff --git a/src/core/Game.cpp b/src/core/Game.cpp
-index 7961b981..98c1d877 100644
+index 4fd30b53..d2e7c218 100644
 --- a/src/core/Game.cpp
 +++ b/src/core/Game.cpp
-@@ -811,7 +811,7 @@ void CGame::ReloadIPLs(void)
+@@ -806,7 +806,7 @@ void CGame::ReloadIPLs(void)
  	CWorld::RemoveStaticObjects();
  	ThePaths.Init();
  	CCullZones::Init();
@@ -319,21 +319,21 @@ index 7961b981..98c1d877 100644
  	CFileLoader::LoadScene("COMMER.IPL");
  	CFileLoader::LoadScene("SUBURBAN.IPL");
 diff --git a/src/core/config.h b/src/core/config.h
-index a2b2b6fc..916a2552 100644
+index 025c8cb2..12d0e8a5 100644
 --- a/src/core/config.h
 +++ b/src/core/config.h
-@@ -390,3 +390,6 @@ enum Config {
- #ifdef LIBRW
- // these are not supported with librw yet
+@@ -486,3 +486,6 @@ enum Config {
+ #undef RADIO_SCROLL_TO_PREV_STATION
+ #undef BIG_IMG
  #endif
 +
 +// Store GTA 3 files in ${HOME}/.local/share/re3
 +// #define XDG_ROOT
 diff --git a/src/core/main.cpp b/src/core/main.cpp
-index d43f4a74..f3eb708f 100644
+index f1346fc0..0256d286 100644
 --- a/src/core/main.cpp
 +++ b/src/core/main.cpp
-@@ -131,6 +131,9 @@ bool gbNewRenderer;
+@@ -152,6 +152,9 @@ Error(char *fmt, ...)
  void
  ValidateVersion()
  {
@@ -343,7 +343,7 @@ index d43f4a74..f3eb708f 100644
  	int32 file = CFileMgr::OpenFile("models\\coll\\peds.col", "rb");
  	char buff[128];
  
-@@ -1675,6 +1678,7 @@ void
+@@ -1698,6 +1701,7 @@ void
  InitialiseGame(void)
  {
  	LoadingScreen(nil, nil, "loadsc0");
@@ -365,10 +365,10 @@ index 7aa01f5a..23dda7e2 100644
  	{
  		hFile = CFileMgr::OpenFile("DATA\\waterpro.dat", "rb");
 diff --git a/src/rw/TexRead.cpp b/src/rw/TexRead.cpp
-index d0addcca..a184e32f 100644
+index c009af96..10268985 100644
 --- a/src/rw/TexRead.cpp
 +++ b/src/rw/TexRead.cpp
-@@ -233,6 +233,7 @@ ReadVideoCardCapsFile(uint32 &cap32, uint32 &cap24, uint32 &cap16, uint32 &cap8)
+@@ -242,6 +242,7 @@ ReadVideoCardCapsFile(uint32 &cap32, uint32 &cap24, uint32 &cap16, uint32 &cap8)
  	cap16 = UINT32_MAX;
  	cap8 = UINT32_MAX;
  
@@ -425,10 +425,10 @@ index d8ede0d3..597058df 100644
  #ifdef FIX_BUGS
  		char savename[MAX_PATH];
 diff --git a/src/skel/glfw/glfw.cpp b/src/skel/glfw/glfw.cpp
-index 93bfde5a..58c45463 100644
+index 332f59f0..7c93a628 100644
 --- a/src/skel/glfw/glfw.cpp
 +++ b/src/skel/glfw/glfw.cpp
-@@ -163,6 +163,7 @@ const char *_psGetUserFilesFolder()
+@@ -154,6 +154,7 @@ const char *_psGetUserFilesFolder()
  #else
  	static char szUserFiles[256];
  	strcpy(szUserFiles, "userfiles");
@@ -437,10 +437,10 @@ index 93bfde5a..58c45463 100644
  	return szUserFiles;
  #endif
 diff --git a/src/skel/win/win.cpp b/src/skel/win/win.cpp
-index 388090fc..a47771b6 100644
+index 3bda4e9d..9ef7e301 100644
 --- a/src/skel/win/win.cpp
 +++ b/src/skel/win/win.cpp
-@@ -202,6 +202,7 @@ const char *_psGetUserFilesFolder()
+@@ -203,6 +203,7 @@ const char *_psGetUserFilesFolder()
  	return szUserFiles;
  #else
  	static CHAR szUserFiles[256];
