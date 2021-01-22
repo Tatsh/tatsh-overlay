@@ -6,7 +6,7 @@ inherit cmake-utils
 
 DESCRIPTION="A new generation, open-source graphics plugin for N64 emulators."
 HOMEPAGE="https://github.com/gonetz/GLideN64"
-MY_SHA="eb8ac40136a3ff3036b26f204d5dd06b26ed57aa"
+MY_SHA="85ad11bbddd8c774c0d430405e29026e5e4f3a50"
 SRC_URI="https://github.com/gonetz/GLideN64/archive/${MY_SHA}.tar.gz"
 
 LICENSE="GPL-2"
