@@ -1,14 +1,14 @@
-From 4777a1eb29bf35553ecba7879ffd39b856318b1f Mon Sep 17 00:00:00 2001
+From 77cade8d90e8515254c159264011e0d3c95c2486 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 18 Jan 2021 22:15:49 -0500
-Subject: [PATCH 4/5] minimalise finding Boost components
+Subject: [PATCH 4/6] minimalise finding Boost components
 
 ---
  CMakeLists.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0dfde64f6..f1dc0318d 100644
+index f2e339a3c..825ea832c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -199,7 +199,7 @@ macro(yuzu_find_packages)

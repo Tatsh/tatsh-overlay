@@ -1,7 +1,7 @@
-From 529556e1be469c8da9e7ba94764e286226033b41 Mon Sep 17 00:00:00 2001
+From 769ff0070730f5823faf30eda429030086caa1c0 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 18 Jan 2021 22:15:59 -0500
-Subject: [PATCH 5/5] Support newer Vulkan headers
+Subject: [PATCH 5/6] Support newer Vulkan headers
 
 ---
  src/video_core/vulkan_common/vulkan_wrapper.cpp | 2 ++

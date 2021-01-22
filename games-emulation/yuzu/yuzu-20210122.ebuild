@@ -46,12 +46,12 @@ BDEPEND="dev-util/vulkan-headers"
 S="${WORKDIR}/${PN}-${MY_SHA}"
 
 PATCHES=(
-	"${FILESDIR}/${P}-0001-Allow-use-of-system-Opus-and-inih.patch"
-	"${FILESDIR}/${P}-0002-Fix-libzip-typo.patch"
-	"${FILESDIR}/${P}-0003-fix-INIReader.h-includes.patch"
-	"${FILESDIR}/${P}-0004-minimalise-finding-Boost-components.patch"
-	"${FILESDIR}/${P}-0005-Support-newer-Vulkan-headers.patch"
-	"${FILESDIR}/${P}-0006-Allow-system-cubeb.patch"
+	"${FILESDIR}/${PN}-0001-Allow-use-of-system-Opus-and-inih.patch"
+	"${FILESDIR}/${PN}-0002-Fix-libzip-typo.patch"
+	"${FILESDIR}/${PN}-0003-fix-INIReader.h-includes.patch"
+	"${FILESDIR}/${PN}-0004-minimalise-finding-Boost-components.patch"
+	"${FILESDIR}/${PN}-0005-Support-newer-Vulkan-headers.patch"
+	"${FILESDIR}/${PN}-0006-Allow-system-cubeb.patch"
 )
 
 src_prepare() {
@@ -65,7 +65,7 @@ src_prepare() {
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
 	cmake_src_prepare
-	{ pushd "${S}/externals/dynarmic" && eapply "${FILESDIR}/${P}-0099-dynarmic-include-xbyak.patch" && popd; } || die
+	{ pushd "${S}/externals/dynarmic" && eapply "${FILESDIR}/${PN}-0099-dynarmic-include-xbyak.patch" && popd; } || die
 	# Force sirit and dynarmic to be static libs
 	for i in sirit dynarmic; do
 		sed -r -e "s/add_library\(${i}/add_library(${i} STATIC/" -i "${S}/externals/${i}/src/CMakeLists.txt" || die

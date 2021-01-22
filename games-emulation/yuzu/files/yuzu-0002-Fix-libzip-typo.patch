@@ -1,7 +1,7 @@
-From c4541bd0016dc013e71ba9b9de18e5075906feae Mon Sep 17 00:00:00 2001
+From facf65cb9469bae5f2e957c699f16cd8e110d222 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 18 Jan 2021 22:14:22 -0500
-Subject: [PATCH 2/5] Fix libzip typo
+Subject: [PATCH 2/6] Fix libzip typo
 
 ---
  externals/CMakeLists.txt | 2 +-

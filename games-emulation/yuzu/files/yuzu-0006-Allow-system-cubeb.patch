@@ -1,7 +1,7 @@
-From 6a46ee7b6b3c18466ef120975fad9ae466bedf2d Mon Sep 17 00:00:00 2001
+From d9dc483661328c90f280ce30af073b7e3b663b93 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 18 Jan 2021 23:45:19 -0500
-Subject: [PATCH] Allow system cubeb
+Subject: [PATCH 6/6] Allow system cubeb
 
 ---
  CMakeLists.txt           | 1 +
@@ -9,7 +9,7 @@ Subject: [PATCH] Allow system cubeb
  2 files changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f1dc0318d..e67484aa0 100644
+index 825ea832c..b8f19be74 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -28,6 +28,7 @@ option(USE_DISCORD_PRESENCE "Enables Discord Rich Presence" OFF)
