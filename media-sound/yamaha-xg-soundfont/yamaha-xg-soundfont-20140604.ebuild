@@ -10,7 +10,6 @@ SRC_URI="http://www.ronimusic.com/sf2/Yamaha_XG_Sound_Set.sf2"
 LICENSE="EULA"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE=""
 
 S="$WORKDIR"
 
