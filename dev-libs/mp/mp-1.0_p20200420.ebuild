@@ -11,7 +11,6 @@ SRC_URI="https://github.com/MerryMage/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar
 LICENSE="BSD-0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}"
