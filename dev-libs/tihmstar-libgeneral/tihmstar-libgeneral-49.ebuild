@@ -13,7 +13,6 @@ SRC_URI="https://github.com/tihmstar/${MY_PN}/archive/${MY_SHA}.tar.gz -> ${P}.t
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}"
