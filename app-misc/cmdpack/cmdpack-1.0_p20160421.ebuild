@@ -14,7 +14,6 @@ HOMEPAGE="http://www.neillcorlett.com/cmdpack/"
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE=""
 
 DEPEND="!media-sound/vb2rip
 	!app-cdr/bin2iso"
