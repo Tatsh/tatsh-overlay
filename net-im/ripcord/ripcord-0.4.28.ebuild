@@ -11,7 +11,6 @@ SRC_URI="https://cancel.fm/dl/R${PN:1}-${PV}-x86_64.AppImage"
 LICENSE="Ripcore"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
 RESTRICT="bindist"
 
 DEPEND=""
