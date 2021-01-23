@@ -17,7 +17,8 @@ IUSE="ao +alsa openal opengl oss pulseaudio +sdl udev xv"
 REQUIRED_USE="|| ( ao openal alsa pulseaudio oss )
 	|| ( xv opengl sdl )"
 
-DEPEND="x11-libs/gtk+:2
+DEPEND="x11-libs/cairo
+	x11-libs/gtk+:2
 	x11-libs/libX11
 	x11-libs/libXext
 	ao? ( media-libs/libao )
