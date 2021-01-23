@@ -14,7 +14,6 @@ SRC_URI="http://xyne.archlinux.ca/projects/${PN}/src/${P}.tar.xz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 RDEPEND=">=dev-python/pyxdg-0.25-r1[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
