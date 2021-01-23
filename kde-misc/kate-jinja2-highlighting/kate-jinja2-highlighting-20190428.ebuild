@@ -11,7 +11,6 @@ SRC_URI="https://github.com/Pitmairen/${PN}/archive/${MY_HASH}.tar.gz -> ${P}.ta
 LICENSE=""
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 RDEPEND=""
 DEPEND="${RDEPEND}"
