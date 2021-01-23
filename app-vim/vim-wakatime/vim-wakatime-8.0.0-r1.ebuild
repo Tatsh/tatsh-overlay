@@ -9,7 +9,6 @@ DESCRIPTION="vim plugin: automatic time tracking with WakaTime"
 HOMEPAGE="https://github.com/wakatime/vim-wakatime"
 LICENSE="BSD"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 SRC_URI="https://github.com/wakatime/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 RDEPEND="${DEPEND} app-misc/wakatime"
