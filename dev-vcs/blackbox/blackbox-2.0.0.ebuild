@@ -56,7 +56,6 @@ SRC_URI="https://github.com/StackExchange/${PN}/archive/v${PV}.tar.gz -> ${P}.ta
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 src_compile() {
 	env GO111MODULE=on GOOS=linux go build -o ${PN} \
