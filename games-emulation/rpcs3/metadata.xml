@@ -6,8 +6,9 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<use>
-		<flag name="evdev">Enable support for input devices with evdev</flag>
 		<flag name="faudio">Enable audio rendering with app-emulation/faudio</flag>
+		<flag name="joystick">Enable support for input devices with evdev</flag>
+		<flag name="llvm">LLVM recompiler support</flag>
 		<flag name="vulkan">Enable Vulkan graphics library support</flag>
 	</use>
 </pkgmetadata>

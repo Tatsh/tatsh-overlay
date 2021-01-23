@@ -27,7 +27,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE="alsa pulseaudio evdev faudio vulkan wayland"
+IUSE="alsa faudio joystick +llvm pulseaudio vulkan wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
 DEPEND="dev-libs/pugixml
@@ -38,20 +38,20 @@ DEPEND="dev-libs/pugixml
 	dev-qt/qtnetwork:5
 	dev-qt/qtwidgets:5
 	dev-util/glslang
-	media-libs/libpng:=
+	media-libs/libpng:*
 	media-libs/openal
 	media-video/ffmpeg
 	sys-libs/zlib
 	virtual/jpeg:=
 	virtual/opengl
 	alsa? ( media-libs/alsa-lib )
-	evdev? ( dev-libs/libevdev )
 	faudio? ( app-emulation/faudio )
+	joystick? ( dev-libs/libevdev )
 	pulseaudio? ( media-sound/pulseaudio )
-	vulkan? ( dev-util/vulkan-headers )
+	vulkan? ( media-libs/vulkan-loader )
 	wayland? ( dev-libs/wayland )"
-RDEPEND="${DEPEND}"
-BDEPEND=""
+RDEPEND="${DEPEND} sys-devel/gdb"
+BDEPEND=">=sys-devel/gcc-9"
 
 S="${WORKDIR}/${PN}-${MY_SHA:1}"
 PATCHES=(
@@ -78,6 +78,7 @@ src_prepare() {
 	sed -r \
 		-e 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
 		-i "${S}/llvm/CMakeLists.txt" || die
+	sed -i -e '/find_program(CCACHE_FOUND/d' CMakeLists.txt || die
 	cmake_src_prepare
 }
 
@@ -86,10 +87,12 @@ src_configure() {
 		-DBUILD_SHARED_LIBS=OFF
 		-DBUILD_EXTERNAL=OFF
 		-DBUILD_LLVM_SUBMODULE=ON
+		-DUSE_PRECOMPILED_HEADERS=OFF
 		-DUSE_ALSA=$(usex alsa)
 		-DUSE_DISCORD_RPC=OFF
 		-DUSE_FAUDIO=$(usex faudio)
-		-DUSE_LIBEVDEV=$(usex evdev)
+		-DUSE_LIBEVDEV=$(usex joystick)
+		-DUSE_NATIVE_INSTRUCTIONS=OFF
 		-DUSE_PULSE=$(usex pulseaudio)
 		-DUSE_SYSTEM_CURL=ON
 		-DUSE_SYSTEM_FFMPEG=ON
@@ -102,6 +105,7 @@ src_configure() {
 		-DUSE_SYS_LIBUSB=ON
 		-DUSE_VULKAN=$(usex vulkan)
 		-DUSE_WAYLAND=$(usex wayland)
+		-DWITH_LLVM=$(usex llvm)
 	)
 	cmake_src_configure
 }
