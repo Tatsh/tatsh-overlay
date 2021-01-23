@@ -12,7 +12,6 @@ SRC_URI="https://web.archive.org/web/20091027063725/http://es.geocities.com/dext
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}"
