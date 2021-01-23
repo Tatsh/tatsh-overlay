@@ -12,7 +12,6 @@ SRC_URI="https://github.com/awslabs/git-secrets/archive/${MY_SHA}.tar.gz -> ${P}
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 RDEPEND=">=dev-vcs/git-2.10.2"
 DEPEND="${RDEPEND}"
