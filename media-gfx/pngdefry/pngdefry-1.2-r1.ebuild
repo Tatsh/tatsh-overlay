@@ -13,7 +13,6 @@ SRC_URI="http://www.jongware.com/binaries/pngdefry.zip -> ${P}.zip"
 LICENSE="public-domain"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}"
