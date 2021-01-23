@@ -12,7 +12,6 @@ SRC_URI="https://fpdownload.macromedia.com/pub/flashplayer/updaters/32/flash_pla
 LICENSE="AdobeFlash-11.x"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
 
 RDEPEND="virtual/opengl
 	x11-libs/gtk+:2"
