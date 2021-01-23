@@ -11,7 +11,6 @@ SRC_URI="https://www.raphnet-tech.com/downloads/raphnet-tech_adapter_manager-${P
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 DEPEND="dev-libs/hidapi
 	x11-libs/wxGTK:3.0-gtk3
