@@ -12,7 +12,6 @@ SRC_URI="https://github.com/michaeldfallen/git-radar/archive/${MY_SHA}.tar.gz ->
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE=""
 
 RDEPEND="dev-vcs/git"
 DEPEND="${RDEPEND}"
