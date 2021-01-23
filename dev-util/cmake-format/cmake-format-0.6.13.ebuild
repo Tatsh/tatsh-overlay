@@ -13,7 +13,6 @@ SRC_URI="https://github.com/cheshirekow/cmake_format/archive/v${PV}.tar.gz -> ${
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 RDEPEND="dev-python/pyyaml
 	dev-python/jinja
