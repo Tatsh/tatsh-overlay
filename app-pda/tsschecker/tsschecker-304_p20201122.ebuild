@@ -16,7 +16,6 @@ SRC_URI="https://github.com/tihmstar/tsschecker/archive/${MY_SHA}.tar.gz -> ${P}
 LICENSE="LGPL-3 MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 DEPEND=">=dev-libs/libfragmentzip-48
 	>=app-pda/libplist-2.2.0
