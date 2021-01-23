@@ -11,7 +11,6 @@ SRC_URI="http://dl.clonehero.net/clonehero-v${PV:1}/clonehero-linux.tar.gz -> ${
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
 RESTRICT="strip"
 
 RDEPEND="sys-libs/zlib
