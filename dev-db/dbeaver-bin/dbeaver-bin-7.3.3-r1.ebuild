@@ -12,7 +12,6 @@ SRC_URI="https://dbeaver.io/files/${PV}/${MY_PN}-${PV}-linux.gtk.x86_64.tar.gz"
 LICENSE="Apache-2.0 EPL-1.0 BSD"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
 
 RDEPEND="x11-libs/gtk+:3"
 DEPEND="${RDEPEND}"
