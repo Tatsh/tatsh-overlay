@@ -14,7 +14,6 @@ SRC_URI="https://github.com/Tatsh/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPLv3"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE=""
 
 RDEPEND="dev-python/argcomplete
 	dev-python/cached-property
