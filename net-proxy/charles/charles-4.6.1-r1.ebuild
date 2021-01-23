@@ -11,7 +11,6 @@ SRC_URI="https://www.charlesproxy.com/assets/release/${PV}/${PN}-proxy-${PV}_amd
 LICENSE="EULA Apache-2.0 MIT GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND} virtual/jre:1.8"
