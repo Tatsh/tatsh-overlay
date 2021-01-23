@@ -10,7 +10,6 @@ SRC_URI="https://dllb2.pling.com/api/files/download/j/eyJ0eXAiOiJKV1QiLCJhbGciOi
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 S="${WORKDIR}/Shere_Khan_X"
 
