@@ -1,4 +1,4 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2020-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -8,7 +8,7 @@ DESCRIPTION="Desktop chat client for Slack and Discord (not web-based)."
 HOMEPAGE="https://cancel.fm/ripcord/"
 SRC_URI="https://cancel.fm/dl/R${PN:1}-${PV}-x86_64.AppImage"
 
-LICENSE="Ripcore"
+LICENSE="Ripcord"
 SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="bindist"
