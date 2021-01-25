@@ -19,6 +19,12 @@ Response = Union['TextDataResponse', requests.Response]
 
 P = portage.db[portage.root]['porttree'].dbapi
 PREFIX_RE: Final[str] = r'(^[^0-9]+)[0-9]'
+SEMVER_RE: Final[str] = (r'^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.'
+                         r'(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]'
+                         r'\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|'
+                         r'\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+'
+                         r'(?P<buildmetadata>[0-9a-zA-Z-]+'
+                         r'(?:\.[0-9a-zA-Z-]+)*))?$')
 
 
 def get_highest_matches(search_dir: str) -> Iterator[str]:
@@ -72,7 +78,8 @@ def get_props(search_dir: str,
                                             '')[5:]
                     m = re.match(
                         '^' + pkg +
-                        r'-[0-9\.]+(?:_(?:alpha|beta|p)[0-9]+)?(tar\.gz|zip)', filename)
+                        r'-[0-9\.]+(?:_(?:alpha|beta|p)[0-9]+)?(tar\.gz|zip)',
+                        filename)
                     if filename != bn and not m:
                         continue
                     found = True
@@ -165,6 +172,17 @@ class TextDataResponse:
         pass
 
 
+def convert_version(s: str) -> str:
+    if m := re.match(SEMVER_RE, s):
+        gd = m.groupdict()
+        if gd['buildmetadata']:
+            raise ValueError('Build metadata not handled yet')
+        if gd['prerelease'] or gd['buildmetadata']:
+            return '{}.{}.{}_{}'.format(gd['major'], gd['minor'], gd['patch'],
+                                        gd['prerelease'].replace('.', ''))
+    return s
+
+
 def main(search_dir: str) -> int:
     session = requests.Session()
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
@@ -173,8 +191,8 @@ def main(search_dir: str) -> int:
                        if url.startswith('data:') else session.get(url))
         try:
             r.raise_for_status()
-            top_hash = re.findall(regex, r.text)[0]
-            if ((use_vercmp and vercmp(top_hash, version) > 0)
+            top_hash = convert_version(re.findall(regex, r.text)[0])
+            if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
                     or top_hash != version):
                 print(
                     f'{cat}/{pkg}: {version} ({ebuild_version}) -> {top_hash}')
