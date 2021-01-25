@@ -1,4 +1,4 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 2019-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -9,7 +9,7 @@ HOMEPAGE="https://www.magewell.com/downloads/pro-capture#/driver/linux-x86"
 SUFFIX="${PV##*.}"
 SRC_URI="http://www.magewell.com/files/drivers/ProCaptureForLinux_${SUFFIX}.tar.gz"
 
-LICENSE="EULA"
+LICENSE="Magewell-Pro-Capture"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc weave"
@@ -24,6 +24,8 @@ BUILD_TARGETS="all" # no clean because a file has to be hacked in src_prepare() 
 BUILD_PARAMS="KERNELDIR=${KERNEL_DIR}"
 MODULE_NAMES="ProCapture(video:src:src)"
 DOCS=(quick_start.txt docs/Readme.txt docs/ProCaptureSeriesCardUserGuideforLinux.{eng,chs}.pdf)
+
+PATCHES=( "${FILESDIR}/${P}-kernel-5.10.patch" )
 
 src_prepare() {
 	sed -e 's:/local::g' -e 's:/src::g' -i scripts/ProCapture.conf || die 'Failed to patch!'

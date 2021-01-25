@@ -1,0 +1,16 @@
+--- a/src/sources/ospi/linux-file.c.old	2021-01-24 23:46:09.917284888 -0500
++++ b/src/sources/ospi/linux-file.c	2021-01-24 23:46:43.576208383 -0500
+@@ -11,6 +11,13 @@
+ #include <linux/version.h>
+ #include <linux/uaccess.h>
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,10,0)
++#define mm_segment_t int
++#define KERNEL_DS
++#define set_fs(x)
++#define get_fs(x) 0
++#endif
++
+ struct file *linux_file_open(const char *path, int flags, int mode)
+ {
+     struct file *filp = NULL;
