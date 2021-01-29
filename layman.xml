@@ -6,7 +6,7 @@
     <description lang="en"><![CDATA[Tatsh overlay]]></description>
     <homepage>https://github.com/Tatsh/tatsh-overlay</homepage>
     <owner type="person">
-      <email>ddrtist@gmail.com</email>
+      <email>audvare@gmail.com</email>
     </owner>
     <source type="git">git://github.com/Tatsh/tatsh-overlay.git</source>
     <feed>https://github.com/feeds/Tatsh/commits/tatsh-overlay/master</feed>
