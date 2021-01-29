@@ -44,6 +44,6 @@
     "virtuals",
     "xmatch"
   ],
-  "python.pythonPath": "/usr/bin/python",
-  "python.analysis.stubPath": "scripts/stubs"
+  "python.analysis.stubPath": ".stubs",
+  "python.pythonPath": "/usr/bin/python"
 }
