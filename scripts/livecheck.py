@@ -192,7 +192,8 @@ def main(search_dir: str) -> int:
         try:
             r.raise_for_status()
             # Ignore beta/alpha/etc if semantic and coming from GitHub
-            if (m := re.match(r'^\d+\.\d+\.\d+', version) and top_hash != version and regex.startswith('archive/')):
+            if (m := re.match(r'^\d+\.\d+\.\d+', version)
+                    and top_hash != version and regex.startswith('archive/')):
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
             top_hash = convert_version(re.findall(regex, r.text)[0])
             if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
