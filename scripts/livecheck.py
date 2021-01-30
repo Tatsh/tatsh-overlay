@@ -188,17 +188,6 @@ class TextDataResponse:
         pass
 
 
-def convert_version(s: str) -> str:
-    if m := re.match(SEMVER_RE, s):
-        gd = m.groupdict()
-        if gd['buildmetadata']:
-            raise ValueError('Build metadata not handled yet')
-        if gd['prerelease'] or gd['buildmetadata']:
-            return '{}.{}.{}_{}'.format(gd['major'], gd['minor'], gd['patch'],
-                                        gd['prerelease'].replace('.', ''))
-    return s
-
-
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', '--auto-update', action='store_true')
@@ -217,11 +206,9 @@ def main() -> int:
         try:
             r.raise_for_status()
             # Ignore beta/alpha/etc if semantic and coming from GitHub
-            top_hash = convert_version(re.findall(regex, r.text)[0])
-            if (re.match(SEMVER_RE, version) and top_hash != version
-                    and regex.startswith('archive/')):
-                top_hash = re.findall(
-                    regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)'), r.text)[0]
+            if re.match(SEMVER_RE, version) and regex.startswith('archive/'):
+                regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
+            top_hash = re.findall(regex, r.text)[0]
             if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
                     or top_hash != version):
                 cp = f'{cat}/{pkg}'
