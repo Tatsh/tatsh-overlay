@@ -1,4 +1,4 @@
-from typing import Any, Dict, Literal, Sequence, TypedDict
+from typing import Any, Dict, Literal, Optional, Sequence, TypedDict
 
 
 class DBAPI:
@@ -17,6 +17,17 @@ class DBAPI:
                               'match-all', 'match-visible', 'minimum-all',
                               'minimum-visible', 'minimum-all-ignore-profile'],
                catpkg: str) -> Sequence[str]:
+        ...
+
+    def findname(self,
+                 match: str,
+                 tree: Optional[str] = ...,
+                 repo: Optional[str] = ...) -> str:
+        ...
+
+    def match(self,
+              name: str,
+              use_cache: Literal[0, 1] = ...) -> Sequence[str]:
         ...
 
 
