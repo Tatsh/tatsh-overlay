@@ -216,17 +216,16 @@ def main() -> int:
                        if url.startswith('data:') else session.get(url))
         try:
             r.raise_for_status()
-            top_hash = convert_version(re.findall(regex, r.text)[0])
             # Ignore beta/alpha/etc if semantic and coming from GitHub
             if (re.match(SEMVER_RE, version) and top_hash != version
                     and regex.startswith('archive/')):
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
+            top_hash = convert_version(re.findall(regex, r.text)[0])
             if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
                     or top_hash != version):
                 cp = f'{cat}/{pkg}'
                 if args.auto_update and cp not in settings.no_auto_update:
                     ebuild = P.findname(P.match(cp)[-1])
-                    print(f'Updating {ebuild}')
                     with open(ebuild, 'r') as f:
                         old_content = f.read()
                     content = old_content.replace(version, top_hash)
@@ -244,6 +243,7 @@ def main() -> int:
                                                     ebuild_version)
                             new_filename = (f'{dn}/{pkg}-{ebuild_version}'
                                             '.ebuild')
+                    print(f'Renaming {ebuild} -> {new_filename}')
                     rename(ebuild, new_filename)
                     with open(new_filename, 'w') as f:
                         f.write(content)
