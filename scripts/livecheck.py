@@ -217,10 +217,11 @@ def main() -> int:
         try:
             r.raise_for_status()
             # Ignore beta/alpha/etc if semantic and coming from GitHub
+            top_hash = convert_version(re.findall(regex, r.text)[0])
             if (re.match(SEMVER_RE, version) and top_hash != version
                     and regex.startswith('archive/')):
-                regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
-            top_hash = convert_version(re.findall(regex, r.text)[0])
+                top_hash = re.findall(
+                    regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)'), r.text)[0]
             if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
                     or top_hash != version):
                 cp = f'{cat}/{pkg}'
