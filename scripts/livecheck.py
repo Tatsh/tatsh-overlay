@@ -1,14 +1,17 @@
 #!/usr/bin/env python
 from dataclasses import dataclass
+from os import rename
 from os.path import basename, dirname, join as path_join, realpath
-from urllib.parse import urlparse
 from typing import (Any, Dict, Final, Iterator, Sequence, Set, Tuple, Union,
                     cast)
+from urllib.parse import urlparse
+import argparse
 import glob
 import hashlib
 import json
 import re
 import sys
+import xml.etree.ElementTree as etree
 
 from portage.versions import catpkgsplit, vercmp
 import portage
@@ -19,6 +22,7 @@ Response = Union['TextDataResponse', requests.Response]
 
 P = portage.db[portage.root]['porttree'].dbapi
 PREFIX_RE: Final[str] = r'(^[^0-9]+)[0-9]'
+RSS_NS = {'': 'http://www.w3.org/2005/Atom'}
 SEMVER_RE: Final[str] = (r'^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.'
                          r'(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]'
                          r'\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|'
@@ -45,19 +49,28 @@ def chunks(l: Sequence[Any], n: int) -> Iterator[Sequence[Any]]:
         yield l[i:i + n]
 
 
+def get_first_src_uri(match: str) -> str:
+    return P.aux_get(match, ['SRC_URI'])[0].split(' ')[0]
+
+
 @dataclass
 class LivecheckSettings:
     branches: Dict[str, str]
     checksum_livechecks: Set[str]
     custom_livechecks: Dict[str, Tuple[str, str, bool]]
     ignored_packages: Set[str]
+    no_auto_update: Set[str]
+
+
+def is_sha(s: str) -> bool:
+    return bool((len(s) < 8 or len(s) > 8) and re.match(r'^[0-9a-f]+$', s))
 
 
 def get_props(search_dir: str,
               settings: LivecheckSettings) -> Iterator[PropTuple]:
     for match in sorted(set(get_highest_matches(search_dir))):
         catpkg, cat, pkg, ebuild_version = catpkg_catpkgsplit(match)
-        src_uri = P.aux_get(match, ['SRC_URI'])[0].split(' ')[0]
+        src_uri = get_first_src_uri(match)
         if cat.startswith('acct-') or catpkg in settings.ignored_packages:
             continue
         elif catpkg in settings.custom_livechecks:
@@ -146,6 +159,7 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
     checksum_livechecks = set()
     custom_livechecks = {}
     ignored_packages = set()
+    no_auto_update = set()
     for path in glob.glob(f'{search_dir}/**/livecheck.json', recursive=True):
         with open(path) as f:
             dn = dirname(path)
@@ -160,8 +174,10 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
                 checksum_livechecks.add(catpkg)
             if ls.get('branch', None):
                 branches[catpkg] = ls['branch']
+            if ls.get('no_auto_update', None):
+                no_auto_update.add(catpkg)
     return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
-                             ignored_packages)
+                             ignored_packages, no_auto_update)
 
 
 @dataclass
@@ -183,23 +199,57 @@ def convert_version(s: str) -> str:
     return s
 
 
-def main(search_dir: str) -> int:
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-a', '--auto-update', action='store_true')
+    parser.add_argument('-D',
+                        '--directory',
+                        nargs=1,
+                        default=realpath(path_join(dirname(__file__), '..')))
+    args = parser.parse_args()
+    search_dir = args.directory
     session = requests.Session()
+    settings = gather_settings(search_dir)
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
-            search_dir, gather_settings(search_dir)):
+            search_dir, settings):
         r: Response = (TextDataResponse(url[5:])
                        if url.startswith('data:') else session.get(url))
         try:
             r.raise_for_status()
-            # Ignore beta/alpha/etc if semantic and coming from GitHub
-            if (m := re.match(r'^\d+\.\d+\.\d+', version)
-                    and top_hash != version and regex.startswith('archive/')):
-                regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
             top_hash = convert_version(re.findall(regex, r.text)[0])
+            # Ignore beta/alpha/etc if semantic and coming from GitHub
+            if (re.match(SEMVER_RE, version) and top_hash != version
+                    and regex.startswith('archive/')):
+                regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
             if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
                     or top_hash != version):
-                print(
-                    f'{cat}/{pkg}: {version} ({ebuild_version}) -> {top_hash}')
+                cp = f'{cat}/{pkg}'
+                if args.auto_update and cp not in settings.no_auto_update:
+                    ebuild = P.findname(P.match(cp)[-1])
+                    print(f'Updating {ebuild}')
+                    with open(ebuild, 'r') as f:
+                        old_content = f.read()
+                    content = old_content.replace(version, top_hash)
+                    dn = dirname(ebuild)
+                    new_filename = f'{dn}/{pkg}-{top_hash}.ebuild'
+                    if is_sha(top_hash):
+                        updated_el = etree.fromstring(r.text).find(
+                            'entry/updated', RSS_NS)
+                        assert updated_el is not None
+                        assert updated_el.text is not None
+                        if re.search(r'(2[0-9]{7})', ebuild_version):
+                            new_date = updated_el.text.split('T')[0].replace(
+                                '-', '')
+                            ebuild_version = re.sub(r'2[0-9]{7}', new_date,
+                                                    ebuild_version)
+                            new_filename = (f'{dn}/{pkg}-{ebuild_version}'
+                                            '.ebuild')
+                    rename(ebuild, new_filename)
+                    with open(new_filename, 'w') as f:
+                        f.write(content)
+                else:
+                    print(f'{cat}/{pkg}: {version} ({ebuild_version}) -> ' +
+                          top_hash)
         except Exception as e:
             print(f'Exception while checking {cat}/{pkg}', file=sys.stderr)
             raise e
@@ -207,7 +257,4 @@ def main(search_dir: str) -> int:
 
 
 if __name__ == '__main__':
-    sys.exit(
-        main(
-            realpath(path_join(dirname(__file__), '..')
-                     ) if len(sys.argv) < 2 else sys.argv[1]))
+    sys.exit(main())
