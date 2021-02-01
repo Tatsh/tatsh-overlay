@@ -6,14 +6,14 @@ inherit cmake
 
 DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/"
-MY_SHA="650734cc3e4127d19579adaffa6122a49751851d"
-DYNARMIC_SHA="3806284cbefc4115436dcdc687776a45ec313093"
+MY_SHA="67d08f14af02c0bd2aa3008eaf0e399a4395b497"
+DYNARMIC_SHA="8c09da666aa3f0bb1000b0b6c5d5b0a1876f306b"
 MBEDTLS_SHA="a280e602f3a4ae001d3a83cbc3e6e04c99c22277"
 SIRIT_SHA="eefca56afd49379bdebc97ded8b480839f930881"
 SIRIT_SPIRV_HEADERS_SHA="2c512180ca03b5d4f56283efc85745775b45fdc4"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
 XBYAK_SHA="c306b8e5786eeeb87b8925a8af5c3bf057ff5a90"
-SRC_URI="https://github.com/yuzu-emu/yuzu/archive/${MY_SHA}.tar.gz -> ${PN}.tar.gz
+SRC_URI="https://github.com/yuzu-emu/yuzu/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/DarkLordZach/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
 	https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/ReinUsesLisp/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
