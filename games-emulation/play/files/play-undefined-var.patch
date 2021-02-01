@@ -1,0 +1,34 @@
+diff --git a/Source/Profiler.cpp b/Source/Profiler.cpp
+index 732e397f..a3c5a907 100644
+--- a/Source/Profiler.cpp
++++ b/Source/Profiler.cpp
+@@ -30,7 +30,6 @@ CProfiler::ZoneHandle CProfiler::RegisterZone(const char* name)
+ 
+ void CProfiler::CountCurrentZone()
+ {
+-	assert(std::this_thread::get_id() == m_workThreadId);
+ 	assert(!m_zoneStack.empty());
+ 
+ 	auto thisTime = std::chrono::high_resolution_clock::now();
+@@ -46,7 +45,6 @@ void CProfiler::CountCurrentZone()
+ 
+ void CProfiler::EnterZone(ZoneHandle zoneHandle)
+ {
+-	assert(std::this_thread::get_id() == m_workThreadId);
+ 
+ 	auto thisTime = std::chrono::high_resolution_clock::now();
+ 
+@@ -70,13 +68,11 @@ void CProfiler::ExitZone()
+ 
+ CProfiler::ZoneArray CProfiler::GetStats() const
+ {
+-	assert(std::this_thread::get_id() == m_workThreadId);
+ 	return m_zones;
+ }
+ 
+ void CProfiler::Reset()
+ {
+-	assert(std::this_thread::get_id() == m_workThreadId);
+ 	for(auto& zone : m_zones)
+ 	{
+ 		zone.totalTime = 0;

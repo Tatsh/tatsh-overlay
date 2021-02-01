@@ -1,0 +1,56 @@
+diff --git a/build_cmake/Framework/CMakeLists.txt b/build_cmake/Framework/CMakeLists.txt
+index feee09f..0826934 100644
+--- a/build_cmake/Framework/CMakeLists.txt
++++ b/build_cmake/Framework/CMakeLists.txt
+@@ -3,7 +3,7 @@ project(Framework)
+ 
+ include(../Framework_Common.cmake)
+ 
+-find_package(ZLIB)
++find_package(ZLIB REQUIRED)
+ if(NOT ZLIB_FOUND)
+ 	MESSAGE("-- Using Provided zlib source")
+ 	if(NOT TARGET zlibstatic)
+@@ -23,14 +23,14 @@ if(NOT TARGET ghc_filesystem)
+ endif()
+ LIST(APPEND PROJECT_LIBS ghc_filesystem)
+ 
+-find_package(ICUUC)
++find_package(ICUUC REQUIRED)
+ if(ICUUC_FOUND)
+ 	LIST(APPEND PROJECT_INCLUDES ${ICUUC_INCLUDE_DIRS})
+ 	LIST(APPEND PROJECT_LIBS ${ICUUC_LIBRARIES})
+ 	add_definitions(-DHAS_ICU)
+ endif()
+ 
+-find_package(OpenSSL)
++find_package(OpenSSL REQUIRED)
+ if(OPENSSL_FOUND)
+ 	LIST(APPEND PROJECT_INCLUDES ${OPENSSL_INCLUDE_DIR})
+ 	LIST(APPEND PROJECT_LIBS ${OPENSSL_LIBRARIES})
+diff --git a/build_cmake/FrameworkOpenGl/CMakeLists.txt b/build_cmake/FrameworkOpenGl/CMakeLists.txt
+index dffa459..cf73b3f 100644
+--- a/build_cmake/FrameworkOpenGl/CMakeLists.txt
++++ b/build_cmake/FrameworkOpenGl/CMakeLists.txt
+@@ -16,7 +16,7 @@ endif()
+ 
+ set(USE_GLEW OFF)
+ if(NOT USE_GLES AND NOT APPLE)
+-	find_package(GLEW)
++	find_package(GLEW REQUIRED)
+ 	if(GLEW_FOUND)
+ 		list(APPEND PROJECT_LIBS GLEW::GLEW)
+ 	else()
+diff --git a/build_cmake/FrameworkSqlite/CMakeLists.txt b/build_cmake/FrameworkSqlite/CMakeLists.txt
+index bc05147..9a874c0 100644
+--- a/build_cmake/FrameworkSqlite/CMakeLists.txt
++++ b/build_cmake/FrameworkSqlite/CMakeLists.txt
+@@ -3,7 +3,7 @@ project(Framework_Sqlite)
+ 
+ include(../Framework_Common.cmake)
+ 
+-find_package(SQLite3)
++find_package(SQLite3 REQUIRED)
+ if(SQLite3_FOUND)
+ 	LIST(APPEND PROJECT_LIBS SQLite::SQLite3)
+ else()

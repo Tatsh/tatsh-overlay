@@ -1,0 +1,121 @@
+diff --git a/Source/CMakeLists.txt b/Source/CMakeLists.txt
+index 9988a510..b194c7c7 100644
+--- a/Source/CMakeLists.txt
++++ b/Source/CMakeLists.txt
+@@ -69,7 +69,7 @@ if(NOT TARGET CodeGen)
+ endif()
+ list(APPEND PROJECT_LIBS CodeGen)
+ 
+-find_package(BZip2)
++find_package(BZip2 REQUIRED)
+ if(NOT BZIP2_FOUND)
+ 	MESSAGE("-- Using Provided BZip2 source")
+ 	if(NOT TARGET BZip2::BZip2)
+@@ -84,7 +84,7 @@ else()
+ 	list(APPEND PROJECT_LIBS ${BZIP2_LIBRARIES})
+ endif()
+ 
+-find_package(ZLIB)
++find_package(ZLIB REQUIRED)
+ if(NOT ZLIB_FOUND)
+ 	MESSAGE("-- Using Provided zlib source")
+ 	if(NOT TARGET zlibstatic)
+@@ -97,7 +97,7 @@ endif()
+ list(APPEND PROJECT_LIBS ZLIB::ZLIB)
+ 
+ # If ICU is available, add its libraries because Framework might need its functions
+-find_package(ICUUC)
++find_package(ICUUC REQUIRED)
+ if(ICUUC_FOUND)
+ 	list(APPEND PROJECT_LIBS ${ICUUC_LIBRARIES})
+ endif()
+diff --git a/Source/ui_qt/CMakeLists.txt b/Source/ui_qt/CMakeLists.txt
+index f0a4924d..7a9ee1d2 100644
+--- a/Source/ui_qt/CMakeLists.txt
++++ b/Source/ui_qt/CMakeLists.txt
+@@ -10,14 +10,10 @@ project(PlayUI)
+ 
+ add_definitions(-DPLAY_VERSION="${PROJECT_Version}")
+ 
+-set(USE_GSH_VULKAN OFF)
+ if(NOT TARGET_PLATFORM_UNIX_AARCH64)
+-	find_package(Vulkan)
+-	if(Vulkan_FOUND)
++	if (USE_GSH_VULKAN)
++		find_package(Vulkan REQUIRED)
+ 		set(USE_GSH_VULKAN ON)
+-		message("Building with Vulkan support.")
+-	else()
+-		message("Building without Vulkan support. If you want to enable Vulkan, please make sure VULKAN_SDK is set.")
+ 	endif()
+ endif()
+ 
+@@ -159,13 +155,13 @@ if(TARGET_PLATFORM_WIN32)
+ 		)
+ 	endif()
+ 	list(APPEND PROJECT_LIBS Framework_Win32)
+-	
++
+ 	set(QT_SOURCES
+ 		${QT_SOURCES}
+ 		../../tools/PsfPlayer/Source/win32_ui/SH_WaveOut.cpp
+ 	)
+ 	list(APPEND PROJECT_LIBS winmm)
+-	
++
+ 	if(TARGET_PLATFORM_WIN32_X86)
+ 		set(MANIFEST win32/Play-x86.manifest)
+ 	else()
+@@ -176,11 +172,11 @@ if(TARGET_PLATFORM_WIN32)
+ 		${QT_SOURCES}
+ 		${MANIFEST}
+ 	)
+-	
++
+ 	list(APPEND PROJECT_LIBS dinput8)
+ 	list(APPEND PROJECT_LIBS xinput)
+ endif()
+-	
++
+ if(DEBUGGER_INCLUDED)
+ 	if(NOT TARGET PlayDebugSupport)
+ 		add_subdirectory(
+@@ -190,7 +186,7 @@ if(DEBUGGER_INCLUDED)
+ 	endif()
+ 	list(APPEND PROJECT_LIBS PlayDebugSupport)
+ endif()
+-	
++
+ set(QT_MOC_HEADERS
+ 	bootablelistdialog.h
+ 	BootableModel.h
+@@ -316,13 +312,13 @@ target_include_directories(Play PRIVATE
+ )
+ 
+ if(TARGET_PLATFORM_WIN32)
+-	add_custom_command(TARGET Play POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different 
++	add_custom_command(TARGET Play POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+ 		$<TARGET_FILE:Qt5::Core> $<TARGET_FILE_DIR:Play>
+ 	)
+-	add_custom_command(TARGET Play POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different 
++	add_custom_command(TARGET Play POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+ 		$<TARGET_FILE:Qt5::Widgets> $<TARGET_FILE_DIR:Play>
+ 	)
+-	add_custom_command(TARGET Play POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different 
++	add_custom_command(TARGET Play POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+ 		$<TARGET_FILE:Qt5::Gui> $<TARGET_FILE_DIR:Play>
+ 	)
+ endif()
+diff --git a/Source/ui_shared/CMakeLists.txt b/Source/ui_shared/CMakeLists.txt
+index edea94e3..8a42dbfe 100644
+--- a/Source/ui_shared/CMakeLists.txt
++++ b/Source/ui_shared/CMakeLists.txt
+@@ -23,7 +23,7 @@ if(NOT TARGET Framework_Http)
+ endif()
+ list(APPEND SHARED_UI_PROJECT_LIBS Framework_Http)
+ 
+-find_package(nlohmann_json QUIET)
++find_package(nlohmann_json QUIET REQUIRED)
+ if(NOT nlohmann_json_FOUND)
+ 	MESSAGE("-- Using Provided nlohmann_json source")
+ 	if(NOT TARGET nlohmann_json)
