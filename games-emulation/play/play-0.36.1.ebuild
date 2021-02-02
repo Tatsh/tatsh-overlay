@@ -47,6 +47,8 @@ UPPER_PN="${PN^^}"
 MY_PN="${UPPER_PN:0:1}${PN:1}-"
 S="${WORKDIR}/${MY_PN}-${MY_PV}"
 
+PATCHES=( "${FILESDIR}/${PN}-system-deps.patch" )
+
 src_prepare() {
 	rmdir deps/{CodeGen,Dependencies,Framework,Nuanceur} || die
 	mv "${WORKDIR}/${MY_PN}-CodeGen-${CODEGEN_SHA}" deps/CodeGen || die
@@ -69,7 +71,7 @@ src_configure() {
 		-DPROJECT_Version=${PV}
 	)
 	# https://github.com/jpd002/Play-/issues/911
-	append-flags -DNDEBUG
+	append-cppflags -DNDEBUG
 	cmake_src_configure
 }
 

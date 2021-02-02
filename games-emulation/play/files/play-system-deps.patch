@@ -1,0 +1,61 @@
+diff --git a/Source/CMakeLists.txt b/Source/CMakeLists.txt
+index d431eaa3..4be03aa8 100644
+--- a/Source/CMakeLists.txt
++++ b/Source/CMakeLists.txt
+@@ -69,7 +69,7 @@ if(NOT TARGET CodeGen)
+ endif()
+ list(APPEND PROJECT_LIBS CodeGen)
+ 
+-find_package(BZip2)
++find_package(BZip2 REQUIRED)
+ if(NOT BZIP2_FOUND)
+ 	MESSAGE("-- Using Provided BZip2 source")
+ 	if(NOT TARGET BZip2::BZip2)
+@@ -84,7 +84,7 @@ else()
+ 	list(APPEND PROJECT_LIBS ${BZIP2_LIBRARIES})
+ endif()
+ 
+-find_package(ZLIB)
++find_package(ZLIB REQUIRED)
+ if(NOT ZLIB_FOUND)
+ 	MESSAGE("-- Using Provided zlib source")
+ 	if(NOT TARGET zlibstatic)
+@@ -97,7 +97,7 @@ endif()
+ list(APPEND PROJECT_LIBS ZLIB::ZLIB)
+ 
+ # If ICU is available, add its libraries because Framework might need its functions
+-find_package(ICUUC)
++find_package(ICUUC REQUIRED)
+ if(ICUUC_FOUND)
+ 	list(APPEND PROJECT_LIBS ${ICUUC_LIBRARIES})
+ endif()
+diff --git a/Source/ui_qt/CMakeLists.txt b/Source/ui_qt/CMakeLists.txt
+index 88fc3a2c..5bd3b1d1 100644
+--- a/Source/ui_qt/CMakeLists.txt
++++ b/Source/ui_qt/CMakeLists.txt
+@@ -10,10 +10,9 @@ project(PlayUI)
+ 
+ add_definitions(-DPLAY_VERSION="${PROJECT_Version}")
+ 
+-set(USE_GSH_VULKAN OFF)
+ if(NOT TARGET_PLATFORM_UNIX_AARCH64)
+-	find_package(Vulkan)
+-	if(Vulkan_FOUND)
++	if (USE_GSH_VULKAN)
++		find_package(Vulkan REQUIRED)
+ 		set(USE_GSH_VULKAN ON)
+ 		message("Building with Vulkan support.")
+ 	else()
+diff --git a/Source/ui_shared/CMakeLists.txt b/Source/ui_shared/CMakeLists.txt
+index edea94e3..8a42dbfe 100644
+--- a/Source/ui_shared/CMakeLists.txt
++++ b/Source/ui_shared/CMakeLists.txt
+@@ -23,7 +23,7 @@ if(NOT TARGET Framework_Http)
+ endif()
+ list(APPEND SHARED_UI_PROJECT_LIBS Framework_Http)
+ 
+-find_package(nlohmann_json QUIET)
++find_package(nlohmann_json QUIET REQUIRED)
+ if(NOT nlohmann_json_FOUND)
+ 	MESSAGE("-- Using Provided nlohmann_json source")
+ 	if(NOT TARGET nlohmann_json)
