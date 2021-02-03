@@ -57,7 +57,7 @@ def get_first_src_uri(match: str) -> str:
 class LivecheckSettings:
     branches: Dict[str, str]
     checksum_livechecks: Set[str]
-    custom_livechecks: Dict[str, Tuple[str, str, bool]]
+    custom_livechecks: Dict[str, Tuple[str, str, bool, str]]
     ignored_packages: Set[str]
     no_auto_update: Set[str]
 
@@ -74,9 +74,10 @@ def get_props(search_dir: str,
         if cat.startswith('acct-') or catpkg in settings.ignored_packages:
             continue
         elif catpkg in settings.custom_livechecks:
-            yield cast(  # type: ignore[redundant-cast]
-                PropTuple, (cat, pkg, ebuild_version, ebuild_version) +
-                settings.custom_livechecks[catpkg])
+            url, regex, use_vercmp, version = settings.custom_livechecks[
+                catpkg]
+            yield (cat, pkg, version or ebuild_version, version
+                   or ebuild_version, url, regex, version)
         elif catpkg in settings.checksum_livechecks:
             manifest_file = path_join(search_dir, catpkg, 'Manifest')
             bn = basename(src_uri)
@@ -169,7 +170,8 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
                 ignored_packages.add(catpkg)
             elif ls.get('type', None) == 'regex':
                 custom_livechecks[catpkg] = (ls['url'], ls['regex'],
-                                             ls.get('use_vercmp', True))
+                                             ls.get('use_vercmp', True),
+                                             ls.get('version', None))
             elif ls.get('type', None) == 'checksum':
                 checksum_livechecks.add(catpkg)
             if ls.get('branch', None):
