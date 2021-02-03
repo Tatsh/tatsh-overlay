@@ -1,0 +1,7 @@
+{
+    "no_auto_update": true,
+    "regex": "tag/OF(\\d+\\.\\d+\\.\\d+)\"",
+    "type": "regex",
+    "url": "https://github.com/teamrizu/outfox/tags",
+    "version": "4.9.6"
+}
