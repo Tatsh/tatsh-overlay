@@ -1,0 +1,6 @@
+{
+    "regex": "tag/(\\d+\\.\\d+(?:-\\d+)?)\"",
+    "type": "regex",
+    "url": "https://github.com/jpd002/Play-/tags",
+    "version": "0.36-1"
+}
