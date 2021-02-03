@@ -1,0 +1,25 @@
+From ea428e53335baa85d50862bb486c2cf2cf77aa74 Mon Sep 17 00:00:00 2001
+From: Alex Aralis <alex.aralis@gmail.com>
+Date: Fri, 24 Jul 2020 10:58:05 -0500
+Subject: [PATCH] unbundle xbyak
+
+---
+ externals/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index d1dcc403b..6d49a3dd0 100644
+--- a/externals/CMakeLists.txt
++++ b/externals/CMakeLists.txt
+@@ -7,7 +7,7 @@ include(DownloadExternals)
+ # xbyak
+ if (ARCHITECTURE_x86 OR ARCHITECTURE_x86_64)
+     add_library(xbyak INTERFACE)
+-    target_include_directories(xbyak SYSTEM INTERFACE ./xbyak/xbyak)
++    target_include_directories(xbyak SYSTEM INTERFACE /usr/include/xbyak)
+     target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
+ endif()
+ 
+-- 
+2.27.0
+

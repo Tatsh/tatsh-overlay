@@ -5,4 +5,9 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+	<use>
+		<flag name="compat-list">Download compatibility list during build.</flag>
+		<flag name="cubeb">Build with cubeb audio backend</flag>
+		<flag name="web-service">Enable web-serviceds</flag>
+	</use>
 </pkgmetadata>
