@@ -77,7 +77,7 @@ def get_props(search_dir: str,
             url, regex, use_vercmp, version = settings.custom_livechecks[
                 catpkg]
             yield (cat, pkg, version or ebuild_version, version
-                   or ebuild_version, url, regex, version)
+                   or ebuild_version, url, regex, use_vercmp)
         elif catpkg in settings.checksum_livechecks:
             manifest_file = path_join(search_dir, catpkg, 'Manifest')
             bn = basename(src_uri)
@@ -211,6 +211,7 @@ def main() -> int:
             if re.match(SEMVER_RE, version) and regex.startswith('archive/'):
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
             top_hash = re.findall(regex, r.text)[0]
+            assert isinstance(use_vercmp, bool)
             if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
                     or top_hash != version):
                 cp = f'{cat}/{pkg}'
