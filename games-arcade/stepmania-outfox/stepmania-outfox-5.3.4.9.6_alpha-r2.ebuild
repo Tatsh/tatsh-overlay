@@ -19,8 +19,8 @@ SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64"
-IUSE="bundled-songs bundled-courses doc"
-BDEPEND="dev-util/patchelf"
+IUSE="+bundled-songs +bundled-courses doc"
+BDEPEND="!arm? ( dev-util/patchelf )"
 RDEPEND="app-arch/bzip2
 	app-arch/lz4
 	media-libs/alsa-lib
@@ -68,10 +68,12 @@ src_prepare() {
 
 src_install() {
 	local inst="${EPREFIX}/opt/${PN}"
-	patchelf --set-rpath "\$ORIGIN:${EPREFIX}/lib64:${EPREIFX}/usr/lib64" \
-		stepmania || die 'Failed to patch ELFs'
-	patchelf --replace-needed libbz2.so.1.0 libbz2.so.1 \
-		libav{codec,format}.so.* || die "Failed to patch ELFs"
+	if ! use arm; then
+		patchelf --set-rpath "\$ORIGIN:${EPREFIX}/lib64:${EPREIFX}/usr/lib64" \
+			stepmania || die 'Failed to patch ELFs'
+		patchelf --replace-needed libbz2.so.1.0 libbz2.so.1 \
+			libav{codec,format}.so.* || die "Failed to patch ELFs"
+	fi
 	make_wrapper "$PN" "${inst}/stepmania" "${inst}" "${inst}" /usr/bin
 	insinto "$inst"
 	doins -r Announcers Appearance BackgroundEffects BackgroundTransitions \
