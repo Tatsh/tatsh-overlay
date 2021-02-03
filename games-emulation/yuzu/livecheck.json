@@ -1,0 +1,7 @@
+{
+    "regex": "tag/mainline-(\\d+-\\d+)\"",
+    "type": "regex",
+    "url": "https://github.com/yuzu-emu/yuzu-mainline/tags",
+    "use_vercmp": false,
+    "version": "0-526"
+}
