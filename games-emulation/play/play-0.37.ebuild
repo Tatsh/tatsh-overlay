@@ -6,7 +6,7 @@ inherit cmake xdg-utils
 
 DESCRIPTION="PlayStation 2 emulator."
 HOMEPAGE="http://purei.org/ https://github.com/jpd002/Play-"
-MY_PV="${PV:0:4}-${PV:5}"
+MY_PV="${PV:0:4}"
 BOOST_CMAKE_SHA="e97843ed8d7d069a278e6f2adf33a9f91638c73f"
 CODEGEN_SHA="10068b1fd39efa88fbfb2fe14e820eae552fb2a1"
 DEPS_SHA="ccabbc639a3b76c5f8f20e7b9de29052a5539335"
