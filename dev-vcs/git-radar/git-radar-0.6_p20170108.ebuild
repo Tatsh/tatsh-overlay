@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=7
 
@@ -11,7 +10,7 @@ SRC_URI="https://github.com/michaeldfallen/git-radar/archive/${MY_SHA}.tar.gz ->
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 
 RDEPEND="dev-vcs/git"
 DEPEND="${RDEPEND}"
@@ -27,6 +26,6 @@ src_install() {
 	doins radar-base.sh
 	exeinto /usr/share/${PN}
 	doexe ${PN} prompt.zsh prompt.bash fetch.sh
-	dosym /usr/share/${PN}/${PN} /usr/bin/${PN}
+	dosym "${EPREFIX}/usr/share/${PN}/${PN}" /usr/bin/${PN}
 	einstalldocs
 }
