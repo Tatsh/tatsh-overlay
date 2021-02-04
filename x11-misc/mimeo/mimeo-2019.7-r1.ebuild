@@ -17,8 +17,6 @@ KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 RDEPEND=">=dev-python/pyxdg-0.25-r1[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 
-DOCS=( COPYING CHANGELOG )
-
 PATCHES=( "${FILESDIR}/${PN}-script.patch" )
 
 python_install_all() {
