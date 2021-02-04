@@ -1,10 +1,9 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=7
 
-DESCRIPTION="Prevents you from committing passwords and other sensitive information to a git repository."
+DESCRIPTION="Prevents you from committing sensitive info to a git repository."
 HOMEPAGE="https://github.com/awslabs/git-secrets"
 MY_SHA="80230afa8c8bdeac766a0fece36f95ffaa0be778"
 SRC_URI="https://github.com/awslabs/git-secrets/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
