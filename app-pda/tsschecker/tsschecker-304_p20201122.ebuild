@@ -1,4 +1,4 @@
-# Copyright 2018 Gentoo Authors
+# Copyright 2018-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -31,8 +31,6 @@ PATCHES=(
 	"${FILESDIR}/saveblobs.patch"
 	"${FILESDIR}/xopen-source-500.patch"
 )
-
-DOCS=( LICENSE README.md )
 
 src_prepare() {
 	default
