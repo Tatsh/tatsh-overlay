@@ -18,8 +18,6 @@ BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_HASH}"
 
-DOCS=( README.rst )
-
 src_install() {
 	insinto /usr/share/org.kde.syntax-highlighting/syntax
 	doins *.xml
