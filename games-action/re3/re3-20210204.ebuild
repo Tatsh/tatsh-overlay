@@ -17,7 +17,7 @@ IUSE="extra"
 
 DEPEND="media-libs/libsndfile
 	media-libs/openal
-	media-libs/glew
+	media-libs/glew:0
 	media-sound/mpg123
 	>=media-libs/glfw-3.3.2"
 RDEPEND="${DEPEND}"
