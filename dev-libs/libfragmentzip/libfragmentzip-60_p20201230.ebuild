@@ -23,8 +23,6 @@ S="${WORKDIR}/${PN}-${MY_SHA}"
 
 PATCHES=( "${FILESDIR}/configure-ac.patch" )
 
-DOCS=( AUTHORS ChangeLog LICENSE NEWS README )
-
 src_prepare() {
 	touch config.h.in
 	default
