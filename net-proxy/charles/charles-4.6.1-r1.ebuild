@@ -1,4 +1,4 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 2019-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -8,7 +8,7 @@ DESCRIPTION="Web debugging proxy application."
 HOMEPAGE="https://www.charlesproxy.com/"
 SRC_URI="https://www.charlesproxy.com/assets/release/${PV}/${PN}-proxy-${PV}_amd64.tar.gz"
 
-LICENSE="EULA Apache-2.0 MIT GPL-2"
+LICENSE="Charles Apache-2.0 MIT GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
