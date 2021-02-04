@@ -18,8 +18,6 @@ BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA}"
 
-DOCS=( README.asciidoc )
-
 src_install() {
 	insinto /usr/share/${PN}
 	doins kwin-rules/*
