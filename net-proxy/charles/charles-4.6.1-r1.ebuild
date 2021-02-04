@@ -12,16 +12,8 @@ LICENSE="Charles Apache-2.0 MIT GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND=""
 RDEPEND="${DEPEND} virtual/jre:1.8"
-BDEPEND=""
 RESTRICT="strip"
-
-DOCS=(
-	doc/licenses/bounce-license.txt
-	doc/licenses/jakarta-oro-license.txt
-	doc/EULA.rtf
-)
 
 S="${WORKDIR}/charles"
 
