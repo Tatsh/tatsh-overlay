@@ -59,7 +59,6 @@ ruby_add_rdepend "dev-ruby/color
 DEPEND="${RDEPEND}"
 BDEPEND=""
 
-DOCS=( README.md )
 _PATCHES=(
 	"${FILESDIR}/kindle_sync.patch"
 	"${FILESDIR}/open_youtube.patch"
