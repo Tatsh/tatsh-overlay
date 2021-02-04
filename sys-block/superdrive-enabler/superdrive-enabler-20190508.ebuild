@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=7
 inherit linux-info toolchain-funcs
@@ -13,7 +12,7 @@ S="${WORKDIR}/${PN}-${MY_HASH}"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 IUSE="+udev"
 
 DEPEND=""
