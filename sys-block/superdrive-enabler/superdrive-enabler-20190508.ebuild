@@ -18,8 +18,6 @@ IUSE="+udev"
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-DOCS=( LICENSE README.md )
-
 CONFIG_CHECK="~BLK_DEV_SR"
 
 src_prepare() {
