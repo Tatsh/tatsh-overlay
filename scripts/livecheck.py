@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from os import rename
 from os.path import basename, dirname, join as path_join, realpath
-from typing import (Any, Dict, Final, Iterator, Sequence, Set, Tuple, Union,
+from typing import (Any, Callable, Dict, Final, Iterator, NamedTuple, Sequence, Set, Tuple, Union,
                     cast)
 from urllib.parse import urlparse
 import argparse
@@ -60,10 +60,15 @@ class LivecheckSettings:
     custom_livechecks: Dict[str, Tuple[str, str, bool, str]]
     ignored_packages: Set[str]
     no_auto_update: Set[str]
+    transformations: Dict[str, Callable[[str], str]]
 
 
 def is_sha(s: str) -> bool:
     return bool((len(s) < 8 or len(s) > 8) and re.match(r'^[0-9a-f]+$', s))
+
+
+def dotize(s: str) -> str:
+    return s.replace('-', '.')
 
 
 def get_props(search_dir: str,
@@ -161,6 +166,7 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
     custom_livechecks = {}
     ignored_packages = set()
     no_auto_update = set()
+    transformations = {}
     for path in glob.glob(f'{search_dir}/**/livecheck.json', recursive=True):
         with open(path) as f:
             dn = dirname(path)
@@ -178,8 +184,16 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
                 branches[catpkg] = ls['branch']
             if ls.get('no_auto_update', None):
                 no_auto_update.add(catpkg)
+            if ls.get('transformation_function', None):
+                tf = ls['transformation_function']
+                if tf == 'dotize':
+                    transformations[catpkg] = dotize
+                elif tf == 'handle_stepmania_outfox':
+                    transformations[catpkg] = handle_stepmania_outfox
+                else:
+                    raise Exception(f'Unknown transformation function: {tf}')
     return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
-                             ignored_packages, no_auto_update)
+                             ignored_packages, no_auto_update, transformations)
 
 
 @dataclass
@@ -188,6 +202,10 @@ class TextDataResponse:
 
     def raise_for_status(self) -> None:
         pass
+
+
+def handle_stepmania_outfox(s: str) -> str:
+    return f'5.3.{s}_alpha'
 
 
 def main() -> int:
@@ -211,10 +229,12 @@ def main() -> int:
             if re.match(SEMVER_RE, version) and regex.startswith('archive/'):
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
             top_hash = re.findall(regex, r.text)[0]
+            cp = f'{cat}/{pkg}'
+            if tf := settings.transformations.get(cp, None):
+                top_hash = tf(top_hash)
             assert isinstance(use_vercmp, bool)
             if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
                     or top_hash != version):
-                cp = f'{cat}/{pkg}'
                 if args.auto_update and cp not in settings.no_auto_update:
                     ebuild = P.findname(P.match(cp)[-1])
                     with open(ebuild, 'r') as f:
