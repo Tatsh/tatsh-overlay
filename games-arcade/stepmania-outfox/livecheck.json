@@ -1,7 +1,6 @@
 {
-    "no_auto_update": true,
     "regex": "tag/OF(\\d+\\.\\d+\\.\\d+)\"",
+    "transformation_function": "handle_stepmania_outfox",
     "type": "regex",
-    "url": "https://github.com/teamrizu/outfox/tags",
-    "version": "4.9.6"
+    "url": "https://github.com/teamrizu/outfox/tags"
 }
