@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+PYTHON_COMPAT=( python3_{8,9} )
+inherit python-single-r1
 
 DESCRIPTION="Host-side script for the Open in mpv Chrome extension."
 HOMEPAGE="https://github.com/Tatsh/open-in-mpv"
@@ -11,13 +13,10 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=""
-RDEPEND="${DEPEND}
-	>=dev-lang/python-3.7.9
+RDEPEND="${PYTHON_DEPS}
 	media-video/mpv"
-BDEPEND=""
 
 src_install() {
-	dobin host/open-in-mpv
+	python_newscript "host/${PN}" "${PN}"
 	einstalldocs
 }
