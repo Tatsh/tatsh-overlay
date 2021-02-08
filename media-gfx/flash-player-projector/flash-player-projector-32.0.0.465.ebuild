@@ -1,4 +1,4 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 2019-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -16,7 +16,6 @@ KEYWORDS="~amd64"
 RDEPEND="virtual/opengl
 	x11-libs/gtk+:2"
 DEPEND="${RDEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}"
 QA_PREBUILT="/usr/bin/flashplayer"
