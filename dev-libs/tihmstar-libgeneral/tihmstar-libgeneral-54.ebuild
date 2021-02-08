@@ -13,10 +13,6 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-BDEPEND=""
-
 PATCHES=( "${FILESDIR}/configure-ac.patch" )
 
 S="${WORKDIR}/${MY_PN}-${PV}"
