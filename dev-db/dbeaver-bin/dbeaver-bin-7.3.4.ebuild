@@ -15,7 +15,6 @@ KEYWORDS="~amd64"
 
 RDEPEND="x11-libs/gtk+:3"
 DEPEND="${RDEPEND}"
-BDEPEND=""
 
 MY_PN="${PN%-bin*}"
 S="${WORKDIR}/${MY_PN}"
