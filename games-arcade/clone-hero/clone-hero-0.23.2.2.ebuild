@@ -16,7 +16,6 @@ RESTRICT="strip"
 RDEPEND="sys-libs/zlib
 	x11-libs/wxGTK:3.0-gtk3"
 DEPEND="${RDEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/clonehero-linux"
 
