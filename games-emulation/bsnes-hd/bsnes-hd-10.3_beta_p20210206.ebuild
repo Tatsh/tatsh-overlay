@@ -30,7 +30,6 @@ DEPEND="x11-libs/gtk+:2
 	sdl? ( media-libs/libsdl[X,joystick,video] )
 	udev? ( virtual/udev )"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA}"
 
