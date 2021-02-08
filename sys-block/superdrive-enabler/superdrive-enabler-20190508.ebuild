@@ -15,9 +15,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 IUSE="+udev"
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-
 CONFIG_CHECK="~BLK_DEV_SR"
 
 src_prepare() {
