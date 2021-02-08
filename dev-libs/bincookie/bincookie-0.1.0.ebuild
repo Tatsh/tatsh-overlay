@@ -13,9 +13,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+tools"
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-
 src_prepare() {
 	sed -e '27s/^if(DOXYGEN_FOUND.*/if(WITH_DOCS AND DOXYGEN_FOUND)/' \
 		-i CMakeLists.txt
