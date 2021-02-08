@@ -17,7 +17,6 @@ DEPEND="dev-libs/hidapi
 	sys-libs/zlib
 	virtual/udev"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/raphnet-tech_adapter_manager-${PV}"
 
