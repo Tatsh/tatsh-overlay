@@ -12,10 +12,6 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-RDEPEND="kde-apps/kate"
-DEPEND="${RDEPEND}"
-BDEPEND=""
-
 S="${WORKDIR}/${PN}-${MY_SHA}"
 
 src_install() {
