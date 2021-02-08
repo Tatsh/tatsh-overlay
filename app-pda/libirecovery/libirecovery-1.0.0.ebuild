@@ -1,4 +1,4 @@
-# Copyright 2018 Gentoo Authors
+# Copyright 2018-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -16,7 +16,6 @@ IUSE="udev"
 DEPEND="sys-libs/readline
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 src_prepare() {
 	default
