@@ -13,9 +13,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="bindist"
 
-DEPEND=""
-RDEPEND="${DEPEND}
-	dev-libs/libsodium:0/23
+RDEPEND="dev-libs/libsodium:0/23
 	dev-qt/qtconcurrent:5
 	dev-qt/qtgui:5
 	dev-qt/qtmultimedia:5[gstreamer]
@@ -25,7 +23,6 @@ RDEPEND="${DEPEND}
 	dev-qt/qtwidgets:5
 	media-libs/opus
 	virtual/opengl"
-BDEPEND=""
 
 QA_PREBUILT="/opt/${PN}/R${PN:1} /opt/${PN}/plugins/*/*.so"
 DOCS=( additional_license_information.txt )
