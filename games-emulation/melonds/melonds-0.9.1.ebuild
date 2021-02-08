@@ -14,7 +14,6 @@ KEYWORDS="~amd64 ~x86"
 
 DEPEND="net-libs/libslirp"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/melonDS-${PV}"
 
