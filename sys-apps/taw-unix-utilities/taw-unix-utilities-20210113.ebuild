@@ -57,7 +57,6 @@ ruby_add_rdepend "dev-ruby/color
 	google? ( dev-ruby/hpricot )
 	extras? ( dev-ruby/moneta )"
 DEPEND="${RDEPEND}"
-BDEPEND=""
 
 _PATCHES=(
 	"${FILESDIR}/kindle_sync.patch"
