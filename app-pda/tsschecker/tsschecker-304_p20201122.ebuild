@@ -23,7 +23,6 @@ DEPEND=">=dev-libs/libfragmentzip-48
 	dev-libs/openssl:0
 	>=app-pda/libirecovery-1.0.0"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA}"
 
