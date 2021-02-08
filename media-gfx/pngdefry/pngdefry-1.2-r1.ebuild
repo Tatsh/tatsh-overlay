@@ -13,9 +13,6 @@ LICENSE="public-domain"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-
 S="${WORKDIR}/source"
 
 src_compile() {
