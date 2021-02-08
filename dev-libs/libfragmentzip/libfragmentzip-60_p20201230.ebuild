@@ -17,7 +17,6 @@ DEPEND="dev-libs/libzip
 	net-misc/curl
 	dev-libs/tihmstar-libgeneral"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA}"
 
