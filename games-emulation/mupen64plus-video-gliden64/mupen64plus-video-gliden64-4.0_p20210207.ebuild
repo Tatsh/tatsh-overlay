@@ -13,9 +13,10 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="virtual/opengl media-libs/freetype sys-libs/zlib"
+DEPEND="virtual/opengl
+	media-libs/freetype
+	sys-libs/zlib"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/GLideN64-${MY_SHA}"
 CMAKE_USE_DIR="${S}/src"
