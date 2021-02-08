@@ -12,10 +12,6 @@ LICENSE="LGPL-3+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-RDEPEND=""
-DEPEND="${RDEPEND}"
-BDEPEND=""
-
 S="${WORKDIR}/${PN}-${MY_HASH}"
 
 src_install() {
