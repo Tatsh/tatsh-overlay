@@ -17,7 +17,6 @@ KEYWORDS="~amd64 ~x86"
 
 DEPEND=">=dev-libs/hidapi-${PV%_*}"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/cython-${PN}-${MY_SHA}"
 
