@@ -13,10 +13,6 @@ LICENSE="ISC"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-BDEPEND=""
-
 S="${WORKDIR}/${PN}-${MY_SHA}"
 
 src_prepare() {
