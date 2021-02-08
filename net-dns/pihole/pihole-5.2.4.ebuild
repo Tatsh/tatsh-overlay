@@ -16,7 +16,6 @@ IUSE="systemd"
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
 RDEPEND="${DEPEND} net-dns/${PN}-ftl"
-BDEPEND=""
 
 S="${WORKDIR}/pi-hole-${PV}"
 
