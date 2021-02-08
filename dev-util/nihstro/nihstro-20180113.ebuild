@@ -15,7 +15,6 @@ KEYWORDS="~amd64 ~x86"
 
 DEPEND="dev-libs/boost:="
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/${PN}-${MY_SHA}"
 
