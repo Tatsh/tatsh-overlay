@@ -8,7 +8,7 @@ inherit distutils-r1 udev
 
 DESCRIPTION="Cross-platform CLI and Python drivers for AIO liquid coolers and other devices."
 HOMEPAGE="https://github.com/liquidctl/liquidctl"
-MY_SHA="ed6315f0ad5169dfd0d2e4cbd5dbe191260bf42e"
+MY_SHA="ca11096eede95765c4d99251bf771fbad1fc951a"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
