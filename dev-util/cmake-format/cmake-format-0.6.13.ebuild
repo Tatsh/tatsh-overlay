@@ -1,4 +1,4 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 2019-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -18,6 +18,5 @@ RDEPEND="dev-python/pyyaml
 	dev-python/jinja
 	dev-python/six"
 DEPEND="${RDEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/${PN/-/_}-${PV}"
