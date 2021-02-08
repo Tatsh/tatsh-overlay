@@ -8,15 +8,11 @@ inherit distutils-r1
 
 DESCRIPTION="An kill-switch that waits for a change on your USB ports."
 HOMEPAGE="https://github.com/hephaest0s/usbkill"
-MY_HASH="d3df79edab0c1dcec4b56468958c17a5c5dc6dce"
-SRC_URI="https://github.com/hephaest0s/usbkill/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
+MY_SHA="d3df79edab0c1dcec4b56468958c17a5c5dc6dce"
+SRC_URI="https://github.com/hephaest0s/usbkill/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-BDEPEND=""
-
-S="${WORKDIR}/${PN}-${MY_HASH}"
+S="${WORKDIR}/${PN}-${MY_SHA}"
