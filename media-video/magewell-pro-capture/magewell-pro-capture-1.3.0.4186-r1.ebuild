@@ -14,10 +14,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc weave"
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-BDEPEND=""
-
 S="${WORKDIR}/ProCaptureForLinux_${SUFFIX}"
 
 BUILD_TARGETS="all" # no clean because a file has to be hacked in src_prepare() that would otherwise get deleted; the archive is clean anyway
