@@ -13,4 +13,3 @@ SLOT="0"
 
 DEPEND="dev-libs/glib:2"
 RDEPEND="${DEPEND}"
-BDEPEND=""
