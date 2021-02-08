@@ -17,7 +17,6 @@ DEPEND="dev-libs/gmp
 	net-dns/libidn
 	sys-libs/readline"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/FTL-${PV}"
 
