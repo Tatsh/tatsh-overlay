@@ -6,6 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<use>
-		<flag name="weave">Do not enable deinterlacing on start of capture.</flag>
+		<flag name="weave">Do not enable deinterlacing. Warning: this stops &quot;mwcap-control --video-output-deinterlace ...&quot; from working.</flag>
 	</use>
 </pkgmetadata>
