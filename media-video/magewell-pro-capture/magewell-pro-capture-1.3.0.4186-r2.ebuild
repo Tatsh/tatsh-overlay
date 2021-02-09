@@ -26,7 +26,7 @@ PATCHES=( "${FILESDIR}/${P}-kernel-5.10.patch" )
 src_prepare() {
 	sed -e 's:/local::g' -e 's:/src::g' -i scripts/ProCapture.conf || die 'Failed to patch!'
 	if use weave; then
-		sed -e 's/MWCAP_VIDEO_DEINTERLACE_(BLEND|TOP_FIELD|BOTTOM_FIELD)/MWCAP_VIDEO_DEINTERLACE_WEAVE/g' -i src/sources/avstream/v4l2.c || die 'Failed to patch!'
+		sed -e 's/MWCAP_VIDEO_DEINTERLACE_\(BLEND\|TOP_FIELD\|BOTTOM_FIELD\)/MWCAP_VIDEO_DEINTERLACE_WEAVE/g' -i src/sources/avstream/v4l2.c || die 'Failed to patch!'
 	fi
 	touch src/.ProCaptureLib.o.cmd # modpost looks for this file but it does not get created
 	default
