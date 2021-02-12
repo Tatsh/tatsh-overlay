@@ -3,7 +3,7 @@
 
 EAPI=7
 PYTHON_COMPAT=( python3_{7..9} )
-DISTUTILS_USE_SETUPTOOLS=rdepend
+DISTUTILS_USE_SETUPTOOLS=no
 inherit bash-completion-r1 distutils-r1
 
 DESCRIPTION="Open files by MIME-type or file name using regular expressions."
@@ -16,8 +16,6 @@ KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 
 RDEPEND=">=dev-python/pyxdg-0.25-r1[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
-
-PATCHES=( "${FILESDIR}/${PN}-script.patch" )
 
 python_install_all() {
 	distutils-r1_python_install_all
