@@ -5,7 +5,7 @@ EAPI=7
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3"
-MY_RE3_HASH="6662e60b63d3765ad703d23c28a2c17822b58348"
+MY_RE3_HASH="a1903e025ce29279182c8578e3f246841c8092f1"
 MY_LIBRW_HASH="5c95300890559c85a2764bc200361f904cd4f9f4"
 SRC_URI="https://github.com/GTAmodding/re3/archive/${MY_RE3_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
