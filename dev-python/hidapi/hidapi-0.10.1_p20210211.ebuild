@@ -8,7 +8,7 @@ inherit distutils-r1
 
 DESCRIPTION="Python wrapper for hidapi."
 HOMEPAGE="https://github.com/trezor/cython-hidapi"
-MY_SHA="4739f827194dc6ea8f1aafae171afc0e224af140"
+MY_SHA="2353c9691b24714cc22098061a5758ddf03f1ae2"
 SRC_URI="https://github.com/trezor/cython-${PN}/archive/${MY_SHA}.tar.gz -> cython-${P}.tar.gz"
 
 LICENSE="|| ( BSD GPL-3 HIDAPI )"
