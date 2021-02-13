@@ -5,7 +5,7 @@ EAPI=7
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3"
-MY_RE3_HASH="a1903e025ce29279182c8578e3f246841c8092f1"
+MY_RE3_HASH="f407c5a25f907882eb3f291bc0455060433da563"
 MY_LIBRW_HASH="4c77fb57546e89da1e6f3bad3c582848de9f5c93"
 SRC_URI="https://github.com/GTAmodding/re3/archive/${MY_RE3_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
@@ -45,6 +45,8 @@ src_prepare() {
 	echo '#define SIMPLIER_MISSIONS' >> src/core/config.h
 	echo '#define VC_PED_PORTS' >> src/core/config.h
 	echo '#define XDG_ROOT' >> src/core/config.h
+	{ cp src/extras/GitSHA1.cpp.in src/extras/GitSHA1.cpp &&
+		sed -e "s/@GIT_SHA1@/${MY_RE3_HASH}/" -i src/extras/GitSHA1.cpp; } || die
 }
 
 src_configure() {
