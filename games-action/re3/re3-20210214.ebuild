@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake wrapper
+inherit cmake
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3"
@@ -67,8 +67,7 @@ src_configure() {
 src_install() {
 	cmake_src_install
 	einstalldocs
-	make_wrapper re3 "${EPREFIX}/usr/share/${PN}/${PN}" \
-		"${EPREFIX}/usr/share/${PN}"
+	dosym ../share/${PN}/${PN} /usr/bin/re3
 }
 
 pkg_postinst() {
