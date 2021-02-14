@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake wrapper
+inherit cmake
 
 DESCRIPTION="GTA Liberty City Stories decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3/tree/lcs"
@@ -63,7 +63,6 @@ src_configure() {
 
 src_install() {
 	cmake_src_install
-	make_wrapper reLCS "${EPREFIX}/usr/share/${PN}/reLCS" \
-		"${EPREFIX}/usr/share/${PN}"
+	dosym ../share/${PN}/reLCS /usr/bin/reLCS
 	einstalldocs
 }
