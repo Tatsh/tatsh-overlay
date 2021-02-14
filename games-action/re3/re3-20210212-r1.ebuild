@@ -2,26 +2,28 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+inherit cmake
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3"
 MY_RE3_HASH="f407c5a25f907882eb3f291bc0455060433da563"
 MY_LIBRW_HASH="4c77fb57546e89da1e6f3bad3c582848de9f5c93"
-SRC_URI="https://github.com/GTAmodding/re3/archive/${MY_RE3_HASH}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/GTAmodding/${PN}/archive/${MY_RE3_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE="extra"
+KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+IUSE="extra opus sanitizer sndfile"
 
 DEPEND="media-libs/libsndfile
 	media-libs/openal
 	media-libs/glew:0
 	media-sound/mpg123
-	>=media-libs/glfw-3.3.2"
+	>=media-libs/glfw-3.3.2
+	opus? ( media-libs/opus )
+	sndfile? ( media-libs/libsndfile )"
 RDEPEND="${DEPEND}"
-BDEPEND="dev-util/premake:5"
 
 S="${WORKDIR}/${PN}-${MY_RE3_HASH}"
 
@@ -33,8 +35,7 @@ src_unpack() {
 }
 
 src_prepare() {
-	default
-	sed -i premake5.lua -e 's/.*staticruntime ".*//g' || die
+	cmake_src_prepare
 	rm -fR vendor/{libsndfile,mpg123,openal-soft}
 	# Other interesting variables:
 	# - FINAL (which would enable USE_MY_DOCUMENTS)
@@ -45,31 +46,26 @@ src_prepare() {
 	echo '#define SIMPLIER_MISSIONS' >> src/core/config.h
 	echo '#define VC_PED_PORTS' >> src/core/config.h
 	echo '#define XDG_ROOT' >> src/core/config.h
-	{ cp src/extras/GitSHA1.cpp.in src/extras/GitSHA1.cpp &&
-		sed -e "s/@GIT_SHA1@/${MY_RE3_HASH}/" -i src/extras/GitSHA1.cpp; } || die
 }
 
 src_configure() {
-	premake5 --with-librw gmake2
-}
-
-src_compile() {
-	cd build
-	if use amd64; then
-		emake config=release_linux-amd64-librw_gl3_glfw-oal verbose=1
-	elif use x86; then
-		emake config=release_linux-x86-librw_gl3_glfw-oal verbose=1
-	elif use arm; then
-		emake config=release_linux-arm-librw_gl3_glfw-oal verbose=1
-	elif use arm64; then
-		emake config=release_linux-arm64-librw_gl3_glfw-oal verbose=1
-	fi
+	local mycmakeargs=(
+		-DRE3_WITH_ASAN=$(usex sanitizer)
+		-DRE3_WITH_OPUS=$(usex opus)
+		-DLIBRW_PLATFORM=GL3
+		-DBUILD_SHARED_LIBS=OFF
+		-DLIBRW_TOOLS=OFF
+		-DRE3_AUDIO=OAL
+		-DRE3_VENDORED_LIBRW=ON
+		-DRE3_WITH_LIBSNDFILE=$(usex sndfile)
+	)
+	cmake_src_configure
 }
 
 src_install() {
-	dobin bin/linux-*-librw_gl3_glfw-oal/Release/re3
+	dobin "${BUILD_DIR}/src/${PN}"
 	if use extra; then
-		insinto /usr/share/re3/gamefiles
+		insinto /usr/share/${PN}/gamefiles
 		doins -r gamefiles/*
 	fi
 	einstalldocs
