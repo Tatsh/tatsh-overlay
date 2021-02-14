@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake
+inherit cmake wrapper
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3"
@@ -59,8 +59,16 @@ src_configure() {
 		-DRE3_VENDORED_LIBRW=ON
 		-DRE3_WITH_LIBSNDFILE=$(usex sndfile)
 		-DRE3_INSTALL=ON
+		-DCMAKE_INSTALL_PREFIX=${EPREFIX}/usr/share/${PN}
 	)
 	cmake_src_configure
+}
+
+src_install() {
+	cmake_src_install
+	einstalldocs
+	make_wrapper re3 ${EPREFIX}/usr/share/${PN}/${PN} \
+		${EPREFIX}/usr/share/${PN}
 }
 
 pkg_postinst() {
