@@ -6,7 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<use>
-		<flag name="extra">Install extra game files (does not automatically affect gameplay)</flag>
 		<flag name="sanitizer">Build with address sanitiser for better crash logs</flag>
 	</use>
 </pkgmetadata>
