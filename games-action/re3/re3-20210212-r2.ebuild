@@ -58,17 +58,9 @@ src_configure() {
 		-DRE3_AUDIO=OAL
 		-DRE3_VENDORED_LIBRW=ON
 		-DRE3_WITH_LIBSNDFILE=$(usex sndfile)
+		-DRE3_INSTALL=ON
 	)
 	cmake_src_configure
-}
-
-src_install() {
-	dobin "${BUILD_DIR}/src/${PN}"
-	if use extra; then
-		insinto /usr/share/${PN}/gamefiles
-		doins -r gamefiles/*
-	fi
-	einstalldocs
 }
 
 pkg_postinst() {
