@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake
+inherit cmake wrapper
 
 DESCRIPTION="GTA Vice City decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3/tree/miami"
@@ -27,8 +27,6 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/re3-${MY_REVC_HASH}"
 
-# PATCHES=( "${FILESDIR}/${PN}-xdg.patch" )
-
 src_unpack() {
 	default
 	cp -R "librw-${MY_LIBRW_HASH}"/* "${S}/vendor/librw/"
@@ -45,7 +43,6 @@ src_prepare() {
 	echo '#define PEDS_REPORT_CRIMES_ON_PHONE' >> src/core/config.h
 	echo '#define SIMPLIER_MISSIONS' >> src/core/config.h
 	echo '#define VC_PED_PORTS' >> src/core/config.h
-# 	echo '#define XDG_ROOT' >> src/core/config.h
 }
 
 src_configure() {
@@ -57,24 +54,16 @@ src_configure() {
 		-DBUILD_SHARED_LIBS=OFF
 		-DLIBRW_TOOLS=OFF
 		-DREVC_AUDIO=OAL
+		-DREVC_INSTALL=ON
+		-DREVC_VENDORED_LIBRW=ON
+		"-DCMAKE_INSTALL_PREFIX=${EPREFIX}/usr/share/${PN}"
 	)
 	cmake_src_configure
 }
 
 src_install() {
-	dobin "${BUILD_DIR}/src/reVC"
-	if use extra; then
-		insinto /usr/share/${PN}/gamefiles
-		doins -r gamefiles/*
-	fi
+	cmake_src_install
+	make_wrapper reVC "${EPREFIX}/usr/share/${PN}/reVC" \
+		"${EPREFIX}/usr/share/${PN}"
 	einstalldocs
-}
-
-pkg_postinst() {
-	einfo
-	einfo "Store your GTA III game files from an installation in the"
-	einfo "following directory (create if necessary):"
-	einfo
-	einfo "~/.local/share/re3"
-	einfo
 }
