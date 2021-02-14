@@ -14,7 +14,7 @@ SRC_URI="https://github.com/GTAmodding/${PN}/archive/${MY_RE3_HASH}.tar.gz -> ${
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~x86"
-IUSE="extra opus sanitizer sndfile"
+IUSE="opus sanitizer sndfile"
 
 DEPEND="media-libs/libsndfile
 	media-libs/openal
