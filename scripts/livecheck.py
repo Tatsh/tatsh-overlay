@@ -190,6 +190,8 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
                     transformations[catpkg] = dotize
                 elif tf == 'handle_stepmania_outfox':
                     transformations[catpkg] = handle_stepmania_outfox
+                elif tf == 'handle_re':
+                    transformations[catpkg] = handle_re
                 else:
                     raise Exception(f'Unknown transformation function: {tf}')
     return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
@@ -206,6 +208,9 @@ class TextDataResponse:
 
 def handle_stepmania_outfox(s: str) -> str:
     return f'5.3.{s}_alpha'
+
+def handle_re(s: str) -> str:
+    return re.sub(r'^re(3|VC|LCS)_v?', '', s)
 
 
 def main() -> int:
