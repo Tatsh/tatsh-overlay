@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 from dataclasses import dataclass
-from os import rename
 from os.path import basename, dirname, join as path_join, realpath
 from typing import (Any, Callable, Dict, Final, Iterator, NamedTuple, Sequence, Set, Tuple, Union,
                     cast)
@@ -10,6 +9,7 @@ import glob
 import hashlib
 import json
 import re
+import subprocess as sp
 import sys
 import xml.etree.ElementTree as etree
 
@@ -260,7 +260,7 @@ def main() -> int:
                             new_filename = (f'{dn}/{pkg}-{ebuild_version}'
                                             '.ebuild')
                     print(f'Renaming {ebuild} -> {new_filename}')
-                    rename(ebuild, new_filename)
+                    sp.run(('git', 'mv', ebuild, new_filename), check=True)
                     with open(new_filename, 'w') as f:
                         f.write(content)
                 else:
