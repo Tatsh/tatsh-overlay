@@ -3,10 +3,10 @@
 
 EAPI=7
 
-inherit cmake autotools eutils desktop
+inherit cmake autotools eutils desktop wrapper
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
-MY_SHA="c7c54bb013028f5b63e2b4b807ff09b286d7837d"
+MY_SHA="aeb5c7598f0c4c0bd16cb20aef5be8f89dbad66b"
 HOMEPAGE="http://www.stepmania.com/"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
@@ -95,10 +95,7 @@ src_configure() {
 }
 
 src_install() {
-	cp "${FILESDIR}/${PN}" "${PN}-script"
-	sed -i -e "s:@LIBDIR@:$(get_libdir):" "${PN}-script"
-	exeinto /usr/bin
-	newexe "${PN}-script" "${PN}"
+	make_wrapper stepmania /usr/$(get_libdir)/${PN}/${PN} /usr/$(get_libdir)/${PN}
 	exeinto /usr/$(get_libdir)/${PN}
 	doexe "${PN}" || die "dobin failed"
 	doexe GtkModule.so || die "doexe GtkModule.so failed"
@@ -113,9 +110,6 @@ src_install() {
 		keepdir /usr/$(get_libdir)/${PN}/Courses
 	fi
 	dodoc -r Docs/* || die "dodoc failed"
-
 	newicon "Themes/default/Graphics/Common window icon.png" ${PN}.png
 	make_desktop_entry ${PN} StepMania
 }
-
-# kate: replace-tabs false
