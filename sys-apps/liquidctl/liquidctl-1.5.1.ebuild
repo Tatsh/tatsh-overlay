@@ -8,8 +8,7 @@ inherit distutils-r1 udev
 
 DESCRIPTION="Cross-platform CLI and Python drivers for AIO liquid coolers and other devices."
 HOMEPAGE="https://github.com/liquidctl/liquidctl"
-MY_SHA="59f9fd85deec961dda20039f5a7fb10f89c500e2"
-SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -19,8 +18,6 @@ RDEPEND="dev-python/docopt[${PYTHON_USEDEP}]
 	dev-python/pyusb[${PYTHON_USEDEP}]
 	dev-python/hidapi[${PYTHON_USEDEP}]
 	sys-apps/i2c-tools[${PYTHON_USEDEP},python]"
-
-S="${WORKDIR}/${PN}-${MY_SHA}"
 
 python_prepare_all() {
 	sed -e 's/, TAG+=".*/, GROUP="plugdev", MODE="0660"/g' \
