@@ -7,7 +7,7 @@ inherit cmake
 DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/"
 MY_PV="mainline-${PV/./-}"
-DYNARMIC_SHA="8c09da666aa3f0bb1000b0b6c5d5b0a1876f306b"
+DYNARMIC_SHA="cafa687684a3e5dbe86be7150c0f8183d2ad53c9"
 MBEDTLS_SHA="a280e602f3a4ae001d3a83cbc3e6e04c99c22277"
 SIRIT_SHA="eefca56afd49379bdebc97ded8b480839f930881"
 SIRIT_SPIRV_HEADERS_SHA="2c512180ca03b5d4f56283efc85745775b45fdc4"
