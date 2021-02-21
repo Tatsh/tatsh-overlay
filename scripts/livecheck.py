@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from dataclasses import dataclass
-from os.path import basename, dirname, join as path_join, realpath
+from os.path import basename, dirname, join as path_join, realpath, splitext
 from typing import (Any, Callable, Dict, Final, Iterator, NamedTuple, Sequence, Set, Tuple, Union,
                     cast)
 from urllib.parse import urlparse
@@ -259,6 +259,9 @@ def main() -> int:
                                                     ebuild_version)
                             new_filename = (f'{dn}/{pkg}-{ebuild_version}'
                                             '.ebuild')
+                    if ebuild == new_filename:
+                        name, ext = splitext(ebuild)
+                        new_filename = f'{name}-r1{ext}'
                     print(f'Renaming {ebuild} -> {new_filename}')
                     sp.run(('git', 'mv', ebuild, new_filename), check=True)
                     with open(new_filename, 'w') as f:
