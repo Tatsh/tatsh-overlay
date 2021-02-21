@@ -6,7 +6,7 @@ inherit desktop toolchain-funcs xdg-utils
 
 DESCRIPTION="bsnes fork that adds HD video features."
 HOMEPAGE="https://github.com/DerKoun/bsnes-hd"
-MY_SHA="866dd739cf8925b5df76b3d0aae6e00b364eace4"
+MY_SHA="f0b6cf34e9780d53516977ed2de64137a8bcc3c5"
 BIN_PN="${PN%-*}"
 SRC_URI="https://github.com/DerKoun/bsnes-hd/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
