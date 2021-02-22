@@ -44,8 +44,13 @@ DOCS=( pam/README )
 
 src_prepare() {
 	# Remove test dep checks
-	sed -e "/.*'dbusmock': true.*/d" -i meson.build || die "sed failed"
-	sed -e '/^pam_wrapper_dep =.*/d' -i meson.build || die "sed failed"
+	if ! use test; then
+		sed -e "/.*'dbusmock': true.*/d" -i meson.build || die "sed failed"
+		sed -e "/.*'pypamtest': .*/d" -i meson.build || die "sed failed"
+		sed -e '/pam_wrapper_dep =.*/d' -i meson.build || die "sed failed"
+		sed -e "/^subdir('tests')/d" -i meson.build || die "sed failed"
+		sed -e "/With address sanitizer: /d" -i meson.build || die "sed failed"
+	fi
 	default
 }
 
