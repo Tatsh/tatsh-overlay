@@ -17,7 +17,9 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="git kindle lastfm youtube ruby google progress soup jpeg tfl extras mp3
-	png zlib"
+	png test zlib"
+RESTRICT="!test? ( test )"
+REQUIRED_USE="test? ( git kindle lastfm youtube ruby google progress soup jpeg tfl extras mp3 png zlib )"
 
 EXTRAS=(
 	annotate_sgf
@@ -27,7 +29,6 @@ EXTRAS=(
 	rot13
 	unall
 	webman
-	xnorm
 )
 
 RDEPEND="
@@ -103,4 +104,9 @@ all_ruby_install() {
 	local -r prefix="${PN:4}-${MY_SHA}"
 	all_fakegem_install
 	dobin "${prefix}/bin/colcut"
+}
+
+each_fakegem_test() {
+	cd "${PN:4}-${MY_SHA}"
+	rake
 }
