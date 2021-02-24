@@ -15,7 +15,7 @@ MY_PV="${PV:6}"
 MY_PV="${MY_PV%_*}GG"
 SHARED_DATE="20210223"
 SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/StepManiaOutFox-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}.tar.gz -> ${P}-amd64.tar.gz )
-	arm? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/StepManiaOutFox-${MAIN_PV}-alpha-${MY_PV}-arm32v7-date-${SHARED_DATE}.tar.gz )
+	arm? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/StepManiaOutFox-${MAIN_PV}-alpha-${MY_PV}-arm32v7-date-${SHARED_DATE}.tar.gz -> ${P}-arm.tar.gz )
 	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/StepManiaOutFox-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}.tar.gz -> ${P}-arm64.tar.gz )"
 
 LICENSE="MIT"
