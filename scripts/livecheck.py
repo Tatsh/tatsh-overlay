@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 from dataclasses import dataclass
 from os.path import basename, dirname, join as path_join, realpath, splitext
-from typing import (Any, Callable, Dict, Final, Iterator, NamedTuple, Sequence, Set, Tuple, Union,
+from typing import (Any, Callable, Dict, Final, Iterator, NamedTuple, Optional, Sequence, Set, Tuple, Union,
                     cast)
 from urllib.parse import urlparse
 import argparse
 import glob
 import hashlib
 import json
+import logging
 import re
 import subprocess as sp
 import sys
@@ -20,6 +21,7 @@ import requests
 PropTuple = Tuple[str, str, str, str, str, str, bool]
 Response = Union['TextDataResponse', requests.Response]
 
+LOG_NAME = 'livecheck'
 P = portage.db[portage.root]['porttree'].dbapi
 PREFIX_RE: Final[str] = r'(^[^0-9]+)[0-9]'
 RSS_NS = {'': 'http://www.w3.org/2005/Atom'}
@@ -32,6 +34,7 @@ SEMVER_RE: Final[str] = (r'^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.'
 
 
 def get_highest_matches(search_dir: str) -> Iterator[str]:
+    log = logging.getLogger(LOG_NAME)
     for path in glob.glob(f'{search_dir}/**/*.ebuild', recursive=True):
         dn = dirname(path)
         if matches := P.xmatch('match-visible',
@@ -68,11 +71,15 @@ def is_sha(s: str) -> bool:
 
 
 def dotize(s: str) -> str:
-    return s.replace('-', '.')
+    ret = s.replace('-', '.')
+    logging.getLogger(LOG_NAME).debug('dotize(): %s -> %s', s, ret)
+    return ret
 
 
 def get_props(search_dir: str,
               settings: LivecheckSettings) -> Iterator[PropTuple]:
+    log = logging.getLogger(LOG_NAME)
+    log.debug('get_props(): search_dir=%s', search_dir)
     for match in sorted(set(get_highest_matches(search_dir))):
         catpkg, cat, pkg, ebuild_version = catpkg_catpkgsplit(match)
         src_uri = get_first_src_uri(match)
@@ -161,6 +168,7 @@ def get_props(search_dir: str,
 
 
 def gather_settings(search_dir: str) -> LivecheckSettings:
+    log = logging.getLogger(LOG_NAME)
     branches = {}
     checksum_livechecks = set()
     custom_livechecks = {}
@@ -168,6 +176,7 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
     no_auto_update = set()
     transformations = {}
     for path in glob.glob(f'{search_dir}/**/livecheck.json', recursive=True):
+        log.debug('Opening %s', path)
         with open(path) as f:
             dn = dirname(path)
             catpkg = f'{basename(dirname(dn))}/{basename(dn)}'
@@ -207,10 +216,23 @@ class TextDataResponse:
 
 
 def handle_stepmania_outfox(s: str) -> str:
-    return f'5.3.{s}_alpha'
+    return f'5.3.{s}_alpha2'
+
 
 def handle_re(s: str) -> str:
     return re.sub(r'^re(3|VC|LCS)_v?', '', s)
+
+
+def setup_logging_stderr(name: Optional[str] = LOG_NAME,
+                         verbose: bool = False) -> logging.Logger:
+    name = name if name else basename(sys.argv[0])
+    log = logging.getLogger(name)
+    log.setLevel(logging.DEBUG if verbose else logging.INFO)
+    channel = logging.StreamHandler(sys.stdout)
+    channel.setFormatter(logging.Formatter('%(levelname)s - %(message)s'))
+    channel.setLevel(logging.DEBUG if verbose else logging.INFO)
+    log.addHandler(channel)
+    return log
 
 
 def main() -> int:
@@ -220,20 +242,26 @@ def main() -> int:
                         '--directory',
                         nargs=1,
                         default=realpath(path_join(dirname(__file__), '..')))
+    parser.add_argument('-d', '--debug', action='store_true')
     args = parser.parse_args()
+    log = setup_logging_stderr('livecheck', verbose=args.debug)
     search_dir = args.directory
     session = requests.Session()
     settings = gather_settings(search_dir)
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
             search_dir, settings):
+        log.debug('Fetching %s', url)
         r: Response = (TextDataResponse(url[5:])
                        if url.startswith('data:') else session.get(url))
         try:
             r.raise_for_status()
             # Ignore beta/alpha/etc if semantic and coming from GitHub
             if re.match(SEMVER_RE, version) and regex.startswith('archive/'):
+                log.debug('Adjusting RE for semantic versioning')
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
+            log.debug('Using RE: "%s"', regex)
             top_hash = re.findall(regex, r.text)[0]
+            log.debug('re.findall() -> "%s"', top_hash)
             cp = f'{cat}/{pkg}'
             if tf := settings.transformations.get(cp, None):
                 top_hash = tf(top_hash)
