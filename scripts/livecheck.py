@@ -76,7 +76,7 @@ def is_sha(s: str) -> bool:
 
 
 def dotize(s: str) -> str:
-    ret = s.replace('-', '.')
+    ret = s.replace('-', '.').replace('_', '.')
     logging.getLogger(LOG_NAME).debug('dotize(): %s -> %s', s, ret)
     return ret
 
@@ -210,6 +210,8 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
                     transformations[catpkg] = handle_stepmania_outfox
                 elif tf == 'handle_re':
                     transformations[catpkg] = handle_re
+                elif tf == 'handle_bsnes_hd':
+                    transformations[catpkg] = handle_bsnes_hd
                 else:
                     raise Exception(f'Unknown transformation function: {tf}')
     return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
@@ -230,6 +232,16 @@ def handle_stepmania_outfox(s: str) -> str:
 
 def handle_re(s: str) -> str:
     return re.sub(r'^re(3|VC|LCS)_v?', '', s)
+
+
+def handle_bsnes_hd(s: str) -> str:
+    log = logging.getLogger(LOG_NAME)
+    log.debug('handle_bsnes_hd() <- "%s"', s)
+    major, minor = re.match(r'^beta_(\d+)_(\d+(?:h\d+)?)', s).groups()
+    minor = re.sub(r'h\d+', '', minor)
+    ret = f'{major}.{minor}_beta'
+    log.debug('handle_bsnes_hd() -> "%s"', ret)
+    return ret
 
 
 def setup_logging_stderr(name: Optional[str] = LOG_NAME,
