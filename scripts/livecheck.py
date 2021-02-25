@@ -227,7 +227,12 @@ class TextDataResponse:
 
 
 def handle_stepmania_outfox(s: str) -> str:
-    return f'5.3.{s}_alpha2'
+    log = logging.getLogger(LOG_NAME)
+    log.debug('handle_stepmania_outfox() <- "%s"', s)
+    s = re.sub(r'[^0-9\.]+', '', s)
+    ret = f'5.3.0.{s}_alpha2'
+    log.debug('handle_stepmania_outfox() -> "%s"', ret)
+    return ret
 
 
 def handle_re(s: str) -> str:
