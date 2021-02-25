@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 from dataclasses import dataclass
 from os.path import basename, dirname, join as path_join, realpath, splitext
-from typing import (Any, Callable, Dict, Final, Iterator, NamedTuple, Optional, Sequence, Set, Tuple, Union,
-                    cast)
+from typing import (Any, Callable, Dict, Final, Iterator, NamedTuple, Optional,
+                    Sequence, Set, Tuple, Union, cast)
 from urllib.parse import urlparse
 import argparse
 import glob
@@ -34,11 +34,16 @@ SEMVER_RE: Final[str] = (r'^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.'
 
 
 def get_highest_matches(search_dir: str) -> Iterator[str]:
-    log = logging.getLogger(LOG_NAME)
     for path in glob.glob(f'{search_dir}/**/*.ebuild', recursive=True):
         dn = dirname(path)
         if matches := P.xmatch('match-visible',
                                f'{basename(dirname(dn))}/{basename(dn)}'):
+            yield matches[-1]
+
+
+def get_highest_matches2(names: Sequence[str]) -> Iterator[str]:
+    for name in names:
+        if matches := P.xmatch('match-visible', name):
             yield matches[-1]
 
 
@@ -77,10 +82,14 @@ def dotize(s: str) -> str:
 
 
 def get_props(search_dir: str,
-              settings: LivecheckSettings) -> Iterator[PropTuple]:
+              settings: LivecheckSettings,
+              names: Optional[Sequence[str]] = None) -> Iterator[PropTuple]:
     log = logging.getLogger(LOG_NAME)
     log.debug('get_props(): search_dir=%s', search_dir)
-    for match in sorted(set(get_highest_matches(search_dir))):
+    for match in sorted(
+            set(
+                get_highest_matches(search_dir)
+                if not names else get_highest_matches2(names))):
         catpkg, cat, pkg, ebuild_version = catpkg_catpkgsplit(match)
         src_uri = get_first_src_uri(match)
         if cat.startswith('acct-') or catpkg in settings.ignored_packages:
@@ -243,13 +252,14 @@ def main() -> int:
                         nargs=1,
                         default=realpath(path_join(dirname(__file__), '..')))
     parser.add_argument('-d', '--debug', action='store_true')
+    parser.add_argument('package_names', nargs='*')
     args = parser.parse_args()
     log = setup_logging_stderr('livecheck', verbose=args.debug)
     search_dir = args.directory
     session = requests.Session()
     settings = gather_settings(search_dir)
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
-            search_dir, settings):
+            search_dir, settings, names=args.package_names):
         log.debug('Fetching %s', url)
         r: Response = (TextDataResponse(url[5:])
                        if url.startswith('data:') else session.get(url))
