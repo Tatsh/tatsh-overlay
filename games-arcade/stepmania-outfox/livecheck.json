@@ -1,5 +1,5 @@
 {
-    "regex": "tag/OF(\\d+\\.\\d+\\.\\d+)\"",
+    "regex": "tag/OF([^\"]+)",
     "transformation_function": "handle_stepmania_outfox",
     "type": "regex",
     "url": "https://github.com/teamrizu/outfox/tags"
