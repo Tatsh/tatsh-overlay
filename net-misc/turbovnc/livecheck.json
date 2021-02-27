@@ -1,0 +1,5 @@
+{
+    "regex": "<tr title=\"(\\d[^\"]+)\"",
+    "type": "regex",
+    "url": "https://sourceforge.net/projects/turbovnc/files/"
+}
