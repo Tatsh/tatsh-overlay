@@ -23,8 +23,10 @@ src_prepare() {
 	rm -fR licenses
 	# FIXME add virtual/jre:= to RDEPEND when this can be done
 	# rm -fR jre
-	sed -e "s/^Icon=.*/Icon=${MY_PN}/" -i "${MY_PN}.desktop"
-	sed -e "/WM_CLASS.*/d" -i "${MY_PN}.desktop"
+	sed -e "s/^Icon=.*/Icon=${MY_PN}/" \
+		-e 's:/usr/share/dbeaver:/opt/dbeaver:g' \
+		-e '/WM_CLASS.*/d' \
+		-i "${MY_PN}.desktop"
 	default
 }
 
