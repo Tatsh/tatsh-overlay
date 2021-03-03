@@ -1,7 +1,7 @@
-From af034b5b380d087a96ba913fd49183f4019a0039 Mon Sep 17 00:00:00 2001
+From a14dbf23d5be83fbc56246c5227bb5e04c1f7a3d Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 19 Jan 2021 03:26:05 -0500
-Subject: [PATCH 1/5] Allow more system libs
+Subject: [PATCH 1/4] Allow more system libs
 
 ---
  3rdparty/CMakeLists.txt                 | 36 ++++++++++++++++++-------
@@ -10,7 +10,7 @@ Subject: [PATCH 1/5] Allow more system libs
  3 files changed, 38 insertions(+), 12 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index e22ff1647..3865894d4 100644
+index e8d2b2ad0..168fe0b18 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
 @@ -1,4 +1,5 @@
@@ -41,7 +41,7 @@ index e22ff1647..3865894d4 100644
  
  
  # libusb
-@@ -180,11 +185,15 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX_OLD})
+@@ -181,11 +186,15 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX_OLD})
  
  
  # xxHash
@@ -62,7 +62,7 @@ index e22ff1647..3865894d4 100644
  
  
  # cereal
-@@ -485,9 +494,18 @@ endif()
+@@ -486,9 +495,18 @@ endif()
  add_library(3rdparty::zlib ALIAS 3rdparty_zlib)
  add_library(3rdparty::7z ALIAS 3rdparty_7z)
  add_library(3rdparty::flatbuffers ALIAS 3rdparty_flatbuffers)
@@ -107,12 +107,12 @@ index 16a029029..c5a1ca4d5 100644
 +  find_package(SPIRV-Headers REQUIRED)
 +endif()
 diff --git a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
-index 203702f1a..629464e4d 100644
+index f10ad0c6b..525603ddd 100644
 --- a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
 +++ b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
-@@ -9,7 +9,7 @@
- #pragma GCC diagnostic ignored "-Wextra"
- #pragma GCC diagnostic ignored "-Wold-style-cast"
+@@ -13,7 +13,7 @@
+ #pragma clang diagnostic ignored "-Winconsistent-missing-override"
+ #endif
  #endif
 -#include "SPIRV/GlslangToSpv.h"
 +#include <glslang/SPIRV/GlslangToSpv.h>
@@ -120,5 +120,5 @@ index 203702f1a..629464e4d 100644
  #ifdef _MSC_VER
  #pragma warning(pop)
 -- 
-2.30.0
+2.30.1
 

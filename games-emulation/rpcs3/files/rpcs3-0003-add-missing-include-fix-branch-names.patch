@@ -1,0 +1,31 @@
+From f8b15c8dc691bfe204c7215e58911bd9d78d5dc2 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 19 Jan 2021 03:26:57 -0500
+Subject: [PATCH 3/4] add missing include, fix branch names
+
+---
+ rpcs3/rpcs3_version.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/rpcs3/rpcs3_version.cpp b/rpcs3/rpcs3_version.cpp
+index 130e3c416..8c269fe24 100644
+--- a/rpcs3/rpcs3_version.cpp
++++ b/rpcs3/rpcs3_version.cpp
+@@ -7,12 +7,12 @@ namespace rpcs3
+ {
+ 	std::string_view get_branch()
+ 	{
+-		return RPCS3_GIT_BRANCH;
++		return "local_build";
+ 	}
+ 
+ 	std::string_view get_full_branch()
+ 	{
+-		return RPCS3_GIT_FULL_BRANCH;
++		return "RPCS3/rpcs3/master";
+ 	}
+ 
+ 	std::pair<std::string, std::string> get_commit_and_hash()
+-- 
+2.30.1
+

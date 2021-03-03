@@ -6,22 +6,22 @@ inherit cmake
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/"
-MY_SHA="v0.0.14"
-ASMJIT_SHA="fc251c914e77cd079e58982cdab00a47539d7fc5"
+MY_SHA="v0.0.15"
+ASMJIT_SHA="723f58581afc0f4cb16ba13396ff77e425896847"
 CEREAL_SHA="60c69df968d1c72c998cd5f23ba34e2e3718a84b"
 HIDAPI_SHA="8961cf86ebc4756992a7cd65c219c743e94bab19"
-LLVM_SHA="cb7748dfa0d615e9f5ea9f31e0ce40fe9aeac595"
+LLVM_SHA="716bb292ba3b4e5c0ceff72fee911ed2b53232cf"
 YAML_CPP_SHA="6a211f0bc71920beef749e6c35d7d1bcc2447715"
 WOLFSSL_SHA="39b5448601271b8d1deabde8a0d33dc64d2a94bd"
 SPAN_SHA="9d7559aabdebf569cab3480a7ea2a87948c0ae47"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz
-	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${P}-llvm.tar.gz
-	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${P}-asmjit.tar.gz
-	https://github.com/wolfSSL/wolfssl/archive/${WOLFSSL_SHA}.tar.gz -> ${P}-wolfssl.tar.gz
-	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${P}-hidapi.tar.gz
-	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${P}-yaml-cpp.tar.gz
-	https://github.com/RPCS3/cereal/archive/${CEREAL_SHA}.tar.gz -> ${P}-cereal.tar.gz
-	https://github.com/tcbrindle/span/archive/${SPAN_SHA}.tar.gz -> ${P}-span.tar.gz"
+	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${PN}-llvm-${LLVM_SHA:0:7}.tar.gz
+	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${PN}-asmjit-${ASMJIT_SHA:0:7}.tar.gz
+	https://github.com/wolfSSL/wolfssl/archive/${WOLFSSL_SHA}.tar.gz -> ${PN}-wolfssl-${WOLFSSL_SHA:0:7}.tar.gz
+	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${PN}-hidapi-${HIDAPI_SHA:0:7}.tar.gz
+	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${PN}-yaml-cpp-${YAML_CPP_SHA:0:7}.tar.gz
+	https://github.com/RPCS3/cereal/archive/${CEREAL_SHA}.tar.gz -> ${PN}-cereal-${CEREAL_SHA:0:7}.tar.gz
+	https://github.com/tcbrindle/span/archive/${SPAN_SHA}.tar.gz -> ${PN}-span-${SPAN_SHA:0:7}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -56,9 +56,9 @@ BDEPEND=">=sys-devel/gcc-9"
 S="${WORKDIR}/${PN}-${MY_SHA:1}"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-allow-more-system-libs.patch"
-	"${FILESDIR}/${PN}-0003-rpcs3-emu-cell-sputhread-remove-always_inline-for-so.patch"
-	"${FILESDIR}/${PN}-0004-add-missing-include-fix-branch-names.patch"
-	"${FILESDIR}/${PN}-0005-add-use_wayland.patch"
+	"${FILESDIR}/${PN}-0002-rpcs3-emu-cell-sputhread-remove-always_inline-for-so.patch"
+	"${FILESDIR}/${PN}-0003-add-missing-include-fix-branch-names.patch"
+	"${FILESDIR}/${PN}-0004-add-use_wayland.patch"
 )
 
 src_prepare() {
