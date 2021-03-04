@@ -1,0 +1,29 @@
+From e880e151698bb59457b3afa31e3e92da1e84c84d Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Thu, 4 Mar 2021 14:21:01 -0500
+Subject: [PATCH] Savestate: use Platform::OpenLocalFile
+
+---
+ src/Savestate.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Savestate.cpp b/src/Savestate.cpp
+index ba8ffd91..1638cd5b 100644
+--- a/src/Savestate.cpp
++++ b/src/Savestate.cpp
+@@ -52,7 +52,7 @@ Savestate::Savestate(const char* filename, bool save)
+     if (save)
+     {
+         Saving = true;
+-        file = Platform::OpenFile(filename, "wb");
++        file = Platform::OpenLocalFile(filename, "wb");
+         if (!file)
+         {
+             printf("savestate: file %s doesn't exist\n", filename);
+@@ -289,4 +289,4 @@ void Savestate::VarArray(void* data, u32 len)
+     {
+         fread(data, len, 1, file);
+     }
+-}
+\ No newline at end of file
++}

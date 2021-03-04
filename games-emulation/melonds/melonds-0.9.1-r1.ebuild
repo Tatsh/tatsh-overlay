@@ -16,6 +16,7 @@ DEPEND="net-libs/libslirp"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/melonDS-${PV}"
+PATCHES=( "${FILESDIR}/1026.patch" )
 
 src_prepare() {
 	sed -e 's/^Exec=.*/Exec=env -u QT_SCREEN_SCALE_FACTORS melonDS/' -i net.kuribo64.melonDS.desktop
