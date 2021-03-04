@@ -59,6 +59,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0002-rpcs3-emu-cell-sputhread-remove-always_inline-for-so.patch"
 	"${FILESDIR}/${PN}-0003-add-missing-include-fix-branch-names.patch"
 	"${FILESDIR}/${PN}-0004-add-use_wayland.patch"
+	"${FILESDIR}/${PN}-0005-faudio.patch"
 )
 
 src_prepare() {
@@ -90,7 +91,7 @@ src_configure() {
 		-DUSE_PRECOMPILED_HEADERS=OFF
 		-DUSE_ALSA=$(usex alsa)
 		-DUSE_DISCORD_RPC=OFF
-		-DUSE_FAUDIO=$(usex faudio)
+		-DUSE_SYSTEM_FAUDIO=$(usex faudio)
 		-DUSE_LIBEVDEV=$(usex joystick)
 		-DUSE_NATIVE_INSTRUCTIONS=OFF
 		-DUSE_PULSE=$(usex pulseaudio)
