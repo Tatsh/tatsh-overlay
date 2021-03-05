@@ -61,7 +61,7 @@ PATCHES=(
 )
 
 src_prepare() {
-	rm .gitmodules
+	rm .gitmodules || die
 	rmdir "${WORKDIR}/sirit-${SIRIT_SHA}/externals/SPIRV-Headers" || die
 	mv "${WORKDIR}/SPIRV-Headers-${SIRIT_SPIRV_HEADERS_SHA}" "${WORKDIR}/sirit-${SIRIT_SHA}/externals/SPIRV-Headers" || die
 	rmdir "${S}/externals/"{soundtouch,dynarmic,sirit,mbedtls} || die
