@@ -134,6 +134,7 @@ def get_props(search_dir: str,
                     f'SRC_URI: {src_uri}')
         elif src_uri.startswith('https://github.com/'):
             parsed = urlparse(src_uri)
+            log.debug('Parsed path: %s', parsed.path)
             github_homepage = ('https://github.com' +
                                '/'.join(parsed.path.split('/')[0:3]))
             filename = basename(parsed.path)
@@ -157,6 +158,10 @@ def get_props(search_dir: str,
                 regex = f'archive/{prefix}' + r'([^"]+)\.tar\.gz'
                 yield (cat, pkg, ebuild_version, ebuild_version, url, regex,
                        True)
+            elif m := re.search(r'/raw/([0-9a-f]+)/', parsed.path):
+                version = m.group(1)
+                branch = (settings.branches[catpkg] if catpkg in settings.branches else 'master')
+                yield (cat, pkg, ebuild_version, version, f'{github_homepage}/commits/{branch}.atom', (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' + str(len(version)) + r'})[0-9a-f]*</id>'), False)
             else:
                 raise ValueError(f'Unhandled GitHub package: {catpkg}')
         elif src_uri.startswith('mirror://pypi/'):
