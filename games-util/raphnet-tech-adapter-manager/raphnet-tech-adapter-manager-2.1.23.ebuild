@@ -6,11 +6,11 @@ inherit udev wxwidgets
 
 DESCRIPTION="Graphical user interface and command-line tools to manage raphnet adapters."
 HOMEPAGE="https://www.raphnet-tech.com/products/adapter_manager/index.php"
-SRC_URI="https://www.raphnet-tech.com/downloads/raphnet-tech_adapter_manager-${PV}.tar.gz"
+SRC_URI="https://www.raphnet-tech.com/downloads/raphnet-tech_adapter_manager-${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~x86"
 
 DEPEND="dev-libs/hidapi
 	x11-libs/wxGTK:3.0-gtk3
