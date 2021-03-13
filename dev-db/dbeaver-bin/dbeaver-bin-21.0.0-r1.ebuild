@@ -7,25 +7,24 @@ inherit desktop eutils
 DESCRIPTION="Free universal database tool (community edition)."
 HOMEPAGE="https://dbeaver.io/"
 MY_PN="${PN%-bin*}-ce"
-SRC_URI="https://dbeaver.io/files/${PV}/${MY_PN}-${PV}-linux.gtk.x86_64.tar.gz"
+SRC_URI="amd64? ( https://dbeaver.io/files/${PV}/${MY_PN}-${PV}-linux.gtk.x86_64-nojdk.tar.gz -> ${P}-amd64.tar.gz )
+	arm64? ( https://dbeaver.io/files/${PV}/${MY_PN}-${PV}-linux.gtk.aarch64-nojdk.tar.gz  -> ${P}-arm64.tar.gz )"
 
 LICENSE="Apache-2.0 EPL-1.0 BSD"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm64"
 
-RDEPEND="x11-libs/gtk+:3"
+RDEPEND="dev-java/openjdk-bin:11"
 DEPEND="${RDEPEND}"
 
 MY_PN="${PN%-bin*}"
 S="${WORKDIR}/${MY_PN}"
 
 src_prepare() {
-	rm -fR licenses
-	# FIXME add virtual/jre:= to RDEPEND when this can be done
-	# rm -fR jre
 	sed -e "s/^Icon=.*/Icon=${MY_PN}/" \
 		-e 's:/usr/share/dbeaver:/opt/dbeaver:g' \
-		-e '/WM_CLASS.*/d' \
+		-e '/^WMCLASS.*/d' \
+		-e "s:^Exec=.*:Exec=${EPREFIX}/usr/bin/${MY_PN}:" \
 		-i "${MY_PN}.desktop"
 	default
 }
@@ -38,6 +37,8 @@ src_install() {
 	rm "${MY_PN}.desktop" "${MY_PN}.png" icon.xpm readme.txt
 	insinto "/opt/${MY_PN}"
 	doins -r *
-	fperms 0755 "/opt/${MY_PN}/${MY_PN}" "/opt/${MY_PN}/jre/bin/"*
-	make_wrapper "${MY_PN}" "/opt/${MY_PN}/${MY_PN}"
+	fperms 0755 "/opt/${MY_PN}/${MY_PN}"
+	make_wrapper "${MY_PN}" "/opt/${MY_PN}/${MY_PN}" "/opt/${MY_PN}"
+	sed -e "s:^exec /opt/${MY_PN}/${MY_PN}:exec /opt/${MY_PN}/${MY_PN} -vm ${EPREFIX}/opt/openjdk-bin-11/bin:" \
+		-i "${D}/usr/bin/${MY_PN}"
 }
