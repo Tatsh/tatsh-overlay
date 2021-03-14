@@ -34,7 +34,7 @@ src_prepare() {
 	eapply --directory="${WORKDIR}/${PN}-${MY_SHA}" -p0 "${FILESDIR}"
 	sed -e "s/@CORE_VERSION@/${CORE_VERSION}/" \
 		-e "s|@LIBCLANG_DIR@|$(llvm-config --libdir)|" \
-		-e "s:CLANG_RESOURCE_DIR =.*:CLANG_RESOURCE_DIR = '$(find "${EPREFI}/usr/lib/clang" -mindepth 1 -maxdepth 1 -type d | head -n 1)':" \
+		-e "s:CLANG_RESOURCE_DIR =.*:CLANG_RESOURCE_DIR = '$(find "${EPREFIX}/usr/lib/clang" -mindepth 1 -maxdepth 1 -type d | head -n 1)':" \
 		-i ../ycmd/utils.py || die
 	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i \
 		../ycmd/completers/cpp/clangd_completer.py || die
