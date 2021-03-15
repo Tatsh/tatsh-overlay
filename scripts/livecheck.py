@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from dataclasses import dataclass
+from functools import cmp_to_key
 from os.path import basename, dirname, join as path_join, realpath, splitext
 from typing import (Any, Callable, Dict, Final, Iterator, NamedTuple, Optional,
                     Sequence, Set, Tuple, Union, cast)
@@ -160,8 +161,12 @@ def get_props(search_dir: str,
                        True)
             elif m := re.search(r'/raw/([0-9a-f]+)/', parsed.path):
                 version = m.group(1)
-                branch = (settings.branches[catpkg] if catpkg in settings.branches else 'master')
-                yield (cat, pkg, ebuild_version, version, f'{github_homepage}/commits/{branch}.atom', (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' + str(len(version)) + r'})[0-9a-f]*</id>'), False)
+                branch = (settings.branches[catpkg]
+                          if catpkg in settings.branches else 'master')
+                yield (cat, pkg, ebuild_version, version,
+                       f'{github_homepage}/commits/{branch}.atom',
+                       (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' +
+                        str(len(version)) + r'})[0-9a-f]*</id>'), False)
             else:
                 raise ValueError(f'Unhandled GitHub package: {catpkg}')
         elif src_uri.startswith('mirror://pypi/'):
@@ -292,7 +297,14 @@ def main() -> int:
                 log.debug('Adjusting RE for semantic versioning')
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
             log.debug('Using RE: "%s"', regex)
-            top_hash = re.findall(regex, r.text)[0]
+            results = re.findall(regex, r.text)
+            top_hash = (list(
+                reversed(
+                    sorted(
+                        results,
+                        key=cmp_to_key(lambda x, y: -1 if
+                                       (ret := vercmp(x, y)) is None else ret)
+                        ))) if use_vercmp else results)[0]
             log.debug('re.findall() -> "%s"', top_hash)
             cp = f'{cat}/{pkg}'
             if tf := settings.transformations.get(cp, None):
@@ -329,6 +341,9 @@ def main() -> int:
                 else:
                     print(f'{cat}/{pkg}: {version} ({ebuild_version}) -> ' +
                           top_hash)
+        except requests.exceptions.HTTPError as e:
+            log.warning('Caught HTTPError while checking %s/%s: %s', cat, pkg,
+                        e)
         except Exception as e:
             print(f'Exception while checking {cat}/{pkg}', file=sys.stderr)
             raise e
