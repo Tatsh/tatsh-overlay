@@ -21,8 +21,6 @@ BUILD_PARAMS="KERNELDIR=${KERNEL_DIR}"
 MODULE_NAMES="ProCapture(video:src:src)"
 DOCS=(quick_start.txt docs/Readme.txt docs/ProCaptureSeriesCardUserGuideforLinux.{eng,chs}.pdf)
 
-PATCHES=( "${FILESDIR}/${P}-kernel-5.10.patch" )
-
 src_prepare() {
 	sed -e 's:/local::g' -e 's:/src::g' -i scripts/ProCapture.conf || die 'Failed to patch!'
 	if use weave; then
