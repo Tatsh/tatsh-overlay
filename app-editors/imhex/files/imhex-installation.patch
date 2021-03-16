@@ -1,0 +1,117 @@
+diff --git a/cmake/build_helpers.cmake b/cmake/build_helpers.cmake
+index 98f19a6..6bfe505 100644
+--- a/cmake/build_helpers.cmake
++++ b/cmake/build_helpers.cmake
+@@ -142,6 +142,7 @@ macro(configurePackageCreation)
+ endmacro()
+ 
+ macro(createPackage)
++    include(GNUInstallDirs)
+     file(MAKE_DIRECTORY "plugins")
+     foreach (plugin IN LISTS PLUGINS)
+         add_subdirectory("plugins/${plugin}")
+@@ -188,7 +189,7 @@ macro(createPackage)
+     endif()
+ 
+     if (UNIX AND NOT APPLE)
+-        install(TARGETS libimhex DESTINATION ${CMAKE_INSTALL_PREFIX})
++        install(TARGETS libimhex DESTINATION ${CMAKE_INSTALL_LIBDIR})
+ 
+         string(REPLACE ":" ";" EXTRA_MAGICDBS "${EXTRA_MAGICDBS}")
+ 
+@@ -199,9 +200,9 @@ macro(createPackage)
+ 
+         if (NOT EXTRA_MAGICDBS STREQUAL "NOTFOUND")
+             if (EXTRA_MAGICDBS MATCHES ".*\\.mgc")
+-                install(FILES "${EXTRA_MAGICDBS}" DESTINATION magic/)
++                install(FILES "${EXTRA_MAGICDBS}" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/ImHex/magic/)
+             else ()
+-                install(FILES "${EXTRA_MAGICDBS}.mgc" DESTINATION magic/)
++                install(FILES "${EXTRA_MAGICDBS}.mgc" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/ImHex/magic/)
+             endif ()
+         endif ()
+     endif ()
+@@ -215,11 +216,11 @@ macro(createPackage)
+             )
+ 
+     foreach (plugin IN LISTS PLUGINS)
+-        install(FILES "$<TARGET_FILE:${plugin}>" DESTINATION plugins/)
++        install(FILES "$<TARGET_FILE:${plugin}>" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/ImHex/plugins/)
+     endforeach ()
+ 
+     # Install the magicdb files.
+-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/magic_dbs.mgc DESTINATION magic/ RENAME imhex.mgc)
++    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/magic_dbs.mgc DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/ImHex/magic/ RENAME imhex.mgc)
+ 
+     if (CREATE_BUNDLE)
+         include(PostprocessBundle)
+@@ -241,7 +242,7 @@ macro(createPackage)
+         if (WIN32)
+             install(TARGETS imhex RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+         else ()
+-            install(TARGETS imhex RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
++            install(TARGETS imhex RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+         endif ()
+     endif()
+ 
+@@ -267,4 +268,4 @@ macro(setDefaultBuiltTypeIfUnset)
+         set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Using Release build type as it was left unset" FORCE)
+         set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release")
+     endif()
+-endmacro()
+\ No newline at end of file
++endmacro()
+diff --git a/source/helpers/plugin_handler.cpp b/source/helpers/plugin_handler.cpp
+index f209eb6..65f652d 100644
+--- a/source/helpers/plugin_handler.cpp
++++ b/source/helpers/plugin_handler.cpp
+@@ -30,7 +30,9 @@ namespace hex {
+     }
+ 
+     Plugin::~Plugin() {
++      if (this->m_handle != nullptr) {
+         dlclose(this->m_handle);
++      }
+     }
+ 
+     void Plugin::initializePlugin() const {
+diff --git a/source/views/view_pattern.cpp b/source/views/view_pattern.cpp
+index ad0553a..4b4f50b 100644
+--- a/source/views/view_pattern.cpp
++++ b/source/views/view_pattern.cpp
+@@ -104,7 +104,7 @@ namespace hex {
+             std::string magicFiles;
+ 
+             std::error_code error;
+-            for (const auto &entry : std::filesystem::directory_iterator("magic", error)) {
++            for (const auto &entry : std::filesystem::directory_iterator("/usr/share/ImHex/magic", error)) {
+                 if (entry.is_regular_file() && entry.path().extension() == ".mgc")
+                     magicFiles += entry.path().string() + MAGIC_PATH_SEPARATOR;
+             }
+@@ -344,4 +344,4 @@ namespace hex {
+         }
+     }
+ 
+-}
+\ No newline at end of file
++}
+diff --git a/source/window.cpp b/source/window.cpp
+index 27c8e91..ccd8a04 100644
+--- a/source/window.cpp
++++ b/source/window.cpp
+@@ -595,7 +595,7 @@ namespace hex {
+ 
+     void Window::initPlugins() {
+         try {
+-            auto pluginFolderPath = std::filesystem::path((SharedData::mainArgv)[0]).parent_path() / "plugins";
++            auto pluginFolderPath = std::filesystem::path("/usr/share/ImHex/plugins");
+             PluginHandler::load(pluginFolderPath.string());
+         } catch (std::runtime_error &e) { return; }
+ 
+@@ -619,4 +619,4 @@ namespace hex {
+         PluginHandler::unload();
+     }
+ 
+-}
+\ No newline at end of file
++}

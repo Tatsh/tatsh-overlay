@@ -1,0 +1,118 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 66967fe..9df13dc 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -25,11 +25,18 @@ detectOS()
+ detectArch()
+ 
+ # Add bundled dependencies
+-add_subdirectory(external/llvm)
++if (NOT USE_SYSTEM_LLVM)
++    add_subdirectory(external/llvm)
++else()
++    find_package(LLVM REQUIRED Demangle)
++endif()
+ add_subdirectory(plugins/libimhex)
+ 
+ # Add include directories
+ include_directories(include ${MBEDTLS_INCLUDE_DIRS} ${CAPSTONE_INCLUDE_DIRS} ${MAGIC_INCLUDE_DIRS} ${Python_INCLUDE_DIRS})
++if (USE_SYSTEM_LLVM)
++    include_directories(include ${LLVM_INCLUDE_DIRS})
++endif()
+ 
+ addVersionDefines()
+ configurePackageCreation()
+@@ -74,4 +81,4 @@ elseif (UNIX)
+     target_link_libraries(imhex magic ${CMAKE_DL_LIBS} capstone LLVMDemangle libimhex ${Python_LIBRARIES} dl)
+ endif()
+ 
+-createPackage()
+\ No newline at end of file
++createPackage()
+diff --git a/plugins/libimhex/CMakeLists.txt b/plugins/libimhex/CMakeLists.txt
+index 9c202db..49b8a89 100644
+--- a/plugins/libimhex/CMakeLists.txt
++++ b/plugins/libimhex/CMakeLists.txt
+@@ -3,46 +3,49 @@ project(libimhex)
+ 
+ set(CMAKE_CXX_STANDARD 20)
+ 
+-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../external/ImGui ${CMAKE_CURRENT_BINARY_DIR}/external/ImGui)
+-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../external/nlohmann_json ${CMAKE_CURRENT_BINARY_DIR}/external/nlohmann_json)
+-
++add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../external/ImGui
++                 ${CMAKE_CURRENT_BINARY_DIR}/external/ImGui)
++if(USE_SYSTEM_NLOHMANN_JSON)
++  find_package(nlohmann_json REQUIRED)
++else()
++  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../external/nlohmann_json
++                   ${CMAKE_CURRENT_BINARY_DIR}/external/nlohmann_json)
++endif()
+ 
+-if (WIN32)
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc -Wl,--allow-multiple-definition -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive")
++if(WIN32)
++  set(CMAKE_CXX_FLAGS
++      "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc -Wl,--allow-multiple-definition -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive"
++  )
+ endif()
+ 
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+ 
+ set(CMAKE_SHARED_LIBRARY_PREFIX "")
+ 
+-add_library(libimhex SHARED
+-        source/api/event.cpp
+-        source/api/imhex_api.cpp
+-        source/api/content_registry.cpp
+-
+-        source/helpers/utils.cpp
+-        source/helpers/shared_data.cpp
+-        source/helpers/crypto.cpp
+-        source/helpers/lang.cpp
+-
+-        source/lang/pattern_language.cpp
+-        source/lang/preprocessor.cpp
+-        source/lang/lexer.cpp
+-        source/lang/parser.cpp
+-        source/lang/validator.cpp
+-        source/lang/evaluator.cpp
+-        source/lang/builtin_functions.cpp
+-
+-        source/providers/provider.cpp
+-
+-        source/views/view.cpp
+-        )
++add_library(
++  libimhex SHARED
++  source/api/event.cpp
++  source/api/imhex_api.cpp
++  source/api/content_registry.cpp
++  source/helpers/utils.cpp
++  source/helpers/shared_data.cpp
++  source/helpers/crypto.cpp
++  source/helpers/lang.cpp
++  source/lang/pattern_language.cpp
++  source/lang/preprocessor.cpp
++  source/lang/lexer.cpp
++  source/lang/parser.cpp
++  source/lang/validator.cpp
++  source/lang/evaluator.cpp
++  source/lang/builtin_functions.cpp
++  source/providers/provider.cpp
++  source/views/view.cpp)
+ 
+ target_include_directories(libimhex PUBLIC include ${MBEDTLS_INCLUDE_DIR})
+ target_link_directories(libimhex PUBLIC ${MBEDTLS_LIBRARY_DIR})
+ 
+-if (WIN32)
+-    target_link_libraries(libimhex PUBLIC imgui nlohmann_json libmbedcrypto.a)
+-else ()
+-    target_link_libraries(libimhex PUBLIC imgui nlohmann_json mbedcrypto)
+-endif ()
+\ No newline at end of file
++if(WIN32)
++  target_link_libraries(libimhex PUBLIC imgui nlohmann_json libmbedcrypto.a)
++else()
++  target_link_libraries(libimhex PUBLIC imgui nlohmann_json mbedcrypto)
++endif()
