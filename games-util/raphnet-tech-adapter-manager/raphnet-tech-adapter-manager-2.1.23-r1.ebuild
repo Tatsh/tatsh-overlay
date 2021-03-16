@@ -13,12 +13,18 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
 
 DEPEND="dev-libs/hidapi
-	x11-libs/wxGTK:3.0-gtk3
 	sys-libs/zlib
-	virtual/udev"
+	virtual/udev
+	x11-libs/wxGTK:3.0-gtk3"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/raphnet-tech_adapter_manager-${PV}"
+
+src_prepare() {
+	sed -e 's/, TAG+=".*/, GROUP="plugdev", MODE="0660"/g' \
+		-i scripts/*.rules || die "Failed to patch"
+	default
+}
 
 src_compile() {
 	cd src
