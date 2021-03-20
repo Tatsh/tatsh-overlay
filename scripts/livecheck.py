@@ -156,7 +156,7 @@ def get_props(search_dir: str,
                             PREFIX_RE, basename(dirname(parsed.path)))):
                     prefix = m.group(1)
                 url = f'{github_homepage}/tags'
-                regex = f'archive/{prefix}' + r'([^"]+)\.tar\.gz'
+                regex = f'archive/refs/tags/{prefix}' + r'([^"]+)\.tar\.gz'
                 yield (cat, pkg, ebuild_version, ebuild_version, url, regex,
                        True)
             elif m := re.search(r'/raw/([0-9a-f]+)/', parsed.path):
