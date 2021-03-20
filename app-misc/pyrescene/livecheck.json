@@ -1,0 +1,5 @@
+{
+    "type": "regex",
+    "url": "https://bitbucket.org/Gfy/pyrescene/downloads/",
+    "regex": "pyReScene-(\\d+\\.\\d+(?:\\.\\d+)?)\\.zip+"
+}
