@@ -81,7 +81,10 @@ src_compile() {
 }
 
 src_install() {
-	use libretro && dolib.so ${BIN_PN}/out/${PN/-/_}_beta_libretro.so
+	if use libretro; then
+		insinto /usr/$(get_libdir)/libretro
+		doins ${BIN_PN}/out/${PN/-/_}_beta_libretro.so
+	fi
 	newbin saved/${BIN_PN} ${PN}
 	make_desktop_entry "${PN}" "${PN}"
 	newicon -s 256 ${BIN_PN}/target-${BIN_PN}/resource/${BIN_PN}.png ${PN}.png
