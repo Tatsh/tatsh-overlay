@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<use>
+		<flag name="libretro">Build libretro core</flag>
 		<flag name="vulkan">Enable Vulkan graphics library support</flag>
 	</use>
 </pkgmetadata>

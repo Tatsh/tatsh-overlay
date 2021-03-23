@@ -24,7 +24,7 @@ SRC_URI="https://github.com/jpd002/Play-/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
-IUSE="vulkan"
+IUSE="libretro vulkan"
 REQUIRED_USE="arm64? ( !vulkan )"
 
 DEPEND="app-arch/bzip2
@@ -67,12 +67,18 @@ src_configure() {
 	# -DENABLE_AMAZON_S3=$(usex s3) currently broken, must be left ON
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
+		-DBUILD_LIBRETRO_CORE=$(usex libretro)
 		-DUSE_GSH_VULKAN=$(usex vulkan)
 		-DPROJECT_Version=${PV}
 	)
 	# https://github.com/jpd002/Play-/issues/911
 	append-cppflags -DNDEBUG
 	cmake_src_configure
+}
+
+src_install() {
+	cmake_src_install
+	use libretro && dolib.so ${BUILD_DIR}/Source/ui_libretro/play_libretro.so
 }
 
 pkg_postinst() {
