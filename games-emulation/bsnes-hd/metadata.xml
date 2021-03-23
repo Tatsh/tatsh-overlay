@@ -5,4 +5,7 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+	<use>
+		<flag name="libretro">Build libretro core</flag>
+	</use>
 </pkgmetadata>

@@ -16,7 +16,7 @@ SRC_URI="https://github.com/DerKoun/bsnes-hd/archive/${MY_SHA}.tar.gz -> ${P}.ta
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="ao +alsa openal opengl oss pulseaudio +sdl udev xv"
+IUSE="ao +alsa libretro openal opengl oss pulseaudio +sdl udev xv"
 REQUIRED_USE="|| ( ao openal alsa pulseaudio oss )
 	|| ( xv opengl sdl )"
 
@@ -69,10 +69,20 @@ src_compile() {
 	export CXXFLAGS="${CXXFLAGS} -O3"
 	emake -C "${BIN_PN}" \
 		"compiler=$(tc-getCXX)"
+	mkdir saved
+	cp ${BIN_PN}/out/${BIN_PN} saved/
+	if use libretro; then
+		emake -C "${BIN_PN}" clean
+		emake -C "${BIN_PN}" \
+			target=libretro \
+			binary=library \
+			"compiler=$(tc-getCXX)"
+	fi
 }
 
 src_install() {
-	newbin "${S}"/${BIN_PN}/out/${BIN_PN} ${PN}
+	use libretro && dolib.so ${BIN_PN}/out/${PN/-/_}_beta_libretro.so
+	newbin saved/${BIN_PN} ${PN}
 	make_desktop_entry "${PN}" "${PN}"
 	newicon -s 256 ${BIN_PN}/target-${BIN_PN}/resource/${BIN_PN}.png ${PN}.png
 	newicon ${BIN_PN}/target-${BIN_PN}/resource/${BIN_PN}.svg ${PN}.svg
