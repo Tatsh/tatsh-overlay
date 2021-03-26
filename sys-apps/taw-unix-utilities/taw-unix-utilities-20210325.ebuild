@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-MY_SHA="05ee03fd89c967846e4f84fd2647bb2b2b2ae09a"
+MY_SHA="473093efe3598bea9f5fbb52ed9ed37f34e8acb8"
 USE_RUBY="ruby25 ruby26 ruby27"
 RUBY_FAKEGEM_EXTRADOC="${PN:4}-${MY_SHA}/README.md"
 RUBY_FAKEGEM_EXTRAINSTALL="${PN:4}-${MY_SHA}/bin"
