@@ -78,7 +78,10 @@ src_configure() {
 
 src_install() {
 	cmake_src_install
-	use libretro && dolib.so ${BUILD_DIR}/Source/ui_libretro/play_libretro.so
+	if use libretro; then
+		insinto /usr/$(get_libdir)/libretro
+		doins ${BUILD_DIR}/Source/ui_libretro/play_libretro.so
+	fi
 }
 
 pkg_postinst() {
