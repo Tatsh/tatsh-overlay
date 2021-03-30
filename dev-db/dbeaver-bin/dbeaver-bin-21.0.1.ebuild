@@ -14,7 +14,7 @@ LICENSE="Apache-2.0 EPL-1.0 BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
-RDEPEND="dev-java/openjdk-bin:11"
+RDEPEND="|| ( dev-java/openjdk:11 dev-java/openjdk-bin:11 )"
 DEPEND="${RDEPEND}"
 
 MY_PN="${PN%-bin*}"
