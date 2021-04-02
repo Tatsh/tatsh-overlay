@@ -2,8 +2,9 @@
 from dataclasses import dataclass
 from functools import cmp_to_key
 from os.path import basename, dirname, join as path_join, realpath, splitext
-from typing import (Any, Callable, Dict, Final, Iterator, NamedTuple, Optional,
-                    Sequence, Set, Tuple, Union, cast)
+from typing import (Any, Callable, Dict, Final, Iterable, Iterator, List,
+                    Mapping, NamedTuple, Optional, Sequence, Set, Tuple,
+                    TypeVar, Union, cast)
 from urllib.parse import urlparse
 import argparse
 import glob
@@ -19,8 +20,9 @@ from portage.versions import catpkgsplit, vercmp
 import portage
 import requests
 
-PropTuple = Tuple[str, str, str, str, str, str, bool]
+PropTuple = Tuple[str, str, str, str, str, Optional[str], bool]
 Response = Union['TextDataResponse', requests.Response]
+T = TypeVar('T')
 
 LOG_NAME = 'livecheck'
 P = portage.db[portage.root]['porttree'].dbapi
@@ -69,7 +71,7 @@ class LivecheckSettings:
     custom_livechecks: Dict[str, Tuple[str, str, bool, str]]
     ignored_packages: Set[str]
     no_auto_update: Set[str]
-    transformations: Dict[str, Callable[[str], str]]
+    transformations: Mapping[str, Callable[[str], str]]
 
 
 def is_sha(s: str) -> bool:
@@ -252,10 +254,16 @@ def handle_re(s: str) -> str:
     return re.sub(r'^re(3|VC|LCS)_v?', '', s)
 
 
+def assert_not_none(x: Optional[T]) -> T:
+    assert x is not None
+    return x
+
+
 def handle_bsnes_hd(s: str) -> str:
     log = logging.getLogger(LOG_NAME)
     log.debug('handle_bsnes_hd() <- "%s"', s)
-    major, minor = re.match(r'^beta_(\d+)_(\d+(?:h\d+)?)', s).groups()
+    major, minor = assert_not_none(re.match(r'^beta_(\d+)_(\d+(?:h\d+)?)',
+                                            s)).groups()
     minor = re.sub(r'h\d+', '', minor)
     ret = f'{major}.{minor}_beta'
     log.debug('handle_bsnes_hd() -> "%s"', ret)
@@ -274,11 +282,12 @@ def setup_logging_stderr(name: Optional[str] = LOG_NAME,
     return log
 
 
-def latest_idea_versions(s: str) -> Iterator[str]:
+def latest_jetbrains_versions(xml_content: str,
+                              product_name: str) -> Iterator[str]:
     return (f"{z.attrib['version']}.{z.attrib['fullNumber']}" for z in [
         y for y in [
-            x for x in etree.fromstring(s)
-            if x.attrib['name'] == 'IntelliJ IDEA'
+            x for x in etree.fromstring(xml_content)
+            if x.attrib.get('name') == product_name
         ][0] if y.attrib.get('status') == 'release'
     ][0])
 
@@ -305,22 +314,34 @@ def main() -> int:
         try:
             r.raise_for_status()
             # Ignore beta/alpha/etc if semantic and coming from GitHub
-            if re.match(SEMVER_RE, version) and regex.startswith('archive/'):
+            if regex and re.match(SEMVER_RE,
+                                  version) and regex.startswith('archive/'):
                 log.debug('Adjusting RE for semantic versioning')
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
             if not regex:
-                if cat == 'dev-util' and pkg.startswith('idea'):
-                    results = latest_idea_versions(r.text)
+                if 'www.jetbrains.com/updates' in url:
+                    if pkg.startswith('idea'):
+                        results = list(
+                            latest_jetbrains_versions(r.text, 'IntelliJ IDEA'))
+                    else:
+                        raise NotImplementedError(
+                            'Unhandled state: '
+                            f'regex=None, cat={cat}, pkg={pkg}, url={url}')
                 else:
-                    raise NotImplementedError('Unhandled state')
+                    raise NotImplementedError(
+                        'Unhandled state: non-JetBrains URI, regex=None, '
+                        f'url={url}, cat={cat}, pkg={pkg}')
             else:
                 log.debug('Using RE: "%s"', regex)
                 results = re.findall(regex, r.text)
             top_hash = (list(
                 reversed(
                     sorted(results,
-                           key=cmp_to_key(lambda x, y: -1 if (ret := vercmp(
-                               x, y)) is None else ret))))
+                           key=cmp_to_key(
+                               cast(
+                                   Callable[[str, str],
+                                            int], lambda x, y: -1 if
+                                   (ret := vercmp(x, y)) is None else ret)))))
                         if use_vercmp else results)[0]
             log.debug('re.findall() -> "%s"', top_hash)
             cp = f'{cat}/{pkg}'
