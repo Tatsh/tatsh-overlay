@@ -179,6 +179,9 @@ def get_props(search_dir: str,
                    P.aux_get(match, ['HOMEPAGE'])[0],
                    (r'\b' + pkg.replace('-', r'[-_]') + r'-([^"]+)\.tar\.gz'),
                    True)
+        elif 'download.jetbrains.com' in src_uri:
+            yield (cat, pkg, ebuild_version, ebuild_version,
+                   'https://www.jetbrains.com/updates/updates.xml', None, True)
         else:
             home = P.aux_get(match, ['HOMEPAGE'])[0]
             raise RuntimeError(
@@ -271,6 +274,15 @@ def setup_logging_stderr(name: Optional[str] = LOG_NAME,
     return log
 
 
+def latest_idea_versions(s: str) -> Iterator[str]:
+    return (f"{z.attrib['version']}.{z.attrib['fullNumber']}" for z in [
+        y for y in [
+            x for x in etree.fromstring(s)
+            if x.attrib['name'] == 'IntelliJ IDEA'
+        ][0] if y.attrib.get('status') == 'release'
+    ][0])
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', '--auto-update', action='store_true')
@@ -296,15 +308,20 @@ def main() -> int:
             if re.match(SEMVER_RE, version) and regex.startswith('archive/'):
                 log.debug('Adjusting RE for semantic versioning')
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
-            log.debug('Using RE: "%s"', regex)
-            results = re.findall(regex, r.text)
+            if not regex:
+                if cat == 'dev-util' and pkg.startswith('idea'):
+                    results = latest_idea_versions(r.text)
+                else:
+                    raise NotImplementedError('Unhandled state')
+            else:
+                log.debug('Using RE: "%s"', regex)
+                results = re.findall(regex, r.text)
             top_hash = (list(
                 reversed(
-                    sorted(
-                        results,
-                        key=cmp_to_key(lambda x, y: -1 if
-                                       (ret := vercmp(x, y)) is None else ret)
-                        ))) if use_vercmp else results)[0]
+                    sorted(results,
+                           key=cmp_to_key(lambda x, y: -1 if (ret := vercmp(
+                               x, y)) is None else ret))))
+                        if use_vercmp else results)[0]
             log.debug('re.findall() -> "%s"', top_hash)
             cp = f'{cat}/{pkg}'
             if tf := settings.transformations.get(cp, None):
