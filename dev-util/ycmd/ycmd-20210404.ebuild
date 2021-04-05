@@ -16,8 +16,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 PYTHON_MINOR_VERSION=8
-BDEPEND="dev-cpp/abseil-cpp"
+DEPEND="dev-cpp/abseil-cpp"
 RDEPEND="
+	${DEPEND}
 	$(python_gen_cond_dep 'dev-python/bottle[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/jedi[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/regex[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
@@ -25,8 +26,7 @@ RDEPEND="
 	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	|| ( sys-devel/clang:11[static-analyzer] sys-devel/clang:10[static-analyzer] )
 	|| ( sys-libs/compiler-rt:11.0.0
-		sys-libs/compiler-rt:10.0.1 )
-"
+		sys-libs/compiler-rt:10.0.1 )"
 
 S="${WORKDIR}/${PN}-${MY_SHA}/cpp"
 
