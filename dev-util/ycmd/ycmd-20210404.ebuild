@@ -8,7 +8,7 @@ inherit cmake python-single-r1
 DESCRIPTION="A code-completion & code-comprehension server."
 HOMEPAGE="https://github.com/ycm-core/ycmd"
 CORE_VERSION=44
-MY_SHA="de6bce157884edbe68a3e67123b3a230762f3468"
+MY_SHA="0daf4eb8c6249d2e1f090b21e4e75cacf3b1f596"
 SRC_URI="https://github.com/ycm-core/ycmd/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
@@ -16,6 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 PYTHON_MINOR_VERSION=8
+BDEPEND="dev-cpp/abseil-cpp"
 RDEPEND="
 	$(python_gen_cond_dep 'dev-python/bottle[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/jedi[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
@@ -45,6 +46,7 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DUSE_CLANG_TIDY=ON
+		-DUSE_SYSTEM_ABSEIL=ON
 	)
 	cmake_src_configure
 }
