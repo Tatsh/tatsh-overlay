@@ -7,7 +7,7 @@ inherit cmake
 DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/"
 MY_PV="mainline-${PV/./-}"
-DYNARMIC_SHA="646fd0592091c5c1e5899fa715bd7b7fcc977a3e"
+DYNARMIC_SHA="c788bcdf17e6bc1d1a1dd315106b952013f5ecb8"
 MBEDTLS_SHA="eac2416b8fdb2cb9c867a538100bf95326bad75b"
 SIRIT_SHA="eefca56afd49379bdebc97ded8b480839f930881"
 SIRIT_SPIRV_HEADERS_SHA="2c512180ca03b5d4f56283efc85745775b45fdc4"
@@ -50,7 +50,6 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-Allow-use-of-system-Opus-and-inih.patch"
-	"${FILESDIR}/${PN}-0002-Fix-libzip-typo.patch"
 	"${FILESDIR}/${PN}-0003-fix-INIReader.h-includes.patch"
 	"${FILESDIR}/${PN}-0004-minimalise-finding-Boost-components.patch"
 	"${FILESDIR}/${PN}-0005-Support-newer-Vulkan-headers.patch"
