@@ -2,6 +2,5 @@
     "regex": "tag/(\\d+\\.\\d+(?:-\\d+)?)\"",
     "type": "regex",
     "url": "https://github.com/jpd002/Play-/tags",
-    "use_vercmp": false,
-    "version": "0.38"
+    "use_vercmp": false
 }
