@@ -80,7 +80,7 @@ src_install() {
 	cmake_src_install
 	if use libretro; then
 		insinto /usr/$(get_libdir)/libretro
-		doins ${BUILD_DIR}/Source/ui_libretro/play_libretro.so
+		doins "${BUILD_DIR}/Source/ui_libretro/play_libretro.so"
 	fi
 }
 
