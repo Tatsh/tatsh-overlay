@@ -34,6 +34,7 @@ DEPEND="app-arch/bzip2
 	dev-libs/openssl
 	dev-qt/qtgui
 	dev-qt/qtwidgets
+	dev-qt/qtx11extras
 	media-libs/libglvnd
 	media-libs/glu
 	media-libs/openal
