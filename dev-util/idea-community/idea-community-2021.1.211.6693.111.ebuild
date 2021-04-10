@@ -36,8 +36,8 @@ LICENSE="Apache-2.0 BSD BSD-2 CC0-1.0 CC-BY-2.5 CDDL-1.1
 
 DEPEND="
 	|| (
-		dev-java/openjdk:11
-		dev-java/openjdk-bin:11
+		~dev-java/openjdk-bin-11.0.9_p11:11
+		~dev-java/openjdk-11.0.9_p11:11
 	)"
 RDEPEND="${DEPEND}
 	dev-java/jansi-native
