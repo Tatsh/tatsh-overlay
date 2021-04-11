@@ -56,15 +56,19 @@ index c629bbc5c..9eba12c0c 100644
  
  # mbedtls
  add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
-@@ -97,4 +102,8 @@ if (ENABLE_WEB_SERVICE)
+@@ -97,8 +102,8 @@ if (ENABLE_WEB_SERVICE)
  endif()
  
  # Opus
--add_subdirectory(opus)
+-find_package(opus 1.3)
+-if (NOT opus_FOUND)
+-    message(STATUS "opus 1.3 or newer not found, falling back to externals")
+-    add_subdirectory(opus EXCLUDE_FROM_ALL)
+-endif()
 +if (NOT USE_SYSTEM_OPUS)
-+    add_subdirectory(opus)
++    add_subdirectory(opus EXCLUDE_FROM_ALL)
 +else()
-+    pkg_check_modules(OPUS REQUIRED opus)
++    find_package(opus 1.3 REQUIRED)
 +endif()
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
 index 2f6b22747..61ddfa7fd 100644
