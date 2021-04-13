@@ -1,0 +1,25 @@
+From 7bf6a9b4b265374ab756fc3fed161b75d6eaee14 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20P=C3=ADsa=C5=99?= <ppisar@redhat.com>
+Date: Tue, 7 Aug 2012 09:07:41 +0200
+Subject: [PATCH] zlib get_crc_table() return type can vary
+
+---
+ UnAlz.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/UnAlz.cpp b/UnAlz.cpp
+index ab675dd..2a49cf5 100755
+--- a/UnAlz.cpp
++++ b/UnAlz.cpp
+@@ -1907,7 +1907,7 @@ void CUnAlz::DecryptingData(int nSize, BYTE* data)
+ ////////////////////////////////////////////////////////////////////////////////////////////////////
+ UINT32 CUnAlz::CRC32(UINT32 l, BYTE c)
+ {
+-	const unsigned long *CRC_TABLE = get_crc_table();
++	const z_crc_t *CRC_TABLE = get_crc_table();
+ 	return CRC_TABLE[(l ^ c) & 0xff] ^ (l >> 8);
+ }
+ 
+-- 
+1.7.11.2
+

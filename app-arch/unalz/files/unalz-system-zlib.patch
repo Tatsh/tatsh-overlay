@@ -1,0 +1,28 @@
+diff -rupN unalz.old/Makefile unalz/Makefile
+--- unalz.old/Makefile	2006-04-23 01:01:27.000000000 -0400
++++ unalz/Makefile	2008-12-18 14:37:25.000000000 -0500
+@@ -1,9 +1,9 @@
+ CPP = g++
+ CC  = gcc
+-OBJ = main.o UnAlz.o UnAlzUtils.o UnAlzBz2decompress.o UnAlzBzip2.o UnAlzbzlib.o zlib/adler32.o zlib/crc32.o zlib/infback.o zlib/inffast.o zlib/inflate.o zlib/inftrees.o zlib/zutil.o bzip2/blocksort.o bzip2/compress.o bzip2/crctable.o bzip2/huffman.o bzip2/randtable.o
++OBJ = main.o UnAlz.o UnAlzUtils.o UnAlzBz2decompress.o UnAlzBzip2.o UnAlzbzlib.o bzip2/blocksort.o bzip2/compress.o bzip2/crctable.o bzip2/huffman.o bzip2/randtable.o
+ BIN = unalz
+-LDFLAGS = 
+-CFLAGS = -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 
++LDFLAGS += -lz
++CFLAGS += -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 
+ 
+ all:
+ 	@echo ""
+diff -rupN unalz.old/UnAlzBzip2.cpp unalz/UnAlzBzip2.cpp
+--- unalz.old/UnAlzBzip2.cpp	2007-04-12 08:04:56.000000000 -0400
++++ unalz/UnAlzBzip2.cpp	2008-12-18 14:29:55.000000000 -0500
+@@ -10,7 +10,7 @@
+ ////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+ //#include "stdafx.h"
+-#include "zlib/zlib.h"
++#include <zlib.h>
+ #include "bzip2/bzlib.h"
+ #include "bzip2/bzlib_private.h"
+ #include "UnAlz.h"

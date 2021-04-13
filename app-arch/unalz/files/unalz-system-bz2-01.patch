@@ -1,0 +1,26 @@
+--- a/Makefile.old	2021-04-13 01:05:53.776288146 -0400
++++ b/Makefile	2021-04-13 01:06:13.293915414 -0400
+@@ -1,9 +1,9 @@
+ CPP = g++
+ CC  = gcc
+-OBJ = main.o UnAlz.o UnAlzUtils.o UnAlzBz2decompress.o UnAlzBzip2.o UnAlzbzlib.o bzip2/blocksort.o bzip2/compress.o bzip2/crctable.o bzip2/huffman.o bzip2/randtable.o
++OBJ = main.o UnAlz.o UnAlzUtils.o UnAlzBz2decompress.o UnAlzBzip2.o UnAlzbzlib.o
+ BIN = unalz
+-LDFLAGS += -lz
+-CFLAGS += -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 
++LDFLAGS += -lz -lbz2
++CFLAGS += -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+ 
+ all:
+ 	@echo ""
+@@ -22,8 +22,8 @@
+ 	@echo ""
+ 
+ posix: unalz
+-	$(CPP) -c UnAlz.cpp -c UnAlzUtils.cpp -c main.cpp -D_UNALZ_ICONV $(CFLAGS) 
+-	$(CPP) $(OBJ) $(LDFLAGS) -liconv -o $(BIN) 
++	$(CPP) -c UnAlz.cpp -c UnAlzUtils.cpp -c main.cpp -D_UNALZ_ICONV $(CFLAGS)
++	$(CPP) $(OBJ) $(LDFLAGS) -liconv -o $(BIN)
+ 
+ posix-utf8: unalz
+ 	$(CPP) -c UnAlz.cpp -c UnAlzUtils.cpp -c main.cpp -D_UNALZ_ICONV -D_UNALZ_UTF8 $(CFLAGS)
