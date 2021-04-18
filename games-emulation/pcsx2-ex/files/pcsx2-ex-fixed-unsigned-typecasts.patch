@@ -1,0 +1,225 @@
+From 7ff69e0e912770ae51539359ca2891d439fda208 Mon Sep 17 00:00:00 2001
+From: some1fromthedark <some1fromthedark@gmail.com>
+Date: Fri, 16 Apr 2021 17:02:14 -0700
+Subject: [PATCH] Fixed unsigned type casts + various fixes for warnings
+
+---
+ pcsx2/Patch_Memory.cpp | 79 ++++++++++++++++++++++++++----------------
+ 1 file changed, 50 insertions(+), 29 deletions(-)
+
+diff --git a/pcsx2/Patch_Memory.cpp b/pcsx2/Patch_Memory.cpp
+index dedf1b8..91f1348 100644
+--- a/pcsx2/Patch_Memory.cpp
++++ b/pcsx2/Patch_Memory.cpp
+@@ -56,7 +56,7 @@ void handle_extended_t(IniPatch* _input)
+         switch (_cheatType) {
+         case 0x30:
+         {
+-            u32 _value = memRead32(_cheatAddress);
++            const u32 _value = memRead32(_cheatAddress);
+ 
+             if (_cheatFlag == 0x40)
+                 memWrite32(_cheatAddress, _value + (_input->addr));
+@@ -71,8 +71,8 @@ void handle_extended_t(IniPatch* _input)
+         case 0x40:
+         {
+             for (u32 i = 0; i < _iteration; i++) {
+-                u32 _address = static_cast<u32>(_cheatAddress + i * _iterationInc);
+-                u32 _value = static_cast<u32>(_input->addr + _input->data * i);
++                const u32 _address = static_cast<u32>(_cheatAddress) + i * _iterationInc;
++                const u32 _value = static_cast<u32>(_input->addr) + _input->data * i;
+                 memWrite32(_address, _value);
+             }
+ 
+@@ -83,7 +83,7 @@ void handle_extended_t(IniPatch* _input)
+         case 0x50:
+         {
+             for (u32 i = 0; i < _iteration; i++) {
+-                u8 _value = memRead8(_cheatAddress + i);
++                const u8 _value = memRead8(_cheatAddress + i);
+                 memWrite8((_input->addr + i) & 0x0FFFFFFF, _value);
+             }
+ 
+@@ -101,6 +101,8 @@ void handle_extended_t(IniPatch* _input)
+ 
+                 if (_iteration == 0) {
+                     _cheatType = 0;
++                    _cheatFlag = 0;
++
+                     if (((_value & 0x0FFFFFFF) & 0x3FFFFFFC) != 0)
+                         writeCheat();
+                 }
+@@ -129,7 +131,7 @@ void handle_extended_t(IniPatch* _input)
+                     _iteration = (u32)_input->addr & 0x0000FFFF;
+ 
+                 _writeType = ((u32)_input->addr & 0x000F0000) >> 16;
+-                u32 _value = memRead32(_cheatAddress);
++                const u32 _value = memRead32(_cheatAddress);
+ 
+                 _cheatAddress = _value + (u32)_input->data;
+                 _iteration--;
+@@ -157,8 +159,8 @@ void handle_extended_t(IniPatch* _input)
+ 
+         case 0x80:
+         {
+-            u32 _value = memRead32(_cheatAddress);
+-            memWrite32(static_cast<u32>(_input->addr & 0x0FFFFFFF), _value);
++            const u32 _value = memRead32(_cheatAddress);
++            memWrite32(static_cast<u32>(_input->addr) & 0x0FFFFFFF, _value);
+ 
+             _cheatType = 0;
+         }
+@@ -166,7 +168,7 @@ void handle_extended_t(IniPatch* _input)
+ 
+         case 0xA0:
+         {
+-            u32 _address = memRead32(static_cast<u32>(_input->addr & 0x0FFFFFFF)) + static_cast<u32>(_input->data);
++            u32 _address = memRead32(static_cast<u32>(_input->addr) & 0x0FFFFFFF) + static_cast<u32>(_input->data);
+             u32 _data = memRead32(_cheatAddress);
+ 
+             memWrite32(_address, _data);
+@@ -176,11 +178,28 @@ void handle_extended_t(IniPatch* _input)
+ 
+         case 0xC0:
+         {
++            u32 _typeData = (u32)_input->data & 0xF0000000;
+             u32 _typeComp = (u32)_input->data & 0x0F000000;
+             u32 _lineNumber = (u32)_input->data & 0x00FFFFFF;
+ 
+-            u32 _value1 = memRead32(_cheatAddress);
+-            u32 _value2 = memRead32(static_cast<u32>(_input->addr & 0x0FFFFFFF));
++            u32 _value1 = 0;
++            u32 _value2 = 0;
++            switch (_typeData) {
++            case 0x00000000:
++                _value1 = memRead32(_cheatAddress);
++                _value2 = memRead32(static_cast<u32>(_input->addr) & 0x0FFFFFFF);
++                break;
++            case 0x10000000:
++                _value1 = memRead16(_cheatAddress);
++                _value2 = memRead16(static_cast<u32>(_input->addr) & 0x0FFFFFFF);
++                break;
++            case 0x20000000:
++                _value1 = memRead8(_cheatAddress);
++                _value2 = memRead8(static_cast<u32>(_input->addr) & 0x0FFFFFFF);
++                break;
++            default:
++                break;
++            }
+ 
+             switch (_typeComp) {
+             case 0x0000000:
+@@ -207,6 +226,8 @@ void handle_extended_t(IniPatch* _input)
+                 if (_value1 < _value2)
+                     _lineSkip = _lineNumber;
+                 break;
++            default:
++                break;
+             }
+ 
+             _cheatType = 0;
+@@ -217,11 +238,11 @@ void handle_extended_t(IniPatch* _input)
+     else
+         switch (_input->addr & 0xF0000000) {
+         case 0x00000000:
+-            memWrite8(_input->addr & 0x0FFFFFFF, static_cast<u8>(_input->data & 0x000000FF));
++            memWrite8(_input->addr & 0x0FFFFFFF, static_cast<u8>(_input->data) & 0x000000FF);
+             break;
+ 
+         case 0x10000000:
+-            memWrite16(_input->addr & 0x0FFFFFFF, static_cast<u16>(_input->data & 0x0000FFFF));
++            memWrite16(_input->addr & 0x0FFFFFFF, static_cast<u16>(_input->data) & 0x0000FFFF);
+             break;
+ 
+         case 0x20000000:
+@@ -259,30 +280,30 @@ void handle_extended_t(IniPatch* _input)
+         } break;
+ 
+         case 0x40000000:
+-            _iteration = static_cast<u32>((_input->data & 0xFFFF0000) / 0x10000);
+-            _iterationInc = static_cast<u32>((_input->data & 0x0000FFFF) * 4);
+-            _cheatAddress = static_cast<u32>(_input->addr & 0x0FFFFFFF);
++            _iteration = (static_cast<u32>(_input->data) & 0xFFFF0000) / 0x10000;
++            _iterationInc = (static_cast<u32>(_input->data) & 0x0000FFFF) * 4;
++            _cheatAddress = static_cast<u32>(_input->addr) & 0x0FFFFFFF;
+             _cheatType = 0x40;
+             break;
+ 
+         case 0x50000000:
+             _iteration = _input->data;
+-            _cheatAddress = static_cast<u32>(_input->addr & 0x0FFFFFFF);
++            _cheatAddress = static_cast<u32>(_input->addr) & 0x0FFFFFFF;
+             _cheatType = 0x50;
+             break;
+ 
+         case 0x60000000:
+             _iteration = 0;
+             _iterationInc = static_cast<u32>(_input->data);
+-            _cheatAddress = static_cast<u32>(_input->addr & 0x0FFFFFFF);
++            _cheatAddress = static_cast<u32>(_input->addr) & 0x0FFFFFFF;
+             _cheatType = 0x60;
+             break;
+ 
+         case 0x70000000: {
+-            u8 _value8 = memRead8(static_cast<u32>(_input->addr & 0x0FFFFFFF));
+-            u16 _value16 = memRead16(static_cast<u32>(_input->addr & 0x0FFFFFFF));
++            u8 _value8 = memRead8(static_cast<u32>(_input->addr) & 0x0FFFFFFF);
++            u16 _value16 = memRead16(static_cast<u32>(_input->addr) & 0x0FFFFFFF);
+ 
+-            u32 _address = static_cast<u32>(_input->addr & 0x0FFFFFFF);
++            u32 _address = static_cast<u32>(_input->addr) & 0x0FFFFFFF;
+ 
+             switch (_input->data & 0x00F00000) {
+             case 0x000000:
+@@ -307,42 +328,42 @@ void handle_extended_t(IniPatch* _input)
+         } break;
+ 
+         case 0x80000000:
+-            _cheatAddress = memRead32(static_cast<u32>(_input->addr & 0x0FFFFFFF)) + _input->data;
++            _cheatAddress = memRead32(static_cast<u32>(_input->addr) & 0x0FFFFFFF) + _input->data;
+             _cheatType = 0x80;
+             break;
+ 
+         case 0x90000000:
+         {
+-            u32 _value = memRead32(static_cast<u32>(_input->addr & 0x0FFFFFFF));
+-            memWrite32(static_cast<u32>(_input->data & 0x0FFFFFFF), _value);
++            u32 _value = memRead32(static_cast<u32>(_input->addr) & 0x0FFFFFFF);
++            memWrite32(static_cast<u32>(_input->data) & 0x0FFFFFFF, _value);
+         }
+         break;
+ 
+         case 0xA0000000:
+-            _cheatAddress = static_cast<u32>(_input->addr & 0x0FFFFFFF);
++            _cheatAddress = static_cast<u32>(_input->addr) & 0x0FFFFFFF;
+             _cheatType = 0xA0;
+             break;
+ 
+         case 0xB0000000: {
+-            _lineSkip = static_cast<u32>((_input->addr & 0x0FF00000) / 0x100000);
++            _lineSkip = (static_cast<u32>(_input->addr) & 0x0FF00000) / 0x100000;
+ 
+             _frameInt++;
+             int _time = _frameInt / 60;
+ 
+-            if (_time * 1000 >= static_cast<long long>(_input->addr & 0x000FFFFF)) {
++            if (_time * 1000 >= static_cast<long long>(_input->addr) & 0x000FFFFF) {
+                 _frameInt = 0;
+                 _lineSkip = 0;
+             }
+         } break;
+ 
+         case 0xC0000000:
+-            _cheatAddress = static_cast<u32>(_input->addr & 0x0FFFFFFF);
++            _cheatAddress = static_cast<u32>(_input->addr) & 0x0FFFFFFF;
+             _cheatType = 0xC0;
+             break;
+ 
+         case 0xD0000000: {
+-            u16 _value1 = memRead16(static_cast<u32>(_input->addr & 0x0FFFFFFF));
+-            u16 _value2 = static_cast<u16>(_input->data & 0x0000FFFF);
++            u16 _value1 = memRead16(static_cast<u32>(_input->addr) & 0x0FFFFFFF);
++            u16 _value2 = static_cast<u16>(_input->data) & 0x0000FFFF;
+ 
+             switch (_input->data & 0xFFFF0000) {
+             case 0x000000:
