@@ -9,7 +9,7 @@ inherit cmake desktop fcaps flag-o-matic multilib toolchain-funcs wxwidgets
 MY_PV="${PV/_/-}"
 
 DESCRIPTION="A PlayStation 2 emulator"
-HOMEPAGE="https://pcsx2.net/"
+HOMEPAGE="https://github.com/Topaz-Reality/PCSX2-EX"
 SRC_URI="https://github.com/Topaz-Reality/${PN^^}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
@@ -61,7 +61,7 @@ pkg_setup() {
 
 src_prepare() {
 	cmake_src_prepare
-	sed -r -e 's@(l(auxlib|ua(lib|jit)?)\.h(pp)?)@lua5.1/\1@' -i pcsx2/sol.hpp || die
+	sed -r -e 's@(l(auxlib|ua(lib|jit)?)\.h(pp)?)@lua5.1/\1@' -i 3rdparty/sol3/sol.hpp || die
 	sed -e 's/-llua/-llua5.1/' -i CMakeLists.txt || die
 	sed -e "s/PCSX2/${PN^^}/g" -i linux_various/PCSX2.desktop.in || die
 	sed -e "s/@PCSX2-EX_MENU_CATEGORIES@/Game;Emulator;/" -i linux_various/PCSX2.desktop.in || die
