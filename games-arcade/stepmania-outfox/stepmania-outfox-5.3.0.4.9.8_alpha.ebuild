@@ -9,18 +9,17 @@ DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
 HOMEPAGE="http://www.stepmania.com/"
 
 UPPER_PN="${PN^^}"
-MY_PN="${UPPER_PN:0:1}${PN:1:3}${UPPER_PN:4:1}${PN:5:4}${UPPER_PN:10:1}${PN:11:2}${UPPER_PN:13:1}${PN:14}"
+MY_PN="${UPPER_PN:10:1}${PN:11:2}${UPPER_PN:13:1}${PN:14}"
 MAIN_PV="${PV:0:5}"
 MY_PV="${PV:6}"
-MY_PV="${MY_PV%_*}GG"
-SHARED_DATE="20210223"
-SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/StepManiaOutFox-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}.tar.gz -> ${P}-amd64.tar.gz )
-	arm? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/StepManiaOutFox-${MAIN_PV}-alpha-${MY_PV}-arm32v7-date-${SHARED_DATE}.tar.gz -> ${P}-arm.tar.gz )
-	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/StepManiaOutFox-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}.tar.gz -> ${P}-arm64.tar.gz )"
+MY_PV="${MY_PV%_*}"
+SHARED_DATE="20210425"
+SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/OutFox-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}.tar.gz -> ${P}-amd64.tar.gz )
+	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/OutFox-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}.tar.gz -> ${P}-arm64.tar.gz )"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64"
+KEYWORDS="~amd64 ~arm64"
 IUSE="+bundled-songs +bundled-courses doc"
 BDEPEND="!arm? ( dev-util/patchelf )"
 RDEPEND="app-arch/bzip2
@@ -42,8 +41,6 @@ RESTRICT="splitdebug"
 pkg_setup() {
 	if use amd64; then
 		S="${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}"
-	elif use arm; then
-		S="${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm32v7-date-${SHARED_DATE}"
 	elif use arm64; then
 		S="${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}"
 	else
