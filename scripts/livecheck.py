@@ -245,7 +245,7 @@ def handle_stepmania_outfox(s: str) -> str:
     log = logging.getLogger(LOG_NAME)
     log.debug('handle_stepmania_outfox() <- "%s"', s)
     s = re.sub(r'[^0-9\.]+', '', s)
-    ret = f'5.3.0.{s}_alpha2'
+    ret = f'5.3.0.{s}_alpha'
     log.debug('handle_stepmania_outfox() -> "%s"', ret)
     return ret
 
