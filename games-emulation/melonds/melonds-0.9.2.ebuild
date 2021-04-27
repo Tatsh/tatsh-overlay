@@ -10,13 +10,15 @@ SRC_URI="https://github.com/Arisotura/melonDS/archive/${PV}.tar.gz -> ${P}.tar.g
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~x86"
 
-DEPEND="net-libs/libslirp"
+DEPEND="media-libs/libsdl2
+	dev-qt/qtgui
+	dev-qt/qtwidgets
+	net-libs/libslirp"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/melonDS-${PV}"
-PATCHES=( "${FILESDIR}/1026.patch" )
 
 src_prepare() {
 	sed -e 's/^Exec=.*/Exec=env -u QT_SCREEN_SCALE_FACTORS melonDS/' -i net.kuribo64.melonDS.desktop
