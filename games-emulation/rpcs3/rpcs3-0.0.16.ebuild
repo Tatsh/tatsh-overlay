@@ -6,7 +6,7 @@ inherit cmake
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/"
-MY_SHA="v0.0.15"
+MY_SHA="v0.0.16"
 ASMJIT_SHA="723f58581afc0f4cb16ba13396ff77e425896847"
 CEREAL_SHA="60c69df968d1c72c998cd5f23ba34e2e3718a84b"
 HIDAPI_SHA="8961cf86ebc4756992a7cd65c219c743e94bab19"
@@ -56,7 +56,6 @@ BDEPEND=">=sys-devel/gcc-9"
 S="${WORKDIR}/${PN}-${MY_SHA:1}"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-allow-more-system-libs.patch"
-	"${FILESDIR}/${PN}-0002-rpcs3-emu-cell-sputhread-remove-always_inline-for-so.patch"
 	"${FILESDIR}/${PN}-0003-add-missing-include-fix-branch-names.patch"
 	"${FILESDIR}/${PN}-0004-add-use_wayland.patch"
 	"${FILESDIR}/${PN}-0005-faudio.patch"
