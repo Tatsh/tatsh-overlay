@@ -16,7 +16,7 @@ index f2e339a3c..825ea832c 100644
  endmacro()
 
  if (NOT YUZU_USE_BUNDLED_BOOST)
--    find_package(Boost 1.73.0 COMPONENTS context headers QUIET)
+-    find_package(Boost 1.73.0 CONFIG COMPONENTS context headers QUIET)
 +    find_package(Boost 1.73.0 COMPONENTS context)
  endif()
  if (Boost_FOUND)
