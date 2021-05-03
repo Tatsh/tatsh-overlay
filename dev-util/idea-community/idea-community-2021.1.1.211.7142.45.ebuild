@@ -5,8 +5,8 @@ EAPI=7
 inherit eutils desktop
 
 SLOT="0"
-PV_STRING="$(ver_cut 2-6)"
-MY_PV="$(ver_cut 1-2)"
+PV_STRING="$(ver_cut 1-6)"
+MY_PV="$(ver_cut 1-3)"
 MY_PN="idea"
 # Using the most recent Jetbrains Runtime binaries available at the time of writing
 # ( jre 11.0.8 build 1098.1  )
@@ -36,17 +36,18 @@ LICENSE="Apache-2.0 BSD BSD-2 CC0-1.0 CC-BY-2.5 CDDL-1.1
 
 DEPEND="
 	|| (
-		~dev-java/openjdk-bin-11.0.9_p11:11
-		~dev-java/openjdk-11.0.9_p11:11
+		>=dev-java/openjdk-11.0.11_p9-r1:11
+		>=dev-java/openjdk-bin-11.0.11_p9-r1:11
 	)"
 RDEPEND="${DEPEND}
 	dev-java/jansi-native
 	dev-libs/libdbusmenu
+	media-libs/harfbuzz
 	=dev-util/lldb-10*"
 
 BDEPEND="dev-util/patchelf"
 RESTRICT="splitdebug"
-S="${WORKDIR}/${MY_PN}-IC-$(ver_cut 3-6)"
+S="${WORKDIR}/${MY_PN}-IC-$(ver_cut 4-6)"
 
 QA_PREBUILT="opt/${PN}-${MY_PV}/*"
 
