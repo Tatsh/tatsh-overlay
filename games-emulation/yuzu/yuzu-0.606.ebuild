@@ -5,7 +5,8 @@ EAPI=7
 inherit cmake
 
 DESCRIPTION="Nintendo Switch emulator"
-HOMEPAGE="https://yuzu-emu.org/"
+HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
+
 MY_PV="mainline-${PV/./-}"
 DYNARMIC_SHA="b2a4da5e65985e6b0a20ac8ac37d14425a2a39d9"
 MBEDTLS_SHA="eac2416b8fdb2cb9c867a538100bf95326bad75b"
