@@ -10,16 +10,16 @@ MY_PV="${PV:0:4}"
 BOOST_CMAKE_SHA="e97843ed8d7d069a278e6f2adf33a9f91638c73f"
 CODEGEN_SHA="10068b1fd39efa88fbfb2fe14e820eae552fb2a1"
 DEPS_SHA="e3e6669ecd40598b4e4adc1bc9297c6967f4c929"
-FILESYSTEM_SHA="3605e869150032ffdd9eae3db93e12f8711a0c82"
-FRAMEWORK_SHA="65baebea9ca9e7ce0631e71c8ede33f4e3d25a15"
-NUANCEUR_SHA="29b04d3be3f25230fbb7511d6cbfdbe661149d33"
+GHC_FILESYSTEM="3605e869150032ffdd9eae3db93e12f8711a0c82"
+FRAMEWORK_SHA="40ac2330b7e880195b638c1ddb99d641420ab1f5"
+NUANCEUR_SHA="ba25a1970e0d97f28ae6b3d0c34fed0ea47ebbd6"
 SRC_URI="https://github.com/jpd002/Play-/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/jpd002/boost-cmake/archive/${BOOST_CMAKE_SHA}.tar.gz -> ${PN}-boost-cmake-${BOOST_CMAKE_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Play--CodeGen/archive/${CODEGEN_SHA}.tar.gz -> ${PN}-codegen-${CODEGEN_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Play-Dependencies/archive/${DEPS_SHA}.tar.gz -> ${PN}-deps-${DEPS_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Play--Framework/archive/${FRAMEWORK_SHA}.tar.gz -> ${PN}-framework-${FRAMEWORK_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Nuanceur/archive/${NUANCEUR_SHA}.tar.gz -> ${PN}-nuanceur-${NUANCEUR_SHA:0:7}.tar.gz
-	https://github.com/gulrak/filesystem/archive/${FILESYSTEM_SHA}.tar.gz -> ${PN}-filesystem-${FILESYSTEM_SHA:0:7}.tar.gz"
+	https://github.com/gulrak/filesystem/archive/${GHC_FILESYSTEM}.tar.gz -> ${PN}-filesystem-${GHC_FILESYSTEM:0:7}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -56,7 +56,7 @@ src_prepare() {
 	mv "${WORKDIR}/${MY_PN}Dependencies-${DEPS_SHA}" deps/Dependencies || die
 	rmdir deps/Dependencies/{boost-cmake,ghc_filesystem} || die
 	mv "${WORKDIR}/boost-cmake-${BOOST_CMAKE_SHA}" deps/Dependencies/boost-cmake || die
-	mv "${WORKDIR}/filesystem-${FILESYSTEM_SHA}" deps/Dependencies/ghc_filesystem || die
+	mv "${WORKDIR}/filesystem-${GHC_FILESYSTEM}" deps/Dependencies/ghc_filesystem || die
 	mv "${WORKDIR}/${MY_PN}-Framework-${FRAMEWORK_SHA}" deps/Framework || die
 	mv "${WORKDIR}/Nuanceur-${NUANCEUR_SHA}" deps/Nuanceur || die
 	sed -e '/^set(PROJECT_Version/d' -i CMakeLists.txt || die
