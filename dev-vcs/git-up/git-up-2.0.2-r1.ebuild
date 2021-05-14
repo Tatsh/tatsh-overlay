@@ -24,5 +24,5 @@ PATCHES=( "${FILESDIR}/remove-click-dep.patch" )
 
 src_prepare() {
 	default
-	sed -r -e "/'click>=7.0,<8.0',/d" -i setup.py
+	sed -r -e "/'click>=7.0,<8.0',/d" -i setup.py || die
 }
