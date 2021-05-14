@@ -17,6 +17,12 @@ KEYWORDS="~amd64 ~x86"
 RDEPEND=">=dev-python/GitPython-3.1.8
 	>=dev-python/colorama-0.3.7
 	>=dev-python/termcolor-1.1.0
-	>=dev-python/click-7.0
 	>=dev-python/six-1.10.0"
 DEPEND="${RDEPEND}"
+
+PATCHES=( "${FILESDIR}/remove-click-dep.patch" )
+
+src_prepare() {
+	default
+	sed -r -e "/'click>=7.0,<8.0',/d" -i setup.py
+}
