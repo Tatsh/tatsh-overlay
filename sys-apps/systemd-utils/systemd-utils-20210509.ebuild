@@ -6,7 +6,7 @@ inherit udev
 
 DESCRIPTION="Random systemd utilities."
 HOMEPAGE="https://github.com/kylemanna/systemd-utils"
-MY_SHA="f9917695629350effdea8a86f650a71a7d4b6a23"
+MY_SHA="8ae869f0a1a717b601cdea73a38e1c93fb021703"
 SRC_URI="https://github.com/kylemanna/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
