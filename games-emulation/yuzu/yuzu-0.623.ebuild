@@ -70,6 +70,7 @@ src_prepare() {
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' -i src/common/CMakeLists.txt || die
+	sed -e 's/find_package(SDL2 2.0.1.*/find_package(SDL2 2.0.14)/' -i CMakeLists.txt || die
 	cmake_src_prepare
 }
 
