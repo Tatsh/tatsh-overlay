@@ -283,13 +283,14 @@ def setup_logging_stderr(name: Optional[str] = LOG_NAME,
 
 
 def latest_jetbrains_versions(xml_content: str,
-                              product_name: str) -> Iterator[str]:
-    return (f"{z.attrib['version']}.{z.attrib['fullNumber']}" for z in [
-        y for y in [
-            x for x in etree.fromstring(xml_content)
-            if x.attrib.get('name') == product_name
-        ][0] if y.attrib.get('status') == 'release'
-    ][0])
+                              product_name: str) -> Iterator[Dict[str, str]]:
+    return (dict(version=z.attrib['version'],
+                 fullNumber=z.attrib['fullNumber']) for z in [
+                     y for y in [
+                         x for x in etree.fromstring(xml_content)
+                         if x.attrib.get('name') == product_name
+                     ][0] if y.attrib.get('status') == 'release'
+                 ][0])
 
 
 def main() -> int:
@@ -318,11 +319,15 @@ def main() -> int:
                                   version) and regex.startswith('archive/'):
                 log.debug('Adjusting RE for semantic versioning')
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
+            prefixes = cast(Optional[Dict[str, str]], None)
             if not regex:
                 if 'www.jetbrains.com/updates' in url:
                     if pkg.startswith('idea'):
-                        results = list(
+                        jb_versions = list(
                             latest_jetbrains_versions(r.text, 'IntelliJ IDEA'))
+                        results = [x['fullNumber'] for x in jb_versions]
+                        prefixes = dict((z['fullNumber'], f"{z['version']}.")
+                                        for z in jb_versions)
                     else:
                         raise NotImplementedError(
                             'Unhandled state: '
@@ -347,6 +352,12 @@ def main() -> int:
             cp = f'{cat}/{pkg}'
             if tf := settings.transformations.get(cp, None):
                 top_hash = tf(top_hash)
+            if prefixes:
+                assert top_hash in prefixes
+                top_hash = f'{prefixes[top_hash]}{top_hash}'
+            log.debug(
+                'Comparing current ebuild version %s with live version %s',
+                version, top_hash)
             assert isinstance(use_vercmp, bool)
             if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
                     or top_hash != version):
