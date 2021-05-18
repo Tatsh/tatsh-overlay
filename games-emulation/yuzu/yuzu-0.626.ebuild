@@ -35,7 +35,7 @@ DEPEND="app-arch/lz4
 	dev-qt/qtcore
 	dev-qt/qtgui
 	dev-qt/qtwidgets
-	media-libs/libsdl2
+	media-libs/libsdl2[haptic,joystick]
 	media-libs/opus
 	media-video/ffmpeg
 	sys-libs/zlib
