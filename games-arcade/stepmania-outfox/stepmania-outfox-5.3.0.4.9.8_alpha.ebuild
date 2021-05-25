@@ -31,7 +31,7 @@ RDEPEND="app-arch/bzip2
 	media-libs/libsdl2
 	media-libs/libvorbis
 	media-libs/vulkan-loader
-	media-sound/pulseaudio
+	|| ( media-sound/pulseaudio media-sound/apulse )
 	virtual/glu
 	virtual/jack
 	virtual/opengl
