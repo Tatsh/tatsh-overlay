@@ -15,7 +15,6 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-PYTHON_MINOR_VERSION=8
 DEPEND="dev-cpp/abseil-cpp"
 RDEPEND="
 	${DEPEND}
@@ -42,7 +41,9 @@ src_prepare() {
 		-i ../ycmd/utils.py || die
 	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i \
 		../ycmd/completers/cpp/clangd_completer.py || die
-	sed -r -e "s|Python3 [0-9\\.]+ REQUIRED COMPONENTS|Python3 3.${PYTHON_MINOR_VERSION} EXACT REQUIRED COMPONENTS|" -i CMakeLists.txt
+	sed -r \
+		-e "s|Python3 [0-9\\.]+ REQUIRED COMPONENTS|Python3 3.$(ver_cut 2 "${EPYTHON:6}") EXACT REQUIRED COMPONENTS|" \
+		-i CMakeLists.txt
 	cmake_src_prepare
 }
 
