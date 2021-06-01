@@ -45,6 +45,7 @@ RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="dev-cpp/catch
 	dev-cpp/nlohmann_json
+	dev-util/glslang
 	dev-util/vulkan-headers"
 
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
