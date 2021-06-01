@@ -27,11 +27,11 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+compat-list +cubeb +web-service"
 
 DEPEND="app-arch/lz4
-	app-arch/zstd
+	>=app-arch/zstd-1.5.0
 	dev-libs/boost:=[context]
 	cubeb? ( dev-libs/cubeb )
 	dev-libs/inih
-	dev-libs/libfmt
+	>=dev-libs/libfmt-7.1.2
 	dev-libs/libzip
 	dev-libs/openssl
 	dev-qt/qtcore
@@ -42,7 +42,6 @@ DEPEND="app-arch/lz4
 	sys-libs/zlib
 	virtual/libusb:="
 RDEPEND="${DEPEND}
-	app-arch/zstd
 	media-libs/vulkan-loader"
 BDEPEND="dev-cpp/catch
 	dev-cpp/nlohmann_json
