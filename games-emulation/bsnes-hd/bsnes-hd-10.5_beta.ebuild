@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/DerKoun/bsnes-hd"
 MY_MAJOR="${PV%.*}"
 MY_MINOR="${PV#*.}"
 MY_MINOR="${MY_MINOR%_*}"
-MY_SHA="beta_${MY_MAJOR}_${MY_MINOR}h2"
+MY_SHA="beta_${MY_MAJOR}_${MY_MINOR}"
 BIN_PN="${PN%-*}"
 SRC_URI="https://github.com/DerKoun/bsnes-hd/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
