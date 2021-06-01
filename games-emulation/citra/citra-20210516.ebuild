@@ -52,7 +52,7 @@ src_prepare() {
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
 	# curl 'https://api.citra-emu.org/gamedb/' | jq -Me | bzip2 -9 > ...
-	bunzip2 -c9 "${FILESDIR}/${PN}-compatibility_list-${PV}.json.bz2" > "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
+	bunzip2 -c "${FILESDIR}/${PN}-compatibility_list-${PV}.json.bz2" > "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
 	sed -e 's/fmt::fmt/fmt/g' -i externals/dynarmic/src/CMakeLists.txt || die
 	sed -e 's|${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak|/usr/include/xbyak|' \
 		-i externals/dynarmic/externals/CMakeLists.txt || die
