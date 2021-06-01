@@ -8,7 +8,7 @@ DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 
 MY_PV="mainline-${PV/./-}"
-DYNARMIC_SHA="b2a4da5e65985e6b0a20ac8ac37d14425a2a39d9"
+DYNARMIC_SHA="36c3b289a090aaf59a24346f57ebe1b13efb36cf"
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
 SDL_SHA="107db2d89953ee7cc03417d43da1f26bd03aad57"
 SIRIT_SHA="eefca56afd49379bdebc97ded8b480839f930881"
