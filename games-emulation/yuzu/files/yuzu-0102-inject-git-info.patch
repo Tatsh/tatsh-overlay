@@ -26,14 +26,14 @@ index d120c8d3d..bf3dcdbf6 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
 @@ -28,6 +28,11 @@ add_custom_command(OUTPUT scm_rev.cpp
-       -DBUILD_TAG="${BUILD_TAG}"
-       -DBUILD_ID="${DISPLAY_VERSION}"
-       -DGIT_EXECUTABLE="${GIT_EXECUTABLE}"
-+      -DGIT_REF_SPEC="${GIT_REF_SPEC}"
-+      -DGIT_REV="${GIT_REV}"
-+      -DGIT_DESC="${GIT_DESC}"
-+      -DGIT_BRANCH="${GIT_BRANCH}"
-+      -DBUILD_FULLNAME="${BUILD_FULLNAME}"
-       -P "${CMAKE_SOURCE_DIR}/CMakeModules/GenerateSCMRev.cmake"
+       -DBUILD_TAG=${BUILD_TAG}
+       -DBUILD_ID=${DISPLAY_VERSION}
++      -DGIT_REF_SPEC=${GIT_REF_SPEC}
++      -DGIT_REV=${GIT_REV}
++      -DGIT_DESC=${GIT_DESC}
++      -DGIT_BRANCH=${GIT_BRANCH}
++      -DBUILD_FULLNAME=${BUILD_FULLNAME}
+       -DGIT_EXECUTABLE=${GIT_EXECUTABLE}
+       -P ${CMAKE_SOURCE_DIR}/CMakeModules/GenerateSCMRev.cmake
      DEPENDS
        # WARNING! It was too much work to try and make a common location for this list,
