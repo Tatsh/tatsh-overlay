@@ -503,7 +503,7 @@ index 24a41c48..964478c6 100755
  fi
  
 diff --git a/pihole b/pihole
-index f8085c8e..c8bfbeb2 100755
+index f8085c8e..e094589f 100755
 --- a/pihole
 +++ b/pihole
 @@ -9,16 +9,16 @@
@@ -546,6 +546,33 @@ index f8085c8e..c8bfbeb2 100755
  updateGravityFunc() {
    "${PI_HOLE_SCRIPT_DIR}"/gravity.sh "$@"
    exit $?
+@@ -261,7 +250,7 @@ Options:
+     exit 0
+   elif [[ "${1}" == "off" ]]; then
+     # Disable logging
+-    sed -i 's/^log-queries/#log-queries/' /etc/dnsmasq.d/01-pihole.conf
++    sed -i 's/^log-queries/#log-queries/' @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf
+     sed -i 's/^QUERY_LOGGING=true/QUERY_LOGGING=false/' /etc/pihole/setupVars.conf
+     if [[ "${2}" != "noflush" ]]; then
+       # Flush logs
+@@ -271,7 +260,7 @@ Options:
+     local str="Logging has been disabled!"
+   elif [[ "${1}" == "on" ]]; then
+     # Enable logging
+-    sed -i 's/^#log-queries/log-queries/' /etc/dnsmasq.d/01-pihole.conf
++    sed -i 's/^#log-queries/log-queries/' @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf
+     sed -i 's/^QUERY_LOGGING=false/QUERY_LOGGING=true/' /etc/pihole/setupVars.conf
+     echo -e "  ${INFO} Enabling logging..."
+     local str="Logging has been enabled!"
+@@ -355,7 +344,7 @@ statusFunc() {
+ 
+ tailFunc() {
+   # Warn user if Pi-hole's logging is disabled
+-  local logging_enabled=$(grep -c "^log-queries" /etc/dnsmasq.d/01-pihole.conf)
++  local logging_enabled=$(grep -c "^log-queries" @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf)
+   if [[ "${logging_enabled}" == "0" ]]; then
+     # No "log-queries" lines are found.
+     # Commented out lines (such as "#log-queries") are ignored
 @@ -378,29 +367,6 @@ tailFunc() {
    exit 0
  }
