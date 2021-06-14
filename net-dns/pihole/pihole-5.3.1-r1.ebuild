@@ -15,21 +15,21 @@ IUSE="cron www"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
-RDEPEND="${DEPEND} net-dns/${PN}-ftl"
+RDEPEND="${DEPEND} net-dns/${PN}-ftl app-admin/sudo"
 
 S="${WORKDIR}/pi-hole-${PV}"
 
 PATCHES=( "${FILESDIR}/${PN}-improved-paths.patch" )
 
 src_prepare() {
-	rm advanced/Scripts/update{,check}.sh advanced/Scripts/piholeCheckout.sh \
-		advanced/Templates/pihole.sudo advanced/Templates/${PN}-FTL.service
+	rm advanced/Scripts/update{,check}.sh advanced/Scripts/${PN}Checkout.sh \
+		advanced/Templates/${PN}.sudo advanced/Templates/${PN}-FTL.service
 	default
 	sed -r -e "s/@EPREFIX@/${EPREFIX}/g" -e "s/@LIBDIR@/$(get_libdir)/g" \
 		 -i gravity.sh "$PN" advanced/Scripts/*.sh \
 		advanced/Scripts/database_migration/gravity-db.sh \
-		advanced/Templates/pihole.cron advanced/index.php \
-		advanced/01-${PN}.conf
+		advanced/Templates/${PN}.cron advanced/index.php \
+		advanced/01-${PN}.conf advanced/Templates/gravity_copy.sql
 	sed -r -e "s/@PIHOLE_VERSION@/${PV}/g" -i advanced/index.php
 }
 
