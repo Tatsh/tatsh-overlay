@@ -453,7 +453,7 @@ index a38cd365..9412d5a4 100644
  // Print $execTime on development branches
  // Testing for - is marginally faster than "git rev-parse --abbrev-ref HEAD"
 diff --git a/gravity.sh b/gravity.sh
-index 24a41c48..964478c6 100755
+index 24a41c48..77790be9 100755
 --- a/gravity.sh
 +++ b/gravity.sh
 @@ -13,17 +13,17 @@
@@ -468,7 +468,7 @@ index 24a41c48..964478c6 100755
  source "${regexconverter}"
  # shellcheck disable=SC1091
 -source "/etc/.pihole/advanced/Scripts/database_migration/gravity-db.sh"
-+source "@EPREFIX@/usr/@LIBDIR@/database_migration/gravity-db.sh"
++source "@EPREFIX@/usr/@LIBDIR@/pihole/database_migration/gravity-db.sh"
  
  basename="pihole"
 -PIHOLE_COMMAND="/usr/local/bin/${basename}"
@@ -479,7 +479,7 @@ index 24a41c48..964478c6 100755
  
  # Legacy (pre v5.0) list file locations
  whitelistFile="${piholeDir}/whitelist.txt"
-@@ -32,10 +32,10 @@ regexFile="${piholeDir}/regex.list"
+@@ -32,14 +32,14 @@ regexFile="${piholeDir}/regex.list"
  adListFile="${piholeDir}/adlists.list"
  
  localList="${piholeDir}/local.list"
@@ -492,7 +492,13 @@ index 24a41c48..964478c6 100755
 +gravityDBfile_default="@EPREFIX@/var/lib/pihole/gravity.db"
  # GRAVITYDB may be overwritten by source pihole-FTL.conf below
  GRAVITYDB="${gravityDBfile_default}"
- gravityDBschema="${piholeGitDir}/advanced/Templates/gravity.db.sql"
+-gravityDBschema="${piholeGitDir}/advanced/Templates/gravity.db.sql"
+-gravityDBcopy="${piholeGitDir}/advanced/Templates/gravity_copy.sql"
++gravityDBschema="${piholeGitDir}/Templates/gravity.db.sql"
++gravityDBcopy="${piholeGitDir}/Templates/gravity_copy.sql"
+ 
+ domainsExtension="domains"
+ 
 @@ -910,7 +910,7 @@ if [[ "${forceDelete:-}" == true ]]; then
    str="Deleting existing list cache"
    echo -ne "${INFO} ${str}..."
