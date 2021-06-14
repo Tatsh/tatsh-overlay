@@ -11,7 +11,7 @@ SRC_URI="https://github.com/pi-hole/pi-hole/archive/v${PV}.tar.gz -> ${P}.tar.gz
 LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="systemd"
+IUSE="cron www"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
@@ -19,54 +19,55 @@ RDEPEND="${DEPEND} net-dns/${PN}-ftl"
 
 S="${WORKDIR}/pi-hole-${PV}"
 
+PATCHES=( "${FILESDIR}/${PN}-improved-paths.patch" )
+
 src_prepare() {
-	sed -r -e "s:coltable=.*:coltable=${EPREFIX}/usr/share/${PN}/COL_TABLE:" \
-		-e "s:/opt/${PN}/:${EPREFIX}/usr/libexec/${PN}/:g" \
-		-e "s:/etc/.${PN}/.*gravity-db.sh:${EPREFIX}/usr/libexec/${PN}/gravity-db.sh:" \
-		-e "s:/usr/local/bin:${EPREFIX}/usr/bin:g" \
-		-e "s:${PN}GitDir=.*:${PN}GitDir=${EPREFIX}/usr/share/${PN}:" \
-		-e "s:gravityDBfile=.*:gravityDBfile=${EPREFIX}/var/db/${PN}/gravity.db:" \
-		-e "s:gravityTEMPfile=.*:gravityTEMPfile=${EPREFIX}/var/db/${PN}/gravity_temp.db:" \
-		-i gravity.sh || die
-	# Randomise gravity update and update checker time time
-	sed -i "s/59 1 /$((1 + RANDOM % 58)) $((3 + RANDOM % 2))/" \
-		advanced/Templates/${PN}.cron || die
-	sed -i "s/59 17/$((1 + RANDOM % 58)) $((12 + RANDOM % 8))/" \
-		advanced/Templates/${PN}.cron || die
+	rm advanced/Scripts/update{,check}.sh advanced/Scripts/piholeCheckout.sh \
+		advanced/Templates/pihole.sudo advanced/Templates/${PN}-FTL.service
 	default
+	sed -r -e "s/@EPREFIX@/${EPREFIX}/g" -e "s/@LIBDIR@/$(get_libdir)/g" \
+		 -i gravity.sh "$PN" advanced/Scripts/*.sh \
+		advanced/Scripts/database_migration/gravity-db.sh \
+		advanced/Templates/pihole.cron advanced/index.php \
+		advanced/01-${PN}.conf
+	sed -r -e "s/@PIHOLE_VERSION@/${PV}/g" -i advanced/index.php
 }
 
 src_install() {
-	# dodir /etc/${PN}/dnsmasq.d
-
 	insinto /etc/logrotate.d
 	newins advanced/Templates/logrotate ${PN}
+	rm advanced/Templates/logrotate
 
-	exeinto /usr/libexec/${PN}
-	doexe gravity.sh \
-		advanced/Scripts/*.sh \
-		advanced/Scripts/database_migration/gravity-db.sh
+	insinto /usr/$(get_libdir)/${PN}
+	doins gravity.sh
+	doins -r advanced/Scripts/*
 
-	insinto /usr/share/${PN}
-	doins advanced/Templates/*.sql advanced/Scripts/COL_TABLE
+	insinto /usr/$(get_libdir)/${PN}/Templates
+	doins -r advanced/Templates/*
 
-	insinto /etc/${PN}
-	newins advanced/01-${PN}.conf 01-${PN}.conf.default
+	insinto /etc/${PN}/dnsmasq.d
+	doins advanced/01-${PN}.conf
 
 	dobashcomp advanced/bash-completion/${PN}
 
-	if ! use systemd; then
+	if use cron; then
 		insinto /etc/cron.d
 		newins advanced/Templates/${PN}.cron ${PN}
 	fi
 
+	if use www; then
+		insinto /usr/share/webapps/${PN}-blocking-page
+		doins advanced/Templates/index.php advanced/Templates/blockingpage.css
+	fi
+
 	doman manpages/${PN}*
+	einstalldocs
 
 	dobin ${PN}
 }
 
 pkg_config() {
-	if ! [ -d /var/db/${PN} ]; then
+	if ! [ -d /var/lib/${PN} ]; then
 		# if ! [ -f /etc/${PN}/setupVars.conf ]; then
 		# fi
 		# Questions:

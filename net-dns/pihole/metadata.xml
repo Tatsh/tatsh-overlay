@@ -5,4 +5,8 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+	<use>
+		<flag name="cron">Installs cron job</flag>
+		<flag name="www">Install www files (requires PHP hosting)</flag>
+	</use>
 </pkgmetadata>
