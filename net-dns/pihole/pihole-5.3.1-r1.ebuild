@@ -38,9 +38,15 @@ src_install() {
 	newins advanced/Templates/logrotate ${PN}
 	rm advanced/Templates/logrotate
 
+	exeinto /usr/$(get_libdir)/${PN}
+	doexe gravity.sh
+	doexe advanced/Scripts/*.sh
+	exeinto /usr/$(get_libdir)/${PN}/database_migration
+	doexe advanced/Scripts/database_migration/*.sh
 	insinto /usr/$(get_libdir)/${PN}
-	doins gravity.sh
-	doins -r advanced/Scripts/*
+	doins advanced/Scripts/COL_TABLE
+	insinto /usr/$(get_libdir)/${PN}/database_migration/gravity
+	doins advanced/Scripts/database_migration/gravity/*
 
 	insinto /usr/$(get_libdir)/${PN}/Templates
 	doins -r advanced/Templates/*
