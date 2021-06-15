@@ -15,7 +15,8 @@ IUSE="cron www"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
-RDEPEND="${DEPEND} net-dns/${PN}-ftl app-admin/sudo"
+FTL_VERSION="5.8.1"
+RDEPEND="${DEPEND} >=net-dns/${PN}-ftl-${FTL_VERSION} app-admin/sudo"
 
 S="${WORKDIR}/pi-hole-${PV}"
 
@@ -26,11 +27,14 @@ src_prepare() {
 		advanced/Templates/${PN}.sudo advanced/Templates/${PN}-FTL.service
 	default
 	sed -r -e "s/@EPREFIX@/${EPREFIX}/g" -e "s/@LIBDIR@/$(get_libdir)/g" \
+		 -e "s/@PIHOLE_FTL_VERSION@/${PIHOLE_FTL_VERSION}/g" \
 		 -i gravity.sh "$PN" advanced/Scripts/*.sh \
 		advanced/Scripts/database_migration/gravity-db.sh \
 		advanced/Templates/${PN}.cron advanced/index.php \
 		advanced/01-${PN}.conf advanced/Templates/gravity_copy.sql
-	sed -r -e "s/@PIHOLE_VERSION@/${PV}/g" -i advanced/index.php
+	sed -r -e "s/@PIHOLE_VERSION@/${PV}/g" -i advanced/index.php \
+		advanced/Scripts/*.sh \
+		advanced/Scripts/database_migration/gravity-db.sh
 }
 
 src_install() {
