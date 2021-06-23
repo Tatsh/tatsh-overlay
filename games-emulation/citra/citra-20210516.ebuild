@@ -27,7 +27,7 @@ DEPEND="app-arch/zstd
 	dev-libs/crypto++:=
 	dev-libs/cubeb
 	dev-libs/inih
-	dev-libs/libfmt:=
+	<dev-libs/libfmt-8.0.0
 	dev-libs/mp
 	dev-libs/teakra
 	>=dev-libs/xbyak-5.941
