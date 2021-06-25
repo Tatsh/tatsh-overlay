@@ -1,0 +1,34 @@
+From f7843b382cad47b3383747e8b2ba6140b8a70edf Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 25 Jun 2021 10:09:46 -0400
+Subject: [PATCH] Support org.freedesktop.ScreenSaver interface via qdbus
+
+---
+ README.rst   | 1 +
+ joystickwake | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/README.rst b/README.rst
+index f7d71fc..f6159c9 100644
+--- a/README.rst
++++ b/README.rst
+@@ -73,6 +73,7 @@ and common screensavers.  Those commands are::
+     gnome-screensaver-command --deactivate
+     mate-screensaver-command --poke
+     xfce4-screensaver-command --poke
++    qdbus org.freedesktop.ScreenSaver /ScreenSaver SimulateUserActivity
+ 
+ If needed, an additional wake command can be configured in either of the
+ following files::
+diff --git a/joystickwake b/joystickwake
+index 2d904d1..5661b0b 100755
+--- a/joystickwake
++++ b/joystickwake
+@@ -345,6 +345,7 @@ DEFAULT_WAKERS = [
+     ExecWaker('gnome-screensaver-command', '--deactivate', name="GNOME"),
+     ExecWaker('mate-screensaver-command', '--poke', name="MATE"),
+     ExecWaker('xfce4-screensaver-command', '--poke', name="Xfce"),
++    ExecWaker('qdbus', 'org.freedesktop.ScreenSaver', '/ScreenSaver', 'SimulateUserActivity', name='org.freedesktop.ScreenSaver'),
+     ]
+ 
+ 
