@@ -10,14 +10,14 @@ inherit distutils-r1
 DESCRIPTION="Joystick-aware screen waker."
 HOMEPAGE="https://github.com/foresto/joystickwake"
 SRC_URI="https://github.com/foresto/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+IUSE="X"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86"
 
 RDEPEND="
-	$(python_gen_cond_dep '
-		dev-python/pyudev[${PYTHON_USEDEP}]
-		dev-python/python-xlib[${PYTHON_USEDEP}]')"
+	$(python_gen_cond_dep 'dev-python/pyudev[${PYTHON_USEDEP}]')
+	X? ( $(python_gen_cond_dep 'dev-python/python-xlib[${PYTHON_USEDEP}]') )"
 
 PATCHES=( "${FILESDIR}/${PN}-pr6.patch" )
