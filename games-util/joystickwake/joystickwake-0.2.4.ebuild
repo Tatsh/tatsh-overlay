@@ -14,9 +14,10 @@ SRC_URI="https://github.com/foresto/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86"
-IUSE="xlib"
 
-RDEPEND="$(python_gen_cond_dep 'dev-python/pyudev[${PYTHON_USEDEP}]')
-	xlib? ( $(python_gen_cond_dep 'dev-python/python-xlib[${PYTHON_USEDEP}]') )"
+RDEPEND="
+	$(python_gen_cond_dep '
+		dev-python/pyudev[${PYTHON_USEDEP}]
+		dev-python/python-xlib[${PYTHON_USEDEP}]')"
 
 PATCHES=( "${FILESDIR}/${PN}-pr6.patch" )
