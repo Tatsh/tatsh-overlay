@@ -301,6 +301,7 @@ def main() -> int:
                         nargs=1,
                         default=realpath(path_join(dirname(__file__), '..')))
     parser.add_argument('-d', '--debug', action='store_true')
+    parser.add_argument('-e', '--exclude', nargs='*')
     parser.add_argument('package_names', nargs='*')
     args = parser.parse_args()
     log = setup_logging_stderr('livecheck', verbose=args.debug)
@@ -309,6 +310,9 @@ def main() -> int:
     settings = gather_settings(search_dir)
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
             search_dir, settings, names=args.package_names):
+        if pkg in args.exclude or f'{cat}/{pkg}' in args.exclude:
+            log.debug('Ignoring %s/%s', cat, pkg)
+            continue
         log.debug('Fetching %s', url)
         r: Response = (TextDataResponse(url[5:])
                        if url.startswith('data:') else session.get(url))
