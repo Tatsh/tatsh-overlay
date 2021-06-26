@@ -310,7 +310,7 @@ def main() -> int:
     settings = gather_settings(search_dir)
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
             search_dir, settings, names=args.package_names):
-        if pkg in args.exclude or f'{cat}/{pkg}' in args.exclude:
+        if pkg in (args.exclude or []) or f'{cat}/{pkg}' in (args.exclude or []):
             log.debug('Ignoring %s/%s', cat, pkg)
             continue
         log.debug('Fetching %s', url)
