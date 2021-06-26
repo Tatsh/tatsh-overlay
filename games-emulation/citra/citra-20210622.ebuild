@@ -8,12 +8,14 @@ DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/ https://github.com/citra-emu/citra"
 MY_SHA="5241032fc58b322e0ede29966dd28490ef0c3cb8"
 DYNARMIC_SHA="707ae88153b60d5f4ea8ba224dfcd761d2271dc4"
+FMT_SHA="cc09f1a6798c085c325569ef466bcdcffdc266d4"
 LODEPNG_SHA="31d9704fdcca0b68fb9656d4764fa0fb60e460c2"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
 SRC_URI="https://github.com/citra-emu/citra/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
-	https://github.com/citra-emu/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz"
+	https://github.com/citra-emu/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
+	https://github.com/fmtlib/fmt/archive/${FMT_SHA}.tar.gz -> ${PN}-fmt-${FMT_SHA:0:7}.tar.gz"
 
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
@@ -26,7 +28,6 @@ DEPEND="app-arch/zstd
 	dev-libs/crypto++:=
 	dev-libs/cubeb
 	dev-libs/inih
-	<dev-libs/libfmt-8.0.0
 	dev-libs/mp
 	dev-libs/teakra
 	>=dev-libs/xbyak-5.941
@@ -45,14 +46,14 @@ S="${WORKDIR}/${PN}-${MY_SHA}"
 
 src_prepare() {
 	rmdir "${S}/externals/lodepng/lodepng" \
-		"${S}/externals/"{soundtouch,dynarmic} || die
+		"${S}/externals/"{soundtouch,dynarmic,fmt} || die
 	mv "${WORKDIR}/ext-soundtouch-${SOUNDTOUCH_SHA}" "${S}/externals/soundtouch" || die
 	mv "${WORKDIR}/lodepng-${LODEPNG_SHA}" "${S}/externals/lodepng/lodepng" || die
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
+	mv "${WORKDIR}/fmt-${FMT_SHA}" "${S}/externals/fmt" || die
 	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
 	# curl 'https://api.citra-emu.org/gamedb/' | jq -Me | bzip2 -9 > ...
 	bunzip2 -c "${FILESDIR}/${PN}-compatibility_list-${PV}.json.bz2" > "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
-	sed -e 's/fmt::fmt/fmt/g' -i externals/dynarmic/src/CMakeLists.txt || die
 	sed -e 's|${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak|/usr/include/xbyak|' \
 		-i externals/dynarmic/externals/CMakeLists.txt || die
 	cmake_src_prepare
@@ -69,7 +70,6 @@ src_configure() {
 		-DUSE_SYSTEM_CRYPTOPP=ON
 		-DUSE_SYSTEM_CUBEB=ON
 		-DUSE_SYSTEM_ENET=ON
-		-DUSE_SYSTEM_FMT=ON
 		-DUSE_SYSTEM_INIH=ON
 		-DUSE_SYSTEM_TEAKRA=ON
 		-DUSE_SYSTEM_XBYAK=ON
