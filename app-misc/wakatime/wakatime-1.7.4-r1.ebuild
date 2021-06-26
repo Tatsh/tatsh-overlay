@@ -396,5 +396,6 @@ src_compile() {
 
 src_install() {
 	newbin build/${PN}-* ${PN}
+	dosym /usr/bin/${PN} /usr/bin/${PN}-cli
 	einstalldocs
 }
