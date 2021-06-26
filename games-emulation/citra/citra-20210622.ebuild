@@ -5,15 +5,14 @@ EAPI=7
 inherit cmake xdg-utils
 
 DESCRIPTION="A Nintendo 3DS emulator."
-HOMEPAGE="https://citra-emu.org/"
-MY_SHA="842031a2eb0b4bac4a351db914530296812962d1"
+HOMEPAGE="https://citra-emu.org/ https://github.com/citra-emu/citra"
+MY_SHA="5241032fc58b322e0ede29966dd28490ef0c3cb8"
 DYNARMIC_SHA="707ae88153b60d5f4ea8ba224dfcd761d2271dc4"
 LODEPNG_SHA="31d9704fdcca0b68fb9656d4764fa0fb60e460c2"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
 SRC_URI="https://github.com/citra-emu/citra/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
-	https://api.citra-emu.org/gamedb/ -> ${PN}-compatibility_list-${PV}.json
 	https://github.com/citra-emu/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz"
 
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
