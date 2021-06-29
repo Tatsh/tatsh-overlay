@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<use>
+		<flag name="barcode">Enable barcode support with app-text/barcode</flag>
+		<flag name="qrcode">Enables QR code support with media-gfx/qrencode</flag>
+	</use>
+</pkgmetadata>
