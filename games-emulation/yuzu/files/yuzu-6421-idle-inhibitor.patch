@@ -1,0 +1,649 @@
+From a123581cc8575d37f4db64d5a0de22345fef50bd Mon Sep 17 00:00:00 2001
+From: "Steven A. Wilson" <11664974+steven-a-wilson@users.noreply.github.com>
+Date: Sun, 6 Jun 2021 14:07:20 -0600
+Subject: [PATCH 1/4] common/idle_inhibitor: Initial implementation
+
+---
+ src/common/CMakeLists.txt     |   2 +
+ src/common/idle_inhibitor.cpp | 231 ++++++++++++++++++++++++++++++++++
+ src/common/idle_inhibitor.h   |  50 ++++++++
+ src/yuzu/main.cpp             |  22 +---
+ src/yuzu/main.h               |   9 +-
+ 5 files changed, 295 insertions(+), 19 deletions(-)
+ create mode 100644 src/common/idle_inhibitor.cpp
+ create mode 100644 src/common/idle_inhibitor.h
+
+diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
+index 7a4d9e3540f..f5303a285ee 100644
+--- a/src/common/CMakeLists.txt
++++ b/src/common/CMakeLists.txt
+@@ -130,6 +130,8 @@ add_library(common STATIC
+     hex_util.h
+     host_memory.cpp
+     host_memory.h
++    idle_inhibitor.cpp
++    idle_inhibitor.h
+     intrusive_red_black_tree.h
+     literals.h
+     logging/backend.cpp
+diff --git a/src/common/idle_inhibitor.cpp b/src/common/idle_inhibitor.cpp
+new file mode 100644
+index 00000000000..8d0c324e791
+--- /dev/null
++++ b/src/common/idle_inhibitor.cpp
+@@ -0,0 +1,231 @@
++// Copyright © 2021 Steven A. Wilson
++
++// Permission to use, copy, modify, and/or distribute this software
++// for any purpose with or without fee is hereby granted.
++
++// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
++// WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
++// WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
++// AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR
++// CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
++// OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
++// NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
++// CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++
++#include "idle_inhibitor.h"
++
++#include <cstdlib>
++
++#include "common/logging/log.h"
++
++#if defined(_WIN32)
++#include <windows.h>
++#elif defined(__unix__)
++#include <chrono>
++#include <dlfcn.h>
++#include <unistd.h>
++struct DBusConnection;
++struct DBusError;
++struct DBusMessage;
++typedef uint32_t dbus_bool_t;
++typedef uint32_t dbus_uint32_t;
++#endif
++
++namespace {
++#if defined(__unix__)
++const char* g_app = "yuzu";
++const char* g_reason = "Emulation is running";
++#endif
++
++#if defined(__unix__)
++const int DBUS_TYPE_INVALID = '\0';
++const int DBUS_TYPE_STRING = 's';
++const int DBUS_TYPE_UINT32 = 'u';
++const int DBUS_TIMEOUT_USE_DEFAULT = -1;
++enum DBusBusType { DBUS_BUS_SESSION, DBUS_BUS_SYSTEM, DBUS_BUS_STARTER };
++
++struct DBus {
++    DBusConnection* (*bus_get)(DBusBusType type, DBusError* error);
++    void (*connection_unref)(DBusConnection* connection);
++    DBusMessage* (*message_new_method_call)(const char* destination, const char* path,
++                                            const char* iface, const char* method);
++    dbus_bool_t (*message_append_args)(DBusMessage* message, int first_arg_type, ...);
++    dbus_bool_t (*connection_send)(DBusConnection* connection, DBusMessage* message,
++                                   dbus_uint32_t* serial);
++    DBusMessage* (*connection_send_with_reply_and_block)(DBusConnection* connection,
++                                                         DBusMessage* message,
++                                                         int timeout_milliseconds,
++                                                         DBusError* error);
++    dbus_bool_t (*message_get_args)(DBusMessage* message, DBusError* error, int first_arg_type,
++                                    ...);
++    void (*message_unref)(DBusMessage* message);
++
++    bool initialized = false;
++    void* handle = nullptr;
++
++    DBus() {
++        handle = dlopen("libdbus-1.so.3", RTLD_NOW);
++        if (handle) {
++#define dbus_symbol(sym)                                                                           \
++    ((sym = reinterpret_cast<decltype(sym)>(dlsym(handle, "dbus_" #sym))), sym != nullptr)
++            initialized = dbus_symbol(bus_get);
++            initialized |= dbus_symbol(connection_unref);
++            initialized |= dbus_symbol(message_new_method_call);
++            initialized |= dbus_symbol(message_append_args);
++            initialized |= dbus_symbol(connection_send);
++            initialized |= dbus_symbol(connection_send_with_reply_and_block);
++            initialized |= dbus_symbol(message_get_args);
++            initialized |= dbus_symbol(message_unref);
++#undef dbus_symbol
++            if (!initialized) {
++                LOG_ERROR(Common, "Failed to load libdbus functions");
++            }
++        } else {
++            LOG_WARNING(Common, "Failed to dlopen() libdbus-1.so.3");
++        }
++    }
++
++    ~DBus() {
++        if (handle)
++            dlclose(handle);
++    }
++};
++
++DBus g_dbus;
++#endif
++} // namespace
++
++namespace Common {
++IdleInhibitor::IdleInhibitor() {
++#if defined(__unix__)
++    ConnectDBus();
++#endif
++}
++
++IdleInhibitor::~IdleInhibitor() {
++    if (inhibiting_idle)
++        AllowIdle();
++#ifdef __unix__
++    if (dbus_connection)
++        g_dbus.connection_unref(dbus_connection);
++#endif
++}
++
++#if defined(_WIN32)
++void IdleInhibitor::InhibitIdle() {
++    inhibiting_idle = true;
++    SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
++}
++
++void AllowIdle() {
++    inhibiting_idle = false;
++    SetThreadExecutionState(ES_CONTINUOUS);
++}
++
++#elif defined(__unix__)
++void IdleInhibitor::ResetScreensaver() {
++    auto poll_time = std::chrono::steady_clock::now() + std::chrono::seconds(10);
++    for (;;) {
++        std::unique_lock<std::mutex> lk(cond_mutex);
++        poll_cond.wait_until(lk, poll_time, [this]() { return !inhibiting_idle; });
++        if (!inhibiting_idle)
++            return;
++
++        if (fork() == 0)
++            execlp("xdg-screensaver", "xdg-screensaver", "reset", nullptr);
++
++        poll_time += std::chrono::seconds(10);
++    }
++}
++
++void IdleInhibitor::ConnectDBus() {
++    if (g_dbus.initialized) {
++        dbus_connection = g_dbus.bus_get(DBUS_BUS_SESSION, nullptr);
++
++        if (!dbus_connection) {
++            LOG_WARNING(Common, "Failed to connect to session bus");
++        }
++    }
++}
++
++void IdleInhibitor::InhibitIdle() {
++    if (inhibiting_idle)
++        return;
++
++    inhibiting_idle = true;
++
++    if (dbus_connection) {
++        DBusMessage* inhibit_call = g_dbus.message_new_method_call(
++            "org.freedesktop.ScreenSaver", "/org/freedesktop/ScreenSaver",
++            "org.freedesktop.ScreenSaver", "Inhibit");
++        if (!inhibit_call) {
++            LOG_ERROR(Common, "Failed to create Inhibit call");
++            return;
++        }
++
++        if (!g_dbus.message_append_args(inhibit_call, DBUS_TYPE_STRING, &g_app, DBUS_TYPE_STRING,
++                                        &g_reason, DBUS_TYPE_INVALID)) {
++            g_dbus.message_unref(inhibit_call);
++            LOG_ERROR(Common, "Failed to append args to Inhibit call");
++            return;
++        }
++
++        DBusMessage* reply = g_dbus.connection_send_with_reply_and_block(
++            dbus_connection, inhibit_call, DBUS_TIMEOUT_USE_DEFAULT, nullptr);
++        g_dbus.message_unref(inhibit_call);
++
++        if (reply) {
++            if (!g_dbus.message_get_args(reply, nullptr, DBUS_TYPE_UINT32, &inhibit_cookie)) {
++                LOG_ERROR(Common, "Failed to get cookie from Inhibit reply");
++                inhibit_cookie = 0;
++            }
++        } else {
++            LOG_WARNING(Common, "Inhibit call failed");
++        }
++    }
++
++    if (inhibit_cookie == 0) {
++        LOG_WARNING(Common, "Falling back to xdg-screensaver polling thread");
++        poll_thread = std::make_unique<std::thread>(&Common::IdleInhibitor::ResetScreensaver, this);
++    }
++}
++
++void IdleInhibitor::AllowIdle() {
++    if (!inhibiting_idle)
++        return;
++
++    cond_mutex.lock();
++    inhibiting_idle = false;
++    cond_mutex.unlock();
++
++    if (poll_thread && poll_thread->joinable()) {
++        poll_cond.notify_all();
++        poll_thread->join();
++        poll_thread = nullptr;
++    }
++
++    if (dbus_connection && inhibit_cookie != 0) {
++        DBusMessage* uninhibit_call = g_dbus.message_new_method_call(
++            "org.freedesktop.ScreenSaver", "/org/freedesktop/ScreenSaver",
++            "org.freedesktop.ScreenSaver", "UnInhibit");
++        if (!uninhibit_call) {
++            LOG_ERROR(Common, "Failed to create UnInhibit call");
++            return;
++        }
++
++        if (!g_dbus.message_append_args(uninhibit_call, DBUS_TYPE_UINT32, &inhibit_cookie,
++                                        DBUS_TYPE_INVALID)) {
++            LOG_ERROR(Common, "Failed to append args to UnInhibit call");
++            g_dbus.message_unref(uninhibit_call);
++            return;
++        }
++
++        if (!g_dbus.connection_send(dbus_connection, uninhibit_call, nullptr)) {
++            LOG_WARNING(Common, "UnInhibit call failed");
++        }
++        g_dbus.message_unref(uninhibit_call);
++        inhibit_cookie = 0;
++    }
++}
++#endif
++} // namespace Common
+diff --git a/src/common/idle_inhibitor.h b/src/common/idle_inhibitor.h
+new file mode 100644
+index 00000000000..14c041ba0e6
+--- /dev/null
++++ b/src/common/idle_inhibitor.h
+@@ -0,0 +1,50 @@
++// Copyright © 2021 Steven A. Wilson
++
++// Permission to use, copy, modify, and/or distribute this software
++// for any purpose with or without fee is hereby granted.
++
++// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
++// WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
++// WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
++// AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR
++// CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
++// OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
++// NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
++// CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
++
++#pragma once
++
++#include <atomic>
++
++#if defined(__unix__)
++#include <condition_variable>
++#include <mutex>
++#include <thread>
++#endif
++
++struct DBus;
++struct DBusConnection;
++
++namespace Common {
++class IdleInhibitor {
++public:
++    explicit IdleInhibitor();
++    ~IdleInhibitor();
++    void InhibitIdle();
++    void AllowIdle();
++
++private:
++    std::atomic_bool inhibiting_idle{false};
++
++#if defined(__unix__)
++    void ConnectDBus();
++    void ResetScreensaver();
++
++    uint32_t inhibit_cookie = 0;
++    DBusConnection* dbus_connection = NULL;
++    std::unique_ptr<std::thread> poll_thread;
++    std::condition_variable poll_cond;
++    std::mutex cond_mutex;
++#endif
++};
++} // namespace Common
+diff --git a/src/yuzu/main.cpp b/src/yuzu/main.cpp
+index e683fb920d6..aa0b983ffeb 100644
+--- a/src/yuzu/main.cpp
++++ b/src/yuzu/main.cpp
+@@ -70,6 +70,7 @@ static FileSys::VirtualFile VfsDirectoryCreateFileWrapper(const FileSys::Virtual
+ #include "common/fs/fs.h"
+ #include "common/fs/fs_paths.h"
+ #include "common/fs/path_util.h"
++#include "common/idle_inhibitor.h"
+ #include "common/logging/backend.h"
+ #include "common/logging/filter.h"
+ #include "common/logging/log.h"
+@@ -202,7 +203,8 @@ static void RemoveCachedContents() {
+
+ GMainWindow::GMainWindow()
+     : input_subsystem{std::make_shared<InputCommon::InputSubsystem>()},
+-      config{std::make_unique<Config>()}, vfs{std::make_shared<FileSys::RealVfsFilesystem>()},
++      idle_inhibitor{std::make_unique<Common::IdleInhibitor>()}, config{std::make_unique<Config>()},
++      vfs{std::make_shared<FileSys::RealVfsFilesystem>()},
+       provider{std::make_unique<FileSys::ManualContentProvider>()} {
+     InitializeLogging();
+
+@@ -1199,18 +1201,6 @@ void GMainWindow::OnDisplayTitleBars(bool show) {
+     }
+ }
+
+-void GMainWindow::PreventOSSleep() {
+-#ifdef _WIN32
+-    SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+-#endif
+-}
+-
+-void GMainWindow::AllowOSSleep() {
+-#ifdef _WIN32
+-    SetThreadExecutionState(ES_CONTINUOUS);
+-#endif
+-}
+-
+ bool GMainWindow::LoadROM(const QString& filename, std::size_t program_index) {
+     // Shutdown previous session if the emu thread is still active...
+     if (emu_thread != nullptr)
+@@ -1437,7 +1427,7 @@ void GMainWindow::ShutdownGame() {
+         HideFullscreen();
+     }
+
+-    AllowOSSleep();
++    idle_inhibitor->AllowIdle();
+
+     discord_rpc->Pause();
+     emu_thread->RequestStop();
+@@ -2363,7 +2353,7 @@ void GMainWindow::OnMenuRecentFile() {
+ }
+
+ void GMainWindow::OnStartGame() {
+-    PreventOSSleep();
++    idle_inhibitor->InhibitIdle();
+
+     emu_thread->SetRunning(true);
+
+@@ -2391,7 +2381,7 @@ void GMainWindow::OnPauseGame() {
+     ui.action_Stop->setEnabled(true);
+     ui.action_Capture_Screenshot->setEnabled(false);
+
+-    AllowOSSleep();
++    idle_inhibitor->AllowIdle();
+ }
+
+ void GMainWindow::OnStopGame() {
+diff --git a/src/yuzu/main.h b/src/yuzu/main.h
+index 490b6889f23..b0c00143cff 100644
+--- a/src/yuzu/main.h
++++ b/src/yuzu/main.h
+@@ -13,6 +13,7 @@
+ #include <QTranslator>
+
+ #include "common/common_types.h"
++#include "common/idle_inhibitor.h"
+ #include "core/core.h"
+ #include "core/hle/service/acc/profile_manager.h"
+ #include "ui_main.h"
+@@ -67,6 +68,10 @@ enum class SwkbdReplyType : u32;
+ enum class WebExitReason : u32;
+ } // namespace Service::AM::Applets
+
++namespace Common {
++class IdlePreventer;
++} // namespace Common
++
+ enum class EmulatedDirectoryTarget {
+     NAND,
+     SDMC,
+@@ -177,9 +182,6 @@ public slots:
+     void ConnectWidgetEvents();
+     void ConnectMenuEvents();
+
+-    void PreventOSSleep();
+-    void AllowOSSleep();
+-
+     bool LoadROM(const QString& filename, std::size_t program_index);
+     void BootGame(const QString& filename, std::size_t program_index = 0);
+     void ShutdownGame();
+@@ -296,6 +298,7 @@ private slots:
+
+     std::unique_ptr<DiscordRPC::DiscordInterface> discord_rpc;
+     std::shared_ptr<InputCommon::InputSubsystem> input_subsystem;
++    std::unique_ptr<Common::IdleInhibitor> idle_inhibitor;
+
+     GRenderWindow* render_window;
+     GameList* game_list;
+
+From d92b4cf951912c78cfa00b2a2528d577c5904963 Mon Sep 17 00:00:00 2001
+From: "Steven A. Wilson" <11664974+steven-a-wilson@users.noreply.github.com>
+Date: Sun, 6 Jun 2021 15:55:17 -0600
+Subject: [PATCH 2/4] common/idle_inhibitor: Code review suggestions
+
+---
+ src/common/idle_inhibitor.cpp | 73 +++++++++++++++++++++--------------
+ 1 file changed, 45 insertions(+), 28 deletions(-)
+
+diff --git a/src/common/idle_inhibitor.cpp b/src/common/idle_inhibitor.cpp
+index 8d0c324e791..ed11a63c60c 100644
+--- a/src/common/idle_inhibitor.cpp
++++ b/src/common/idle_inhibitor.cpp
+@@ -12,7 +12,7 @@
+ // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+ // CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+-#include "idle_inhibitor.h"
++#include "common/idle_inhibitor.h"
+
+ #include <cstdlib>
+
+@@ -27,22 +27,26 @@
+ struct DBusConnection;
+ struct DBusError;
+ struct DBusMessage;
+-typedef uint32_t dbus_bool_t;
+-typedef uint32_t dbus_uint32_t;
++using dbus_bool_t = uint32_t;
++using dbus_uint32_t = uint32_t;
+ #endif
+
+ namespace {
+ #if defined(__unix__)
+-const char* g_app = "yuzu";
+-const char* g_reason = "Emulation is running";
++constexpr char g_app[] = "yuzu";
++constexpr char g_reason[] = "Emulation is running";
+ #endif
+
+ #if defined(__unix__)
+-const int DBUS_TYPE_INVALID = '\0';
+-const int DBUS_TYPE_STRING = 's';
+-const int DBUS_TYPE_UINT32 = 'u';
+-const int DBUS_TIMEOUT_USE_DEFAULT = -1;
+-enum DBusBusType { DBUS_BUS_SESSION, DBUS_BUS_SYSTEM, DBUS_BUS_STARTER };
++constexpr int DBUS_TYPE_INVALID = '\0';
++constexpr int DBUS_TYPE_STRING = 's';
++constexpr int DBUS_TYPE_UINT32 = 'u';
++constexpr int DBUS_TIMEOUT_USE_DEFAULT = -1;
++enum DBusBusType {
++    DBUS_BUS_SESSION,
++    DBUS_BUS_SYSTEM,
++    DBUS_BUS_STARTER,
++};
+
+ struct DBus {
+     DBusConnection* (*bus_get)(DBusBusType type, DBusError* error);
+@@ -86,8 +90,9 @@ struct DBus {
+     }
+
+     ~DBus() {
+-        if (handle)
++        if (handle) {
+             dlclose(handle);
++        }
+     }
+ };
+
+@@ -103,11 +108,13 @@ IdleInhibitor::IdleInhibitor() {
+ }
+
+ IdleInhibitor::~IdleInhibitor() {
+-    if (inhibiting_idle)
++    if (inhibiting_idle) {
+         AllowIdle();
++    }
+ #ifdef __unix__
+-    if (dbus_connection)
++    if (dbus_connection) {
+         g_dbus.connection_unref(dbus_connection);
++    }
+ #endif
+ }
+
+@@ -125,32 +132,37 @@ void AllowIdle() {
+ #elif defined(__unix__)
+ void IdleInhibitor::ResetScreensaver() {
+     auto poll_time = std::chrono::steady_clock::now() + std::chrono::seconds(10);
+-    for (;;) {
++    while (true) {
+         std::unique_lock<std::mutex> lk(cond_mutex);
+         poll_cond.wait_until(lk, poll_time, [this]() { return !inhibiting_idle; });
+-        if (!inhibiting_idle)
++        if (!inhibiting_idle) {
+             return;
++        }
+
+-        if (fork() == 0)
++        if (fork() == 0) {
+             execlp("xdg-screensaver", "xdg-screensaver", "reset", nullptr);
++        }
+
+         poll_time += std::chrono::seconds(10);
+     }
+ }
+
+ void IdleInhibitor::ConnectDBus() {
+-    if (g_dbus.initialized) {
+-        dbus_connection = g_dbus.bus_get(DBUS_BUS_SESSION, nullptr);
++    if (!g_dbus.initialized) {
++        return;
++    }
+
+-        if (!dbus_connection) {
+-            LOG_WARNING(Common, "Failed to connect to session bus");
+-        }
++    dbus_connection = g_dbus.bus_get(DBUS_BUS_SESSION, nullptr);
++
++    if (!dbus_connection) {
++        LOG_WARNING(Common, "Failed to connect to session bus");
+     }
+ }
+
+ void IdleInhibitor::InhibitIdle() {
+-    if (inhibiting_idle)
++    if (inhibiting_idle) {
+         return;
++    }
+
+     inhibiting_idle = true;
+
+@@ -163,8 +175,11 @@ void IdleInhibitor::InhibitIdle() {
+             return;
+         }
+
+-        if (!g_dbus.message_append_args(inhibit_call, DBUS_TYPE_STRING, &g_app, DBUS_TYPE_STRING,
+-                                        &g_reason, DBUS_TYPE_INVALID)) {
++        // dbus_message_append_args() takes char** for string arguments
++        const char* app_ptr = &g_app[0];
++        const char* reason_ptr = &g_reason[0];
++        if (!g_dbus.message_append_args(inhibit_call, DBUS_TYPE_STRING, &app_ptr, DBUS_TYPE_STRING,
++                                        &reason_ptr, DBUS_TYPE_INVALID)) {
+             g_dbus.message_unref(inhibit_call);
+             LOG_ERROR(Common, "Failed to append args to Inhibit call");
+             return;
+@@ -191,17 +206,19 @@ void IdleInhibitor::InhibitIdle() {
+ }
+
+ void IdleInhibitor::AllowIdle() {
+-    if (!inhibiting_idle)
++    if (!inhibiting_idle) {
+         return;
++    }
+
+-    cond_mutex.lock();
++    {
++    std::lock_guard lock{cond_mutex};
+     inhibiting_idle = false;
+-    cond_mutex.unlock();
++    }
+
+     if (poll_thread && poll_thread->joinable()) {
+         poll_cond.notify_all();
+         poll_thread->join();
+-        poll_thread = nullptr;
++        poll_thread.reset();
+     }
+
+     if (dbus_connection && inhibit_cookie != 0) {
+
+From a7720677e6221e42f073e406d4fcd29c0fce9901 Mon Sep 17 00:00:00 2001
+From: "Steven A. Wilson" <11664974+steven-a-wilson@users.noreply.github.com>
+Date: Sun, 6 Jun 2021 15:55:34 -0600
+Subject: [PATCH 3/4] common/idle_inhibitor: Fix Win32 build
+
+---
+ src/common/idle_inhibitor.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/common/idle_inhibitor.cpp b/src/common/idle_inhibitor.cpp
+index ed11a63c60c..4c984729462 100644
+--- a/src/common/idle_inhibitor.cpp
++++ b/src/common/idle_inhibitor.cpp
+@@ -124,7 +124,7 @@ void IdleInhibitor::InhibitIdle() {
+     SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+ }
+
+-void AllowIdle() {
++void IdleInhibitor::AllowIdle() {
+     inhibiting_idle = false;
+     SetThreadExecutionState(ES_CONTINUOUS);
+ }
+
+From 2bdd19a434467c7ec75bc14d240d6796f7b69302 Mon Sep 17 00:00:00 2001
+From: "Steven A. Wilson" <11664974+steven-a-wilson@users.noreply.github.com>
+Date: Sat, 26 Jun 2021 10:24:28 -0600
+Subject: [PATCH 4/4] common/idle_inhibitor: clang-format
+
+---
+ src/common/idle_inhibitor.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/common/idle_inhibitor.cpp b/src/common/idle_inhibitor.cpp
+index 4c984729462..363ef2911cd 100644
+--- a/src/common/idle_inhibitor.cpp
++++ b/src/common/idle_inhibitor.cpp
+@@ -211,8 +211,8 @@ void IdleInhibitor::AllowIdle() {
+     }
+
+     {
+-    std::lock_guard lock{cond_mutex};
+-    inhibiting_idle = false;
++        std::lock_guard lock{cond_mutex};
++        inhibiting_idle = false;
+     }
+
+     if (poll_thread && poll_thread->joinable()) {
