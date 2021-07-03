@@ -5,23 +5,27 @@ EAPI=7
 inherit cmake
 
 DESCRIPTION="PS3 emulator and debugger."
-HOMEPAGE="https://rpcs3.net/"
-MY_SHA="v0.0.16"
+HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
+MY_SHA="v0.0.17"
 ASMJIT_SHA="723f58581afc0f4cb16ba13396ff77e425896847"
-CEREAL_SHA="60c69df968d1c72c998cd5f23ba34e2e3718a84b"
-HIDAPI_SHA="8961cf86ebc4756992a7cd65c219c743e94bab19"
-LLVM_SHA="716bb292ba3b4e5c0ceff72fee911ed2b53232cf"
+HIDAPI_SHA="01f601a1509bf9c67819fbf521df39644bab52d5"
+LLVM_SHA="5836324d6443a62ed09b84c125029e98324978c3"
 YAML_CPP_SHA="6a211f0bc71920beef749e6c35d7d1bcc2447715"
 WOLFSSL_SHA="39b5448601271b8d1deabde8a0d33dc64d2a94bd"
-SPAN_SHA="9d7559aabdebf569cab3480a7ea2a87948c0ae47"
+GLSLANG_SHA="18eef33bd7a4bf5ad8c69f99cb72022608cf6e73"
+SPIRV_HEADERS_SHA="3fdabd0da2932c276b25b9b4a988ba134eba1aa6"
+SPIRV_TOOLS_SHA="895927bd3f2d653f40cebab55aa6c7eabde30a86"
+LIBUSB_SHA="c33990a300674e24f47ff0f172f7efb10b63b88a"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${PN}-llvm-${LLVM_SHA:0:7}.tar.gz
 	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${PN}-asmjit-${ASMJIT_SHA:0:7}.tar.gz
 	https://github.com/wolfSSL/wolfssl/archive/${WOLFSSL_SHA}.tar.gz -> ${PN}-wolfssl-${WOLFSSL_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${PN}-hidapi-${HIDAPI_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${PN}-yaml-cpp-${YAML_CPP_SHA:0:7}.tar.gz
-	https://github.com/RPCS3/cereal/archive/${CEREAL_SHA}.tar.gz -> ${PN}-cereal-${CEREAL_SHA:0:7}.tar.gz
-	https://github.com/tcbrindle/span/archive/${SPAN_SHA}.tar.gz -> ${PN}-span-${SPAN_SHA:0:7}.tar.gz"
+	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> ${PN}-glslang-${GLSLANG_SHA:0:7}.tar.gz
+	https://github.com/KhronosGroup/SPIRV-Tools/archive/${SPIRV_TOOLS_SHA}.tar.gz -> ${PN}-SPIRV-Tools-${SPIRV_TOOLS_SHA:0:7}.tar.gz
+	https://github.com/KhronosGroup/SPIRV-Headers/archive/${SPIRV_HEADERS_SHA}.tar.gz -> ${PN}-SPIRV-Headers-${SPIRV_HEADERS_SHA:0:7}.tar.gz
+	https://github.com/libusb/libusb/archive/${LIBUSB_SHA}.tar.gz -> ${PN}-libusb-${LIBUSB_SHA:0:7}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -37,7 +41,6 @@ DEPEND="dev-libs/pugixml
 	dev-qt/qtgui
 	dev-qt/qtnetwork:5
 	dev-qt/qtwidgets:5
-	dev-util/glslang
 	media-libs/libpng:*
 	media-libs/openal
 	media-video/ffmpeg
@@ -52,26 +55,36 @@ DEPEND="dev-libs/pugixml
 	wayland? ( dev-libs/wayland )"
 RDEPEND="${DEPEND} sys-devel/gdb"
 BDEPEND=">=sys-devel/gcc-9"
+# Eventually:
+# dev-util/spirv-headers
+# dev-util/spirv-tools
+# dev-util/glslang
 
 S="${WORKDIR}/${PN}-${MY_SHA:1}"
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-allow-more-system-libs.patch"
 	"${FILESDIR}/${PN}-0003-add-missing-include-fix-branch-names.patch"
 	"${FILESDIR}/${PN}-0004-add-use_wayland.patch"
 	"${FILESDIR}/${PN}-0005-faudio.patch"
+	"${FILESDIR}/${PN}-0006-vk.patch"
 )
 
 src_prepare() {
 	rmdir "${S}/llvm" || die
 	mv "${WORKDIR}/llvm-mirror-${LLVM_SHA}" "${S}/llvm" || die
-	rmdir "${S}/3rdparty/"{cereal,wolfssl,hidapi,yaml-cpp,span} || die
+	rmdir "${S}/3rdparty/"{wolfssl,yaml-cpp} || die
 	mv "${WORKDIR}/wolfssl-${WOLFSSL_SHA}" "${S}/3rdparty/wolfssl" || die
-	mv "${WORKDIR}/hidapi-${HIDAPI_SHA}" "${S}/3rdparty/hidapi" || die
+	rmdir "${S}/3rdparty/hidapi/hidapi" || die
+	mv "${WORKDIR}/hidapi-${HIDAPI_SHA}" "${S}/3rdparty/hidapi/hidapi" || die
 	mv "${WORKDIR}/yaml-cpp-${YAML_CPP_SHA}" "${S}/3rdparty/yaml-cpp" || die
-	mv "${WORKDIR}/cereal-${CEREAL_SHA}" "${S}/3rdparty/cereal" || die
-	mv "${WORKDIR}/span-${SPAN_SHA}" "${S}/3rdparty/span" || die
-	rmdir "${S}/asmjit" || die
-	mv "${WORKDIR}/asmjit-${ASMJIT_SHA}" "${S}/asmjit" || die
+	rmdir "${S}/3rdparty/asmjit/asmjit" || die
+	mv "${WORKDIR}/asmjit-${ASMJIT_SHA}" "${S}/3rdparty/asmjit/asmjit" || die
+	rmdir "${S}/3rdparty/SPIRV/SPIRV-"{Headers,Tools} || die
+	mv "${WORKDIR}/SPIRV-Tools-${SPIRV_TOOLS_SHA}" "${S}/3rdparty/SPIRV/SPIRV-Tools" || die
+	mv "${WORKDIR}/SPIRV-Headers-${SPIRV_HEADERS_SHA}" "${S}/3rdparty/SPIRV/SPIRV-Headers" || die
+	rmdir "${S}/3rdparty/glslang/glslang" || die
+	mv "${WORKDIR}/glslang-${GLSLANG_SHA}" "${S}/3rdparty/glslang/glslang" || die
+	rmdir "${S}/3rdparty/libusb/libusb" || die
+	mv "${WORKDIR}/libusb-${LIBUSB_SHA}" "${S}/3rdparty/libusb/libusb" || die
 	echo "#define RPCS3_GIT_VERSION \"0000-${MY_SHA}\"" > rpcs3/git-version.h
 	echo '#define RPCS3_GIT_BRANCH "master"' >> rpcs3/git-version.h
 	echo '#define RPCS3_GIT_VERSION_NO_UPDATE 1' >> rpcs3/git-version.h
@@ -96,13 +109,10 @@ src_configure() {
 		-DUSE_PULSE=$(usex pulseaudio)
 		-DUSE_SYSTEM_CURL=ON
 		-DUSE_SYSTEM_FFMPEG=ON
-		-DUSE_SYSTEM_GLSLANG=ON
 		-DUSE_SYSTEM_LIBPNG=ON
 		-DUSE_SYSTEM_PUGIXML=ON
-		-DUSE_SYSTEM_SPIRV_HEADERS=ON
 		-DUSE_SYSTEM_XXHASH=ON
 		-DUSE_SYSTEM_ZLIB=ON
-		-DUSE_SYS_LIBUSB=ON
 		-DUSE_VULKAN=$(usex vulkan)
 		-DUSE_WAYLAND=$(usex wayland)
 		-DWITH_LLVM=$(usex llvm)

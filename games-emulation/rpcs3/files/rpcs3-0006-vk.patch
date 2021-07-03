@@ -1,0 +1,16 @@
+diff --git a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
+index f10ad0c6b..525603ddd 100644
+--- a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
++++ b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
+@@ -13,7 +13,7 @@
+ #pragma clang diagnostic ignored "-Winconsistent-missing-override"
+ #endif
+ #endif
+-#include "SPIRV/GlslangToSpv.h"
++#include <glslang/SPIRV/GlslangToSpv.h>
+ #include "spirv-tools/optimizer.hpp"
+ #ifdef _MSC_VER
+ #pragma warning(pop)
+--
+2.30.1
+
