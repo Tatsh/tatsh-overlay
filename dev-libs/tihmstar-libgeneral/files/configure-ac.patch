@@ -4,7 +4,7 @@ diff -urN a/configure.ac b/configure.ac
 @@ -1,17 +1,17 @@
  AC_PREREQ([2.69])
 -AC_INIT([libgeneral], m4_esyscmd([git rev-list --count HEAD | tr -d '\n']), [tihmstar@gmail.com])
-+AC_INIT([libgeneral], 40, [tihmstar@gmail.com])
++AC_INIT([libgeneral], 56, [tihmstar@gmail.com])
 
  AC_CANONICAL_SYSTEM
  AC_CANONICAL_HOST
@@ -18,9 +18,9 @@ diff -urN a/configure.ac b/configure.ac
 -AC_DEFINE([VERSION_COMMIT_SHA], "m4_esyscmd([git rev-parse HEAD | tr -d '\n'])", [Git commit sha])
 -AC_SUBST([VERSION_COMMIT_COUNT], ["m4_esyscmd([git rev-list --count HEAD | tr -d '\n'])"])
 -AC_SUBST([VERSION_COMMIT_SHA], ["m4_esyscmd([git rev-parse HEAD | tr -d '\n'])"])
-+AC_DEFINE([VERSION_COMMIT_COUNT], "40", [Git commit count])
-+AC_DEFINE([VERSION_COMMIT_SHA], "210aa949151ce9851a44ab8623667dc749a5c74e", [Git commit sha])
-+AC_SUBST([VERSION_COMMIT_COUNT], ["40"])
-+AC_SUBST([VERSION_COMMIT_COUNT], ["210aa949151ce9851a44ab8623667dc749a5c74e"])
++AC_DEFINE([VERSION_COMMIT_COUNT], "56", [Git commit count])
++AC_DEFINE([VERSION_COMMIT_SHA], "e0d98cbeedece5d62e3e9432c3ed37cd87da5338", [Git commit sha])
++AC_SUBST([VERSION_COMMIT_COUNT], ["56"])
++AC_SUBST([VERSION_COMMIT_COUNT], ["e0d98cbeedece5d62e3e9432c3ed37cd87da5338"])
 
  # Checks for programs.
