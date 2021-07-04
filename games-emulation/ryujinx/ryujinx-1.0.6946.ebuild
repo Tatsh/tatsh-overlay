@@ -19,15 +19,14 @@ S="${WORKDIR}/publish"
 MY_PN="R${PN:1}"
 QA_PREBUILT="/opt/${PN}/*.so /opt/${PN}/${MY_PN}"
 
-src_prepare() {
-	rm *.dylib *.dll || die
-	default
-}
-
 src_install() {
 	insinto "/opt/${PN}"
-	doins -r ./*
+	doins ./*.ini ./*.txt ./*.md ./*.config
 	make_wrapper "${MY_PN}" "/opt/${PN}/${MY_PN}" "/opt/${PN}" "/opt/${PN}" /opt/bin/
 	newicon -s 32 "${FILESDIR}/${PN}-logo.png" "${PN}.png"
 	make_desktop_entry "/opt/bin/${MY_PN}" "${MY_PN}" "${PN}"
+	exeinto "/opt/${PN}"
+	doexe "${MY_PN}"
+	insopts -m755
+	doins *.so
 }
