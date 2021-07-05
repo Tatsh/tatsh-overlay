@@ -38,6 +38,7 @@ src_prepare() {
 		-e "s/^from image_cleaner/from ${PN}_lib.image_cleaner/g" \
 		-e "s/^from progress_monitor/from ${PN}_lib.progress_monitor/g" \
 		-e "s/^from avalon_framework/from ${PN}_lib.avalon_framework/g" \
+		-e "s/import_module\(f\"wrappers\./import_module(\"${PN}_lib.wrappers./g" \
 		-i src/*.py src/wrappers/*.py || die
 	sed -r \
 		-e "s|^LOCALE_DIRECTORY =.*|LOCALE_DIRECTORY = '${EPREFIX}/usr/share/locale'|" \
