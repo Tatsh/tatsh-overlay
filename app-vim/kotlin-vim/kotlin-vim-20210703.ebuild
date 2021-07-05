@@ -11,7 +11,7 @@ HOMEPAGE="https://github.com/udalov/kotlin-vim"
 LICENSE="Apache-2.0"
 KEYWORDS="~amd64 ~x86"
 
-SHA="e043f6a2ddcb0611e4afcb1871260a520e475c74"
+SHA="9122b2805499fbde06f27116f4b7a2a30d6996f5"
 SRC_URI="https://github.com/udalov/kotlin-vim/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 S="${WORKDIR}/${PN}-${SHA}"
