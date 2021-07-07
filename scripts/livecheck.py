@@ -247,8 +247,10 @@ def handle_glabels(s: str) -> str:
     r = requests.get(
         f'https://github.com/jimevins/glabels-qt/commits/glabels-{s}.atom')
     r.raise_for_status()
-    return ('3.99_p' + etree.fromstring(r.text).find(
-        'entry/updated', RSS_NS).text.split('T')[0].replace('-', ''))
+    return ('3.99_p' + assert_not_none(
+        assert_not_none(
+            etree.fromstring(r.text).find(
+                'entry/updated', RSS_NS)).text).split('T')[0].replace('-', ''))
 
 
 def handle_stepmania_outfox(s: str) -> str:
