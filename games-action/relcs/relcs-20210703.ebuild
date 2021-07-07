@@ -6,8 +6,8 @@ inherit cmake
 
 DESCRIPTION="GTA Liberty City Stories decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3/tree/lcs"
-MY_RELCS_HASH="82322293fe65682c32ee18a82296e8727f42d788"
-MY_LIBRW_HASH="65c619b3e7dcec6f5dbd05d3203b530d667ba90f"
+MY_RELCS_HASH="5d5e0f62e8b677e122cbdceef8badcbaae7c0235"
+MY_LIBRW_HASH="af20de45226f5152a035866da32517466e81142d"
 SRC_URI="https://github.com/GTAmodding/re3/archive/${MY_RELCS_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
 
