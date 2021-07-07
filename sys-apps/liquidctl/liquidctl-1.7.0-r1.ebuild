@@ -12,10 +12,11 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="!test? ( test )"
 
-RDEPEND="dev-python/docopt[${PYTHON_USEDEP}]
+RDEPEND="dev-python/colorlog[${PYTHON_USEDEP}]
+	dev-python/docopt[${PYTHON_USEDEP}]
 	dev-python/pyusb[${PYTHON_USEDEP}]
 	dev-python/hidapi[${PYTHON_USEDEP}]
 	sys-apps/i2c-tools[${PYTHON_USEDEP},python]"
