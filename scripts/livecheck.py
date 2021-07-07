@@ -227,6 +227,8 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
                     transformations[catpkg] = handle_re
                 elif tf == 'handle_bsnes_hd':
                     transformations[catpkg] = handle_bsnes_hd
+                elif tf == 'handle_glabels':
+                    transformations[catpkg] = handle_glabels
                 else:
                     raise Exception(f'Unknown transformation function: {tf}')
     return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
@@ -239,6 +241,15 @@ class TextDataResponse:
 
     def raise_for_status(self) -> None:
         pass
+
+
+def handle_glabels(s: str) -> str:
+    r = requests.get(
+        f'https://github.com/jimevins/glabels-qt/commits/glabels-{s}.atom')
+    r.raise_for_status()
+    return ('3.99_p' + etree.fromstring(r.text).find('entry/updated',
+                                          RSS_NS).text.split('T')[0].replace(
+                                              '-', ''))
 
 
 def handle_stepmania_outfox(s: str) -> str:
@@ -310,7 +321,8 @@ def main() -> int:
     settings = gather_settings(search_dir)
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
             search_dir, settings, names=args.package_names):
-        if pkg in (args.exclude or []) or f'{cat}/{pkg}' in (args.exclude or []):
+        if pkg in (args.exclude or []) or f'{cat}/{pkg}' in (args.exclude
+                                                             or []):
             log.debug('Ignoring %s/%s', cat, pkg)
             continue
         log.debug('Fetching %s', url)
