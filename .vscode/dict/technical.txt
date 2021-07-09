@@ -1,0 +1,7 @@
+Intelli
+bsnes
+crossdev
+dotize
+eselect
+glabels
+mingw

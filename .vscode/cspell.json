@@ -1,0 +1,18 @@
+{
+  "dictionaryDefinitions": [
+    {
+      "name": "technical",
+      "path": "dict/technical.txt"
+    },
+    {
+      "name": "names",
+      "path": "dict/names.txt"
+    }
+  ],
+  "languageSettings": [
+    {
+      "dictionaries": ["names", "technical"],
+      "languageId": "*"
+    }
+  ]
+}
