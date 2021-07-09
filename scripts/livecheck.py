@@ -2,9 +2,8 @@
 from dataclasses import dataclass
 from functools import cmp_to_key
 from os.path import basename, dirname, join as path_join, realpath, splitext
-from typing import (Any, Callable, Dict, Final, Iterable, Iterator, List,
-                    Mapping, NamedTuple, Optional, Sequence, Set, Tuple,
-                    TypeVar, Union, cast)
+from typing import (Any, Callable, Dict, Final, Iterator, Mapping, Optional,
+                    Sequence, Set, Tuple, TypeVar, Union, cast)
 from urllib.parse import urlparse
 import argparse
 import glob
