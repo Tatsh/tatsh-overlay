@@ -1,6 +1,8 @@
+# tatsh-overlay
+
 This is stuff I make randomly. If you find a bug, please [file an issue](https://github.com/Tatsh/tatsh-overlay/issues/new).
 
-# Installation
+## Installation
 
 ```shell
 emerge app-eselect/eselect-repository
@@ -14,12 +16,12 @@ Based on [Masking installed but unsafe ebuild repositories](https://wiki.gentoo.
 
 In `/etc/portage/package.mask/tatsh-overlay`:
 
-```
+```plain
 */*::tatsh-overlay
 ```
 
 In `/etc/portage/package.unmask/tatsh-overlay` (example):
 
-```
+```plain
 games-arcade/stepmania::tatsh-overlay
 ```
