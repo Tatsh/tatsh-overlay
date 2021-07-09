@@ -1,7 +1,14 @@
 Intelli
 bsnes
 crossdev
+dbapi
 dotize
 eselect
 glabels
+iuse
 mingw
+nargs
+quse
+semver
+vercmp
+xmatch
