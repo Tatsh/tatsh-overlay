@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit desktop wrapper
+inherit desktop wrapper xdg
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
 HOMEPAGE="http://www.stepmania.com/"
@@ -85,16 +85,4 @@ src_install() {
 	newicon "Appearance/Themes/default/Graphics/Common window icon.png" \
 		${PN}.png
 	make_desktop_entry "${PN}" "StepMania OutFox"
-}
-
-pkg_postinst() {
-	xdg_desktop_database_update
-	xdg_mimeinfo_database_update
-	xdg_icon_cache_update
-}
-
-pkg_postrm() {
-	xdg_desktop_database_update
-	xdg_mimeinfo_database_update
-	xdg_icon_cache_update
 }
