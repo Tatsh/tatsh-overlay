@@ -3,7 +3,7 @@
 
 EAPI=7
 WX_GTK_VER="3.0-gtk3"
-inherit desktop wxwidgets
+inherit desktop wxwidgets xdg
 
 DESCRIPTION="Clone of Guitar Hero and similar games."
 HOMEPAGE="https://clonehero.net/"
