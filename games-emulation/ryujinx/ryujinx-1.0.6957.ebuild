@@ -7,8 +7,8 @@ inherit desktop wrapper
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="94cc365b635b0c42f6443af724ff0cdcb7ab00a3"
-SRC_URI="https://ci.appveyor.com/api/buildjobs/9u4mjkb942cpykha/artifacts/${P}-linux_x64.tar.gz"
+KEY="ni480j1yvym3wle4"
+SRC_URI="https://ci.appveyor.com/api/buildjobs/${KEY}/artifacts/${P}-linux_x64.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
