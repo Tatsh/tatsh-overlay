@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake
+inherit cmake xdg
 
 DESCRIPTION="A fast and accurate Nintendo DS emulator."
 HOMEPAGE="http://melonds.kuribo64.net/"
