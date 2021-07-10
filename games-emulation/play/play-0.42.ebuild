@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake xdg-utils
+inherit cmake xdg
 
 DESCRIPTION="PlayStation 2 emulator."
 HOMEPAGE="http://purei.org/ https://github.com/jpd002/Play-"
@@ -83,16 +83,4 @@ src_install() {
 		insinto /usr/$(get_libdir)/libretro
 		doins "${BUILD_DIR}/Source/ui_libretro/play_libretro.so"
 	fi
-}
-
-pkg_postinst() {
-	xdg_desktop_database_update
-	xdg_mimeinfo_database_update
-	xdg_icon_cache_update
-}
-
-pkg_postrm() {
-	xdg_desktop_database_update
-	xdg_mimeinfo_database_update
-	xdg_icon_cache_update
 }
