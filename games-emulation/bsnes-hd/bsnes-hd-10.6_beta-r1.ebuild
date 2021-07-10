@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit desktop toolchain-funcs xdg-utils
+inherit desktop toolchain-funcs xdg
 
 DESCRIPTION="bsnes fork that adds HD video features."
 HOMEPAGE="https://github.com/DerKoun/bsnes-hd"
@@ -43,7 +43,7 @@ disable_module() {
 }
 
 src_prepare() {
-	default
+	xdg_src_prepare
 	sed -i \
 		-e "/handle/s#/usr/local/lib#/usr/$(get_libdir)#" \
 		nall/dl.hpp || die "fixing libdir failed!"
@@ -90,12 +90,4 @@ src_install() {
 	newicon -s 256 ${BIN_PN}/target-${BIN_PN}/resource/${BIN_PN}.png ${PN}.png
 	newicon ${BIN_PN}/target-${BIN_PN}/resource/${BIN_PN}.svg ${PN}.svg
 	einstalldocs
-}
-
-pkg_postrm() {
-	xdg_icon_cache_update
-}
-
-pkg_postinst() {
-	xdg_icon_cache_update
 }
