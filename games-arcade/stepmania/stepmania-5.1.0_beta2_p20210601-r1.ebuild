@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake autotools eutils desktop wrapper
+inherit cmake autotools eutils desktop wrapper xdg
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
 MY_SHA="651049665831efe73d276c434672cb536fc26a6f"
