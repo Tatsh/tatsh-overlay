@@ -1,0 +1,11 @@
+--- a/bin/charles.old	2021-07-10 04:11:37.106394817 -0400
++++ b/bin/charles	2021-07-10 04:12:53.410622879 -0400
+@@ -22,6 +22,8 @@
+ # Check if we have the included JDK
+ if [ -d "$CHARLES_LIB/jdk" ]; then
+     export JAVA_HOME="$CHARLES_LIB/jdk"
++elif [ -d "@EPREFIX@/opt/openjdk-bin-11" ]; then
++    export JAVA_HOME="@EPREFIX@/opt/openjdk-bin-11"
+ fi
+ 
+ # Find Java binary

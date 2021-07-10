@@ -17,11 +17,13 @@ RDEPEND="|| ( dev-java/openjdk-bin:11
 RESTRICT="strip"
 
 S="${WORKDIR}/charles"
+PATCHES=( "${FILESDIR}/${PN}-jdk.patch" )
 
 src_prepare() {
 	rm -R lib/jdk || die
 	sed -e "s/^Icon=.*/Icon=${PN}-proxy/" -i etc/${PN}-proxy.desktop || die
 	xdg_src_prepare
+	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i bin/${PN}
 }
 
 src_install() {
