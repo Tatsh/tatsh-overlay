@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit desktop wrapper
+inherit desktop wrapper xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
