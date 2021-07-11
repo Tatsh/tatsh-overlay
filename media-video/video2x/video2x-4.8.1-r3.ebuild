@@ -29,6 +29,8 @@ RDEPEND="$(python_gen_cond_dep '
 		dev-python/tqdm[${PYTHON_USEDEP}]
 	')"
 
+PATCHES=( "${FILESDIR}/${PN}-paths.patch" )
+
 src_prepare() {
 	sed -r \
 		-e "s/^from bilogger/from ${PN}_lib.bilogger/g" \
@@ -49,6 +51,7 @@ src_prepare() {
 		-i src/${PN}_gui.py || die
 	cp "${WORKDIR}/avalon-framework-${AVALON_SHA}/__init__.py" src/avalon_framework.py || die
 	default
+	sed -r -e "s|@EPREFIX@|${EPREFIX}|g" -i src/*.py src/wrappers/*.py || die
 }
 
 src_install() {

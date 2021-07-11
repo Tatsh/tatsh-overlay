@@ -1,0 +1,79 @@
+diff --git a/src/video2x_gui.py b/src/video2x_gui.py
+index d97fa7c..ab9404d 100755
+--- a/src/video2x_gui.py
++++ b/src/video2x_gui.py
+@@ -281,15 +281,7 @@ class Video2XMainWindow(QMainWindow):
+         # config file
+         self.config_line_edit = self.findChild(QLineEdit, "configLineEdit")
+         self.enable_line_edit_file_drop(self.config_line_edit)
+-
+-        if getattr(sys, "frozen", False):
+-            self.config_line_edit.setText(
+-                str((pathlib.Path(sys.executable).parent / "video2x.yaml").absolute())
+-            )
+-        elif __file__:
+-            self.config_line_edit.setText(
+-                str((pathlib.Path(__file__).parent / "video2x.yaml").absolute())
+-            )
++        self.config_line_edit.setText(os.path.expanduser('~/.config/video2x.yaml'))
+ 
+         self.config_select_file_button = self.findChild(
+             QPushButton, "configSelectButton"
+@@ -1071,12 +1063,7 @@ class Video2XMainWindow(QMainWindow):
+         self.config["srmd_ncnn_vulkan"][
+             "t"
+         ] = self.srmd_ncnn_vulkan_tile_size_spin_box.value()
+-        self.config["srmd_ncnn_vulkan"]["m"] = str(
+-            (
+-                pathlib.Path(self.config["srmd_ncnn_vulkan"]["path"]).parent
+-                / self.srmd_ncnn_vulkan_model_combo_box.currentText()
+-            ).absolute()
+-        )
++        self.config['srmd_ncnn_vulkan']['m'] = '@EPREFIX@/usr/share/srmd-ncnn-vulkan/' + self.srmd_ncnn_vulkan_model_combo_box.currentText()
+         self.config["srmd_ncnn_vulkan"][
+             "g"
+         ] = self.srmd_ncnn_vulkan_gpu_id_spin_box.value()
+@@ -1094,12 +1081,7 @@ class Video2XMainWindow(QMainWindow):
+         self.config["realsr_ncnn_vulkan"][
+             "t"
+         ] = self.realsr_ncnn_vulkan_tile_size_spin_box.value()
+-        self.config["realsr_ncnn_vulkan"]["m"] = str(
+-            (
+-                pathlib.Path(self.config["realsr_ncnn_vulkan"]["path"]).parent
+-                / self.realsr_ncnn_vulkan_model_combo_box.currentText()
+-            ).absolute()
+-        )
++        self.config['realsr_ncnn_vulkan']['m'] = '@EPREFIX@/usr/share/realsr-ncnn-vulkan/' + self.realsr_ncnn_vulkan_model_combo_box.currentText()
+         self.config["realsr_ncnn_vulkan"][
+             "g"
+         ] = self.realsr_ncnn_vulkan_gpu_id_spin_box.value()
+diff --git a/src/wrappers/realsr_ncnn_vulkan.py b/src/wrappers/realsr_ncnn_vulkan.py
+index 6d0e174..032c741 100755
+--- a/src/wrappers/realsr_ncnn_vulkan.py
++++ b/src/wrappers/realsr_ncnn_vulkan.py
+@@ -84,8 +84,8 @@ class WrapperMain:
+ 
+         # by default, realsr-ncnn-vulkan will look for the models under the current working directory
+         # change the working directory to its containing folder if model directory not specified
+-        if self.driver_settings["m"] is None and platform.system() == "Windows":
+-            os.chdir(pathlib.Path(self.driver_settings["path"]).parent)
++        if self.driver_settings["m"] is None:
++            self.drive_settings['m'] = '@EPREFIX@/usr/share/realsr-ncnn-vulkan/models-DF2K_JPEG'
+ 
+         # list to be executed
+         # initialize the list with the binary path as the first element
+diff --git a/src/wrappers/srmd_ncnn_vulkan.py b/src/wrappers/srmd_ncnn_vulkan.py
+index 5d4c152..5b831e6 100755
+--- a/src/wrappers/srmd_ncnn_vulkan.py
++++ b/src/wrappers/srmd_ncnn_vulkan.py
+@@ -85,8 +85,8 @@ class WrapperMain:
+ 
+         # by default, srmd-ncnn-vulkan will look for the models under the current working directory
+         # change the working directory to its containing folder if model directory not specified
+-        if self.driver_settings["m"] is None and platform.system() == "Windows":
+-            os.chdir(pathlib.Path(self.driver_settings["path"]).parent)
++        if self.driver_settings["m"] is None:
++            self.driver_settings['m'] = '@EPREFIX@/usr/share/srmd-ncnn-vulkan/models-srmd'
+ 
+         # list to be executed
+         # initialize the list with the binary path as the first element
