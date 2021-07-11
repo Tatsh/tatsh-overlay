@@ -22,6 +22,12 @@ BDEPEND="openmp? ( sys-devel/gcc:=[openmp] )
 
 CMAKE_USE_DIR="${S}/src"
 
+src_prepare() {
+	sed -e "s|PATHSTR(\"models-srmd\")|PATHSTR(\"${EPREFIX}/usr/share/${PN}/models-srmd\")|g" \
+		-i src/main.cpp || die
+	cmake_src_prepare
+}
+
 src_configure() {
 	mycmakeargs=(
 		-DUSE_SYSTEM_NCNN=ON
@@ -34,5 +40,7 @@ src_configure() {
 
 src_install() {
 	dobin "${BUILD_DIR}/${PN}"
+	insinto /usr/share/${PN}
+	doins -r models/models-*
 	einstalldocs
 }
