@@ -17,7 +17,7 @@ RDEPEND="|| ( dev-java/openjdk-bin:11
 RESTRICT="strip"
 
 S="${WORKDIR}/charles"
-PATCHES=( "${FILESDIR}/${PN}-jdk.patch" )
+PATCHES=( "${FILESDIR}/${PN}-misc.patch" )
 
 src_prepare() {
 	# Collides with Wireshark

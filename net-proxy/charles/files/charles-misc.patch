@@ -1,0 +1,39 @@
+--- a/bin/charles.old	2021-07-05 22:02:17.000000000 -0400
++++ b/bin/charles	2021-07-11 19:26:22.071354612 -0400
+@@ -4,7 +4,7 @@
+ #
+ 
+ # Find Charles lib directory
+-if [ -z "$CHARLES_LIB"]; then
++if [ -z "$CHARLES_LIB" ]; then
+     CHARLES_LIB="$(dirname "$(readlink -f "$0")")"/../lib
+     if [ ! -f "$CHARLES_LIB/charles.jar" ]; then
+         CHARLES_LIB="/usr/lib/charles-proxy"
+@@ -22,6 +22,8 @@
+ # Check if we have the included JDK
+ if [ -d "$CHARLES_LIB/jdk" ]; then
+     export JAVA_HOME="$CHARLES_LIB/jdk"
++elif [ -d "@EPREFIX@/opt/openjdk-bin-11" ]; then
++    export JAVA_HOME="@EPREFIX@/opt/openjdk-bin-11"
+ fi
+ 
+ # Find Java binary
+@@ -32,6 +34,12 @@
+     JAVA="$JAVA_HOME/bin/java"
+ fi
+ 
++shopt -s extglob
++if [ -n "$_JAVA_OPTIONS" ]; then
++    _JAVA_OPTIONS="${_JAVA_OPTIONS/?( )-Dsun.java2d.uiScale=+([^ ])}"
++    export _JAVA_OPTIONS
++fi
++
+ # HiDPI
+ if [ -x /usr/bin/gsettings ]; then
+     GDK_SCALE=$(/usr/bin/gsettings get org.gnome.desktop.interface scaling-factor | awk '{print $2}')
+@@ -44,4 +51,4 @@
+     -Dcharles.config="~/.charles.config" \
+     -Djava.library.path="$CHARLES_LIB" \
+     -jar $CHARLES_LIB/charles.jar \
+-    $*
++    "$@"
