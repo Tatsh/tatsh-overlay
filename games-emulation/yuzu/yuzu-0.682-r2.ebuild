@@ -38,6 +38,7 @@ DEPEND="app-arch/lz4
 	dev-libs/openssl
 	dev-qt/qtcore
 	dev-qt/qtgui
+	dev-qt/qtwebengine
 	dev-qt/qtwidgets
 	media-libs/opus
 	media-video/ffmpeg
