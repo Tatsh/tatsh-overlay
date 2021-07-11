@@ -20,6 +20,8 @@ S="${WORKDIR}/charles"
 PATCHES=( "${FILESDIR}/${PN}-jdk.patch" )
 
 src_prepare() {
+	# Collides with Wireshark
+	find . -name application-vnd.tcpdump.pcap.png -delete
 	rm -R lib/jdk || die
 	sed -e "s/^Icon=.*/Icon=${PN}-proxy/" -i etc/${PN}-proxy.desktop || die
 	xdg_src_prepare
@@ -30,10 +32,10 @@ src_install() {
 	dobin bin/${PN} bin/add-to-java-cacerts.sh
 	insinto /usr/share/java/${PN}
 	doins lib/*.jar
-	insinto /usr/share/icons
+	insinto /usr/share/icons/hicolor
 	doins -r icon/*
 	insinto /usr/share/applications
-	doins etc/*.desktop
+	domenu etc/*.desktop
 	insinto /usr/share/mime/packages
 	doins etc/mime/*.xml
 	einstalldocs
