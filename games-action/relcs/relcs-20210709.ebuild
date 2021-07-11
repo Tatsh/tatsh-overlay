@@ -25,6 +25,8 @@ DEPEND="media-libs/libsndfile
 	sndfile? ( media-libs/libsndfile )"
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${PN}-link-x11.patch" )
+
 S="${WORKDIR}/re3-${MY_RELCS_HASH}"
 
 src_unpack() {
