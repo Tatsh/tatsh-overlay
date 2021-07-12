@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake
+inherit cmake systemd udev
 
 DESCRIPTION="Combine joy-cons using hid-nintendo"
 HOMEPAGE="https://github.com/DanielOgorchock/joycond"
@@ -23,13 +23,24 @@ IUSE="systemd"
 
 S="${WORKDIR}/${PN}-${SHA}"
 
+src_prepare() {
+	sed -r -e 's|/etc/systemd/|/lib/systemd/|g' \
+		-e 's|/etc/modules-load.d/|/lib/modules-load.d/|g' \
+		-i CMakeLists.txt
+	cmake_src_prepare
+}
+
 src_install() {
-	cmake_src_install
+	newbin "${BUILD_DIR}/${PN}" "${PN}"
+	udev_dorules udev/*.rules
 	if ! use systemd; then
-		rm -rf "${D}"/etc/modules-load.d
 		mkdir "${D}"/etc/init.d/
 		echo -e "#!/sbin/openrc-run\ncommand=/usr/bin/${PN}" \
 			> "${D}"/etc/init.d/${PN}
 		chmod +x "${D}"/etc/init.d/${PN}
+	else
+		systemd_dounit systemd/${PN}.service
+		insinto /lib/modules-load.d
+		doins systemd/${PN}.conf
 	fi
 }
