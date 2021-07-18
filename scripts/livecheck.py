@@ -16,6 +16,7 @@ import sys
 import xml.etree.ElementTree as etree
 
 from portage.versions import catpkgsplit, vercmp
+from requests import ConnectTimeout, ReadTimeout
 import portage
 import requests
 
@@ -329,7 +330,7 @@ def main() -> int:
         try:
             r: Response = (TextDataResponse(url[5:]) if url.startswith('data:')
                            else session.get(url, timeout=30))
-        except requests.exceptions.ReadTimeout:
+        except (ReadTimeout, ConnectTimeout):
             log.debug('Caught timeout attempting to fetch %s', url)
             continue
         try:
