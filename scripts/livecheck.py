@@ -326,8 +326,12 @@ def main() -> int:
             log.debug('Ignoring %s/%s', cat, pkg)
             continue
         log.debug('Fetching %s', url)
-        r: Response = (TextDataResponse(url[5:])
-                       if url.startswith('data:') else session.get(url))
+        try:
+            r: Response = (TextDataResponse(url[5:]) if url.startswith('data:')
+                           else session.get(url, timeout=30))
+        except requests.exceptions.ReadTimeout:
+            log.debug('Caught timeout attempting to fetch %s', url)
+            continue
         try:
             r.raise_for_status()
             # Ignore beta/alpha/etc if semantic and coming from GitHub
