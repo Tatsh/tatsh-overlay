@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM 'http://www.gentoo.org/dtd/metadata.dtd'>
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<use>
+		<flag name="achievements">Enable achievement pop-ups.</flag>
+		<flag name="cli">Build rpcli command.</flag>
+		<flag name="lto">Enable link-time optimization.</flag>
+		<flag name="pvr">Enable the PowerVR Native SDK subset for PVRTC decompression.</flag>
+		<flag name="unice68">Enable UnICE68 for Atari ST SNDH files (GPLv3).</flag>
+		<flag name="xbox-360">Enable support for reading from Xbox 360 binaries</flag>
+		<flag name="xfce">Enable support for XFCE widget.</flag>
+	</use>
+</pkgmetadata>
