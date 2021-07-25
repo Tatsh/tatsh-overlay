@@ -7,7 +7,7 @@ inherit cmake systemd udev
 
 DESCRIPTION="Combine joy-cons using hid-nintendo"
 HOMEPAGE="https://github.com/DanielOgorchock/joycond"
-SHA="2d3f553060291f1bfee2e49fc2ca4a768b289df8"
+SHA="6ffc91f7e499d2d163b95e00930a99affd999a69"
 SRC_URI="https://github.com/DanielOgorchock/joycond/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
