@@ -6,8 +6,8 @@ inherit cmake
 
 DESCRIPTION="GTA Vice City decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3/tree/miami"
-MY_REVC_HASH="reVC_${PV}"
-MY_LIBRW_HASH="41ae7b9b61c6736b34269df0f0350d1b5bcff4df"
+MY_REVC_HASH="bf757fc96014c07d288786da00e09d426190f9e4"
+MY_LIBRW_HASH="a5bc97232293250ae1bbd6ef6642532a541034ca"
 SRC_URI="https://github.com/GTAmodding/re3/archive/${MY_REVC_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
 
@@ -26,6 +26,8 @@ DEPEND="media-libs/libsndfile
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/re3-${MY_REVC_HASH}"
+
+PATCHES=( "${FILESDIR}/relcs-link-x11.patch" )
 
 src_unpack() {
 	default
