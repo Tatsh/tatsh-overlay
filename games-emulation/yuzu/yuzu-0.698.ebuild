@@ -54,7 +54,6 @@ BDEPEND="dev-cpp/catch
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-6421-idle-inhibitor.patch"
 	"${FILESDIR}/${PN}-0001-Allow-use-of-system-Opus-and-inih.patch"
 	"${FILESDIR}/${PN}-0003-fix-INIReader.h-includes.patch"
 	"${FILESDIR}/${PN}-0004-minimalise-finding-Boost-components.patch"
