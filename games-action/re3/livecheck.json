@@ -1,6 +1,0 @@
-{
-  "regex": "tag/re3_v(\\d+(?:\\.\\d+(?:\\.\\d+)?))\"",
-  "transformation_function": "handle_re",
-  "type": "regex",
-  "url": "https://github.com/GTAmodding/re3/tags"
-}
