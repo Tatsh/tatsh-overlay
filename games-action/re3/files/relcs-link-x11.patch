@@ -1,0 +1,16 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 9cce6641..350a0f9f 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -24,9 +24,11 @@ add_executable(${EXECUTABLE} WIN32
+     ${${PROJECT}_SOURCES}
+ )
+ 
++find_package(X11 REQUIRED)
+ target_link_libraries(${EXECUTABLE} PRIVATE
+     librw::librw
+     Threads::Threads
++    ${X11_LIBRARIES}
+ )
+ 
+ target_include_directories(${EXECUTABLE}

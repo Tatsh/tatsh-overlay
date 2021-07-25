@@ -65,16 +65,17 @@ index 11e2b0ff..74e0cd7f 100644
  	FILE *cacheFile = fopen("audio\\sound.cache", "rb");
  	if (cacheFile) {
  		fread(nStreamLength, sizeof(uint32), TOTAL_STREAMED_SOUNDS, cacheFile);
-@@ -1076,7 +1079,8 @@ cSampleManager::Initialise(void)
+--- a/src/audio/sampman_miles.cpp
++++ b/src/audio/sampman_miles.cpp
+@@ -1092,7 +1092,7 @@
  		
+ 		bool8 bFileNotFound = FALSE;
+ 		char rootpath[MAX_PATH];
+-		
++		CFileMgr::SetDir("");
  		strcpy(_aHDDPath, m_szCDRomRootPath);
  		rootpath[0] = '\0';
--		
-+
-+		CFileMgr::SetDir("");
- 		FILE *f = fopen(StreamedNameTable[0], "rb");
  		
- 		if ( f )
 @@ -1124,6 +1128,7 @@ cSampleManager::Initialise(void)
  	}
  #endif
@@ -85,12 +86,12 @@ index 11e2b0ff..74e0cd7f 100644
  	fclose(cacheFile);
 @@ -1310,6 +1315,8 @@ cSampleManager::CheckForAnAudioFileOnCD(void)
  
- 	strcat(filepath, StreamedNameTable[AudioManager.GetRandomNumber(1) % TOTAL_STREAMED_SOUNDS]);
+ 		strcat(filepath, StreamedNameTable[AudioManager.GetRandomNumber(1) % TOTAL_STREAMED_SOUNDS]);
  	
 +	CFileMgr::SetDir("");
 +
- 	FILE *f = fopen(filepath, "rb");
- 	
+ 		f = fopen(filepath, "rb");
+ 	}
  	if ( f )
 @@ -2288,6 +2295,8 @@ cSampleManager::IsStreamPlaying(uint8 nStream)
  bool
@@ -322,13 +323,14 @@ diff --git a/src/core/config.h b/src/core/config.h
 index 025c8cb2..12d0e8a5 100644
 --- a/src/core/config.h
 +++ b/src/core/config.h
-@@ -486,3 +486,6 @@ enum Config {
- #undef RADIO_SCROLL_TO_PREV_STATION
- #undef BIG_IMG
+@@ -461,4 +461,7 @@
+ #undef PEDS_REPORT_CRIMES_ON_PHONE
  #endif
-+
+ 
 +// Store GTA 3 files in ${HOME}/.local/share/re3
 +// #define XDG_ROOT
++
+ #endif // VANILLA_DEFINES
 diff --git a/src/core/main.cpp b/src/core/main.cpp
 index f1346fc0..0256d286 100644
 --- a/src/core/main.cpp
@@ -351,19 +353,6 @@ index f1346fc0..0256d286 100644
  	CGame::Initialise("DATA\\GTA3.DAT");
  }
  
-diff --git a/src/render/WaterLevel.cpp b/src/render/WaterLevel.cpp
-index 7aa01f5a..23dda7e2 100644
---- a/src/render/WaterLevel.cpp
-+++ b/src/render/WaterLevel.cpp
-@@ -61,7 +61,7 @@ CWaterLevel::Initialise(Const char *pWaterDat)
- 
- #ifdef MASTER
- 	int32 hFile = -1;
--
-+	CFileMgr::SetDir("");
- 	do
- 	{
- 		hFile = CFileMgr::OpenFile("DATA\\waterpro.dat", "rb");
 diff --git a/src/rw/TexRead.cpp b/src/rw/TexRead.cpp
 index c009af96..10268985 100644
 --- a/src/rw/TexRead.cpp

@@ -6,8 +6,8 @@ inherit cmake
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3"
-MY_RE3_HASH="re3_v${PV}"
-MY_LIBRW_HASH="41ae7b9b61c6736b34269df0f0350d1b5bcff4df"
+MY_RE3_HASH="3adf37a3a94d1a7d2cbef5156b9b17f11b01b551"
+MY_LIBRW_HASH="a5bc97232293250ae1bbd6ef6642532a541034ca"
 SRC_URI="https://github.com/GTAmodding/${PN}/archive/${MY_RE3_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
 
@@ -27,7 +27,10 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}-${MY_RE3_HASH}"
 
-PATCHES=( "${FILESDIR}/${PN}-xdg.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-xdg.patch"
+	"${FILESDIR}/relcs-link-x11.patch"
+)
 
 src_unpack() {
 	default
