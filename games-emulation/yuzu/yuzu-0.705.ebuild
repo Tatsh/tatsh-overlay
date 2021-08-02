@@ -12,8 +12,8 @@ DYNARMIC_SHA="7946868af49d403fe54c92d2d60ef986513d1fec"
 HTTPLIB_SHA="9648f950f5a8a41d18833cf4a85f5821b1bcac54"
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
 SDL_SHA="2f248a2a31c3323ecc37c00ad5e269e347ae392a"
-SIRIT_SHA="eefca56afd49379bdebc97ded8b480839f930881"
-SIRIT_SPIRV_HEADERS_SHA="2c512180ca03b5d4f56283efc85745775b45fdc4"
+SIRIT_SHA="a39596358a3a5488c06554c0c15184a6af71e433"
+SIRIT_SPIRV_HEADERS_SHA="a3fdfe81465d57efc97cfd28ac6c8190fb31a6c8"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/yuzu-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
@@ -57,7 +57,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0001-Allow-use-of-system-Opus-and-inih.patch"
 	"${FILESDIR}/${PN}-0003-fix-INIReader.h-includes.patch"
 	"${FILESDIR}/${PN}-0004-minimalise-finding-Boost-components.patch"
-	"${FILESDIR}/${PN}-0005-Support-newer-Vulkan-headers.patch"
 	"${FILESDIR}/${PN}-0006-Allow-system-cubeb.patch"
 	"${FILESDIR}/${PN}-0100-unbundle-xbyak.patch"
 	"${FILESDIR}/${PN}-0101-mime-type.patch"
