@@ -12,7 +12,7 @@ LICENSE="GPL-3"
 KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
-MY_SHA="8411859f48c8066a3b6f29c1a8e3bfa2d0653551"
+MY_SHA="8c6081c79b2250467c45f475332e3a3a33028467"
 MY_PN="YouCompleteMe"
 SRC_URI="https://github.com/ycm-core/${MY_PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
