@@ -6,7 +6,7 @@ inherit cmake
 
 DESCRIPTION="GTA Vice City decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3/tree/miami"
-MY_REVC_HASH="bf757fc96014c07d288786da00e09d426190f9e4"
+MY_REVC_HASH="e80cbf8bb2abbe3edb7a604ae5b0af366bf10a9a"
 MY_LIBRW_HASH="a5bc97232293250ae1bbd6ef6642532a541034ca"
 SRC_URI="https://github.com/GTAmodding/re3/archive/${MY_REVC_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
