@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit desktop
+inherit desktop wrapper
 
 DESCRIPTION="Desktop chat client for Slack and Discord (not web-based)."
 HOMEPAGE="https://cancel.fm/ripcord/"
@@ -42,24 +42,18 @@ src_install() {
 	exeinto /opt/${PN}
 	doexe "R${PN:1}"
 	insinto /opt/${PN}
-	doins -r translations twemoji.ripdb
+	doins twemoji.ripdb
+	insinto /usr/share/qt5/translations/
+	doins translations/"${PN}_en.qm"
 	newicon -s 512 "R${PN:1}_Icon.png" "${PN}.png"
-	cat > "${PN}.sh" <<EOF
-#!/usr/bin/env bash
-cd /opt/${PN}
-exec ./R${PN:1}
-EOF
-	newbin "${PN}.sh" "${PN}"
+	make_wrapper "${PN}" "/opt/${PN}/R${PN:1}" "/opt/${PN}"
 	make_desktop_entry "${PN}" "R${PN:1}" "$PN" "Network;InstantMessaging;"
 	einstalldocs
-	dodir /opt/${PN}/plugins/iconengines
-	cp plugins/iconengines/libqsvgicon.so "${ED}/opt/${PN}/plugins/iconengines" || die "Copy failed"
-	dodir /opt/${PN}/plugins/platforms
-	cp plugins/platforms/libqxcb.so "${ED}/opt/${PN}/plugins/platforms" || die "Copy failed"
 	cat > ${ED}/opt/${PN}/qt.conf <<EOF
 [Paths]
 Prefix = ./
-Plugins = plugins
-Translations = translations
+
+[Paths]
+Prefix = /usr/lib64/qt5
 EOF
 }
