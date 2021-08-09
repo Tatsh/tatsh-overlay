@@ -11,15 +11,17 @@ BOOST_CMAKE_SHA="e97843ed8d7d069a278e6f2adf33a9f91638c73f"
 CODEGEN_SHA="448bac159733c6799a451ac75a18ce04aff5e223"
 DEPS_SHA="b9e2d00c3ebee8e9e966334729bea3709185b899"
 GHC_FILESYSTEM="2a8b380f8d4e77b389c42a194ab9c70d8e3a0f1e"
-FRAMEWORK_SHA="6fa3d71fc8287f8e93ddad5e2283ade628fd845d"
-NUANCEUR_SHA="ba25a1970e0d97f28ae6b3d0c34fed0ea47ebbd6"
+FRAMEWORK_SHA="2e5e367fd892c2fe94a3e8b8eb85bf9f94b8af17"
+NUANCEUR_SHA="f06bc0ecd47f4c583623b0f2c813220fa7422bc4"
+LIBCHDR_SHA="4cf740750e8b27a0bdcde91efb049118f7d4c473"
 SRC_URI="https://github.com/jpd002/Play-/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/jpd002/boost-cmake/archive/${BOOST_CMAKE_SHA}.tar.gz -> ${PN}-boost-cmake-${BOOST_CMAKE_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Play--CodeGen/archive/${CODEGEN_SHA}.tar.gz -> ${PN}-codegen-${CODEGEN_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Play-Dependencies/archive/${DEPS_SHA}.tar.gz -> ${PN}-deps-${DEPS_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Play--Framework/archive/${FRAMEWORK_SHA}.tar.gz -> ${PN}-framework-${FRAMEWORK_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Nuanceur/archive/${NUANCEUR_SHA}.tar.gz -> ${PN}-nuanceur-${NUANCEUR_SHA:0:7}.tar.gz
-	https://github.com/gulrak/filesystem/archive/${GHC_FILESYSTEM}.tar.gz -> ${PN}-filesystem-${GHC_FILESYSTEM:0:7}.tar.gz"
+	https://github.com/gulrak/filesystem/archive/${GHC_FILESYSTEM}.tar.gz -> ${PN}-filesystem-${GHC_FILESYSTEM:0:7}.tar.gz
+	https://github.com/jpd002/libchdr/archive/${LIBCHDR_SHA}.tar.gz -> ${PN}-libchdr-${LIBCHDR_SHA:0:7}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -59,6 +61,8 @@ src_prepare() {
 	mv "${WORKDIR}/filesystem-${GHC_FILESYSTEM}" deps/Dependencies/ghc_filesystem || die
 	mv "${WORKDIR}/${MY_PN}-Framework-${FRAMEWORK_SHA}" deps/Framework || die
 	mv "${WORKDIR}/Nuanceur-${NUANCEUR_SHA}" deps/Nuanceur || die
+	rmdir deps/libchdr || die
+	mv "${WORKDIR}/libchdr-${LIBCHDR_SHA}" deps/libchdr || die
 	sed -e '/^set(PROJECT_Version/d' -i CMakeLists.txt || die
 	{ cd deps/Framework && eapply -p1 "${FILESDIR}/${PN}-framework-system-deps.patch"; } || die
 	cmake_src_prepare
