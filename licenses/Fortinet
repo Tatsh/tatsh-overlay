@@ -1,8 +1,245 @@
-Copyright© 2021 Fortinet, Inc. All rights reserved. Fortinet®, FortiGate®, FortiCare® and FortiGuard®, and certain other marks are registered trademarks of Fortinet, Inc., and other Fortinet names herein
-may also be registered and/or common law trademarks of Fortinet. All other product or company names may be trademarks of their respective owners. Performance and other metrics contained herein were
-attained in internal lab tests under ideal conditions, and actual performance and other results may vary. Network variables, different network environments and other conditions may affect performance
-results. Nothing herein represents any binding commitment by Fortinet, and Fortinet disclaims all warranties, whether express or implied, except to the extent Fortinet enters a binding written contract,
-signed by Fortinet’s General Counsel, with a purchaser that expressly warrants that the identified product will perform according to certain expressly-identified performance metrics and, in such event, only
-the specific performance metrics expressly identified in such binding written contract shall be binding on Fortinet. For absolute clarity, any such warranty will be limited to performance in the same ideal
-conditions as in Fortinet’s internal lab tests. Fortinet disclaims in full any covenants, representations, and guarantees pursuant hereto, whether express or implied. Fortinet reserves the right to change,
-modify, transfer, or otherwise revise this publication without notice, and the most current version of the publication shall be applicable.
+Product License Agreement / EULA and Warranty Terms
+Product License Agreement
+The parties to this agreement are you (the end-customer) and Fortinet, Inc. ("Fortinet"). CAREFULLY READTHE FOLLOWING LEGAL
+AGREEMENT (THE OR THIS “AGREEMENT” OR “EULA”). USE OR INSTALLATION OF FORTINET PRODUCT(S) AND ANY UPDATES
+THERETO, INCLUDING HARDWARE APPLIANCE PRODUCTS, SOFTWARE AND FIRMWARE INCLUDED THEREIN BY FORTINET, AND
+STAND-ALONE SOFTWARE PRODUCTS SOLD BY FORTINET (TOGETHER, THE "PRODUCTS") CONSTITUTES ACCEPTANCE BY YOU OF THE
+TERMS IN THIS AGREEMENT, AS AMENDED OR UPDATED FROM TIME TO TIME IN FORTINET’S DISCRETION BY FORTINET PUBLISHING
+AN AMENDED OR UPDATED VERSION. FORTINET SHALL NOT BE BOUND BY ANY ADDITIONAL AND/OR CONFLICTING PROVISIONS IN
+ANY ORDER, RELEASE, ACCEPTANCE OR OTHER WRITTEN CORRESPONDENCE OR OTHER WRITTEN OR VERBAL COMMUNICATION
+UNLESS EXPRESSLY AGREED TO IN A WRITING SIGNED BY THE GENERAL COUNSEL OF FORTINET. IF YOU DO NOT AGREE TO ALL OF THE
+TERMS OF THIS AGREEMENT, DO NOT START THE INSTALLATION PROCESS OR USE THE PRODUCTS. IF YOU DO NOT AGREE TO THE
+TERMS OF THIS AGREEMENT, YOU SHOULD IMMEDIATELY, AND IN NO EVENT LATER THAN FIVE (5) CALENDAR DAYS AFTER YOUR
+RECEIPT OF THE PRODUCT, IMMEDIATELY NOTIFY FORTINET LEGAL LEGAL@FORTINET.COM OF REQUESTED EULA CHANGES.
+1. License Grant.
+This is a license agreement between you and Fortinet, not a sales agreement. The term "Software", as used throughout this
+Agreement, includes all Fortinet and third party firmware and software provided to you with, or incorporated into, Fortinet appliances
+and any stand-alone software provided to you by Fortinet, with the exception of any open source software contained in Fortinet’s
+Products which is discussed in detail in section 15 below, and the term “Software” includes any accompanying documentation, any
+updates and enhancements of the software or firmware provided to you by Fortinet, at its option. Fortinet grants to you a nontransferable (except as provided in section 5 ("Transfer") and section 15 ("Open Source Software") below), non-exclusive, revocable
+(in the event of your failure to comply with these terms, in the event of termination, or in the event Fortinet is not properly paid for
+the applicable Product) license to use the Software solely for your internal business purposes (provided, if (a) agreed by Fortinet in
+writing, (b) you are authorized by Fortinet in writing to provide managed service provider services (“MSSP”) to your end-customers,
+and (c) you pay for an MSSP license, then you may use the Software and/or Software embedded in Fortinet Hardware to provide
+those services, subject to the other restrictions in this Agreement), in accordance with the terms set forth in this Agreement and
+subject to any further restrictions in Fortinet documentation (including license term restrictions), and solely on the Fortinet appliance,
+or, in the case of blades, CPUs, platform, devices or databases, on the single blade, CPU, platform, device or database on which
+Fortinet installed the Software, or, for stand-alone Software, solely on a single computer running a validly-licensed copy of the
+operating system for which the Software was designed unless and except set forth in the published documentation otherwise. For
+clarity, notwithstanding anything to the contrary, all licenses of Software to be installed on blades, CPUs, platforms, devices or
+databases are licensed per blade, solely for one blade and not for multiple blades that may be installed in a chassis, per CPU, per
+platform, per device, or per database basis, up to the blade, CPU, platform, device, database number defined in the license and as
+applicable and in accordance with the documentation. The Software is "in use" on any appliances, blades, CPUs, platforms, devices, or
+databases when it is loaded into temporary memory (i.e. RAM), accessed, downloaded, installed, or used on an appliance, blade, CPU,
+platform, device, or database. You agree that, except for the limited, specific license rights granted in this section 1, you receive no
+license rightsto the Software.
+2. Limitation on Use.
+You are prohibited from and may not attempt to, and, if you are a corporation, you are responsible to prevent your employees and
+contractors from attempting to: (a) modify, translate, reverse engineer, decompile, disassemble, create derivative works based on,
+sublicense, or distribute the Software; (b) rent or lease any rights in the Software in any form to any third party or make the Software
+available or accessible to third parties in any other manner (except as expressly permitted for MSSP partners); (c) transfer assign or
+sublicense right to any other person or entity (except as provided in section 5): (d) remove any proprietary notice, labels, or marks on
+the Software, Products, and containers; (e) use the Software to determine, or disclose the results of, any benchmarking or
+performance measurements; (f) interfere with a platform for use of the Software; (g) use the Software on a device not owned and
+controlled by you; (h) use automated means to access online portions of the platform for the Software; (i) use the Software for thirdparty training, commercial time-sharing or service bureau use or (except as expressly set forth in this Agreement) use the Software to
+provide services to third parties, (j) share non-public features or content of the software with any third party; (k) access the software
+in order to build a competitive product or service, to build a product using similar ideas, features, functions or graphics of the
+software, or to copy any ideas, features, functions or graphics of the software; or, (l) engage in web scraping or data scraping on or
+related to the software, including without limitation, collection of information through any software that simulates human activity or
+any bot or web crawler.
+3. Proprietary Rights.
+All rights (including copyrights, trade secret, patent and other intellectual property rights), title, interest in and to the Software and
+any Product, and any copy thereof remain with Fortinet. You acknowledge that no title or other intellectual property rights in the
+Software or other Products is transferred to you and you will not acquire any rights to the Software or other Products except for the
+specific limited license as expressly set forth in section 1 (“License Grant”) above. You expressly agree and acknowledge that Fortinet
+owns, retains, and shall retain all intellectual property rights in and to, and you have no intellectual property rights in and to, the
+Products and the Software other than the License Grant. You agree to keep confidential all Fortinet confidential information and only
+to use such information for the purposesfor which Fortinet disclosed it.
+4. Term and Termination.
+The term of the license is the shorter of (a) the term as set forth in the ordering documents, other Fortinet documentation, or per
+Fortinet practices or policies (such as with evaluation or beta licenses or subscription or other term licenses) and (b) for the duration
+of Fortinet's copyright in the Software. Fortinet may terminate this Agreement, and the licenses and other rights herein, immediately
+without notice if you breach or fail to comply with any of the terms and conditions of this Agreement or for other reasons as stated in
+Fortinet’s other documentation. You agree that, upon such termination, you will cease using the Software and any Product and either
+destroy all copies of the Fortinet documentation or return all materials to Fortinet.
+5. Transfer.
+If you are a Fortinet contracted and authorized reseller or distributor of Products, you may transfer (not rent or lease unless
+specifically agreed to in writing by Fortinet) the Software to one end user on a permanent basis, provided that: (i) you ensure that
+your customer and the end user receives a copy of this Agreement, is bound by its terms and conditions, and, by selling the Product or
+Software, you hereby agree to enforce the terms in this Agreement against such end user, (ii) you at all times comply with all
+applicable United States export control laws and regulations, and (iii) you agree to refund any fees paid to you by an end user who
+purchased Product(s) from you but does not agree to the terms contained in this Agreement and therefore wishes to return the
+Product(s) as provided for in this Agreement. Further, if you are a non-authorized reseller of Products and Services, you are not
+authorized to sell Product(s), Software or Services, but, regardless, by selling Product(s), Software or Services, you hereby agree you
+are bound by the restrictions and obligations herein and are bound to: (i) ensure that your customer and the end user receive a copy
+of this Agreement and are bound in full by all restrictions and obligations herein (ii) enforce the restrictions and obligations in this
+Agreement against such customer and/or end user, (iii) comply with all applicable United States export control laws and regulations
+and all other applicable laws, and (iv) refund any fees paid to you by a customer and/or end user who purchased Product(s) from you
+but does not agree to the restrictions and obligations contained in this Agreement and therefore wishes to return the Product(s) as
+provided for in this Agreement. Notwithstanding anything to the contrary, distributors, resellers and other Fortinet partners (a) are
+not agents of Fortinet and (b) are not authorized to bind Fortinet in any way. Fortinet’s license, warranty, and support is only available
+for Products that you purchased directly from an authorized Fortinet channel partner. Products not purchased from an authorized
+Fortinet channel partner are not eligible, will not be supported, and may be blocked from registration.
+6. Limited Warranty.
+Fortinet provides this limited warranty for its product only to the single end-user person or entity that originally purchased the
+Product from Fortinet or its authorized reseller or distributor and paid for such Product. The warranty is only valid for Products which
+are properly registered on Fortinet’s Support Website, https://support.fortinet.com, or such other website as provided by Fortinet, or
+for which the warranty otherwise starts according to Fortinet’s policies, and any support is only valid for products properly purchased
+through authorized distributors and resellers. The warranty periods discussed below willstart according to Fortinet’s policies posted
+at http://www.fortinet.com/aboutus/legal.html or such other website as provided by Fortinet. It is the Fortinet distributor’s and
+reseller’s responsibility to make clear to the end user the date the product was originally shipped from Fortinet, and it isthe end
+user’s responsibility to understand the original ship date from the party from which the end user purchased the product. All warranty
+claims must be submitted in writing to Fortinet before the expiration of the warranty term or such claims are waived in full. Fortinet
+provides no warranty for any beta, donation or evaluation Products. Fortinet warrants that the hardware portion of the Products
+("Hardware") will be free from material defects in workmanship as compared to the functional specifications for the period set forth
+as follows and applicable to the Product type ("Hardware Warranty Period"): (a) a three hundred sixty-five (365) day limited warranty
+for the Hardware products; (b) for FortiAP, the warranty herein shall last from the start of the warranty period as discussed above
+until five (5) years following the product announced end-of-life date Hardware; (c) for FortiSwitch Hardware appliance products other
+than the FortiSwitch-5000 series, the warranty herein shall last from the start of the warranty period as discussed above until five (5)
+years following the product announced end-of-life date Hardware. Fortinet's sole obligation shall be to repair or offer replacement
+Hardware for the defective Hardware at no charge to the original owner. This obligation is exclusive of transport fees, labor, deinstallation, installation, reconfiguration, or return shipment and handling fees and costs, and Fortinet shall have no obligation related
+thereto. Such repair or replacement will be rendered by Fortinet at an authorized Fortinet service facility as determined by Fortinet.
+The replacement Hardware need not be new or of an identical make, model, or part; Fortinet may, in its discretion, replace the
+defective Hardware (or any part thereof) with any reconditioned Product that Fortinet reasonably determines is substantially
+equivalent (or superior) in all material respects to the defective Hardware. The Hardware Warranty Period for the repaired or
+replacement Hardware shall be for the greater of the remaining Hardware Warranty Period or ninety days from the delivery of the
+repaired or replacement Hardware. If Fortinet determines in its reasonable discretion that a material defect is incapable of correction
+or that it is not practical to repair or replace defective Hardware, the price paid by the original purchaser for the defective Hardware
+will be refunded by Fortinet upon return to Fortinet of the defective Hardware. All Hardware (or part thereof) that is replaced by
+Fortinet, or for which the purchase price is refunded, shall become the property of Fortinet upon replacement or refund. Fortinet
+warrants that Software as initially shipped by Fortinet will substantially conform to Fortinet's then-current functional specifications for
+the Software, as set forth in the applicable documentation for a period of ninety (90) days ("Software Warranty Period"), if the
+Software is properly installed on approved Hardware and operated as contemplated in its documentation. Fortinet's sole obligation
+shall be to repair or offer replacement Software for the non-conforming Software with software that substantially conforms to
+Fortinet's functional specifications. This obligation is exclusive of transport fees, labor, de-installation, installation, reconfiguration, or
+return shipment and handling fees and costs, and Fortinet shall have no obligation related thereto. Except as otherwise agreed by
+Fortinet in writing, the warranty replacement Software is provided only to the original licensee, and is subject to the terms and
+conditions of the license granted by Fortinet for the Software. The Software Warranty Period shall extend for an additional ninety (90)
+days after any warranty replacement software is delivered. If Fortinet determines in its reasonable discretion that a material nonconformance is incapable of correction or that it is not practical to repair or replace the non-conforming Software, the price paid by
+the original licensee for the non-conforming Software will be refunded by Fortinet; provided that the non-conforming Software (and
+all copies thereof) is first returned to Fortinet. The license granted respecting any Software for which a refund is given automatically
+terminates immediately upon refund. For purpose of the above hardware and software warranties, the term “functional
+specifications” means solely those specifications authorized and published by Fortinet that expressly state in such specifications that
+they are the functional specifications referred to in this section 6 of this Agreement, and, in the event no such specifications are
+provided to you with the Software or Hardware, there shall be no warranty on such Software.
+7. Disclaimer of Other Warranties and Restrictions.
+EXCEPT FOR THE LIMITED WARRANTY SPECIFIED IN SECTION 6 ABOVE, THE PRODUCT AND SOFTWARE ARE PROVIDED "AS-IS"
+WITHOUT ANY WARRANTY OF ANY KIND INCLUDING, WITHOUT LIMITATION, ANY IMPLIED WARRANTY, IMPLIED OR EXPRESS
+WARRANTY OF MERCHANTABILITY, OR WARRANTY FOR FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IF ANY
+IMPLIED WARRANTY CANNOT BE DISCLAIMED IN ANY TERRITORY WHERE A PRODUCT IS SOLD, THE DURATION OF SUCH IMPLIED
+WARRANTY SHALL BE LIMITED TO NINETY (90) DAYS FROM THE DATE OF ORIGINAL SHIPMENT FROM FORTINET. EXCEPT AS EXPRESSLY
+COVERED UNDER THE LIMITED WARRANTY PROVIDED HEREIN, THE ENTIRE RISK AS TO THE QUALITY, SELECTION AND PERFORMANCE
+OF THE PRODUCT IS WITH THE PURCHASER OF THE PRODUCT. NOTWITHSTANDING ANYTHING TO THE CONTRARY, THE HARDWARE
+WARRANTY PERIOD DISCUSSED ABOVE DOES NOT APPLY TO CERTAIN FORTINET PRODUCTS, INCLUDING FORTITOKEN WHICH HAS A
+365 DAY WARRANTY FROM THE DATE OF SHIPMENT FROM FORTINET’S FACILITIES, AND THE SOFTWARE WARRANTY DOES NOT APPLY
+TO CERTAIN FORTINET PRODUCTS. YOU HEREBY ACKNOWLEDGE AND AGREE THAT NO VENDOR CAN ASSURE COMPLETE SECURITY
+AND NOTHING HEREIN OR ELSEWHERE SHALL BE DEEMED TO IMPLY A SECURITY GUARANTEE OR ASSURANCE, AND FORTINET
+DISCLAIMS LIABILITY REGARDING YOUR WEB BROWSER’S REQUIREMENTS OR ANY THIRD PARTY DEVICE OR APPLIANCE USED TO
+OPERATE THE SOFTWARE.
+The warranty in Section 6 above does not apply if the Software, Product or any other equipment upon which the Software is
+authorized to be used (a) has been altered, except by Fortinet or its authorized representative, (b) has not been installed, operated,
+repaired, updated to the latest version, or maintained in accordance with instructions supplied by Fortinet, (c) has been subjected to
+abnormal physical or electrical stress, misuse, negligence, or accident; (d) is licensed for beta, evaluation, donation, testing or
+demonstration purposes or for which Fortinet does not charge a purchase price or license fee; or (e) is procured from a nonauthorized reseller or non-authorized distributor. In the case of beta, testing, evaluation, donation or free Software or Product, the
+end user acknowledges and agrees that such Software or Product may contain bugs or errors and could cause system failures, data
+loss and other issues, and the end user agrees that such Software or Product is provided “as-is” without any warranty whatsoever, and
+Fortinet disclaims any warranty orliability whatsoever. An end user’s use of evaluation or beta Software or Product islimited to thirty
+(30) daysfrom original shipment unless otherwise agreed in writing by Fortinet. For clarity, notwithstanding anything to the contrary,
+allsales are final and no provision in this EULA entitles you to return Products, other than as expressly set forth herein.
+8. Governing Law.
+Any disputes arising out of this Agreement or Fortinet’s limited warranty shall be governed by the laws of the state of California,
+without regard to the conflict of laws principles. In the event of any disputes arising out of this Agreement or Fortinet’s limited
+warranty, the parties submit to the jurisdiction of the federal and state courts located in Santa Clara County, California, as applicable,
+and agree that any controversy or claim arising out of or relating to this Agreement shall be determined in the federal and state courts
+located in Santa Clara County, California, as applicable.
+9. Limitation of Liability.
+TO THE MAXIMUM EXTENT PERMITTED BY LAW AND NOTWITHSTANDING ANYTHING TO THE CONTRARY, FORTINET IS NOT LIABLE
+UNDER ANY CONTRACT, NEGLIGENCE, TORT, STRICT LIABILITY, INFRINGEMENT OR OTHER LEGAL OR EQUITABLE THEORY FOR ANY
+LOSS OF USE OF THE PRODUCT OR SERVICE OR ANY DAMAGES OF ANY KIND WHATSOEVER, WHETHER DIRECT, SPECIAL, INCIDENTAL
+OR CONSEQUENTIAL (INCLUDING, BUT NOT LIMITED TO, DAMAGES FOR LOSS OF GOODWILL, LOSS OF PROFIT, LOSS OF
+OPPORTUNITY, LOSS OR DAMAGE RELATED TO USE OF THE PRODUCT OR SERVICE IN CONNECTION WITH HIGH RISK ACTIVITIES, DEINSTALLATION AND INSTALLATION FEES AND COSTS, DAMAGE TO PERSONAL OR REAL PROPERTY, WORK STOPPAGE, COMPUTER
+FAILURE OR MALFUNCTION, COMPUTER SECURITY BREACH, COMPUTER VIRUS INFECTION, LOSS OF INFORMATION OR DATA
+CONTAINED IN, STORED ON, OR INTEGRATED WITH ANY PRODUCT INCLUDING ANY PRODUCT RETURNED TO FORTINET FOR
+WARRANTY SERVICE) RESULTING FROM THE USE OF THE PRODUCT, RELATING TO WARRANTY SERVICE, OR ARISING OUT OF ANY
+BREACH OF THE LIMITED WARRANTY IN SECTION 6 ABOVE, EVEN IF FORTINET HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES. THE SOLE REMEDY FOR A BREACH OF THE LIMITED WARRANTY IS, AT FORTINET’S SOLE AND ABSOLUTE DISCRETION:
+REPAIR, REPLACEMENT, OR REFUND OF THE DEFECTIVE OR NON-CONFORMING PRODUCT AS SPECIFICALLY STATED IN SECTION 6
+ABOVE; PROVIDED, HOWEVER, IN NO EVENT SHALL ANY END-CUSTOMER REMEDIES UNDER THIS EULA AND ANY SUPPORT
+AGREEMENT EXCEED THE AMOUNT PAID TO FORTINET FOR THE SPECIFIC APPLICABLE DEFECTIVE OR NON-CONFORMING PRODUCT
+AT ISSUE.
+10. Compliance with Laws, including Import/Export Laws and FCPA.
+You are advised that the Products may be subject to the United States Export Administration Regulations and other import and export
+laws; diversion contrary to United States law and regulation is prohibited. You agree to comply with all applicable international and
+national laws that apply to the Products as well as end user, end-use, and destination restrictions issued by U.S. and other
+governments. For additional information on U.S. export controls see https://www.bis.doc.gov. Fortinet assumes no responsibility or
+liability for your failure to obtain any necessary import and export approvals and licenses, and Fortinet reserves the right to terminate
+or suspend shipments,services and support in the event Fortinet has a reasonable basisto suspect any import or export violation.
+You represent that neither the United States Bureau of Industry and Security nor any other governmental agency has issued sanctions
+against you or otherwise suspended, revoked or denied your export privileges. You agree not to use or transfer the Products for any
+use relating to nuclear, chemical or biological weapons, or missile technology, unless authorized by the United States Government by
+regulation or specific written license. Additionally, you agree not to directly or indirectly export, import or transmit the Products
+contrary to the laws or regulations of any other governmental entity that has jurisdiction over such export, import, transmission or
+use. Furthermore, you hereby agree that, for any orders that you place with Fortinet whereby any legal or regulatory requirements
+may apply to Fortinet such as requirements related to the International Traffic in Arms Regulations, or Buy American Act, or the Trade
+Agreements Act: you are responsible to ensure the Purchase Order submitted to Fortinet by you and/or any partners clearly states the
+specific requirement in writing, or otherwise Fortinet is not bound by any such requirements. You represent that you understand, and
+you hereby agree to comply with, all applicable laws including but not limited to the U.S. Foreign Corrupt Practices Act . You
+represent that you hereby agree that you and your employees have not accepted, and will not accept, anything of value, including
+money, meals, entertainment, paid-for travel, beta, testing, evaluation, donation or free Products and/or related services, or anything
+else of value, in exchange for Fortinet maintaining current business or for new business opportunities. You represent and warrant to
+Fortinet that you and your employees, consultants, agents and representatives will not use Fortinet’s products and services to engage
+in, or support in any way, violations or abuses of human rights, including those involving censorship, surveillance, detention, or
+excessive use of force. You agree you and your employees will be responsible to comply in full with all laws and policies applicable to
+any and all dealings with Fortinet in general and its distributors, resellers and partners.
+11. U.S. Government End Users.
+The Software and accompanying documentation are deemed to be "commercial computer software" and "commercial computer
+software documentation," respectively, pursuant to DFAR Section 227.7202 and FAR Section 12.212, as applicable. Any use,
+modification, reproduction, release, performance, display or disclosure of the Software and accompanying documentation by the
+United States Government shall be governed solely by the terms of this Agreement and shall be prohibited except to the extent
+expressly permitted by the terms of this Agreement and itssuccessors.
+12. Tax Liability.
+You agree to be responsible for payment of any sales or use taxesimposed at any time on thistransaction.
+13. General Provisions.
+Except as specifically permitted and required in section 5 (“Transfer”) above, you agree not to assign this Agreement or transfer any of
+the rights or obligations under this Agreement without the prior written consent of Fortinet. This Agreement shall be binding upon,
+and inure to the benefit of, the successors and permitted assigns of the parties. The United Nations Convention on Contracts for the
+International Sales of Goods is expressly excluded. This Agreement and other Fortinet agreements may be amended or supplemented
+only by a writing that refers explicitly to the agreement signed on behalf of both parties, or, for this Agreement, as otherwise
+expressly provided in the lead-in above Section 1 above, provided, notwithstanding anything to the contrary and except for this
+Agreement which may be amended or updated as expressly provided in the lead-in above Section 1 above, for any amendment or
+other agreement to be binding on Fortinet, such amendment or other agreement must be signed by Fortinet’s General Counsel. No
+waiver will be implied from conduct or failure to enforce rights nor effective unless in a writing signed on behalf of the party against
+whom the waiver is asserted. If any part of this Agreement is found unenforceable, that part will be enforced to the maximum extent
+permitted and the remainder shall continue in full force and effect. You acknowledge that you have read this Agreement, understand
+it, and agree to be bound by its terms and conditions. Notwithstanding anything to the contrary, this EULA constitutes the entire
+agreement between Fortinet and its end-customers and supersedes any and all prior representations or conflicting provisions, such as
+limitations of liability, warranties, or otherwise in any and all purported end customer agreements, whether entered into now or in
+the future. In the event of a conflict between this EULA and another agreement, this EULA shall prevail unless the conflicting
+agreement expressly states that it replaces this EULA, expressly referring to this EULA, and is agreed to in writing by authorized
+representatives of the parties (which, in the case of Fortinet, is Fortinet’s General Counsel).
+14. Privacy.
+You agree to Fortinet’s collection, use, disclosure, protection and transfer of your information, as set forth in the Fortinet privacy
+policy on the Fortinet web site (http://www.fortinet.com/about-us/privacy.html), including (a) Fortinet’s use of the Customer
+information to send information regarding Fortinet products and services; and (b) Fortinet’s disclosure of your information to provide
+assistance to law enforcement, governmental agencies and other authorities or to allow Fortinet to protect its Customers’ and/or end
+users’ rights.
+15. Open Source Software.
+Fortinet’s products may include software modulesthat are licensed (orsublicensed) to the user under the GNUGeneral Public
+License, Version 2, of June 1991 (“GPL”) or GNU Lesser General Public License, Version 2.1, of February 1999 (“LGPL”) or other open
+source software licenses which, among other rights, permit the user to use, copy, modify and redistribute modules, or portions
+thereof, and may also require attribution disclosures and access to the source code ("Open Source Software"). The GPL requires that
+for any Open Source Software covered under the GPL, which is distributed to someone in an executable binary format, that the source
+code also be made available to those users. For any Open Source Software covered under the GPL, the source code is made available
+on this CD or download package. If any Open Source Software licenses require that Fortinet provide rights to use, copy or modify any
+Open Source Software program that are broader than the rights granted in this agreement, then such rights shall take precedence
+over the rights and restrictions herein. Fortinet will provide, for a charge reflecting our standard distribution costs, the complete
+machine-readable copy of the modified software modules. To obtain a complete machine-readable copy, please send your written
+request, along with a check in the amount of US $25.00, to General Public License Source Code Request, Fortinet, Inc., 899 Kifer Rd,
+Sunnyvale, CA 94086 USA. To receive the modified software modules, you must also include the following information: (a) Name, (b)
+Address, (c) Telephone number, (d) E-mail Address, (e) Product purchased (if applicable), (f) Product Serial Number (if applicable). All
+open source software modules are licensed free of charge. There is no warranty for these modules, to the extent permitted by
+applicable law. The copyright holders provide these software modules “AS-IS” without warranty of any kind, either expressed or
+implied. In no event will the copyright holder for the open source software be liable to you for damages, including any special,
+incidental or consequential damages arising out of the use or inability to use the software modules, even if such holder has been
+advised of the possibility of such damages. A full copy of this license, including additional open source software license disclosures and
+third party license disclosures
