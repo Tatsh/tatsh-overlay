@@ -10,7 +10,7 @@ HOMEPAGE="https://www.fortinet.com/support/product-downloads#vpn"
 SRC_URI="https://filestore.fortinet.com/${PN}/downloads/${PN}_vpn_${PV}_x86_64.rpm"
 RESTRICT="mirror strip"
 
-LICENSE="Fortinet"
+LICENSE="Fortinet GPL-2 LGPL-2.1+"
 SLOT="0"
 KEYWORDS="~amd64"
 
