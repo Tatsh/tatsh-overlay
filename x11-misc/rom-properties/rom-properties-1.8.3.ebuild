@@ -22,7 +22,7 @@ DEPEND="
 	lz4? ( app-arch/lz4 )
 	lzo? ( dev-libs/lzo )
 	nls? ( sys-devel/gettext )
-	xfce? ( x11-libs/gtk+:2 )
+	xfce? ( xfce-extra/tumbler[curl] )
 	xml? ( dev-libs/tinyxml2 )
 	zstd? ( app-arch/zstd )"
 REQUIRED_USE="|| ( cli gtk kde xfce )"
