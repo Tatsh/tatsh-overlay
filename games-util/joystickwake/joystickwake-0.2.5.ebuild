@@ -19,5 +19,3 @@ KEYWORDS="~amd64 ~arm ~x86"
 RDEPEND="
 	$(python_gen_cond_dep 'dev-python/pyudev[${PYTHON_USEDEP}]')
 	X? ( $(python_gen_cond_dep 'dev-python/python-xlib[${PYTHON_USEDEP}]') )"
-
-PATCHES=( "${FILESDIR}/${PN}-pr6.patch" )
