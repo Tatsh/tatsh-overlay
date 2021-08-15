@@ -742,3 +742,4 @@ src_install() {
 	dosym ${PN} /usr/bin/${PN}-cli
 	einstalldocs
 }
+
