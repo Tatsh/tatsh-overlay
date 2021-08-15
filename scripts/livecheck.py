@@ -86,14 +86,19 @@ def dotize(s: str) -> str:
 
 def get_props(search_dir: str,
               settings: LivecheckSettings,
-              names: Optional[Sequence[str]] = None) -> Iterator[PropTuple]:
+              names: Optional[Sequence[str]] = None,
+              exclude: Optional[Sequence[str]] = None) -> Iterator[PropTuple]:
     log = logging.getLogger(LOG_NAME)
     log.debug('get_props(): search_dir=%s', search_dir)
+    exclude = exclude or []
     for match in sorted(
             set(
                 get_highest_matches(search_dir)
                 if not names else get_highest_matches2(names))):
         catpkg, cat, pkg, ebuild_version = catpkg_catpkgsplit(match)
+        if catpkg in exclude or pkg in exclude:
+            log.debug('Ignoring %s', catpkg)
+            continue
         src_uri = get_first_src_uri(match)
         if cat.startswith('acct-') or catpkg in settings.ignored_packages:
             continue
@@ -317,16 +322,14 @@ def main() -> int:
     parser.add_argument('package_names', nargs='*')
     args = parser.parse_args()
     log = setup_logging_stderr('livecheck', verbose=args.debug)
-    log.debug('Excluding %s', ', '.join(args.exclude))
+    if args.exclude:
+        log.debug('Excluding %s', ', '.join(args.exclude))
     search_dir = args.directory
     session = requests.Session()
     settings = gather_settings(search_dir)
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
-            search_dir, settings, names=args.package_names):
-        if (pkg in (args.exclude or [])
-                or f'{cat}/{pkg}' in (args.exclude or [])):
-            log.debug('Ignoring %s/%s', cat, pkg)
-            continue
+            search_dir, settings, names=args.package_names,
+            exclude=args.exclude):
         log.debug('Fetching %s', url)
         try:
             r: Response = (TextDataResponse(url[5:]) if url.startswith('data:')
