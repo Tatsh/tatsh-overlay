@@ -317,6 +317,7 @@ def main() -> int:
     parser.add_argument('package_names', nargs='*')
     args = parser.parse_args()
     log = setup_logging_stderr('livecheck', verbose=args.debug)
+    log.debug('Excluding %s', ', '.join(args.exclude))
     search_dir = args.directory
     session = requests.Session()
     settings = gather_settings(search_dir)
