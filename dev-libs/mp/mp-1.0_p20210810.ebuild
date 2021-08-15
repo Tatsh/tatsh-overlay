@@ -5,7 +5,7 @@ EAPI=7
 
 DESCRIPTION="A small, 0BSD-licensed metaprogramming library for C++17."
 HOMEPAGE="https://github.com/MerryMage/mp"
-MY_SHA="649fde1e814f9ce5b04d7ddeb940244d9f63cb2f"
+MY_SHA="b50053cef50385419c59fb3aebb78974547318bc"
 SRC_URI="https://github.com/MerryMage/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD-0"
