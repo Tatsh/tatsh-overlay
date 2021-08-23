@@ -25,16 +25,16 @@ src_prepare() {
 		-e 's:/usr/share/dbeaver:/opt/dbeaver:g' \
 		-e '/^WMCLASS.*/d' \
 		-e "s:^Exec=.*:Exec=${EPREFIX}/usr/bin/${MY_PN}:" \
-		-i "${MY_PN}.desktop"
+		-i "${MY_PN}-ce.desktop"
 	default
 }
 
 src_install() {
 	doicon -s 128 "${MY_PN}.png"
 	newicon icon.xpm "${MY_PN}.xpm"
-	domenu "${MY_PN}.desktop"
+	domenu "${MY_PN}-ce.desktop"
 	einstalldocs
-	rm "${MY_PN}.desktop" "${MY_PN}.png" icon.xpm readme.txt
+	rm "${MY_PN}-ce.desktop" "${MY_PN}.png" icon.xpm readme.txt
 	insinto "/opt/${MY_PN}"
 	doins -r *
 	fperms 0755 "/opt/${MY_PN}/${MY_PN}"
