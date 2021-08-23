@@ -11,11 +11,13 @@ DYNARMIC_SHA="71e3553d78190be9edce0eb1ea06ba937640a0a8"
 FMT_SHA="cc09f1a6798c085c325569ef466bcdcffdc266d4"
 LODEPNG_SHA="31d9704fdcca0b68fb9656d4764fa0fb60e460c2"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
+XBYAK_SHA="c306b8e5786eeeb87b8925a8af5c3bf057ff5a90"
 SRC_URI="https://github.com/citra-emu/citra/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
-	https://github.com/fmtlib/fmt/archive/${FMT_SHA}.tar.gz -> ${PN}-fmt-${FMT_SHA:0:7}.tar.gz"
+	https://github.com/fmtlib/fmt/archive/${FMT_SHA}.tar.gz -> ${PN}-fmt-${FMT_SHA:0:7}.tar.gz
+	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz -> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz"
 
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
@@ -46,11 +48,12 @@ S="${WORKDIR}/${PN}-${MY_SHA}"
 
 src_prepare() {
 	rmdir "${S}/externals/lodepng/lodepng" \
-		"${S}/externals/"{soundtouch,dynarmic,fmt} || die
+		"${S}/externals/"{soundtouch,dynarmic,fmt,xbyak} || die
 	mv "${WORKDIR}/ext-soundtouch-${SOUNDTOUCH_SHA}" "${S}/externals/soundtouch" || die
 	mv "${WORKDIR}/lodepng-${LODEPNG_SHA}" "${S}/externals/lodepng/lodepng" || die
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/fmt-${FMT_SHA}" "${S}/externals/fmt" || die
+	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
 	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
 	# curl 'https://api.citra-emu.org/gamedb/' | jq -Me | bzip2 -9 > ...
 	bunzip2 -c "${FILESDIR}/${PN}-compatibility_list-${PV}.json.bz2" > "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
@@ -72,7 +75,7 @@ src_configure() {
 		-DUSE_SYSTEM_ENET=ON
 		-DUSE_SYSTEM_INIH=ON
 		-DUSE_SYSTEM_TEAKRA=ON
-		-DUSE_SYSTEM_XBYAK=ON
+		-DUSE_SYSTEM_XBYAK=OFF
 		-DUSE_SYSTEM_ZSTD=ON
 	)
 	cmake_src_configure

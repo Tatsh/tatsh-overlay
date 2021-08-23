@@ -77,7 +77,7 @@ index 24e881b19..bfee14919 100644
 -    target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
 +    if (NOT USE_SYSTEM_XBYAK)
 +        add_library(xbyak INTERFACE)
-+        target_include_directories(xbyak SYSTEM INTERFACE /usr/include/xbyak)
++        target_include_directories(xbyak SYSTEM INTERFACE ./xbyak/xbyak)
 +        target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
 +    else()
 +        find_path(XBYAK_INCLUDE xbyak.h PATH_SUFFIXES xbyak REQUIRED)
