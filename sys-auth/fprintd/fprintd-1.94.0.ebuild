@@ -21,7 +21,7 @@ RESTRICT="!test? ( test )"
 
 RDEPEND="dev-libs/dbus-glib
 	dev-libs/glib:2
-	>=sys-auth/libfprint-${PV}
+	>=sys-auth/libfprint-1.92.1
 	sys-auth/polkit
 	systemd? ( sys-apps/systemd )
 	pam? ( sys-libs/pam )"
@@ -34,7 +34,7 @@ DEPEND="${RDEPEND}
 	)
 	test? (
 		${PYTHON_DEPS}
-		$(python_gen_cond_dep 'dev-python/dbusmock[${PYTHON_USEDEP}]')
+		$(python_gen_cond_dep 'dev-python/python-dbusmock[${PYTHON_USEDEP}]')
 		sys-libs/pam_wrapper[${PYTHON_SINGLE_USEDEP}]
 	)"
 
