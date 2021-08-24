@@ -35,10 +35,10 @@ src_install() {
 	domenu "${MY_PN}-ce.desktop"
 	einstalldocs
 	rm "${MY_PN}-ce.desktop" "${MY_PN}.png" icon.xpm readme.txt
-	insinto "/opt/${MY_PN}"
+	insinto "/opt/${MY_PN}-ce"
 	doins -r *
-	fperms 0755 "/opt/${MY_PN}/${MY_PN}"
-	make_wrapper "${MY_PN}" "/opt/${MY_PN}/${MY_PN}" "/opt/${MY_PN}"
-	sed -e "s:^exec /opt/${MY_PN}/${MY_PN}:exec /opt/${MY_PN}/${MY_PN} -vm ${EPREFIX}/opt/openjdk-bin-11/bin:" \
+	fperms 0755 "/opt/${MY_PN}-ce/${MY_PN}"
+	make_wrapper "${MY_PN}" "/opt/${MY_PN}-ce/${MY_PN}" "/opt/${MY_PN}-ce"
+	sed -e "s:^exec /opt/${MY_PN}-ce/${MY_PN}:exec /opt/${MY_PN}-ce/${MY_PN} -vm ${EPREFIX}/opt/openjdk-bin-11/bin:" \
 		-i "${D}/usr/bin/${MY_PN}"
 }
