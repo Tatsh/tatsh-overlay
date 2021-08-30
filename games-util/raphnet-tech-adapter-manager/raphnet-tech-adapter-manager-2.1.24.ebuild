@@ -12,6 +12,7 @@ SRC_URI="https://www.raphnet-tech.com/downloads/raphnet-tech_adapter_manager-${P
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
+IUSE="firmware"
 
 DEPEND="dev-libs/hidapi
 	sys-libs/zlib
@@ -39,4 +40,8 @@ src_install() {
 	popd || die
 	udev_dorules scripts/*.rules
 	einstalldocs
+	if use firmware; then
+		insinto /usr/share/${PN}
+		doins -r firmwares
+	fi
 }
