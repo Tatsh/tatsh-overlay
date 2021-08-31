@@ -1,0 +1,12 @@
+diff --git a/configure.ac b/configure.ac
+index 8e98dc4e9..a21cb36f4 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -422,6 +422,7 @@ if test -n "$SDL2_LIBS"; then
+     CPPFLAGS="$CPPFLAGS $SDL2_CFLAGS"
+ else
+   if test -n "$SDL_LIBS"; then
++    SDL_LIBS=$(sed -e 's/-Wl,-rpath,[[^ ]]\+ //' <<< "$SDL_LIBS")
+     LIBS="$LIBS $SDL_LIBS"
+     CPPFLAGS="$CPPFLAGS $SDL_CFLAGS"
+   else

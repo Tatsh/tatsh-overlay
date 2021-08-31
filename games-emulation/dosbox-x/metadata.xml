@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<use>
+		<flag name="core-inline">Enable memory-increasing inlines for better performance but requiring more build time</flag>
+		<flag name="dynrec">Use recompiling cpu core instead of dynamic x86/x64 specific cpu core</flag>
+		<flag name="fluidsynth">Use media-sound/fluidsynth for MIDI emulation</flag>
+		<flag name="fpu">Enable FPU emulation</flag>
+		<flag name="freetype">Enable FreeType support</flag>
+		<flag name="midi">Enable MIDI support (with ALSA)</flag>
+		<flag name="mt-32">Use media-libs/munt-mt32emu for MT-32 emulation</flag>
+		<flag name="printer">Enable printer emulation</flag>
+		<flag name="screenshots">Screenshots and movie recording</flag>
+		<flag name="slirp">Enable libslirp support</flag>
+		<flag name="unaligned">Enable unaligned memory access</flag>
+		<flag name="xbrz">Enable support for xBRZ pixel scaler</flag>
+	</use>
+</pkgmetadata>
