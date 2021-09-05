@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<use>
+		<flag name="discord">Enable Discord support</flag>
+		<flag name="dynrec">Enable dynamic recompiler</flag>
+		<flag name="fluidsynth">Use media-sound/fluidsynth for MIDI emulation</flag>
+		<flag name="mt-32">Use media-libs/munt-mt32emu for MT-32 emulation</flag>
+		<flag name="new-dynrec">Use the PCem v15 (&quot;new&quot;) dynamic recompiler</flag>
+		<flag name="vramdump">Enable video RAM dumping</flag>
+	</use>
+</pkgmetadata>
