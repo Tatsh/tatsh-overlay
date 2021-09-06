@@ -6,8 +6,8 @@ inherit cmake
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3"
-MY_RE3_HASH="9bb34fab2511a4dce77775e445267d223fc5b064"
-MY_LIBRW_HASH="22ce63a114be1b84357dea0ba597c8926d465d37"
+MY_RE3_HASH="3233ffe1c4b99e8efb4c41c6794b4fce880cf503"
+MY_LIBRW_HASH="5501c4fdc7425ff926be59369a13593bb6c81b54"
 SRC_URI="https://github.com/GTAmodding/${PN}/archive/${MY_RE3_HASH}.tar.gz -> ${P}.tar.gz
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
 
