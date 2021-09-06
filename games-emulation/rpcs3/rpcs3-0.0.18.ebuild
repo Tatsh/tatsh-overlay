@@ -75,7 +75,7 @@ src_prepare() {
 	mv "${WORKDIR}/wolfssl-${WOLFSSL_SHA}" "${S}/3rdparty/wolfssl" || die
 	rmdir "${S}/3rdparty/hidapi/hidapi" || die
 	mv "${WORKDIR}/hidapi-${HIDAPI_SHA}" "${S}/3rdparty/hidapi/hidapi" || die
-	mv "${WORKDIR}/yaml-cpp-${YAML_CPP_SHA}" "${S}/3rdparty/yaml-cpp" || die
+	mv "${WORKDIR}/yaml-cpp-${YAML_CPP_SHA}" "${S}/3rdparty/yaml-cpp/yaml-cpp" || die
 	rmdir "${S}/3rdparty/asmjit/asmjit" || die
 	mv "${WORKDIR}/asmjit-${ASMJIT_SHA}" "${S}/3rdparty/asmjit/asmjit" || die
 	rmdir "${S}/3rdparty/SPIRV/SPIRV-"{Headers,Tools} || die
@@ -92,6 +92,7 @@ src_prepare() {
 		-e 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
 		-i "${S}/llvm/CMakeLists.txt" || die
 	sed -i -e '/find_program(CCACHE_FOUND/d' CMakeLists.txt || die
+	sed -i -e 's|FAudio.h|FAudio/FAudio.h|' rpcs3/Emu/Audio/FAudio/FAudioBackend.h || die
 	cmake_src_prepare
 }
 
