@@ -6,13 +6,13 @@ inherit cmake xdg
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
-MY_SHA="v0.0.17"
+MY_SHA="v0.0.18"
 ASMJIT_SHA="723f58581afc0f4cb16ba13396ff77e425896847"
 HIDAPI_SHA="01f601a1509bf9c67819fbf521df39644bab52d5"
 LLVM_SHA="5836324d6443a62ed09b84c125029e98324978c3"
 YAML_CPP_SHA="6a211f0bc71920beef749e6c35d7d1bcc2447715"
-WOLFSSL_SHA="39b5448601271b8d1deabde8a0d33dc64d2a94bd"
-GLSLANG_SHA="18eef33bd7a4bf5ad8c69f99cb72022608cf6e73"
+WOLFSSL_SHA="723ed009ae5dc68acc14cd7664f93503d64cd51d"
+GLSLANG_SHA="ae2a562936cc8504c9ef2757cceaff163147834f"
 SPIRV_HEADERS_SHA="3fdabd0da2932c276b25b9b4a988ba134eba1aa6"
 SPIRV_TOOLS_SHA="895927bd3f2d653f40cebab55aa6c7eabde30a86"
 LIBUSB_SHA="c33990a300674e24f47ff0f172f7efb10b63b88a"
@@ -64,14 +64,14 @@ S="${WORKDIR}/${PN}-${MY_SHA:1}"
 PATCHES=(
 	"${FILESDIR}/${PN}-0003-add-missing-include-fix-branch-names.patch"
 	"${FILESDIR}/${PN}-0004-add-use_wayland.patch"
-	"${FILESDIR}/${PN}-0005-faudio.patch"
 	"${FILESDIR}/${PN}-0006-vk.patch"
 )
 
 src_prepare() {
 	rmdir "${S}/llvm" || die
 	mv "${WORKDIR}/llvm-mirror-${LLVM_SHA}" "${S}/llvm" || die
-	rmdir "${S}/3rdparty/"{wolfssl,yaml-cpp} || die
+	rmdir "${S}/3rdparty/yaml-cpp/yaml-cpp" || die
+	rmdir "${S}/3rdparty/wolfssl" || die
 	mv "${WORKDIR}/wolfssl-${WOLFSSL_SHA}" "${S}/3rdparty/wolfssl" || die
 	rmdir "${S}/3rdparty/hidapi/hidapi" || die
 	mv "${WORKDIR}/hidapi-${HIDAPI_SHA}" "${S}/3rdparty/hidapi/hidapi" || die
@@ -103,6 +103,7 @@ src_configure() {
 		-DUSE_PRECOMPILED_HEADERS=OFF
 		-DUSE_ALSA=$(usex alsa)
 		-DUSE_DISCORD_RPC=OFF
+		-DUSE_FAUDIO=$(usex faudio)
 		-DUSE_SYSTEM_FAUDIO=$(usex faudio)
 		-DUSE_LIBEVDEV=$(usex joystick)
 		-DUSE_NATIVE_INSTRUCTIONS=OFF
