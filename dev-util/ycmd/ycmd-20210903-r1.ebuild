@@ -28,7 +28,7 @@ RDEPEND="
 		sys-devel/clang:12[static-analyzer] )
 	|| ( sys-libs/compiler-rt:11.1.0
 		sys-libs/compiler-rt:10.0.1
-		sys-libs/compiler-rt:12.0.0 )"
+		sys-libs/compiler-rt:12.0.1 )"
 
 S="${WORKDIR}/${PN}-${MY_SHA}/cpp"
 
