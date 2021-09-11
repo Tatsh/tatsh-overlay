@@ -415,8 +415,18 @@ def main() -> int:
                     with open(new_filename, 'w') as f:
                         f.write(content)
                 else:
-                    print(f'{cat}/{pkg}: {version} ({ebuild_version}) -> ' +
-                          top_hash)
+                    new_date = ''
+                    if is_sha(top_hash):
+                        updated_el = etree.fromstring(r.text).find(
+                            'entry/updated', RSS_NS)
+                        assert updated_el is not None
+                        assert updated_el.text is not None
+                        if re.search(r'(2[0-9]{7})', ebuild_version):
+                            new_date = (' (' +
+                                        updated_el.text.split('T')[0].replace(
+                                            '-', '') + ')')
+                    print(f'{cat}/{pkg}: {version} ({ebuild_version}) -> '
+                          f'{top_hash}{new_date}')
         except requests.exceptions.HTTPError as e:
             log.warning('Caught HTTPError while checking %s/%s: %s', cat, pkg,
                         e)
