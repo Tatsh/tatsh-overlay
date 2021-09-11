@@ -377,6 +377,8 @@ def main() -> int:
             cp = f'{cat}/{pkg}'
             if tf := settings.transformations.get(cp, None):
                 top_hash = tf(top_hash)
+            if cp == 'games-emulation/play':
+                top_hash = top_hash.replace('-', '.')
             if prefixes:
                 assert top_hash in prefixes
                 top_hash = f'{prefixes[top_hash]}{top_hash}'
