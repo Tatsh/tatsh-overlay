@@ -33,19 +33,18 @@ diff --git a/Source/ui_qt/CMakeLists.txt b/Source/ui_qt/CMakeLists.txt
 index 88fc3a2c..5bd3b1d1 100644
 --- a/Source/ui_qt/CMakeLists.txt
 +++ b/Source/ui_qt/CMakeLists.txt
-@@ -10,10 +10,9 @@ project(PlayUI)
+@@ -9,9 +9,8 @@ project(PlayUI)
  
  add_definitions(-DPLAY_VERSION="${PROJECT_Version}")
  
 -set(USE_GSH_VULKAN OFF)
- if(NOT TARGET_PLATFORM_UNIX_AARCH64)
--	find_package(Vulkan)
--	if(Vulkan_FOUND)
-+	if (USE_GSH_VULKAN)
-+		find_package(Vulkan REQUIRED)
- 		set(USE_GSH_VULKAN ON)
- 		message("Building with Vulkan support.")
- 	else()
+-find_package(Vulkan)
+-if(Vulkan_FOUND)
++if (USE_GSH_VULKAN)
++	find_package(Vulkan REQUIRED)
+ 	set(USE_GSH_VULKAN ON)
+ 	message("Building with Vulkan support.")
+ else()
 diff --git a/Source/ui_shared/CMakeLists.txt b/Source/ui_shared/CMakeLists.txt
 index edea94e3..8a42dbfe 100644
 --- a/Source/ui_shared/CMakeLists.txt
