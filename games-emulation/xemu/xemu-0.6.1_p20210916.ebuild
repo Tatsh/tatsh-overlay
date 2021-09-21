@@ -6,7 +6,7 @@ EAPI=7
 inherit eutils flag-o-matic
 
 DESCRIPTION="Original Xbox emulator."
-HOMEPAGE="https://github.com/mborgerson/xemu"
+HOMEPAGE="https://xemu.app/ https://github.com/mborgerson/xemu"
 SHA="d7e926fc6342a28b4441df306b525b1aac016fad"
 IMGUI_SHA="e18abe3619cfa0eced163c027d0349506814816c"
 IMPLOT_SHA="dea3387cdcc1d6a7ee3607f8a37a9dce8a85224f"
@@ -40,6 +40,8 @@ DEPEND="media-libs/libepoxy
 RDEPEND="${DEPEND}"
 BDEPEND="dev-util/meson
 	dev-util/ninja"
+
+DOCS=( README.md )
 
 S="${WORKDIR}/${PN}-${SHA}"
 
