@@ -3,7 +3,10 @@
 
 EAPI=7
 
-inherit eutils flag-o-matic
+PYTHON_COMPAT=( python3_{7,8,9,10} )
+PYTHON_REQ_USE="ncurses,readline"
+
+inherit eutils flag-o-matic python-r1
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/mborgerson/xemu"
@@ -26,26 +29,41 @@ SRC_URI="https://github.com/mborgerson/xemu/archive/${SHA}.tar.gz -> ${P}.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack +lto malloc-trim membarrier pulseaudio sdl"
+IUSE="xattr aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack +lto malloc-trim membarrier nls doc pulseaudio sdl test"
 REQUIRED_USE="debug? ( !lto  )"
 
 DEPEND="media-libs/libepoxy
+	dev-libs/libxml2[static-libs(+)]
 	media-libs/libsdl2
 	net-libs/libslirp
 	media-libs/libsamplerate
 	dev-libs/openssl
+	virtual/opengl
 	x11-libs/gtk+:3
 	dev-libs/glib
 	net-libs/libpcap
-	pulseaudio? ( || ( media-sound/pulseaudio media-sound/apulse ) )
-	io-uring? ( sys-libs/liburing )
+	pulseaudio? ( media-sound/pulseaudio )
+	io-uring? ( sys-libs/liburing:=[static-libs(+)] )
 	sys-libs/zlib
 	alsa? ( media-libs/alsa-lib )
 	jack? ( virtual/jack )
-	aio? ( dev-libs/libaio )"
+	aio? ( dev-libs/libaio )
+	xattr? ( sys-apps/attr[static-libs(+)] )"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-util/meson
-	dev-util/ninja"
+	dev-lang/perl
+	sys-apps/texinfo
+	dev-util/ninja
+	virtual/pkgconfig
+	$(python_gen_impl_dep)
+	doc? (
+			dev-python/sphinx
+			dev-python/sphinx_rtd_theme
+	)
+	test? (
+			dev-libs/glib[utils]
+			sys-devel/bc
+	)"
 
 DOCS=( README.md )
 
@@ -62,7 +80,6 @@ src_prepare() {
 }
 
 src_configure() {
-	local cc_args=()
 	local audio_drv_list=()
 	local build_cflags=("-I${S}/ui/imgui")
 	local debug_flag
@@ -75,8 +92,32 @@ src_configure() {
 	use jack && audio_drv_list+=( jack )
 	use pulseaudio && audio_drv_list+=( pa )
 	use sdl && audio_drv_list+=( sdl )
+	local other_opts=(
+		--docdir=/usr/share/doc/${PF}/html
+		--libdir=/usr/$(get_libdir)
+		--disable-bsd-user
+		--disable-containers # bug #732972
+		--disable-guest-agent
+		--disable-tcg-interpreter
+		--cc="$(tc-getCC)"
+		--cxx="$(tc-getCXX)"
+		--host-cc="$(tc-getBUILD_CC)"
+		$(use_enable debug debug-info)
+		$(use_enable debug debug-tcg)
+		$(use_enable doc docs)
+		$(use_enable nls gettext)
+		$(use_enable xattr attr)
+		# From qemu ebuild
+		# We support gnutls/nettle for crypto operations.  It is possible
+		# to use gcrypt when gnutls/nettle are disabled (but not when they
+		# are enabled), but it's not really worth the hassle.  Disable it
+		# all the time to avoid automatically detecting it. #568856
+		--disable-gcrypt
+		# use prebuilt keymaps, bug #759604
+		--disable-xkbcommon
+		--enable-libxml2
+	)
 	econf \
-		${cc_args} \
 		$(use_enable malloc-trim) \
 		$(use_enable lto) \
 		${debug_flag} \
@@ -93,7 +134,8 @@ src_configure() {
 		"--extra-cflags=-DXBOX=1 ${build_cflags[@]} -Wno-error=redundant-decls ${CFLAGS}" \
 		--target-list=i386-softmmu \
 		--with-git-submodules=ignore \
-		"--audio-drv-list=${audio_drv_list[*]}"
+		"--audio-drv-list=${audio_drv_list[*]}" \
+		"${other_opts[@]}"
 }
 
 src_compile() {
