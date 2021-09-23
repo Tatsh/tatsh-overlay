@@ -148,6 +148,7 @@ src_compile() {
 src_install() {
 	default
 	rm -r "${ED}/usr/share/qemu" || die
+	find "${ED}/usr/share/icons" -iname '*.bmp' -delete
 	while IFS=$'\n' read -r name; do
 		mv "${name}" "${name/qemu/${PN}}" || die
 	done < <(find "${ED}/usr/share" -name 'qemu.*')
