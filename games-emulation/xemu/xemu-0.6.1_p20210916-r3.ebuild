@@ -157,7 +157,7 @@ src_install() {
 
 src_test() {
 	cd "${S}/build"
-	pax-mark m */qemu-system-* #515550
+	pax-mark m */xemu #515550
 	emake check
 }
 
