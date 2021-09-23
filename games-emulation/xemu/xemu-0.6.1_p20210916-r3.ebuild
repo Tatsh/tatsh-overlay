@@ -34,7 +34,7 @@ REQUIRED_USE="debug? ( !lto  )"
 RESTRICT="!test? ( test )"
 
 DEPEND="media-libs/libepoxy
-	dev-libs/libxml2[static-libs(+)]
+	dev-libs/libxml2
 	media-libs/libsdl2
 	net-libs/libslirp
 	media-libs/libsamplerate
@@ -44,12 +44,12 @@ DEPEND="media-libs/libepoxy
 	dev-libs/glib
 	net-libs/libpcap
 	pulseaudio? ( media-sound/pulseaudio )
-	io-uring? ( sys-libs/liburing:=[static-libs(+)] )
+	io-uring? ( sys-libs/liburing )
 	sys-libs/zlib
 	alsa? ( media-libs/alsa-lib )
 	jack? ( virtual/jack )
 	aio? ( dev-libs/libaio )
-	xattr? ( sys-apps/attr[static-libs(+)] )"
+	xattr? ( sys-apps/attr )"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-util/meson
 	dev-lang/perl
