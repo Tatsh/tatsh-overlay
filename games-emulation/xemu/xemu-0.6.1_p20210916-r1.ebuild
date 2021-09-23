@@ -12,6 +12,7 @@ IMGUI_SHA="e18abe3619cfa0eced163c027d0349506814816c"
 IMPLOT_SHA="dea3387cdcc1d6a7ee3607f8a37a9dce8a85224f"
 KEYCODEMAPDB_SHA="d21009b1c9f94b740ea66be8e48a1d8ad8124023"
 SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
+SLIRP_SHA="a88d9ace234a24ce1c17189642ef9104799425e0"
 TESTFLOAT_SHA="5a59dcec19327396a011a17fd924aed4fec416b3"
 XXHASH_SHA="f2c52f1236a50d754b07f584ce4592de1df8c0f7"
 SRC_URI="https://github.com/mborgerson/xemu/archive/${SHA}.tar.gz -> ${P}.tar.gz
@@ -25,7 +26,8 @@ SRC_URI="https://github.com/mborgerson/xemu/archive/${SHA}.tar.gz -> ${P}.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug +lto"
+IUSE="aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack +lto malloc-trim membarrier pulseaudio sdl"
+REQUIRED_USE="debug? ( !lto  )"
 
 DEPEND="media-libs/libepoxy
 	media-libs/libsdl2
@@ -35,8 +37,12 @@ DEPEND="media-libs/libepoxy
 	x11-libs/gtk+:3
 	dev-libs/glib
 	net-libs/libpcap
-	|| ( media-sound/pulseaudio media-sound/apulse )
-	sys-libs/zlib"
+	pulseaudio? ( || ( media-sound/pulseaudio media-sound/apulse ) )
+	io-uring? ( sys-libs/liburing )
+	sys-libs/zlib
+	alsa? ( media-libs/alsa-lib )
+	jack? ( virtual/jack )
+	aio? ( dev-libs/libaio )"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-util/meson
 	dev-util/ninja"
@@ -56,25 +62,38 @@ src_prepare() {
 }
 
 src_configure() {
-	local opts=()
+	local cc_args=()
+	local audio_drv_list=()
 	local build_cflags=("-I${S}/ui/imgui")
+	local debug_flag
 	if use debug; then
 		filter-flags '-O*'
 		build_cflags+=(-O0 -g -DXEMU_DEBUG_BUILD=1)
-		opts+=(--enable-debug)
-	else
-		if use lto; then
-			opts+=(--enable-lto)
-		fi
+		debug_flag=--enable-debug
 	fi
+	use alsa && audio_drv_list+=( alsa )
+	use jack && audio_drv_list+=( jack )
+	use pulseaudio && audio_drv_list+=( pa )
+	use sdl && audio_drv_list+=( sdl )
 	econf \
+		${cc_args} \
+		$(use_enable malloc-trim) \
+		$(use_enable lto) \
+		${debug_flag} \
+		$(use_enable io-uring linux-io-uring) \
+		--disable-blobs \
+		--disable-qom-cast-debug \
+		$(use_enable membarrier) \
 		--disable-strip \
+		$(use_enable cpu_flags_x86_avx2 avx2) \
+		$(use_enable cpu_flags_x86_avx512f avx512f) \
 		--disable-werror \
+		$(use_enable aio linux-aio) \
 		--enable-slirp=system \
 		"--extra-cflags=-DXBOX=1 ${build_cflags[@]} -Wno-error=redundant-decls ${CFLAGS}" \
 		--target-list=i386-softmmu \
 		--with-git-submodules=ignore \
-		${opts[@]}
+		"--audio-drv-list=${audio_drv_list[*]}"
 }
 
 src_compile() {

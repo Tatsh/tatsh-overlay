@@ -6,6 +6,10 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<use>
+		<flag name="aio">Add support for AIO</flag>
+		<flag name="io-uring">Enable efficient I/O via sys-libs/liburing</flag>
 		<flag name="lto">Enable link time optimisation (highly recommended)</flag>
+		<flag name="malloc-trim">Enable malloc_trim() support</flag>
+		<flag name="membarrier">Enable membarrier syscall support</flag>
 	</use>
 </pkgmetadata>
