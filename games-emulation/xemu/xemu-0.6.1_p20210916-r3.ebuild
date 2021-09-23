@@ -148,10 +148,9 @@ src_compile() {
 src_install() {
 	default
 	rm -r "${ED}/usr/share/qemu" || die
-	mv "${ED}/usr/share/applications/qemu.desktop" "${ED}/usr/share/applications/${PN}.desktop"
 	while IFS=$'\n' read -r name; do
 		mv "${name}" "${name/qemu/${PN}}" || die
-	done < <(find "${ED}/usr/share/icons" -name 'qemu.*')
+	done < <(find "${ED}/usr/share" -name 'qemu.*')
 	einstalldocs
 }
 
