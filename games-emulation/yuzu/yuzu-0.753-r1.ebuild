@@ -33,7 +33,7 @@ DEPEND="app-arch/lz4
 	dev-libs/boost:=[context]
 	cubeb? ( dev-libs/cubeb )
 	dev-libs/inih
-	>=dev-libs/libfmt-7.1.2
+	>=dev-libs/libfmt-8.0.0
 	dev-libs/libzip
 	dev-libs/openssl
 	dev-qt/qtcore
