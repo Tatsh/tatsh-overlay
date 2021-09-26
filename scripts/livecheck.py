@@ -189,6 +189,14 @@ def get_props(search_dir: str,
         elif 'download.jetbrains.com' in src_uri:
             yield (cat, pkg, ebuild_version, ebuild_version,
                    'https://www.jetbrains.com/updates/updates.xml', None, True)
+        elif '/forticlient/downloads/' in src_uri:
+            r = requests.get(
+                'https://links.fortinet.com/forticlient/rhel/vpnagent',
+                allow_redirects=False)
+            r.raise_for_status()
+            yield (cat, pkg, ebuild_version, ebuild_version,
+                   'https://links.fortinet.com/forticlient/rhel/vpnagent',
+                   None, True)
         else:
             home = P.aux_get(match, ['HOMEPAGE'])[0]
             raise RuntimeError(
@@ -357,6 +365,14 @@ def main() -> int:
                         raise NotImplementedError(
                             'Unhandled state: '
                             f'regex=None, cat={cat}, pkg={pkg}, url={url}')
+                elif 'fortinet.com/forticlient' in url:
+                    r = requests.get(url, allow_redirects=False)
+                    r.raise_for_status()
+                    results = [
+                        re.split(r'^forticlient_vpn_',
+                                 basename(
+                                     r.headers['location']))[1].split('_')[0]
+                    ]
                 else:
                     raise NotImplementedError(
                         'Unhandled state: non-JetBrains URI, regex=None, '
