@@ -46,7 +46,7 @@ src_install() {
 	insinto /usr/share/qt5/translations/
 	doins translations/"${PN}_en.qm"
 	newicon -s 512 "R${PN:1}_Icon.png" "${PN}.png"
-	make_wrapper "${PN}" "/opt/${PN}/R${PN:1}" "/opt/${PN}"
+	make_wrapper "${PN}" "env RIPCORD_ALLOW_UPDATES=0 /opt/${PN}/R${PN:1}" "/opt/${PN}"
 	make_desktop_entry "${PN}" "R${PN:1}" "$PN" "Network;InstantMessaging;"
 	einstalldocs
 	cat > ${ED}/opt/${PN}/qt.conf <<EOF
