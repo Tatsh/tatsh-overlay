@@ -8,7 +8,7 @@ DESCRIPTION="GTA Vice City decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3/tree/miami"
 MY_REVC_HASH="a16fcd8d6a79e433c1c6e73d540f1bbe27e14164"
 MY_LIBRW_HASH="5501c4fdc7425ff926be59369a13593bb6c81b54"
-SRC_URI="https://github.com/GTAmodding/re3/archive/${MY_REVC_HASH}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://web.archive.org/web/20210905122315/https://github.com/GTAmodding/re3/archive/${MY_REVC_HASH}.zip -> ${P}.zip
 	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
 
 LICENSE="MIT"
