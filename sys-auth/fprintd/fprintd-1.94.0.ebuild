@@ -8,7 +8,7 @@ inherit meson pam python-single-r1 systemd
 
 DESCRIPTION="D-Bus service to access fingerprint readers"
 HOMEPAGE="https://cgit.freedesktop.org/libfprint/fprintd/"
-SHA="b760a82ac68177516bd0a36656a3d2c040e8fcf7"
+SHA="fc7e058e937db861d1868a55b5316798d14fe0b7"
 SRC_URI="https://gitlab.freedesktop.org/libfprint/fprintd/-/archive/v${PV}/${P}.tar.gz"
 
 LICENSE="GPL-2"
@@ -31,11 +31,10 @@ DEPEND="${RDEPEND}
 		dev-util/gtk-doc
 		dev-util/gtk-doc-am
 		dev-libs/libxml2
-	)
-	test? (
-		${PYTHON_DEPS}
-		$(python_gen_cond_dep 'dev-python/dbusmock[${PYTHON_USEDEP}]')
-		sys-libs/pam_wrapper[${PYTHON_SINGLE_USEDEP}]
+	)"
+BDEPEND="test? (
+		dev-python/python-dbusmock
+		pam? ( sys-libs/pam_wrapper )
 	)"
 
 S="${WORKDIR}/${PN}-v${PV}-${SHA}"
