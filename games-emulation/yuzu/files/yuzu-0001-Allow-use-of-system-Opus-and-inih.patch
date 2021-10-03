@@ -21,9 +21,9 @@ index 27aa56780..f2e339a3c 100644
 +option(USE_SYSTEM_OPUS "Enable system opus" OFF)
 +option(USE_SYSTEM_INIH "Enable system inih" OFF)
 +
- if (NOT ENABLE_WEB_SERVICE)
-     set(YUZU_ENABLE_BOXCAT OFF)
- endif()
+ # Default to a Release build
+ get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+ if (NOT IS_MULTI_CONFIG AND NOT CMAKE_BUILD_TYPE)
 @@ -417,7 +420,7 @@ elseif (WIN32)
          set(PLATFORM_LIBRARIES ${PLATFORM_LIBRARIES} psapi imm32 version)
      endif()
