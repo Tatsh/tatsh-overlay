@@ -16,7 +16,7 @@ CRATES="
 	cfg-if-1.0.0
 	chrono-0.4.19
 	clap-2.33.3
-	fuser-0.8.0
+	fuser-0.9.1
 	hermit-abi-0.1.18
 	itoa-0.4.7
 	lazy_static-1.4.0
@@ -61,8 +61,8 @@ CRATES="
 	winapi-i686-pc-windows-gnu-0.4.0
 	winapi-x86_64-pc-windows-gnu-0.4.0
 	yaml-rust-0.4.5
-	zerocopy-0.3.0
-	zerocopy-derive-0.2.0
+	zerocopy-0.5.0
+	zerocopy-derive-0.3.0
 "
 
 inherit cargo
