@@ -79,6 +79,9 @@ src_prepare() {
 	{ rmdir ui/implot && mv "${WORKDIR}/implot-${IMPLOT_SHA}" ui/implot; } || die
 	{ rmdir ui/keycodemapdb &&	mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" ui/keycodemapdb; } || die
 	! use test && sed -r -e "/^subdir\('tests/d" -i meson.build || die
+	cut -d_ -f1 <<< "${PV}" > XEMU_VERSION || die
+	echo master > XEMU_BRANCH || die
+	echo "${SHA}" > XEMU_COMMIT || die
 	default
 }
 
