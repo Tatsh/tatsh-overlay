@@ -1,0 +1,95 @@
+From 0a7dd79112da31bca05f2284d09fdbf65532129f Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 6 Oct 2021 02:35:51 -0400
+Subject: [PATCH 2/4] Make running tests configurable
+
+---
+ configure         |  7 ++++++-
+ meson.build       | 11 ++++++++---
+ meson_options.txt |  2 ++
+ 3 files changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/configure b/configure
+index c8bf6db..b40c584 100755
+--- a/configure
++++ b/configure
+@@ -1549,6 +1549,10 @@ for opt do
+   ;;
+   --disable-containers) use_containers="no"
+   ;;
++  --enable-tests) run_tests="true"
++  ;;
++  --disable-tests) run_tests="false"
++  ;;
+   --enable-fuzzing) fuzzing=yes
+   ;;
+   --disable-fuzzing) fuzzing=no
+@@ -1848,6 +1852,7 @@ Advanced options (experts only):
+   --enable-plugins
+                            enable plugins via shared library loading
+   --disable-containers     don't use containers for cross-building
++  --disable-tests          disable tests
+   --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
+ 
+ Optional features, enabled with --enable-FEATURE and
+@@ -5309,7 +5314,7 @@ if test "$skip_meson" = no; then
+         -Db_pie=$(if test "$pie" = yes; then echo true; else echo false; fi) \
+         ${staticpic:+-Db_staticpic=$staticpic} \
+         -Db_coverage=$(if test "$gcov" = yes; then echo true; else echo false; fi) \
+-        -Db_lto=$lto -Dcfi=$cfi -Dcfi_debug=$cfi_debug \
++        -Db_lto=$lto -Dcfi=$cfi -Dcfi_debug=$cfi_debug -Drun_tests=$run_tests \
+         -Dmalloc=$malloc -Dmalloc_trim=$malloc_trim -Dsparse=$sparse \
+         -Dkvm=$kvm -Dhax=$hax -Dwhpx=$whpx -Dhvf=$hvf -Dnvmm=$nvmm \
+         -Dxen=$xen -Dxen_pci_passthrough=$xen_pci_passthrough -Dtcg=$tcg \
+diff --git a/meson.build b/meson.build
+index 40e45ce..ee177de 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2334,8 +2334,10 @@ linux_user_ss.add(files('gdbstub.c', 'thunk.c'))
+ specific_ss.add_all(when: 'CONFIG_LINUX_USER', if_true: linux_user_ss)
+ 
+ # needed for fuzzing binaries
+-subdir('tests/qtest/libqos')
+-subdir('tests/qtest/fuzz')
++if get_option('run_tests')
++	subdir('tests/qtest/libqos')
++	subdir('tests/qtest/fuzz')
++endif
+ 
+ # accel modules
+ tcg_real_module_ss = ss.source_set()
+@@ -2840,7 +2842,9 @@ subdir('scripts')
+ subdir('tools')
+ subdir('pc-bios')
+ subdir('docs')
+-subdir('tests')
++if get_option('run_tests')
++	subdir('tests')
++endif
+ if gtk.found()
+   subdir('po')
+ endif
+@@ -2922,6 +2926,7 @@ summary_info += {'system-mode emulation': have_system}
+ summary_info += {'user-mode emulation': have_user}
+ summary_info += {'block layer':       have_block}
+ summary_info += {'Install blobs':     get_option('install_blobs')}
++summary_info += {'Run tests':         get_option('run_tests')}
+ summary_info += {'module support':    config_host.has_key('CONFIG_MODULES')}
+ if config_host.has_key('CONFIG_MODULES')
+   summary_info += {'alternative module path': config_host.has_key('CONFIG_MODULE_UPGRADES')}
+diff --git a/meson_options.txt b/meson_options.txt
+index a9a9b8f..d770e1f 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -19,6 +19,8 @@ option('sparse', type : 'feature', value : 'auto',
+        description: 'sparse checker')
+ option('guest_agent_msi', type : 'feature', value : 'auto',
+        description: 'Build MSI package for the QEMU Guest Agent')
++option('run_tests', type : 'boolean', value : false,
++       description : 'run validation tests' )
+ 
+ option('malloc_trim', type : 'feature', value : 'auto',
+        description: 'enable libc malloc_trim() for memory optimization')
+-- 
+2.33.0
+

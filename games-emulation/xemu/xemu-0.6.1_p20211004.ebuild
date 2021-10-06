@@ -10,7 +10,7 @@ inherit eutils flag-o-matic python-r1 xdg-utils
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/mborgerson/xemu"
-SHA="a8c73197daae6f952b2f0edcc85e4bcf63dd38ee"
+SHA="af70a13f8cd31068edfec907b6eac1e4dff6f428"
 IMGUI_SHA="e18abe3619cfa0eced163c027d0349506814816c"
 IMPLOT_SHA="dea3387cdcc1d6a7ee3607f8a37a9dce8a85224f"
 KEYCODEMAPDB_SHA="d21009b1c9f94b740ea66be8e48a1d8ad8124023"
@@ -66,7 +66,12 @@ BDEPEND="dev-util/meson
 			sys-devel/bc
 	)"
 
-PATCHES=( "${FILESDIR}/${PN}-bin-name.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-0001-make-target-list-xemu-work-with-bin-name-set-to-xemu.patch"
+	"${FILESDIR}/${PN}-0002-make-running-tests-configurable.patch"
+	"${FILESDIR}/${PN}-0003-ui-qemu-xemu-do-not-install-bmp.patch"
+	"${FILESDIR}/${PN}-0004-meson-let-version-get-stale.patch"
+)
 DOCS=( README.md )
 
 S="${WORKDIR}/${PN}-${SHA}"
@@ -78,7 +83,6 @@ src_prepare() {
 	{ rmdir ui/imgui && mv "${WORKDIR}/imgui-${IMGUI_SHA}" ui/imgui; } || die
 	{ rmdir ui/implot && mv "${WORKDIR}/implot-${IMPLOT_SHA}" ui/implot; } || die
 	{ rmdir ui/keycodemapdb &&	mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" ui/keycodemapdb; } || die
-	! use test && sed -r -e "/^subdir\('tests/d" -i meson.build || die
 	cut -d_ -f1 <<< "${PV}" > XEMU_VERSION || die
 	echo master > XEMU_BRANCH || die
 	echo "${SHA}" > XEMU_COMMIT || die
@@ -135,10 +139,11 @@ src_configure() {
 		$(use_enable cpu_flags_x86_avx2 avx2) \
 		$(use_enable cpu_flags_x86_avx512f avx512f) \
 		--disable-werror \
+		$(use_enable test tests) \
 		$(use_enable aio linux-aio) \
 		--enable-slirp=system \
 		"--extra-cflags=-DXBOX=1 ${build_cflags[@]} -Wno-error=redundant-decls ${CFLAGS}" \
-		--target-list=i386-softmmu \
+		--target-list=xemu \
 		--with-git-submodules=ignore \
 		"--audio-drv-list=${audio_drv_list[*]}" \
 		"${other_opts[@]}"
@@ -146,22 +151,12 @@ src_configure() {
 
 src_compile() {
 	MAKEOPTS+=" V=1"
-	emake "${PN}"
-}
-
-src_install() {
-	default
-	rm -r "${ED}/usr/share/qemu" || die
-	find "${ED}/usr/share/icons" -iname '*.bmp' -delete
-	while IFS=$'\n' read -r name; do
-		mv "${name}" "${name/qemu/${PN}}" || die
-	done < <(find "${ED}/usr/share" -name 'qemu.*')
-	einstalldocs
+	emake
 }
 
 src_test() {
 	cd "${S}/build"
-	pax-mark m */xemu #515550
+	pax-mark m "${PN}"* #515550
 	emake check
 }
 

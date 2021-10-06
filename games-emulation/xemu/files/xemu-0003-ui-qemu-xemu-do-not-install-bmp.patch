@@ -1,0 +1,47 @@
+From 20b3ead294745644534dd93a9d6f3fc4d42f5052 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 6 Oct 2021 03:33:25 -0400
+Subject: [PATCH 3/4] ui: qemu -> xemu; do not install bmp
+
+---
+ ui/icons/meson.build | 10 +++-------
+ ui/meson.build       |  2 +-
+ 2 files changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/ui/icons/meson.build b/ui/icons/meson.build
+index 12c5208..7893e4b 100644
+--- a/ui/icons/meson.build
++++ b/ui/icons/meson.build
+@@ -1,13 +1,9 @@
+ foreach s: [16, 24, 32, 48, 64, 128, 256, 512]
+   s = '@0@x@0@'.format(s.to_string())
+-  install_data('qemu_@0@.png'.format(s),
+-               rename: 'qemu.png',
++  install_data('xemu_@0@.png'.format(s),
++               rename: 'xemu.png',
+                install_dir: qemu_icondir / 'hicolor' / s / 'apps')
+ endforeach
+ 
+-install_data('qemu_32x32.bmp',
+-             rename: 'qemu.bmp',
+-             install_dir: qemu_icondir / 'hicolor' / '32x32' / 'apps')
+-
+-install_data('qemu.svg',
++install_data('xemu.svg',
+              install_dir: qemu_icondir / 'hicolor' / 'scalable' / 'apps')
+diff --git a/ui/meson.build b/ui/meson.build
+index abd516b..e101a11 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -201,7 +201,7 @@ subdir('shader')
+ if have_system
+   subdir('icons')
+ 
+-  install_data('qemu.desktop', install_dir: qemu_desktopdir)
++  install_data('xemu.desktop', install_dir: qemu_desktopdir)
+ endif
+ 
+ modules += {'ui': ui_modules}
+-- 
+2.33.0
+
