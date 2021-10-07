@@ -25,5 +25,6 @@ src_configure() {
 	econf \
 		$(use_enable cpu_flags_x86_aes aesni) \
 		$(use_enable sniffer) \
+		$(use_enable debug) \
 		--enable-distro
 }
