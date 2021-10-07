@@ -1,0 +1,5 @@
+{
+    "type": "regex",
+    "url": "https://www.wolfssl.com/download/",
+    "regex": "<span class=\"product\">wolfssl-(\\d+\\.\\d+\\.\\d+)\\.zip"
+}
