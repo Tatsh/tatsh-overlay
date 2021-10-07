@@ -17,14 +17,12 @@ KEYCODEMAPDB_SHA="d21009b1c9f94b740ea66be8e48a1d8ad8124023"
 SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
 SLIRP_SHA="a88d9ace234a24ce1c17189642ef9104799425e0"
 TESTFLOAT_SHA="5a59dcec19327396a011a17fd924aed4fec416b3"
-XXHASH_SHA="f2c52f1236a50d754b07f584ce4592de1df8c0f7"
 SRC_URI="https://github.com/mborgerson/xemu/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://gitlab.com/qemu-project/keycodemapdb/-/archive/${KEYCODEMAPDB_SHA}/keycodemapdb-${KEYCODEMAPDB_SHA}.tar.gz -> ${PN}-keycodemapdb-${KEYCODEMAPDB_SHA:0:7}.tar.gz
 	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> ${PN}-imgui-${IMGUI_SHA:0:7}.tar.gz
 	https://github.com/epezent/implot/archive/${IMPLOT_SHA}.tar.gz -> ${PN}-implot-${IMPLOT_SHA:0:7}.tar.gz
 	https://gitlab.com/qemu-project/berkeley-softfloat-3/-/archive/${SOFTFLOAT_SHA}/berkeley-softfloat-3-${SOFTFLOAT_SHA}.tar.gz -> ${PN}-softfloat-${SOFTFLOAT_SHA:0:7}.tar.gz
-	https://gitlab.com/qemu-project/berkeley-testfloat-3/-/archive/${TESTFLOAT_SHA}/berkeley-testfloat-3-${TESTFLOAT_SHA}.tar.gz -> ${PN}-testfloat-${TESTFLOAT_SHA:0:7}.tar.gz
-	https://github.com/Cyan4973/xxHash/archive/${XXHASH_SHA}.tar.gz -> ${PN}-xxhash-${XXHASH_SHA:0:7}.tar.gz"
+	https://gitlab.com/qemu-project/berkeley-testfloat-3/-/archive/${TESTFLOAT_SHA}/berkeley-testfloat-3-${TESTFLOAT_SHA}.tar.gz -> ${PN}-testfloat-${TESTFLOAT_SHA:0:7}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -39,6 +37,7 @@ DEPEND="media-libs/libepoxy
 	net-libs/libslirp
 	media-libs/libsamplerate
 	dev-libs/openssl
+	dev-libs/xxhash
 	virtual/opengl
 	x11-libs/gtk+:3
 	dev-libs/glib
@@ -71,13 +70,15 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0002-make-running-tests-configurable.patch"
 	"${FILESDIR}/${PN}-0003-ui-qemu-xemu-do-not-install-bmp.patch"
 	"${FILESDIR}/${PN}-0004-meson-let-version-get-stale.patch"
+	"${FILESDIR}/${PN}-0005-allow-use-of-system-xxhash-header.patch"
+	"${FILESDIR}/${PN}-0006-not-for-upstream-remove-trace-events-all.patch"
+	"${FILESDIR}/${PN}-0007-not-for-upstream-remove-keymaps.patch"
 )
 DOCS=( README.md )
 
 S="${WORKDIR}/${PN}-${SHA}"
 
 src_prepare() {
-	{ rmdir hw/xbox/nv2a/xxHash && mv "${WORKDIR}/xxHash-${XXHASH_SHA}" hw/xbox/nv2a/xxHash; } || die
 	{ rmdir tests/fp/berkeley-softfloat-3 && mv "${WORKDIR}/berkeley-softfloat-3-${SOFTFLOAT_SHA}" tests/fp/berkeley-softfloat-3; } || die
 	{ rmdir tests/fp/berkeley-testfloat-3 && mv "${WORKDIR}/berkeley-testfloat-3-${TESTFLOAT_SHA}" tests/fp/berkeley-testfloat-3; } || die
 	{ rmdir ui/imgui && mv "${WORKDIR}/imgui-${IMGUI_SHA}" ui/imgui; } || die
@@ -145,6 +146,7 @@ src_configure() {
 		"--extra-cflags=-DXBOX=1 ${build_cflags[@]} -Wno-error=redundant-decls ${CFLAGS}" \
 		--target-list=xemu \
 		--with-git-submodules=ignore \
+		--with-xxhash=system \
 		"--audio-drv-list=${audio_drv_list[*]}" \
 		"${other_opts[@]}"
 }

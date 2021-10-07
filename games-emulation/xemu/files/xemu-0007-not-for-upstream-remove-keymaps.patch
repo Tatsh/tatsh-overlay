@@ -1,0 +1,21 @@
+From 11c4120e3ffc6278f2f548e21f4cd20d2411a411 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Thu, 7 Oct 2021 07:24:39 -0400
+Subject: [PATCH 7/7] not for upstream: remove keymaps
+
+---
+ pc-bios/meson.build | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index f2b3259..d8d166e 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -88,4 +88,3 @@ if get_option('install_blobs')
+ endif
+ 
+ subdir('descriptors')
+-subdir('keymaps')
+-- 
+2.33.0
+

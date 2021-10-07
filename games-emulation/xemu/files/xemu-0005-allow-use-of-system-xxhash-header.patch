@@ -1,0 +1,134 @@
+From 355afe3c39a141677bf80107bd4ace316621fe49 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Thu, 7 Oct 2021 07:12:59 -0400
+Subject: [PATCH 5/5] allow use of system xxHash header
+
+---
+ configure             | 21 +++++++++++++++++++--
+ hw/xbox/nv2a/pgraph.c |  2 +-
+ meson.build           | 16 ++++++++++++++++
+ meson_options.txt     |  3 +++
+ 4 files changed, 39 insertions(+), 3 deletions(-)
+
+diff --git a/configure b/configure
+index b40c584..5c9bb77 100755
+--- a/configure
++++ b/configure
+@@ -359,6 +359,7 @@ module_upgrades="no"
+ prefix="/usr/local"
+ qemu_suffix="qemu"
+ slirp="auto"
++xxhash="internal"
+ oss_lib=""
+ bsd="no"
+ linux="no"
+@@ -1076,6 +1077,10 @@ for opt do
+   ;;
+   --enable-slirp=system) slirp="system"
+   ;;
++  --with-xxhash=internal) xxhash="internal"
++  ;;
++  --with-xxhash=system) xxhash="system"
++  ;;
+   --disable-vde) vde="no"
+   ;;
+   --enable-vde) vde="yes"
+@@ -1834,6 +1839,8 @@ Advanced options (experts only):
+   --with-trace-file=NAME   Full PATH,NAME of file to store traces
+                            Default:trace-<pid>
+   --disable-slirp          disable SLIRP userspace network connectivity
++  --with-xxhash=internal   use internal version of xxHash
++  --with-xxhash=system     link against system xxHash
+   --enable-tcg-interpreter enable TCI (TCG with bytecode interpreter, experimental and slow)
+   --enable-malloc-trim     enable libc malloc_trim() for memory optimization
+   --oss-lib                path to OSS library
+@@ -4359,6 +4366,16 @@ if test "$slirp_smbd" != "no" ; then
+   fi
+ fi
+ 
++##########################################
++# check for xxHash
++case "$xxhash" in
++    system)
++        if ! pkg-config --exists libxxhash ; then
++            error_exit "Cannot find xxHash on system."
++        fi
++    ;;
++esac
++
+ ##########################################
+ # check for usable __NR_keyctl syscall
+ 
+@@ -5314,9 +5331,9 @@ if test "$skip_meson" = no; then
+         -Db_pie=$(if test "$pie" = yes; then echo true; else echo false; fi) \
+         ${staticpic:+-Db_staticpic=$staticpic} \
+         -Db_coverage=$(if test "$gcov" = yes; then echo true; else echo false; fi) \
+-        -Db_lto=$lto -Dcfi=$cfi -Dcfi_debug=$cfi_debug -Drun_tests=$run_tests \
++        -Db_lto=$lto -Dcfi=$cfi -Dcfi_debug=$cfi_debug -Drun_tests=${run_tests:-false} \
+         -Dmalloc=$malloc -Dmalloc_trim=$malloc_trim -Dsparse=$sparse \
+-        -Dkvm=$kvm -Dhax=$hax -Dwhpx=$whpx -Dhvf=$hvf -Dnvmm=$nvmm \
++        -Dkvm=$kvm -Dhax=$hax -Dwhpx=$whpx -Dhvf=$hvf -Dnvmm=$nvmm -Dxxhash=$xxhash \
+         -Dxen=$xen -Dxen_pci_passthrough=$xen_pci_passthrough -Dtcg=$tcg \
+         -Dcocoa=$cocoa -Dgtk=$gtk -Dmpath=$mpath -Dsdl=$sdl -Dsdl_image=$sdl_image \
+         -Dlibusb=$libusb -Dsmartcard=$smartcard -Dusb_redir=$usb_redir -Dvte=$vte \
+diff --git a/hw/xbox/nv2a/pgraph.c b/hw/xbox/nv2a/pgraph.c
+index 46dd37e..39a47ca 100644
+--- a/hw/xbox/nv2a/pgraph.c
++++ b/hw/xbox/nv2a/pgraph.c
+@@ -20,7 +20,7 @@
+  */
+ 
+ #include "nv2a_int.h"
+-#include "xxHash/xxh3.h"
++#include <xxh3.h>
+ #include "s3tc.h"
+ #include "ui/xemu-settings.h"
+ 
+diff --git a/meson.build b/meson.build
+index f394ea1..1dca05c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1924,6 +1924,19 @@ if get_option('cfi') and slirp_opt == 'system'
+          + ' Please configure with --enable-slirp=git')
+ endif
+ 
++xxhash = not_found
++xxhash_opt = get_option('xxhash')
++if xxhash_opt == 'system'
++  xxhash = dependency('libxxhash', kwargs: static_kwargs,
++                       method: 'pkg-config',
++                       required: xxhash_opt == 'system')
++  if xxhash.found()
++    xxhash_opt = 'system'
++  else
++    xxhash_opt = 'internal'
++  endif
++endif
++
+ fdt = not_found
+ fdt_opt = get_option('fdt')
+ if have_system
+@@ -2571,6 +2584,9 @@ foreach target : target_dirs
+ 
+   config_target += config_host
+   target_inc = [include_directories('target' / config_target['TARGET_BASE_ARCH'])]
++  if xxhash_opt == 'internal' and target == 'xemu'
++    target_inc += include_directories('hw/xbox/nv2a/xxHash')
++  endif
+   if targetos == 'linux'
+     target_inc += include_directories('linux-headers', is_system: true)
+   endif
+diff --git a/meson_options.txt b/meson_options.txt
+index d770e1f..265e0e1 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -157,3 +157,6 @@ option('slirp', type: 'combo', value: 'auto',
+ option('fdt', type: 'combo', value: 'auto',
+        choices: ['disabled', 'enabled', 'auto', 'system', 'internal'],
+        description: 'Whether and how to find the libfdt library')
++option('xxhash', type: 'combo', value: 'internal',
++       choices: ['internal', 'system'],
++       description: 'Whether and how to find the xxHash library')
+-- 
+2.33.0
+
