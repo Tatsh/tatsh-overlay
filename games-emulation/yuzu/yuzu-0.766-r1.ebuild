@@ -12,12 +12,10 @@ DYNARMIC_SHA="517e35f845e010788b6febe42fd6ddb187b8c236"
 HTTPLIB_SHA="9648f950f5a8a41d18833cf4a85f5821b1bcac54"
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
 SIRIT_SHA="a39596358a3a5488c06554c0c15184a6af71e433"
-SIRIT_SPIRV_HEADERS_SHA="a3fdfe81465d57efc97cfd28ac6c8190fb31a6c8"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/yuzu-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/ReinUsesLisp/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
-	https://github.com/KhronosGroup/SPIRV-Headers/archive/${SIRIT_SPIRV_HEADERS_SHA}.tar.gz -> ${PN}-sirit-spirv-headers-${SIRIT_SPIRV_HEADERS_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
 	https://github.com/yhirose/cpp-httplib/archive/${HTTPLIB_SHA}.tar.gz -> ${PN}-httplib-${HTTPLIB_SHA:0:7}.tar.gz"
 
@@ -42,13 +40,15 @@ DEPEND="app-arch/lz4
 	media-libs/opus
 	media-video/ffmpeg
 	sys-libs/zlib
+	x11-libs/libva
 	virtual/libusb:="
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="dev-cpp/catch
 	dev-cpp/nlohmann_json
 	dev-util/glslang
-	dev-util/vulkan-headers"
+	dev-util/vulkan-headers
+	dev-util/spirv-headers"
 
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
@@ -64,8 +64,6 @@ PATCHES=(
 
 src_prepare() {
 	rm .gitmodules || die
-	rmdir "${WORKDIR}/sirit-${SIRIT_SHA}/externals/SPIRV-Headers" || die
-	mv "${WORKDIR}/SPIRV-Headers-${SIRIT_SPIRV_HEADERS_SHA}" "${WORKDIR}/sirit-${SIRIT_SHA}/externals/SPIRV-Headers" || die
 	rmdir "${S}/externals/"{soundtouch,dynarmic,sirit,mbedtls,cpp-httplib} || die
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/ext-soundtouch-${SOUNDTOUCH_SHA}" "${S}/externals/soundtouch" || die
@@ -73,6 +71,7 @@ src_prepare() {
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
 	mv "${WORKDIR}/cpp-httplib-${HTTPLIB_SHA}" "${S}/externals/cpp-httplib" || die
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' -i src/common/CMakeLists.txt || die
+	sed -e '/enable_testing.*/d' -e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' -i externals/sirit/CMakeLists.txt || die
 	cmake_src_prepare
 }
 
@@ -95,6 +94,7 @@ src_configure() {
 		-DYUZU_ENABLE_COMPATIBILITY_REPORTING=ON
 		-DYUZU_USE_BUNDLED_BOOST=OFF
 		-DYUZU_USE_QT_WEB_ENGINE=ON
+		-Wno-dev
 	)
 	cmake_src_configure
 }
