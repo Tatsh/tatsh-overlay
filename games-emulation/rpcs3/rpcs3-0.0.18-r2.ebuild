@@ -45,12 +45,12 @@ DEPEND="dev-libs/pugixml
 	pulseaudio? ( media-sound/pulseaudio )
 	vulkan? (
 		media-libs/vulkan-loader
-		dev-util/spirv-headers
 		dev-util/spirv-tools
 		dev-util/glslang )
 	wayland? ( dev-libs/wayland )"
 RDEPEND="${DEPEND} sys-devel/gdb"
-BDEPEND=">=sys-devel/gcc-9"
+BDEPEND=">=sys-devel/gcc-9
+	dev-util/spirv-headers"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0003-add-missing-include-fix-branch-names.patch"
