@@ -8,7 +8,7 @@ inherit desktop wrapper xdg
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
 # sed -r -e "s/^KEY=.*/KEY=\"$(curl 'https://ci.appveyor.com/api/projects/gdkchan/ryujinx/branch/master' | jq -r '.build.jobs[0].jobId')\"/" -i ryujinx-*.ebuild
-KEY="xn67d6mubjkqbfbw"
+KEY="wgg3a8fnyy37rcbd"
 SRC_URI="https://ci.appveyor.com/api/buildjobs/${KEY}/artifacts/${P}-linux_x64.tar.gz"
 
 LICENSE="MIT"
