@@ -21,7 +21,7 @@ DEPEND="media-libs/libsndfile
 	media-libs/glew:0
 	media-sound/mpg123
 	>=media-libs/glfw-3.3.2
-	opus? ( media-libs/opus )
+	opus? ( media-libs/opus media-libs/opusfile )
 	sndfile? ( media-libs/libsndfile )"
 RDEPEND="${DEPEND}"
 
