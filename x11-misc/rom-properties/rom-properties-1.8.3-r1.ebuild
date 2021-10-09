@@ -15,8 +15,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE="achievements cli crypt gtk kde nls lto lz4 lzo pvr unice68 xbox-360 xfce xml zstd"
 
 DEPEND="
+	dev-libs/nettle
 	media-libs/libjpeg-turbo
 	media-libs/libpng
+	sys-libs/libseccomp
 	sys-libs/zlib
 	gtk? ( x11-libs/gtk+:3 )
 	lz4? ( app-arch/lz4 )
