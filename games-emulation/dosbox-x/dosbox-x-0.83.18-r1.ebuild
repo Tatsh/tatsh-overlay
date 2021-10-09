@@ -16,18 +16,25 @@ IUSE="X +core-inline debug dynrec ffmpeg +fluidsynth +freetype +fpu hardened mid
 
 DEPEND="debug? ( sys-libs/ncurses:0= )
 	ffmpeg? ( media-video/ffmpeg )
+	freetype? ( media-libs/freetype )
 	fluidsynth? (
 		media-sound/fluid-soundfont
 		media-sound/fluidsynth
 	)
 	mt-32? ( media-libs/munt-mt32emu )
-	media-libs/sdl2-net
 	opengl? ( virtual/opengl )
 	screenshots? ( media-libs/libpng:0= )
-	sys-libs/zlib
-	net-libs/libpcap
+	X? (
+		x11-libs/libX11
+		x11-libs/libXext
+		x11-libs/libXrandr
+		x11-libs/libxkbfile
+	)
 	media-libs/alsa-lib
-	X? ( x11-libs/libX11 )"
+	media-libs/libglvnd
+	media-libs/sdl2-net
+	net-libs/libpcap
+	sys-libs/zlib"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-lang/nasm"
 
