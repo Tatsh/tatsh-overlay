@@ -20,7 +20,8 @@ DEPEND="zlib? ( sys-libs/zlib )
 	dev-qt/qtwidgets:5
 	dev-qt/qtprintsupport:5
 	dev-qt/qtxml:5
-	dev-qt/qtsvg:5"
+	dev-qt/qtsvg:5
+	dev-qt/qtgui:5"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-qt/linguist-tools:5"
 
