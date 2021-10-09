@@ -16,7 +16,11 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
 
-DEPEND="media-libs/glfw"
+DEPEND="media-libs/glew:=
+	media-libs/glfw
+	media-libs/libglvnd
+	net-wireless/bluez
+	sys-apps/dbus"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_PN}-${PV}/Client"
