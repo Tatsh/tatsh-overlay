@@ -20,6 +20,7 @@ DEPEND="evdev? ( dev-libs/libevdev )
 	pulseaudio? ( media-sound/pulseaudio )
 	openmp? ( sys-devel/gcc:=[openmp] )
 	udev? ( virtual/udev )
+	media-libs/libglvnd
 	x11-libs/libICE
 	x11-libs/libSM
 	x11-libs/libX11
