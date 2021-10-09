@@ -13,8 +13,19 @@ LICENSE="AdobeFlash-11.x"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="virtual/opengl
-	x11-libs/gtk+:2"
+RDEPEND="dev-libs/glib
+	dev-libs/nspr
+	dev-libs/nss
+	media-libs/fontconfig
+	media-libs/freetype
+	media-libs/libglvnd
+	virtual/opengl
+	x11-libs/gdk-pixbuf
+	x11-libs/gtk+:2
+	x11-libs/libX11
+	x11-libs/libXcursor
+	x11-libs/libXrender
+	x11-libs/pango"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}"
