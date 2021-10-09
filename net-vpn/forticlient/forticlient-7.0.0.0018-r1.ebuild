@@ -19,7 +19,6 @@ RDEPEND="app-accessibility/at-spi2-atk
 	dev-libs/atk
 	dev-libs/expat
 	dev-libs/glib
-	dev-libs/nettle
 	dev-libs/nspr
 	dev-libs/nss
 	media-libs/alsa-lib
@@ -29,7 +28,6 @@ RDEPEND="app-accessibility/at-spi2-atk
 	sys-apps/dbus
 	sys-apps/util-linux
 	sys-auth/polkit
-	sys-libs/libseccomp
 	virtual/libudev
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
