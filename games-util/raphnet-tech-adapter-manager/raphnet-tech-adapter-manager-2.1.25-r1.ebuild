@@ -14,9 +14,16 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
 IUSE="firmware"
 
-DEPEND="dev-libs/hidapi
+DEPEND="dev-libs/atk
+	dev-libs/glib
+	dev-libs/hidapi
+	media-libs/harfbuzz
 	sys-libs/zlib
 	virtual/udev
+	x11-libs/cairo
+	x11-libs/gdk-pixbuf
+	x11-libs/gtk+:3
+	x11-libs/pango
 	x11-libs/wxGTK:3.0-gtk3"
 RDEPEND="${DEPEND}"
 
