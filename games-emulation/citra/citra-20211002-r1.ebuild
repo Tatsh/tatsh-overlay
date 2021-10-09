@@ -33,10 +33,15 @@ DEPEND="app-arch/zstd
 	dev-libs/mp
 	dev-libs/teakra
 	>=dev-libs/xbyak-5.941
+	dev-qt/qtcore
+	dev-qt/qtgui
+	dev-qt/qtmultimedia
+	dev-qt/qtwidgets
 	dev-util/nihstro
 	media-libs/libsdl2
 	media-video/ffmpeg
-	net-libs/enet:="
+	net-libs/enet:=
+	virtual/libusb:1"
 RDEPEND="${DEPEND}"
 
 PATCHES=(
