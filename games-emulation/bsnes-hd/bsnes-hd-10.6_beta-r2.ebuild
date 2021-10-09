@@ -20,10 +20,21 @@ IUSE="ao +alsa libretro openal opengl oss pulseaudio +sdl udev xv"
 REQUIRED_USE="|| ( ao openal alsa pulseaudio oss )
 	|| ( xv opengl sdl )"
 
-DEPEND="x11-libs/gtk+:2
+DEPEND="dev-libs/atk
+	dev-libs/glib
+	media-libs/fontconfig
+	media-libs/freetype
+	media-libs/harfbuzz
+	media-libs/libglvnd
+	media-libs/libsdl2
+	x11-libs/cairo
+	x11-libs/gdk-pixbuf
+	x11-libs/gtk+:2
 	x11-libs/gtksourceview:2.0
 	x11-libs/libX11
 	x11-libs/libXext
+	x11-libs/libXrandr
+	x11-libs/pango
 	ao? ( media-libs/libao )
 	openal? ( media-libs/openal )
 	alsa? ( media-libs/alsa-lib )
