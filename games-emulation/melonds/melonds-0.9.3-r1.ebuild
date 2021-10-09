@@ -12,9 +12,14 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
-DEPEND="media-libs/libsdl2
+DEPEND="app-arch/libarchive
+	dev-libs/teakra
+	dev-qt/qtcore
 	dev-qt/qtgui
+	dev-qt/qtnetwork
 	dev-qt/qtwidgets
+	media-libs/libepoxy
+	media-libs/libsdl2
 	net-libs/libslirp"
 RDEPEND="${DEPEND}"
 
