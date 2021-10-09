@@ -31,29 +31,30 @@ IUSE="xattr aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jac
 REQUIRED_USE="debug? ( !lto  )"
 RESTRICT="!test? ( test )"
 
-DEPEND="media-libs/libepoxy
+DEPEND="dev-libs/glib
 	dev-libs/libxml2
-	media-libs/libsdl2
-	net-libs/libslirp
-	media-libs/libsamplerate
 	dev-libs/openssl
 	dev-libs/xxhash
+	media-libs/libepoxy
+	media-libs/libsamplerate
+	media-libs/libsdl2
+	net-libs/libpcap
+	net-libs/libslirp
+	sys-libs/zlib
 	virtual/opengl
 	x11-libs/gtk+:3
-	dev-libs/glib
-	net-libs/libpcap
-	pulseaudio? ( media-sound/pulseaudio )
-	io-uring? ( sys-libs/liburing )
-	sys-libs/zlib
-	alsa? ( media-libs/alsa-lib )
-	jack? ( virtual/jack )
+	x11-libs/pixman
 	aio? ( dev-libs/libaio )
+	alsa? ( media-libs/alsa-lib )
+	io-uring? ( sys-libs/liburing )
+	jack? ( virtual/jack )
+	pulseaudio? ( media-sound/pulseaudio )
 	xattr? ( sys-apps/attr )"
 RDEPEND="${DEPEND}"
-BDEPEND="dev-util/meson
-	dev-lang/perl
-	sys-apps/texinfo
+BDEPEND="dev-lang/perl
+	dev-util/meson
 	dev-util/ninja
+	sys-apps/texinfo
 	virtual/pkgconfig
 	$(python_gen_impl_dep)
 	doc? (
