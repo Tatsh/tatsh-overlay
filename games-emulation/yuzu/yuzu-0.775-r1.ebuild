@@ -22,7 +22,7 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+compat-list +cubeb +web-service"
+IUSE="+cubeb +web-service"
 
 DEPEND="app-arch/lz4
 	>=app-arch/zstd-1.5.0
@@ -72,6 +72,8 @@ src_prepare() {
 	mv "${WORKDIR}/cpp-httplib-${HTTPLIB_SHA}" "${S}/externals/cpp-httplib" || die
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' -i src/common/CMakeLists.txt || die
 	sed -e '/enable_testing.*/d' -e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' -i externals/sirit/CMakeLists.txt || die
+	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
+	bunzip2 < "${FILESDIR}/${P}-compatibility_list.json.bz2" > "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
 	cmake_src_prepare
 }
 
@@ -80,7 +82,7 @@ src_configure() {
 		-DBUILD_FULLNAME=""
 		-DBUILD_FULLNAME="${MY_PV}"
 		-DBUILD_SHARED_LIBS=OFF
-		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=$(usex compat-list)
+		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=OFF
 		-DENABLE_CUBEB=$(usex cubeb)
 		-DENABLE_WEB_SERVICE=$(usex web-service)
 		-DGIT_BRANCH="${PN}"
