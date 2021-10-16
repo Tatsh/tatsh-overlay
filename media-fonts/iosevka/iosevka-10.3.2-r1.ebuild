@@ -8,7 +8,8 @@ inherit font
 DESCRIPTION="Slender typeface for code, from code"
 HOMEPAGE="https://be5invis.github.io/Iosevka/"
 SRC_URI="https://github.com/be5invis/${PN}/releases/download/v${PV}/ttf-${P}.zip
-https://github.com/be5invis/${PN}/releases/download/v${PV}/ttf-${PN}-fixed-${PV}.zip"
+	https://github.com/be5invis/${PN}/releases/download/v${PV}/ttf-${PN}-fixed-${PV}.zip
+	https://github.com/be5invis/${PN}/releases/download/v${PV}/ttf-${PN}-term-${PV}.zip"
 
 LICENSE="OFL-1.1"
 SLOT="0"
