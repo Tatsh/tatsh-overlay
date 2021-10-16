@@ -23,10 +23,11 @@ KEYWORDS="~amd64"
 IUSE="alsa faudio joystick +llvm pulseaudio vulkan wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
-DEPEND="dev-libs/flatbuffers
+DEPEND=">=dev-libs/flatbuffers-2.0.0
 	dev-libs/pugixml
 	>=dev-libs/wolfssl-4.7.0
 	dev-libs/xxhash
+	dev-util/spirv-tools
 	dev-qt/qtconcurrent
 	dev-qt/qtcore:5
 	dev-qt/qtdbus
@@ -52,7 +53,6 @@ DEPEND="dev-libs/flatbuffers
 	pulseaudio? ( media-sound/pulseaudio )
 	vulkan? (
 		media-libs/vulkan-loader
-		dev-util/spirv-tools
 		dev-util/glslang )
 	wayland? ( dev-libs/wayland )"
 RDEPEND="${DEPEND} sys-devel/gdb"
