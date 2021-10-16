@@ -437,8 +437,8 @@ def main() -> int:
                             'entry/updated', RSS_NS)
                         assert updated_el is not None
                         assert updated_el.text is not None
-                        if re.search(r'(2[0-9]{7})', ebuild_version):
-                            new_date = (' (' +
+                        if m := re.search(r'(2[0-9]{7})', ebuild_version):
+                            new_date = (' (' + ebuild_version[:m.span()[0]] +
                                         updated_el.text.split('T')[0].replace(
                                             '-', '') + ')')
                     print(f'{cat}/{pkg}: {version} ({ebuild_version}) -> '
