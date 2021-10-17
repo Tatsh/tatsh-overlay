@@ -6,7 +6,7 @@ inherit cmake
 
 DESCRIPTION="Cross platform audio library."
 HOMEPAGE="https://github.com/mozilla/cubeb"
-MY_SHA="6ce95962c8bb1442a725cbacdc77d5d8cbce43ad"
+MY_SHA="d512bfa07a327e0ae7e7aef892dcce01cbeaa67c"
 SRC_URI="https://github.com/mozilla/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="ISC"
