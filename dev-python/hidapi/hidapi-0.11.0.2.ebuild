@@ -8,17 +8,17 @@ inherit distutils-r1
 
 DESCRIPTION="Python wrapper for hidapi."
 HOMEPAGE="https://github.com/trezor/cython-hidapi"
-MY_SHA="4ce1ec514f72d4e096f74565d0e09817488f6d9b"
-SRC_URI="https://github.com/trezor/cython-${PN}/archive/${MY_SHA}.tar.gz -> cython-${P}.tar.gz"
+MY_PV=$(ver_rs 3 .post)
+SRC_URI="https://github.com/trezor/cython-hidapi/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="|| ( BSD GPL-3 HIDAPI )"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 
-DEPEND=">=dev-libs/hidapi-${PV%_*}"
+DEPEND=">=dev-libs/hidapi-$(ver_cut 1-3)"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/cython-${PN}-${MY_SHA}"
+S="${WORKDIR}/cython-${PN}-${MY_PV}"
 
 python_configure_all() {
 	mydistutilsargs=( --with-system-hidapi )
