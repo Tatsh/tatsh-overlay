@@ -242,6 +242,8 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
                     transformations[catpkg] = handle_bsnes_hd
                 elif tf == 'handle_glabels':
                     transformations[catpkg] = handle_glabels
+                elif tf == 'handle_cython_post_suffix':
+                    transformations[catpkg] = handle_cython_post_suffix
                 else:
                     raise Exception(f'Unknown transformation function: {tf}')
     return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
@@ -277,6 +279,10 @@ def handle_stepmania_outfox(s: str) -> str:
 
 def handle_re(s: str) -> str:
     return re.sub(r'^re(3|VC|LCS)_v?', '', s)
+
+
+def handle_cython_post_suffix(s: str) -> str:
+    return s.replace('.post', '.')
 
 
 def assert_not_none(x: Optional[T]) -> T:
