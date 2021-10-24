@@ -10,7 +10,7 @@ inherit eutils flag-o-matic python-r1 xdg-utils
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/mborgerson/xemu"
-SHA="5a80cfa2d95390438f17e5c4cd5e0c072bb0c4a4"
+SHA="5ae39a321a7c6088bfa05717a7e8d98745f22068"
 IMGUI_SHA="e18abe3619cfa0eced163c027d0349506814816c"
 IMPLOT_SHA="dea3387cdcc1d6a7ee3607f8a37a9dce8a85224f"
 KEYCODEMAPDB_SHA="d21009b1c9f94b740ea66be8e48a1d8ad8124023"
