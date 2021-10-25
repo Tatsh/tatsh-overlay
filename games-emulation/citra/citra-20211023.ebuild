@@ -24,6 +24,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="web-service"
 
+# System xbyak is still used by Dynarmic, but not Citra itself
 DEPEND="app-arch/zstd
 	dev-cpp/catch:0
 	dev-libs/boost:0
@@ -60,7 +61,8 @@ src_prepare() {
 	mv "${WORKDIR}/fmt-${FMT_SHA}" "${S}/externals/fmt" || die
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
 	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
-	# curl 'https://api.citra-emu.org/gamedb/' | jq -Me | bzip2 -9 > ...
+	# Get the compat list:
+	#   curl 'https://api.citra-emu.org/gamedb/' | jq -Me | bzip2 -9 > ...
 	bunzip2 -c "${FILESDIR}/${PN}-compatibility_list-${PV}.json.bz2" > "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
 	sed -e 's|${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak|/usr/include/xbyak|' \
 		-i externals/dynarmic/externals/CMakeLists.txt || die
