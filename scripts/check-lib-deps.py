@@ -38,11 +38,12 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
                 y for y in lines
                 if '-libs/' in y or y.startswith('dev-qt/') or re.match(
                     r'^(?:app-pda/lib(?:irecovery|plist)|net-misc/curl|'
-                    r'media-sound/(?:pulseaudio|mpg123)|media-video/ffmpeg|'
+                    r'media-sound/(?:pulseaudio|mpg123)|'
+                    r'media-video/(ffmpeg|pipewire)|'
                     r'app-arch/(?:zstd|libarchive|lz4)|app-emulation/faudio|'
                     r'dev-util/glslang|net-wireless/bluez|sys-apps/dbus|'
                     r'app-accessibility/at-spi2-atk|net-print/cups|'
-                    r'sys-apps/util-linux)', y)
+                    r'sys-apps/util-linux|app-crypt/mit-krb5)', y)
             ][0].split(':')[0]
             if lib_package == package_name:
                 continue
@@ -93,7 +94,7 @@ def main() -> int:
                                         check=True,
                                         capture_output=True,
                                         text=True).stdout.splitlines()
-                      if ('/bin/' in x or '/sbin/' in x) and is_elf(x))
+                      if is_elf(x))
         if len(exes):
             for exe, missing in find_missing_deps0(package_name, exes):
                 if len(missing):
