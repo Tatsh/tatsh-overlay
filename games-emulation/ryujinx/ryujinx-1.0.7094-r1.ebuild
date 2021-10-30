@@ -238,6 +238,7 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 BDEPEND="virtual/dotnet-sdk:5.0"
 DEPEND="app-crypt/mit-krb5
 	sys-libs/zlib"
+# FIXME Make SoundIO and OpenAL optional
 RDEPEND="${DEPEND}
 	dev-libs/icu
 	dev-libs/openssl
