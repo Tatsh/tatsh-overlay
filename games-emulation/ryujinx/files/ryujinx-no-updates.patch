@@ -1,0 +1,66 @@
+diff --git a/Ryujinx/Modules/Updater/Updater.cs b/Ryujinx/Modules/Updater/Updater.cs
+index 524060d4..75347a68 100644
+--- a/Ryujinx/Modules/Updater/Updater.cs
++++ b/Ryujinx/Modules/Updater/Updater.cs
+@@ -470,6 +470,7 @@ namespace Ryujinx.Modules
+ 
+         public static bool CanUpdate(bool showWarnings)
+         {
++            return false;
+ #if !DISABLE_UPDATER
+             if (RuntimeInformation.OSArchitecture != Architecture.X64)
+             {
+diff --git a/Ryujinx/Ui/MainWindow.glade b/Ryujinx/Ui/MainWindow.glade
+index 66b307fb..4deb760c 100644
+--- a/Ryujinx/Ui/MainWindow.glade
++++ b/Ryujinx/Ui/MainWindow.glade
+@@ -427,22 +427,6 @@
+                   <object class="GtkMenu">
+                     <property name="visible">True</property>
+                     <property name="can_focus">False</property>
+-                    <child>
+-                      <object class="GtkMenuItem" id="UpdateMenuItem">
+-                        <property name="visible">True</property>
+-                        <property name="can_focus">False</property>
+-                        <property name="tooltip_text" translatable="yes">Check for updates to Ryujinx</property>
+-                        <property name="label" translatable="yes">Check for Updates</property>
+-                        <property name="use_underline">True</property>
+-                        <signal name="activate" handler="Update_Pressed" swapped="no"/>
+-                      </object>
+-                    </child>
+-                    <child>
+-                      <object class="GtkSeparatorMenuItem">
+-                        <property name="visible">True</property>
+-                        <property name="can_focus">False</property>
+-                      </object>
+-                    </child>
+                     <child>
+                       <object class="GtkMenuItem" id="About">
+                         <property name="visible">True</property>
+diff --git a/Ryujinx/Ui/Windows/SettingsWindow.glade b/Ryujinx/Ui/Windows/SettingsWindow.glade
+index 7e2f86cd..42329b5d 100644
+--- a/Ryujinx/Ui/Windows/SettingsWindow.glade
++++ b/Ryujinx/Ui/Windows/SettingsWindow.glade
+@@ -121,22 +121,6 @@
+                                     <property name="position">0</property>
+                                   </packing>
+                                 </child>
+-                                <child>
+-                                  <object class="GtkCheckButton" id="_checkUpdatesToggle">
+-                                    <property name="label" translatable="yes">Check for Updates on Launch</property>
+-                                    <property name="visible">True</property>
+-                                    <property name="can-focus">True</property>
+-                                    <property name="receives-default">False</property>
+-                                    <property name="halign">start</property>
+-                                    <property name="draw-indicator">True</property>
+-                                  </object>
+-                                  <packing>
+-                                    <property name="expand">False</property>
+-                                    <property name="fill">True</property>
+-                                    <property name="padding">5</property>
+-                                    <property name="position">1</property>
+-                                  </packing>
+-                                </child>
+                                 <child>
+                                   <object class="GtkCheckButton" id="_showConfirmExitToggle">
+                                     <property name="label" translatable="yes">Show "Confirm Exit" Dialog</property>

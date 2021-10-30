@@ -251,6 +251,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
+PATCHES=( "${FILESDIR}/${PN}-no-updates.patch" )
+
 S="${WORKDIR}/${MY_PN}-${SHA}"
 
 # FIXME Figure out how to disable dotnet's stripping
