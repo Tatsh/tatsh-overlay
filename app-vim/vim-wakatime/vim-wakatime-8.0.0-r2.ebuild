@@ -8,10 +8,8 @@ inherit vim-plugin
 DESCRIPTION="vim plugin: automatic time tracking with WakaTime"
 HOMEPAGE="https://github.com/wakatime/vim-wakatime"
 LICENSE="BSD"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 SRC_URI="https://github.com/wakatime/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
-
-RDEPEND="${DEPEND} app-misc/wakatime"
 
 VIM_PLUGIN_HELPURI="https://github.com/wakatime/vim-wakatime"
 
@@ -25,4 +23,12 @@ src_prepare() {
 	# empty, delete it
 	rm -fR doc/
 	default
+}
+
+pkg_postinst() {
+	einfo
+	einfo "Be sure to have wakatime-cli in your path for this plugin to work."
+	einfo
+	einfo "You can get this via the GURU repository: dev-util/wakatime-cli"
+	einfo
 }
