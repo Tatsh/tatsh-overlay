@@ -1,17 +1,17 @@
-From 355afe3c39a141677bf80107bd4ace316621fe49 Mon Sep 17 00:00:00 2001
+From 205a41d0d5ac6103205676fd307ae936d43319fc Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 7 Oct 2021 07:12:59 -0400
-Subject: [PATCH 5/5] allow use of system xxHash header
+Subject: [PATCH 5/7] allow use of system xxHash header
 
 ---
- configure             | 21 +++++++++++++++++++--
- hw/xbox/nv2a/pgraph.c |  2 +-
- meson.build           | 16 ++++++++++++++++
- meson_options.txt     |  3 +++
+ configure         | 21 +++++++++++++++++++--
+ meson.build       | 16 ++++++++++++++++
+ meson_options.txt |  3 +++
+ util/fast-hash.c  |  2 +-
  4 files changed, 39 insertions(+), 3 deletions(-)
 
 diff --git a/configure b/configure
-index b40c584..5c9bb77 100755
+index d5f47f1..dcdf692 100755
 --- a/configure
 +++ b/configure
 @@ -359,6 +359,7 @@ module_upgrades="no"
@@ -71,19 +71,6 @@ index b40c584..5c9bb77 100755
          -Dxen=$xen -Dxen_pci_passthrough=$xen_pci_passthrough -Dtcg=$tcg \
          -Dcocoa=$cocoa -Dgtk=$gtk -Dmpath=$mpath -Dsdl=$sdl -Dsdl_image=$sdl_image \
          -Dlibusb=$libusb -Dsmartcard=$smartcard -Dusb_redir=$usb_redir -Dvte=$vte \
-diff --git a/hw/xbox/nv2a/pgraph.c b/hw/xbox/nv2a/pgraph.c
-index 46dd37e..39a47ca 100644
---- a/hw/xbox/nv2a/pgraph.c
-+++ b/hw/xbox/nv2a/pgraph.c
-@@ -20,7 +20,7 @@
-  */
- 
- #include "nv2a_int.h"
--#include "xxHash/xxh3.h"
-+#include <xxh3.h>
- #include "s3tc.h"
- #include "ui/xemu-settings.h"
- 
 diff --git a/meson.build b/meson.build
 index f394ea1..1dca05c 100644
 --- a/meson.build
@@ -129,6 +116,17 @@ index d770e1f..265e0e1 100644
 +option('xxhash', type: 'combo', value: 'internal',
 +       choices: ['internal', 'system'],
 +       description: 'Whether and how to find the xxHash library')
+diff --git a/util/fast-hash.c b/util/fast-hash.c
+index 90d2b1c..8b3095e 100644
+--- a/util/fast-hash.c
++++ b/util/fast-hash.c
+@@ -1,5 +1,5 @@
+ #include "qemu/fast-hash.h"
+-#include "util/xxHash/xxh3.h"
++#include <xxh3.h>
+ 
+ uint64_t fast_hash(const uint8_t *data, size_t len)
+ {
 -- 
-2.33.0
+2.33.1
 
