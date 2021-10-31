@@ -7,7 +7,7 @@ inherit autotools
 DESCRIPTION="A powerful tool to check TSS signing status of various devices and firmwares."
 HOMEPAGE="https://github.com/tihmstar/tsschecker"
 MY_COMMIT_COUNT="319"
-MY_SHA="bc858e7a08c2a5cc586a814aa1275da8dc734cb0"
+MY_SHA="59554beb8e79319e12d8f373fd5bb9846b8c69c9"
 JSSY_SHA="e17d3c8ec5216692efbbe59bbe9801bb7661e07d"
 SRC_URI="https://github.com/tihmstar/tsschecker/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/tihmstar/jssy/archive/${JSSY_SHA}.tar.gz -> ${P}-jssy.tar.gz"
