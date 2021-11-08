@@ -15,7 +15,7 @@ index cb42c95e..6a33502c 100644
 -  'clangd',
 -  'output',
 -  'bin' ) )
-+PRE_BUILT_CLANGD_DIR = '@EPREFIX@/usr/lib/llvm/11/bin'
++PRE_BUILT_CLANGD_DIR = '@EPREFIX@/usr/lib/llvm/@CLANG_VERSION@/bin'
  PRE_BUILT_CLANDG_PATH = os.path.join( PRE_BUILT_CLANGD_DIR, 'clangd' )
  
  

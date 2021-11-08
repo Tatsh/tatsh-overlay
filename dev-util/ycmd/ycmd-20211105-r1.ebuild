@@ -25,9 +25,11 @@ RDEPEND="
 	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	|| ( sys-devel/clang:11[static-analyzer]
 		sys-devel/clang:10[static-analyzer]
+		sys-devel/clang:13[static-analyzer]
 		sys-devel/clang:12[static-analyzer] )
 	|| ( sys-libs/compiler-rt:11.1.0
 		sys-libs/compiler-rt:10.0.1
+		sys-libs/compiler-rt:13.0.0
 		sys-libs/compiler-rt:12.0.1 )"
 
 S="${WORKDIR}/${PN}-${MY_SHA}/cpp"
@@ -39,7 +41,9 @@ src_prepare() {
 		-e "s|@LIBCLANG_DIR@|$(llvm-config --libdir)|" \
 		-e "s:CLANG_RESOURCE_DIR =.*:CLANG_RESOURCE_DIR = '$(find "${EPREFIX}/usr/lib/clang" -mindepth 1 -maxdepth 1 -type d | head -n 1)':" \
 		-i ../ycmd/utils.py || die
-	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i \
+	local -r clang_version=$(best_version sys-devel/clang)
+	sed -e "s/@EPREFIX@/${EPREFIX}/g" \
+		-e "s/@CLANG_VERSION@/${clang_version:16:2}/" -i \
 		../ycmd/completers/cpp/clangd_completer.py || die
 	sed -r \
 		-e "s|Python3 [0-9\\.]+ REQUIRED COMPONENTS|Python3 3.$(ver_cut 2 "${EPYTHON:6}") EXACT REQUIRED COMPONENTS|" \
