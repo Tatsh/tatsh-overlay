@@ -83,6 +83,7 @@ src_prepare() {
 		-i "${S}/llvm/CMakeLists.txt" || die
 	sed -i -e '/find_program(CCACHE_FOUND/d' CMakeLists.txt || die
 	sed -i -e 's|FAudio.h|FAudio/FAudio.h|' rpcs3/Emu/Audio/FAudio/FAudioBackend.h || die
+	sed -i -r -e '/\s+add_compile_options\(-Werror=missing-noreturn\).*/d' buildfiles/cmake/ConfigureCompiler.cmake || die
 	cmake_src_prepare
 }
 
