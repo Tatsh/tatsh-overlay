@@ -173,8 +173,8 @@ src_prepare() {
 
 src_install() {
 	mkdir install-unhinted install-hinted || die
-	mv unhinted/ttf/*/* install-unhinted/. ||  die
-	mv hinted/ttf/*/* install-hinted/. || die
+	mv unhinted/ttf/Noto*/*.tt[fc] install-unhinted/. ||  die
+	mv hinted/ttf/Noto*/*.tt[fc] install-hinted/. || die
 	FONT_S="${S}/install-unhinted/" font_src_install
 	FONT_S="${S}/install-hinted/" font_src_install
 	# Allow to drop some fonts optionally for people that want to save
