@@ -9,7 +9,7 @@ HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
 ASMJIT_SHA="723f58581afc0f4cb16ba13396ff77e425896847"
 HIDAPI_SHA="01f601a1509bf9c67819fbf521df39644bab52d5"
 LLVM_SHA="5836324d6443a62ed09b84c125029e98324978c3"
-YAML_CPP_SHA="6a211f0bc71920beef749e6c35d7d1bcc2447715"
+YAML_CPP_SHA="0b67821f307e8c6bf0eba9b6d3250e3cf1441450"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${PN}-llvm-${LLVM_SHA:0:7}.tar.gz
 	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${PN}-asmjit-${ASMJIT_SHA:0:7}.tar.gz
@@ -89,7 +89,6 @@ src_prepare() {
 src_configure() {
 	mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
-		-DBUILD_EXTERNAL=OFF
 		-DBUILD_LLVM_SUBMODULE=ON
 		-DUSE_PRECOMPILED_HEADERS=OFF
 		-DUSE_ALSA=$(usex alsa)
