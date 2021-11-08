@@ -7,7 +7,7 @@ inherit desktop multilib wrapper xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="c6015daf8ddbd8a08e0adff8d39ffc38c7b339a2"
+SHA="81e9b86cdb4b2a01cc41b8e8a4dff2c9e3c13843"
 MY_PN="R${PN:1}"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://api.nuget.org/v3-flatcontainer/atksharp/3.22.25.128/atksharp.3.22.25.128.nupkg
