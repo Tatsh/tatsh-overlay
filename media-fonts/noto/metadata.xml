@@ -66,6 +66,7 @@
 		<flag name="l10n_su">Install fonts for Sundanese</flag>
 		<flag name="l10n_syl">Install fonts for Sylheti</flag>
 		<flag name="l10n_tbw">Install fonts for Tagbanwa alphabet</flag>
+		<flag name="l10n_tmh">Install fonts for Tifinagh alphabet</flag>
 		<flag name="l10n_vai">Install fonts for Vai syllabary</flag>
 		<flag name="l10n_jv">Install fonts for Javanese script</flag>
 		<flag name="l10n_khb">Install fonts for Tai Tham alphabet</flag>

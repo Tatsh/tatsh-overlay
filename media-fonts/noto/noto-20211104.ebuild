@@ -21,8 +21,8 @@ IUSE="brahmi music coptic cuneiform cypriot deseret duployan linear
 IUSE_IL10N=( ar ban bax ber bku blt bn bo bsq bug bya ccp chr cja cmr dv
 	eo ff gu he hi hoc hy ii ja jv ka khb km kn ko kv lo mai men mjl ml mn mni
 	mww my new nod nqo or osa pa rej sa sat saz sd si so sq srb su syc syl ta
-	tbw te th tl ur vai zh-CN zh-TW iu hnn bho eky lep lif lis tbw skr mr
-	pa )
+	tbw te th tl tmh ur vai zh-CN zh-TW iu hnn bho eky lep lif lis tbw skr mr
+	pa tmh )
 for lang in "${IUSE_IL10N[@]}"; do
 	IUSE="${IUSE} l10n_${lang}"
 done
@@ -167,6 +167,7 @@ src_prepare() {
 	! use l10n_my && find . -iname '*myanmar*.ttf' -delete
 	! use l10n_te && find . -iname '*telugu*.ttf' -delete
 	! use music && find . -iname '*music*.ttf' -delete
+	! use l10n_tmh && find . -iname '*tifinagh*.ttf' -delete
 	default
 }
 
