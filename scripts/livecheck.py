@@ -349,7 +349,11 @@ def main() -> int:
             r: Response = (TextDataResponse(url[5:]) if url.startswith('data:')
                            else session.get(url, timeout=30))
         except (ReadTimeout, ConnectTimeout):
-            log.debug('Caught timeout attempting to fetch %s', url)
+            log.warning('Caught timeout attempting to fetch %s', url)
+            continue
+        except (requests.exceptions.HTTPError,
+                requests.exceptions.SSLError) as e:
+            log.warning('Caught error while checking %s/%s: %s', cat, pkg, e)
             continue
         try:
             r.raise_for_status()
@@ -449,9 +453,9 @@ def main() -> int:
                                             '-', '') + ')')
                     print(f'{cat}/{pkg}: {version} ({ebuild_version}) -> '
                           f'{top_hash}{new_date}')
-        except requests.exceptions.HTTPError as e:
-            log.warning('Caught HTTPError while checking %s/%s: %s', cat, pkg,
-                        e)
+        except (requests.exceptions.HTTPError,
+                requests.exceptions.SSLError) as e:
+            log.warning('Caught error while checking %s/%s: %s', cat, pkg, e)
         except Exception as e:
             print(f'Exception while checking {cat}/{pkg}', file=sys.stderr)
             raise e
