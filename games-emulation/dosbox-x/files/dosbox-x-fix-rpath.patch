@@ -6,7 +6,7 @@ index 8e98dc4e9..a21cb36f4 100644
      CPPFLAGS="$CPPFLAGS $SDL2_CFLAGS"
  else
    if test -n "$SDL_LIBS"; then
-+    SDL_LIBS=$(sed -e 's/-Wl,-rpath,[[^ ]]\+ //' <<< "$SDL_LIBS")
++    SDL_LIBS="$(echo "$SDL_LIBS" | sed -e 's/-Wl,-rpath,[[^ ]]\+ //')"
      LIBS="$LIBS $SDL_LIBS"
      CPPFLAGS="$CPPFLAGS $SDL_CFLAGS"
    else
