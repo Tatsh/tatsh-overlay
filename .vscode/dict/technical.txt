@@ -12,3 +12,4 @@ quse
 semver
 vercmp
 xmatch
+deps
