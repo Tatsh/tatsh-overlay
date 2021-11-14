@@ -6,7 +6,7 @@ inherit autotools
 
 DESCRIPTION="A powerful tool to check TSS signing status of various devices and firmwares."
 HOMEPAGE="https://github.com/tihmstar/tsschecker"
-MY_COMMIT_COUNT="319"
+COMMIT_COUNT="319"
 SHA="59554beb8e79319e12d8f373fd5bb9846b8c69c9"
 JSSY_SHA="e17d3c8ec5216692efbbe59bbe9801bb7661e07d"
 SRC_URI="https://github.com/tihmstar/tsschecker/archive/${SHA}.tar.gz -> ${P}.tar.gz
@@ -33,7 +33,7 @@ PATCHES=(
 
 src_prepare() {
 	default
-	local -r quoted_commit_count='\\\\\\"'"${MY_COMMIT_COUNT}"'\\\\\\"'
+	local -r quoted_commit_count='\\\\\\"'"${COMMIT_COUNT}"'\\\\\\"'
 	local -r quoted_sha='\\\\\\"'"${SHA}"'\\\\\\"'
 	sed -i "s/^CFLAGS+=\" -D TSSCHECKER_VERSION_COUNT=.*/CFLAGS+=\" -D TSSCHECKER_VERSION_COUNT=${quoted_commit_count}\"/" \
 		./configure.ac || die "Failed to patch"
