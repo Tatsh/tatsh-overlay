@@ -6,8 +6,8 @@ inherit cmake
 
 DESCRIPTION="A new generation, open-source graphics plugin for N64 emulators."
 HOMEPAGE="https://github.com/gonetz/GLideN64"
-MY_SHA="ad091be1cfa058259c98cf6d1f979b7b2471dc92"
-SRC_URI="https://github.com/gonetz/GLideN64/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SHA="ad091be1cfa058259c98cf6d1f979b7b2471dc92"
+SRC_URI="https://github.com/gonetz/GLideN64/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -18,7 +18,7 @@ DEPEND="virtual/opengl
 	sys-libs/zlib"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/GLideN64-${MY_SHA}"
+S="${WORKDIR}/GLideN64-${SHA}"
 CMAKE_USE_DIR="${S}/src"
 CMAKE_BUILD_TYPE=Release
 
@@ -28,8 +28,8 @@ src_prepare() {
 }
 
 src_configure() {
-	echo "#define PLUGIN_REVISION ${MY_SHA}" > Revision.h
-	echo "#define PLUGIN_REVISION_W L${MY_SHA}" >> Revision.h
+	echo "#define PLUGIN_REVISION ${SHA}" > Revision.h
+	echo "#define PLUGIN_REVISION_W L${SHA}" >> Revision.h
 	local mycmakeargs=(
 		-DCRC_OPT=ON
 		-DVEC4_OPT=ON
