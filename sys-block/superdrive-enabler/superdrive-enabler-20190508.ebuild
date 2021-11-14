@@ -6,9 +6,9 @@ inherit linux-info toolchain-funcs
 
 DESCRIPTION="Hack for Apple's Superdrive to work with other systems than OS X."
 HOMEPAGE="https://github.com/onmomo/superdrive-enabler"
-MY_HASH="c5e430077d361283311080fd1ff4cb94e6896553"
-SRC_URI="https://github.com/onmomo/superdrive-enabler/archive/${MY_HASH}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/${PN}-${MY_HASH}"
+SHA="c5e430077d361283311080fd1ff4cb94e6896553"
+SRC_URI="https://github.com/onmomo/superdrive-enabler/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/${PN}-${SHA}"
 
 LICENSE="MIT"
 SLOT="0"
