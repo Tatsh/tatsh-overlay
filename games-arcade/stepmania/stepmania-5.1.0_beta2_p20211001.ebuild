@@ -6,9 +6,9 @@ EAPI=7
 inherit cmake autotools eutils desktop wrapper xdg
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
-MY_SHA="cd7da39a979abb2d746776324a3b2fa0c23ce50f"
+SHA="cd7da39a979abb2d746776324a3b2fa0c23ce50f"
 HOMEPAGE="http://www.stepmania.com/"
-SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/${PN}/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -33,7 +33,7 @@ DEPEND="x11-libs/gtk+:2
 	jack? ( virtual/jack )
 	virtual/opengl"
 
-S="${WORKDIR}/${PN}-${MY_SHA}"
+S="${WORKDIR}/${PN}-${SHA}"
 CMAKE_MAKEFILE_GENERATOR=ninja
 
 src_prepare() {
