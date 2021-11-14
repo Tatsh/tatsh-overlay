@@ -26,7 +26,7 @@ PropTuple = Tuple[str, str, str, str, str, Optional[str], bool]
 Response = Union['TextDataResponse', requests.Response]
 T = TypeVar('T')
 
-LOG_NAME = 'livecheck'
+LOG_NAME: Final[str] = 'livecheck'
 P = portage.db[portage.root]['porttree'].dbapi
 PREFIX_RE: Final[str] = r'(^[^0-9]+)[0-9]'
 RSS_NS = {'': 'http://www.w3.org/2005/Atom'}
@@ -80,6 +80,19 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
 }
 
 
+def prepend_v(s: str) -> str:
+    return f'v{s}'
+
+
+TAG_NAME_FUNCTIONS: Final[Mapping[str, Callable[[str], str]]] = {
+    'app-misc/tasksh': prepend_v,
+    'games-emulation/rpcs3': prepend_v,
+    'games-emulation/xemu': lambda s: f'xemu-v{s}',
+    'games-emulation/yuzu': lambda x: f'mainline-{x.replace(".", "-")}',
+    'media-sound/sony-headphones-client': prepend_v,
+}
+
+
 @lru_cache()
 def get_github_api_credentials() -> str:
     with open(expanduser('~/.config/gh/hosts.yml')) as f:
@@ -87,7 +100,7 @@ def get_github_api_credentials() -> str:
     return data['github.com']['oauth_token']
 
 
-def process_submodules(pkg_name: str, tag_name: str, ebuild: str,
+def process_submodules(pkg_name: str, ref: str, ebuild: str,
                        repo_uri: str) -> None:
     if pkg_name not in SUBMODULES:
         return
@@ -104,7 +117,7 @@ def process_submodules(pkg_name: str, tag_name: str, ebuild: str,
             grep_for = f"{basename(item).upper().replace('-', '_')}_SHA=\""
         r = requests.get(
             (f'https://api.github.com/repos{repo_root}/contents/{name}'
-             f'?ref={tag_name}'),
+             f'?ref={ref}'),
             headers=dict(
                 Authorization=f'token {get_github_api_credentials()}'))
         r.raise_for_status()
