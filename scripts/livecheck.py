@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 from functools import cmp_to_key, lru_cache
 from os.path import basename, dirname, join as path_join, realpath, splitext
-from posixpath import expanduser
+from os.path import expanduser
 from typing import (Any, Callable, Dict, Final, Iterator, Mapping, Optional,
                     Sequence, Set, Tuple, TypeVar, Union, cast)
 from urllib.parse import urlparse
