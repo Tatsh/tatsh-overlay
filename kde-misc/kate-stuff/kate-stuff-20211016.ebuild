@@ -5,14 +5,14 @@ EAPI=7
 
 DESCRIPTION="Updated and improved Kate editor syntax files and code snippets."
 HOMEPAGE="https://github.com/zaufi/kate-stuff"
-MY_SHA="3c215dfdb80c28a07fc5bdd778dfd667a84d9f46"
-SRC_URI="https://github.com/zaufi/kate-stuff/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SHA="3c215dfdb80c28a07fc5bdd778dfd667a84d9f46"
+SRC_URI="https://github.com/zaufi/kate-stuff/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-S="${WORKDIR}/${PN}-${MY_SHA}"
+S="${WORKDIR}/${PN}-${SHA}"
 
 src_install() {
 	insinto /usr/share/${PN}
