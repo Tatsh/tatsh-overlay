@@ -6,10 +6,10 @@ inherit cmake
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://github.com/GTAmodding/re3"
-MY_RE3_HASH="3233ffe1c4b99e8efb4c41c6794b4fce880cf503"
-MY_LIBRW_HASH="5501c4fdc7425ff926be59369a13593bb6c81b54"
-SRC_URI="https://web.archive.org/web/20210906122012/https://github.com/GTAmodding/${PN}/archive/${MY_RE3_HASH}.zip -> ${P}.zip
-	https://github.com/aap/librw/archive/${MY_LIBRW_HASH}.tar.gz -> ${PN}-librw-${MY_LIBRW_HASH}.tar.gz"
+SHA="3233ffe1c4b99e8efb4c41c6794b4fce880cf503"
+LIBRW_SHA="5501c4fdc7425ff926be59369a13593bb6c81b54"
+SRC_URI="https://web.archive.org/web/20210906122012/https://github.com/GTAmodding/${PN}/archive/${SHA}.zip -> ${P}.zip
+	https://github.com/aap/librw/archive/${LIBRW_SHA}.tar.gz -> ${PN}-librw-${LIBRW_SHA}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -25,7 +25,7 @@ DEPEND="media-libs/libsndfile
 	sndfile? ( media-libs/libsndfile )"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${PN}-${MY_RE3_HASH}"
+S="${WORKDIR}/${PN}-${SHA}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-xdg.patch"
@@ -34,7 +34,7 @@ PATCHES=(
 
 src_unpack() {
 	default
-	cp -R "librw-${MY_LIBRW_HASH}"/* "${S}/vendor/librw/"
+	cp -R "librw-${LIBRW_SHA}"/* "${S}/vendor/librw/"
 }
 
 src_prepare() {
