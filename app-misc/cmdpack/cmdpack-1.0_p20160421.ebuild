@@ -3,9 +3,9 @@
 
 EAPI=7
 
-MY_SHA="480428199a1c92e0ad0d8b1a5f5ddbaaad5d7b64"
-SRC_URI="https://github.com/cmdpack/cmdpack/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
-S="${WORKDIR}/${PN}-${MY_SHA}"
+SHA="480428199a1c92e0ad0d8b1a5f5ddbaaad5d7b64"
+SRC_URI="https://github.com/cmdpack/cmdpack/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/${PN}-${SHA}"
 KEYWORDS="~amd64 ~x86"
 inherit eutils
 
