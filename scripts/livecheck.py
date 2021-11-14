@@ -508,7 +508,6 @@ def main() -> int:
                     with open(ebuild, 'r') as f:
                         old_content = f.read()
                     content = old_content.replace(version, top_hash)
-                    import pdb; pdb.set_trace()
                     ps_ref = top_hash
                     if not is_sha(top_hash) and cp in TAG_NAME_FUNCTIONS:
                         ps_ref = TAG_NAME_FUNCTIONS[cp](top_hash)
