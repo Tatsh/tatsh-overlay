@@ -10,14 +10,13 @@ inherit eutils flag-o-matic python-r1 xdg-utils
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/mborgerson/xemu"
-SHA="bbcd5763e6204d6d1e109c2d19cfd794e3abf8e2"
 IMGUI_SHA="e18abe3619cfa0eced163c027d0349506814816c"
 IMPLOT_SHA="dea3387cdcc1d6a7ee3607f8a37a9dce8a85224f"
 KEYCODEMAPDB_SHA="d21009b1c9f94b740ea66be8e48a1d8ad8124023"
 SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
 SLIRP_SHA="a88d9ace234a24ce1c17189642ef9104799425e0"
 TESTFLOAT_SHA="5a59dcec19327396a011a17fd924aed4fec416b3"
-SRC_URI="https://github.com/mborgerson/xemu/archive/${SHA}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/mborgerson/xemu/archive/${PN}-v${PV}.tar.gz -> ${P}.tar.gz
 	https://gitlab.com/qemu-project/keycodemapdb/-/archive/${KEYCODEMAPDB_SHA}/keycodemapdb-${KEYCODEMAPDB_SHA}.tar.gz -> ${PN}-keycodemapdb-${KEYCODEMAPDB_SHA:0:7}.tar.gz
 	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> ${PN}-imgui-${IMGUI_SHA:0:7}.tar.gz
 	https://github.com/epezent/implot/archive/${IMPLOT_SHA}.tar.gz -> ${PN}-implot-${IMPLOT_SHA:0:7}.tar.gz
@@ -74,20 +73,21 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0005-allow-use-of-system-xxhash-header.patch"
 	"${FILESDIR}/${PN}-0006-not-for-upstream-remove-trace-events-all.patch"
 	"${FILESDIR}/${PN}-0007-not-for-upstream-remove-keymaps.patch"
+	"${FILESDIR}/${PN}-9999-respect-pitch-yuv-conversion.patch"
 )
 DOCS=( README.md )
 
-S="${WORKDIR}/${PN}-${SHA}"
+S="${WORKDIR}/${PN}-${PN}-v${PV}"
 
 src_prepare() {
 	{ rmdir tests/fp/berkeley-softfloat-3 && mv "${WORKDIR}/berkeley-softfloat-3-${SOFTFLOAT_SHA}" tests/fp/berkeley-softfloat-3; } || die
 	{ rmdir tests/fp/berkeley-testfloat-3 && mv "${WORKDIR}/berkeley-testfloat-3-${TESTFLOAT_SHA}" tests/fp/berkeley-testfloat-3; } || die
 	{ rmdir ui/imgui && mv "${WORKDIR}/imgui-${IMGUI_SHA}" ui/imgui; } || die
 	{ rmdir ui/implot && mv "${WORKDIR}/implot-${IMPLOT_SHA}" ui/implot; } || die
-	{ rmdir ui/keycodemapdb &&	mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" ui/keycodemapdb; } || die
-	cut -d_ -f1 <<< "${PV}" > XEMU_VERSION || die
+	{ rmdir ui/keycodemapdb && mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" ui/keycodemapdb; } || die
+	echo "v${PV}" > XEMU_VERSION || die
 	echo master > XEMU_BRANCH || die
-	echo "${SHA}" > XEMU_COMMIT || die
+	touch XEMU_COMMIT || die
 	default
 }
 
