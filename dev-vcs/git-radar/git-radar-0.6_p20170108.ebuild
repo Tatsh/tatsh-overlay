@@ -5,8 +5,8 @@ EAPI=7
 
 DESCRIPTION="A heads up display for Git."
 HOMEPAGE="https://github.com/michaeldfallen/git-radar"
-MY_SHA="2ac25e3d1047cdf19f15bc894ff39449b83d65d4"
-SRC_URI="https://github.com/michaeldfallen/git-radar/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SHA="2ac25e3d1047cdf19f15bc894ff39449b83d65d4"
+SRC_URI="https://github.com/michaeldfallen/git-radar/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 RDEPEND="dev-vcs/git"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/${PN}-${MY_SHA}"
+S="${WORKDIR}/${PN}-${SHA}"
 
 src_compile() {
 	:
