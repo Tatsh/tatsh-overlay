@@ -6,8 +6,8 @@ inherit autotools
 
 DESCRIPTION="A library allowing to download single files from a remote zip archive"
 HOMEPAGE="https://github.com/tihmstar/libfragmentzip"
-MY_SHA="aaf6fae83a0aa6f7aae1c94721857076d04a14e8"
-SRC_URI="https://github.com/tihmstar/libfragmentzip/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SHA="aaf6fae83a0aa6f7aae1c94721857076d04a14e8"
+SRC_URI="https://github.com/tihmstar/libfragmentzip/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -18,7 +18,7 @@ DEPEND="dev-libs/libzip
 	dev-libs/tihmstar-libgeneral"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${PN}-${MY_SHA}"
+S="${WORKDIR}/${PN}-${SHA}"
 
 PATCHES=( "${FILESDIR}/configure-ac.patch" )
 
