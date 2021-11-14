@@ -12,9 +12,9 @@ LICENSE="GPL-3"
 KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
-MY_SHA="166f499cb1e7c0f445d0ffd8d280329f3942b93b"
+SHA="166f499cb1e7c0f445d0ffd8d280329f3942b93b"
 MY_PN="YouCompleteMe"
-SRC_URI="https://github.com/ycm-core/${MY_PN}/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/ycm-core/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 DEPEND="|| ( >=app-editors/vim-7.3 >=app-editors/gvim-7.3 )"
 RDEPEND="${DEPEND}
@@ -27,7 +27,7 @@ RDEPEND="${DEPEND}
 	$(python_gen_cond_dep 'dev-python/requests[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-util/ycmd[${PYTHON_SINGLE_USEDEP}]' ${PYTHON_COMPAT[*]})"
 
-S="${WORKDIR}/${MY_PN}-${MY_SHA}"
+S="${WORKDIR}/${MY_PN}-${SHA}"
 
 src_prepare() {
 	rm -fR third_party/ python/ycm/tests/
