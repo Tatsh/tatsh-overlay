@@ -2,16 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-MY_SHA="473093efe3598bea9f5fbb52ed9ed37f34e8acb8"
+SHA="473093efe3598bea9f5fbb52ed9ed37f34e8acb8"
 USE_RUBY="ruby25 ruby26 ruby27"
-RUBY_FAKEGEM_EXTRADOC="${PN:4}-${MY_SHA}/README.md"
-RUBY_FAKEGEM_EXTRAINSTALL="${PN:4}-${MY_SHA}/bin"
+RUBY_FAKEGEM_EXTRADOC="${PN:4}-${SHA}/README.md"
+RUBY_FAKEGEM_EXTRAINSTALL="${PN:4}-${SHA}/bin"
 RUBY_S="${PN}-*"
 inherit ruby-fakegem
 
 DESCRIPTION="Various small Unix utilities"
 HOMEPAGE="https://github.com/taw/unix-utilities"
-SRC_URI="https://github.com/taw/unix-utilities/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/taw/unix-utilities/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -68,7 +68,7 @@ _PATCHES=(
 )
 
 all_ruby_prepare() {
-	local -r prefix="${PN:4}-${MY_SHA}"
+	local -r prefix="${PN:4}-${SHA}"
 
 	pushd "$prefix"
 	for patch in ${_PATCHES[*]}; do
@@ -101,12 +101,12 @@ all_ruby_prepare() {
 }
 
 all_ruby_install() {
-	local -r prefix="${PN:4}-${MY_SHA}"
+	local -r prefix="${PN:4}-${SHA}"
 	all_fakegem_install
 	dobin "${prefix}/bin/colcut"
 }
 
 each_fakegem_test() {
-	cd "${PN:4}-${MY_SHA}"
+	cd "${PN:4}-${SHA}"
 	rake
 }
