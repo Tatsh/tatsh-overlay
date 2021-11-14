@@ -6,8 +6,8 @@ inherit cmake
 
 DESCRIPTION="3DS shader assembler and disassembler"
 HOMEPAGE="https://github.com/neobrain/nihstro"
-MY_SHA="e924e21b1da60170f0f0a4e5a073cb7d579969c0"
-SRC_URI="https://github.com/neobrain/nihstro/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SHA="e924e21b1da60170f0f0a4e5a073cb7d579969c0"
+SRC_URI="https://github.com/neobrain/nihstro/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 DEPEND="dev-libs/boost:="
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${PN}-${MY_SHA}"
+S="${WORKDIR}/${PN}-${SHA}"
 
 DOCS=( Readme.md docs/instruction_set.md docs/nihcode_spec.md )
 
