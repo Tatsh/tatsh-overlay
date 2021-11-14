@@ -7,7 +7,7 @@ inherit font
 DESCRIPTION="Google's font family that aims to support all the world's languages"
 HOMEPAGE="https://www.google.com/get/noto/ https://github.com/googlei18n/noto-fonts"
 
-COMMIT="c383d9d64b48da4d183aef2b1e7a07919fd461ae"
+COMMIT="46c5b6b4f83ea84028e5049b14f4a2f61e1c961a"
 SRC_URI="https://github.com/googlei18n/noto-fonts/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="OFL-1.1"
@@ -111,6 +111,7 @@ src_prepare() {
 	! use l10n_sa && find . '(' -iname '*sharada*.ttf' -o \
 		-iname '*bhaiksuki*.ttf' -o \
 		-iname '*kharoshthi*.ttf' -o \
+		-iname '*nandinagari*.ttf' -o \
 		-iname '*grantha*.ttf' ')' -delete
 	! use l10n_eo && find . -iname '*shavian*.ttf' -delete
 	! use l10n_si && find . -iname '*sinhala*.ttf' -delete
