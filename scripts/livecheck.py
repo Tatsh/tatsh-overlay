@@ -348,12 +348,9 @@ def main() -> int:
         try:
             r: Response = (TextDataResponse(url[5:]) if url.startswith('data:')
                            else session.get(url, timeout=30))
-        except (ReadTimeout, ConnectTimeout):
-            log.warning('Caught timeout attempting to fetch %s', url)
-            continue
-        except (requests.exceptions.HTTPError,
+        except (ReadTimeout, ConnectTimeout, requests.exceptions.HTTPError,
                 requests.exceptions.SSLError) as e:
-            log.warning('Caught error while checking %s/%s: %s', cat, pkg, e)
+            log.debug('Caught error %s attempting to fetch %s', e, url)
             continue
         try:
             r.raise_for_status()
