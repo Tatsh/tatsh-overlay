@@ -6,8 +6,8 @@ inherit cmake
 
 DESCRIPTION="A re-implementation of the RenderWare Graphics engine."
 HOMEPAGE="https://github.com/aap/librw"
-MY_SHA="c60d7a791c7d97e8383948b9ea22760f4e9fba04"
-SRC_URI="https://github.com/aap/librw/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SHA="c60d7a791c7d97e8383948b9ea22760f4e9fba04"
+SRC_URI="https://github.com/aap/librw/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -18,7 +18,7 @@ RDEPEND="media-libs/glfw
 	media-libs/libsdl2"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/${PN}-${MY_SHA}"
+S="${WORKDIR}/${PN}-${SHA}"
 
 src_configure() {
 	local mycmakeargs=(
