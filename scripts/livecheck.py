@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 from dataclasses import dataclass
-from functools import cmp_to_key
+from functools import cmp_to_key, lru_cache
 from os.path import basename, dirname, join as path_join, realpath, splitext
+from posixpath import expanduser
 from typing import (Any, Callable, Dict, Final, Iterator, Mapping, Optional,
                     Sequence, Set, Tuple, TypeVar, Union, cast)
 from urllib.parse import urlparse
@@ -19,6 +20,7 @@ from portage.versions import catpkgsplit, vercmp
 from requests import ConnectTimeout, ReadTimeout
 import portage
 import requests
+import yaml
 
 PropTuple = Tuple[str, str, str, str, str, Optional[str], bool]
 Response = Union['TextDataResponse', requests.Response]
@@ -34,6 +36,91 @@ SEMVER_RE: Final[str] = (r'^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.'
                          r'\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+'
                          r'(?P<buildmetadata>[0-9a-zA-Z-]+'
                          r'(?:\.[0-9a-zA-Z-]+)*))?$')
+
+SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
+    'app-misc/tasksh': {'src/libshared'},
+    'app-pda/tsschecker': {'external/jssy'},
+    'games-emulation/citra': {
+        'externals/dynarmic',
+        'externals/fmt',
+        'externals/lodepng/lodepng',
+        'externals/soundtouch',
+        'externals/xbyak',
+    },
+    'games-emulation/play': {
+        'deps/CodeGen',
+        'deps/Dependencies',
+        'deps/Framework',
+        'deps/Nuanceur',
+        'deps/libchdr',
+    },
+    'games-emulation/rpcs3': {
+        '3rdparty/asmjit/asmjit',
+        '3rdparty/hidapi',
+        '3rdparty/yaml-cpp',
+        'llvm',
+    },
+    'games-emulation/xemu': {
+        'slirp',
+        'ui/imgui',
+        'ui/implot',
+        'ui/keycodemapdb',
+        ('tests/fp/berkeley-softfloat-3', 'SOFTFLOAT_SHA'),
+        ('tests/fp/berkeley-testfloat-3', 'TESTFLOAT_SHA'),
+    },
+    'games-emulation/yuzu': {
+        'externals/SDL',
+        'externals/dynarmic',
+        'externals/mbedtls',
+        'externals/sirit',
+        'externals/soundtouch',
+        ('externals/cpp-httplib', 'HTTPLIB_SHA'),
+    },
+    'media-sound/sony-headphones-client': {'Client/imgui'},
+}
+
+
+@lru_cache()
+def get_github_api_credentials() -> str:
+    with open(expanduser('~/.config/gh/hosts.yml')) as f:
+        data = yaml.safe_load(f)
+    return data['github.com']['oauth_token']
+
+
+def process_submodules(pkg_name: str, tag_name: str, ebuild: str,
+                       repo_uri: str) -> None:
+    if pkg_name not in SUBMODULES:
+        return
+    repo_root = urlparse(repo_uri).path
+    replacements = []
+    with open(ebuild) as f:
+        ebuild_lines = f.readlines()
+    for item in SUBMODULES[pkg_name]:
+        name = item
+        if isinstance(item, tuple):
+            grep_for = f'{item[1]}="'
+            name = item[0]
+        else:
+            grep_for = f"{basename(item).upper().replace('-', '_')}_SHA=\""
+        r = requests.get(
+            (f'https://api.github.com/repos{repo_root}/contents/{name}'
+             f'?ref={tag_name}'),
+            headers=dict(
+                Authorization=f'token {get_github_api_credentials()}'))
+        r.raise_for_status()
+        remote_sha = r.json()['sha']
+        for line in ebuild_lines:
+            if line.startswith(grep_for):
+                local_sha = line.split('=')[1].replace('"', '').strip()
+                if local_sha != remote_sha:
+                    replacements.append((local_sha, remote_sha))
+    if replacements:
+        with open(ebuild, 'r+') as f:
+            contents = f.read()
+            f.seek(0)
+            for find, replace in replacements:
+                contents = contents.replace(find, replace)
+            f.write(contents)
 
 
 def get_highest_matches(search_dir: str) -> Iterator[str]:
