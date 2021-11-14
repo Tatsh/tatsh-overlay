@@ -8,8 +8,8 @@ inherit cmake python-single-r1
 DESCRIPTION="A code-completion & code-comprehension server."
 HOMEPAGE="https://github.com/ycm-core/ycmd"
 CORE_VERSION=45
-MY_SHA="d897cf1ad0dd7e4ac6928715755cc5bf6e71651f"
-SRC_URI="https://github.com/ycm-core/ycmd/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SHA="d897cf1ad0dd7e4ac6928715755cc5bf6e71651f"
+SRC_URI="https://github.com/ycm-core/ycmd/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -32,11 +32,11 @@ RDEPEND="
 		sys-libs/compiler-rt:13.0.0
 		sys-libs/compiler-rt:12.0.1 )"
 
-S="${WORKDIR}/${PN}-${MY_SHA}/cpp"
+S="${WORKDIR}/${PN}-${SHA}/cpp"
 
 src_prepare() {
 	rm -fR ../ycmd/tests ../third_party
-	eapply --directory="${WORKDIR}/${PN}-${MY_SHA}" -p0 "${FILESDIR}"
+	eapply --directory="${WORKDIR}/${PN}-${SHA}" -p0 "${FILESDIR}"
 	sed -e "s/@CORE_VERSION@/${CORE_VERSION}/" \
 		-e "s|@LIBCLANG_DIR@|$(llvm-config --libdir)|" \
 		-e "s:CLANG_RESOURCE_DIR =.*:CLANG_RESOURCE_DIR = '$(find "${EPREFIX}/usr/lib/clang" -mindepth 1 -maxdepth 1 -type d | head -n 1)':" \
