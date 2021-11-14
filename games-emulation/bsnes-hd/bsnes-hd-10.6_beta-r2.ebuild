@@ -9,9 +9,9 @@ HOMEPAGE="https://github.com/DerKoun/bsnes-hd"
 MY_MAJOR="${PV%.*}"
 MY_MINOR="${PV#*.}"
 MY_MINOR="${MY_MINOR%_*}"
-MY_SHA="beta_${MY_MAJOR}_${MY_MINOR}"
+SHA="beta_${MY_MAJOR}_${MY_MINOR}"
 BIN_PN="${PN%-*}"
-SRC_URI="https://github.com/DerKoun/bsnes-hd/archive/${MY_SHA}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/DerKoun/bsnes-hd/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -45,7 +45,7 @@ DEPEND="dev-libs/atk
 	udev? ( virtual/udev )"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${PN}-${MY_SHA}"
+S="${WORKDIR}/${PN}-${SHA}"
 
 disable_module() {
 	sed -i \
