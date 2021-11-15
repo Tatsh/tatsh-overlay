@@ -16,7 +16,9 @@ KEYWORDS="~amd64 ~x86"
 S="${WORKDIR}/${PN}-${SHA}"
 
 src_prepare() {
-	sed -e '23s/.*/if(FALSE)/' -e 's/^add_sanitizers(.*//' \
+	sed -r \
+		-e 's/if\(USE_SANITIZERS\)/if(FALSE)/' \
+		-e 's/^add_sanitizers\(.*//' \
 		-i CMakeLists.txt
 	cmake_src_prepare
 }
