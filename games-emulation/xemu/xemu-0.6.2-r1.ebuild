@@ -85,7 +85,7 @@ src_prepare() {
 	{ rmdir ui/imgui && mv "${WORKDIR}/imgui-${IMGUI_SHA}" ui/imgui; } || die
 	{ rmdir ui/implot && mv "${WORKDIR}/implot-${IMPLOT_SHA}" ui/implot; } || die
 	{ rmdir ui/keycodemapdb && mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" ui/keycodemapdb; } || die
-	echo "v${PV}" > XEMU_VERSION || die
+	echo "${PV}" > XEMU_VERSION || die
 	echo master > XEMU_BRANCH || die
 	touch XEMU_COMMIT || die
 	default
