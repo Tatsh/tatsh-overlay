@@ -61,6 +61,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0100-unbundle-xbyak.patch"
 	"${FILESDIR}/${PN}-0101-mime-type.patch"
 	"${FILESDIR}/${PN}-0102-inject-git-info.patch"
+	"${FILESDIR}/${PN}-catch2-dep-version.patch"
 )
 
 src_prepare() {
@@ -81,9 +82,9 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-		-DBUILD_FULLNAME=""
 		-DBUILD_FULLNAME="${MY_PV}"
 		-DBUILD_SHARED_LIBS=OFF
+		-DCONAN_REQUIRED_LIBS=OFF
 		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=OFF
 		-DENABLE_CUBEB=$(usex cubeb)
 		-DENABLE_WEB_SERVICE=$(usex web-service)
