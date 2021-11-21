@@ -13,15 +13,10 @@ SRC_URI="https://github.com/wakatime/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
 VIM_PLUGIN_HELPURI="https://github.com/wakatime/vim-wakatime"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-fix-cli-path.patch"
-	"${FILESDIR}/${PN}-fix-overridecommandprefix.patch"
-)
-
 src_prepare() {
-	rm -fR packages/
+	rm -fR packages/ || die
 	# empty, delete it
-	rm -fR doc/
+	rm -fR doc/ || die
 	default
 }
 
