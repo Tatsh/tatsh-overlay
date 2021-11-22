@@ -22,6 +22,8 @@ S="${WORKDIR}/GLideN64-${SHA}"
 CMAKE_USE_DIR="${S}/src"
 CMAKE_BUILD_TYPE=Release
 
+PATCHES=( "${FILESDIR}/${PN}-2605.patch" )
+
 src_prepare() {
 	cmake_src_prepare
 	rm -rf src/GLideNHQ/inc
@@ -30,10 +32,6 @@ src_prepare() {
 src_configure() {
 	echo "#define PLUGIN_REVISION ${SHA}" > Revision.h
 	echo "#define PLUGIN_REVISION_W L${SHA}" >> Revision.h
-	# This prepends it before the build system adds its own -std=gnu++17,
-	# unfortunately after a -std=c++11 flag. gnu++17 will not work because that
-	# flag is already included and it will get deduped. Kind of a hack.
-	append-cxxflags -std=gnu++14
 	local mycmakeargs=(
 		-DCRC_OPT=ON
 		-DVEC4_OPT=ON
