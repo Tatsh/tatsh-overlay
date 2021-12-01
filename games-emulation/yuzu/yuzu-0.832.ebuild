@@ -45,7 +45,7 @@ DEPEND="app-arch/lz4
 	virtual/libusb:="
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
-BDEPEND="dev-cpp/catch
+BDEPEND=">=dev-cpp/catch-2.13.7
 	dev-cpp/nlohmann_json
 	dev-util/glslang
 	dev-util/vulkan-headers
@@ -61,7 +61,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0100-unbundle-xbyak.patch"
 	"${FILESDIR}/${PN}-0101-mime-type.patch"
 	"${FILESDIR}/${PN}-0102-inject-git-info.patch"
-	"${FILESDIR}/${PN}-catch2-dep-version.patch"
 )
 
 src_prepare() {
