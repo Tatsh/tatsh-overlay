@@ -7,7 +7,7 @@ inherit desktop multilib wrapper xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="30b7aaefcad65f7b3487eb615e41f6445eda2f75"
+SHA="7c9360d39353db38a8b5c5ff9c52924a577f089e"
 MY_PN="R${PN:1}"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://api.nuget.org/v3-flatcontainer/atksharp/3.22.25.128/atksharp.3.22.25.128.nupkg
@@ -23,18 +23,18 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/gtksharp.dependencies/1.1.0/gtksharp.dependencies.1.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/gtksharp/3.22.25.128/gtksharp.3.22.25.128.nupkg
 	https://api.nuget.org/v3-flatcontainer/libhac/0.13.3/libhac.0.13.3.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-x64/5.0.7/microsoft.aspnetcore.app.runtime.linux-x64.5.0.7.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.osx-x64/5.0.7/microsoft.aspnetcore.app.runtime.osx-x64.5.0.7.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.win-x64/5.0.7/microsoft.aspnetcore.app.runtime.win-x64.5.0.7.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-x64/6.0.0/microsoft.aspnetcore.app.runtime.linux-x64.6.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.osx-x64/6.0.0/microsoft.aspnetcore.app.runtime.osx-x64.6.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.win-x64/6.0.0/microsoft.aspnetcore.app.runtime.win-x64.6.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.codecoverage/16.8.0/microsoft.codecoverage.16.8.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.csharp/4.0.1/microsoft.csharp.4.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.dotnet.internalabstractions/1.0.0/microsoft.dotnet.internalabstractions.1.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.net.test.sdk/16.8.0/microsoft.net.test.sdk.16.8.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.osx-x64/5.0.7/microsoft.netcore.app.host.osx-x64.5.0.7.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.win-x64/5.0.7/microsoft.netcore.app.host.win-x64.5.0.7.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-x64/5.0.7/microsoft.netcore.app.runtime.linux-x64.5.0.7.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.osx-x64/5.0.7/microsoft.netcore.app.runtime.osx-x64.5.0.7.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.win-x64/5.0.7/microsoft.netcore.app.runtime.win-x64.5.0.7.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.osx-x64/6.0.0/microsoft.netcore.app.host.osx-x64.6.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.win-x64/6.0.0/microsoft.netcore.app.host.win-x64.6.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-x64/6.0.0/microsoft.netcore.app.runtime.linux-x64.6.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.osx-x64/6.0.0/microsoft.netcore.app.runtime.osx-x64.6.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.win-x64/6.0.0/microsoft.netcore.app.runtime.win-x64.6.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.platforms/1.0.1/microsoft.netcore.platforms.1.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.platforms/2.0.0/microsoft.netcore.platforms.2.0.0.nupkg
@@ -48,8 +48,9 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/microsoft.win32.registry/4.3.0/microsoft.win32.registry.4.3.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.win32.registry/4.5.0/microsoft.win32.registry.4.5.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.win32.systemevents/5.0.0/microsoft.win32.systemevents.5.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/mono.posix.netstandard/1.0.0/mono.posix.netstandard.1.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/mono.posix.netstandard/5.20.1-preview/mono.posix.netstandard.5.20.1-preview.nupkg
 	https://api.nuget.org/v3-flatcontainer/msgpack.cli/1.0.1/msgpack.cli.1.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/netstandard.library/1.6.0/netstandard.library.1.6.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/netstandard.library/2.0.0/netstandard.library.2.0.0.nupkg
@@ -115,16 +116,16 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/ryujinx.graphics.nvdec.dependencies/4.4.0-build7/ryujinx.graphics.nvdec.dependencies.4.4.0-build7.nupkg
 	https://api.nuget.org/v3-flatcontainer/ryujinx.graphics.nvdec.dependencies/4.4.0-build9/ryujinx.graphics.nvdec.dependencies.4.4.0-build9.nupkg
 	https://api.nuget.org/v3-flatcontainer/ryujinx.sdl2-cs/2.0.17-build18/ryujinx.sdl2-cs.2.0.17-build18.nupkg
-	https://api.nuget.org/v3-flatcontainer/sharpziplib/1.3.0/sharpziplib.1.3.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/sharpziplib/1.3.3/sharpziplib.1.3.3.nupkg
 	https://api.nuget.org/v3-flatcontainer/sixlabors.fonts/1.0.0-beta0013/sixlabors.fonts.1.0.0-beta0013.nupkg
 	https://api.nuget.org/v3-flatcontainer/sixlabors.imagesharp.drawing/1.0.0-beta11/sixlabors.imagesharp.drawing.1.0.0-beta11.nupkg
-	https://api.nuget.org/v3-flatcontainer/sixlabors.imagesharp/1.0.2/sixlabors.imagesharp.1.0.2.nupkg
+	https://api.nuget.org/v3-flatcontainer/sixlabors.imagesharp/1.0.4/sixlabors.imagesharp.1.0.4.nupkg
 	https://api.nuget.org/v3-flatcontainer/spb/0.0.3-build15/spb.0.0.3-build15.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.appcontext/4.1.0/system.appcontext.4.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.buffers/4.0.0/system.buffers.4.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.buffers/4.3.0/system.buffers.4.3.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.codedom/4.4.0/system.codedom.4.4.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/system.codedom/5.0.0/system.codedom.5.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/system.codedom/6.0.0/system.codedom.6.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.collections.concurrent/4.0.12/system.collections.concurrent.4.0.12.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.collections.nongeneric/4.3.0/system.collections.nongeneric.4.3.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.collections.specialized/4.3.0/system.collections.specialized.4.3.0.nupkg
@@ -142,7 +143,7 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/system.diagnostics.tools/4.0.1/system.diagnostics.tools.4.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.diagnostics.tracing/4.1.0/system.diagnostics.tracing.4.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.diagnostics.tracing/4.3.0/system.diagnostics.tracing.4.3.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/system.drawing.common/5.0.1/system.drawing.common.5.0.1.nupkg
+	https://api.nuget.org/v3-flatcontainer/system.drawing.common/6.0.0/system.drawing.common.6.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.dynamic.runtime/4.0.11/system.dynamic.runtime.4.0.11.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.globalization.calendars/4.0.1/system.globalization.calendars.4.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.globalization.extensions/4.0.1/system.globalization.extensions.4.0.1.nupkg
@@ -160,7 +161,7 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/system.linq.expressions/4.1.0/system.linq.expressions.4.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.linq/4.1.0/system.linq.4.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.linq/4.3.0/system.linq.4.3.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/system.management/5.0.0/system.management.5.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/system.management/6.0.0/system.management.6.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.net.http/4.1.0/system.net.http.4.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.net.nameresolution/4.3.0/system.net.nameresolution.4.3.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.net.primitives/4.0.11/system.net.primitives.4.0.11.nupkg
@@ -235,7 +236,7 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/system.xml.xpath.xmldocument/4.3.0/system.xml.xpath.xmldocument.4.3.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.xml.xpath/4.3.0/system.xml.xpath.4.3.0.nupkg"
 
-BDEPEND="virtual/dotnet-sdk:5.0"
+BDEPEND="virtual/dotnet-sdk:6.0"
 DEPEND="app-crypt/mit-krb5
 	sys-libs/zlib"
 # FIXME Make SoundIO and OpenAL optional
