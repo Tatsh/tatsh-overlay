@@ -288,6 +288,7 @@ src_prepare() {
 }
 
 src_compile() {
+	addpredict /opt/dotnet-sdk-bin-6.0/metadata
 	export \
 		DOTNET_CLI_TELEMETRY_OPTOUT=1 \
 		NO_COLOR=1 \
@@ -299,12 +300,13 @@ src_compile() {
 		--configuration Release \
 		--runtime linux-x64 \
 		"/p:Version=${PV}" \
-		/p:DebugType=embedded || die; } |
+		/p:DebugType=embedded \
+		--self-contained || die; } |
 			sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"
 }
 
 src_install() {
-	cd "${MY_PN}/bin/Release/net5.0/linux-x64/publish" || die
+	cd "${MY_PN}/bin/Release/net6.0/linux-x64/publish" || die
 	insinto "/usr/$(get_libdir)/${PN}"
 	doins ./*.ini ./*.config
 	make_wrapper "${MY_PN}" "/usr/$(get_libdir)/${PN}/${MY_PN}" "/usr/$(get_libdir)/${PN}" "/usr/$(get_libdir)/${PN}" /usr/bin
