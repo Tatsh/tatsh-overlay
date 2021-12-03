@@ -7,8 +7,8 @@ DISTUTILS_USE_SETUPTOOLS=no
 inherit bash-completion-r1 distutils-r1
 
 DESCRIPTION="Open files by MIME-type or file name using regular expressions."
-HOMEPAGE="http://xyne.archlinux.ca/projects/mimeo/index.html"
-SRC_URI="http://xyne.archlinux.ca/projects/${PN}/src/${P}.tar.xz"
+HOMEPAGE="https://xyne.dev/projects/mimeo/"
+SRC_URI="http://xyne.dev/projects/${PN}/src/${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
