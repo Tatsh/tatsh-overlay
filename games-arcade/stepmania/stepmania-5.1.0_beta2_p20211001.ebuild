@@ -17,21 +17,32 @@ IUSE="+alsa +crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +networking +ogg
 	+wav +xinerama +sdl +xrandr +X +bundled-songs +bundled-courses lto minimaid
 	parallel-port profiling pulseaudio jack"
 
-DEPEND="x11-libs/gtk+:2
+DEPEND="X? ( x11-libs/libX11 )
 	alsa? ( media-libs/alsa-lib )
+	jack? ( virtual/jack )
+	jpeg? ( virtual/jpeg )
 	mp3? ( media-libs/libmad )
 	ogg? ( media-libs/libogg media-libs/libvorbis )
 	pulseaudio? ( media-sound/pulseaudio )
-	media-libs/libpng
-	jpeg? ( virtual/jpeg )
-	xinerama? ( x11-libs/libXinerama )
 	sdl? ( media-libs/libsdl2 )
-	>=media-video/ffmpeg-4.2.4
-	media-libs/glew
+	xinerama? ( x11-libs/libXinerama )
 	xrandr? ( x11-libs/libXrandr )
-	X? ( x11-libs/libX11 )
-	jack? ( virtual/jack )
-	virtual/opengl"
+	dev-libs/glib
+	dev-libs/libpcre
+	dev-libs/libtommath
+	media-libs/glew
+	media-libs/glu
+	media-libs/libglvnd
+	media-libs/libjpeg-turbo
+	media-libs/libpng
+	media-video/ffmpeg
+	sys-libs/zlib
+	virtual/opengl
+	virtual/udev
+	x11-libs/gdk-pixbuf
+	x11-libs/gtk+:2
+	x11-libs/libXext
+	x11-libs/libXtst"
 
 S="${WORKDIR}/${PN}-${SHA}"
 CMAKE_MAKEFILE_GENERATOR=ninja
