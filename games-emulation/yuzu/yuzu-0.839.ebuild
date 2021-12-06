@@ -40,6 +40,7 @@ DEPEND="app-arch/lz4
 	dev-qt/qtwidgets
 	media-libs/opus
 	media-video/ffmpeg
+	sys-libs/libunwind
 	sys-libs/zlib
 	x11-libs/libva
 	virtual/libusb:="
