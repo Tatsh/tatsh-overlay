@@ -13,5 +13,10 @@ SLOT="5"
 KEYWORDS="~amd64 ~x86"
 IUSE="aqua debug"
 
-DEPEND=">=kde-frameworks/ktexteditor-${KFMIN}:5"
+DEPEND=">=kde-frameworks/ktexteditor-${KFMIN}:5
+	dev-qt/qtcore:5
+	dev-qt/qtgui:5
+	dev-qt/qtnetwork:5
+	dev-qt/qtsql:5
+	dev-qt/qtwidgets:5"
 RDEPEND="${DEPEND}"
