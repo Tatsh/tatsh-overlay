@@ -12,6 +12,9 @@ LICENSE="BSD-0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
+DEPEND="dev-libs/gmp dev-libs/mpfr"
+RDEPEND="${DEPEND}"
+
 S="${WORKDIR}/${PN}-${SHA}"
 
 src_install() {
