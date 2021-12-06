@@ -12,7 +12,7 @@ CODEGEN_SHA="448bac159733c6799a451ac75a18ce04aff5e223"
 DEPS_SHA="2068201d97951327e015b521590bb3117fbc7a50"
 GHC_FILESYSTEM="2a8b380f8d4e77b389c42a194ab9c70d8e3a0f1e"
 FRAMEWORK_SHA="faa4c23a2e96ba42b6ff1438bf33f111295c55cf"
-LIBCHDR_SHA="4cf740750e8b27a0bdcde91efb049118f7d4c473"
+LIBCHDR_SHA="532a3f60f75eec3454ff4e52cad8862afc40e65f"
 NUANCEUR_SHA="8e2f8649b38322e1f97b05b87e2876c6de53462e"
 SRC_URI="https://github.com/jpd002/Play-/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/jpd002/boost-cmake/archive/${BOOST_CMAKE_SHA}.tar.gz -> ${PN}-boost-cmake-${BOOST_CMAKE_SHA:0:7}.tar.gz
