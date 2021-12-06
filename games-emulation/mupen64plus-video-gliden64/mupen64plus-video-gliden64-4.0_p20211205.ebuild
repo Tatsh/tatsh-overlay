@@ -15,6 +15,8 @@ KEYWORDS="~amd64 ~x86"
 
 DEPEND="virtual/opengl
 	media-libs/freetype
+	media-libs/libglvnd
+	media-libs/libpng
 	sys-libs/zlib"
 RDEPEND="${DEPEND}"
 
