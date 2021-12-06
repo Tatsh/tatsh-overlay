@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="Emulator of x86-based machines based on PCem."
 HOMEPAGE="https://github.com/86Box/86Box"
-SHA="9acfdeffa8a619ddb2c58f7c92fac4e8b90226dc"
+SHA="652cbb5b1f257bbb7dd376b5461947c9541b2a82"
 SRC_URI="https://github.com/86Box/86Box/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
