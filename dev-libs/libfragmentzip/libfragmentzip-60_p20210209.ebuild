@@ -15,7 +15,8 @@ KEYWORDS="~amd64 ~x86"
 
 DEPEND="dev-libs/libzip
 	net-misc/curl
-	dev-libs/tihmstar-libgeneral"
+	dev-libs/tihmstar-libgeneral
+	sys-libs/zlib"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}-${SHA}"
