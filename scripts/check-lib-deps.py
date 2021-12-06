@@ -9,12 +9,20 @@ import portage
 
 P = portage.db[portage.root]['porttree'].dbapi
 
+IGNORE = {
+    'games-arcade/stepmania-outfox': {
+        'media-video/ffmpeg',
+        'media-video/pipewire',  # ignored because virtual/jack is listed
+        'virtual/libusb',
+    }
+}
+
 
 def is_elf(exe: str) -> bool:
     try:
         with open(exe, 'rb') as f:
             return f.read(4).endswith(b'ELF')
-    except FileNotFoundError:
+    except (FileNotFoundError, PermissionError):
         return False
 
 
@@ -94,13 +102,19 @@ def main() -> int:
         package_names = sys.argv[1:]
     for package_name in package_names:
         printed_name = False
-        exes = sorted(x for x in sp.run(('qlist', package_name),
-                                        check=True,
-                                        capture_output=True,
-                                        text=True).stdout.splitlines()
-                      if is_elf(x))
+        exes = sorted(
+            x for x in sp.run(('qlist', '-e', package_name),
+                              check=True,
+                              capture_output=True,
+                              text=True).stdout.splitlines()
+            if is_elf(x) and not re.match(r'/usr/lib\d+/ryujinx/lib.*\.so$', x)
+            and not re.match(r'/opt/stepmania-outfox/lib.*\.so(?:\.\d+)?', x))
         if len(exes):
             for exe, missing in find_missing_deps0(package_name, exes):
+                missing = [
+                    y for y in missing if not (
+                        package_name in IGNORE and y in IGNORE[package_name])
+                ]
                 if len(missing):
                     if not printed_name:
                         print(f'{package_name}:')
