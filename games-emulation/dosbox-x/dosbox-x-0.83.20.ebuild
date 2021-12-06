@@ -32,7 +32,6 @@ DEPEND="debug? ( sys-libs/ncurses:0= )
 	)
 	media-libs/alsa-lib
 	media-libs/libglvnd
-	media-libs/sdl2-net
 	net-libs/libpcap
 	sys-libs/zlib"
 RDEPEND="${DEPEND}"
@@ -45,13 +44,13 @@ S="${WORKDIR}/${PN}-${PN}-v${PV}"
 src_prepare() {
 	default
 	eautoreconf
-	pushd vs2015/sdlnet
+	pushd vs/sdlnet || die
 	eautoreconf
-	popd
+	popd || die
 }
 
 src_configure() {
-	pushd vs2015/sdl
+	pushd vs/sdl || die
 	mkdir linux-host
 	ac_cv_header_iconv_h=no \
 	ac_cv_func_iconv=no \
@@ -68,10 +67,10 @@ src_configure() {
 		"--prefix=$(pwd -P)/linux-host"
 	emake
 	emake install
-	popd
+	popd || die
 
-	pushd vs2015/sdlnet
-	mkdir linux-host
+	pushd vs/sdlnet || die
+	mkdir linux-host || die
 	./configure \
 		--disable-dependency-tracking \
 		--disable-silent-rules \
@@ -81,7 +80,7 @@ src_configure() {
 		"--with-sdl-prefix=$(pwd -P)/../sdl/linux-host"
 	emake
 	emake install
-	popd
+	popd || die
 
 	local debug_arg=debug
 	if use debug; then
