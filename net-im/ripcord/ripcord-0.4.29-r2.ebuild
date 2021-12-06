@@ -14,6 +14,7 @@ KEYWORDS="~amd64"
 RESTRICT="bindist"
 
 RDEPEND="dev-libs/libsodium:0/23
+	dev-qt/qtcore:5
 	dev-qt/qtconcurrent:5
 	dev-qt/qtgui:5
 	dev-qt/qtmultimedia:5[gstreamer]
@@ -21,8 +22,12 @@ RDEPEND="dev-libs/libsodium:0/23
 	dev-qt/qtsvg:5
 	dev-qt/qtwebsockets:5
 	dev-qt/qtwidgets:5
+	media-libs/libglvnd
 	media-libs/opus
-	virtual/opengl"
+	sys-libs/zlib
+	virtual/opengl
+	x11-libs/libX11
+	x11-libs/libXScrnSaver"
 
 QA_PREBUILT="/opt/${PN}/R${PN:1} /opt/${PN}/plugins/*/*.so"
 DOCS=( additional_license_information.txt )
