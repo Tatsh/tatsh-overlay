@@ -18,9 +18,11 @@ DEPEND="
 	dev-libs/nettle
 	media-libs/libjpeg-turbo
 	media-libs/libpng
+	net-misc/curl
 	sys-libs/libseccomp
 	sys-libs/zlib
 	gtk? ( x11-libs/gtk+:3 )
+	kde? ( dev-qt/qtcore dev-qt/qtgui dev-qt/qtwidgets )
 	lz4? ( app-arch/lz4 )
 	lzo? ( dev-libs/lzo )
 	nls? ( sys-devel/gettext )
