@@ -14,19 +14,16 @@ SLOT="2"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="examples gtk-doc +introspection"
 
-RDEPEND="
-	dev-libs/glib:2
-	dev-libs/libgusb
-	dev-libs/nss
-	virtual/libusb:1=
+RDEPEND="virtual/libusb:1=
 	x11-libs/gtk+:3
 	x11-libs/libX11
-	x11-libs/libXv
-	x11-libs/pixman
-	!>=sys-auth/libfprint-1.92:0
-"
-
-DEPEND="${RDEPEND}"
+	x11-libs/libXv"
+DEPEND="${RDEPEND}
+	dev-libs/glib:2
+	dev-libs/libgusb
+	dev-libs/libgudev
+	dev-libs/nss
+	x11-libs/pixman"
 
 BDEPEND="
 	virtual/pkgconfig
