@@ -20,7 +20,8 @@ DEPEND="media-libs/glew:=
 	media-libs/glfw
 	media-libs/libglvnd
 	net-wireless/bluez
-	sys-apps/dbus"
+	sys-apps/dbus
+	sys-libs/libunwind"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_PN}-${PV}/Client"
