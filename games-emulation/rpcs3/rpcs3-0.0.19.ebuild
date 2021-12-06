@@ -32,7 +32,9 @@ DEPEND=">=dev-libs/flatbuffers-2.0.0
 	dev-qt/qtcore:5
 	dev-qt/qtdbus
 	dev-qt/qtgui
+	dev-qt/qtmultimedia
 	dev-qt/qtnetwork:5
+	dev-qt/qtsvg
 	dev-qt/qtwidgets:5
 	media-libs/glew:0
 	media-libs/libglvnd
