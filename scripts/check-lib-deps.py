@@ -11,8 +11,11 @@ P = portage.db[portage.root]['porttree'].dbapi
 
 
 def is_elf(exe: str) -> bool:
-    with open(exe, 'rb') as f:
-        return f.read(4).endswith(b'ELF')
+    try:
+        with open(exe, 'rb') as f:
+            return f.read(4).endswith(b'ELF')
+    except FileNotFoundError:
+        return False
 
 
 @lru_cache()
@@ -25,26 +28,27 @@ def qfile(filename: str) -> str:
 
 def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
     for x in libs:
-        # Special case from forticlient
-        if (package_name == 'net-vpn/forticlient' and x == 'libffmpeg.so'):
-            continue
         if x.startswith('libudev.so'):
             lib_package = 'virtual/udev'
         elif x.startswith('libusb-'):
             lib_package = 'virtual/libusb'
         else:
             lines = qfile(x).splitlines()
-            lib_package = [
-                y for y in lines
-                if '-libs/' in y or y.startswith('dev-qt/') or re.match(
-                    r'^(?:app-pda/lib(?:irecovery|plist)|net-misc/curl|'
-                    r'media-sound/(?:pulseaudio|mpg123)|'
-                    r'media-video/(ffmpeg|pipewire)|'
-                    r'app-arch/(?:zstd|libarchive|lz4)|app-emulation/faudio|'
-                    r'dev-util/glslang|net-wireless/bluez|sys-apps/dbus|'
-                    r'app-accessibility/at-spi2-atk|net-print/cups|'
-                    r'sys-apps/util-linux|app-crypt/mit-krb5)', y)
-            ][0].split(':')[0]
+            try:
+                lib_package = [
+                    y for y in lines
+                    if '-libs/' in y or y.startswith('dev-qt/') or re.match(
+                        r'^(?:app-pda/lib(?:irecovery|plist)|net-misc/curl|'
+                        r'media-sound/(?:pulseaudio|mpg123)|'
+                        r'media-video/(ffmpeg|pipewire)|'
+                        r'app-arch/(?:zstd|libarchive|lz4)|'
+                        r'app-emulation/faudio|'
+                        r'dev-util/glslang|net-wireless/bluez|sys-apps/dbus|'
+                        r'app-accessibility/at-spi2-atk|net-print/cups|'
+                        r'sys-apps/util-linux|app-crypt/mit-krb5)', y)
+                ][0].split(':')[0]
+            except IndexError:
+                continue
             if lib_package == package_name:
                 continue
         ebuild = P.findname(P.match(package_name)[-1])
