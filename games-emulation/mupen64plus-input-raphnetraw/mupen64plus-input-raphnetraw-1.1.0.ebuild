@@ -11,7 +11,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="dev-libs/hidapi"
+DEPEND="dev-libs/hidapi media-libs/libsdl2"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
