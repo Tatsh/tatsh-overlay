@@ -33,7 +33,6 @@ RDEPEND="app-arch/bzip2
 	|| ( media-sound/pulseaudio media-sound/apulse )
 	virtual/glu
 	virtual/jack
-	virtual/libusb
 	virtual/opengl
 	virtual/udev"
 RESTRICT="splitdebug"
