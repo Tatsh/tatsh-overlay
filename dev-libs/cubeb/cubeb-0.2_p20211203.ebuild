@@ -13,6 +13,9 @@ LICENSE="ISC"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
+DEPEND="media-libs/speexdsp"
+RDEPEND="${DEPEND}"
+
 S="${WORKDIR}/${PN}-${SHA}"
 
 src_prepare() {
