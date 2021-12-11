@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="Emulator of x86-based machines based on PCem."
 HOMEPAGE="https://github.com/86Box/86Box"
-SHA="9acfdeffa8a619ddb2c58f7c92fac4e8b90226dc"
+SHA="6fd2cfaf90765819345ba1e0274f8d4236afee81"
 SRC_URI="https://github.com/86Box/86Box/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
@@ -19,7 +19,8 @@ DEPEND="media-libs/alsa-lib
 	media-libs/freetype
 	media-libs/libpng
 	media-libs/libsdl2[X,opengl]
-	media-libs/openal"
+	media-libs/openal
+	>media-libs/rtmidi-4.0.0"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/86Box-${SHA}"
