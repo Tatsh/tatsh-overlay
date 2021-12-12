@@ -35,6 +35,10 @@ src_prepare() {
 	sed -r -e "s/@PIHOLE_VERSION@/${PV}/g" -i advanced/index.php \
 		advanced/Scripts/*.sh \
 		advanced/Scripts/database_migration/gravity-db.sh
+	sed     -e 's%/etc/pihole/gravity.db%/var/lib/pihole/gravity.db%g' \
+		-e 's%/etc/pihole/macvendor.db%/var/lib/pihole/macvendor.db%g' \
+		-e 's%/etc/pihole/pihole-FTL.db%/var/lib/pihole/pihole-FTL.db%g' \
+		-i -- $(grep -rl '/etc/pihole/[[:alpha:]-]*.db' .) || die
 }
 
 src_install() {
@@ -74,6 +78,12 @@ src_install() {
 	einstalldocs
 
 	dobin ${PN}
+	
+	# make sure the working directory exists
+	diropts -m0755
+	keepdir /var/lib/${PN}
+	
+	sqlite3 ${D}/var/lib/${PN}/gravity.db < advanced/Templates/gravity.db.sql || die
 }
 
 pkg_config() {
