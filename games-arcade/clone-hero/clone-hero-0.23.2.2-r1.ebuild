@@ -18,7 +18,7 @@ RDEPEND="sys-libs/zlib
 	x11-libs/wxGTK:3.0-gtk3
 	dev-libs/glib
 	x11-libs/gdk-pixbuf
-	x11-libs/gtk+"
+	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/clonehero-linux"
