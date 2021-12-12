@@ -38,19 +38,14 @@ RDEPEND="app-arch/bzip2
 	virtual/udev"
 RESTRICT="splitdebug"
 
-pkg_setup() {
-	if use amd64; then
-		S="${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}"
-	elif use arm64; then
-		S="${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}"
-	else
-		eerror 'Unsupported architecture'
-		die
-	fi
-	export S
-}
+S="${WORKDIR}"
 
 src_prepare() {
+	if use amd64; then
+		cd "${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}" || die
+	elif use arm64; then
+		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}" || die
+	fi
 	einfo 'Removing useless instructions.txt files ...'
 	find . -type f -iname 'instructions.txt' -exec rm -f {} \;
 	# Built-in songs and courses
@@ -66,6 +61,11 @@ src_prepare() {
 }
 
 src_install() {
+	if use amd64; then
+		cd "${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}" || die
+	elif use arm64; then
+		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}" || die
+	fi
 	local inst="${EPREFIX}/opt/${PN}"
 	if ! use arm; then
 		patchelf --set-rpath "\$ORIGIN:${EPREFIX}/lib64:${EPREIFX}/usr/lib64" \
