@@ -83,7 +83,7 @@ src_install() {
 	diropts -m0755
 	keepdir /var/lib/${PN}
 
-	sqlite3 ${D}/var/lib/${PN}/gravity.db < advanced/Templates/gravity.db.sql || die
+	sqlite3 "${D}/var/lib/${PN}/gravity.db" < advanced/Templates/gravity.db.sql || die
 }
 
 pkg_config() {
