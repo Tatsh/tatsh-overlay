@@ -1,0 +1,5 @@
+{
+    "type": "regex",
+    "url": "https://www.music.mcgill.ca/~gary/rtmidi/index.html",
+    "regex": "Latest Release.*/rtmidi/release/rtmidi-(\\d+\\.\\d+\\.\\d+)\\.tar\\.gz\">"
+}
