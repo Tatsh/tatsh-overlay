@@ -28,6 +28,10 @@ src_prepare() {
 		-e 's/ AND LIBTERMCAP//g' \
 		-i src/CMakeLists.txt || die
 	sed -r -e 's/ AND LIBTERMCAP//g' -i src/lua/CMakeLists.txt || die
+	sed     -e 's%/etc/pihole/gravity.db%/var/lib/pihole/gravity.db%g' \
+		-e 's%/etc/pihole/macvendor.db%/var/lib/pihole/macvendor.db%g' \
+		-e 's%/etc/pihole/pihole-FTL.db%/var/lib/pihole/pihole-FTL.db%g' \
+		-i -- $(grep -rl '/etc/pihole/[[:alpha:]-]*.db' .) || die
 	cmake_src_prepare
 }
 
