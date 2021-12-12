@@ -20,7 +20,10 @@ RDEPEND="${DEPEND} >=net-dns/${PN}-ftl-${FTL_VERSION} app-admin/sudo"
 
 S="${WORKDIR}/pi-hole-${PV}"
 
-PATCHES=( "${FILESDIR}/${PN}-improved-paths.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-improved-paths-01.patch"
+	"${FILESDIR}/${PN}-improved-paths-02.patch"
+)
 
 src_prepare() {
 	rm advanced/Scripts/update{,check}.sh advanced/Scripts/${PN}Checkout.sh \
