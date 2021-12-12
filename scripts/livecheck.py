@@ -78,18 +78,12 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
     },
     'media-sound/sony-headphones-client': {'Client/imgui'},
 }
-
-
-def prepend_v(s: str) -> str:
-    return f'v{s}'
-
-
 TAG_NAME_FUNCTIONS: Final[Mapping[str, Callable[[str], str]]] = {
-    'app-misc/tasksh': prepend_v,
-    'games-emulation/rpcs3': prepend_v,
+    'app-misc/tasksh': lambda s: f'v{s}',
+    'games-emulation/rpcs3': lambda s: f'v{s}',
     'games-emulation/xemu': lambda s: f'xemu-v{s}',
     'games-emulation/yuzu': lambda x: f'mainline-{x.replace(".", "-")}',
-    'media-sound/sony-headphones-client': prepend_v,
+    'media-sound/sony-headphones-client': lambda s: f'v{s}',
 }
 
 
@@ -478,6 +472,8 @@ def main() -> int:
                 top_hash = tf(top_hash)
             if cp == 'games-emulation/play':
                 top_hash = top_hash.replace('-', '.')
+            # elif cp == 'games-emulation/ryujinx':
+            #     top_hash = r.json()['build']['commitId']
             if prefixes:
                 assert top_hash in prefixes
                 top_hash = f'{prefixes[top_hash]}{top_hash}'
@@ -492,6 +488,12 @@ def main() -> int:
                     with open(ebuild, 'r') as f:
                         old_content = f.read()
                     content = old_content.replace(version, top_hash)
+                    if cp == 'games-emulation/ryujinx':
+                        commit = cast(requests.Response,
+                                      r).json()['build']['commitId']
+                        content = re.sub(r'^SHA="[^"]+"', f'SHA="{commit}"',
+                                         content, 1, re.MULTILINE)
+                    
                     ps_ref = top_hash
                     if not is_sha(top_hash) and cp in TAG_NAME_FUNCTIONS:
                         ps_ref = TAG_NAME_FUNCTIONS[cp](top_hash)
