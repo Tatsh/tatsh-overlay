@@ -161,7 +161,7 @@ class LivecheckSettings:
 
 
 def is_sha(s: str) -> bool:
-    return bool((len(s) < 8 or len(s) > 8) and re.match(r'^[0-9a-f]+$', s))
+    return bool((len(s) == 7 or len(s) > 8) and re.match(r'^[0-9a-f]+$', s))
 
 
 def dotize(s: str) -> str:
@@ -472,8 +472,6 @@ def main() -> int:
                 top_hash = tf(top_hash)
             if cp == 'games-emulation/play':
                 top_hash = top_hash.replace('-', '.')
-            # elif cp == 'games-emulation/ryujinx':
-            #     top_hash = r.json()['build']['commitId']
             if prefixes:
                 assert top_hash in prefixes
                 top_hash = f'{prefixes[top_hash]}{top_hash}'
@@ -493,7 +491,6 @@ def main() -> int:
                                       r).json()['build']['commitId']
                         content = re.sub(r'^SHA="[^"]+"', f'SHA="{commit}"',
                                          content, 1, re.MULTILINE)
-                    
                     ps_ref = top_hash
                     if not is_sha(top_hash) and cp in TAG_NAME_FUNCTIONS:
                         ps_ref = TAG_NAME_FUNCTIONS[cp](top_hash)
