@@ -7,7 +7,7 @@ inherit desktop multilib wrapper xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="acc0b0f3138b0ea4d573db5152927026c29bd61d"
+SHA="119a3a188738c12a5ddbe76e67fe0cc38122ee7b"
 MY_PN="R${PN:1}"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://api.nuget.org/v3-flatcontainer/atksharp/3.22.25.128/atksharp.3.22.25.128.nupkg
@@ -252,13 +252,10 @@ RDEPEND="${DEPEND}
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-
+RESTRICT="strip"
 PATCHES=( "${FILESDIR}/${PN}-no-updates.patch" )
 
 S="${WORKDIR}/${MY_PN}-${SHA}"
-
-# FIXME Figure out how to disable dotnet's stripping
-RESTRICT="strip"
 
 src_unpack() {
 	local archive
@@ -299,8 +296,8 @@ src_compile() {
 		--no-restore \
 		--configuration Release \
 		--runtime linux-x64 \
-		"/p:Version=${PV}" \
-		/p:DebugType=embedded \
+		"-p:Version=${PV}" \
+		-p:DebugType=embedded \
 		--self-contained || die; } |
 			sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"
 }
@@ -308,14 +305,12 @@ src_compile() {
 src_install() {
 	cd "${MY_PN}/bin/Release/net6.0/linux-x64/publish" || die
 	insinto "/usr/$(get_libdir)/${PN}"
-	doins ./*.ini ./*.config
+	doins ./*.config
 	make_wrapper "${MY_PN}" "/usr/$(get_libdir)/${PN}/${MY_PN}" "/usr/$(get_libdir)/${PN}" "/usr/$(get_libdir)/${PN}" /usr/bin
 	newicon -s 32 "${FILESDIR}/${PN}-logo.png" "${PN}.png"
 	make_desktop_entry "/usr/$(get_libdir)/${PN}/${MY_PN}" "${MY_PN}" "${PN}"
 	exeinto "/usr/$(get_libdir)/${PN}"
 	doexe "${MY_PN}"
-	insopts -m755
-	doins libMonoPosixHelper.so
 	# Don't use bundled versions
 	dosym "${EPREFIX}/usr/$(get_libdir)/libSDL2.so" "/usr/$(get_libdir)/${PN}/libSDL2.so"
 	dosym "${EPREFIX}/usr/$(get_libdir)/libsoundio.so" "/usr/$(get_libdir)/${PN}/libsoundio.so"
