@@ -62,6 +62,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0100-unbundle-xbyak.patch"
 	"${FILESDIR}/${PN}-0101-mime-type.patch"
 	"${FILESDIR}/${PN}-0102-inject-git-info.patch"
+	"${FILESDIR}/${PN}-0103-sdl-wayland-1.20-fix.patch"
 )
 
 src_prepare() {
