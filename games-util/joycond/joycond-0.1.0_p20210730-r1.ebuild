@@ -21,6 +21,8 @@ RDEPEND="${DEPEND}
 	games-util/hid-nintendo"
 IUSE="systemd"
 
+PATCHES=( "${FILESDIR}/${PN}-service-paranoia.patch" )
+
 S="${WORKDIR}/${PN}-${SHA}"
 
 src_prepare() {
