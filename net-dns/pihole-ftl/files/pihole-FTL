@@ -1,7 +1,7 @@
 #!/sbin/openrc-run
 PIFTL_CMD="/usr/bin/pihole-FTL"
 PIFTL_CONF="${PIFTL_CONF:-/etc/pihole/pihole-FTL.conf}"
-PIFTL_PID="/var/run/pihole-FTL.pid"
+PIFTL_PID="/run/pihole/FTL.pid"
 
 description="Pi-hole FTL"
 name="Pi-hole daemon"
@@ -21,7 +21,7 @@ start_pre() {
 	checkpath --file-truncate -f "$PIFTL_PID"
 	# Prepare config and database files to the user FTL runs as.
 	checkpath -o "$command_user" -f \
-		/var/run/pihole-FTL.port \
+		/run/pihole/FTL.port \
 		/var/log/pihole-FTL.log \
 		/var/log/pihole.log \
 		/var/lib/pihole/dhcp.leases \
@@ -36,7 +36,7 @@ start_pre() {
 }
 
 stop_post() {
-	rm -rf /var/run/pihole/* /dev/shm/FTL-*
+	rm -rf /run/pihole/* /dev/shm/FTL-*
 }
 
 start() {
