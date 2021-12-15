@@ -21,27 +21,32 @@ RDEPEND="${DEPEND} >=net-dns/${PN}-ftl-${FTL_VERSION} app-admin/sudo"
 S="${WORKDIR}/pi-hole-${PV}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-improved-paths-01.patch"
-	"${FILESDIR}/${PN}-improved-paths-02.patch"
+	"${FILESDIR}/${PN}-0001-cron-remove-flush-updatechecker.patch"
+	"${FILESDIR}/${PN}-0002-path-changes-01.patch"
+	"${FILESDIR}/${PN}-0002-path-changes-02.patch"
+	"${FILESDIR}/${PN}-0002-path-changes-03.patch"
+	"${FILESDIR}/${PN}-0003-logrotate-add-missingok-fix-paths.patch"
 )
 
 src_prepare() {
-	rm advanced/Scripts/update{,check}.sh advanced/Scripts/${PN}Checkout.sh \
-		advanced/Templates/${PN}.sudo advanced/Templates/${PN}-FTL.service
+	rm advanced/Scripts/update{,check}.sh \
+		advanced/Scripts/${PN}Checkout.sh \
+		advanced/Templates/${PN}.sudo || die
 	default
 	sed -r -e "s/@EPREFIX@/${EPREFIX}/g" -e "s/@LIBDIR@/$(get_libdir)/g" \
-		 -e "s/@PIHOLE_FTL_VERSION@/${PIHOLE_FTL_VERSION}/g" \
-		 -i gravity.sh "$PN" advanced/Scripts/*.sh \
-		advanced/Scripts/database_migration/gravity-db.sh \
-		advanced/Templates/${PN}.cron advanced/index.php \
-		advanced/01-${PN}.conf advanced/Templates/gravity_copy.sql
-	sed -r -e "s/@PIHOLE_VERSION@/${PV}/g" -i advanced/index.php \
-		advanced/Scripts/*.sh \
-		advanced/Scripts/database_migration/gravity-db.sh
-	sed     -e 's%/etc/pihole/gravity.db%/var/lib/pihole/gravity.db%g' \
-		-e 's%/etc/pihole/macvendor.db%/var/lib/pihole/macvendor.db%g' \
-		-e 's%/etc/pihole/pihole-FTL.db%/var/lib/pihole/pihole-FTL.db%g' \
-		-i -- $(grep -rl '/etc/pihole/[[:alpha:]-]*.db' .) || die
+		-e "s/@PIHOLE_FTL_VERSION@/${PIHOLE_FTL_VERSION}/g" \
+		-e "s/@PIHOLE_VERSION@/${PV}/g" \
+		-i gravity.sh \
+			"$PN" \
+			advanced/Scripts/*.sh \
+			advanced/Scripts/database_migration/gravity-db.sh \
+			advanced/Templates/${PN}.cron \
+			advanced/index.php \
+			advanced/01-${PN}.conf \
+			advanced/Templates/gravity_copy.sql \
+			advanced/Templates/${PN}-FTL.service \
+			manpages/${PN}-FTL.conf.5 \
+			advanced/Templates/logrotate || die
 }
 
 src_install() {
@@ -74,7 +79,7 @@ src_install() {
 
 	if use www; then
 		insinto /usr/share/webapps/${PN}-blocking-page
-		doins advanced/Templates/index.php advanced/Templates/blockingpage.css
+		doins advanced/index.php advanced/blockingpage.css
 	fi
 
 	doman manpages/${PN}*
@@ -85,7 +90,6 @@ src_install() {
 	# make sure the working directory exists
 	diropts -m0755
 	keepdir /var/lib/${PN}
-
 	sqlite3 "${D}/var/lib/${PN}/gravity.db" < advanced/Templates/gravity.db.sql || die
 }
 
