@@ -1,11 +1,11 @@
 #!/sbin/openrc-run
+PIFTL_CMD="/usr/bin/pihole-FTL"
 PIFTL_CONF="${PIFTL_CONF:-/etc/pihole/pihole-FTL.conf}"
+PIFTL_PID="/var/run/pihole-FTL.pid"
 
-name="Pi-Hole daemon"
-command="/usr/bin/pihole-FTL"
-required_files="${PIFTL_CONF}"
-pidfile=/var/run/pihole-FTL.pid
 description="Pi-hole FTL"
+name="Pi-hole daemon"
+required_files="${PIFTL_CONF}"
 
 depend() {
 	need localmount
@@ -13,19 +13,40 @@ depend() {
 }
 
 start_pre() {
-	mkdir -pm 0755 /var/run/pihole
-	touch /var/run/pihole-FTL.port /var/log/pihole-FTL.log /var/log/pihole.log /var/lib/pihole/dhcp.leases
-	# Ensure that permissions are set so that pihole-FTL can edit all necessary files
-	chown pihole:pihole /var/run/pihole-FTL.port /var/log/pihole-FTL.log /var/log/pihole.log /var/lib/pihole/dhcp.leases /var/run/pihole /etc/pihole
-	chmod 0644 /var/run/pihole-FTL.port /var/log/pihole-FTL.log /var/log/pihole.log /var/lib/pihole/dhcp.leases
-	# Ensure that permissions are set so that pihole-FTL can edit the files. We ignore errors as the file may not (yet) exist
-	chmod -f 0644 /var/lib/pihole/macvendor.db
-	# Chown database files to the user FTL runs as. We ignore errors as the files may not (yet) exist
-	chown -f pihole:pihole /var/lib/pihole/pihole-FTL.db /var/lib/pihole/gravity.db /var/lib/pihole/macvendor.db
-	# Chown database file permissions so that the pihole group (web interface) can edit the file. We ignore errors as the files may not (yet) exist
-	chmod -f 0664 /var/lib/pihole/pihole-FTL.db
+	command_user="pihole:pihole"
+	# Prepare directories with pihole:pihole permissions:
+	checkpath -o "$command_user" -d /run/pihole /var/log/pihole /var/lib/pihole
+	# Prepare pid-file with root:root and 0644 permissions and clear of all
+	# contents.
+	checkpath --file-truncate "$PIFTL_PID"
+	# Prepare config and database files to the user FTL runs as.
+	checkpath -o "$command_user" -f \
+		/var/run/pihole-FTL.port \
+		/var/log/pihole-FTL.log \
+		/var/log/pihole.log \
+		/var/lib/pihole/dhcp.leases \
+		/var/lib/pihole/pihole-FTL.db \
+		/var/lib/pihole/gravity.db \
+		/var/lib/pihole/macvendor.db
+	# Prepare database file permissions so that the pihole group (web
+	# interface) can edit the file.
+	checkpath -m 0664 -f \
+		/var/lib/pihole/pihole-FTL.db \
+		/var/lib/pihole/gravity.db
 }
 
 stop_post() {
-	rm -f /var/run/pihole/FTL.sock /dev/shm/FTL-*
+	rm -rf /run/pihole* /run/pihole/FTL.sock /dev/shm/FTL-*
+}
+
+start() {
+	ebegin "Starting $RC_SVCNAME"
+	start-stop-daemon --start --exec "$PIFTL_CMD" --pidfile "$PIFTL_PID"
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping $RC_SVCNAME"
+	start-stop-daemon --stop --exec "$PIFTL_CMD" --pidfile "$PIFTL_PID"
+	eend $?
 }
