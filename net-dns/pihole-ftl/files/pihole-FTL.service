@@ -1,0 +1,51 @@
+[Unit]
+Description=Pi-hole FTL
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStartPre=/bin/touch \
+               /run/pihole/FTL.pid \
+               /run/pihole/FTL.port \
+               /var/log/pihole-FTL.log \
+               /var/log/pihole.log
+ExecStartPre=/bin/chmod 0644 \
+               /run/pihole/FTL.pid \
+               /run/pihole/FTL.port \
+               /var/log/pihole-FTL.log \
+               /var/log/pihole.log
+ExecStartPre=/bin/chown pihole. \
+               /run/pihole \
+               /run/pihole/FTL.pid \
+               /run/pihole/FTL.port \
+               /var/lib/pihole/dhcp.leases \
+               /var/log/pihole-FTL.log \
+               /var/log/pihole.log
+ExecStartPre=/bin/rm -f \
+               /dev/shm/FTL-clients \
+               /dev/shm/FTL-counters \
+               /dev/shm/FTL-dns-cache \
+               /dev/shm/FTL-domains \
+               /dev/shm/FTL-lock \
+               /dev/shm/FTL-overTime \
+               /dev/shm/FTL-per-client-regex \
+               /dev/shm/FTL-queries \
+               /dev/shm/FTL-settings \
+               /dev/shm/FTL-strings \
+               /dev/shm/FTL-upstreams \
+               /run/pihole/FTL.sock
+ExecStart=/usr/bin/pihole-FTL
+PIDFile=/run/pihole/FTL.pid
+PermissionsStartOnly=True
+ProtectSystem=full
+Restart=on-abnormal
+RestartSec=30s
+TimeoutStopSec=10s
+Type=forking
+
+Group=pihole
+User=pihole
+
+[Install]
+WantedBy=multi-user.target

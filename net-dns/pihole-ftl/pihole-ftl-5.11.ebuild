@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake
+inherit cmake systemd
 
 DESCRIPTION="The Pi-hole FTL engine"
 HOMEPAGE="https://github.com/pi-hole/FTL"
@@ -28,14 +28,16 @@ src_prepare() {
 		-e 's/ AND LIBTERMCAP//g' \
 		-i src/CMakeLists.txt || die
 	sed -r -e 's/ AND LIBTERMCAP//g' -i src/lua/CMakeLists.txt || die
-	sed     -e 's%/etc/pihole/gravity.db%/var/lib/pihole/gravity.db%g' \
-		-e 's%/etc/pihole/macvendor.db%/var/lib/pihole/macvendor.db%g' \
-		-e 's%/etc/pihole/pihole-FTL.db%/var/lib/pihole/pihole-FTL.db%g' \
-		-i -- $(grep -rl '/etc/pihole/[[:alpha:]-]*.db' .) || die
 	cmake_src_prepare
 }
 
 src_compile() {
 	export GIT_BRANCH=master GIT_TAG=v${PV} GIT_VERSION=v${PV}
 	cmake_src_compile
+}
+
+src_install() {
+	cmake_src_install
+	doinitd "${FILESDIR}/pihole-FTL"
+	systemd_dounit "${FILESDIR}/pihole-FTL.service"
 }

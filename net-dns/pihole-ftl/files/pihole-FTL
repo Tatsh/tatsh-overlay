@@ -1,0 +1,31 @@
+#!/sbin/openrc-run
+PIFTL_CONF="${PIFTL_CONF:-/etc/pihole/pihole-FTL.conf}"
+
+name="Pi-Hole daemon"
+command="/usr/bin/pihole-FTL"
+required_files="${PIFTL_CONF}"
+pidfile=/var/run/pihole-FTL.pid
+description="Pi-hole FTL"
+
+depend() {
+	need localmount
+	use net
+}
+
+start_pre() {
+	mkdir -pm 0755 /var/run/pihole
+	touch /var/run/pihole-FTL.port /var/log/pihole-FTL.log /var/log/pihole.log /var/lib/pihole/dhcp.leases
+	# Ensure that permissions are set so that pihole-FTL can edit all necessary files
+	chown pihole:pihole /var/run/pihole-FTL.port /var/log/pihole-FTL.log /var/log/pihole.log /var/lib/pihole/dhcp.leases /var/run/pihole /etc/pihole
+	chmod 0644 /var/run/pihole-FTL.port /var/log/pihole-FTL.log /var/log/pihole.log /var/lib/pihole/dhcp.leases
+	# Ensure that permissions are set so that pihole-FTL can edit the files. We ignore errors as the file may not (yet) exist
+	chmod -f 0644 /var/lib/pihole/macvendor.db
+	# Chown database files to the user FTL runs as. We ignore errors as the files may not (yet) exist
+	chown -f pihole:pihole /var/lib/pihole/pihole-FTL.db /var/lib/pihole/gravity.db /var/lib/pihole/macvendor.db
+	# Chown database file permissions so that the pihole group (web interface) can edit the file. We ignore errors as the files may not (yet) exist
+	chmod -f 0664 /var/lib/pihole/pihole-FTL.db
+}
+
+stop_post() {
+	rm -f /var/run/pihole/FTL.sock /dev/shm/FTL-*
+}
