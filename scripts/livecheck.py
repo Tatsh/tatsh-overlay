@@ -436,7 +436,7 @@ def main() -> int:
             if regex and re.match(SEMVER_RE,
                                   version) and regex.startswith('archive/'):
                 log.debug('Adjusting RE for semantic versioning')
-                regex = regex.replace(r'([^"]+)', r'(\d+\.\d+\.\d+)')
+                regex = regex.replace(r'([^"]+)', r'(\d+\.\d+(?:\.\d+)?)')
             prefixes = cast(Optional[Dict[str, str]], None)
             if not regex:
                 if 'www.jetbrains.com/updates' in url:
