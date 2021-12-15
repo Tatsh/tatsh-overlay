@@ -28,6 +28,8 @@ src_prepare() {
 		-e 's/ AND LIBTERMCAP//g' \
 		-i src/CMakeLists.txt || die
 	sed -r -e 's/ AND LIBTERMCAP//g' -i src/lua/CMakeLists.txt || die
+	cp "${FILESDIR}/pihole-FTL.conf" . || die
+	sed -r -e "s/@EPREFIX@/${EPREFIX}/g" -i pihole-FTL.conf || die
 	cmake_src_prepare
 }
 
@@ -40,4 +42,6 @@ src_install() {
 	cmake_src_install
 	doinitd "${FILESDIR}/pihole-FTL"
 	systemd_dounit "${FILESDIR}/pihole-FTL.service"
+	insinto /etc/pihole
+	doins pihole-FTL.conf
 }
