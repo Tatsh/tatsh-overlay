@@ -1,0 +1,64 @@
+From 7c73f46de64e35026ed94306cf7b83638d724d0f Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 15 Dec 2021 07:24:10 -0500
+Subject: [PATCH] More path fixes
+
+---
+ advanced/Scripts/list.sh | 2 +-
+ pihole                   | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/advanced/Scripts/list.sh b/advanced/Scripts/list.sh
+index e0615c01..0d5e0f4f 100755
+--- a/advanced/Scripts/list.sh
++++ b/advanced/Scripts/list.sh
+@@ -11,7 +11,7 @@
+ # Please see LICENSE file for your rights under this license.
+ 
+ # Globals
+-piholeDir="@EPREFIX@/etc/pihole"
++piholeDir="@EPREFIX@/var/lib/pihole"
+ GRAVITYDB="@EPREFIX@/var/lib/pihole/gravity.db"
+ # Source pihole-FTL from install script
+ pihole_FTL="${piholeDir}/pihole-FTL.conf"
+diff --git a/pihole b/pihole
+index c27d068c..ac2531a4 100755
+--- a/pihole
++++ b/pihole
+@@ -252,7 +252,7 @@ Options:
+   elif [[ "${1}" == "off" ]]; then
+     # Disable logging
+     sed -i 's/^log-queries/#log-queries/' @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf
+-    sed -i 's/^QUERY_LOGGING=true/QUERY_LOGGING=false/' @EPREFIX@/etc/pihole/setupVars.conf
++    sed -i 's/^QUERY_LOGGING=true/QUERY_LOGGING=false/' @EPREFIX@/var/lib/pihole/setupVars.conf
+     if [[ "${2}" != "noflush" ]]; then
+       # Flush logs
+       "${PI_HOLE_BIN_DIR}"/pihole -f
+@@ -262,7 +262,7 @@ Options:
+   elif [[ "${1}" == "on" ]]; then
+     # Enable logging
+     sed -i 's/^#log-queries/log-queries/' @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf
+-    sed -i 's/^QUERY_LOGGING=false/QUERY_LOGGING=true/' @EPREFIX@/etc/pihole/setupVars.conf
++    sed -i 's/^QUERY_LOGGING=false/QUERY_LOGGING=true/' @EPREFIX@/var/lib/pihole/setupVars.conf
+     echo -e "  ${INFO} Enabling logging..."
+     local str="Logging has been enabled!"
+   else
+@@ -320,13 +320,13 @@ statusFunc() {
+   fi
+ 
+   # Determine if Pi-hole's blocking is enabled
+-  if grep -q "BLOCKING_ENABLED=false" @EPREFIX@/etc/pihole/setupVars.conf; then
++  if grep -q "BLOCKING_ENABLED=false" @EPREFIX@/var/lib/pihole/setupVars.conf; then
+     # A config is commented out
+     case "${1}" in
+       "web") echo 0;;
+       *) echo -e "  ${CROSS} Pi-hole blocking is disabled";;
+     esac
+-  elif grep -q "BLOCKING_ENABLED=true" @EPREFIX@/etc/pihole/setupVars.conf;  then
++  elif grep -q "BLOCKING_ENABLED=true" @EPREFIX@/var/lib/pihole/setupVars.conf;  then
+     # Configs are set
+     case "${1}" in
+       "web") echo 1;;
+-- 
+2.34.1
+
