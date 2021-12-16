@@ -62,6 +62,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0100-unbundle-xbyak.patch"
 	"${FILESDIR}/${PN}-0101-mime-type.patch"
 	"${FILESDIR}/${PN}-0102-inject-git-info.patch"
+	"${FILESDIR}/${PN}-0103-externals-cmakelists.patch"
 )
 
 src_prepare() {
@@ -91,10 +92,6 @@ src_configure() {
 		-DGIT_BRANCH="${PN}"
 		-DGIT_DESC="${PV}"
 		-DGIT_REV="${PV}"
-		-DSDL_ATOMIC=ON
-		-DSDL_POWER=ON
-		-DSDL_THREADS=ON
-		-DSDL_WAYLAND=OFF
 		-DUSE_DISCORD_PRESENCE=OFF
 		-DUSE_SYSTEM_CUBEB=$(usex cubeb)
 		-DUSE_SYSTEM_INIH=ON
