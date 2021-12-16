@@ -98,8 +98,8 @@ src_install() {
 	insinto /var/lib/${PN}
 	doins "${FILESDIR}/setupVars.conf"
 
-	echo "CONFIG_PROTECT=\"${EPREFIX}/var/lib/${PN}\"" > "${T}/90-${PN}"
-	doenvd "${T}/90-${PN}"
+	echo "CONFIG_PROTECT=\"${EPREFIX}/var/lib/${PN}\"" > "${T}/90${PN}"
+	doenvd "${T}/90${PN}"
 }
 
 # pkg_config() {
