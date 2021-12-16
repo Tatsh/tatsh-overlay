@@ -17,6 +17,7 @@ RDEPEND="app-shells/bash:0"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-padd-shellcheck-issues.patch"
 	"${FILESDIR}/${PN}-0002-more-path-fixes.patch"
+	"${FILESDIR}/${PN}-0003-version-checking-workaround.patch"
 )
 
 S="${WORKDIR}/${MY_PN}-${PV}"
