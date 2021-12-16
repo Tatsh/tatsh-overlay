@@ -12,15 +12,15 @@ index 2ba4e90..70902a9 100755
 --- a/padd.sh
 +++ b/padd.sh
 @@ -16,6 +16,9 @@ LC_NUMERIC=C
- 
+
  ############################################ VARIABLES #############################################
- 
-+pihole_version=$(mktemp padd-piholeversion.XXXXX)
-+padd_pid=$(mktemp padd-pid.XXXXX)
+
++pihole_version=$(mktemp -t padd-piholeversion.XXXXX)
++padd_pid=$(mktemp -t padd-pid.XXXXX)
 +
  # VERSION
  padd_version="v3.6.2"
- 
+
 @@ -380,7 +383,7 @@ GetNetworkInformation() {
      # if the DHCP Router variable isn't set
      # Issue 3: https://github.com/jpmck/PADD/issues/3
@@ -28,10 +28,10 @@ index 2ba4e90..70902a9 100755
 -      DHCP_ROUTER=$(/sbin/ip route | awk '/default/ { printf "%s\t", $3 }')
 +      DHCP_ROUTER=$(/bin/ip route | awk '/default/ { printf "%s\t", $3 }')
      fi
- 
+
      dhcp_info=" Router:   ${DHCP_ROUTER}"
 @@ -475,10 +478,10 @@ GetPiholeInformation() {
- 
+
  GetVersionInformation() {
    # Check if version status has been saved
 -  if [ -e "piHoleVersion" ]; then # the file exists...
@@ -41,7 +41,7 @@ index 2ba4e90..70902a9 100755
 -    source piHoleVersion
 +    # shellcheck disable=SC1091 source=/dev/null
 +    source "$pihole_version"
- 
+
      # Today is...
      today=$(date +%Y%m%d)
 @@ -486,7 +489,7 @@ GetVersionInformation() {
@@ -51,24 +51,24 @@ index 2ba4e90..70902a9 100755
 -      rm -f piHoleVersion
 +      rm -f "$pihole_version"
      fi
- 
+
    else # the file doesn't exist, create it...
 @@ -593,7 +596,7 @@ GetVersionInformation() {
      fi
- 
+
      # write it all to the file
 -    echo "last_check=${today}" > ./piHoleVersion
 +    echo "last_check=${today}" > "$pihole_version"
      {
        echo "core_version=$core_version"
-       echo "core_version_latest=$core_version_latest"     
+       echo "core_version_latest=$core_version_latest"
 @@ -619,7 +622,7 @@ GetVersionInformation() {
        echo "mini_status_=\"$mini_status_\""
-       echo "tiny_status_=\"$tiny_status_\""        
+       echo "tiny_status_=\"$tiny_status_\""
        echo "full_status_=\"$full_status_\""
 -    } >> ./piHoleVersion
 +    } >> "$pihole_version"
- 
+
      # there's a file now
    fi
 @@ -638,6 +641,7 @@ CleanEcho() {
@@ -78,10 +78,10 @@ index 2ba4e90..70902a9 100755
 +  # shellcheck disable=SC2059
    printf "$@"
  }
- 
+
 @@ -1033,6 +1037,7 @@ json_extract() {
      local pair_regex="\"${key}\"[[:space:]]*:[[:space:]]*(${value_regex})"
- 
+
      if [[ ${json} =~ ${pair_regex} ]]; then
 +        # shellcheck disable=SC2001
          sed 's/^"\|"$//g' <<< "${BASH_REMATCH[1]}"
@@ -93,7 +93,7 @@ index 2ba4e90..70902a9 100755
      echo -ne " [■·········]  10%\\r"
 -    echo ${pid} > ./PADD.pid
 +    echo ${pid} > "$padd_pid"
- 
+
      # Check for updates
      echo -ne " [■■········]  20%\\r"
 -    if [ -e "piHoleVersion" ]; then
@@ -109,7 +109,7 @@ index 2ba4e90..70902a9 100755
      echo "- Writing PID (${pid}) to file."
 -    echo ${pid} > ./PADD.pid
 +    echo ${pid} > "$padd_pid"
- 
+
      # Check for updates
      echo "- Checking for version file."
 -    if [ -e "piHoleVersion" ]; then
@@ -126,7 +126,7 @@ index 2ba4e90..70902a9 100755
      echo "- Writing PID (${pid}) to file..."
 -    echo ${pid} > ./PADD.pid
 +    echo ${pid} > "$padd_pid"
- 
+
      # Check for updates
      echo "- Checking for PADD version file..."
 -    if [ -e "piHoleVersion" ]; then
@@ -139,22 +139,22 @@ index 2ba4e90..70902a9 100755
      fi
 @@ -1179,7 +1184,7 @@ NormalPADD() {
      SizeChecker
- 
+
      # Get Config variables
 -    . /etc/pihole/setupVars.conf
 +    . /var/lib/pihole/setupVars.conf
- 
+
      # Move the cursor to top left of console to redraw
      tput cup 0 0
 @@ -1236,7 +1241,7 @@ if [[ $# = 0 ]]; then
- 
+
    # Get Our Config Values
    # shellcheck disable=SC1091
 -  . /etc/pihole/setupVars.conf
 +  . /var/lib/pihole/setupVars.conf
- 
+
    SizeChecker
- 
--- 
+
+--
 2.34.1
 
