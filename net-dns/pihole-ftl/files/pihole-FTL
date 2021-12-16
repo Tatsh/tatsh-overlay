@@ -10,6 +10,7 @@ required_files="${PIFTL_CONF}"
 depend() {
 	need localmount
 	use net
+	provide dns
 }
 
 start_pre() {
@@ -24,15 +25,17 @@ start_pre() {
 		/run/pihole/FTL.port \
 		/var/log/pihole-FTL.log \
 		/var/log/pihole.log \
-		/var/lib/pihole/dhcp.leases \
-		/var/lib/pihole/pihole-FTL.db \
+		/var/lib/pihole/dhcp.leases
+	chown -f "$command_user" \
 		/var/lib/pihole/gravity.db \
-		/var/lib/pihole/macvendor.db
+		/var/lib/pihole/pihole-FTL.db || ewarn "gravity.db or pihole-FTL.db is not properly installed"
+	chown -f "$command_user" \
+		/var/lib/pihole/macvendor.db || ewarn "macvendor.db file is not properly installed"
 	# Prepare database file permissions so that the pihole group (web
 	# interface) can edit the file.
 	checkpath -m 0664 -f \
-		/var/lib/pihole/pihole-FTL.db \
-		/var/lib/pihole/gravity.db
+		/var/lib/pihole/gravity.db \
+		/var/lib/pihole/pihole-FTL.db || ewarn "gravity.db or pihole-FTL.db is not properly installed"
 }
 
 stop_post() {
@@ -41,12 +44,14 @@ stop_post() {
 
 start() {
 	ebegin "Starting $RC_SVCNAME"
-	start-stop-daemon --start --exec "$PIFTL_CMD" --pidfile "$PIFTL_PID"
+	start-stop-daemon --start --exec "$PIFTL_CMD" --pidfile "$PIFTL_PID" \
+		--user pihole --group pihole
 	eend $?
 }
 
 stop() {
 	ebegin "Stopping $RC_SVCNAME"
-	start-stop-daemon --stop --exec "$PIFTL_CMD" --pidfile "$PIFTL_PID"
+	start-stop-daemon --stop --exec "$PIFTL_CMD" --pidfile "$PIFTL_PID" \
+		--user pihole --group pihole
 	eend $?
 }
