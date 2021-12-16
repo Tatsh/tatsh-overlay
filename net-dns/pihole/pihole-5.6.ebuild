@@ -71,6 +71,9 @@ src_install() {
 	insinto /usr/$(get_libdir)/${PN}/Templates
 	doins -r advanced/Templates/*
 
+	insinto /etc
+	echo "conf-dir=${EPREFIX}/etc/pihole/dnsmasq.d" > dnsmasq.conf
+	doins dnsmasq.conf
 	insinto /etc/${PN}/dnsmasq.d
 	doins advanced/01-${PN}.conf advanced/06-rfc6761.conf
 
