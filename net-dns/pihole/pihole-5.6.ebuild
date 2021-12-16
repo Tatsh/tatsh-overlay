@@ -27,6 +27,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0002-path-changes-03.patch"
 	"${FILESDIR}/${PN}-0003-logrotate-add-missingok-fix-paths.patch"
 	"${FILESDIR}/${PN}-0004-more-path-fixes.patch"
+	"${FILESDIR}/${PN}-0005-add-rc-service-to-restartdns.patch"
+	"${FILESDIR}/${PN}-0006-advanced-scripts-piholelogflush-change-statefile.patch"
 )
 
 src_prepare() {
