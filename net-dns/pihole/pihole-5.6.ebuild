@@ -44,6 +44,7 @@ src_prepare() {
 			advanced/Templates/${PN}.cron \
 			advanced/index.php \
 			advanced/01-${PN}.conf \
+			advanced/06-rfc6761.conf \
 			advanced/Templates/gravity_copy.sql \
 			advanced/Templates/${PN}-FTL.service \
 			manpages/${PN}-FTL.conf.5 \
@@ -69,7 +70,7 @@ src_install() {
 	doins -r advanced/Templates/*
 
 	insinto /etc/${PN}/dnsmasq.d
-	doins advanced/01-${PN}.conf
+	doins advanced/01-${PN}.conf advanced/06-rfc6761.conf
 
 	dobashcomp advanced/bash-completion/${PN}
 
