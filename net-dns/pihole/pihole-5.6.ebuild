@@ -94,8 +94,12 @@ src_install() {
 	# make sure the working directory exists
 	diropts -m0755
 	keepdir /var/lib/${PN}
+
 	insinto /var/lib/${PN}
 	doins "${FILESDIR}/setupVars.conf"
+
+	echo "CONFIG_PROTECT=\"${EPREFIX}/var/lib/${PN}\"" > "${T}/90-${PN}"
+	doenvd "${T}/90-${PN}"
 }
 
 # pkg_config() {
