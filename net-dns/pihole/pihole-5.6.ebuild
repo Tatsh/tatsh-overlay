@@ -29,6 +29,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0004-more-path-fixes.patch"
 	"${FILESDIR}/${PN}-0005-add-rc-service-to-restartdns.patch"
 	"${FILESDIR}/${PN}-0006-advanced-scripts-piholelogflush-change-statefile.patch"
+	"${FILESDIR}/${PN}-0007-fix-chrono.patch"
 )
 
 src_prepare() {

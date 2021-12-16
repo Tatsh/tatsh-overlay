@@ -1,0 +1,25 @@
+From 0a6c38c41b8c61794cd3b6e0b9325b3024ed9f9c Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Thu, 16 Dec 2021 16:36:12 -0500
+Subject: [PATCH] fix chrono
+
+---
+ advanced/Scripts/chronometer.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/advanced/Scripts/chronometer.sh b/advanced/Scripts/chronometer.sh
+index 2198dca0..0a03bfc5 100755
+--- a/advanced/Scripts/chronometer.sh
++++ b/advanced/Scripts/chronometer.sh
+@@ -14,7 +14,7 @@ LC_NUMERIC=C
+ # Retrieve stats from FTL engine
+ pihole-FTL() {
+     local ftl_port LINE
+-    ftl_port=$(cat @EPREFIX@/run/pihole-FTL.port 2> /dev/null)
++    ftl_port=$(cat @EPREFIX@/run/pihole/FTL.port 2> /dev/null)
+     if [[ -n "$ftl_port" ]]; then
+         # Open connection to FTL
+         exec 3<>"/dev/tcp/127.0.0.1/$ftl_port"
+-- 
+2.34.1
+
