@@ -102,19 +102,18 @@ src_install() {
 	doenvd "${T}/90${PN}"
 }
 
-# pkg_config() {
-# 	if ! [ -d /var/lib/${PN} ]; then
-		# if ! [ -f /etc/${PN}/setupVars.conf ]; then
-		# fi
-		# Questions:
-		# - Do you want to log queries? QUERY_LOGGING=true/false
-		# - Select a privacy mode: https://github.com/pi-hole/pi-hole/blob/master/automated%20install/basic-install.sh#L1210
-		#   PRIVACY_LEVEL=0/1/2/3
-		# - ${PN}_DNS_1 and ${PN}_DNS_2
-		#   https://github.com/pi-hole/pi-hole/blob/master/automated%20install/basic-install.sh#L1107
-		# - Select protocols https://github.com/pi-hole/pi-hole/blob/master/automated%20install/basic-install.sh#L820
-		# - Select interface ${PN}_INTERFACE
-		# - CACHE_SIZE int, default 10000
-# 		/usr/libexec/${PN}/gravity.sh --force
-# 	fi
-# }
+pkg_preinst() {
+	local -r macvendor_uri="https://ftl.pi-hole.net/macvendor.db"
+	ebegin 'Downloading macvendor.db file'
+	wget "$macvendor_uri" -O "${D}/var/lib/${PN}/macvendor.db"
+	eend $? 'Downloading macvendor.db failed'
+	local -r gravity_sql="${D}/usr/$(get_libdir)/pihole/Templates/gravity.db.sql"
+	if ! [ -f "${ROOT}/var/lib/${PN}/gravity.db" ]; then
+		sqlite3 "${D}/var/lib/${PN}/gravity.db" < "${gravity_sql}"
+		eend $? 'Preparation of gravity.db failed'
+	fi
+}
+
+pkg_postrm() {
+	rm -f "${ROOT}/var/lib/${PN}/macvendor.db"
+}
