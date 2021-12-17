@@ -113,7 +113,8 @@ pkg_preinst() {
 	eend $? 'Downloading macvendor.db failed'
 	local -r gravity_sql="${D}/usr/$(get_libdir)/pihole/Templates/gravity.db.sql"
 	if ! [ -f "${ROOT}/var/lib/${PN}/gravity.db" ]; then
-		sqlite3 "${D}/var/lib/${PN}/gravity.db" < "${gravity_sql}"
+		ebegin 'Preparing gravity.db'
+		pihole-FTL sqlite3 "${D}/var/lib/${PN}/gravity.db" < "${gravity_sql}"
 		eend $? 'Preparation of gravity.db failed'
 	fi
 }
