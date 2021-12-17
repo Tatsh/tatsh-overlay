@@ -1,16 +1,20 @@
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index a76a3d800..814d654c9 100644
+index 64d1e6aec..a53961a47 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -59,8 +59,9 @@ if (YUZU_USE_EXTERNAL_SDL2)
-         # Yuzu itself needs: Events Joystick Haptic Sensor Timers Audio
+@@ -52,11 +52,12 @@ endif()
+ # SDL2
+ if (YUZU_USE_EXTERNAL_SDL2)
+     if (NOT WIN32)
+-        # Yuzu itself needs: Events Joystick Haptic Sensor Timers Audio
++        # Yuzu itself needs: Events Joystick Haptic Sensor Timers Audio Threads Atomic
++        # Since 2.0.18 Threads/Atomic required for HIDAPI/libusb (see https://github.com/libsdl-org/SDL/issues/5095)
          # Yuzu-cmd also needs: Video (depends on Loadso/Dlopen)
          set(SDL_UNUSED_SUBSYSTEMS
 -            Atomic Render Power Threads
 -            File CPUinfo Filesystem Locale)
-+            Render Power
-+            File CPUinfo Filesystem Locale
-+            Wayland)
++            Render Power File
++            CPUinfo Filesystem Locale)
          foreach(_SUB ${SDL_UNUSED_SUBSYSTEMS})
            string(TOUPPER ${_SUB} _OPT)
            option(SDL_${_OPT} "" OFF)
