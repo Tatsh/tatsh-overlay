@@ -115,6 +115,12 @@ pkg_preinst() {
 	ebegin 'Downloading macvendor.db file'
 	wget "$macvendor_uri" -O "${D}/var/lib/${PN}/macvendor.db"
 	eend $? 'Downloading macvendor.db failed'
+	cat > "${PN}-update-macvendor-db" <<EOF
+#!/bin/sh
+wget ${macvendor_uri} -O ${ROOT}/var/lib/${PN}/macvendor.db
+EOF
+	exeinto /etc/cron.monthly
+	doexe "${PN}-update-macvendor-db"
 	local -r gravity_sql="${D}/usr/$(get_libdir)/pihole/Templates/gravity.db.sql"
 	if ! [ -f "${ROOT}/var/lib/${PN}/gravity.db" ]; then
 		ebegin 'Preparing gravity.db'
