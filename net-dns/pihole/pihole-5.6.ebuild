@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit bash-completion-r1
+inherit bash-completion-r1 systemd
 
 DESCRIPTION="Network-wide ad blocking (core)."
 HOMEPAGE="https://pi-hole.net/"
@@ -104,6 +104,10 @@ src_install() {
 
 	echo "CONFIG_PROTECT=\"${EPREFIX}/var/lib/${PN}\"" > "${T}/90${PN}"
 	doenvd "${T}/90${PN}"
+
+	systemd_dounit \
+		"${FILESDIR}/${PN}-update-gravity-db."* \
+		"${FILESDIR}/${PN}-update-macvendor-db."*
 }
 
 pkg_preinst() {

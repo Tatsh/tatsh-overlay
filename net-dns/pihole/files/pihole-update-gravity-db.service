@@ -1,0 +1,11 @@
+[Unit]
+Description=Update gravity.db
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/pihole updateGravity
+
+[Install]
+WantedBy=multi-user.target

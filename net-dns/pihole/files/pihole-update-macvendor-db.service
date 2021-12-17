@@ -1,0 +1,11 @@
+[Unit]
+Description=Update macvendor.db
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/wget https://ftl.pi-hole.net/macvendor.db -O /var/lib/pihole/macvendor.db
+
+[Install]
+WantedBy=multi-user.target
