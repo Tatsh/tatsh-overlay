@@ -311,7 +311,4 @@ src_install() {
 	make_desktop_entry "/usr/$(get_libdir)/${PN}/${MY_PN}" "${MY_PN}" "${PN}"
 	exeinto "/usr/$(get_libdir)/${PN}"
 	doexe "${MY_PN}"
-	# Don't use bundled versions
-	dosym "${EPREFIX}/usr/$(get_libdir)/libSDL2.so" "/usr/$(get_libdir)/${PN}/libSDL2.so"
-	dosym "${EPREFIX}/usr/$(get_libdir)/libsoundio.so" "/usr/$(get_libdir)/${PN}/libsoundio.so"
 }
