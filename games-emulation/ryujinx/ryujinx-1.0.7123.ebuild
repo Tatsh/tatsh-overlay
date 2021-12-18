@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit desktop multilib wrapper xdg
+inherit desktop multilib multiprocessing xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
@@ -236,7 +236,8 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/system.xml.xpath.xmldocument/4.3.0/system.xml.xpath.xmldocument.4.3.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.xml.xpath/4.3.0/system.xml.xpath.4.3.0.nupkg"
 
-BDEPEND="virtual/dotnet-sdk:6.0"
+NET_SLOT="6.0"
+BDEPEND="virtual/dotnet-sdk:${NET_SLOT}"
 DEPEND="app-crypt/mit-krb5
 	sys-libs/zlib"
 # FIXME Make SoundIO and OpenAL optional
@@ -277,38 +278,33 @@ src_prepare() {
 		NO_COLOR=1 \
 		DOTNET_NOLOGO=1 \
 		MSBUILDDISABLENODEREUSE=1
-	# FIXME Remove the sed command when NO_COLOR works
-	{ dotnet restore \
+	dotnet restore \
+		-maxcpucount:$(makeopts_jobs) \
 		--runtime linux-x64 \
-		--source "${DISTDIR}" || die; } |
-			sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"
+		--source "${DISTDIR}" || die
 }
 
 src_compile() {
-	addpredict /opt/dotnet-sdk-bin-6.0/metadata
+	addpredict /opt/dotnet-sdk-bin-${NET_SLOT}/metadata
 	export \
 		DOTNET_CLI_TELEMETRY_OPTOUT=1 \
-		NO_COLOR=1 \
 		DOTNET_NOLOGO=1 \
 		MSBUILDDISABLENODEREUSE=1
-	{ dotnet publish \
+	dotnet publish \
+		-maxcpucount:$(makeopts_jobs) \
 		--nologo \
 		--no-restore \
 		--configuration Release \
 		--runtime linux-x64 \
 		"-p:Version=${PV}" \
 		-p:DebugType=embedded \
-		--self-contained || die; } |
-			sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"
+		--self-contained || die
 }
 
 src_install() {
-	cd "${MY_PN}/bin/Release/net6.0/linux-x64/publish" || die
-	insinto "/usr/$(get_libdir)/${PN}"
-	doins ./*.config
-	make_wrapper "${MY_PN}" "/usr/$(get_libdir)/${PN}/${MY_PN}" "/usr/$(get_libdir)/${PN}" "/usr/$(get_libdir)/${PN}" /usr/bin
+	cd "${MY_PN}/bin/Release/net${NET_SLOT}/linux-x64/publish" || die
+	dobin "${MY_PN}"
 	newicon -s 32 "${FILESDIR}/${PN}-logo.png" "${PN}.png"
 	make_desktop_entry "/usr/$(get_libdir)/${PN}/${MY_PN}" "${MY_PN}" "${PN}"
-	exeinto "/usr/$(get_libdir)/${PN}"
-	doexe "${MY_PN}"
+	einstalldocs
 }
