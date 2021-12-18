@@ -65,6 +65,10 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0103-externals-cmakelists.patch"
 )
 
+pkg_setup() {
+	wget -O "${T}/compatibility_list.json" https://api.yuzu-emu.org/gamedb/ || die
+}
+
 src_prepare() {
 	rm .gitmodules || die
 	rmdir "${S}/externals/"{soundtouch,dynarmic,sirit,mbedtls,cpp-httplib,SDL} || die
@@ -77,7 +81,7 @@ src_prepare() {
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' -i src/common/CMakeLists.txt || die
 	sed -e '/enable_testing.*/d' -e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' -i externals/sirit/CMakeLists.txt || die
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
-	bunzip2 < "${FILESDIR}/${P}-compatibility_list.json.bz2" > "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
+	mv -f "${T}/compatibility_list.json" "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
 	cmake_src_prepare
 }
 
