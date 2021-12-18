@@ -275,9 +275,9 @@ src_prepare() {
 	default
 	export \
 		DOTNET_CLI_TELEMETRY_OPTOUT=1 \
-		NO_COLOR=1 \
 		DOTNET_NOLOGO=1 \
-		MSBUILDDISABLENODEREUSE=1
+		MSBUILDDISABLENODEREUSE=1 \
+		NO_COLOR=1
 	dotnet restore \
 		-maxcpucount:$(makeopts_jobs) \
 		--runtime linux-x64 \
@@ -289,7 +289,8 @@ src_compile() {
 	export \
 		DOTNET_CLI_TELEMETRY_OPTOUT=1 \
 		DOTNET_NOLOGO=1 \
-		MSBUILDDISABLENODEREUSE=1
+		MSBUILDDISABLENODEREUSE=1 \
+		NO_COLOR=1
 	dotnet publish \
 		-maxcpucount:$(makeopts_jobs) \
 		--nologo \
