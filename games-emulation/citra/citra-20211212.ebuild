@@ -52,6 +52,10 @@ PATCHES=(
 
 S="${WORKDIR}/${PN}-${SHA}"
 
+pkg_setup() {
+	wget -O "${T}/compatibility_list.json" https://api.citra-emu.org/gamedb/ || die
+}
+
 src_prepare() {
 	rmdir "${S}/externals/lodepng/lodepng" \
 		"${S}/externals/"{soundtouch,dynarmic,fmt,xbyak} || die
@@ -61,9 +65,7 @@ src_prepare() {
 	mv "${WORKDIR}/fmt-${FMT_SHA}" "${S}/externals/fmt" || die
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
 	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
-	# Get the compat list:
-	#   curl 'https://api.citra-emu.org/gamedb/' | jq -Me | bzip2 -9 > ...
-	bunzip2 -c "${FILESDIR}/${PN}-compatibility_list-${PV}.json.bz2" > "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
+	mv -f "${T}/compatibility_list.json" "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
 	sed -e 's|${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak|/usr/include/xbyak|' \
 		-i externals/dynarmic/externals/CMakeLists.txt || die
 	cmake_src_prepare
