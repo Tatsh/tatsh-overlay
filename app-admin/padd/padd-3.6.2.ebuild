@@ -22,14 +22,6 @@ PATCHES=(
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 
-src_prepare() {
-	default
-	sed -r -e \
-		"s|/etc/pihole/setupVars\.conf|${EPREFIX}/var/lib/pihole/setupVars.conf|g" \
-		-e "s|/sbin/ip|/bin/ip|g" \
-		-i "${PN}.sh" || die
-}
-
 src_install() {
 	newbin "${PN}.sh" "${PN}"
 }
