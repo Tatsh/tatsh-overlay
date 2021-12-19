@@ -79,7 +79,7 @@ src_install() {
 		patchelf --replace-needed libbz2.so.1.0 libbz2.so.1 \
 			libav{codec,format}.so.* || die "Failed to patch ELFs"
 	fi
-	make_wrapper "$PN" "${inst}/stepmania" "${inst}" "${inst}" /usr/bin
+	make_wrapper "$PN" "${inst}/OutFox" "${inst}" "${inst}" /usr/bin
 	insinto "$inst"
 	doins -r Announcers Appearance BackgroundEffects BackgroundTransitions \
 		BGAnimations Characters Courses Data Scripts Songs
