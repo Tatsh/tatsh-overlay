@@ -6,15 +6,17 @@ EAPI=7
 inherit desktop wrapper xdg
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
-HOMEPAGE="http://www.stepmania.com/"
+HOMEPAGE="https://projectoutfox.com/"
 
 UPPER_PN="${PN^^}"
 MY_PN="${UPPER_PN:10:1}${PN:11:2}${UPPER_PN:13:1}${PN:14}"
 MAIN_PV="${PV:0:5}"
-MY_PV="${PV:6:6}"
-SHARED_DATE="20211001"
-SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/OutFox-${MAIN_PV}-alpha-${MY_PV}-HF1-amd64-date-${SHARED_DATE}.tar.gz -> ${P}-amd64.tar.gz )
-	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${MY_PV}/OutFox-${MAIN_PV}-alpha-${MY_PV}-HF1-arm64v8-date-${SHARED_DATE}.tar.gz -> ${P}-arm64.tar.gz )"
+MY_PV="${PV:6:4}"
+ALT_PV="${PV:6:6}"
+SHARED_DATE="20211212"
+ARM64_DATE="20211215"
+SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${ALT_PV}/OutFox-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}.tar.gz -> ${P}-amd64.tar.gz )
+	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${ALT_PV}/OutFox-${MAIN_PV}-alpha-${ALT_PV}-arm64v8-date-${ARM64_DATE}.tar.gz -> ${P}-arm64.tar.gz )"
 
 LICENSE="MIT"
 SLOT="0"
@@ -45,6 +47,8 @@ src_prepare() {
 		cd "${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}" || die
 	elif use arm64; then
 		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}" || die
+	else
+		die 'Unsupported architecture'
 	fi
 	einfo 'Removing useless instructions.txt files ...'
 	find . -type f -iname 'instructions.txt' -exec rm -f {} \;
@@ -64,12 +68,14 @@ src_install() {
 	if use amd64; then
 		cd "${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}" || die
 	elif use arm64; then
-		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}" || die
+		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${ARM64_DATE}" || die
+	else
+		die 'Unsupported architecture'
 	fi
 	local inst="${EPREFIX}/opt/${PN}"
 	if ! use arm; then
 		patchelf --set-rpath "\$ORIGIN:${EPREFIX}/lib64:${EPREIFX}/usr/lib64" \
-			stepmania || die 'Failed to patch ELFs'
+			OutFox || die 'Failed to patch ELFs'
 		patchelf --replace-needed libbz2.so.1.0 libbz2.so.1 \
 			libav{codec,format}.so.* || die "Failed to patch ELFs"
 	fi
@@ -80,7 +86,7 @@ src_install() {
 	! use bundled-songs && keepdir "${inst}/Songs"
 	! use bundled-courses && keepdir "${inst}/Courses"
 	exeinto "${inst}"
-	doexe stepmania *.so*
+	doexe OutFox *.so*
 	use doc && dodoc -r Docs/*
 	newicon "Appearance/Themes/default/Graphics/Common window icon.png" \
 		${PN}.png
