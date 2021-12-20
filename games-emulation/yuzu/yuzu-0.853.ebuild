@@ -57,7 +57,6 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-Allow-use-of-system-Opus-and-inih.patch"
 	"${FILESDIR}/${PN}-0003-fix-INIReader.h-includes.patch"
-	"${FILESDIR}/${PN}-0004-minimalise-finding-Boost-components.patch"
 	"${FILESDIR}/${PN}-0006-Allow-system-cubeb.patch"
 	"${FILESDIR}/${PN}-0100-unbundle-xbyak.patch"
 	"${FILESDIR}/${PN}-0101-mime-type.patch"
