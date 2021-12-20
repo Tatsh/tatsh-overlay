@@ -23,18 +23,18 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/gtksharp.dependencies/1.1.0/gtksharp.dependencies.1.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/gtksharp/3.22.25.128/gtksharp.3.22.25.128.nupkg
 	https://api.nuget.org/v3-flatcontainer/libhac/0.13.3/libhac.0.13.3.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-x64/6.0.0/microsoft.aspnetcore.app.runtime.linux-x64.6.0.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.osx-x64/6.0.0/microsoft.aspnetcore.app.runtime.osx-x64.6.0.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.win-x64/6.0.0/microsoft.aspnetcore.app.runtime.win-x64.6.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-x64/6.0.1/microsoft.aspnetcore.app.runtime.linux-x64.6.0.1.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.osx-x64/6.0.1/microsoft.aspnetcore.app.runtime.osx-x64.6.0.1.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.win-x64/6.0.1/microsoft.aspnetcore.app.runtime.win-x64.6.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.codecoverage/16.8.0/microsoft.codecoverage.16.8.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.csharp/4.0.1/microsoft.csharp.4.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.dotnet.internalabstractions/1.0.0/microsoft.dotnet.internalabstractions.1.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.net.test.sdk/16.8.0/microsoft.net.test.sdk.16.8.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.osx-x64/6.0.0/microsoft.netcore.app.host.osx-x64.6.0.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.win-x64/6.0.0/microsoft.netcore.app.host.win-x64.6.0.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-x64/6.0.0/microsoft.netcore.app.runtime.linux-x64.6.0.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.osx-x64/6.0.0/microsoft.netcore.app.runtime.osx-x64.6.0.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.win-x64/6.0.0/microsoft.netcore.app.runtime.win-x64.6.0.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.osx-x64/6.0.1/microsoft.netcore.app.host.osx-x64.6.0.1.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.win-x64/6.0.1/microsoft.netcore.app.host.win-x64.6.0.1.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-x64/6.0.1/microsoft.netcore.app.runtime.linux-x64.6.0.1.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.osx-x64/6.0.1/microsoft.netcore.app.runtime.osx-x64.6.0.1.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.win-x64/6.0.1/microsoft.netcore.app.runtime.win-x64.6.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.platforms/1.0.1/microsoft.netcore.platforms.1.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.netcore.platforms/2.0.0/microsoft.netcore.platforms.2.0.0.nupkg
