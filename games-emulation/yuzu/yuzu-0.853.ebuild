@@ -56,9 +56,6 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-Allow-use-of-system-Opus-and-inih.patch"
-	"${FILESDIR}/${PN}-0003-fix-INIReader.h-includes.patch"
-	"${FILESDIR}/${PN}-0006-Allow-system-cubeb.patch"
-	"${FILESDIR}/${PN}-0100-unbundle-xbyak.patch"
 	"${FILESDIR}/${PN}-0101-mime-type.patch"
 	"${FILESDIR}/${PN}-0102-inject-git-info.patch"
 )
@@ -98,6 +95,7 @@ src_configure() {
 		-DUSE_SYSTEM_CUBEB=$(usex cubeb)
 		-DUSE_SYSTEM_INIH=ON
 		-DUSE_SYSTEM_OPUS=ON
+		-DUSE_SYSTEM_XBYAK=ON
 		-DYUZU_USE_EXTERNAL_SDL2=ON
 		-DYUZU_ENABLE_COMPATIBILITY_REPORTING=ON
 		-DYUZU_USE_BUNDLED_BOOST=OFF

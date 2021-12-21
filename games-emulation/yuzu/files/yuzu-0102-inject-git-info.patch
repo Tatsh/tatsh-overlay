@@ -1,25 +1,42 @@
+From e305564e09b7454145edfcbc54c1a8deed8d778f Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 20 Dec 2021 18:42:02 -0500
+Subject: [PATCH 1/3] Allow overriding SCM version info
+
+---
+ CMakeModules/GenerateSCMRev.cmake | 12 +++++++++---
+ src/common/CMakeLists.txt         |  5 +++++
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+
 diff --git a/CMakeModules/GenerateSCMRev.cmake b/CMakeModules/GenerateSCMRev.cmake
-index 311ba1c2e..79315b198 100644
+index 43ca730ec..c7da2b91d 100644
 --- a/CMakeModules/GenerateSCMRev.cmake
 +++ b/CMakeModules/GenerateSCMRev.cmake
-@@ -11,9 +11,9 @@ find_package(Git QUIET PATHS "${GIT_EXECUTABLE}")
+@@ -11,9 +11,15 @@ find_package(Git QUIET PATHS "${GIT_EXECUTABLE}")
  
  # generate git/build information
  include(GetGitRevisionDescription)
 -get_git_head_revision(GIT_REF_SPEC GIT_REV)
 -git_describe(GIT_DESC --always --long --dirty)
 -git_branch_name(GIT_BRANCH)
-+#get_git_head_revision(GIT_REF_SPEC GIT_REV)
-+#git_describe(GIT_DESC --always --long --dirty)
-+#git_branch_name(GIT_BRANCH)
++if(NOT GIT_REF_SPEC)
++    get_git_head_revision(GIT_REF_SPEC GIT_REV)
++endif()
++if(NOT GIT_DESC)
++    git_describe(GIT_DESC --always --long --dirty)
++endif()
++if (NOT GIT_BRANCH)
++  git_branch_name(GIT_BRANCH)
++endif()
  get_timestamp(BUILD_DATE)
  
  # Generate cpp with Git revision from template
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index d120c8d3d..bf3dcdbf6 100644
+index 919da4a53..790193b00 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
-@@ -28,6 +28,11 @@ add_custom_command(OUTPUT scm_rev.cpp
+@@ -22,6 +22,11 @@ add_custom_command(OUTPUT scm_rev.cpp
+       -DTITLE_BAR_FORMAT_RUNNING=${TITLE_BAR_FORMAT_RUNNING}
        -DBUILD_TAG=${BUILD_TAG}
        -DBUILD_ID=${DISPLAY_VERSION}
 +      -DGIT_REF_SPEC=${GIT_REF_SPEC}
@@ -30,4 +47,6 @@ index d120c8d3d..bf3dcdbf6 100644
        -DGIT_EXECUTABLE=${GIT_EXECUTABLE}
        -P ${CMAKE_SOURCE_DIR}/CMakeModules/GenerateSCMRev.cmake
      DEPENDS
-       # WARNING! It was too much work to try and make a common location for this list,
+-- 
+2.34.1
+

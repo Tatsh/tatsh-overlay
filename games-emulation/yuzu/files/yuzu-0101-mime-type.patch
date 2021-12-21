@@ -1,5 +1,15 @@
+From 20dc7b71185f3b730996b443300d69e31b11218d Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 20 Dec 2021 18:42:33 -0500
+Subject: [PATCH 2/3] Linux: add more file associations
+
+---
+ dist/yuzu.desktop |  2 +-
+ dist/yuzu.xml     | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
+
 diff --git a/dist/yuzu.desktop b/dist/yuzu.desktop
-index c614a4c08..8f09d1bd3 100644
+index 105080c73..6cc0704d2 100644
 --- a/dist/yuzu.desktop
 +++ b/dist/yuzu.desktop
 @@ -8,5 +8,5 @@ Icon=yuzu
@@ -35,3 +45,6 @@ index f6e408321..dd1e30a6b 100644
 +    </mime-type>
  </mime-info>
 \ No newline at end of file
+-- 
+2.34.1
+
