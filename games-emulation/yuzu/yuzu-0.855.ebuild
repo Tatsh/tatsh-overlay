@@ -58,7 +58,6 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 PATCHES=(
 	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
 	"${FILESDIR}/${PN}-7610-unbundle-opus.patch"
-	"${FILESDIR}/${PN}-0101-mime-type.patch"
 	"${FILESDIR}/${PN}-0102-inject-git-info.patch"
 )
 
