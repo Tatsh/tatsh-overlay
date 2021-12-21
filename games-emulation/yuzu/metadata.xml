@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<use>
+		<flag name="cubeb">Build with cubeb audio backend</flag>
 		<flag name="compatibility-reporting">Enable compatibility reporting</flag>
 		<flag name="web-service">Enable web-services</flag>
 	</use>

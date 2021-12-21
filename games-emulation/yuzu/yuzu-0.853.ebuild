@@ -24,13 +24,13 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+compatibility-reporting +web-service"
+IUSE="+compatibility-reporting +cubeb +web-service"
 REQUIRED_USE="compatibility-reporting? ( web-service )"
 
 DEPEND="app-arch/lz4
 	>=app-arch/zstd-1.5.0
 	dev-libs/boost:=[context]
-	dev-libs/cubeb
+	cubeb? ( dev-libs/cubeb )
 	dev-libs/inih
 	>=dev-libs/libfmt-8.0.0
 	dev-libs/libzip
@@ -87,7 +87,7 @@ src_configure() {
 		-DBUILD_SHARED_LIBS=OFF
 		-DCONAN_REQUIRED_LIBS=OFF
 		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=OFF
-		-DENABLE_CUBEB=ON
+		-DENABLE_CUBEB=$(usex cubeb)
 		-DENABLE_WEB_SERVICE=$(usex web-service)
 		-DGIT_BRANCH="${PN}"
 		-DGIT_DESC="${PV}"
