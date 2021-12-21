@@ -1,0 +1,127 @@
+From b7712ad0174ef6299d75ab9e001a29a02d6ac70a Mon Sep 17 00:00:00 2001
+From: Alexandre Bouvier <contact@amb.tf>
+Date: Fri, 20 Aug 2021 06:07:12 +0200
+Subject: [PATCH] cmake: Allow unbundling some external libraries
+
+Add option for:
+
+* cubeb
+* inih
+* xbyak
+---
+ CMakeLists.txt                | 36 +++++++++++++++++++++++++++++++++++
+ externals/CMakeLists.txt      |  8 +++++---
+ externals/inih/CMakeLists.txt |  2 +-
+ src/yuzu_cmd/config.cpp       |  2 +-
+ 4 files changed, 43 insertions(+), 5 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0e064ab4452..57c7292c849 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -27,6 +27,12 @@ option(YUZU_USE_BUNDLED_LIBUSB "Compile bundled libusb" OFF)
+ 
+ option(YUZU_USE_BUNDLED_FFMPEG "Download/Build bundled FFmpeg" "${WIN32}")
+ 
++option(YUZU_USE_BUNDLED_XBYAK "Compile bundled xbyak" ON)
++
++option(YUZU_USE_BUNDLED_INIH "Compile bundled inih" ON)
++
++option(YUZU_USE_BUNDLED_CUBEB "Compile bundled cubeb" ON)
++
+ option(YUZU_USE_QT_WEB_ENGINE "Use QtWebEngine for web applet implementation" OFF)
+ 
+ option(YUZU_ENABLE_BOXCAT "Enable the Boxcat service, a yuzu high-level implementation of BCAT" ON)
+@@ -691,6 +697,36 @@ unset(FFmpeg_COMPONENTS)
+ set(THREADS_PREFER_PTHREAD_FLAG ON)
+ find_package(Threads REQUIRED)
+ 
++if (NOT YUZU_USE_BUNDLED_XBYAK)
++    find_package(xbyak QUIET)
++    if (xbyak_FOUND)
++        add_library(xbyak ALIAS xbyak::xbyak)
++    else()
++        message(STATUS "xbyak not found, falling back to externals")
++    endif()
++endif()
++
++if (NOT YUZU_USE_BUNDLED_INIH)
++    find_package(PkgConfig QUIET)
++    if (PKG_CONFIG_FOUND)
++        pkg_check_modules(inih QUIET IMPORTED_TARGET INIReader)
++    endif()
++    if (inih_FOUND)
++        add_library(inih ALIAS PkgConfig::inih)
++    else()
++        message(STATUS "inih not found, falling back to externals")
++    endif()
++endif()
++
++if (ENABLE_CUBEB AND NOT YUZU_USE_BUNDLED_CUBEB)
++    find_package(cubeb QUIET)
++    if (cubeb_FOUND)
++        add_library(cubeb ALIAS cubeb::cubeb)
++    else()
++        message(STATUS "cubeb not found, falling back to externals")
++    endif()
++endif()
++
+ # Platform-specific library requirements
+ # ======================================
+ 
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index 0c2c059a980..5235dcf53cc 100644
+--- a/externals/CMakeLists.txt
++++ b/externals/CMakeLists.txt
+@@ -5,7 +5,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
+ include(DownloadExternals)
+ 
+ # xbyak
+-if (ARCHITECTURE_x86 OR ARCHITECTURE_x86_64)
++if ((ARCHITECTURE_x86 OR ARCHITECTURE_x86_64) AND NOT TARGET xbyak)
+     add_library(xbyak INTERFACE)
+     file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
+     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
+@@ -34,7 +34,9 @@ endif()
+ add_subdirectory(glad)
+ 
+ # inih
+-add_subdirectory(inih)
++if (NOT TARGET inih)
++    add_subdirectory(inih)
++endif()
+ 
+ # mbedtls
+ add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
+@@ -79,7 +81,7 @@ endif()
+ add_subdirectory(soundtouch)
+ 
+ # Cubeb
+-if(ENABLE_CUBEB)
++if (ENABLE_CUBEB AND NOT TARGET cubeb)
+     set(BUILD_TESTS OFF CACHE BOOL "")
+     add_subdirectory(cubeb EXCLUDE_FROM_ALL)
+ endif()
+diff --git a/externals/inih/CMakeLists.txt b/externals/inih/CMakeLists.txt
+index 2a75852c211..275f17434a0 100644
+--- a/externals/inih/CMakeLists.txt
++++ b/externals/inih/CMakeLists.txt
+@@ -6,4 +6,4 @@ add_library(inih
+ )
+ 
+ create_target_directory_groups(inih)
+-target_include_directories(inih INTERFACE .)
++target_include_directories(inih INTERFACE inih/cpp)
+diff --git a/src/yuzu_cmd/config.cpp b/src/yuzu_cmd/config.cpp
+index 4f14be524c8..3c4d89e82d9 100644
+--- a/src/yuzu_cmd/config.cpp
++++ b/src/yuzu_cmd/config.cpp
+@@ -15,7 +15,7 @@
+ #pragma clang diagnostic pop
+ #endif
+ 
+-#include <inih/cpp/INIReader.h>
++#include <INIReader.h>
+ #include "common/fs/file.h"
+ #include "common/fs/fs.h"
+ #include "common/fs/path_util.h"

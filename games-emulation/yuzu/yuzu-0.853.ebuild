@@ -56,7 +56,8 @@ BDEPEND=">=dev-cpp/catch-2.13.7
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-Allow-use-of-system-Opus-and-inih.patch"
+	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
+	"${FILESDIR}/${PN}-7610-unbundle-opus.patch"
 	"${FILESDIR}/${PN}-0101-mime-type.patch"
 	"${FILESDIR}/${PN}-0102-inject-git-info.patch"
 )
@@ -93,13 +94,13 @@ src_configure() {
 		-DGIT_DESC="${PV}"
 		-DGIT_REV="${PV}"
 		-DUSE_DISCORD_PRESENCE=OFF
-		-DUSE_SYSTEM_CUBEB=ON
-		-DUSE_SYSTEM_INIH=ON
-		-DUSE_SYSTEM_OPUS=ON
-		-DUSE_SYSTEM_XBYAK=ON
 		-DYUZU_USE_EXTERNAL_SDL2=ON
 		-DYUZU_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)
 		-DYUZU_USE_BUNDLED_BOOST=OFF
+		-DYUZU_USE_BUNDLED_CUBEB=OFF
+		-DYUZU_USE_BUNDLED_INIH=OFF
+		-DYUZU_USE_BUNDLED_OPUS=oFF
+		-DYUZU_USE_BUNDLED_XBYAK=OFF
 		-DYUZU_USE_QT_WEB_ENGINE=ON
 		-Wno-dev
 	)
