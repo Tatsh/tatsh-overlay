@@ -1,7 +1,7 @@
-From 4464ba6f7a87f8a02dcd4a53b3df91021dfa0adf Mon Sep 17 00:00:00 2001
+From f095e380f51633ee5f1a6537c0c92845c569e61c Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
-Date: Mon, 20 Dec 2021 19:01:39 -0500
-Subject: [PATCH 3/3] Add more support for system libs
+Date: Mon, 20 Dec 2021 19:20:26 -0500
+Subject: [PATCH] Add support for system libs
 
 * opus
 * inih
@@ -9,14 +9,13 @@ Subject: [PATCH 3/3] Add more support for system libs
 * xbyak
 ---
  CMakeLists.txt              |  5 +++++
- externals/CMakeLists.txt    | 29 +++++++++++++++++++++--------
- src/core/CMakeLists.txt     |  5 +++++
+ externals/CMakeLists.txt    | 30 ++++++++++++++++++++++--------
  src/yuzu_cmd/CMakeLists.txt |  5 +++++
  src/yuzu_cmd/config.cpp     |  2 +-
- 5 files changed, 37 insertions(+), 9 deletions(-)
+ 4 files changed, 33 insertions(+), 9 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 18d553f4d..dbf22e597 100644
+index a810e11c2..acbfaf2fa 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -33,6 +33,11 @@ option(ENABLE_CUBEB "Enables the cubeb audio backend" ON)
@@ -32,7 +31,7 @@ index 18d553f4d..dbf22e597 100644
  get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
  if (NOT IS_MULTI_CONFIG AND NOT CMAKE_BUILD_TYPE)
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index e9095b123..70221746b 100644
+index 64d1e6aec..eb2bb1528 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -1,4 +1,5 @@
@@ -41,14 +40,15 @@ index e9095b123..70221746b 100644
  
  list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules")
  list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
-@@ -8,8 +9,12 @@ include(DownloadExternals)
+@@ -8,8 +9,13 @@ include(DownloadExternals)
  if (ARCHITECTURE_x86 OR ARCHITECTURE_x86_64)
      add_library(xbyak INTERFACE)
      file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
 -    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
 -    target_include_directories(xbyak SYSTEM INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
 +    if (USE_SYSTEM_XBYAK)
-+        target_include_directories(xbyak SYSTEM INTERFACE /usr/include/xbyak)
++        find_path(XBYAK_H_PATH xbyak.h PATH_SUFFIXES xbyak)
++        target_include_directories(xbyak SYSTEM INTERFACE ${XBYAK_H_PATH})
 +    else()
 +        file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
 +        target_include_directories(xbyak SYSTEM INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
@@ -56,7 +56,7 @@ index e9095b123..70221746b 100644
      target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
  endif()
  
-@@ -34,7 +39,11 @@ endif()
+@@ -34,7 +40,11 @@ endif()
  add_subdirectory(glad)
  
  # inih
@@ -69,7 +69,7 @@ index e9095b123..70221746b 100644
  
  # mbedtls
  add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
-@@ -77,8 +86,12 @@ add_subdirectory(soundtouch)
+@@ -76,8 +86,12 @@ add_subdirectory(soundtouch)
  
  # Cubeb
  if(ENABLE_CUBEB)
@@ -84,7 +84,7 @@ index e9095b123..70221746b 100644
  endif()
  
  # DiscordRPC
-@@ -117,10 +130,10 @@ if (ENABLE_WEB_SERVICE)
+@@ -116,8 +130,8 @@ if (ENABLE_WEB_SERVICE)
  endif()
  
  # Opus
@@ -96,21 +96,6 @@ index e9095b123..70221746b 100644
 +else()
 +    find_package(opus 1.3 REQUIRED)
  endif()
- 
- # FFMpeg
-diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index 49bed614a..557a861bf 100644
---- a/src/core/CMakeLists.txt
-+++ b/src/core/CMakeLists.txt
-@@ -721,3 +721,8 @@ if (ARCHITECTURE_x86_64)
-     )
-     target_link_libraries(core PRIVATE dynarmic)
- endif()
-+
-+if (USE_SYSTEM_OPUS)
-+    find_path(OPUS_H_PATH opus.h PATH_SUFFIXES opus)
-+    target_include_directories(core PUBLIC ${OPUS_H_PATH})
-+endif()
 diff --git a/src/yuzu_cmd/CMakeLists.txt b/src/yuzu_cmd/CMakeLists.txt
 index 74fc24972..db3d3bbe3 100644
 --- a/src/yuzu_cmd/CMakeLists.txt
