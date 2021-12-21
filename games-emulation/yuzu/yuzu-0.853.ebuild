@@ -24,7 +24,8 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+web-service"
+IUSE="+compatibility-reporting +web-service"
+REQUIRED_USE="compatibility-reporting? ( web-service )"
 
 DEPEND="app-arch/lz4
 	>=app-arch/zstd-1.5.0
@@ -97,7 +98,7 @@ src_configure() {
 		-DUSE_SYSTEM_OPUS=ON
 		-DUSE_SYSTEM_XBYAK=ON
 		-DYUZU_USE_EXTERNAL_SDL2=ON
-		-DYUZU_ENABLE_COMPATIBILITY_REPORTING=ON
+		-DYUZU_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)
 		-DYUZU_USE_BUNDLED_BOOST=OFF
 		-DYUZU_USE_QT_WEB_ENGINE=ON
 		-Wno-dev
