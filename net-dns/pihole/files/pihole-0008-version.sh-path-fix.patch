@@ -1,0 +1,25 @@
+From 583cfd468db723dd85cb8a205d5ab6544f9da039 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 24 Dec 2021 00:16:15 -0500
+Subject: [PATCH] version.sh path fix
+
+---
+ advanced/Scripts/version.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/advanced/Scripts/version.sh b/advanced/Scripts/version.sh
+index 8809b5fb..772d1886 100755
+--- a/advanced/Scripts/version.sh
++++ b/advanced/Scripts/version.sh
+@@ -15,7 +15,7 @@ WEBGITDIR="@EPREFIX@/var/www/localhost/htdocs/pihole-admin"
+ 
+ # Source the setupvars config file
+ # shellcheck disable=SC1091
+-source /etc/pihole/setupVars.conf
++source @EPREFIX@/var/lib/pihole/setupVars.conf
+ 
+ getLocalVersion() {
+     # FTL requires a different method
+-- 
+2.34.1
+
