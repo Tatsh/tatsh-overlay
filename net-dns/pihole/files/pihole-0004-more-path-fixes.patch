@@ -1,7 +1,7 @@
-From 7c73f46de64e35026ed94306cf7b83638d724d0f Mon Sep 17 00:00:00 2001
+From 7b5ed00bdb0ae7fedca6b963f16611b4e44dc775 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 07:24:10 -0500
-Subject: [PATCH] More path fixes
+Subject: [PATCH 4/7] More path fixes
 
 ---
  advanced/Scripts/list.sh | 2 +-
@@ -9,7 +9,7 @@ Subject: [PATCH] More path fixes
  2 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/advanced/Scripts/list.sh b/advanced/Scripts/list.sh
-index e0615c01..0d5e0f4f 100755
+index 9148bea8..b13e0f52 100755
 --- a/advanced/Scripts/list.sh
 +++ b/advanced/Scripts/list.sh
 @@ -11,7 +11,7 @@
@@ -22,10 +22,10 @@ index e0615c01..0d5e0f4f 100755
  # Source pihole-FTL from install script
  pihole_FTL="${piholeDir}/pihole-FTL.conf"
 diff --git a/pihole b/pihole
-index c27d068c..ac2531a4 100755
+index 3dab3f03..5c60998e 100755
 --- a/pihole
 +++ b/pihole
-@@ -252,7 +252,7 @@ Options:
+@@ -250,7 +250,7 @@ Options:
    elif [[ "${1}" == "off" ]]; then
      # Disable logging
      sed -i 's/^log-queries/#log-queries/' @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf
@@ -34,7 +34,7 @@ index c27d068c..ac2531a4 100755
      if [[ "${2}" != "noflush" ]]; then
        # Flush logs
        "${PI_HOLE_BIN_DIR}"/pihole -f
-@@ -262,7 +262,7 @@ Options:
+@@ -260,7 +260,7 @@ Options:
    elif [[ "${1}" == "on" ]]; then
      # Enable logging
      sed -i 's/^#log-queries/log-queries/' @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf
@@ -43,7 +43,7 @@ index c27d068c..ac2531a4 100755
      echo -e "  ${INFO} Enabling logging..."
      local str="Logging has been enabled!"
    else
-@@ -320,13 +320,13 @@ statusFunc() {
+@@ -318,13 +318,13 @@ statusFunc() {
    fi
  
    # Determine if Pi-hole's blocking is enabled

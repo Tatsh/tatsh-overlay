@@ -1,7 +1,7 @@
-From 491337c751f8ebbb0f4cb84555ca64dc3fcf0c0d Mon Sep 17 00:00:00 2001
+From e1f494fa652f71290a10f55437f6eac630976756 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:11 -0500
-Subject: [PATCH 1/2] cron: remove flush/updatechecker
+Subject: [PATCH 1/7] cron: remove flush/updatechecker
 
 ---
  advanced/Templates/pihole.cron | 17 +----------------
