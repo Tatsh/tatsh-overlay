@@ -6,7 +6,7 @@ inherit cmake flag-o-matic
 
 DESCRIPTION="A new generation, open-source graphics plugin for N64 emulators."
 HOMEPAGE="https://github.com/gonetz/GLideN64"
-SHA="506f263c131f43289cfdea7fd8bcb9760b45c220"
+SHA="8343fd05c9a01ce2d73f7e32bb8355036759a05b"
 SRC_URI="https://github.com/gonetz/GLideN64/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
