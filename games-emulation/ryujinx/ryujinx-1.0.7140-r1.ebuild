@@ -306,6 +306,6 @@ src_install() {
 	cd "${MY_PN}/bin/Release/net${NET_SLOT}/linux-x64/publish" || die
 	dobin "${MY_PN}"
 	newicon -s 32 "${FILESDIR}/${PN}-logo.png" "${PN}.png"
-	make_desktop_entry "/usr/$(get_libdir)/${PN}/${MY_PN}" "${MY_PN}" "${PN}"
+	make_desktop_entry "/usr/bin/${MY_PN}" "${MY_PN}" "${PN}"
 	einstalldocs
 }
