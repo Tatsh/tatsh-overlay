@@ -6,7 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<use>
-		<flag name="discord">Enable Discord support</flag>
 		<flag name="dynrec">Enable dynamic recompiler</flag>
 		<flag name="fluidsynth">Use media-sound/fluidsynth for MIDI emulation</flag>
 		<flag name="mt-32">Use media-libs/munt-mt32emu for MT-32 emulation</flag>

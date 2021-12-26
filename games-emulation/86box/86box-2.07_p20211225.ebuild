@@ -7,13 +7,13 @@ inherit cmake
 
 DESCRIPTION="Emulator of x86-based machines based on PCem."
 HOMEPAGE="https://github.com/86Box/86Box"
-SHA="bc90f993503fff74e7d0133b25e750ff7e4edcac"
+SHA="77c70f749aee0b0aa9dc5dad2e54126018ea958e"
 SRC_URI="https://github.com/86Box/86Box/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="discord +dynrec +fluidsynth mt-32 new-dynrec usb vramdump"
+IUSE="+dynrec +fluidsynth mt-32 new-dynrec usb vramdump"
 
 DEPEND="media-libs/alsa-lib
 	media-libs/freetype
@@ -28,7 +28,6 @@ S="${WORKDIR}/86Box-${SHA}"
 src_configure() {
 	local mycmakeargs=(
 		-DDEV_BRANCH=ON
-		-DDISCORD=$(usex discord)
 		-DDYNAREC=$(usex dynrec)
 		-DFLUIDSYNTH=$(usex fluidsynth)
 		-DMINITRACE=OFF
