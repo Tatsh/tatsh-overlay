@@ -1,0 +1,136 @@
+From 481b210c0d035d3de36dc7845802135d90d25a8b Mon Sep 17 00:00:00 2001
+From: ameerj <52414509+ameerj@users.noreply.github.com>
+Date: Thu, 23 Dec 2021 20:55:48 -0500
+Subject: [PATCH] vk_texture_cache: Fix invalidated pointer access
+
+The vulkan ImageView held a reference to its source image for rescale status checking. This pointer is sometimes invalidated when the texture cache slot_images container is resized.
+To avoid an invalid pointer dereference, the ImageView now holds a reference to the container itself.
+---
+ .../renderer_opengl/gl_texture_cache.cpp          |  2 +-
+ src/video_core/renderer_opengl/gl_texture_cache.h |  4 +++-
+ .../renderer_vulkan/vk_texture_cache.cpp          | 15 +++++++++++----
+ src/video_core/renderer_vulkan/vk_texture_cache.h |  5 ++++-
+ src/video_core/texture_cache/texture_cache.h      |  3 ++-
+ 5 files changed, 21 insertions(+), 8 deletions(-)
+
+diff --git a/src/video_core/renderer_opengl/gl_texture_cache.cpp b/src/video_core/renderer_opengl/gl_texture_cache.cpp
+index 14e6522f2e7..3c1f79a271b 100644
+--- a/src/video_core/renderer_opengl/gl_texture_cache.cpp
++++ b/src/video_core/renderer_opengl/gl_texture_cache.cpp
+@@ -1047,7 +1047,7 @@ bool Image::ScaleDown(bool ignore) {
+ }
+ 
+ ImageView::ImageView(TextureCacheRuntime& runtime, const VideoCommon::ImageViewInfo& info,
+-                     ImageId image_id_, Image& image)
++                     ImageId image_id_, Image& image, const SlotVector<Image>&)
+     : VideoCommon::ImageViewBase{info, image.info, image_id_}, views{runtime.null_image_views} {
+     const Device& device = runtime.device;
+     if (True(image.flags & ImageFlagBits::Converted)) {
+diff --git a/src/video_core/renderer_opengl/gl_texture_cache.h b/src/video_core/renderer_opengl/gl_texture_cache.h
+index dbf1df79cd9..7f425631f54 100644
+--- a/src/video_core/renderer_opengl/gl_texture_cache.h
++++ b/src/video_core/renderer_opengl/gl_texture_cache.h
+@@ -36,6 +36,7 @@ using VideoCommon::ImageViewType;
+ using VideoCommon::NUM_RT;
+ using VideoCommon::Region2D;
+ using VideoCommon::RenderTargets;
++using VideoCommon::SlotVector;
+ 
+ struct ImageBufferMap {
+     ~ImageBufferMap();
+@@ -234,7 +235,8 @@ class ImageView : public VideoCommon::ImageViewBase {
+     friend Image;
+ 
+ public:
+-    explicit ImageView(TextureCacheRuntime&, const VideoCommon::ImageViewInfo&, ImageId, Image&);
++    explicit ImageView(TextureCacheRuntime&, const VideoCommon::ImageViewInfo&, ImageId, Image&,
++                       const SlotVector<Image>&);
+     explicit ImageView(TextureCacheRuntime&, const VideoCommon::ImageInfo&,
+                        const VideoCommon::ImageViewInfo&, GPUVAddr);
+     explicit ImageView(TextureCacheRuntime&, const VideoCommon::ImageInfo& info,
+diff --git a/src/video_core/renderer_vulkan/vk_texture_cache.cpp b/src/video_core/renderer_vulkan/vk_texture_cache.cpp
+index 1941170cb39..c3050887cfa 100644
+--- a/src/video_core/renderer_vulkan/vk_texture_cache.cpp
++++ b/src/video_core/renderer_vulkan/vk_texture_cache.cpp
+@@ -1473,8 +1473,7 @@ bool Image::BlitScaleHelper(bool scale_up) {
+ ImageView::ImageView(TextureCacheRuntime& runtime, const VideoCommon::ImageViewInfo& info,
+                      ImageId image_id_, Image& image)
+     : VideoCommon::ImageViewBase{info, image.info, image_id_}, device{&runtime.device},
+-      src_image{&image}, image_handle{image.Handle()},
+-      samples(ConvertSampleCount(image.info.num_samples)) {
++      image_handle{image.Handle()}, samples(ConvertSampleCount(image.info.num_samples)) {
+     using Shader::TextureType;
+ 
+     const VkImageAspectFlags aspect_mask = ImageViewAspectMask(info);
+@@ -1557,6 +1556,12 @@ ImageView::ImageView(TextureCacheRuntime& runtime, const VideoCommon::ImageViewI
+     }
+ }
+ 
++ImageView::ImageView(TextureCacheRuntime& runtime, const VideoCommon::ImageViewInfo& info,
++                     ImageId image_id_, Image& image, const SlotVector<Image>& slot_imgs)
++    : ImageView{runtime, info, image_id_, image} {
++    slot_images = &slot_imgs;
++}
++
+ ImageView::ImageView(TextureCacheRuntime&, const VideoCommon::ImageInfo& info,
+                      const VideoCommon::ImageViewInfo& view_info, GPUVAddr gpu_addr_)
+     : VideoCommon::ImageViewBase{info, view_info}, gpu_addr{gpu_addr_},
+@@ -1613,10 +1618,12 @@ VkImageView ImageView::StorageView(Shader::TextureType texture_type,
+ }
+ 
+ bool ImageView::IsRescaled() const noexcept {
+-    if (!src_image) {
++    if (!slot_images) {
+         return false;
+     }
+-    return src_image->IsRescaled();
++    const auto& slots = *slot_images;
++    const auto& src_image = slots[image_id];
++    return src_image.IsRescaled();
+ }
+ 
+ vk::ImageView ImageView::MakeView(VkFormat vk_format, VkImageAspectFlags aspect_mask) {
+diff --git a/src/video_core/renderer_vulkan/vk_texture_cache.h b/src/video_core/renderer_vulkan/vk_texture_cache.h
+index c592f2666d4..2f12be78b3c 100644
+--- a/src/video_core/renderer_vulkan/vk_texture_cache.h
++++ b/src/video_core/renderer_vulkan/vk_texture_cache.h
+@@ -23,6 +23,7 @@ using VideoCommon::ImageId;
+ using VideoCommon::NUM_RT;
+ using VideoCommon::Region2D;
+ using VideoCommon::RenderTargets;
++using VideoCommon::SlotVector;
+ using VideoCore::Surface::PixelFormat;
+ 
+ class ASTCDecoderPass;
+@@ -170,6 +171,8 @@ class Image : public VideoCommon::ImageBase {
+ class ImageView : public VideoCommon::ImageViewBase {
+ public:
+     explicit ImageView(TextureCacheRuntime&, const VideoCommon::ImageViewInfo&, ImageId, Image&);
++    explicit ImageView(TextureCacheRuntime&, const VideoCommon::ImageViewInfo&, ImageId, Image&,
++                       const SlotVector<Image>&);
+     explicit ImageView(TextureCacheRuntime&, const VideoCommon::ImageInfo&,
+                        const VideoCommon::ImageViewInfo&, GPUVAddr);
+     explicit ImageView(TextureCacheRuntime&, const VideoCommon::NullImageViewParams&);
+@@ -226,7 +229,7 @@ class ImageView : public VideoCommon::ImageViewBase {
+     [[nodiscard]] vk::ImageView MakeView(VkFormat vk_format, VkImageAspectFlags aspect_mask);
+ 
+     const Device* device = nullptr;
+-    const Image* src_image{};
++    const SlotVector<Image>* slot_images = nullptr;
+ 
+     std::array<vk::ImageView, Shader::NUM_TEXTURE_TYPES> image_views;
+     std::unique_ptr<StorageViews> storage_views;
+diff --git a/src/video_core/texture_cache/texture_cache.h b/src/video_core/texture_cache/texture_cache.h
+index 2e19fced243..b494152b83f 100644
+--- a/src/video_core/texture_cache/texture_cache.h
++++ b/src/video_core/texture_cache/texture_cache.h
+@@ -1397,7 +1397,8 @@ ImageViewId TextureCache<P>::FindOrEmplaceImageView(ImageId image_id, const Imag
+     if (const ImageViewId image_view_id = image.FindView(info); image_view_id) {
+         return image_view_id;
+     }
+-    const ImageViewId image_view_id = slot_image_views.insert(runtime, info, image_id, image);
++    const ImageViewId image_view_id =
++        slot_image_views.insert(runtime, info, image_id, image, slot_images);
+     image.InsertView(info, image_view_id);
+     return image_view_id;
+ }

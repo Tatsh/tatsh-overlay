@@ -1,0 +1,506 @@
+From 3cfa516e160a4029928e101c8eba6c88e9431de0 Mon Sep 17 00:00:00 2001
+From: Hanjie Wu <nagi@zju.edu.cn>
+Date: Sun, 3 Oct 2021 01:34:40 +0800
+Subject: [PATCH 1/8] implement openssl crypto backend
+
+---
+ CMakeLists.txt                                |  2 +
+ externals/CMakeLists.txt                      | 16 +++-
+ src/core/CMakeLists.txt                       | 10 +-
+ .../{aes_util.cpp => aes_util_mbedtls.cpp}    |  4 +
+ src/core/crypto/aes_util_openssl.cpp          | 95 +++++++++++++++++++
+ src/core/crypto/crypto.h                      | 22 +++++
+ src/core/crypto/crypto_mbedtls.cpp            | 78 +++++++++++++++
+ src/core/crypto/crypto_openssl.cpp            | 58 +++++++++++
+ src/core/crypto/key_manager.cpp               | 38 ++------
+ src/core/crypto/partition_data_manager.cpp    |  6 +-
+ src/core/file_sys/registered_cache.cpp        | 12 +--
+ src/core/file_sys/xts_archive.cpp             | 21 +---
+ src/core/hle/service/bcat/bcat_module.cpp     |  4 +-
+ src/core/hle/service/ldr/ldr.cpp              |  4 +-
+ src/core/telemetry_session.cpp                | 21 +---
+ 15 files changed, 306 insertions(+), 85 deletions(-)
+ rename src/core/crypto/{aes_util.cpp => aes_util_mbedtls.cpp} (99%)
+ create mode 100644 src/core/crypto/aes_util_openssl.cpp
+ create mode 100644 src/core/crypto/crypto.h
+ create mode 100644 src/core/crypto/crypto_mbedtls.cpp
+ create mode 100644 src/core/crypto/crypto_openssl.cpp
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index eb403205ce7..9028c1720d6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -33,6 +33,8 @@ option(ENABLE_CUBEB "Enables the cubeb audio backend" ON)
+
+ option(USE_DISCORD_PRESENCE "Enables Discord Rich Presence" OFF)
+
++option(YUZU_USE_OPENSSL_CRYPTO "Use OpenSSL/libressl for cryptography backend" ON)
++
+ # Default to a Release build
+ get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+ if (NOT IS_MULTI_CONFIG AND NOT CMAKE_BUILD_TYPE)
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index a76a3d8006e..7f342188054 100644
+--- a/externals/CMakeLists.txt
++++ b/externals/CMakeLists.txt
+@@ -36,10 +36,6 @@ add_subdirectory(glad)
+ # inih
+ add_subdirectory(inih)
+
+-# mbedtls
+-add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
+-target_include_directories(mbedtls PUBLIC ./mbedtls/include)
+-
+ # MicroProfile
+ add_library(microprofile INTERFACE)
+ target_include_directories(microprofile INTERFACE ./microprofile)
+@@ -93,10 +89,11 @@ endif()
+ # Sirit
+ add_subdirectory(sirit)
+
+-if (ENABLE_WEB_SERVICE)
++if (ENABLE_WEB_SERVICE OR YUZU_USE_OPENSSL_CRYPTO)
+     find_package(OpenSSL 1.1)
+     if (OPENSSL_FOUND)
+         set(OPENSSL_LIBRARIES OpenSSL::SSL OpenSSL::Crypto)
++        set(YUZU_CRYPTO_BACKEND OpenSSL::Crypto PARENT_SCOPE)
+     else()
+         # LibreSSL
+         set(LIBRESSL_SKIP_INSTALL ON CACHE BOOL "")
+@@ -107,7 +104,10 @@ if (ENABLE_WEB_SERVICE)
+         get_directory_property(OPENSSL_LIBRARIES
+             DIRECTORY libressl
+             DEFINITION OPENSSL_LIBS)
++        target_include_directories(crypto INTERFACE ./libressl/include)
++        set(YUZU_CRYPTO_BACKEND crypto PARENT_SCOPE)
+     endif()
++    set(YUZU_CRYPTO_DEFINITION -DYUZU_USE_OPENSSL_CRYPTO PARENT_SCOPE)
+
+     # httplib
+     add_library(httplib INTERFACE)
+@@ -117,6 +117,12 @@ if (ENABLE_WEB_SERVICE)
+     if (WIN32)
+         target_link_libraries(httplib INTERFACE crypt32 cryptui ws2_32)
+     endif()
++else()
++    # mbedtls
++    add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
++    target_include_directories(mbedtls PUBLIC ./mbedtls/include)
++    set(YUZU_CRYPTO_BACKEND mbedtls PARENT_SCOPE)
++    set(YUZU_CRYPTO_DEFINITION -DYUZU_USE_MBEDTLS_CRYPTO PARENT_SCOPE)
+ endif()
+
+ # Opus
+diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
+index 9f0fbba2d9e..a920eae2bb1 100644
+--- a/src/core/CMakeLists.txt
++++ b/src/core/CMakeLists.txt
+@@ -22,8 +22,12 @@ add_library(core STATIC
+     core_timing_util.h
+     cpu_manager.cpp
+     cpu_manager.h
+-    crypto/aes_util.cpp
++    crypto/aes_util_mbedtls.cpp
++    crypto/aes_util_openssl.cpp
+     crypto/aes_util.h
++    crypto/crypto.h
++    crypto/crypto_mbedtls.cpp
++    crypto/crypto_openssl.cpp
+     crypto/encryption_layer.cpp
+     crypto/encryption_layer.h
+     crypto/key_manager.cpp
+@@ -682,7 +686,9 @@ endif()
+ create_target_directory_groups(core)
+
+ target_link_libraries(core PUBLIC common PRIVATE audio_core video_core)
+-target_link_libraries(core PUBLIC Boost::boost PRIVATE fmt::fmt nlohmann_json::nlohmann_json mbedtls Opus::Opus)
++target_link_libraries(core PUBLIC Boost::boost PRIVATE fmt::fmt nlohmann_json::nlohmann_json ${YUZU_CRYPTO_BACKEND} Opus::Opus)
++
++target_compile_definitions(core PRIVATE ${YUZU_CRYPTO_DEFINITION})
+
+ if (ENABLE_WEB_SERVICE)
+     target_compile_definitions(core PRIVATE -DENABLE_WEB_SERVICE)
+diff --git a/src/core/crypto/aes_util.cpp b/src/core/crypto/aes_util_mbedtls.cpp
+similarity index 99%
+rename from src/core/crypto/aes_util.cpp
+rename to src/core/crypto/aes_util_mbedtls.cpp
+index 85a666de935..39040d78635 100644
+--- a/src/core/crypto/aes_util.cpp
++++ b/src/core/crypto/aes_util_mbedtls.cpp
+@@ -2,6 +2,8 @@
+ // Licensed under GPLv2 or any later version
+ // Refer to the license.txt file included.
+
++#ifdef YUZU_USE_MBEDTLS_CRYPTO
++
+ #include <array>
+ #include <mbedtls/cipher.h>
+ #include "common/assert.h"
+@@ -128,3 +130,5 @@ void AESCipher<Key, KeySize>::SetIV(std::span<const u8> data) {
+ template class AESCipher<Key128>;
+ template class AESCipher<Key256>;
+ } // namespace Core::Crypto
++
++#endif
+diff --git a/src/core/crypto/aes_util_openssl.cpp b/src/core/crypto/aes_util_openssl.cpp
+new file mode 100644
+index 00000000000..af7ba1b3a66
+--- /dev/null
++++ b/src/core/crypto/aes_util_openssl.cpp
+@@ -0,0 +1,95 @@
++#ifdef YUZU_USE_OPENSSL_CRYPTO
++
++#include <map>
++#include <vector>
++#include <openssl/evp.h>
++#include "common/assert.h"
++#include "common/logging/log.h"
++#include "core/crypto/aes_util.h"
++#include "core/crypto/key_manager.h"
++
++namespace Core::Crypto {
++namespace {
++using NintendoTweak = std::array<u8, 16>;
++
++NintendoTweak CalculateNintendoTweak(std::size_t sector_id) {
++    NintendoTweak out{};
++    for (std::size_t i = 0xF; i <= 0xF; --i) {
++        out[i] = sector_id & 0xFF;
++        sector_id >>= 8;
++    }
++    return out;
++}
++} // Anonymous namespace
++
++struct CipherContext {
++    const EVP_CIPHER* cipher;
++    EVP_CIPHER_CTX* ctx;
++    std::vector<u8> key;
++    std::vector<u8> iv;
++};
++
++const static std::map<Mode, decltype(&EVP_aes_128_ctr)> cipher_map = {
++    {Mode::CTR, EVP_aes_128_ctr}, {Mode::ECB, EVP_aes_128_ecb}, {Mode::XTS, EVP_aes_128_xts}};
++
++template <typename Key, std::size_t KeySize>
++Crypto::AESCipher<Key, KeySize>::AESCipher(Key key, Mode mode)
++    : ctx(std::make_unique<CipherContext>()) {
++    ctx->ctx = EVP_CIPHER_CTX_new();
++    ASSERT_MSG((ctx->ctx != NULL), "Failed to initialize OpenSSL ciphers.");
++    ctx->cipher = cipher_map.at(mode)();
++    ctx->key.resize(key.size());
++    std::memcpy(ctx->key.data(), key.data(), KeySize);
++}
++
++template <typename Key, std::size_t KeySize>
++AESCipher<Key, KeySize>::~AESCipher() {
++    EVP_CIPHER_CTX_free(ctx->ctx);
++}
++
++template <typename Key, std::size_t KeySize>
++void AESCipher<Key, KeySize>::Transcode(const u8* src, std::size_t size, u8* dest, Op op) const {
++    EVP_CIPHER_CTX_reset(ctx->ctx);
++    EVP_CipherInit(ctx->ctx, ctx->cipher, ctx->key.data(), ctx->iv.data(),
++                   op == Op::Encrypt ? 1 : 0);
++    EVP_CIPHER_CTX_set_padding(ctx->ctx, 0);
++
++    int written, last_written;
++    if (EVP_CIPHER_mode(ctx->cipher) == EVP_CIPH_XTS_MODE) {
++        EVP_CipherUpdate(ctx->ctx, dest, &written, src, (int)size);
++        if (written != (int)size) {
++            LOG_WARNING(Crypto, "Not all data was decrypted requested={:016X}, actual={:016X}.",
++                        size, written);
++        }
++    } else {
++        EVP_CipherUpdate(ctx->ctx, dest, &written, src, (int)size);
++        EVP_CipherFinal(ctx->ctx, dest + written, &last_written);
++        if (written + last_written != (int)size) {
++            LOG_WARNING(Crypto, "Not all data was decrypted requested={:016X}, actual={:016X}.",
++                        size, written + last_written);
++        }
++    }
++}
++
++template <typename Key, std::size_t KeySize>
++void AESCipher<Key, KeySize>::XTSTranscode(const u8* src, std::size_t size, u8* dest,
++                                           std::size_t sector_id, std::size_t sector_size, Op op) {
++    ASSERT_MSG(size % sector_size == 0, "XTS decryption size must be a multiple of sector size.");
++
++    for (std::size_t i = 0; i < size; i += sector_size) {
++        SetIV(CalculateNintendoTweak(sector_id++));
++        Transcode(src + i, sector_size, dest + i, op);
++    }
++}
++
++template <typename Key, std::size_t KeySize>
++void AESCipher<Key, KeySize>::SetIV(std::span<const u8> data) {
++    ctx->iv.resize(data.size());
++    std::memcpy(ctx->iv.data(), data.data(), data.size());
++}
++
++template class AESCipher<Key128>;
++template class AESCipher<Key256>;
++} // namespace Core::Crypto
++
++#endif
+diff --git a/src/core/crypto/crypto.h b/src/core/crypto/crypto.h
+new file mode 100644
+index 00000000000..aa143cdd52e
+--- /dev/null
++++ b/src/core/crypto/crypto.h
+@@ -0,0 +1,22 @@
++#pragma once
++
++#include <cstdlib>
++
++#include "common/common_types.h"
++
++bool CalculateHMACSHA256(u8* out, const u8* key, std::size_t key_length, const u8* data,
++                         std::size_t data_length);
++
++void CalculateMD5(const u8* data, std::size_t data_length, u8* hash);
++
++void CalculateSHA256(const u8* data, std::size_t data_length, u8* hash);
++
++// CMAC with AES-128, key_length = 16 bytes
++void CalculateCMAC(const u8* source, size_t size, const u8* key, u8* cmac);
++
++// Calculate m = (s^d) mod n
++void CalculateModExp(const u8* d, std::size_t d_length, const u8* n, std::size_t n_length,
++                     const u8* s, std::size_t s_length, u8* m, std::size_t m_length);
++
++void GenerateRandomBytesWithSeed(u8* out, std::size_t out_length, const u8* seed,
++                                 std::size_t seed_length);
+diff --git a/src/core/crypto/crypto_mbedtls.cpp b/src/core/crypto/crypto_mbedtls.cpp
+new file mode 100644
+index 00000000000..7bea7eadb12
+--- /dev/null
++++ b/src/core/crypto/crypto_mbedtls.cpp
+@@ -0,0 +1,78 @@
++#ifdef YUZU_USE_MBEDTLS_CRYPTO
++
++#include <mbedtls/bignum.h>
++#include <mbedtls/cmac.h>
++#include <mbedtls/ctr_drbg.h>
++#include <mbedtls/entropy.h>
++#include <mbedtls/md.h>
++#include <mbedtls/md5.h>
++#include <mbedtls/sha256.h>
++
++#include "common/assert.h"
++#include "core/crypto/crypto.h"
++
++bool CalculateHMACSHA256(u8* out, const u8* key, std::size_t key_length, const u8* data,
++                         std::size_t data_length) {
++    mbedtls_md_context_t context;
++    mbedtls_md_init(&context);
++
++    if (mbedtls_md_setup(&context, mbedtls_md_info_from_type(MBEDTLS_MD_SHA256), 1) ||
++        mbedtls_md_hmac_starts(&context, key, key_length) ||
++        mbedtls_md_hmac_update(&context, data, data_length) ||
++        mbedtls_md_hmac_finish(&context, out)) {
++        mbedtls_md_free(&context);
++        return false;
++    }
++
++    mbedtls_md_free(&context);
++    return true;
++}
++
++void CalculateMD5(const u8* data, std::size_t data_length, u8* hash) {
++    mbedtls_md5_ret(data, data_length, hash);
++}
++
++void CalculateSHA256(const u8* data, std::size_t data_length, u8* hash) {
++    mbedtls_sha256_ret(data, data_length, hash, 0);
++}
++
++void CalculateCMAC(const u8* source, size_t size, const u8* key, u8* cmac) {
++    mbedtls_cipher_cmac(mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_ECB), key, 128, source,
++                        size, cmac);
++}
++
++void CalculateModExp(const u8* d, std::size_t d_length, const u8* n, std::size_t n_length,
++                     const u8* s, std::size_t s_length, u8* m, std::size_t m_length) {
++    mbedtls_mpi D; // RSA Private Exponent
++    mbedtls_mpi N; // RSA Modulus
++    mbedtls_mpi S; // Input
++    mbedtls_mpi M; // Output
++
++    mbedtls_mpi_init(&D);
++    mbedtls_mpi_init(&N);
++    mbedtls_mpi_init(&S);
++    mbedtls_mpi_init(&M);
++
++    mbedtls_mpi_read_binary(&D, d, d_length);
++    mbedtls_mpi_read_binary(&N, n, n_length);
++    mbedtls_mpi_read_binary(&S, s, s_length);
++
++    mbedtls_mpi_exp_mod(&M, &S, &D, &N, nullptr);
++    mbedtls_mpi_write_binary(&M, m, m_length);
++}
++
++void GenerateRandomBytesWithSeed(u8* out, std::size_t out_length, const u8* seed,
++                                 std::size_t seed_length) {
++    mbedtls_entropy_context entropy;
++    mbedtls_entropy_init(&entropy);
++    mbedtls_ctr_drbg_context ctr_drbg;
++
++    mbedtls_ctr_drbg_init(&ctr_drbg);
++    ASSERT(mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, seed, seed_length));
++    ASSERT(mbedtls_ctr_drbg_random(&ctr_drbg, out, out_length) == 0);
++
++    mbedtls_ctr_drbg_free(&ctr_drbg);
++    mbedtls_entropy_free(&entropy);
++}
++
++#endif
+diff --git a/src/core/crypto/crypto_openssl.cpp b/src/core/crypto/crypto_openssl.cpp
+new file mode 100644
+index 00000000000..e399c43434e
+--- /dev/null
++++ b/src/core/crypto/crypto_openssl.cpp
+@@ -0,0 +1,58 @@
++#ifdef YUZU_USE_OPENSSL_CRYPTO
++
++#include <openssl/bn.h>
++#include <openssl/cmac.h>
++#include <openssl/evp.h>
++#include <openssl/hmac.h>
++#include <openssl/rand.h>
++
++#include "common/assert.h"
++#include "core/crypto/crypto.h"
++
++bool CalculateHMACSHA256(u8* out, const u8* key, std::size_t key_length, const u8* data,
++                         std::size_t data_length) {
++    HMAC(EVP_sha256(), key, (int)key_length, data, data_length, out, NULL);
++    return true;
++}
++
++void CalculateMD5(const u8* data, std::size_t data_length, u8* hash) {
++    EVP_Digest(data, data_length, hash, NULL, EVP_md5(), NULL);
++}
++
++void CalculateSHA256(const u8* data, std::size_t data_length, u8* hash) {
++    EVP_Digest(data, data_length, hash, NULL, EVP_sha256(), NULL);
++}
++
++void CalculateCMAC(const u8* source, size_t size, const u8* key, u8* cmac) {
++    size_t outlen;
++    CMAC_CTX* ctx = CMAC_CTX_new();
++    CMAC_Init(ctx, key, 16, EVP_aes_128_cbc(), NULL);
++    CMAC_Update(ctx, source, size);
++    CMAC_Final(ctx, cmac, &outlen);
++    CMAC_CTX_free(ctx);
++}
++
++void CalculateModExp(const u8* d, std::size_t d_length, const u8* n, std::size_t n_length,
++                     const u8* s, std::size_t s_length, u8* m, std::size_t m_length) {
++    BN_CTX* ctx = BN_CTX_new();
++    BN_CTX_start(ctx);
++    BIGNUM* D = BN_CTX_get(ctx);
++    BIGNUM* N = BN_CTX_get(ctx);
++    BIGNUM* S = BN_CTX_get(ctx);
++    BIGNUM* M = BN_CTX_get(ctx);
++    BN_bin2bn(d, (int)d_length, D);
++    BN_bin2bn(n, (int)n_length, N);
++    BN_bin2bn(s, (int)s_length, S);
++    BN_mod_exp(M, S, D, N, ctx);
++    BN_bn2bin(M, m);
++    BN_CTX_end(ctx);
++    BN_CTX_free(ctx);
++}
++
++void GenerateRandomBytesWithSeed(u8* out, std::size_t out_length, const u8* seed,
++                                 std::size_t seed_length) {
++    RAND_seed((const void*)seed, (int)seed_length);
++    ASSERT(RAND_bytes(out, (int)out_length) == 1);
++}
++
++#endif
+diff --git a/src/core/crypto/key_manager.cpp b/src/core/crypto/key_manager.cpp
+index a98daed898b..01b408057b6 100644
+--- a/src/core/crypto/key_manager.cpp
++++ b/src/core/crypto/key_manager.cpp
+@@ -13,10 +13,6 @@
+ #include <sstream>
+ #include <tuple>
+ #include <vector>
+-#include <mbedtls/bignum.h>
+-#include <mbedtls/cipher.h>
+-#include <mbedtls/cmac.h>
+-#include <mbedtls/sha256.h>
+ #include "common/fs/file.h"
+ #include "common/fs/fs.h"
+ #include "common/fs/path_util.h"
+@@ -26,6 +22,7 @@
+ #include "common/settings.h"
+ #include "common/string_util.h"
+ #include "core/crypto/aes_util.h"
++#include "core/crypto/crypto.h"
+ #include "core/crypto/key_manager.h"
+ #include "core/crypto/partition_data_manager.h"
+ #include "core/file_sys/content_archive.h"
+@@ -485,7 +482,7 @@ static std::array<u8, target_size> MGF1(const std::array<u8, in_size>& seed) {
+     while (out.size() < target_size) {
+         out.resize(out.size() + 0x20);
+         seed_exp[in_size + 3] = static_cast<u8>(i);
+-        mbedtls_sha256_ret(seed_exp.data(), seed_exp.size(), out.data() + out.size() - 0x20, 0);
++        CalculateSHA256(seed_exp.data(), seed_exp.size(), out.data() + out.size() - 0x20);
+         ++i;
+     }
+
+@@ -530,24 +527,10 @@ std::optional<std::pair<Key128, Key128>> ParseTicket(const Ticket& ticket,
+         return std::make_pair(rights_id, ticket.GetData().title_key_common);
+     }
+
+-    mbedtls_mpi D; // RSA Private Exponent
+-    mbedtls_mpi N; // RSA Modulus
+-    mbedtls_mpi S; // Input
+-    mbedtls_mpi M; // Output
+-
+-    mbedtls_mpi_init(&D);
+-    mbedtls_mpi_init(&N);
+-    mbedtls_mpi_init(&S);
+-    mbedtls_mpi_init(&M);
+-
+-    mbedtls_mpi_read_binary(&D, key.decryption_key.data(), key.decryption_key.size());
+-    mbedtls_mpi_read_binary(&N, key.modulus.data(), key.modulus.size());
+-    mbedtls_mpi_read_binary(&S, ticket.GetData().title_key_block.data(), 0x100);
+-
+-    mbedtls_mpi_exp_mod(&M, &S, &D, &N, nullptr);
+-
+     std::array<u8, 0x100> rsa_step;
+-    mbedtls_mpi_write_binary(&M, rsa_step.data(), rsa_step.size());
++    CalculateModExp(key.decryption_key.data(), key.decryption_key.size(), key.modulus.data(),
++                    key.modulus.size(), ticket.GetData().title_key_block.data(), 0x100,
++                    rsa_step.data(), rsa_step.size());
+
+     u8 m_0 = rsa_step[0];
+     std::array<u8, 0x20> m_1;
+@@ -895,14 +878,6 @@ void KeyManager::DeriveSDSeedLazy() {
+     }
+ }
+
+-static Key128 CalculateCMAC(const u8* source, size_t size, const Key128& key) {
+-    Key128 out{};
+-
+-    mbedtls_cipher_cmac(mbedtls_cipher_info_from_type(MBEDTLS_CIPHER_AES_128_ECB), key.data(),
+-                        key.size() * 8, source, size, out.data());
+-    return out;
+-}
+-
+ void KeyManager::DeriveBase() {
+     if (!BaseDeriveNecessary()) {
+         return;
+@@ -968,7 +943,8 @@ void KeyManager::DeriveBase() {
+             key, GetKey(S128KeyType::Source, static_cast<u64>(SourceKeyType::KeyblobMAC)));
+         SetKey(S128KeyType::KeyblobMAC, mac_key, i);
+
+-        Key128 cmac = CalculateCMAC(encrypted_keyblobs[i].data() + 0x10, 0xA0, mac_key);
++        Key128 cmac;
++        CalculateCMAC(encrypted_keyblobs[i].data() + 0x10, 0xA0, mac_key.data(), cmac.data());
+         if (std::memcmp(cmac.data(), encrypted_keyblobs[i].data(), cmac.size()) != 0) {
+             continue;
+         }

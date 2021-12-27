@@ -1,0 +1,23 @@
+From d203b24da0f41988cc7d38685d420fe7f7fa07dc Mon Sep 17 00:00:00 2001
+From: yzct12345 <87620833+yzct12345@users.noreply.github.com>
+Date: Wed, 11 Aug 2021 07:26:29 +0000
+Subject: [PATCH] vulkan_device: Disable CollectToolingInfo
+
+---
+ src/video_core/vulkan_common/vulkan_device.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/video_core/vulkan_common/vulkan_device.cpp b/src/video_core/vulkan_common/vulkan_device.cpp
+index 8e56a89e10c..193f1820544 100644
+--- a/src/video_core/vulkan_common/vulkan_device.cpp
++++ b/src/video_core/vulkan_common/vulkan_device.cpp
+@@ -1161,7 +1161,8 @@ void Device::CollectPhysicalMemoryInfo() {
+ }
+ 
+ void Device::CollectToolingInfo() {
+-    if (!ext_tooling_info) {
++    if (!ext_tooling_info || true) {
++        // Disabled to work around https://github.com/yuzu-emu/yuzu/issues/6835
+         return;
+     }
+     const auto vkGetPhysicalDeviceToolPropertiesEXT =
