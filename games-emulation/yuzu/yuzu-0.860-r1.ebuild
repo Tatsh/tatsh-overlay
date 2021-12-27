@@ -10,12 +10,10 @@ HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 MY_PV="mainline-${PV/./-}"
 DYNARMIC_SHA="cce7e4ee5d7b07a4609c73c053fbf57dc8c78458"
 HTTPLIB_SHA="9648f950f5a8a41d18833cf4a85f5821b1bcac54"
-MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
 SDL_SHA="e2ade2bfc46d915cd306c63c830b81d800b2575f"
 SIRIT_SHA="a39596358a3a5488c06554c0c15184a6af71e433"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/yuzu-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
 	https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/ReinUsesLisp/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
@@ -44,6 +42,7 @@ DEPEND="app-arch/lz4
 	dev-qt/qtwidgets
 	media-libs/opus
 	>=media-video/ffmpeg-4.3
+	<net-libs/mbedtls-3.1.0[cmac]
 	sys-libs/libunwind
 	sys-libs/zlib
 	x11-libs/libva
@@ -61,6 +60,7 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 PATCHES=(
 	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
 	"${FILESDIR}/${PN}-7610-unbundle-opus.patch"
+	"${FILESDIR}/${PN}-7044-system-mbedtls.patch"
 )
 
 pkg_setup() {
@@ -72,10 +72,6 @@ src_prepare() {
 	rmdir "${S}/externals/"{soundtouch,dynarmic,sirit,cpp-httplib,SDL} || die
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/ext-soundtouch-${SOUNDTOUCH_SHA}" "${S}/externals/soundtouch" || die
-	if ! use experimental; then
-		rmdir "${S}/externals/mbedtls" || die
-		mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
-	fi
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
 	mv "${WORKDIR}/cpp-httplib-${HTTPLIB_SHA}" "${S}/externals/cpp-httplib" || die
 	mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
