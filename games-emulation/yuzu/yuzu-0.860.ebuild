@@ -91,9 +91,7 @@ src_prepare() {
 		eapply "${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
 		eapply "${FILESDIR}/${PN}-7621-setmemorypermission.patch"
 		eapply "${FILESDIR}/${PN}-7622-vk-texture-cache-fix-invalidated-pointer-access.patch"
-		for i in {1..4}; do
-			eapply "${FILESDIR}/${PN}-7213-openssl-0${i}.patch"
-		done
+		eapply "${FILESDIR}/${PN}-7213-openssl"*.patch
 	fi
 	cmake_src_prepare
 }
