@@ -93,6 +93,8 @@ src_prepare() {
 		eapply "${FILESDIR}/${PN}-7622-vk-texture-cache-fix-invalidated-pointer-access.patch"
 		eapply "${FILESDIR}/${PN}-7213-openssl"*.patch
 		eapply "${FILESDIR}/${PN}-7633-controller-hotkeys.patch"
+		eapply "${FILESDIR}/${PN}-7635-svcsetheapsize.patch"
+		eapply "${FILESDIR}/${PN}-7636-nvflinger.patch"
 	fi
 	cmake_src_prepare
 }
