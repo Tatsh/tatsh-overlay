@@ -92,6 +92,7 @@ src_prepare() {
 		eapply "${FILESDIR}/${PN}-7621-setmemorypermission.patch"
 		eapply "${FILESDIR}/${PN}-7622-vk-texture-cache-fix-invalidated-pointer-access.patch"
 		eapply "${FILESDIR}/${PN}-7213-openssl"*.patch
+		eapply "${FILESDIR}/${PN}-7633-controller-hotkeys.patch"
 	fi
 	cmake_src_prepare
 }
