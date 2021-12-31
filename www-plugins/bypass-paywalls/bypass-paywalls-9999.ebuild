@@ -42,4 +42,9 @@ pkg_postinst() {
 	einfo "\"${EXT_ID}\" (with double quotes) and remove it. Then restart the"
 	einfo "browser and the extension should get installed for that profile."
 	einfo
+	einfo 'If the installation does not install even without the string'
+	einfo 'present in your profile data, then non-store extensions are blocked'
+	einfo 'by your enterprise policy. There is no way around this other than'
+	einfo 'to use another profile.'
+	einfo
 }
