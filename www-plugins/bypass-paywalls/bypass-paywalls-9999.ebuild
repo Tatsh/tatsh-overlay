@@ -10,6 +10,7 @@ IUSE="chrome chromium"
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
+REQUIRED_USE="|| ( chrome chromium )"
 
 S="${WORKDIR}"
 
