@@ -1,11 +1,11 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 DESCRIPTION="Bypass Paywalls browser extension."
 HOMEPAGE="https://github.com/iamadamdev/bypass-paywalls-chrome"
-IUSE="chrome"
+IUSE="chrome chromium"
 
 LICENSE="all-rights-reserved"
 SLOT="0"
@@ -27,6 +27,10 @@ src_install() {
 EOF
 	if use chrome; then
 		insinto /usr/share/google-chrome/extensions
+		doins "${EXT_ID}.json"
+	fi
+	if use chromium; then
+		insinto /usr/share/chromium/extensions
 		doins "${EXT_ID}.json"
 	fi
 }

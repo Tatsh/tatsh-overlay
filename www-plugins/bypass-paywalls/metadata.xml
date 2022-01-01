@@ -7,5 +7,6 @@
 	</maintainer>
 	<use>
 		<flag name="chrome">Install file for Chrome and Chrome Beta</flag>
+		<flag name="chromium">Install file for Chromium-based browsers</flag>
 	</use>
 </pkgmetadata>
