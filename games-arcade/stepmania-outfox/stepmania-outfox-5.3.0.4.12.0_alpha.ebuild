@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -13,10 +13,9 @@ MY_PN="${UPPER_PN:10:1}${PN:11:2}${UPPER_PN:13:1}${PN:14}"
 MAIN_PV="${PV:0:5}"
 MY_PV="${PV:6:4}"
 ALT_PV="${PV:6:6}"
-SHARED_DATE="20211212"
-ARM64_DATE="20211215"
-SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${ALT_PV}/OutFox-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}.tar.gz -> ${P}-amd64.tar.gz )
-	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${ALT_PV}/OutFox-${MAIN_PV}-alpha-${ALT_PV}-arm64v8-date-${ARM64_DATE}.tar.gz -> ${P}-arm64.tar.gz )"
+SHARED_DATE="20211231"
+SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${ALT_PV}/OutFox-${MAIN_PV}-alpha-${ALT_PV}-amd64-linux64bit-date-${SHARED_DATE}.tar.gz -> ${P}-amd64.tar.gz )
+	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${ALT_PV}/OutFox-${MAIN_PV}-alpha-${ALT_PV}-arm64v8-linuxARM64bit-date-${SHARED_DATE}.tar.gz -> ${P}-arm64.tar.gz )"
 
 LICENSE="MIT"
 SLOT="0"
@@ -44,9 +43,9 @@ S="${WORKDIR}"
 
 src_prepare() {
 	if use amd64; then
-		cd "${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}" || die
+		cd "${MY_PN/-}-${MAIN_PV}-alpha-${ALT_PV}-amd64-date-${SHARED_DATE}" || die
 	elif use arm64; then
-		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}" || die
+		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${ALT_PV}-arm64v8-date-${SHARED_DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
@@ -68,7 +67,7 @@ src_install() {
 	if use amd64; then
 		cd "${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}" || die
 	elif use arm64; then
-		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${ARM64_DATE}" || die
+		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
