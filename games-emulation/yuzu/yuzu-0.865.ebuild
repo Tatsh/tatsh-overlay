@@ -81,6 +81,7 @@ src_prepare() {
 	if use experimental; then
 		# Disable due to 7213 issue https://github.com/yuzu-emu/yuzu/pull/7213#issuecomment-1001306268
 		sed -e '/-Werror=missing-declarations/d' -i src/CMakeLists.txt || die
+		eapply "${FILESDIR}/${PN}-4949-high-dpi-fixes.patch"
 		eapply "${FILESDIR}/${PN}-6769-create-shortcuts.patch"
 		eapply "${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
 		eapply "${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
