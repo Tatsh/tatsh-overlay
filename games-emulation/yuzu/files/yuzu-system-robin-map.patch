@@ -1,0 +1,16 @@
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index e20b5d02..690bd310 100644
+--- a/externals/dynarmic/externals/CMakeLists.txt
++++ b/externals/dynarmic/externals/CMakeLists.txt
+@@ -23,9 +23,8 @@ target_include_directories(mp INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE
+ 
+ # robin-map
+ 
+-if (NOT TARGET tsl::robin_map)
+-    add_subdirectory(robin-map)
+-endif()
++find_package(tsl-robin-map REQUIRED)
++set_target_properties(tsl::robin_map PROPERTIES IMPORTED_GLOBAL TRUE)
+ 
+ # vixl
+ 

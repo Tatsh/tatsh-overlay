@@ -35,7 +35,7 @@ DEPEND="app-arch/lz4
 	dev-libs/inih
 	>=dev-libs/libfmt-8.0.0
 	dev-libs/libzip
-	dev-libs/openssl
+	dev-cpp/robin-map
 	dev-qt/qtcore
 	dev-qt/qtdbus
 	dev-qt/qtgui
@@ -60,6 +60,7 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 PATCHES=(
 	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
 	"${FILESDIR}/${PN}-7610-unbundle-opus.patch"
+	"${FILESDIR}/${PN}-system-robin-map.patch"
 )
 
 pkg_setup() {
