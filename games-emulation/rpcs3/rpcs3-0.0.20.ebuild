@@ -1,4 +1,4 @@
-# Copyright 2019-2021 Gentoo Authors
+# Copyright 2019-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,9 +6,9 @@ inherit cmake xdg
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
-ASMJIT_SHA="723f58581afc0f4cb16ba13396ff77e425896847"
+ASMJIT_SHA="eae7197fce03fd52a6e71ca89207a88ce270fb1a"
 HIDAPI_SHA="01f601a1509bf9c67819fbf521df39644bab52d5"
-LLVM_SHA="5836324d6443a62ed09b84c125029e98324978c3"
+LLVM_SHA="1c0ca194dc501ffb1674868babf8bd52658a0734"
 YAML_CPP_SHA="0b67821f307e8c6bf0eba9b6d3250e3cf1441450"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${PN}-llvm-${LLVM_SHA:0:7}.tar.gz
