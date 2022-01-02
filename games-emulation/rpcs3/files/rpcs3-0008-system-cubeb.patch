@@ -1,0 +1,43 @@
+From 73b65c8cff31490228ccfd82f804b97303970bc9 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 2 Jan 2022 03:32:54 -0500
+Subject: [PATCH] Allow system cubeb
+
+---
+ 3rdparty/CMakeLists.txt  | 6 +++++-
+ rpcs3/Emu/CMakeLists.txt | 2 +-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
+index e2e8f4a1c..8338677bd 100644
+--- a/3rdparty/CMakeLists.txt
++++ b/3rdparty/CMakeLists.txt
+@@ -136,7 +136,11 @@ target_include_directories(3rdparty_stblib INTERFACE stblib/include)
+ add_subdirectory(discord-rpc)
+ 
+ # Cubeb
+-add_subdirectory(cubeb EXCLUDE_FROM_ALL)
++if (USE_SYSTEM_CUBEB)
++	find_package(cubeb REQUIRED)
++else()
++	add_subdirectory(cubeb EXCLUDE_FROM_ALL)
++endif()
+ 
+ # libevdev
+ set(LIBEVDEV_TARGET 3rdparty_dummy_lib)
+diff --git a/rpcs3/Emu/CMakeLists.txt b/rpcs3/Emu/CMakeLists.txt
+index 8d1233fb1..b86c30e0a 100644
+--- a/rpcs3/Emu/CMakeLists.txt
++++ b/rpcs3/Emu/CMakeLists.txt
+@@ -137,7 +137,7 @@ target_link_libraries(rpcs3_emu
+ 
+ target_link_libraries(rpcs3_emu
+     PUBLIC
+-        3rdparty::cubeb)
++        cubeb)
+ 
+ # Cell
+ target_sources(rpcs3_emu PRIVATE
+-- 
+2.34.1
+

@@ -1,0 +1,18 @@
+diff --git a/lib/ExecutionEngine/IntelJITEvents/CMakeLists.txt b/lib/ExecutionEngine/IntelJITEvents/CMakeLists.txt
+index 0c5017c359d..f89c7fd0156 100644
+--- a/llvm/lib/ExecutionEngine/IntelJITEvents/CMakeLists.txt
++++ b/llvm/lib/ExecutionEngine/IntelJITEvents/CMakeLists.txt
+@@ -21,13 +21,6 @@ if(NOT EXISTS ${ITTAPI_SOURCE_DIR}/ittapi)
+     endif()
+ endif()
+ 
+-execute_process(COMMAND ${GIT_EXECUTABLE} checkout ${ITTAPI_GIT_TAG}
+-                WORKING_DIRECTORY ${ITTAPI_SOURCE_DIR}/ittapi
+-                RESULT_VARIABLE GIT_CHECKOUT_RESULT)
+-if(NOT GIT_CHECKOUT_RESULT EQUAL "0")
+-    message(FATAL_ERROR "git checkout ${ITTAPI_GIT_TAG} failed with ${GIT_CHECKOUT_RESULT}, please checkout ${ITTAPI_GIT_TAG} at ${ITTAPI_SOURCE_DIR}/ittapi")
+-endif()
+-
+ include_directories( ${ITTAPI_SOURCE_DIR}/ittapi/include/ )
+ 
+ if( HAVE_LIBDL )

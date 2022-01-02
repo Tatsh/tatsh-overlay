@@ -8,24 +8,27 @@ DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
 ASMJIT_SHA="eae7197fce03fd52a6e71ca89207a88ce270fb1a"
 HIDAPI_SHA="01f601a1509bf9c67819fbf521df39644bab52d5"
+ITTAPI_VERSION="3.18.12"
 LLVM_SHA="1c0ca194dc501ffb1674868babf8bd52658a0734"
 YAML_CPP_SHA="0b67821f307e8c6bf0eba9b6d3250e3cf1441450"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${PN}-llvm-${LLVM_SHA:0:7}.tar.gz
 	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${PN}-asmjit-${ASMJIT_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${PN}-hidapi-${HIDAPI_SHA:0:7}.tar.gz
-	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${PN}-yaml-cpp-${YAML_CPP_SHA:0:7}.tar.gz"
+	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${PN}-yaml-cpp-${YAML_CPP_SHA:0:7}.tar.gz
+	https://github.com/intel/ittapi/archive/refs/tags/v${ITTAPI_VERSION}.tar.gz -> ${PN}-ittapi-${ITTAPI_VERSION}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE="alsa faudio joystick +llvm pulseaudio vulkan wayland"
+IUSE="faudio joystick +llvm vulkan wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
 DEPEND=">=dev-libs/flatbuffers-2.0.0
 	dev-libs/pugixml
 	>=dev-libs/wolfssl-4.7.0
+	dev-libs/cubeb
 	dev-libs/xxhash
 	dev-util/spirv-tools
 	dev-qt/qtconcurrent
@@ -49,10 +52,8 @@ DEPEND=">=dev-libs/flatbuffers-2.0.0
 	virtual/opengl
 	virtual/udev
 	x11-libs/libX11
-	alsa? ( media-libs/alsa-lib )
 	faudio? ( app-emulation/faudio )
 	joystick? ( dev-libs/libevdev )
-	pulseaudio? ( media-sound/pulseaudio )
 	vulkan? (
 		media-libs/vulkan-loader
 		dev-util/glslang )
@@ -66,6 +67,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0004-add-use_wayland.patch"
 	"${FILESDIR}/${PN}-0006-vk.patch"
 	"${FILESDIR}/${PN}-0007-allow-use-of-system-spirv-and-glslang.patch"
+	"${FILESDIR}/${PN}-0008-system-cubeb.patch"
+	"${FILESDIR}/${PN}-0009-ittapi-remove-git-co.patch"
 )
 
 src_prepare() {
@@ -86,6 +89,7 @@ src_prepare() {
 	sed -i -e '/find_program(CCACHE_FOUND/d' CMakeLists.txt || die
 	sed -i -e 's|FAudio.h|FAudio/FAudio.h|' rpcs3/Emu/Audio/FAudio/FAudioBackend.h || die
 	sed -i -r -e '/\s+add_compile_options\(-Werror=missing-noreturn\).*/d' buildfiles/cmake/ConfigureCompiler.cmake || die
+	mv "${WORKDIR}/ittapi-${ITTAPI_VERSION}" "${WORKDIR}/ittapi"
 	cmake_src_prepare
 }
 
@@ -93,14 +97,14 @@ src_configure() {
 	mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
 		-DBUILD_LLVM_SUBMODULE=ON
+		"-DITTAPI_SOURCE_DIR=${WORKDIR}"
 		-DUSE_PRECOMPILED_HEADERS=OFF
-		-DUSE_ALSA=$(usex alsa)
 		-DUSE_DISCORD_RPC=OFF
 		-DUSE_FAUDIO=$(usex faudio)
 		-DUSE_SYSTEM_FAUDIO=$(usex faudio)
 		-DUSE_LIBEVDEV=$(usex joystick)
 		-DUSE_NATIVE_INSTRUCTIONS=OFF
-		-DUSE_PULSE=$(usex pulseaudio)
+		-DUSE_SYSTEM_CUBEB=ON
 		-DUSE_SYSTEM_CURL=ON
 		-DUSE_SYSTEM_FFMPEG=ON
 		-DUSE_SYSTEM_FLATBUFFERS=ON
