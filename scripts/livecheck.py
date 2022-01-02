@@ -57,7 +57,7 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
     'games-emulation/rpcs3': {
         '3rdparty/asmjit/asmjit',
         '3rdparty/hidapi',
-        '3rdparty/yaml-cpp',
+        '3rdparty/yaml-cpp/yaml-cpp',
         'llvm',
     },
     'games-emulation/xemu': {
