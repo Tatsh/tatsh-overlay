@@ -65,9 +65,9 @@ src_prepare() {
 
 src_install() {
 	if use amd64; then
-		cd "${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-amd64-date-${SHARED_DATE}" || die
+		cd "${MY_PN/-}-${MAIN_PV}-alpha-${ALT_PV}-amd64-date-${SHARED_DATE}" || die
 	elif use arm64; then
-		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${MY_PV}-arm64v8-date-${SHARED_DATE}" || die
+		cd "${WORKDIR}/${MY_PN/-}-${MAIN_PV}-alpha-${ALT_PV}-arm64v8-date-${SHARED_DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
