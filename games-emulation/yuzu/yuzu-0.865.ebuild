@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -8,7 +8,7 @@ DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 
 MY_PV="mainline-${PV/./-}"
-DYNARMIC_SHA="cce7e4ee5d7b07a4609c73c053fbf57dc8c78458"
+DYNARMIC_SHA="28714ee75aa079cbb706e38bdabc8ee1f6c69515"
 HTTPLIB_SHA="9648f950f5a8a41d18833cf4a85f5821b1bcac54"
 SDL_SHA="e2ade2bfc46d915cd306c63c830b81d800b2575f"
 SIRIT_SHA="a39596358a3a5488c06554c0c15184a6af71e433"
@@ -84,11 +84,8 @@ src_prepare() {
 		eapply "${FILESDIR}/${PN}-6769-create-shortcuts.patch"
 		eapply "${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
 		eapply "${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
-		eapply "${FILESDIR}/${PN}-7621-setmemorypermission.patch"
-		eapply "${FILESDIR}/${PN}-7622-vk-texture-cache-fix-invalidated-pointer-access.patch"
 		eapply "${FILESDIR}/${PN}-7213-openssl"*.patch
 		eapply "${FILESDIR}/${PN}-7633-controller-hotkeys.patch"
-		eapply "${FILESDIR}/${PN}-7635-svcsetheapsize.patch"
 		eapply "${FILESDIR}/${PN}-7636-nvflinger.patch"
 	else
 		eapply "${FILESDIR}/${PN}-7044-system-mbedtls.patch"
