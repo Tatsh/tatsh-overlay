@@ -1,4 +1,4 @@
-# Copyright 2020-2021 Gentoo Authors
+# Copyright 2020-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -29,7 +29,7 @@ DEPEND="app-arch/zstd
 	dev-cpp/catch:0
 	dev-libs/boost:0
 	dev-libs/crypto++:=
-	dev-libs/cubeb
+	media-libs/cubeb
 	dev-libs/inih
 	dev-libs/mp
 	dev-libs/teakra
