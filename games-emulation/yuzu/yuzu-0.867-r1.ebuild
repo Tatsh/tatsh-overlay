@@ -29,7 +29,7 @@ REQUIRED_USE="compatibility-reporting? ( web-service )"
 DEPEND="app-arch/lz4
 	>=app-arch/zstd-1.5.0
 	dev-libs/boost:=[context]
-	cubeb? ( dev-libs/cubeb )
+	cubeb? ( media-libs/cubeb )
 	experimental? ( dev-libs/openssl )
 	!experimental? ( <net-libs/mbedtls-3.1.0[cmac] )
 	dev-libs/inih
