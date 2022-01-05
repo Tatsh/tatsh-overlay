@@ -1,0 +1,74 @@
+From 91e9213f689fd6f2db6f5a6acef4088cab3b98b1 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 5 Jan 2022 14:56:22 -0500
+Subject: [PATCH 4/4] header: bug fixes
+
+Read temperature from file if specified in TEMPERATURE_FILE
+Add extra case for temp input
+Get pi-hole status in a simpler way
+---
+ scripts/pi-hole/php/header.php | 27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
+
+diff --git a/scripts/pi-hole/php/header.php b/scripts/pi-hole/php/header.php
+index eb1ed391..f146ac7e 100644
+--- a/scripts/pi-hole/php/header.php
++++ b/scripts/pi-hole/php/header.php
+@@ -25,7 +25,11 @@
+     $token = $_SESSION['token'];
+ 
+     // Try to get temperature value from different places (OS dependent)
+-    if(file_exists("/sys/class/thermal/thermal_zone0/temp"))
++    if (isset($_ENV['TEMPERATURE_FILE'])
++    {
++      $output = rtrim(file_get_contents($_ENV['TEMPERATURE_FILE']));
++    }
++    elseif (file_exists("/sys/class/thermal/thermal_zone0/temp"))
+     {
+         $output = rtrim(file_get_contents("/sys/class/thermal/thermal_zone0/temp"));
+     }
+@@ -33,6 +37,10 @@
+     {
+         $output = rtrim(file_get_contents("/sys/class/hwmon/hwmon0/temp1_input"));
+     }
++    elseif (file_exists("/sys/class/hwmon/hwmon1/temp1_input"))
++    {
++        $output = rtrim(file_get_contents("/sys/class/hwmon/hwmon1/temp1_input"));
++    }
+     else
+     {
+         $output = "";
+@@ -331,27 +339,16 @@ if($auth) {
+                 <div class="pull-left info">
+                     <p>Status</p>
+                     <?php
+-                    $pistatus = pihole_execute('status web');
+-                    if (isset($pistatus[0])) {
+-                        $pistatus = intval($pistatus[0]);
+-                    } else {
+-                        $pistatus = null;
+-                    }
++                    $pistatus = filetype('/run/pihole/FTL.sock') === 'socket' ? 53 : 0;
+                     if ($pistatus == 53) {
+                         echo '<span id="status"><i class="fa fa-w fa-circle text-green-light"></i> Active</span>';
+-                    } elseif ($pistatus == 0) {
+-                        echo '<span id="status"><i class="fa fa-w fa-circle text-red"></i> Offline</span>';
+-                    } elseif ($pistatus == -1) {
+-                        echo '<span id="status"><i class="fa fa-w fa-circle text-red"></i> DNS service not running</span>';
+-                    } elseif ($pistatus == -2 || is_null($pistatus)) {
+-                        echo '<span id="status"><i class="fa fa-w fa-circle text-red"></i> Unknown</span>';
+                     } else {
+-                        echo '<span id="status"><i class="fa fa-w fa-circle text-orange"></i> DNS service on port '.$pistatus.'</span>';
++                        echo '<span id="status"><i class="fa fa-w fa-circle text-red"></i> Offline</span>';
+                     }
+                     ?>
+                     <br/>
+                     <?php
+-                    echo '<span title="Detected $nproc cores"><i class="fa fa-w fa-circle ';
++                    echo "<span title=\"Detected $nproc cores\"><i class=\"fa fa-w fa-circle ";
+                     if ($loaddata[0] > $nproc) {
+                         echo "text-red";
+                     } else {
+-- 
+2.34.1
+

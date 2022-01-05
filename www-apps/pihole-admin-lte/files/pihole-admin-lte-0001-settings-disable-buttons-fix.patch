@@ -1,5 +1,14 @@
+From 18e50eb2edfde255ce080e93bba72b55d4f1dd3f Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 5 Jan 2022 14:54:45 -0500
+Subject: [PATCH 1/4] settings: disable buttons, fix paths
+
+---
+ settings.php | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
 diff --git a/settings.php b/settings.php
-index c9a15c96..3d77df07 100644
+index ec75d9e8..7039728a 100644
 --- a/settings.php
 +++ b/settings.php
 @@ -9,7 +9,7 @@ require "scripts/pi-hole/php/header.php";
@@ -34,3 +43,6 @@ index c9a15c96..3d77df07 100644
                                  if (!is_resource($dhcpleases))
                                      $leasesfile = false;
  
+-- 
+2.34.1
+

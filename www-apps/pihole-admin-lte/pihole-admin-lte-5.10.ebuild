@@ -22,10 +22,10 @@ RDEPEND="dev-lang/php[fileinfo,filter,gd,intl,session,sqlite,tokenizer]
 need_httpd_cgi
 
 PATCHES=(
-	"${FILESDIR}/${PN}-fix-paths.patch"
-	"${FILESDIR}/${PN}-header.patch"
-	"${FILESDIR}/${PN}-no-update-message.patch"
-	"${FILESDIR}/${PN}-settings.patch"
+	"${FILESDIR}/${PN}-0001-settings-disable-buttons-fix.patch"
+	"${FILESDIR}/${PN}-0002-fix-paths.patch"
+	"${FILESDIR}/${PN}-0003-footer-remove-update-check.patch"
+	"${FILESDIR}/${PN}-0004-header-bug-fixes.patch"
 )
 
 src_prepare() {

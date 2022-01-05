@@ -1,3 +1,12 @@
+From 061d3fcbc0fc1cbc8d37125731baa26639e728f1 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 5 Jan 2022 14:56:10 -0500
+Subject: [PATCH 3/4] footer: remove update check
+
+---
+ scripts/pi-hole/php/footer.php | 3 ---
+ 1 file changed, 3 deletions(-)
+
 diff --git a/scripts/pi-hole/php/footer.php b/scripts/pi-hole/php/footer.php
 index 0d2d2485..8e60490e 100644
 --- a/scripts/pi-hole/php/footer.php
@@ -12,3 +21,6 @@ index 0d2d2485..8e60490e 100644
                  <?php } ?>
              </div>
          </div>
+-- 
+2.34.1
+
