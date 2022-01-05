@@ -57,4 +57,5 @@ pkg_postinst() {
 	elog
 	elog "An example nginx configuration snippet is available in"
 	elog "${EROOT}/usr/share/${PF} in the file ${PN}-nginx-example.conf"
+	webapp_pkg_postinst
 }
