@@ -1,0 +1,75 @@
+diff --git a/scripts/pi-hole/php/password.php b/scripts/pi-hole/php/password.php
+index 038d4bbb..b702ee17 100644
+--- a/scripts/pi-hole/php/password.php
++++ b/scripts/pi-hole/php/password.php
+@@ -16,7 +16,7 @@
+     session_start();
+ 
+     // Read setupVars.conf file
+-    $setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
++    $setupVars = parse_ini_file("/var/lib/pihole/setupVars.conf");
+     // Try to read password hash from setupVars.conf
+     if(isset($setupVars['WEBPASSWORD']))
+     {
+diff --git a/scripts/pi-hole/php/savesettings.php b/scripts/pi-hole/php/savesettings.php
+index edfd72b8..370725da 100644
+--- a/scripts/pi-hole/php/savesettings.php
++++ b/scripts/pi-hole/php/savesettings.php
+@@ -99,7 +99,7 @@ function readDNSserversList()
+ {
+ 	// Reset list
+ 	$list = [];
+-	$handle = @fopen("/etc/pihole/dns-servers.conf", "r");
++	$handle = @fopen("/var/lib/pihole/dns-servers.conf", "r");
+ 	if ($handle)
+ 	{
+ 		while (($line = fgets($handle)) !== false)
+diff --git a/scripts/pi-hole/php/update_checker.php b/scripts/pi-hole/php/update_checker.php
+index d479318a..bc12ef30 100644
+--- a/scripts/pi-hole/php/update_checker.php
++++ b/scripts/pi-hole/php/update_checker.php
+@@ -1,8 +1,8 @@
+ <?php
+ 
+-$localversions = "/etc/pihole/localversions";
+-$localbranches = "/etc/pihole/localbranches";
+-$GitHubVersions = "/etc/pihole/GitHubVersions";
++$localversions = "/var/lib/pihole/localversions";
++$localbranches = "/var/lib/pihole/localbranches";
++$GitHubVersions = "/var/lib/pihole/GitHubVersions";
+ 
+ if(!is_readable($localversions) || !is_readable($localbranches) || !is_readable($GitHubVersions))
+ {
+@@ -43,7 +43,7 @@ else
+ 	}
+ 
+ 	/********** Get Pi-hole FTL (not a git repository) **********/
+-	$FTL_branch = $branches[2];
++	$FTL_branch = @$branches[2];
+ 	if(substr($versions[2], 0, 4) === "vDev") {
+ 	    $FTL_current = "vDev";
+ 	    $FTL_commit = $versions[2];
+@@ -54,8 +54,8 @@ else
+ 
+ 	// Get data from GitHub
+ 	$core_latest = $GitHubversions[0];
+-	$web_latest = $GitHubversions[1];
+-	$FTL_latest = $GitHubversions[2];
++	$web_latest = @$GitHubversions[1];
++	$FTL_latest = @$GitHubversions[2];
+ 
+ 	// Core version comparison
+ 	if($core_current !== "vDev")
+diff --git a/scripts/pi-hole/php/auth.php b/scripts/pi-hole/php/auth.php
+index 673bd480..684c05e0 100644
+--- a/scripts/pi-hole/php/auth.php
++++ b/scripts/pi-hole/php/auth.php
+@@ -30,7 +30,7 @@ function log_and_die($message) {
+ }
+ 
+ function check_cors() {
+-    $setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
++    $setupVars = parse_ini_file("/var/lib/pihole/setupVars.conf");
+     $ipv4 = isset($setupVars["IPV4_ADDRESS"]) ? explode("/", $setupVars["IPV4_ADDRESS"])[0] : $_SERVER['SERVER_ADDR'];
+     $ipv6 = isset($setupVars["IPV6_ADDRESS"]) ? explode("/", $setupVars["IPV6_ADDRESS"])[0] : $_SERVER['SERVER_ADDR'];
+ 

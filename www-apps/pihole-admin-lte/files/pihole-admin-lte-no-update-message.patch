@@ -1,0 +1,14 @@
+diff --git a/scripts/pi-hole/php/footer.php b/scripts/pi-hole/php/footer.php
+index 0d2d2485..8e60490e 100644
+--- a/scripts/pi-hole/php/footer.php
++++ b/scripts/pi-hole/php/footer.php
+@@ -95,9 +95,6 @@
+                         <?php if ($web_update) { ?> &middot; <a class="lookatme" href="<?php echo $webReleasesUrl . "/latest"; ?>" rel="noopener" target="_blank">Update available!</a><?php } ?>
+                     </li>
+                 </ul>
+-                <?php if($core_update || $web_update || $FTL_update) { ?>
+-                    <p>To install updates, run <code><a href="https://docs.pi-hole.net/main/update/" rel="noopener" target="_blank">pihole -up</a></code>.</p>
+-                <?php } ?>
+                 <?php } ?>
+             </div>
+         </div>

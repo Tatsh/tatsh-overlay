@@ -1,0 +1,36 @@
+diff --git a/settings.php b/settings.php
+index c9a15c96..3d77df07 100644
+--- a/settings.php
++++ b/settings.php
+@@ -9,7 +9,7 @@ require "scripts/pi-hole/php/header.php";
+ require "scripts/pi-hole/php/savesettings.php";
+ require_once "scripts/pi-hole/php/FTL.php";
+ // Reread ini file as things might have been changed
+-$setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
++$setupVars = parse_ini_file("/var/lib/pihole/setupVars.conf");
+ $piholeFTLConf = piholeFTLConfig();
+ 
+ // Handling of PHP internal errors
+@@ -336,11 +336,11 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
+                                         </div>
+                                         <p class="hidden-md hidden-lg"></p>
+                                         <div class="col-md-4">
+-                                            <button type="button" class="btn btn-danger confirm-poweroff btn-block">Power off system</button>
++                                            <button type="button" class="btn btn-danger confirm-poweroff btn-block" disabled>Power off system</button>
+                                         </div>
+                                         <p class="hidden-md hidden-lg"></p>
+                                         <div class="col-md-4">
+-                                            <button type="button" class="btn btn-danger confirm-reboot btn-block">Restart system</button>
++                                            <button disabled type="button" class="btn btn-danger confirm-reboot btn-block">Restart system</button>
+                                         </div>
+                                     </div>
+ 
+@@ -554,7 +554,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
+                             if ($DHCP) {
+                                 // Read leases file
+                                 $leasesfile = true;
+-                                $dhcpleases = @fopen('/etc/pihole/dhcp.leases', 'r');
++                                $dhcpleases = @fopen('/var/lib/pihole/dhcp.leases', 'r');
+                                 if (!is_resource($dhcpleases))
+                                     $leasesfile = false;
+ 
