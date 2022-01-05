@@ -40,7 +40,7 @@ src_prepare() {
 		-name 'composer.lock' -o \
 		-name 'package*.json' \
 	')' -type f -delete || die
-	rm -fR ..github/ phpstan.neon.dist || die
+	rm -fR .github/ phpstan.neon.dist || die
 }
 
 src_install() {
