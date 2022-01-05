@@ -49,5 +49,12 @@ src_install() {
 	webapp_src_preinst
 	insinto "${MY_HTDOCSDIR}"
 	doins -r .
+	dodoc "${FILESDIR}/${PN}-nginx-example.conf"
 	webapp_src_install
+}
+
+pkg_postinst() {
+	elog
+	elog "An example nginx configuration snippet is available in"
+	elog "${EROOT}/usr/share/${PF} in the file ${PN}-nginx-example.conf"
 }
