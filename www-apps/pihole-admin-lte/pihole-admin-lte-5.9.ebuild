@@ -31,11 +31,13 @@ PATCHES=(
 src_prepare() {
 	default
 	find '(' \
+		-iname 'LICENSE' -o \
+		-name '*.css.map' -o \
+		-name '*.js.map' -o \
 		-name '*.md' -o \
 		-name '.gitattributes' -o \
 		-name '.gitignore' -o \
 		-name '.user.php.ini' -o  \
-		-iname 'LICENSE' -o \
 		-name 'composer.json' -o \
 		-name 'composer.lock' -o \
 		-name 'package*.json' \
