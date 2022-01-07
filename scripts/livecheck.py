@@ -422,9 +422,13 @@ def main() -> int:
             search_dir, settings, names=args.package_names,
             exclude=args.exclude):
         log.debug('Fetching %s', url)
+        headers = {}
+        if 'api.github.com' in url:
+            log.debug('Adding authorization header')
+            headers['Authorization'] = f'token {get_github_api_credentials()}'
         try:
             r: Response = (TextDataResponse(url[5:]) if url.startswith('data:')
-                           else session.get(url, timeout=30))
+                           else session.get(url, headers=headers, timeout=30))
         except (ReadTimeout, ConnectTimeout, requests.exceptions.HTTPError,
                 requests.exceptions.SSLError) as e:
             log.debug('Caught error %s attempting to fetch %s', e, url)
