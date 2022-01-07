@@ -8,7 +8,7 @@ DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 
 MY_PV="mainline-${PV/./-}"
-DYNARMIC_SHA="28714ee75aa079cbb706e38bdabc8ee1f6c69515"
+DYNARMIC_SHA="1635958d0613da376046532e0db5aed6316fbc18"
 HTTPLIB_SHA="9648f950f5a8a41d18833cf4a85f5821b1bcac54"
 SDL_SHA="e2ade2bfc46d915cd306c63c830b81d800b2575f"
 SIRIT_SHA="a39596358a3a5488c06554c0c15184a6af71e433"
@@ -59,7 +59,6 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
-	"${FILESDIR}/${PN}-7610-unbundle-opus.patch"
 	"${FILESDIR}/${PN}-system-robin-map.patch"
 )
 
@@ -88,7 +87,6 @@ src_prepare() {
 		eapply "${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
 		eapply "${FILESDIR}/${PN}-7213-openssl"*.patch
 		eapply "${FILESDIR}/${PN}-7633-controller-hotkeys.patch"
-		eapply "${FILESDIR}/${PN}-7636-nvflinger.patch"
 	else
 		eapply "${FILESDIR}/${PN}-7044-system-mbedtls.patch"
 	fi
