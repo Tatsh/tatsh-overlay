@@ -17,6 +17,7 @@ LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64"
 
+BDEPEND="app-portage/portage-utils"
 RDEPEND="app-admin/sudo
 dev-lang/php[fileinfo,filter,gd,intl,session,sqlite,tokenizer]
 	net-dns/pihole
@@ -61,11 +62,12 @@ src_install() {
 		newins "${FILESDIR}/${PN}-fpm-example.conf" "${PN}.conf"
 	fi
 	webapp_postinst_txt en "${FILESDIR}/postinstall-en.txt"
+	mkdir -p "${ED}/etc/sudoers.d" "${ED}/var/lib/pihole" || die
 	{ echo 'pihole ALL=(ALL) NOPASSWD: /usr/bin/pihole' > "${ED}/etc/sudoers.d/pihole"; } || die
 	webapp_src_install
 	touch "${ED}/var/lib/pihole/GitHubVersions" || die
 	{ echo 'master master' > "${ED}/var/lib/pihole/localbranches"; } || die
-	local -r core_ver=$(best_version net-dns/pihole)
-	local -r ftl_ver=$(best_version net-dns/pihole-ftl)
+	local -r core_ver=$(qatom $(best_version net-dns/pihole) | cut '-d ' -f3)
+	local -r ftl_ver=$(qatom $(best_version net-dns/pihole-ftl) | cut '-d ' -f3)
 	{ echo "${core_ver} ${PV} ${ftl_ver}" > "${ED}/var/lib/pihole/localversions"; } || die
 }
