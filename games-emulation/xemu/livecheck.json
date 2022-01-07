@@ -1,0 +1,5 @@
+{
+    "regex": "\"ref\":\"refs/tags/xemu-v([^\"]+)\",",
+    "type": "regex",
+    "url": "https://api.github.com/repos/mborgerson/xemu/git/refs/tags?per_page=100"
+}
