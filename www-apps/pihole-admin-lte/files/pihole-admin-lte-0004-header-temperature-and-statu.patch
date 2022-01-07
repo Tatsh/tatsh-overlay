@@ -1,17 +1,16 @@
-From 53f92bda2e550cc0738318d79064b20bcd36da6c Mon Sep 17 00:00:00 2001
+From 86dc8d9b0d4fbe4764bd73cdf9aa0b6462de026f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 5 Jan 2022 14:56:22 -0500
-Subject: [PATCH 4/4] header: bug fixes
+Subject: [PATCH 4/4] header: temperature and status changes
 
 Read temperature from file given name of a driver like k10temp in HWMON_NAME
-Add extra case for temp input
 Get pi-hole status in a simpler way
 ---
- scripts/pi-hole/php/header.php | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ scripts/pi-hole/php/header.php | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
 diff --git a/scripts/pi-hole/php/header.php b/scripts/pi-hole/php/header.php
-index eb1ed391..f20cd88b 100644
+index 175fd41f..f702fbae 100644
 --- a/scripts/pi-hole/php/header.php
 +++ b/scripts/pi-hole/php/header.php
 @@ -25,7 +25,21 @@
@@ -37,7 +36,7 @@ index eb1ed391..f20cd88b 100644
      {
          $output = rtrim(file_get_contents("/sys/class/thermal/thermal_zone0/temp"));
      }
-@@ -331,27 +345,16 @@ if($auth) {
+@@ -331,22 +345,11 @@ if($auth) {
                  <div class="pull-left info">
                      <p>Status</p>
                      <?php
@@ -62,12 +61,6 @@ index eb1ed391..f20cd88b 100644
                      }
                      ?>
                      <br/>
-                     <?php
--                    echo '<span title="Detected $nproc cores"><i class="fa fa-w fa-circle ';
-+                    echo "<span title=\"Detected $nproc cores\"><i class=\"fa fa-w fa-circle ";
-                     if ($loaddata[0] > $nproc) {
-                         echo "text-red";
-                     } else {
 -- 
 2.34.1
 

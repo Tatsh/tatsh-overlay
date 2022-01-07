@@ -28,7 +28,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0001-settings-disable-buttons-fix.patch"
 	"${FILESDIR}/${PN}-0002-fix-paths.patch"
 	"${FILESDIR}/${PN}-0003-footer-remove-update-check.patch"
-	"${FILESDIR}/${PN}-0004-header-bug-fixes.patch"
+	"${FILESDIR}/${PN}-0004-header-temperature-and-statu.patch"
 )
 
 src_prepare() {

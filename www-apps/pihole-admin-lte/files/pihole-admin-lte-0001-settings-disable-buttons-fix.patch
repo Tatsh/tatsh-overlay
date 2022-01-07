@@ -1,4 +1,4 @@
-From 18e50eb2edfde255ce080e93bba72b55d4f1dd3f Mon Sep 17 00:00:00 2001
+From 5c9fc0232aba784b76e87a61de6da7296719be96 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 5 Jan 2022 14:54:45 -0500
 Subject: [PATCH 1/4] settings: disable buttons, fix paths
