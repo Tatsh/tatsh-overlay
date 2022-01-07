@@ -56,11 +56,7 @@ src_install() {
 		"${PN}.conf"
 	webapp_server_configfile nginx "${FILESDIR}/${PN}-nginx-example.conf" \
 		"${PN}.conf"
-	if has_version 'dev-lang/php[fpm]'; then
-		local -r php_ver=$(best_version dev-lang/php | sed -re 's/^([0-9]+)\.([0-9]+).*/\1.\2/')
-		insinto "/etc/php/fpm-php${php_ver}/fpm.d"
-		newins "${FILESDIR}/${PN}-fpm-example.conf" "${PN}.conf"
-	fi
+	newdoc "${FILESDIR}/${PN}-fpm-example.conf" "php-fpm-${PN}.conf"
 	webapp_postinst_txt en "${FILESDIR}/postinstall-en.txt"
 	mkdir -p "${ED}/etc/sudoers.d" "${ED}/var/lib/pihole" || die
 	{ echo 'pihole ALL=(ALL) NOPASSWD: /usr/bin/pihole' > "${ED}/etc/sudoers.d/pihole"; } || die
