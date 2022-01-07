@@ -17,7 +17,9 @@ LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-lang/php[fileinfo,filter,gd,intl,session,sqlite,tokenizer]
+RDEPEND="app-admin/sudo
+dev-lang/php[fileinfo,filter,gd,intl,session,sqlite,tokenizer]
+	net-dns/pihole
 	virtual/httpd-php"
 need_httpd_cgi
 
@@ -49,13 +51,21 @@ src_install() {
 	webapp_src_preinst
 	insinto "${MY_HTDOCSDIR}"
 	doins -r .
-	newdoc "${FILESDIR}/${PN}-nginx-example.conf" nginx-example.conf
+	webapp_server_configfile apache "${FILESDIR}/${PN}-apache-example.conf" \
+		"${PN}.conf"
+	webapp_server_configfile nginx "${FILESDIR}/${PN}-nginx-example.conf" \
+		"${PN}.conf"
+	if has_version 'dev-lang/php[fpm]'; then
+		local -r php_ver=$(best_version dev-lang/php | sed -re 's/^([0-9]+)\.([0-9]+).*/\1.\2/')
+		insinto "/etc/php/fpm-php${php_ver}/fpm.d"
+		newins "${FILESDIR}/${PN}-fpm-example.conf" "${PN}.conf"
+	fi
+	webapp_postinst_txt en "${FILESDIR}/postinstall-en.txt"
+	{ echo 'pihole ALL=(ALL) NOPASSWD: /usr/bin/pihole' > "${ED}/etc/sudoers.d/pihole"; } || die
 	webapp_src_install
-}
-
-pkg_postinst() {
-	elog
-	elog "An example nginx configuration snippet is available in"
-	elog "${EROOT}/usr/share/${PF} in the file nginx-example.conf"
-	webapp_pkg_postinst
+	touch "${ED}/var/lib/pihole/GitHubVersions" || die
+	{ echo 'master master' > "${ED}/var/lib/pihole/localbranches"; } || die
+	local -r core_ver=$(best_version net-dns/pihole)
+	local -r ftl_ver=$(best_version net-dns/pihole-ftl)
+	{ echo "${core_ver} ${PV} ${ftl_ver}" > "${ED}/var/lib/pihole/localversions"; } || die
 }

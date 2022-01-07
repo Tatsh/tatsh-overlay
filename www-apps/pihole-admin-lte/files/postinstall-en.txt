@@ -1,0 +1,31 @@
+SUDO
+
+For tasks that require access to the pihole executable to work, such as editing
+groups, you need to add a rule to allow the pihole user to access it without
+password via sudo. Simple way to do this:
+
+echo 'pihole ALL=(ALL) NOPASSWD: /usr/bin/pihole' > /etc/sudoers.d/pihole
+
+This file is installed by default by the package.
+
+TEMPERATURE READING
+
+To make the temperature reading more predictable, a patch is applied to allow
+for an environment variable HWMON_NAME which is read from the $_SERVER array.
+The value should be something like coretemp or k10temp. You can see the name in
+/sys/class/hwmon/hwmon*/name.
+
+If you are using PHP-FPM, you can set a line like so for the group in the
+configuration:
+
+[pihole]
+...
+env[HWMON_NAME] = k10temp
+
+If you are using Apache, you can set it like so:
+
+<VirtualHost hostname:80>
+  ...
+  SetEnv HWMON_NAME k10temp
+  ...
+</VirtualHost>
