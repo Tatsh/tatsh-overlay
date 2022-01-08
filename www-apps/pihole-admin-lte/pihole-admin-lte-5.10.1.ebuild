@@ -17,9 +17,9 @@ LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-BDEPEND="app-portage/portage-utils"
+BDEPEND="app-misc/jq app-portage/portage-utils"
 RDEPEND="app-admin/sudo
-dev-lang/php[fileinfo,filter,gd,intl,session,sqlite,tokenizer]
+	dev-lang/php[fileinfo,filter,gd,intl,session,sqlite,tokenizer]
 	net-dns/pihole
 	virtual/httpd-php"
 need_httpd_cgi
@@ -30,6 +30,14 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0003-footer-remove-update-check.patch"
 	"${FILESDIR}/${PN}-0004-header-temperature-and-statu.patch"
 )
+
+pkg_setup() {
+	webapp_pkg_setup
+	local -r ph_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/pi-hole/releases/latest' || die; } | jq -r .tag_name)
+	local -r web_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/AdminLTE/releases/latest' || die; } | jq -r .tag_name)
+	local -r ftl_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/FTL/releases/latest' || die; } | jq -r .tag_name)
+	{ echo "${ph_ver} ${web_ver} ${ftl_ver}" > "${T}/GitHubVersions"; } || die
+}
 
 src_prepare() {
 	default
@@ -61,9 +69,10 @@ src_install() {
 	mkdir -p "${ED}/etc/sudoers.d" "${ED}/var/lib/pihole" || die
 	{ echo 'pihole ALL=(ALL) NOPASSWD: /usr/bin/pihole' > "${ED}/etc/sudoers.d/pihole"; } || die
 	webapp_src_install
-	touch "${ED}/var/lib/pihole/GitHubVersions" || die
-	{ echo 'master master' > "${ED}/var/lib/pihole/localbranches"; } || die
+	insinto /var/lib/pihole
+	doins "${T}/GitHubVersions"
+	{ echo 'master master master' > "${ED}/var/lib/pihole/localbranches"; } || die
 	local -r core_ver=$(qatom $(best_version net-dns/pihole) | cut '-d ' -f3)
 	local -r ftl_ver=$(qatom $(best_version net-dns/pihole-ftl) | cut '-d ' -f3)
-	{ echo "${core_ver} ${PV} ${ftl_ver}" > "${ED}/var/lib/pihole/localversions"; } || die
+	{ echo "v${core_ver} v${PV} v${ftl_ver}" > "${ED}/var/lib/pihole/localversions"; } || die
 }
