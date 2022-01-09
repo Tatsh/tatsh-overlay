@@ -1,4 +1,4 @@
-# Copyright 2020-2021 Gentoo Authors
+# Copyright 2020-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,7 +6,7 @@ inherit cmake flag-o-matic
 
 DESCRIPTION="A new generation, open-source graphics plugin for N64 emulators."
 HOMEPAGE="https://github.com/gonetz/GLideN64"
-SHA="8343fd05c9a01ce2d73f7e32bb8355036759a05b"
+SHA="e9a6f258afd7988f64a990d49be545219fb71e4c"
 SRC_URI="https://github.com/gonetz/GLideN64/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
