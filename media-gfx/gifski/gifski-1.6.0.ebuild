@@ -91,12 +91,9 @@ CRATES="
 inherit cargo
 
 DESCRIPTION="pngquant-based GIF maker for nice-looking animGIFs"
-# Double check the homepage as the cargo_metadata crate
-# does not provide this value so instead repository is used
 HOMEPAGE="https://github.com/ImageOptim/gifski"
-SRC_URI="$(cargo_crate_uris)"
-# License set may be more restrictive as OR is not respected
-# use cargo-license for a more accurate license picture
+SRC_URI="https://github.com/ImageOptim/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
+	$(cargo_crate_uris)"
 LICENSE="0BSD AGPL-3+ Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD CC0-1.0 GPL-3+ ISC MIT Unlicense WTFPL-2 ZLIB"
 SLOT="0"
 KEYWORDS="~amd64"
