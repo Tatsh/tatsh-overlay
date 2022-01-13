@@ -6,7 +6,11 @@ password via sudo. Simple way to do this:
 
 echo 'pihole ALL=(ALL) NOPASSWD: /usr/bin/pihole' > /etc/sudoers.d/pihole
 
-This file is installed by default by the package.
+This file is installed by default by the package. Be sure permissions are set
+correctly:
+
+chmod 0600 /etc/sudoers.d/pihole
+chown root. /etc/sudoers.d/pihole
 
 TEMPERATURE READING
 
