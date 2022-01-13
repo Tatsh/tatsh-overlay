@@ -30,6 +30,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0007-fix-chrono.patch"
 	"${FILESDIR}/${PN}-0008-version.sh-path-fix.patch"
 	"${FILESDIR}/${PN}-0009-fix-calling-valid_ip.patch"
+	"${FILESDIR}/${PN}-0010-fix-path-in-generated-dhcp-c.patch"
 )
 
 src_prepare() {
