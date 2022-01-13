@@ -67,12 +67,23 @@ src_install() {
 	newdoc "${FILESDIR}/${PN}-fpm-example.conf" "php-fpm-${PN}.conf"
 	webapp_postinst_txt en "${FILESDIR}/postinstall-en.txt"
 	mkdir -p "${ED}/etc/sudoers.d" "${ED}/var/lib/pihole" || die
-	{ echo 'pihole ALL=(ALL) NOPASSWD: /usr/bin/pihole' > "${ED}/etc/sudoers.d/pihole"; } || die
+	{ echo 'pihole ALL=(ALL) NOPASSWD: /usr/bin/pihole' > \
+		"${ED}/etc/sudoers.d/pihole"; } || die
+	fperms 0600 /etc/sudoers.d/pihole
+	fowners root:root /etc/sudoers.d/pihole
 	webapp_src_install
 	insinto /var/lib/pihole
 	doins "${T}/GitHubVersions"
-	{ echo 'master master master' > "${ED}/var/lib/pihole/localbranches"; } || die
-	local -r core_ver=$(qatom $(best_version net-dns/pihole) | cut '-d ' -f3)
-	local -r ftl_ver=$(qatom $(best_version net-dns/pihole-ftl) | cut '-d ' -f3)
-	{ echo "v${core_ver} v${PV} v${ftl_ver}" > "${ED}/var/lib/pihole/localversions"; } || die
+	{ echo 'master master master' > \
+		"${ED}/var/lib/pihole/localbranches"; } || die
+	local -r core_ver=$({
+		qatom -q "$(best_version net-dns/pihole)" || \
+			die 'qatom failed to get net-dns/pihole version'; } |
+			cut '-d ' -f3)
+	local -r ftl_ver=$({
+		qatom -q "$(best_version net-dns/pihole-ftl)" || \
+			die 'qatom failed to get FTL version'; } |
+			cut '-d ' -f3)
+	{ echo "v${core_ver} v${PV} v${ftl_ver}" > \
+		"${ED}/var/lib/pihole/localversions"; } || die
 }
