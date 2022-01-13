@@ -1,7 +1,7 @@
 From 871d6f26554644640a86023652cfcc6d5e8f7598 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 16 Dec 2021 08:46:50 -0500
-Subject: [PATCH 06/10] advanced/Scripts/piholeLogFlush: change STATEFILE path
+Subject: [PATCH 06/11] advanced/Scripts/piholeLogFlush: change STATEFILE path
 
 ---
  advanced/Scripts/piholeLogFlush.sh | 2 +-

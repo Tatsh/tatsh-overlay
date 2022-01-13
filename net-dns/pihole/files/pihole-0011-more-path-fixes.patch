@@ -1,0 +1,41 @@
+From edc2dddf9e97437976cc277bddc306c5fc1b1b91 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Thu, 13 Jan 2022 11:27:45 -0500
+Subject: [PATCH 11/11] more path fixes
+
+---
+ advanced/01-pihole.conf         | 4 ++--
+ advanced/Scripts/chronometer.sh | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/advanced/01-pihole.conf b/advanced/01-pihole.conf
+index 4c0a2b22..7c33c7b8 100644
+--- a/advanced/01-pihole.conf
++++ b/advanced/01-pihole.conf
+@@ -18,8 +18,8 @@
+ #                    WITHIN @EPREFIX@/etc/pihole/dnsmasq.d/yourname.conf      #
+ ###############################################################################
+ 
+-addn-hosts==@EPREFIX@/var/lib/pihole/local.list
+-addn-hosts==@EPREFIX@/var/lib/pihole/custom.list
++addn-hosts=@EPREFIX@/var/lib/pihole/local.list
++addn-hosts=@EPREFIX@/var/lib/pihole/custom.list
+ 
+ domain-needed
+ 
+diff --git a/advanced/Scripts/chronometer.sh b/advanced/Scripts/chronometer.sh
+index 5f646d87..52e9eb63 100755
+--- a/advanced/Scripts/chronometer.sh
++++ b/advanced/Scripts/chronometer.sh
+@@ -369,7 +369,7 @@ get_sys_stats() {
+         ph_dhcp_range=$(seq -s "|" -f "${DHCP_START%.*}.%g" "${DHCP_START##*.}" "${DHCP_END##*.}")
+ 
+         # Count dynamic leases from available range, and not static leases
+-        ph_dhcp_num=$(grep -cE "$ph_dhcp_range" "/etc/pihole/dhcp.leases")
++        ph_dhcp_num=$(grep -cE "$ph_dhcp_range" "/var/lib/pihole/dhcp.leases")
+         ph_dhcp_percent=$(( ph_dhcp_num * 100 / ph_dhcp_max ))
+     fi
+ }
+-- 
+2.34.1
+

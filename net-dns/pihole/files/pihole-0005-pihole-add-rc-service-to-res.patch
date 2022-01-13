@@ -1,7 +1,7 @@
 From ea718ac490af47a8b84997047f1de4e4bb102ed3 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 16 Dec 2021 08:45:38 -0500
-Subject: [PATCH 05/10] pihole: add rc-service to restartDNS
+Subject: [PATCH 05/11] pihole: add rc-service to restartDNS
 
 ---
  pihole | 2 ++

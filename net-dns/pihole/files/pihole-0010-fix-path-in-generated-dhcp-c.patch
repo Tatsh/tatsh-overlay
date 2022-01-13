@@ -1,7 +1,7 @@
 From 505e73c49618e2c32c8ef5b75cb1328b3ec84da5 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 11:11:56 -0500
-Subject: [PATCH 10/10] fix path in generated DHCP config
+Subject: [PATCH 10/11] fix path in generated DHCP config
 
 ---
  advanced/Scripts/webpage.sh | 2 +-
