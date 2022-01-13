@@ -1,16 +1,17 @@
-From b30beea186e4e2feaa462f7873c3d5571476c998 Mon Sep 17 00:00:00 2001
+From 3d5f61d4484b948d8b0626edceb65ea2059140be Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 11:41:39 -0500
 Subject: [PATCH 5/5] more path fixes
 
 ---
- api_db.php                         | 2 +-
- dns_records.php                    | 2 +-
- scripts/pi-hole/js/queryads.js     | 2 +-
- scripts/pi-hole/php/database.php   | 4 ++--
- scripts/pi-hole/php/func.php       | 2 +-
- scripts/pi-hole/php/teleporter.php | 8 ++++----
- 6 files changed, 10 insertions(+), 10 deletions(-)
+ api_db.php                           |  2 +-
+ dns_records.php                      |  4 ++--
+ scripts/pi-hole/js/queryads.js       |  2 +-
+ scripts/pi-hole/php/database.php     |  4 ++--
+ scripts/pi-hole/php/func.php         |  4 ++--
+ scripts/pi-hole/php/savesettings.php |  2 +-
+ scripts/pi-hole/php/teleporter.php   | 10 +++++-----
+ 7 files changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/api_db.php b/api_db.php
 index a861cbde..993a8b27 100644
@@ -26,12 +27,15 @@ index a861cbde..993a8b27 100644
  	$data = array_merge($data, $result);
  }
 diff --git a/dns_records.php b/dns_records.php
-index 36311ef2..7e7af827 100644
+index 36311ef2..60723a79 100644
 --- a/dns_records.php
 +++ b/dns_records.php
-@@ -45,7 +45,7 @@
+@@ -43,9 +43,9 @@
+               <p>The order of locally defined DNS records is: </p>
+               <ol>
                    <li>The device's host name and <code>pi.hole</code></li>
-                   <li>Configured in a config file in <code>/etc/dnsmasq.d/</code></li>
+-                  <li>Configured in a config file in <code>/etc/dnsmasq.d/</code></li>
++                  <li>Configured in a config file in <code>/etc/pihole/dnsmasq.d/</code></li>
                    <li>Read from <code>/etc/hosts</code></li>
 -                  <li>Read from the "Local (custom) DNS" list (stored in <code>/etc/pihole/custom.list</code>)</li>
 +                  <li>Read from the "Local (custom) DNS" list (stored in <code>/var/lib/pihole/custom.list</code>)</li>
@@ -74,7 +78,7 @@ index ee9cff69..dd03e346 100644
  }
  
 diff --git a/scripts/pi-hole/php/func.php b/scripts/pi-hole/php/func.php
-index 754277b5..037a162a 100644
+index 754277b5..17e416e6 100644
 --- a/scripts/pi-hole/php/func.php
 +++ b/scripts/pi-hole/php/func.php
 @@ -153,7 +153,7 @@ function pihole_execute($argument_string, $error_on_failure = true) {
@@ -86,10 +90,41 @@ index 754277b5..037a162a 100644
  
  function echoCustomDNSEntries()
  {
+@@ -301,7 +301,7 @@ function deleteAllCustomDNSEntries($reload="")
+ }
+ 
+ // CNAME
+-$customCNAMEFile = "/etc/dnsmasq.d/05-pihole-custom-cname.conf";
++$customCNAMEFile = "/etc/pihole/dnsmasq.d/05-pihole-custom-cname.conf";
+ 
+ function echoCustomCNAMEEntries()
+ {
+diff --git a/scripts/pi-hole/php/savesettings.php b/scripts/pi-hole/php/savesettings.php
+index 370725da..02418010 100644
+--- a/scripts/pi-hole/php/savesettings.php
++++ b/scripts/pi-hole/php/savesettings.php
+@@ -35,7 +35,7 @@ function formatMAC($mac_addr)
+ }
+ 
+ $dhcp_static_leases = array();
+-function readStaticLeasesFile($origin_file="/etc/dnsmasq.d/04-pihole-static-dhcp.conf")
++function readStaticLeasesFile($origin_file="/etc/pihole/dnsmasq.d/04-pihole-static-dhcp.conf")
+ {
+ 	global $dhcp_static_leases;
+ 	$dhcp_static_leases = array();
 diff --git a/scripts/pi-hole/php/teleporter.php b/scripts/pi-hole/php/teleporter.php
-index d25f0509..abedef06 100644
+index d25f0509..80a97738 100644
 --- a/scripts/pi-hole/php/teleporter.php
 +++ b/scripts/pi-hole/php/teleporter.php
+@@ -493,7 +493,7 @@ if(isset($_POST["action"]))
+ 			if(isset($_POST["staticdhcpleases"]) && $file->getFilename() === "04-pihole-static-dhcp.conf")
+ 			{
+ 				if($flushtables) {
+-					$local_file = @fopen("/etc/dnsmasq.d/04-pihole-static-dhcp.conf", "r+");
++					$local_file = @fopen("/etc/pihole/dnsmasq.d/04-pihole-static-dhcp.conf", "r+");
+ 					if ($local_file !== false) {
+ 						ftruncate($local_file, 0);
+ 						fclose($local_file);
 @@ -623,12 +623,12 @@ else
  	archive_add_table("adlist_by_group.json", "adlist_by_group");
  	archive_add_table("client_by_group.json", "client_by_group");
