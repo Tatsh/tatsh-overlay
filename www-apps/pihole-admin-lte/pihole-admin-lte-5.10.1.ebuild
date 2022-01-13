@@ -70,9 +70,9 @@ src_install() {
 	mkdir -p "${ED}/etc/sudoers.d" "${ED}/var/lib/pihole" || die
 	{ echo 'pihole ALL=(ALL) NOPASSWD: /usr/bin/pihole' > \
 		"${ED}/etc/sudoers.d/pihole"; } || die
-	fperms 0600 /etc/sudoers.d/pihole
-	fowners root:root /etc/sudoers.d/pihole
 	webapp_src_install
+	fperms 0600 /etc/sudoers.d/pihole
+	fowners root:0 /etc/sudoers.d/pihole
 	insinto /var/lib/pihole
 	doins "${T}/GitHubVersions"
 	{ echo 'master master master' > \
