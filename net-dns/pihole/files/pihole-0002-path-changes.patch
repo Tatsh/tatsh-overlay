@@ -1,0 +1,1035 @@
+From cb348e56309d662a32e09c3ba14fe8e2f8409db8 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 15 Dec 2021 06:31:49 -0500
+Subject: [PATCH 2/9] Path changes
+
+---
+ advanced/01-pihole.conf                       | 10 +-
+ advanced/Scripts/chronometer.sh               | 10 +-
+ .../Scripts/database_migration/gravity-db.sh  |  2 +-
+ advanced/Scripts/list.sh                      |  6 +-
+ advanced/Scripts/pihole-reenable.sh           |  2 +-
+ advanced/Scripts/piholeARPTable.sh            |  6 +-
+ advanced/Scripts/piholeDebug.sh               | 38 ++++----
+ advanced/Scripts/piholeLogFlush.sh            | 36 +++----
+ advanced/Scripts/query.sh                     |  6 +-
+ advanced/Scripts/setupLCD.sh                  | 18 ++--
+ advanced/Scripts/updatecheck.sh               |  2 +-
+ advanced/Scripts/version.sh                   | 64 ++-----------
+ advanced/Scripts/webpage.sh                   | 19 ++--
+ advanced/Templates/gravity_copy.sql           |  2 +-
+ advanced/Templates/pihole-FTL.service         | 22 ++---
+ advanced/index.php                            | 10 +-
+ gravity.sh                                    | 23 ++---
+ manpages/pihole-FTL.conf.5                    | 16 ++--
+ pihole                                        | 95 +++++--------------
+ 19 files changed, 146 insertions(+), 241 deletions(-)
+
+diff --git a/advanced/01-pihole.conf b/advanced/01-pihole.conf
+index 02bc93bf..4c0a2b22 100644
+--- a/advanced/01-pihole.conf
++++ b/advanced/01-pihole.conf
+@@ -12,14 +12,14 @@
+ # ANY CHANGES MADE TO THIS FILE AFTER INSTALL WILL BE LOST ON THE NEXT UPDATE #
+ #                                                                             #
+ #        IF YOU WISH TO CHANGE THE UPSTREAM SERVERS, CHANGE THEM IN:          #
+-#                      /etc/pihole/setupVars.conf                             #
++#                      @EPREFIX@/var/lib/pihole/setupVars.conf                #
+ #                                                                             #
+ #        ANY OTHER CHANGES SHOULD BE MADE IN A SEPARATE CONFIG FILE           #
+-#                    WITHIN /etc/dnsmasq.d/yourname.conf                      #
++#                    WITHIN @EPREFIX@/etc/pihole/dnsmasq.d/yourname.conf      #
+ ###############################################################################
+ 
+-addn-hosts=/etc/pihole/local.list
+-addn-hosts=/etc/pihole/custom.list
++addn-hosts==@EPREFIX@/var/lib/pihole/local.list
++addn-hosts==@EPREFIX@/var/lib/pihole/custom.list
+ 
+ domain-needed
+ 
+@@ -37,6 +37,6 @@ interface=@INT@
+ cache-size=@CACHE_SIZE@
+ 
+ log-queries
+-log-facility=/var/log/pihole.log
++log-facility=@EPREFIX@/var/log/pihole.log
+ 
+ log-async
+diff --git a/advanced/Scripts/chronometer.sh b/advanced/Scripts/chronometer.sh
+index 312c484f..114c3883 100755
+--- a/advanced/Scripts/chronometer.sh
++++ b/advanced/Scripts/chronometer.sh
+@@ -14,7 +14,7 @@ LC_NUMERIC=C
+ # Retrieve stats from FTL engine
+ pihole-FTL() {
+     local ftl_port LINE
+-    ftl_port=$(cat /run/pihole-FTL.port 2> /dev/null)
++    ftl_port=$(cat @EPREFIX@/run/pihole-FTL.port 2> /dev/null)
+     if [[ -n "$ftl_port" ]]; then
+         # Open connection to FTL
+         exec 3<>"/dev/tcp/127.0.0.1/$ftl_port"
+@@ -134,7 +134,7 @@ get_init_stats() {
+     }
+ 
+     # Set Color Codes
+-    coltable="/opt/pihole/COL_TABLE"
++    coltable="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
+     if [[ -f "${coltable}" ]]; then
+         source ${coltable}
+     else
+@@ -187,7 +187,7 @@ get_init_stats() {
+         esac
+         sys_type="Raspberry Pi$sys_model"
+     else
+-        source "/etc/os-release"
++        source "@EPREFIX@/etc/os-release"
+         CODENAME=$(sed 's/[()]//g' <<< "${VERSION/* /}")
+         sys_type="${NAME/ */} ${CODENAME^} $VERSION_ID"
+     fi
+@@ -210,8 +210,8 @@ get_init_stats() {
+     fi
+ 
+     # Test existence of setupVars config
+-    if [[ -f "/etc/pihole/setupVars.conf" ]]; then
+-        setupVars="/etc/pihole/setupVars.conf"
++    if [[ -f "@EPREFIX@/var/lib/pihole/setupVars.conf" ]]; then
++        setupVars="@EPREFIX@/var/lib/pihole/setupVars.conf"
+     fi
+ }
+ 
+diff --git a/advanced/Scripts/database_migration/gravity-db.sh b/advanced/Scripts/database_migration/gravity-db.sh
+index 09dc1727..25db988f 100755
+--- a/advanced/Scripts/database_migration/gravity-db.sh
++++ b/advanced/Scripts/database_migration/gravity-db.sh
+@@ -10,7 +10,7 @@
+ # This file is copyright under the latest version of the EUPL.
+ # Please see LICENSE file for your rights under this license.
+ 
+-readonly scriptPath="/etc/.pihole/advanced/Scripts/database_migration/gravity"
++readonly scriptPath="@EPREFIX@/usr/@LIBDIR@/pihole/database_migration/gravity"
+ 
+ upgrade_gravityDB(){
+ 	local database piholeDir auditFile version
+diff --git a/advanced/Scripts/list.sh b/advanced/Scripts/list.sh
+index 8945047e..9148bea8 100755
+--- a/advanced/Scripts/list.sh
++++ b/advanced/Scripts/list.sh
+@@ -11,8 +11,8 @@
+ # Please see LICENSE file for your rights under this license.
+ 
+ # Globals
+-piholeDir="/etc/pihole"
+-GRAVITYDB="${piholeDir}/gravity.db"
++piholeDir="@EPREFIX@/etc/pihole"
++GRAVITYDB="@EPREFIX@/var/lib/pihole/gravity.db"
+ # Source pihole-FTL from install script
+ pihole_FTL="${piholeDir}/pihole-FTL.conf"
+ if [[ -f "${pihole_FTL}" ]]; then
+@@ -37,7 +37,7 @@ declare -i domaincount
+ domaincount=0
+ reload=false
+ 
+-colfile="/opt/pihole/COL_TABLE"
++colfile="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
+ source ${colfile}
+ 
+ # IDs are hard-wired to domain interpretation in the gravity database scheme
+diff --git a/advanced/Scripts/pihole-reenable.sh b/advanced/Scripts/pihole-reenable.sh
+index 93ec3b95..99d8b87a 100755
+--- a/advanced/Scripts/pihole-reenable.sh
++++ b/advanced/Scripts/pihole-reenable.sh
+@@ -17,7 +17,7 @@
+ # This ensures that pihole ends up in the correct state after a sequence of
+ # commands suchs as: `pihole disable 30s; pihole enable; pihole disable`
+ 
+-readonly PI_HOLE_BIN_DIR="/usr/local/bin"
++readonly PI_HOLE_BIN_DIR="@EPREFIX@/usr/bin"
+ 
+ sleep "${1}"
+ "${PI_HOLE_BIN_DIR}"/pihole enable
+diff --git a/advanced/Scripts/piholeARPTable.sh b/advanced/Scripts/piholeARPTable.sh
+index 66d05bf9..79be0255 100755
+--- a/advanced/Scripts/piholeARPTable.sh
++++ b/advanced/Scripts/piholeARPTable.sh
+@@ -10,7 +10,7 @@
+ # This file is copyright under the latest version of the EUPL.
+ # Please see LICENSE file for your rights under this license.
+ 
+-coltable="/opt/pihole/COL_TABLE"
++coltable="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
+ if [[ -f ${coltable} ]]; then
+     source ${coltable}
+ fi
+@@ -20,13 +20,13 @@ fi
+ # Constructed to return nothing when
+ # a) the setting is not present in the config file, or
+ # b) the setting is commented out (e.g. "#DBFILE=...")
+-FTLconf="/etc/pihole/pihole-FTL.conf"
++FTLconf="@EPREFIX@/etc/pihole/pihole-FTL.conf"
+ if [ -e "$FTLconf" ]; then
+     DBFILE="$(sed -n -e 's/^\s*DBFILE\s*=\s*//p' ${FTLconf})"
+ fi
+ # Test for empty string. Use standard path in this case.
+ if [ -z "$DBFILE" ]; then
+-    DBFILE="/etc/pihole/pihole-FTL.db"
++    DBFILE="@EPREFIX@/var/lib/pihole/pihole-FTL.db"
+ fi
+ 
+ 
+diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
+index 3ac63e80..9dc9a90e 100755
+--- a/advanced/Scripts/piholeDebug.sh
++++ b/advanced/Scripts/piholeDebug.sh
+@@ -22,8 +22,8 @@ set -o pipefail
+ ######## GLOBAL VARS ########
+ # These variables would normally be next to the other files
+ # but we need them to be first in order to get the colors needed for the script output
+-PIHOLE_SCRIPTS_DIRECTORY="/opt/pihole"
+-PIHOLE_COLTABLE_FILE="${PIHOLE_SCRIPTS_DIRECTORY}/COL_TABLE"
++PIHOLE_SCRIPTS_DIRECTORY="@EPREFIX@/usr/@LIBDIR@/pihole"
++PIHOLE_COLTABLE_FILE="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
+ 
+ # These provide the colors we need for making the log more readable
+ if [[ -f ${PIHOLE_COLTABLE_FILE} ]]; then
+@@ -59,18 +59,18 @@ FORUMS_URL="${COL_CYAN}https://discourse.pi-hole.net${COL_NC}"
+ 
+ # Directories required by Pi-hole
+ # https://discourse.pi-hole.net/t/what-files-does-pi-hole-use/1684
+-CORE_GIT_DIRECTORY="/etc/.pihole"
+-CRON_D_DIRECTORY="/etc/cron.d"
+-DNSMASQ_D_DIRECTORY="/etc/dnsmasq.d"
+-PIHOLE_DIRECTORY="/etc/pihole"
+-PIHOLE_SCRIPTS_DIRECTORY="/opt/pihole"
+-BIN_DIRECTORY="/usr/local/bin"
+-RUN_DIRECTORY="/run"
+-LOG_DIRECTORY="/var/log"
++CORE_GIT_DIRECTORY="@EPREFIX@/usr/@LIBDIR@/pihole"
++CRON_D_DIRECTORY="@EPREFIX@/etc/cron.d"
++DNSMASQ_D_DIRECTORY="@EPREFIX@/etc/pihole/dnsmasq.d"
++PIHOLE_DIRECTORY="@EPREFIX@/var/lib/pihole"
++PIHOLE_SCRIPTS_DIRECTORY="@EPREFIX@/usr/@LIBDIR@/pihole"
++BIN_DIRECTORY="@EPREFIX@/usr/bin"
++RUN_DIRECTORY="@EPREFIX@/run"
++LOG_DIRECTORY="@EPREFIX@/var/log"
+ WEB_SERVER_LOG_DIRECTORY="${LOG_DIRECTORY}/lighttpd"
+-WEB_SERVER_CONFIG_DIRECTORY="/etc/lighttpd"
+-HTML_DIRECTORY="/var/www/html"
+-WEB_GIT_DIRECTORY="${HTML_DIRECTORY}/admin"
++WEB_SERVER_CONFIG_DIRECTORY="@EPREFIX@/etc/lighttpd"
++HTML_DIRECTORY="@EPREFIX@/var/www/localhost/htdocs"
++WEB_GIT_DIRECTORY="${HTML_DIRECTORY}/pihole-admin"
+ #BLOCK_PAGE_DIRECTORY="${HTML_DIRECTORY}/pihole"
+ SHM_DIRECTORY="/dev/shm"
+ ETC="/etc"
+@@ -87,7 +87,7 @@ PIHOLE_RAW_BLOCKLIST_FILES="${PIHOLE_DIRECTORY}/list.*"
+ PIHOLE_LOCAL_HOSTS_FILE="${PIHOLE_DIRECTORY}/local.list"
+ PIHOLE_LOGROTATE_FILE="${PIHOLE_DIRECTORY}/logrotate"
+ PIHOLE_SETUP_VARS_FILE="${PIHOLE_DIRECTORY}/setupVars.conf"
+-PIHOLE_FTL_CONF_FILE="${PIHOLE_DIRECTORY}/pihole-FTL.conf"
++PIHOLE_FTL_CONF_FILE="@EPREFIX@/etc/pihole/pihole-FTL.conf"
+ PIHOLE_CUSTOM_HOSTS_FILE="${PIHOLE_DIRECTORY}/custom.list"
+ 
+ # Read the value of an FTL config key. The value is printed to stdout.
+@@ -413,8 +413,8 @@ os_check() {
+     local remote_os_domain valid_os valid_version detected_os detected_version cmdResult digReturnCode response
+     remote_os_domain=${OS_CHECK_DOMAIN_NAME:-"versions.pi-hole.net"}
+ 
+-    detected_os=$(grep "\bID\b" /etc/os-release | cut -d '=' -f2 | tr -d '"')
+-    detected_version=$(grep VERSION_ID /etc/os-release | cut -d '=' -f2 | tr -d '"')
++    detected_os=$(grep "\bID\b" @EPREFIX@/etc/os-release | cut -d '=' -f2 | tr -d '"')
++    detected_version=$(grep VERSION_ID @EPREFIX@/etc/os-release | cut -d '=' -f2 | tr -d '"')
+ 
+     cmdResult="$(dig +short -t txt "${remote_os_domain}" @ns1.pi-hole.net 2>&1; echo $?)"
+     #Get the return code of the previous command (last line)
+@@ -468,7 +468,7 @@ diagnose_operating_system() {
+     echo_current_diagnostic "Operating system"
+ 
+     # If there is a /etc/*release file, it's probably a supported operating system, so we can
+-    if ls /etc/*release 1> /dev/null 2>&1; then
++    if ls @EPREFIX@/etc/*release 1> /dev/null 2>&1; then
+         # display the attributes to the user from the function made earlier
+         os_check
+     else
+@@ -481,9 +481,9 @@ check_selinux() {
+     # SELinux is not supported by the Pi-hole
+     echo_current_diagnostic "SELinux"
+     # Check if a SELinux configuration file exists
+-    if [[ -f /etc/selinux/config ]]; then
++    if [[ -f @EPREFIX@/etc/selinux/config ]]; then
+         # If a SELinux configuration file was found, check the default SELinux mode.
+-        DEFAULT_SELINUX=$(awk -F= '/^SELINUX=/ {print $2}' /etc/selinux/config)
++        DEFAULT_SELINUX=$(awk -F= '/^SELINUX=/ {print $2}' @EPREFIX@/etc/selinux/config)
+         case "${DEFAULT_SELINUX,,}" in
+             enforcing)
+                 log_write "${CROSS} ${COL_RED}Default SELinux: $DEFAULT_SELINUX${COL_NC}"
+diff --git a/advanced/Scripts/piholeLogFlush.sh b/advanced/Scripts/piholeLogFlush.sh
+index 5c6a2c68..4f2edebf 100755
+--- a/advanced/Scripts/piholeLogFlush.sh
++++ b/advanced/Scripts/piholeLogFlush.sh
+@@ -8,58 +8,58 @@
+ # This file is copyright under the latest version of the EUPL.
+ # Please see LICENSE file for your rights under this license.
+ 
+-colfile="/opt/pihole/COL_TABLE"
++colfile="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
+ source ${colfile}
+ 
+ # In case we're running at the same time as a system logrotate, use a
+ # separate logrotate state file to prevent stepping on each other's
+ # toes.
+-STATEFILE="/var/lib/logrotate/pihole"
++STATEFILE="@EPREFIX@/var/lib/logrotate/pihole"
+ 
+ # Determine database location
+ # Obtain DBFILE=... setting from pihole-FTL.db
+ # Constructed to return nothing when
+ # a) the setting is not present in the config file, or
+ # b) the setting is commented out (e.g. "#DBFILE=...")
+-FTLconf="/etc/pihole/pihole-FTL.conf"
++FTLconf="@EPREFIX@/etc/pihole/pihole-FTL.conf"
+ if [ -e "$FTLconf" ]; then
+     DBFILE="$(sed -n -e 's/^\s*DBFILE\s*=\s*//p' ${FTLconf})"
+ fi
+ # Test for empty string. Use standard path in this case.
+ if [ -z "$DBFILE" ]; then
+-    DBFILE="/etc/pihole/pihole-FTL.db"
++    DBFILE="@EPREFIX@/var/lib/pihole/pihole-FTL.db"
+ fi
+ 
+ if [[ "$@" != *"quiet"* ]]; then
+-    echo -ne "  ${INFO} Flushing /var/log/pihole.log ..."
++    echo -ne "  ${INFO} Flushing @EPREFIX@/var/log/pihole.log ..."
+ fi
+ if [[ "$@" == *"once"* ]]; then
+     # Nightly logrotation
+-    if command -v /usr/sbin/logrotate >/dev/null; then
++    if command -v @EPREFIX@/usr/bin/logrotate >/dev/null; then
+         # Logrotate once
+-        /usr/sbin/logrotate --force --state "${STATEFILE}" /etc/pihole/logrotate
++        @EPREFIX@/usr/bin/logrotate --force --state "${STATEFILE}" @EPREFIX@/etc/logrotate.d/pihole
+     else
+         # Copy pihole.log over to pihole.log.1
+         # and empty out pihole.log
+         # Note that moving the file is not an option, as
+         # dnsmasq would happily continue writing into the
+         # moved file (it will have the same file handler)
+-        cp -p /var/log/pihole.log /var/log/pihole.log.1
+-        echo " " > /var/log/pihole.log
+-        chmod 644 /var/log/pihole.log
++        cp -p @EPREFIX@/var/log/pihole.log @EPREFIX@/var/log/pihole.log.1
++        echo " " > @EPREFIX@/var/log/pihole.log
++        chmod 644 @EPREFIX@/var/log/pihole.log
+     fi
+ else
+     # Manual flushing
+-    if command -v /usr/sbin/logrotate >/dev/null; then
++    if command -v @EPREFIX@/usr/bin/logrotate >/dev/null; then
+         # Logrotate twice to move all data out of sight of FTL
+-        /usr/sbin/logrotate --force --state "${STATEFILE}" /etc/pihole/logrotate; sleep 3
+-        /usr/sbin/logrotate --force --state "${STATEFILE}" /etc/pihole/logrotate
++        @EPREFIX@/usr/bin/logrotate --force --state "${STATEFILE}" @EPREFIX@/etc/logrotate.d/pihole; sleep 3
++        @EPREFIX@/usr/bin/logrotate --force --state "${STATEFILE}" @EPREFIX@/etc/logrotate.d/pihole
+     else
+         # Flush both pihole.log and pihole.log.1 (if existing)
+-        echo " " > /var/log/pihole.log
+-        if [ -f /var/log/pihole.log.1 ]; then
+-            echo " " > /var/log/pihole.log.1
+-            chmod 644 /var/log/pihole.log.1
++        echo " " > @EPREFIX@/var/log/pihole.log
++        if [ -f @EPREFIX@/var/log/pihole.log.1 ]; then
++            echo " " > @EPREFIX@/var/log/pihole.log.1
++            chmod 644 @EPREFIX@/var/log/pihole.log.1
+         fi
+     fi
+     # Delete most recent 24 hours from FTL's database, leave even older data intact (don't wipe out all history)
+@@ -70,6 +70,6 @@ else
+ fi
+ 
+ if [[ "$@" != *"quiet"* ]]; then
+-    echo -e "${OVER}  ${TICK} Flushed /var/log/pihole.log"
++    echo -e "${OVER}  ${TICK} Flushed @EPREFIX@/var/log/pihole.log"
+     echo -e "  ${TICK} Deleted ${deleted} queries from database"
+ fi
+diff --git a/advanced/Scripts/query.sh b/advanced/Scripts/query.sh
+index 0fd9871a..d5b08491 100755
+--- a/advanced/Scripts/query.sh
++++ b/advanced/Scripts/query.sh
+@@ -11,8 +11,8 @@
+ # Please see LICENSE file for your rights under this license.
+ 
+ # Globals
+-piholeDir="/etc/pihole"
+-GRAVITYDB="${piholeDir}/gravity.db"
++piholeDir="@EPREFIX@/etc/pihole"
++GRAVITYDB="@EPREFIX@/var/lib/pihole/gravity.db"
+ options="$*"
+ all=""
+ exact=""
+@@ -28,7 +28,7 @@ fi
+ # have changed
+ gravityDBfile="${GRAVITYDB}"
+ 
+-colfile="/opt/pihole/COL_TABLE"
++colfile="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
+ source "${colfile}"
+ 
+ # Scan an array of files for matching strings
+diff --git a/advanced/Scripts/setupLCD.sh b/advanced/Scripts/setupLCD.sh
+index 82523643..dcbbf8fe 100755
+--- a/advanced/Scripts/setupLCD.sh
++++ b/advanced/Scripts/setupLCD.sh
+@@ -17,7 +17,7 @@
+ getInitSys() {
+     if command -v systemctl > /dev/null && systemctl | grep -q '\-\.mount'; then
+         SYSTEMD=1
+-    elif [ -f /etc/init.d/cron ] && [ ! -h /etc/init.d/cron ]; then
++    elif [ -f @EPREFIX@/etc/init.d/cron ] && [ ! -h @EPREFIX@/etc/init.d/cron ]; then
+         SYSTEMD=0
+     else
+         echo "Unrecognized init system"
+@@ -28,13 +28,13 @@ getInitSys() {
+ # Borrowed from adafruit-pitft-helper:
+ # https://github.com/adafruit/Adafruit-PiTFT-Helper/blob/master/adafruit-pitft-helper#L274-L285
+ autoLoginPiToConsole() {
+-    if [ -e /etc/init.d/lightdm ]; then
++    if [ -e @EPREFIX@/etc/init.d/lightdm ]; then
+         if [ ${SYSTEMD} -eq 1 ]; then
+             systemctl set-default multi-user.target
+-            ln -fs /etc/systemd/system/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
++            ln -fs @EPREFIX@/etc/systemd/system/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
+         else
+             update-rc.d lightdm disable 2
+-            sed /etc/inittab -i -e "s/1:2345:respawn:\/sbin\/getty --noclear 38400 tty1/1:2345:respawn:\/bin\/login -f pi tty1 <\/dev\/tty1 >\/dev\/tty1 2>&1/"
++            sed @EPREFIX@/etc/inittab -i -e "s/1:2345:respawn:\/sbin\/getty --noclear 38400 tty1/1:2345:respawn:\/bin\/login -f pi tty1 <\/dev\/tty1 >\/dev\/tty1 2>&1/"
+         fi
+     fi
+ }
+@@ -45,7 +45,7 @@ getInitSys
+ autoLoginPiToConsole
+ 
+ # Set chronomter to run automatically when pi logs in
+-echo /usr/local/bin/chronometer.sh >> /home/pi/.bashrc
++echo @EPREFIX@/usr/@LIBDIR@/pihole/chronometer.sh >> /home/pi/.bashrc
+ # OR
+ #$SUDO echo /usr/local/bin/chronometer.sh >> /etc/profile
+ 
+@@ -57,12 +57,12 @@ apt-get -y install adafruit-pitft-helper
+ adafruit-pitft-helper -t 28r
+ 
+ # Download the cmdline.txt file that prevents the screen from going blank after a period of time
+-mv /boot/cmdline.txt /boot/cmdline.orig
+-curl -o /boot/cmdline.txt https://raw.githubusercontent.com/pi-hole/pi-hole/master/advanced/cmdline.txt
++mv @EPREFIX@/boot/cmdline.txt @EPREFIX@/boot/cmdline.orig
++curl -o @EPREFIX@/boot/cmdline.txt https://raw.githubusercontent.com/pi-hole/pi-hole/master/advanced/cmdline.txt
+ 
+ # Back up the original file and download the new one
+-mv /etc/default/console-setup /etc/default/console-setup.orig
+-curl -o /etc/default/console-setup https://raw.githubusercontent.com/pi-hole/pi-hole/master/advanced/console-setup
++mv @EPREFIX@/etc/default/console-setup @EPREFIX@/etc/default/console-setup.orig
++curl -o @EPREFIX@/etc/default/console-setup https://raw.githubusercontent.com/pi-hole/pi-hole/master/advanced/console-setup
+ 
+ # Instantly apply the font change to the LCD screen
+ setupcon
+diff --git a/advanced/Scripts/updatecheck.sh b/advanced/Scripts/updatecheck.sh
+index afb03ebb..526afd04 100755
+--- a/advanced/Scripts/updatecheck.sh
++++ b/advanced/Scripts/updatecheck.sh
+@@ -39,7 +39,7 @@ function get_local_version() {
+ 
+ # Source the setupvars config file
+ # shellcheck disable=SC1091
+-. /etc/pihole/setupVars.conf
++. @EPREFIX@/var/lib/setupVars.conf
+ 
+ if [[ "$2" == "remote" ]]; then
+ 
+diff --git a/advanced/Scripts/version.sh b/advanced/Scripts/version.sh
+index 0b7b29dd..8809b5fb 100755
+--- a/advanced/Scripts/version.sh
++++ b/advanced/Scripts/version.sh
+@@ -10,8 +10,8 @@
+ 
+ # Variables
+ DEFAULT="-1"
+-COREGITDIR="/etc/.pihole/"
+-WEBGITDIR="/var/www/html/admin/"
++COREGITDIR="@EPREFIX@/usr/@LIBDIR@/pihole"
++WEBGITDIR="@EPREFIX@/var/www/localhost/htdocs/pihole-admin"
+ 
+ # Source the setupvars config file
+ # shellcheck disable=SC1091
+@@ -23,64 +23,17 @@ getLocalVersion() {
+         pihole-FTL version
+         return 0
+     fi
+-
+-    # Get the tagged version of the local repository
+-    local directory="${1}"
+-    local version
+-
+-    cd "${directory}" 2> /dev/null || { echo "${DEFAULT}"; return 1; }
+-    version=$(git describe --tags --always || echo "$DEFAULT")
+-    if [[ "${version}" =~ ^v ]]; then
+-        echo "${version}"
+-    elif [[ "${version}" == "${DEFAULT}" ]]; then
+-        echo "ERROR"
+-        return 1
+-    else
+-        echo "Untagged"
+-    fi
++    echo "@PIHOLE_VERSION@"
+     return 0
+ }
+ 
+ getLocalHash() {
+-    # Local FTL hash does not exist on filesystem
+-    if [[ "$1" == "FTL" ]]; then
+-        echo "N/A"
+-        return 0
+-    fi
+-
+-    # Get the short hash of the local repository
+-    local directory="${1}"
+-    local hash
+-
+-    cd "${directory}" 2> /dev/null || { echo "${DEFAULT}"; return 1; }
+-    hash=$(git rev-parse --short HEAD || echo "$DEFAULT")
+-    if [[ "${hash}" == "${DEFAULT}" ]]; then
+-        echo "ERROR"
+-        return 1
+-    else
+-        echo "${hash}"
+-    fi
++    echo "N/A"
+     return 0
+ }
+ 
+ getRemoteHash(){
+-    # Remote FTL hash is not applicable
+-    if [[ "$1" == "FTL" ]]; then
+-        echo "N/A"
+-        return 0
+-    fi
+-
+-    local daemon="${1}"
+-    local branch="${2}"
+-
+-    hash=$(git ls-remote --heads "https://github.com/pi-hole/${daemon}" | \
+-        awk -v bra="$branch" '$0~bra {print substr($0,0,8);exit}')
+-    if [[ -n "$hash" ]]; then
+-        echo "$hash"
+-    else
+-        echo "ERROR"
+-        return 1
+-    fi
++    echo "N/A"
+     return 0
+ }
+ 
+@@ -90,7 +43,7 @@ getRemoteVersion(){
+     local version
+     local cachedVersions
+     local arrCache
+-    cachedVersions="/etc/pihole/GitHubVersions"
++    cachedVersions="@EPREFIX@/var/lib/pihole/GitHubVersions"
+ 
+     #If the above file exists, then we can read from that. Prevents overuse of GitHub API
+     if [[ -f "$cachedVersions" ]]; then
+@@ -124,10 +77,9 @@ getLocalBranch(){
+ 
+     # Local FTL btranch is stored in /etc/pihole/ftlbranch
+     if [[ "$1" == "FTL" ]]; then
+-        branch="$(pihole-FTL branch)"
++        branch="v@PIHOLE_FTL_VERSION@"
+     else
+-        cd "${directory}" 2> /dev/null || { echo "${DEFAULT}"; return 1; }
+-        branch=$(git rev-parse --abbrev-ref HEAD || echo "$DEFAULT")
++        branch="v@PIHOLE_VERSION@"
+     fi
+     if [[ ! "${branch}" =~ ^v ]]; then
+         if [[ "${branch}" == "master" ]]; then
+diff --git a/advanced/Scripts/webpage.sh b/advanced/Scripts/webpage.sh
+index 4f44eca8..ccec9c24 100755
+--- a/advanced/Scripts/webpage.sh
++++ b/advanced/Scripts/webpage.sh
+@@ -10,23 +10,22 @@
+ # This file is copyright under the latest version of the EUPL.
+ # Please see LICENSE file for your rights under this license.
+ 
+-readonly dnsmasqconfig="/etc/dnsmasq.d/01-pihole.conf"
+-readonly dhcpconfig="/etc/dnsmasq.d/02-pihole-dhcp.conf"
+-readonly FTLconf="/etc/pihole/pihole-FTL.conf"
++readonly dnsmasqconfig="@EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf"
++readonly dhcpconfig="@EPREFIX@/etc/pihole/dnsmasq.d/02-pihole-dhcp.conf"
++readonly FTLconf="@EPREFIX@/etc/pihole/pihole-FTL.conf"
+ # 03 -> wildcards
+-readonly dhcpstaticconfig="/etc/dnsmasq.d/04-pihole-static-dhcp.conf"
+-readonly dnscustomfile="/etc/pihole/custom.list"
+-readonly dnscustomcnamefile="/etc/dnsmasq.d/05-pihole-custom-cname.conf"
++readonly dhcpstaticconfig="@EPREFIX@/etc/pihole/dnsmasq.d/04-pihole-static-dhcp.conf"
++readonly dnscustomfile="@EPREFIX@/var/lib/pihole/custom.list"
++readonly dnscustomcnamefile="@EPREFIX@/etc/pihole/dnsmasq.d/05-pihole-custom-cname.conf"
+ 
+-readonly gravityDBfile="/etc/pihole/gravity.db"
++readonly gravityDBfile="@EPREFIX@/var/lib/gravity.db"
+ 
+ # Source install script for ${setupVars}, ${PI_HOLE_BIN_DIR} and valid_ip()
+-readonly PI_HOLE_FILES_DIR="/etc/.pihole"
++readonly PI_HOLE_FILES_DIR="@EPREFIX@/var/lib/pihole/"
+ # shellcheck disable=SC2034  # used in basic-install
+ PH_TEST="true"
+-source "${PI_HOLE_FILES_DIR}/automated install/basic-install.sh"
+ 
+-coltable="/opt/pihole/COL_TABLE"
++coltable="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
+ if [[ -f ${coltable} ]]; then
+     source ${coltable}
+ fi
+diff --git a/advanced/Templates/gravity_copy.sql b/advanced/Templates/gravity_copy.sql
+index 4a2a9b22..f5556929 100644
+--- a/advanced/Templates/gravity_copy.sql
++++ b/advanced/Templates/gravity_copy.sql
+@@ -1,6 +1,6 @@
+ .timeout 30000
+ 
+-ATTACH DATABASE '/etc/pihole/gravity.db' AS OLD;
++ATTACH DATABASE '@EPREFIX@/var/lib/pihole/gravity.db' AS OLD;
+ 
+ BEGIN TRANSACTION;
+ 
+diff --git a/advanced/Templates/pihole-FTL.service b/advanced/Templates/pihole-FTL.service
+index 865e2cd9..b3b92bd3 100644
+--- a/advanced/Templates/pihole-FTL.service
++++ b/advanced/Templates/pihole-FTL.service
+@@ -20,22 +20,22 @@ start() {
+     echo "pihole-FTL is already running"
+   else
+     # Touch files to ensure they exist (create if non-existing, preserve if existing)
+-    mkdir -pm 0755 /run/pihole
+-    touch /run/pihole-FTL.pid /run/pihole-FTL.port /var/log/pihole-FTL.log /var/log/pihole.log /etc/pihole/dhcp.leases
++    mkdir -pm 0755 @EPREFIX@/run/pihole
++    touch @EPREFIX@/run/pihole-FTL.pid @EPREFIX@/run/pihole-FTL.port @EPREFIX@/var/log/pihole-FTL.log @EPREFIX@/var/log/pihole.log @EPREFIX@/var/lib/pihole/dhcp.leases
+     # Ensure that permissions are set so that pihole-FTL can edit all necessary files
+-    chown pihole:pihole /run/pihole-FTL.pid /run/pihole-FTL.port /var/log/pihole-FTL.log /var/log/pihole.log /etc/pihole/dhcp.leases /run/pihole /etc/pihole
+-    chmod 0644 /run/pihole-FTL.pid /run/pihole-FTL.port /var/log/pihole-FTL.log /var/log/pihole.log /etc/pihole/dhcp.leases
++    chown pihole:pihole @EPREFIX@/run/pihole-FTL.pid @EPREFIX@/run/pihole-FTL.port @EPREFIX@/var/log/pihole-FTL.log @EPREFIX@/var/log/pihole.log @EPREFIX@/var/lib/pihole/dhcp.leases @EPREFIX@/run/pihole @EPREFIX@/etc/pihole
++    chmod 0644 @EPREFIX@/run/pihole-FTL.pid @EPREFIX@/run/pihole-FTL.port @EPREFIX@/var/log/pihole-FTL.log @EPREFIX@/var/log/pihole.log @EPREFIX@/var/lib/pihole/dhcp.leases
+     # Ensure that permissions are set so that pihole-FTL can edit the files. We ignore errors as the file may not (yet) exist
+-    chmod -f 0644 /etc/pihole/macvendor.db
++    chmod -f 0644 @EPREFIX@/var/lib/pihole/macvendor.db
+     # Chown database files to the user FTL runs as. We ignore errors as the files may not (yet) exist
+-    chown -f pihole:pihole /etc/pihole/pihole-FTL.db /etc/pihole/gravity.db /etc/pihole/macvendor.db
++    chown -f pihole:pihole @EPREFIX@/var/lib/pihole/pihole-FTL.db @EPREFIX@/var/lib/pihole/gravity.db @EPREFIX@/var/lib/pihole/macvendor.db
+     # Chown database file permissions so that the pihole group (web interface) can edit the file. We ignore errors as the files may not (yet) exist
+-    chmod -f 0664 /etc/pihole/pihole-FTL.db
+-    if setcap CAP_NET_BIND_SERVICE,CAP_NET_RAW,CAP_NET_ADMIN,CAP_SYS_NICE,CAP_IPC_LOCK,CAP_CHOWN+eip "/usr/bin/pihole-FTL"; then
+-      su -s /bin/sh -c "/usr/bin/pihole-FTL" pihole
++    chmod -f 0664 @EPREFIX@/var/lib/pihole/pihole-FTL.db
++    if setcap CAP_NET_BIND_SERVICE,CAP_NET_RAW,CAP_NET_ADMIN,CAP_SYS_NICE,CAP_IPC_LOCK,CAP_CHOWN+eip "@EPREFIX@/usr/bin/pihole-FTL"; then
++      su -s /bin/sh -c "@EPREFIX@/usr/bin/pihole-FTL" pihole
+     else
+       echo "Warning: Starting pihole-FTL as root because setting capabilities is not supported on this system"
+-      /usr/bin/pihole-FTL
++      @EPREFIX@/usr/bin/pihole-FTL
+     fi
+     echo
+   fi
+@@ -66,7 +66,7 @@ stop() {
+     echo "Not running"
+   fi
+   # Cleanup
+-  rm -f /run/pihole/FTL.sock /dev/shm/FTL-*
++  rm -f @EPREFIX@/run/pihole/FTL.sock /dev/shm/FTL-*
+   echo
+ }
+ 
+diff --git a/advanced/index.php b/advanced/index.php
+index d0c5fc5d..666713b8 100644
+--- a/advanced/index.php
++++ b/advanced/index.php
+@@ -11,11 +11,11 @@ $serverName = htmlspecialchars($_SERVER["SERVER_NAME"]);
+ // Remove external ipv6 brackets if any
+ $serverName = preg_replace('/^\[(.*)\]$/', '${1}', $serverName);
+ 
+-if (!is_file("/etc/pihole/setupVars.conf"))
++if (!is_file("@EPREFIX@/var/lib/pihole/setupVars.conf"))
+   die("[ERROR] File not found: <code>/etc/pihole/setupVars.conf</code>");
+ 
+ // Get values from setupVars.conf
+-$setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
++$setupVars = parse_ini_file("@EPREFIX@/var/lib/pihole/setupVars.conf");
+ $svPasswd = !empty($setupVars["WEBPASSWORD"]);
+ $svEmail = (!empty($setupVars["ADMIN_EMAIL"]) && filter_var($setupVars["ADMIN_EMAIL"], FILTER_VALIDATE_EMAIL)) ? $setupVars["ADMIN_EMAIL"] : "";
+ unset($setupVars);
+@@ -130,11 +130,11 @@ EOT;
+ $bpAskAdmin = !empty($svEmail) ? '<a href="mailto:'.$svEmail.'?subject=Site Blocked: '.$serverName.'"></a>' : "<span/>";
+ 
+ // Get possible non-standard location of FTL's database
+-$FTLsettings = parse_ini_file("/etc/pihole/pihole-FTL.conf");
++$FTLsettings = parse_ini_file("@EPREFIX@/etc/pihole/pihole-FTL.conf");
+ if (isset($FTLsettings["GRAVITYDB"])) {
+     $gravityDBFile = $FTLsettings["GRAVITYDB"];
+ } else {
+-    $gravityDBFile = "/etc/pihole/gravity.db";
++    $gravityDBFile = "@EPREFIX@/var/lib/pihole/gravity.db";
+ }
+ 
+ // Connect to gravity.db
+@@ -240,7 +240,7 @@ $wlOutputClass = (isset($wlInfo) && $wlInfo === "recentwl") ? $wlInfo : "hidden"
+ $wlOutput = (isset($wlInfo) && $wlInfo !== "recentwl") ? "<a href='http://$wlInfo'>$wlInfo</a>" : "";
+ 
+ // Get Pi-hole Core version
+-$phVersion = exec("cd /etc/.pihole/ && git describe --long --tags");
++$phVersion = "@PIHOLE_VERSION@";
+ 
+ // Print $execTime on development branches
+ // Testing for - is marginally faster than "git rev-parse --abbrev-ref HEAD"
+diff --git a/gravity.sh b/gravity.sh
+index a6ab3c86..17da127f 100755
+--- a/gravity.sh
++++ b/gravity.sh
+@@ -13,15 +13,16 @@
+ 
+ export LC_ALL=C
+ 
+-coltable="/opt/pihole/COL_TABLE"
++basename="pihole"
++coltable="@EPREFIX@/usr/@LIBDIR@/${basename}/COL_TABLE"
+ source "${coltable}"
+ # shellcheck disable=SC1091
+-source "/etc/.pihole/advanced/Scripts/database_migration/gravity-db.sh"
++source "@EPREFIX@/usr/@LIBDIR@/${basename}/database_migration/gravity-db.sh"
+ 
+ basename="pihole"
+-PIHOLE_COMMAND="/usr/local/bin/${basename}"
++PIHOLE_COMMAND="@EPREFIX@/usr/bin/${basename}"
+ 
+-piholeDir="/etc/${basename}"
++piholeDir="@EPREFIX@/var/lib/${basename}"
+ 
+ # Legacy (pre v5.0) list file locations
+ whitelistFile="${piholeDir}/whitelist.txt"
+@@ -30,14 +31,14 @@ regexFile="${piholeDir}/regex.list"
+ adListFile="${piholeDir}/adlists.list"
+ 
+ localList="${piholeDir}/local.list"
+-VPNList="/etc/openvpn/ipp.txt"
++VPNList="@EPREFIX@/etc/openvpn/ipp.txt"
+ 
+-piholeGitDir="/etc/.pihole"
+-gravityDBfile_default="${piholeDir}/gravity.db"
++piholeGitDir="@EPREFIX@/usr/@LIBDIR@/pihole"
++gravityDBfile_default="@EPREFIX@/var/lib/pihole/gravity.db"
+ # GRAVITYDB may be overwritten by source pihole-FTL.conf below
+ GRAVITYDB="${gravityDBfile_default}"
+-gravityDBschema="${piholeGitDir}/advanced/Templates/gravity.db.sql"
+-gravityDBcopy="${piholeGitDir}/advanced/Templates/gravity_copy.sql"
++gravityDBschema="${piholeGitDir}/Templates/gravity.db.sql"
++gravityDBcopy="${piholeGitDir}/Templates/gravity_copy.sql"
+ 
+ domainsExtension="domains"
+ 
+@@ -52,7 +53,7 @@ else
+ fi
+ 
+ # Source pihole-FTL from install script
+-pihole_FTL="${piholeDir}/pihole-FTL.conf"
++pihole_FTL="@EPREFIX@/etc/pihole-FTL.conf"
+ if [[ -f "${pihole_FTL}" ]]; then
+   source "${pihole_FTL}"
+ fi
+@@ -980,7 +981,7 @@ if [[ "${forceDelete:-}" == true ]]; then
+   str="Deleting existing list cache"
+   echo -ne "${INFO} ${str}..."
+ 
+-  rm /etc/pihole/list.* 2> /dev/null || true
++  rm @EPREFIX@/var/lib/pihole/list.* 2> /dev/null || true
+   echo -e "${OVER}  ${TICK} ${str}"
+ fi
+ 
+diff --git a/manpages/pihole-FTL.conf.5 b/manpages/pihole-FTL.conf.5
+index 42405436..67cb43f5 100644
+--- a/manpages/pihole-FTL.conf.5
++++ b/manpages/pihole-FTL.conf.5
+@@ -156,44 +156,44 @@ For each setting the option shown first is the default.
+     Accepts value between 0.1 (6 sec) and 1440 (1 day)
+ .br
+ 
+-\fBDBFILE=/etc/pihole/pihole-FTL.db\fR
++\fBDBFILE=@EPREFIX@/var/lib/pihole/pihole-FTL.db\fR
+ .br
+     Specify path and filename of FTL's SQLite long-term database.
+ .br
+     Setting this to DBFILE= disables the database altogether
+ .br
+ 
+-\fBLOGFILE=/var/log/pihole-FTL.log\fR
++\fBLOGFILE=@EPREFIX@/var/log/pihole-FTL.log\fR
+ .br
+     The location of FTL's log file.
+ .br
+ 
+-\fBPIDFILE=/run/pihole-FTL.pid\fR
++\fBPIDFILE=@EPREFIX@/run/pihole-FTL.pid\fR
+ .br
+     The file which contains the PID of FTL's main process.
+ .br
+ 
+-\fBPORTFILE=/run/pihole-FTL.port\fR
++\fBPORTFILE=@EPREFIX@/run/pihole-FTL.port\fR
+ .br
+     Specify path and filename where the FTL process will write its API port number.
+ .br
+ 
+-\fBSOCKETFILE=/run/pihole/FTL.sock\fR
++\fBSOCKETFILE=@EPREFIX@/run/pihole/FTL.sock\fR
+ .br
+     The file containing the socket FTL's API is listening on.
+ .br
+ 
+-\fBSETUPVARSFILE=/etc/pihole/setupVars.conf\fR
++\fBSETUPVARSFILE=@EPREFIX@/var/lib/pihole/setupVars.conf\fR
+ .br
+     The config file of Pi-hole containing, e.g., the current blocking status (do not change).
+ .br
+ 
+-\fBMACVENDORDB=/etc/pihole/macvendor.db\fR
++\fBMACVENDORDB=@EPREFIX@/var/lib/pihole/macvendor.db\fR
+ .br
+     The database containing MAC -> Vendor information for the network table.
+ .br
+ 
+-\fBGRAVITYDB=/etc/pihole/gravity.db\fR
++\fBGRAVITYDB=@EPREFIX@/var/lib/pihole/gravity.db\fR
+ .br
+     Specify path and filename of FTL's SQLite3 gravity database. This database contains all domains relevant for Pi-hole's DNS blocking.
+ .br
+diff --git a/pihole b/pihole
+index 055bd702..3dab3f03 100755
+--- a/pihole
++++ b/pihole
+@@ -9,16 +9,16 @@
+ # This file is copyright under the latest version of the EUPL.
+ # Please see LICENSE file for your rights under this license.
+ 
+-readonly PI_HOLE_SCRIPT_DIR="/opt/pihole"
++readonly PI_HOLE_SCRIPT_DIR="@EPREFIX@/usr/@LIBDIR@/pihole"
+ 
+ # setupVars and PI_HOLE_BIN_DIR are not readonly here because in some functions (checkout),
+ # they might get set again when the installer is sourced. This causes an
+ # error due to modifying a readonly variable.
+-setupVars="/etc/pihole/setupVars.conf"
+-PI_HOLE_BIN_DIR="/usr/local/bin"
+-readonly FTL_PID_FILE="/run/pihole-FTL.pid"
++setupVars="@EPREFIX@/var/lib/pihole/setupVars.conf"
++PI_HOLE_BIN_DIR="@EPREFIX@/usr/bin"
++readonly FTL_PID_FILE="@EPREFIX@/run/pihole/FTL.pid"
+ 
+-readonly colfile="${PI_HOLE_SCRIPT_DIR}/COL_TABLE"
++readonly colfile="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
+ source "${colfile}"
+ 
+ webpageFunc() {
+@@ -59,17 +59,6 @@ arpFunc() {
+   exit 0
+ }
+ 
+-updatePiholeFunc() {
+-  shift
+-  "${PI_HOLE_SCRIPT_DIR}"/update.sh "$@"
+-  exit 0
+-}
+-
+-reconfigurePiholeFunc() {
+-  /etc/.pihole/automated\ install/basic-install.sh --reconfigure
+-  exit 0;
+-}
+-
+ updateGravityFunc() {
+   exec "${PI_HOLE_SCRIPT_DIR}"/gravity.sh "$@"
+ }
+@@ -86,12 +75,6 @@ chronometerFunc() {
+   exit 0
+ }
+ 
+-
+-uninstallFunc() {
+-  "${PI_HOLE_SCRIPT_DIR}"/uninstall.sh
+-  exit 0
+-}
+-
+ versionFunc() {
+   shift
+   exec "${PI_HOLE_SCRIPT_DIR}"/version.sh "$@"
+@@ -149,7 +132,14 @@ restartDNS() {
+     fi
+   else
+     # A full restart has been requested
+-    svc="service pihole-FTL restart"
++    if command -v service &>/dev/null; then
++        svc="service pihole-FTL restart"
++    elif command -v systemctl &>/dev/null; then
++        svc="systemctl restart pihole-FTL"
++    else
++        "Cannot restart Pi-hole"
++        return 1
++    fi
+     str="Restarting DNS server"
+     icon="${TICK}"
+   fi
+@@ -253,14 +243,14 @@ Example: 'pihole logging on'
+ Specify whether the Pi-hole log should be used
+ 
+ Options:
+-  on                  Enable the Pi-hole log at /var/log/pihole.log
+-  off                 Disable and flush the Pi-hole log at /var/log/pihole.log
+-  off noflush         Disable the Pi-hole log at /var/log/pihole.log"
++  on                  Enable the Pi-hole log at @EPREFIX@/var/log/pihole.log
++  off                 Disable and flush the Pi-hole log at @EPREFIX@/var/log/pihole.log
++  off noflush         Disable the Pi-hole log at @EPREFIX@/var/log/pihole.log"
+     exit 0
+   elif [[ "${1}" == "off" ]]; then
+     # Disable logging
+-    sed -i 's/^log-queries/#log-queries/' /etc/dnsmasq.d/01-pihole.conf
+-    sed -i 's/^QUERY_LOGGING=true/QUERY_LOGGING=false/' /etc/pihole/setupVars.conf
++    sed -i 's/^log-queries/#log-queries/' @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf
++    sed -i 's/^QUERY_LOGGING=true/QUERY_LOGGING=false/' @EPREFIX@/etc/pihole/setupVars.conf
+     if [[ "${2}" != "noflush" ]]; then
+       # Flush logs
+       "${PI_HOLE_BIN_DIR}"/pihole -f
+@@ -269,8 +259,8 @@ Options:
+     local str="Logging has been disabled!"
+   elif [[ "${1}" == "on" ]]; then
+     # Enable logging
+-    sed -i 's/^#log-queries/log-queries/' /etc/dnsmasq.d/01-pihole.conf
+-    sed -i 's/^QUERY_LOGGING=false/QUERY_LOGGING=true/' /etc/pihole/setupVars.conf
++    sed -i 's/^#log-queries/log-queries/' @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf
++    sed -i 's/^QUERY_LOGGING=false/QUERY_LOGGING=true/' @EPREFIX@/etc/pihole/setupVars.conf
+     echo -e "  ${INFO} Enabling logging..."
+     local str="Logging has been enabled!"
+   else
+@@ -328,13 +318,13 @@ statusFunc() {
+   fi
+ 
+   # Determine if Pi-hole's blocking is enabled
+-  if grep -q "BLOCKING_ENABLED=false" /etc/pihole/setupVars.conf; then
++  if grep -q "BLOCKING_ENABLED=false" @EPREFIX@/etc/pihole/setupVars.conf; then
+     # A config is commented out
+     case "${1}" in
+       "web") echo 0;;
+       *) echo -e "  ${CROSS} Pi-hole blocking is disabled";;
+     esac
+-  elif grep -q "BLOCKING_ENABLED=true" /etc/pihole/setupVars.conf;  then
++  elif grep -q "BLOCKING_ENABLED=true" @EPREFIX@/etc/pihole/setupVars.conf;  then
+     # Configs are set
+     case "${1}" in
+       "web") echo 1;;
+@@ -353,7 +343,7 @@ statusFunc() {
+ 
+ tailFunc() {
+   # Warn user if Pi-hole's logging is disabled
+-  local logging_enabled=$(grep -c "^log-queries" /etc/dnsmasq.d/01-pihole.conf)
++  local logging_enabled=$(grep -c "^log-queries" @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf)
+   if [[ "${logging_enabled}" == "0" ]]; then
+     # No "log-queries" lines are found.
+     # Commented out lines (such as "#log-queries") are ignored
+@@ -365,7 +355,7 @@ tailFunc() {
+   # Color blocklist/blacklist/wildcard entries as red
+   # Color A/AAAA/DHCP strings as white
+   # Color everything else as gray
+-  tail -f /var/log/pihole.log | grep --line-buffered "${1}" | sed -E \
++  tail -f @EPREFIX@/var/log/pihole.log | grep --line-buffered "${1}" | sed -E \
+     -e "s,($(date +'%b %d ')| dnsmasq\[[0-9]*\]),,g" \
+     -e "s,(.*(blacklisted |gravity blocked ).*),${COL_RED}&${COL_NC}," \
+     -e "s,.*(query\\[A|DHCP).*,${COL_NC}&${COL_NC}," \
+@@ -373,29 +363,6 @@ tailFunc() {
+   exit 0
+ }
+ 
+-piholeCheckoutFunc() {
+-  if [[ "$2" == "-h" ]] || [[ "$2" == "--help" ]]; then
+-    echo "Usage: pihole checkout [repo] [branch]
+-Example: 'pihole checkout master' or 'pihole checkout core dev'
+-Switch Pi-hole subsystems to a different GitHub branch
+-
+-Repositories:
+-  core [branch]       Change the branch of Pi-hole's core subsystem
+-  web [branch]        Change the branch of Web Interface subsystem
+-  ftl [branch]        Change the branch of Pi-hole's FTL subsystem
+-
+-Branches:
+-  master              Update subsystems to the latest stable release
+-  dev                 Update subsystems to the latest development release
+-  branchname          Update subsystems to the specified branchname"
+-    exit 0
+-  fi
+-
+-  source "${PI_HOLE_SCRIPT_DIR}"/piholeCheckout.sh
+-  shift
+-  checkout "$@"
+-}
+-
+ tricorderFunc() {
+   local tricorder_token
+   if [[ ! -p "/dev/stdin" ]]; then
+@@ -417,11 +384,6 @@ tricorderFunc() {
+   exit 0
+ }
+ 
+-updateCheckFunc() {
+-  "${PI_HOLE_SCRIPT_DIR}"/updatecheck.sh "$@"
+-  exit 0
+-}
+-
+ helpFunc() {
+   echo "Usage: pihole [options]
+ Example: 'pihole -w -h'
+@@ -440,7 +402,6 @@ Debugging Options:
+   -d, debug           Start a debugging session
+                         Add '-a' to automatically upload the log to tricorder.pi-hole.net
+   -f, flush           Flush the Pi-hole log
+-  -r, reconfigure     Reconfigure or Repair Pi-hole subsystems
+   -t, tail [arg]      View the live output of the Pi-hole log.
+                       Add an optional argument to filter the log
+                       (regular expressions are supported)
+@@ -457,11 +418,8 @@ Options:
+                         Add '-h' for more info on logging usage
+   -q, query           Query the adlists for a specified domain
+                         Add '-h' for more info on query usage
+-  -up, updatePihole   Update Pi-hole subsystems
+-                        Add '--check-only' to exit script before update is performed.
+   -v, version         Show installed versions of Pi-hole, Web Interface & FTL
+                         Add '-h' for more info on version usage
+-  uninstall           Uninstall Pi-hole from your system
+   status              Display the running status of Pi-hole subsystems
+   enable              Enable Pi-hole subsystems
+   disable             Disable Pi-hole subsystems
+@@ -469,8 +427,6 @@ Options:
+   restartdns          Full restart Pi-hole subsystems
+                         Add 'reload' to update the lists and flush the cache without restarting the DNS server
+                         Add 'reload-lists' to only update the lists WITHOUT flushing the cache or restarting the DNS server
+-  checkout            Switch Pi-hole subsystems to a different GitHub branch
+-                        Add '-h' for more info on checkout usage
+   arpflush            Flush information stored in Pi-hole's network tables";
+   exit 0
+ }
+@@ -504,15 +460,12 @@ case "${1}" in
+   "--white-wild" | "white-wild"   ) listFunc "$@";;
+   "-d" | "debug"                ) debugFunc "$@";;
+   "-f" | "flush"                ) flushFunc "$@";;
+-  "-up" | "updatePihole"        ) updatePiholeFunc "$@";;
+-  "-r"  | "reconfigure"         ) reconfigurePiholeFunc;;
+   "-g" | "updateGravity"        ) updateGravityFunc "$@";;
+   "-c" | "chronometer"          ) chronometerFunc "$@";;
+   "-h" | "help"                 ) helpFunc;;
+   "-v" | "version"              ) versionFunc "$@";;
+   "-q" | "query"                ) queryFunc "$@";;
+   "-l" | "logging"              ) piholeLogging "$@";;
+-  "uninstall"                   ) uninstallFunc;;
+   "enable"                      ) piholeEnable 1;;
+   "disable"                     ) piholeEnable 0 "$2";;
+   "status"                      ) statusFunc "$2";;
+-- 
+2.34.1
+

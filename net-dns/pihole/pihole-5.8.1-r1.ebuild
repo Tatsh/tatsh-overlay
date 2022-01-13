@@ -21,16 +21,15 @@ RDEPEND="${DEPEND} >=net-dns/${PN}-ftl-${FTL_VERSION} app-admin/sudo"
 S="${WORKDIR}/pi-hole-${PV}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-cron-remove-flush-updatechecker.patch"
-	"${FILESDIR}/${PN}-0002-path-changes-01.patch"
-	"${FILESDIR}/${PN}-0002-path-changes-02.patch"
-	"${FILESDIR}/${PN}-0002-path-changes-03.patch"
-	"${FILESDIR}/${PN}-0003-logrotate-add-missingok-fix-paths.patch"
+	"${FILESDIR}/${PN}-0001-cron-remove-flush-updatechec.patch"
+	"${FILESDIR}/${PN}-0002-path-changes.patch"
+	"${FILESDIR}/${PN}-0003-logrotate-add-missingok-fix-.patch"
 	"${FILESDIR}/${PN}-0004-more-path-fixes.patch"
-	"${FILESDIR}/${PN}-0005-add-rc-service-to-restartdns.patch"
-	"${FILESDIR}/${PN}-0006-advanced-scripts-piholelogflush-change-statefile.patch"
+	"${FILESDIR}/${PN}-0005-pihole-add-rc-service-to-res.patch"
+	"${FILESDIR}/${PN}-0006-advanced-scripts-piholelogfl.patch"
 	"${FILESDIR}/${PN}-0007-fix-chrono.patch"
 	"${FILESDIR}/${PN}-0008-version.sh-path-fix.patch"
+	"${FILESDIR}/${PN}-0009-fix-calling-valid_ip.patch"
 )
 
 src_prepare() {
