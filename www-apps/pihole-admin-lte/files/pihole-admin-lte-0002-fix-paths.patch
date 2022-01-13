@@ -1,7 +1,7 @@
 From cb115e28bdec2ef9f0ebcde2cadf0e9eb2f28188 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 5 Jan 2022 14:55:53 -0500
-Subject: [PATCH 2/4] Fix paths
+Subject: [PATCH 2/5] Fix paths
 
 ---
  scripts/pi-hole/php/auth.php           |  2 +-

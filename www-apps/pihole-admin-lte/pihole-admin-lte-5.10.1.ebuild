@@ -29,6 +29,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0002-fix-paths.patch"
 	"${FILESDIR}/${PN}-0003-footer-remove-update-check.patch"
 	"${FILESDIR}/${PN}-0004-header-temperature-and-statu.patch"
+	"${FILESDIR}/${PN}-0005-more-path-fixes.patch"
 )
 
 pkg_setup() {

@@ -1,7 +1,7 @@
 From 86dc8d9b0d4fbe4764bd73cdf9aa0b6462de026f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 5 Jan 2022 14:56:22 -0500
-Subject: [PATCH 4/4] header: temperature and status changes
+Subject: [PATCH 4/5] header: temperature and status changes
 
 Read temperature from file given name of a driver like k10temp in HWMON_NAME
 Get pi-hole status in a simpler way

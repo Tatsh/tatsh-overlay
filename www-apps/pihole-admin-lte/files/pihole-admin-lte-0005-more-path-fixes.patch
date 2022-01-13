@@ -1,0 +1,112 @@
+From b30beea186e4e2feaa462f7873c3d5571476c998 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Thu, 13 Jan 2022 11:41:39 -0500
+Subject: [PATCH 5/5] more path fixes
+
+---
+ api_db.php                         | 2 +-
+ dns_records.php                    | 2 +-
+ scripts/pi-hole/js/queryads.js     | 2 +-
+ scripts/pi-hole/php/database.php   | 4 ++--
+ scripts/pi-hole/php/func.php       | 2 +-
+ scripts/pi-hole/php/teleporter.php | 8 ++++----
+ 6 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/api_db.php b/api_db.php
+index a861cbde..993a8b27 100644
+--- a/api_db.php
++++ b/api_db.php
+@@ -273,7 +273,7 @@ if (isset($_GET['getQueriesCount']) && $auth)
+ 
+ if (isset($_GET['getDBfilesize']) && $auth)
+ {
+-	$filesize = filesize("/etc/pihole/pihole-FTL.db");
++	$filesize = filesize("/var/lib/pihole/pihole-FTL.db");
+ 	$result = array('filesize' => $filesize);
+ 	$data = array_merge($data, $result);
+ }
+diff --git a/dns_records.php b/dns_records.php
+index 36311ef2..7e7af827 100644
+--- a/dns_records.php
++++ b/dns_records.php
+@@ -45,7 +45,7 @@
+                   <li>The device's host name and <code>pi.hole</code></li>
+                   <li>Configured in a config file in <code>/etc/dnsmasq.d/</code></li>
+                   <li>Read from <code>/etc/hosts</code></li>
+-                  <li>Read from the "Local (custom) DNS" list (stored in <code>/etc/pihole/custom.list</code>)</li>
++                  <li>Read from the "Local (custom) DNS" list (stored in <code>/var/lib/pihole/custom.list</code>)</li>
+               </ol>
+               <p>Only the first record will trigger an address-to-name association.</p>
+                 <button type="button" id="btnAdd" class="btn btn-primary pull-right">Add</button>
+diff --git a/scripts/pi-hole/js/queryads.js b/scripts/pi-hole/js/queryads.js
+index a97eadd9..5f330230 100644
+--- a/scripts/pi-hole/js/queryads.js
++++ b/scripts/pi-hole/js/queryads.js
+@@ -11,7 +11,7 @@ function quietfilter(ta, data) {
+   var lines = data.split("\n");
+   for (var i = 0; i < lines.length; i++) {
+     if (lines[i].indexOf("results") !== -1 && lines[i].indexOf("0 results") === -1) {
+-      var shortstring = lines[i].replace("::: /etc/pihole/", "");
++      var shortstring = lines[i].replace("::: /var/lib/pihole/", "");
+       // Remove "(x results)"
+       shortstring = shortstring.replace(/\(.*/, "");
+       ta.append(shortstring + "\n");
+diff --git a/scripts/pi-hole/php/database.php b/scripts/pi-hole/php/database.php
+index ee9cff69..dd03e346 100644
+--- a/scripts/pi-hole/php/database.php
++++ b/scripts/pi-hole/php/database.php
+@@ -16,7 +16,7 @@ function getGravityDBFilename()
+ 	}
+ 	else
+ 	{
+-		return "/etc/pihole/gravity.db";
++		return "/var/lib/pihole/gravity.db";
+ 	}
+ }
+ 
+@@ -30,7 +30,7 @@ function getQueriesDBFilename()
+ 	}
+ 	else
+ 	{
+-		return "/etc/pihole/pihole-FTL.db";
++		return "/var/lib/pihole/pihole-FTL.db";
+ 	}
+ }
+ 
+diff --git a/scripts/pi-hole/php/func.php b/scripts/pi-hole/php/func.php
+index 754277b5..037a162a 100644
+--- a/scripts/pi-hole/php/func.php
++++ b/scripts/pi-hole/php/func.php
+@@ -153,7 +153,7 @@ function pihole_execute($argument_string, $error_on_failure = true) {
+ }
+ 
+ // Custom DNS
+-$customDNSFile = "/etc/pihole/custom.list";
++$customDNSFile = "/var/lib/pihole/custom.list";
+ 
+ function echoCustomDNSEntries()
+ {
+diff --git a/scripts/pi-hole/php/teleporter.php b/scripts/pi-hole/php/teleporter.php
+index d25f0509..abedef06 100644
+--- a/scripts/pi-hole/php/teleporter.php
++++ b/scripts/pi-hole/php/teleporter.php
+@@ -623,12 +623,12 @@ else
+ 	archive_add_table("adlist_by_group.json", "adlist_by_group");
+ 	archive_add_table("client_by_group.json", "client_by_group");
+ 
+-	archive_add_file("/etc/pihole/","setupVars.conf");
+-	archive_add_file("/etc/pihole/","dhcp.leases");
+-	archive_add_file("/etc/pihole/","custom.list");
++	archive_add_file("/var/lib/pihole/","setupVars.conf");
++	archive_add_file("/var/lib/pihole/","dhcp.leases");
++	archive_add_file("/var/lib/pihole/","custom.list");
+ 	archive_add_file("/etc/pihole/","pihole-FTL.conf");
+ 	archive_add_file("/etc/","hosts","etc/");
+-	archive_add_directory("/etc/dnsmasq.d/","dnsmasq.d/");
++	archive_add_directory("/etc/pihole/","dnsmasq.d/");
+ 
+ 	$archive->compress(Phar::GZ); // Creates a gziped copy
+ 	unlink($archive_file_name); // Unlink original tar file as it is not needed anymore
+-- 
+2.34.1
+
