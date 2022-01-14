@@ -1,14 +1,14 @@
-From 32ed4ea35b4273eb0b5eae3a0d9d1d8b35d407b7 Mon Sep 17 00:00:00 2001
+From d2bd98d4d170cb564c2a70e7342dd99820b08dd9 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 14 Jan 2022 18:21:09 -0500
 Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
 
 ---
- advanced/Scripts/piholeDebug.sh | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ advanced/Scripts/piholeDebug.sh | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 9dc9a90e..abe17146 100755
+index 9dc9a90e..b50936ed 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -142,7 +142,15 @@ DNSMASQ_CONF="${ETC}/dnsmasq.conf"
@@ -28,20 +28,18 @@ index 9dc9a90e..abe17146 100755
  
  # Store the required directories in an array so it can be parsed through
  #REQUIRED_DIRECTORIES=("${CORE_GIT_DIRECTORY}"
-@@ -386,6 +394,12 @@ get_program_version() {
+@@ -386,6 +394,10 @@ get_program_version() {
                      ;;
          "php") program_version="$(${program_name} -v 2> /dev/null | head -n1 | cut -d '-' -f1 | cut -d ' ' -f2)"
                  ;;
 +        "nginx") program_version="$(${program_name} -v 2>&1 | head -n1 | cut -d/ -f2)"
 +                ;;
-+        "apache"*)
-+        "httpd"*)
-+                 program_version="$(apache2 -v 2> /dev/null | grep -F version: | cut -d/ -f2 | cut '-d ' -f1)"
++        apache*) program_version="$(apache2 -v 2> /dev/null | grep -F version: | cut -d/ -f2 | cut '-d ' -f1)"
 +                ;;
          # If a match is not found, show an error
          *) echo "Unrecognized program";
      esac
-@@ -403,7 +417,11 @@ get_program_version() {
+@@ -403,7 +415,11 @@ get_program_version() {
  # and their versions, using the functions above.
  check_critical_program_versions() {
      # Use the function created earlier and bundle them into one function that checks all the version numbers
@@ -54,7 +52,7 @@ index 9dc9a90e..abe17146 100755
      get_program_version "php"
  }
  
-@@ -422,6 +440,7 @@ os_check() {
+@@ -422,6 +438,7 @@ os_check() {
  
      # Extract dig response
      response="${cmdResult%%$'\n'*}"
@@ -62,7 +60,7 @@ index 9dc9a90e..abe17146 100755
  
      IFS=" " read -r -a supportedOS < <(echo "${response}" | tr -d '"')
      for distro_and_versions in "${supportedOS[@]}"
-@@ -434,7 +453,7 @@ os_check() {
+@@ -434,7 +451,7 @@ os_check() {
              IFS="," read -r -a supportedVer <<<"${versions_part}"
              for version in "${supportedVer[@]}"
              do
@@ -71,7 +69,7 @@ index 9dc9a90e..abe17146 100755
                      valid_version=true
                      break
                  fi
-@@ -450,9 +469,9 @@ os_check() {
+@@ -450,9 +467,9 @@ os_check() {
          log_write "${TICK} Distro:  ${COL_GREEN}${detected_os^}${COL_NC}"
  
          if [ "$valid_version" = true ]; then
