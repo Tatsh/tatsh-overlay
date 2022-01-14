@@ -1,0 +1,88 @@
+From 32ed4ea35b4273eb0b5eae3a0d9d1d8b35d407b7 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 14 Jan 2022 18:21:09 -0500
+Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
+
+---
+ advanced/Scripts/piholeDebug.sh | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
+
+diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
+index 9dc9a90e..abe17146 100755
+--- a/advanced/Scripts/piholeDebug.sh
++++ b/advanced/Scripts/piholeDebug.sh
+@@ -142,7 +142,15 @@ DNSMASQ_CONF="${ETC}/dnsmasq.conf"
+ #SUPPORTED_OS=("Raspbian" "Ubuntu" "Fedora" "Debian" "CentOS")
+ 
+ # Store Pi-hole's processes in an array for easy use and parsing
+-PIHOLE_PROCESSES=( "lighttpd" "pihole-FTL" )
++PIHOLE_PROCESSES=( "pihole-FTL" )
++if [ -f /etc/vhosts/webapp-config ]; then
++    vhost_server=$(grep -F vhost_server= /etc/vhosts/webapp-config | head -n1 | cut '-d"' -f2)
++    if [ -n "$vhost_server" ]; then
++        PIHOLE_PROCESSES+=( "$vhost_server" )
++    fi
++else
++    PIHOLE_PROCESSES+=( "lighttpd" )
++fi
+ 
+ # Store the required directories in an array so it can be parsed through
+ #REQUIRED_DIRECTORIES=("${CORE_GIT_DIRECTORY}"
+@@ -386,6 +394,12 @@ get_program_version() {
+                     ;;
+         "php") program_version="$(${program_name} -v 2> /dev/null | head -n1 | cut -d '-' -f1 | cut -d ' ' -f2)"
+                 ;;
++        "nginx") program_version="$(${program_name} -v 2>&1 | head -n1 | cut -d/ -f2)"
++                ;;
++        "apache"*)
++        "httpd"*)
++                 program_version="$(apache2 -v 2> /dev/null | grep -F version: | cut -d/ -f2 | cut '-d ' -f1)"
++                ;;
+         # If a match is not found, show an error
+         *) echo "Unrecognized program";
+     esac
+@@ -403,7 +417,11 @@ get_program_version() {
+ # and their versions, using the functions above.
+ check_critical_program_versions() {
+     # Use the function created earlier and bundle them into one function that checks all the version numbers
+-    get_program_version "lighttpd"
++    if [ -n "$vhost_server" ]; then
++        get_program_version "$vhost_server"
++    else
++        get_program_version "lighttpd"
++    fi
+     get_program_version "php"
+ }
+ 
+@@ -422,6 +440,7 @@ os_check() {
+ 
+     # Extract dig response
+     response="${cmdResult%%$'\n'*}"
++    response="${response} Gentoo=1"
+ 
+     IFS=" " read -r -a supportedOS < <(echo "${response}" | tr -d '"')
+     for distro_and_versions in "${supportedOS[@]}"
+@@ -434,7 +453,7 @@ os_check() {
+             IFS="," read -r -a supportedVer <<<"${versions_part}"
+             for version in "${supportedVer[@]}"
+             do
+-                if [[ "${detected_version}" =~ $version ]]; then
++                if [[ "${detected_version:-1}" =~ $version ]]; then
+                     valid_version=true
+                     break
+                 fi
+@@ -450,9 +469,9 @@ os_check() {
+         log_write "${TICK} Distro:  ${COL_GREEN}${detected_os^}${COL_NC}"
+ 
+         if [ "$valid_version" = true ]; then
+-            log_write "${TICK} Version: ${COL_GREEN}${detected_version}${COL_NC}"
++            log_write "${TICK} Version: ${COL_GREEN}${detected_version:-1}${COL_NC}"
+         else
+-            log_write "${CROSS} Version: ${COL_RED}${detected_version}${COL_NC}"
++            log_write "${CROSS} Version: ${COL_RED}${detected_version:-1}${COL_NC}"
+             log_write "${CROSS} Error: ${COL_RED}${detected_os^} is supported but version ${detected_version} is currently unsupported (${FAQ_HARDWARE_REQUIREMENTS})${COL_NC}"
+         fi
+     else
+-- 
+2.34.1
+

@@ -35,6 +35,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0009-fix-calling-valid_ip.patch"
 	"${FILESDIR}/${PN}-0010-fix-path-in-generated-dhcp-c.patch"
 	"${FILESDIR}/${PN}-0011-more-path-fixes.patch"
+	"${FILESDIR}/${PN}-0012-piholedebug-gentoo-vhost-fix.patch"
 )
 
 src_prepare() {
