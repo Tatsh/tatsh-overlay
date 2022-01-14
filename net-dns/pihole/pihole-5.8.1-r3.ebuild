@@ -16,7 +16,10 @@ IUSE="cron www"
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
 FTL_VERSION="5.8.1"
-RDEPEND="${DEPEND} >=net-dns/${PN}-ftl-${FTL_VERSION} app-admin/sudo"
+RDEPEND="${DEPEND}
+	>=net-dns/${PN}-ftl-${FTL_VERSION}
+	app-admin/sudo
+	sys-apps/iproute2"
 
 S="${WORKDIR}/pi-hole-${PV}"
 
