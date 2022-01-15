@@ -1,14 +1,14 @@
-From a484bbc4a3201702ba24939ab577c9b2b6301e95 Mon Sep 17 00:00:00 2001
+From 9384daaf815f31072e89bdae8812a4d686a3ac46 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 14 Jan 2022 18:21:09 -0500
 Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
 
 ---
- advanced/Scripts/piholeDebug.sh | 56 +++++++++++++++++++--------------
- 1 file changed, 32 insertions(+), 24 deletions(-)
+ advanced/Scripts/piholeDebug.sh | 86 +++++++++++++++++++++------------
+ 1 file changed, 54 insertions(+), 32 deletions(-)
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 9dc9a90e..fa97ae36 100755
+index 9dc9a90e..6a58048c 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,9 +22,13 @@ set -o pipefail
@@ -78,7 +78,18 @@ index 9dc9a90e..fa97ae36 100755
  
  # Store the required directories in an array so it can be parsed through
  #REQUIRED_DIRECTORIES=("${CORE_GIT_DIRECTORY}"
-@@ -299,7 +306,7 @@ compare_local_version_to_git_version() {
+@@ -183,7 +190,9 @@ REQUIRED_FILES=("${PIHOLE_CRON_FILE}"
+ "${DNSMASQ_CONF}"
+ "${PIHOLE_CUSTOM_HOSTS_FILE}")
+ 
+-DISCLAIMER="This process collects information from your Pi-hole, and optionally uploads it to a unique and random directory on tricorder.pi-hole.net.
++DISCLAIMER="tatsh-overlay message: The following output may differ significantly from a standard Pi-hole installation's. Any issues should be posted WITHOUT this log to https://github.com/Tatsh/tatsh-overlay/issues before sending an issue upstream. You will then be advised if upstream is relevant for the issue. If a log is necessary, it will be requested.
++
++This process collects information from your Pi-hole, and optionally uploads it to a unique and random directory on tricorder.pi-hole.net.
+ 
+ The intent of this script is to allow users to self-diagnose their installations.  This is accomplished by running tests against our software and providing the user with links to FAQ articles when a problem is detected.  Since we are a small team and Pi-hole has been growing steadily, it is our hope that this will help us spend more time on development.
+ 
+@@ -299,7 +308,7 @@ compare_local_version_to_git_version() {
              else
                  # echo the current version in yellow, signifying it's something to take a look at, but not a critical error
                  # Also add a URL to an FAQ
@@ -87,7 +98,7 @@ index 9dc9a90e..fa97ae36 100755
              fi
  
              # Print the repo upstreams
-@@ -360,16 +367,12 @@ check_ftl_version() {
+@@ -360,16 +369,12 @@ check_ftl_version() {
          log_write "${TICK} ${ftl_name}: ${COL_GREEN}${FTL_VERSION}${COL_NC}"
      else
          # If not, show it in yellow, signifying there is an update
@@ -105,7 +116,7 @@ index 9dc9a90e..fa97ae36 100755
      # Check the FTL version
      check_ftl_version
  }
-@@ -386,8 +389,12 @@ get_program_version() {
+@@ -386,8 +391,12 @@ get_program_version() {
                      ;;
          "php") program_version="$(${program_name} -v 2> /dev/null | head -n1 | cut -d '-' -f1 | cut -d ' ' -f2)"
                  ;;
@@ -119,7 +130,7 @@ index 9dc9a90e..fa97ae36 100755
      esac
      # If the program does not have a version (the variable is empty)
      if [[ -z "${program_version}" ]]; then
-@@ -403,7 +410,7 @@ get_program_version() {
+@@ -403,7 +412,7 @@ get_program_version() {
  # and their versions, using the functions above.
  check_critical_program_versions() {
      # Use the function created earlier and bundle them into one function that checks all the version numbers
@@ -128,7 +139,7 @@ index 9dc9a90e..fa97ae36 100755
      get_program_version "php"
  }
  
-@@ -422,6 +429,7 @@ os_check() {
+@@ -422,6 +431,7 @@ os_check() {
  
      # Extract dig response
      response="${cmdResult%%$'\n'*}"
@@ -136,7 +147,7 @@ index 9dc9a90e..fa97ae36 100755
  
      IFS=" " read -r -a supportedOS < <(echo "${response}" | tr -d '"')
      for distro_and_versions in "${supportedOS[@]}"
-@@ -434,7 +442,7 @@ os_check() {
+@@ -434,7 +444,7 @@ os_check() {
              IFS="," read -r -a supportedVer <<<"${versions_part}"
              for version in "${supportedVer[@]}"
              do
@@ -145,7 +156,7 @@ index 9dc9a90e..fa97ae36 100755
                      valid_version=true
                      break
                  fi
-@@ -450,9 +458,9 @@ os_check() {
+@@ -450,9 +460,9 @@ os_check() {
          log_write "${TICK} Distro:  ${COL_GREEN}${detected_os^}${COL_NC}"
  
          if [ "$valid_version" = true ]; then
@@ -157,7 +168,7 @@ index 9dc9a90e..fa97ae36 100755
              log_write "${CROSS} Error: ${COL_RED}${detected_os^} is supported but version ${detected_version} is currently unsupported (${FAQ_HARDWARE_REQUIREMENTS})${COL_NC}"
          fi
      else
-@@ -743,7 +751,7 @@ check_required_ports() {
+@@ -743,7 +753,7 @@ check_required_ports() {
      # Since Pi-hole needs 53, 80, and 4711, check what they are being used by
      # so we can detect any issues
      local resolver="pihole-FTL"
@@ -166,7 +177,61 @@ index 9dc9a90e..fa97ae36 100755
      local ftl="pihole-FTL"
      # Create an array for these ports in use
      ports_in_use=()
-@@ -1139,9 +1147,9 @@ show_content_of_pihole_files() {
+@@ -792,6 +802,12 @@ check_networking() {
+ }
+ 
+ check_x_headers() {
++    if emerge --search www-apps/pihole-admin-lte | grep -F installed | grep -Fq 'Not Installed'; then
++        return
++    fi
++    if [ -f "@EPREFIX/etc/pihole/debug-vars" ]; then
++        source "@EPREFIX/etc/pihole/debug-vars"
++    fi
+     # The X-Headers allow us to determine from the command line if the Web
+     # lighttpd.conf has a directive to show "X-Pi-hole: A black hole for Internet advertisements."
+     # in the header of any Pi-holed domain
+@@ -801,27 +817,33 @@ check_x_headers() {
+     echo_current_diagnostic "Dashboard and block page"
+     # Use curl -I to get the header and parse out just the X-Pi-hole one
+     local block_page
+-    block_page=$(curl -Is localhost | awk '/X-Pi-hole/' | tr -d '\r')
++    if [ -n "${BLOCK_PAGE_HOST}" ]; then
++        block_page=$(curl -Is ${BLOCK_PAGE_HOST} | awk '/X-Pi-hole/' | tr -d '\r')
++    fi
+     # Do it for the dashboard as well, as the header is different than above
+     local dashboard
+-    dashboard=$(curl -Is localhost/admin/ | awk '/X-Pi-hole/' | tr -d '\r')
++    dashboard=$(curl -Is ${DASHBOARD_HOST}/admin/ | awk '/X-Pi-hole/' | tr -d '\r')
+     # Store what the X-Header should be in variables for comparison later
+     local block_page_working
+     block_page_working="X-Pi-hole: A black hole for Internet advertisements."
+     local dashboard_working
+     dashboard_working="X-Pi-hole: The Pi-hole Web interface is working!"
+     local full_curl_output_block_page
+-    full_curl_output_block_page="$(curl -Is localhost)"
++    full_curl_output_block_page="$(curl -Is ${BLOCK_PAGE_HOST})"
+     local full_curl_output_dashboard
+-    full_curl_output_dashboard="$(curl -Is localhost/admin/)"
++    full_curl_output_dashboard="$(curl -Is ${DASHBOARD_HOST}/admin/)"
+     # If the X-header found by curl matches what is should be,
+     if [[ $block_page == "$block_page_working" ]]; then
+         # display a success message
+         log_write "$TICK Block page X-Header: ${COL_GREEN}${block_page}${COL_NC}"
+     else
+-        # Otherwise, show an error
+-        log_write "$CROSS Block page X-Header: ${COL_RED}X-Header does not match or could not be retrieved.${COL_NC}"
+-        log_write "${COL_RED}${full_curl_output_block_page}${COL_NC}"
++        if [ -z "$BLOCK_PAGE_HOST" ]; then
++            log_write "${INFO} Block page host is not specified. Assuming it is not used."
++        else
++            # Otherwise, show an error
++            log_write "$CROSS Block page X-Header: ${COL_RED}X-Header does not match or could not be retrieved.${COL_NC}"
++            log_write "${COL_RED}${full_curl_output_block_page}${COL_NC}"
++        fi
+     fi
+ 
+     # Same logic applies to the dashboard as above, if the X-Header matches what a working system should have,
+@@ -1139,9 +1161,9 @@ show_content_of_pihole_files() {
      # Show the content of the files in each of Pi-hole's folders
      show_content_of_files_in_dir "${PIHOLE_DIRECTORY}"
      show_content_of_files_in_dir "${DNSMASQ_D_DIRECTORY}"
