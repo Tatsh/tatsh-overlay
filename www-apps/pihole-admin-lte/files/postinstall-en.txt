@@ -49,10 +49,6 @@ user:password in the URIs if necessary.
 BLOCK_PAGE_HOST is optional and can be an empty string. In that case, the debug
 log generator will not check for a block page.
 
-To pass the check, the block page must have the header:
+To pass the check, the block page must have the X-Pi-hole header set:
 
 X-Pi-hole: A black hole for Internet advertisements.
-
-The dashboard page (at least the index) must have the header:
-
-X-Pi-hole: The Pi-hole Web interface is working!
