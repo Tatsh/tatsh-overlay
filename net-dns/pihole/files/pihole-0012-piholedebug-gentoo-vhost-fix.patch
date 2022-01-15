@@ -1,4 +1,4 @@
-From 8d816bd369ff93bcaf2e90b34f2f7f846c4e7013 Mon Sep 17 00:00:00 2001
+From 1711077bd347cef997fd484d86e4460142d3641f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 14 Jan 2022 18:21:09 -0500
 Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
@@ -9,7 +9,7 @@ Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
  2 files changed, 48 insertions(+), 35 deletions(-)
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 9dc9a90e..9335af31 100755
+index 9dc9a90e..1e822aa5 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,9 +22,13 @@ set -o pipefail
@@ -188,12 +188,12 @@ index 9dc9a90e..9335af31 100755
      local block_page
 -    block_page=$(curl -Is localhost | awk '/X-Pi-hole/' | tr -d '\r')
 +    if [ -n "${BLOCK_PAGE_HOST}" ]; then
-+        block_page=$(curl -Is "${BLOCK_PAGE_HOST}" | awk '/X-Pi-hole/' | tr -d '\r')
++        block_page=$(curl -Is "${BLOCK_PAGE_HOST}" | awk 'IGNORECASE = 1;/X-Pi-hole/' | tr -d '\r')
 +    fi
      # Do it for the dashboard as well, as the header is different than above
      local dashboard
 -    dashboard=$(curl -Is localhost/admin/ | awk '/X-Pi-hole/' | tr -d '\r')
-+    dashboard=$(curl -Is "${DASHBOARD_HOST}/admin/" | awk '/X-Pi-hole/' | tr -d '\r')
++    dashboard=$(curl -Is "${DASHBOARD_HOST}/admin/" | awk 'IGNORECASE = 1;/X-Pi-hole/' | tr -d '\r')
      # Store what the X-Header should be in variables for comparison later
      local block_page_working
      block_page_working="X-Pi-hole: A black hole for Internet advertisements."
