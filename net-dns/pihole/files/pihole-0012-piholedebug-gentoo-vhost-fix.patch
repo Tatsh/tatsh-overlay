@@ -1,14 +1,14 @@
-From 9384daaf815f31072e89bdae8812a4d686a3ac46 Mon Sep 17 00:00:00 2001
+From 48c6a3723310cdcfe9dfa73cff055e0d12187589 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 14 Jan 2022 18:21:09 -0500
 Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
 
 ---
- advanced/Scripts/piholeDebug.sh | 86 +++++++++++++++++++++------------
- 1 file changed, 54 insertions(+), 32 deletions(-)
+ advanced/Scripts/piholeDebug.sh | 90 ++++++++++++++++++++-------------
+ 1 file changed, 56 insertions(+), 34 deletions(-)
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 9dc9a90e..6a58048c 100755
+index 9dc9a90e..2ab4a086 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,9 +22,13 @@ set -o pipefail
@@ -190,18 +190,18 @@ index 9dc9a90e..6a58048c 100755
      # The X-Headers allow us to determine from the command line if the Web
      # lighttpd.conf has a directive to show "X-Pi-hole: A black hole for Internet advertisements."
      # in the header of any Pi-holed domain
-@@ -801,27 +817,33 @@ check_x_headers() {
+@@ -801,31 +817,37 @@ check_x_headers() {
      echo_current_diagnostic "Dashboard and block page"
      # Use curl -I to get the header and parse out just the X-Pi-hole one
      local block_page
 -    block_page=$(curl -Is localhost | awk '/X-Pi-hole/' | tr -d '\r')
 +    if [ -n "${BLOCK_PAGE_HOST}" ]; then
-+        block_page=$(curl -Is ${BLOCK_PAGE_HOST} | awk '/X-Pi-hole/' | tr -d '\r')
++        block_page=$(curl -Is "${BLOCK_PAGE_HOST}" | awk '/X-Pi-hole/' | tr -d '\r')
 +    fi
      # Do it for the dashboard as well, as the header is different than above
      local dashboard
 -    dashboard=$(curl -Is localhost/admin/ | awk '/X-Pi-hole/' | tr -d '\r')
-+    dashboard=$(curl -Is ${DASHBOARD_HOST}/admin/ | awk '/X-Pi-hole/' | tr -d '\r')
++    dashboard=$(curl -Is "${DASHBOARD_HOST}/admin/" | awk '/X-Pi-hole/' | tr -d '\r')
      # Store what the X-Header should be in variables for comparison later
      local block_page_working
      block_page_working="X-Pi-hole: A black hole for Internet advertisements."
@@ -209,12 +209,13 @@ index 9dc9a90e..6a58048c 100755
      dashboard_working="X-Pi-hole: The Pi-hole Web interface is working!"
      local full_curl_output_block_page
 -    full_curl_output_block_page="$(curl -Is localhost)"
-+    full_curl_output_block_page="$(curl -Is ${BLOCK_PAGE_HOST})"
++    full_curl_output_block_page="$(curl -Is "${BLOCK_PAGE_HOST}")"
      local full_curl_output_dashboard
 -    full_curl_output_dashboard="$(curl -Is localhost/admin/)"
-+    full_curl_output_dashboard="$(curl -Is ${DASHBOARD_HOST}/admin/)"
++    full_curl_output_dashboard="$(curl -Is "${DASHBOARD_HOST}/admin/")"
      # If the X-header found by curl matches what is should be,
-     if [[ $block_page == "$block_page_working" ]]; then
+-    if [[ $block_page == "$block_page_working" ]]; then
++    if [[ ${block_page,,} == "${block_page_working,,}" ]]; then
          # display a success message
          log_write "$TICK Block page X-Header: ${COL_GREEN}${block_page}${COL_NC}"
      else
@@ -231,6 +232,11 @@ index 9dc9a90e..6a58048c 100755
      fi
  
      # Same logic applies to the dashboard as above, if the X-Header matches what a working system should have,
+-    if [[ $dashboard == "$dashboard_working" ]]; then
++    if [[ ${dashboard,,} == "${dashboard_working,,}" ]]; then
+         # then we can show a success
+         log_write "$TICK Web interface X-Header: ${COL_GREEN}${dashboard}${COL_NC}"
+     else
 @@ -1139,9 +1161,9 @@ show_content_of_pihole_files() {
      # Show the content of the files in each of Pi-hole's folders
      show_content_of_files_in_dir "${PIHOLE_DIRECTORY}"
