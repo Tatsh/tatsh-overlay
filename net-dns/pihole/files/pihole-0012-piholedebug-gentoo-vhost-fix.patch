@@ -1,4 +1,4 @@
-From 4919987849b6d6b47afc43312f9d4c4cb1063956 Mon Sep 17 00:00:00 2001
+From 8d816bd369ff93bcaf2e90b34f2f7f846c4e7013 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 14 Jan 2022 18:21:09 -0500
 Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
@@ -9,7 +9,7 @@ Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
  2 files changed, 48 insertions(+), 35 deletions(-)
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 9dc9a90e..7bd9c42e 100755
+index 9dc9a90e..9335af31 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,9 +22,13 @@ set -o pipefail
@@ -176,8 +176,8 @@ index 9dc9a90e..7bd9c42e 100755
 +    if emerge --search www-apps/pihole-admin-lte | grep -F installed | grep -Fq 'Not Installed'; then
 +        return
 +    fi
-+    if [ -f "@EPREFIX/etc/pihole/debug-vars" ]; then
-+        source "@EPREFIX/etc/pihole/debug-vars"
++    if [ -f "@EPREFIX@/etc/pihole/debug-vars" ]; then
++        source "@EPREFIX@/etc/pihole/debug-vars"
 +    fi
      # The X-Headers allow us to determine from the command line if the Web
      # lighttpd.conf has a directive to show "X-Pi-hole: A black hole for Internet advertisements."
