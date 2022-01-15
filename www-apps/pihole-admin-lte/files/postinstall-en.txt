@@ -33,3 +33,15 @@ If you are using Apache, you can set it like so:
   SetEnv HWMON_NAME k10temp
   ...
 </VirtualHost>
+
+DEBUG LOG
+
+To have the 'Generate debug log' feature work fully, add a file
+/etc/pihole/debug-vars with content like the following:
+
+BLOCK_PAGE_HOST="https://block-page-host"
+DASHBOARD_HOST="https://dashboard-host"
+
+This file is sourced with Bash so it can do anything but ideally should
+try not to mess with the environment. You can pass basic authentication
+user:password in the URIs if necessary.
