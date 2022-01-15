@@ -1,26 +1,70 @@
-From d2bd98d4d170cb564c2a70e7342dd99820b08dd9 Mon Sep 17 00:00:00 2001
+From 982a365ad581063524379f9f093521b3c1e49e51 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 14 Jan 2022 18:21:09 -0500
 Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
 
 ---
- advanced/Scripts/piholeDebug.sh | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ advanced/Scripts/piholeDebug.sh | 49 +++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 20 deletions(-)
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 9dc9a90e..b50936ed 100755
+index 9dc9a90e..76304993 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
-@@ -142,7 +142,15 @@ DNSMASQ_CONF="${ETC}/dnsmasq.conf"
+@@ -22,9 +22,13 @@ set -o pipefail
+ ######## GLOBAL VARS ########
+ # These variables would normally be next to the other files
+ # but we need them to be first in order to get the colors needed for the script output
+-PIHOLE_SCRIPTS_DIRECTORY="@EPREFIX@/usr/@LIBDIR@/pihole"
+ PIHOLE_COLTABLE_FILE="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
+ 
++VHOST_SERVER=lighttpd
++if [ -f /etc/vhosts/webapp-config ]; then
++    VHOST_SERVER=$(grep -F vhost_server= /etc/vhosts/webapp-config | head -n1 | cut '-d"' -f2)
++fi
++
+ # These provide the colors we need for making the log more readable
+ if [[ -f ${PIHOLE_COLTABLE_FILE} ]]; then
+     source ${PIHOLE_COLTABLE_FILE}
+@@ -50,7 +54,6 @@ FAQ_HARDWARE_REQUIREMENTS="${COL_CYAN}https://docs.pi-hole.net/main/prerequisite
+ FAQ_HARDWARE_REQUIREMENTS_PORTS="${COL_CYAN}https://docs.pi-hole.net/main/prerequisites/#ports${COL_NC}"
+ FAQ_HARDWARE_REQUIREMENTS_FIREWALLD="${COL_CYAN}https://docs.pi-hole.net/main/prerequisites/#firewalld${COL_NC}"
+ FAQ_GATEWAY="${COL_CYAN}https://discourse.pi-hole.net/t/why-is-a-default-gateway-important-for-pi-hole/3546${COL_NC}"
+-FAQ_ULA="${COL_CYAN}https://discourse.pi-hole.net/t/use-ipv6-ula-addresses-for-pi-hole/2127${COL_NC}"
+ FAQ_FTL_COMPATIBILITY="${COL_CYAN}https://github.com/pi-hole/FTL#compatibility-list${COL_NC}"
+ FAQ_BAD_ADDRESS="${COL_CYAN}https://discourse.pi-hole.net/t/why-do-i-see-bad-address-at-in-pihole-log/3972${COL_NC}"
+ 
+@@ -59,18 +62,14 @@ FORUMS_URL="${COL_CYAN}https://discourse.pi-hole.net${COL_NC}"
+ 
+ # Directories required by Pi-hole
+ # https://discourse.pi-hole.net/t/what-files-does-pi-hole-use/1684
+-CORE_GIT_DIRECTORY="@EPREFIX@/usr/@LIBDIR@/pihole"
+ CRON_D_DIRECTORY="@EPREFIX@/etc/cron.d"
+ DNSMASQ_D_DIRECTORY="@EPREFIX@/etc/pihole/dnsmasq.d"
+ PIHOLE_DIRECTORY="@EPREFIX@/var/lib/pihole"
+-PIHOLE_SCRIPTS_DIRECTORY="@EPREFIX@/usr/@LIBDIR@/pihole"
+ BIN_DIRECTORY="@EPREFIX@/usr/bin"
+ RUN_DIRECTORY="@EPREFIX@/run"
+ LOG_DIRECTORY="@EPREFIX@/var/log"
+-WEB_SERVER_LOG_DIRECTORY="${LOG_DIRECTORY}/lighttpd"
++WEB_SERVER_LOG_DIRECTORY="${LOG_DIRECTORY}/${VHOST_SERVER}"
+ WEB_SERVER_CONFIG_DIRECTORY="@EPREFIX@/etc/lighttpd"
+-HTML_DIRECTORY="@EPREFIX@/var/www/localhost/htdocs"
+-WEB_GIT_DIRECTORY="${HTML_DIRECTORY}/pihole-admin"
+ #BLOCK_PAGE_DIRECTORY="${HTML_DIRECTORY}/pihole"
+ SHM_DIRECTORY="/dev/shm"
+ ETC="/etc"
+@@ -142,7 +141,16 @@ DNSMASQ_CONF="${ETC}/dnsmasq.conf"
  #SUPPORTED_OS=("Raspbian" "Ubuntu" "Fedora" "Debian" "CentOS")
  
  # Store Pi-hole's processes in an array for easy use and parsing
 -PIHOLE_PROCESSES=( "lighttpd" "pihole-FTL" )
 +PIHOLE_PROCESSES=( "pihole-FTL" )
++VHOST_SERVER=lighttpd
 +if [ -f /etc/vhosts/webapp-config ]; then
-+    vhost_server=$(grep -F vhost_server= /etc/vhosts/webapp-config | head -n1 | cut '-d"' -f2)
-+    if [ -n "$vhost_server" ]; then
-+        PIHOLE_PROCESSES+=( "$vhost_server" )
++    VHOST_SERVER=$(grep -F VHOST_SERVER= /etc/vhosts/webapp-config | head -n1 | cut '-d"' -f2)
++    if [ -n "$VHOST_SERVER" ]; then
++        PIHOLE_PROCESSES+=( "$VHOST_SERVER" )
 +    fi
 +else
 +    PIHOLE_PROCESSES+=( "lighttpd" )
@@ -28,7 +72,18 @@ index 9dc9a90e..b50936ed 100755
  
  # Store the required directories in an array so it can be parsed through
  #REQUIRED_DIRECTORIES=("${CORE_GIT_DIRECTORY}"
-@@ -386,6 +394,10 @@ get_program_version() {
+@@ -366,10 +374,6 @@ check_ftl_version() {
+ 
+ # Checks the core version of the Pi-hole codebase
+ check_component_versions() {
+-    # Check the Web version, branch, and commit
+-    compare_local_version_to_git_version "${CORE_GIT_DIRECTORY}" "Core"
+-    # Check the Web version, branch, and commit
+-    compare_local_version_to_git_version "${WEB_GIT_DIRECTORY}" "Web"
+     # Check the FTL version
+     check_ftl_version
+ }
+@@ -386,6 +390,10 @@ get_program_version() {
                      ;;
          "php") program_version="$(${program_name} -v 2> /dev/null | head -n1 | cut -d '-' -f1 | cut -d ' ' -f2)"
                  ;;
@@ -39,20 +94,16 @@ index 9dc9a90e..b50936ed 100755
          # If a match is not found, show an error
          *) echo "Unrecognized program";
      esac
-@@ -403,7 +415,11 @@ get_program_version() {
+@@ -403,7 +411,7 @@ get_program_version() {
  # and their versions, using the functions above.
  check_critical_program_versions() {
      # Use the function created earlier and bundle them into one function that checks all the version numbers
 -    get_program_version "lighttpd"
-+    if [ -n "$vhost_server" ]; then
-+        get_program_version "$vhost_server"
-+    else
-+        get_program_version "lighttpd"
-+    fi
++    get_program_version "$VHOST_SERVER"
      get_program_version "php"
  }
  
-@@ -422,6 +438,7 @@ os_check() {
+@@ -422,6 +430,7 @@ os_check() {
  
      # Extract dig response
      response="${cmdResult%%$'\n'*}"
@@ -60,7 +111,7 @@ index 9dc9a90e..b50936ed 100755
  
      IFS=" " read -r -a supportedOS < <(echo "${response}" | tr -d '"')
      for distro_and_versions in "${supportedOS[@]}"
-@@ -434,7 +451,7 @@ os_check() {
+@@ -434,7 +443,7 @@ os_check() {
              IFS="," read -r -a supportedVer <<<"${versions_part}"
              for version in "${supportedVer[@]}"
              do
@@ -69,7 +120,7 @@ index 9dc9a90e..b50936ed 100755
                      valid_version=true
                      break
                  fi
-@@ -450,9 +467,9 @@ os_check() {
+@@ -450,9 +459,9 @@ os_check() {
          log_write "${TICK} Distro:  ${COL_GREEN}${detected_os^}${COL_NC}"
  
          if [ "$valid_version" = true ]; then
@@ -81,6 +132,28 @@ index 9dc9a90e..b50936ed 100755
              log_write "${CROSS} Error: ${COL_RED}${detected_os^} is supported but version ${detected_version} is currently unsupported (${FAQ_HARDWARE_REQUIREMENTS})${COL_NC}"
          fi
      else
+@@ -743,7 +752,7 @@ check_required_ports() {
+     # Since Pi-hole needs 53, 80, and 4711, check what they are being used by
+     # so we can detect any issues
+     local resolver="pihole-FTL"
+-    local web_server="lighttpd"
++    local web_server="${VHOST_SERVER}"
+     local ftl="pihole-FTL"
+     # Create an array for these ports in use
+     ports_in_use=()
+@@ -1139,9 +1148,9 @@ show_content_of_pihole_files() {
+     # Show the content of the files in each of Pi-hole's folders
+     show_content_of_files_in_dir "${PIHOLE_DIRECTORY}"
+     show_content_of_files_in_dir "${DNSMASQ_D_DIRECTORY}"
+-    show_content_of_files_in_dir "${WEB_SERVER_CONFIG_DIRECTORY}"
+-    show_content_of_files_in_dir "${CRON_D_DIRECTORY}"
+-    show_content_of_files_in_dir "${WEB_SERVER_LOG_DIRECTORY}"
++    [ -d "${WEB_SERVER_CONFIG_DIRECTORY}" ] && show_content_of_files_in_dir "${WEB_SERVER_CONFIG_DIRECTORY}"
++    [ -d "${CRON_D_DIRECTORY}" ] && show_content_of_files_in_dir "${CRON_D_DIRECTORY}"
++    [ -d "${WEB_SERVER_LOG_DIRECTORY}" ] && show_content_of_files_in_dir "${WEB_SERVER_LOG_DIRECTORY}"
+     show_content_of_files_in_dir "${LOG_DIRECTORY}"
+     show_content_of_files_in_dir "${SHM_DIRECTORY}"
+     show_content_of_files_in_dir "${ETC}"
 -- 
 2.34.1
 
