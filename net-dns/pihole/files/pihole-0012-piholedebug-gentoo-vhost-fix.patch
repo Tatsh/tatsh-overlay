@@ -1,14 +1,14 @@
-From 982a365ad581063524379f9f093521b3c1e49e51 Mon Sep 17 00:00:00 2001
+From a484bbc4a3201702ba24939ab577c9b2b6301e95 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 14 Jan 2022 18:21:09 -0500
 Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
 
 ---
- advanced/Scripts/piholeDebug.sh | 49 +++++++++++++++++++--------------
- 1 file changed, 29 insertions(+), 20 deletions(-)
+ advanced/Scripts/piholeDebug.sh | 56 +++++++++++++++++++--------------
+ 1 file changed, 32 insertions(+), 24 deletions(-)
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 9dc9a90e..76304993 100755
+index 9dc9a90e..fa97ae36 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,9 +22,13 @@ set -o pipefail
@@ -26,7 +26,13 @@ index 9dc9a90e..76304993 100755
  # These provide the colors we need for making the log more readable
  if [[ -f ${PIHOLE_COLTABLE_FILE} ]]; then
      source ${PIHOLE_COLTABLE_FILE}
-@@ -50,7 +54,6 @@ FAQ_HARDWARE_REQUIREMENTS="${COL_CYAN}https://docs.pi-hole.net/main/prerequisite
+@@ -44,13 +48,11 @@ fi
+ OBFUSCATED_PLACEHOLDER="<DOMAIN OBFUSCATED>"
+ 
+ # FAQ URLs for use in showing the debug log
+-FAQ_UPDATE_PI_HOLE="${COL_CYAN}https://discourse.pi-hole.net/t/how-do-i-update-pi-hole/249${COL_NC}"
+ FAQ_CHECKOUT_COMMAND="${COL_CYAN}https://discourse.pi-hole.net/t/the-pihole-command-with-examples/738#checkout${COL_NC}"
+ FAQ_HARDWARE_REQUIREMENTS="${COL_CYAN}https://docs.pi-hole.net/main/prerequisites/${COL_NC}"
  FAQ_HARDWARE_REQUIREMENTS_PORTS="${COL_CYAN}https://docs.pi-hole.net/main/prerequisites/#ports${COL_NC}"
  FAQ_HARDWARE_REQUIREMENTS_FIREWALLD="${COL_CYAN}https://docs.pi-hole.net/main/prerequisites/#firewalld${COL_NC}"
  FAQ_GATEWAY="${COL_CYAN}https://discourse.pi-hole.net/t/why-is-a-default-gateway-important-for-pi-hole/3546${COL_NC}"
@@ -34,7 +40,7 @@ index 9dc9a90e..76304993 100755
  FAQ_FTL_COMPATIBILITY="${COL_CYAN}https://github.com/pi-hole/FTL#compatibility-list${COL_NC}"
  FAQ_BAD_ADDRESS="${COL_CYAN}https://discourse.pi-hole.net/t/why-do-i-see-bad-address-at-in-pihole-log/3972${COL_NC}"
  
-@@ -59,18 +62,14 @@ FORUMS_URL="${COL_CYAN}https://discourse.pi-hole.net${COL_NC}"
+@@ -59,18 +61,14 @@ FORUMS_URL="${COL_CYAN}https://discourse.pi-hole.net${COL_NC}"
  
  # Directories required by Pi-hole
  # https://discourse.pi-hole.net/t/what-files-does-pi-hole-use/1684
@@ -54,7 +60,7 @@ index 9dc9a90e..76304993 100755
  #BLOCK_PAGE_DIRECTORY="${HTML_DIRECTORY}/pihole"
  SHM_DIRECTORY="/dev/shm"
  ETC="/etc"
-@@ -142,7 +141,16 @@ DNSMASQ_CONF="${ETC}/dnsmasq.conf"
+@@ -142,7 +140,16 @@ DNSMASQ_CONF="${ETC}/dnsmasq.conf"
  #SUPPORTED_OS=("Raspbian" "Ubuntu" "Fedora" "Debian" "CentOS")
  
  # Store Pi-hole's processes in an array for easy use and parsing
@@ -72,7 +78,23 @@ index 9dc9a90e..76304993 100755
  
  # Store the required directories in an array so it can be parsed through
  #REQUIRED_DIRECTORIES=("${CORE_GIT_DIRECTORY}"
-@@ -366,10 +374,6 @@ check_ftl_version() {
+@@ -299,7 +306,7 @@ compare_local_version_to_git_version() {
+             else
+                 # echo the current version in yellow, signifying it's something to take a look at, but not a critical error
+                 # Also add a URL to an FAQ
+-                log_write "${INFO} ${pihole_component}: ${COL_YELLOW}${remote_version:-Untagged}${COL_NC} (${FAQ_UPDATE_PI_HOLE})"
++                log_write "${INFO} ${pihole_component}: ${COL_YELLOW}${remote_version:-Untagged}${COL_NC}"
+             fi
+ 
+             # Print the repo upstreams
+@@ -360,16 +367,12 @@ check_ftl_version() {
+         log_write "${TICK} ${ftl_name}: ${COL_GREEN}${FTL_VERSION}${COL_NC}"
+     else
+         # If not, show it in yellow, signifying there is an update
+-        log_write "${TICK} ${ftl_name}: ${COL_YELLOW}${FTL_VERSION}${COL_NC} (${FAQ_UPDATE_PI_HOLE})"
++        log_write "${TICK} ${ftl_name}: ${COL_YELLOW}${FTL_VERSION}${COL_NC}"
+     fi
+ }
  
  # Checks the core version of the Pi-hole codebase
  check_component_versions() {
@@ -83,7 +105,7 @@ index 9dc9a90e..76304993 100755
      # Check the FTL version
      check_ftl_version
  }
-@@ -386,6 +390,10 @@ get_program_version() {
+@@ -386,8 +389,12 @@ get_program_version() {
                      ;;
          "php") program_version="$(${program_name} -v 2> /dev/null | head -n1 | cut -d '-' -f1 | cut -d ' ' -f2)"
                  ;;
@@ -92,9 +114,12 @@ index 9dc9a90e..76304993 100755
 +        apache*) program_version="$(apache2 -v 2> /dev/null | grep -F version: | cut -d/ -f2 | cut '-d ' -f1)"
 +                ;;
          # If a match is not found, show an error
-         *) echo "Unrecognized program";
+-        *) echo "Unrecognized program";
++        *) echo "Unrecognized program '${program_name}'";
      esac
-@@ -403,7 +411,7 @@ get_program_version() {
+     # If the program does not have a version (the variable is empty)
+     if [[ -z "${program_version}" ]]; then
+@@ -403,7 +410,7 @@ get_program_version() {
  # and their versions, using the functions above.
  check_critical_program_versions() {
      # Use the function created earlier and bundle them into one function that checks all the version numbers
@@ -103,7 +128,7 @@ index 9dc9a90e..76304993 100755
      get_program_version "php"
  }
  
-@@ -422,6 +430,7 @@ os_check() {
+@@ -422,6 +429,7 @@ os_check() {
  
      # Extract dig response
      response="${cmdResult%%$'\n'*}"
@@ -111,7 +136,7 @@ index 9dc9a90e..76304993 100755
  
      IFS=" " read -r -a supportedOS < <(echo "${response}" | tr -d '"')
      for distro_and_versions in "${supportedOS[@]}"
-@@ -434,7 +443,7 @@ os_check() {
+@@ -434,7 +442,7 @@ os_check() {
              IFS="," read -r -a supportedVer <<<"${versions_part}"
              for version in "${supportedVer[@]}"
              do
@@ -120,7 +145,7 @@ index 9dc9a90e..76304993 100755
                      valid_version=true
                      break
                  fi
-@@ -450,9 +459,9 @@ os_check() {
+@@ -450,9 +458,9 @@ os_check() {
          log_write "${TICK} Distro:  ${COL_GREEN}${detected_os^}${COL_NC}"
  
          if [ "$valid_version" = true ]; then
@@ -132,7 +157,7 @@ index 9dc9a90e..76304993 100755
              log_write "${CROSS} Error: ${COL_RED}${detected_os^} is supported but version ${detected_version} is currently unsupported (${FAQ_HARDWARE_REQUIREMENTS})${COL_NC}"
          fi
      else
-@@ -743,7 +752,7 @@ check_required_ports() {
+@@ -743,7 +751,7 @@ check_required_ports() {
      # Since Pi-hole needs 53, 80, and 4711, check what they are being used by
      # so we can detect any issues
      local resolver="pihole-FTL"
@@ -141,7 +166,7 @@ index 9dc9a90e..76304993 100755
      local ftl="pihole-FTL"
      # Create an array for these ports in use
      ports_in_use=()
-@@ -1139,9 +1148,9 @@ show_content_of_pihole_files() {
+@@ -1139,9 +1147,9 @@ show_content_of_pihole_files() {
      # Show the content of the files in each of Pi-hole's folders
      show_content_of_files_in_dir "${PIHOLE_DIRECTORY}"
      show_content_of_files_in_dir "${DNSMASQ_D_DIRECTORY}"
