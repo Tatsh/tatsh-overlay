@@ -1,7 +1,7 @@
 From 583cfd468db723dd85cb8a205d5ab6544f9da039 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 24 Dec 2021 00:16:15 -0500
-Subject: [PATCH 08/11] version.sh path fix
+Subject: [PATCH 08/12] version.sh path fix
 
 ---
  advanced/Scripts/version.sh | 2 +-

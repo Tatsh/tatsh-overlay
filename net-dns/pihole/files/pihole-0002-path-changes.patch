@@ -1,7 +1,7 @@
 From cb348e56309d662a32e09c3ba14fe8e2f8409db8 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:49 -0500
-Subject: [PATCH 02/11] Path changes
+Subject: [PATCH 02/12] Path changes
 
 ---
  advanced/01-pihole.conf                       | 10 +-

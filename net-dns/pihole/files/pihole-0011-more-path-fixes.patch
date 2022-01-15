@@ -1,7 +1,7 @@
 From edc2dddf9e97437976cc277bddc306c5fc1b1b91 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 11:27:45 -0500
-Subject: [PATCH 11/11] more path fixes
+Subject: [PATCH 11/12] more path fixes
 
 ---
  advanced/01-pihole.conf         | 4 ++--
