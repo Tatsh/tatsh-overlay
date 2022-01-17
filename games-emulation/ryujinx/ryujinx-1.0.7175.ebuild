@@ -7,7 +7,7 @@ inherit desktop multilib multiprocessing xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="cda659955ced1b16839cdd1e7fea1ef6f8d99041"
+SHA="fb853f13e92be33a2b75984cbb5c3921a9660019"
 MY_PN="R${PN:1}"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://api.nuget.org/v3-flatcontainer/atksharp/3.22.25.128/atksharp.3.22.25.128.nupkg
@@ -22,7 +22,7 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/glibsharp/3.22.25.128/glibsharp.3.22.25.128.nupkg
 	https://api.nuget.org/v3-flatcontainer/gtksharp.dependencies/1.1.0/gtksharp.dependencies.1.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/gtksharp/3.22.25.128/gtksharp.3.22.25.128.nupkg
-	https://api.nuget.org/v3-flatcontainer/libhac/0.14.3/libhac.0.14.3.nupkg
+	https://api.nuget.org/v3-flatcontainer/libhac/0.15.0/libhac.0.15.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-x64/6.0.1/microsoft.aspnetcore.app.runtime.linux-x64.6.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.osx-x64/6.0.1/microsoft.aspnetcore.app.runtime.osx-x64.6.0.1.nupkg
 	https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.win-x64/6.0.1/microsoft.aspnetcore.app.runtime.win-x64.6.0.1.nupkg
@@ -120,7 +120,6 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/sixlabors.fonts/1.0.0-beta0013/sixlabors.fonts.1.0.0-beta0013.nupkg
 	https://api.nuget.org/v3-flatcontainer/sixlabors.imagesharp.drawing/1.0.0-beta11/sixlabors.imagesharp.drawing.1.0.0-beta11.nupkg
 	https://api.nuget.org/v3-flatcontainer/sixlabors.imagesharp/1.0.4/sixlabors.imagesharp.1.0.4.nupkg
-	https://api.nuget.org/v3-flatcontainer/spb/0.0.4-build17/spb.0.0.4-build17.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.appcontext/4.1.0/system.appcontext.4.1.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.buffers/4.0.0/system.buffers.4.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.buffers/4.3.0/system.buffers.4.3.0.nupkg
@@ -203,7 +202,6 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/system.security.accesscontrol/5.0.0/system.security.accesscontrol.5.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.security.claims/4.3.0/system.security.claims.4.3.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.security.cryptography.algorithms/4.2.0/system.security.cryptography.algorithms.4.2.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/system.security.cryptography.cng/4.2.0/system.security.cryptography.cng.4.2.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.security.cryptography.csp/4.0.0/system.security.cryptography.csp.4.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.security.cryptography.encoding/4.0.0/system.security.cryptography.encoding.4.0.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.security.cryptography.openssl/4.0.0/system.security.cryptography.openssl.4.0.0.nupkg
@@ -234,7 +232,16 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	https://api.nuget.org/v3-flatcontainer/system.xml.xdocument/4.0.11/system.xml.xdocument.4.0.11.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.xml.xmldocument/4.3.0/system.xml.xmldocument.4.3.0.nupkg
 	https://api.nuget.org/v3-flatcontainer/system.xml.xpath.xmldocument/4.3.0/system.xml.xpath.xmldocument.4.3.0.nupkg
-	https://api.nuget.org/v3-flatcontainer/system.xml.xpath/4.3.0/system.xml.xpath.4.3.0.nupkg"
+	https://api.nuget.org/v3-flatcontainer/system.xml.xpath/4.3.0/system.xml.xpath.4.3.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/libhac/0.15.0/libhac.0.15.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.csharp/4.5.0/microsoft.csharp.4.5.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.identitymodel.jsonwebtokens/6.15.0/microsoft.identitymodel.jsonwebtokens.6.15.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.identitymodel.logging/6.15.0/microsoft.identitymodel.logging.6.15.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/microsoft.identitymodel.tokens/6.15.0/microsoft.identitymodel.tokens.6.15.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/spb/0.0.4-build17/spb.0.0.4-build17.nupkg
+	https://api.nuget.org/v3-flatcontainer/system.identitymodel.tokens.jwt/6.15.0/system.identitymodel.tokens.jwt.6.15.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/system.security.cryptography.cng/4.5.0/system.security.cryptography.cng.4.5.0.nupkg
+	https://api.nuget.org/v3-flatcontainer/system.security.cryptography.cng/4.2.0/system.security.cryptography.cng.4.2.0.nupkg"
 
 NET_SLOT="6.0"
 BDEPEND="virtual/dotnet-sdk:${NET_SLOT}"
