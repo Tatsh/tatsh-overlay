@@ -1,4 +1,4 @@
-# Copyright 2019-2021 Gentoo Authors
+# Copyright 2019-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,7 +6,7 @@ inherit udev
 
 DESCRIPTION="Random systemd utilities."
 HOMEPAGE="https://github.com/kylemanna/systemd-utils"
-SHA="8ae869f0a1a717b601cdea73a38e1c93fb021703"
+SHA="eadaa1c9878553b7c032bf2911321fd6374fdeaa"
 SRC_URI="https://github.com/kylemanna/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
