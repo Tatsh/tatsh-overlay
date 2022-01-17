@@ -23,24 +23,24 @@ CRATES="
 	clap-2.34.0
 	color_quant-1.1.0
 	crc32fast-1.3.0
-	crossbeam-channel-0.5.1
+	crossbeam-channel-0.5.2
 	crossbeam-deque-0.8.1
-	crossbeam-epoch-0.9.5
-	crossbeam-utils-0.8.5
+	crossbeam-epoch-0.9.6
+	crossbeam-utils-0.8.6
 	dunce-1.0.2
 	either-1.6.1
 	fallible_collections-0.4.4
 	ffmpeg-next-4.4.0
 	ffmpeg-sys-next-4.4.0
 	flate2-1.0.22
-	getrandom-0.2.3
+	getrandom-0.2.4
 	gif-0.11.3
 	gif-dispose-3.1.1
 	gifsicle-1.92.5
 	glob-0.3.0
 	hashbrown-0.11.2
 	hermit-abi-0.1.19
-	imagequant-4.0.0-beta.2
+	imagequant-4.0.0-beta.6
 	imgref-1.9.1
 	lazy_static-1.4.0
 	lazycell-1.3.0
