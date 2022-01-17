@@ -86,7 +86,6 @@ src_prepare() {
 		eapply "${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
 		eapply "${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
 		eapply "${FILESDIR}/${PN}-7213-openssl"*.patch
-		eapply "${FILESDIR}/${PN}-7633-controller-hotkeys.patch"
 	else
 		eapply "${FILESDIR}/${PN}-7044-system-mbedtls.patch"
 	fi
