@@ -12,7 +12,7 @@ SRC_URI="https://github.com/elFarto/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="experimental"
+IUSE="av1 experimental"
 
 BDEPEND=">=media-libs/nv-codec-headers-11.1.5.1"
 DEPEND="media-libs/gst-plugins-bad
@@ -24,4 +24,11 @@ src_prepare() {
 		eapply "${FILESDIR}/${PN}-chrome-experimental.patch"
 	fi
 	default
+}
+
+src_configure() {
+	local emesonargs=(
+		$(meson_use av1)
+	)
+	meson_src_configure
 }

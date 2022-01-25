@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<use>
+		<flag name="av1">Enable experimental AV1 support</flag>
 		<flag name="experimental">Apply experimental patches that mostly apply to Chrome usage</flag>
 	</use>
 </pkgmetadata>
