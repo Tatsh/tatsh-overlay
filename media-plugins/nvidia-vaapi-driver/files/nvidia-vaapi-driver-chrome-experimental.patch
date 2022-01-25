@@ -1,0 +1,577 @@
+diff --git a/README.md b/README.md
+index 45ce9b6..cf45303 100644
+--- a/README.md
++++ b/README.md
+@@ -48,6 +48,7 @@ To use the driver with firefox you will need at least Firefox 96 (currently in b
+ | media.rdd-ffmpeg.enabled | true | Required, default on FF97. Forces ffmpeg usage into the RDD process, rather than the content process.|
+ | media.av1.enabled | false | Optional, disables AV1. The driver doesn't support AV1 playback yet. This will prevent sites attempting to use it and falling back to software decoding |
+ | gfx.x11-egl.force-enabled | true | This driver requires that Firefox use the EGL backend. If it isn't selecting it by default, it'll need to be forced on using this option or by setting the `MOZ_X11_EGL` environment variable to `1`. It's recommended you try the environment variable method first to test it. |
++| widget.dmabuf.force-enabled | true | Required for NVIDIA 470 series drivers, not required at all on 495+. This option has been shown to help getting decoding working on the 470 driver series. However it should be noted that Firefox isn't coded to allow DMA-BUF support without GBM support, so it may not function completely correctly when it's forced on. |
+ 
+ In addition the following environment variables need to be set:
+ | Variable | Value | Reason |
+diff --git a/src/av1.c b/src/av1.c
+index d751486..5f4f103 100644
+--- a/src/av1.c
++++ b/src/av1.c
+@@ -80,6 +80,55 @@ static void copyAV1PicParam(NVContext *ctx, NVBuffer* buffer, CUVIDPICPARAMS *pi
+     if (pps->skip_mode) {
+         //TODO compute SkipModeFrame0 and SkipModeFrame1
+         LOG("AV1 frame requires SkipModeFrame0 and SkipModeFrame1 values");
++
++//        int forwardIdx = -1;
++//        int backwardIdx = -1;
++//        int forwardHint = 0;
++//        int backwardHint = 0;
++//        int RefOrderHint[8];
++//        for (int i = 0; i < 8; i++) {
++//            //TODO can't generate RefOrderHint as refresh_frame_flags isn't passed in
++//        }
++//        for (int i = 0; i < 7; i++ ) {
++//            int refHint = RefOrderHint[ buf->ref_frame_idx[ i ] ];
++//            if ( get_relative_dist( refHint, OrderHint ) < 0 ) {
++//                if ( forwardIdx < 0 || get_relative_dist( refHint, forwardHint) > 0 ) {
++//                    forwardIdx = i;
++//                    forwardHint = refHint;
++//                }
++//            } else if ( get_relative_dist( refHint, OrderHint) > 0 ) {
++//                if ( backwardIdx < 0 || get_relative_dist( refHint, backwardHint) < 0 ) {
++//                    backwardIdx = i;
++//                    backwardHint = refHint;
++//                }
++//            }
++//        }
++//        if ( forwardIdx < 0 ) {
++//            //skipModeAllowed = 0
++//        } else if ( backwardIdx >= 0 ) {
++//            //skipModeAllowed = 1
++//            pps->SkipModeFrame0 = LAST_FRAME + Min(forwardIdx, backwardIdx);
++//            pps->SkipModeFrame1 = LAST_FRAME + Max(forwardIdx, backwardIdx);
++//        } else {
++//            int secondForwardIdx = -1;
++//            int secondForwardHint = 0;
++//            for (int i = 0; i < 7; i++ ) {
++//                int refHint = RefOrderHint[ buf->ref_frame_idx[ i ] ];
++//                if ( get_relative_dist( refHint, forwardHint ) < 0 ) {
++//                    if ( secondForwardIdx < 0 || get_relative_dist( refHint, secondForwardHint ) > 0 ) {
++//                        secondForwardIdx = i;
++//                        secondForwardHint = refHint;
++//                    }
++//                }
++//            }
++//            if ( secondForwardIdx < 0 ) {
++//                //skipModeAllowed = 0
++//            } else {
++//                //skipModeAllowed = 1
++//                pps->SkipModeFrame0 = LAST_FRAME + Min(forwardIdx, secondForwardIdx);
++//                pps->SkipModeFrame1 = LAST_FRAME + Max(forwardIdx, secondForwardIdx);
++//            }
++//        }
+     }
+ 
+     pps->base_qindex = buf->base_qindex;
+diff --git a/src/export-buf.c b/src/export-buf.c
+index 3d9c17c..e4aa602 100644
+--- a/src/export-buf.c
++++ b/src/export-buf.c
+@@ -51,6 +51,35 @@ static void debug(EGLenum error,const char *command,EGLint messageType,EGLLabelK
+ }
+ 
+ void releaseExporter(NVDriver *drv) {
++    LOG("Releasing exporter, %d outstanding frames", drv->numFramesPresented);
++    while (drv->numFramesPresented > 0) {
++      CUeglFrame eglframe;
++      CUresult cuStatus = drv->cu->cuEGLStreamProducerReturnFrame(&drv->cuStreamConnection, &eglframe, NULL);
++      if (cuStatus == CUDA_SUCCESS) {
++        drv->numFramesPresented--;
++        for (int i = 0; i < 3; i++) {
++            if (eglframe.frame.pArray[i] != NULL) {
++                LOG("Cleaning up CUDA array %p", eglframe.frame.pArray[i]);
++                drv->cu->cuArrayDestroy(eglframe.frame.pArray[i]);
++                eglframe.frame.pArray[i] = NULL;
++            }
++        }
++      } else {
++          break;
++      }
++    }
++    LOG("Done releasing frames");
++
++    NVEGLImage *img = drv->allocatedEGLImages;
++    while (img != NULL) {
++        LOG("Destroying EGLImage: %p", img->image);
++        eglDestroyImage(drv->eglDisplay, img->image);
++        NVEGLImage *oldImg = img;
++        img = img->next;
++        free(oldImg);
++    }
++    LOG("Done releasing EGLImages");
++
+     if (drv->cuStreamConnection != NULL) {
+         drv->cu->cuEGLStreamProducerDisconnect(&drv->cuStreamConnection);
+     }
+@@ -78,6 +107,8 @@ static void reconnect(NVDriver *drv) {
+     if (drv->eglStream != EGL_NO_STREAM_KHR) {
+         eglDestroyStreamKHR(drv->eglDisplay, drv->eglStream);
+     }
++//    EGLint streamAttribs[] = { EGL_STREAM_FIFO_LENGTH_KHR, 4, EGL_NONE };
++//    drv->eglStream = eglCreateStreamKHR(drv->eglDisplay, streamAttribs);
+     drv->eglStream = eglCreateStreamKHR(drv->eglDisplay, NULL);
+     if (drv->eglStream == EGL_NO_STREAM_KHR) {
+         LOG("Unable to create EGLStream");
+@@ -118,7 +149,11 @@ static int findCudaDisplay(EGLDisplay *eglDisplay) {
+                 //we need to check to see if modeset=1 has been passed to the nvidia_drm driver
+                 //since you need to be root to read the parameter out of /sys, we'll have to find the
+                 //DRM device file, open it and issue an ioctl to see if the ASYNC_PAGE_FLIP cap is set
+-                const char* drmDeviceFile = eglQueryDeviceStringEXT(devices[i], EGL_DRM_DEVICE_FILE_EXT);
++                const char* drmDeviceFile = eglQueryDeviceStringEXT(devices[i], EGL_DRM_RENDER_NODE_FILE_EXT);
++                if (drmDeviceFile == NULL) {
++                    LOG("Unable to retrieve render node, falling back to device node");
++                    drmDeviceFile = eglQueryDeviceStringEXT(devices[i], EGL_DRM_DEVICE_FILE_EXT);
++                }
+                 LOG("Checking device file: %s", drmDeviceFile);
+                 if (drmDeviceFile != NULL) {
+                     int fd = open(drmDeviceFile, O_RDONLY);
+@@ -212,7 +247,7 @@ int exportCudaPtr(NVDriver *drv, CUdeviceptr ptr, NVSurface *surface, uint32_t p
+       } else if (cuStatus != CUDA_SUCCESS) {
+         CHECK_CUDA_RESULT(cuStatus);
+       } else {
+-        //LOG("returned frame %dx%d %p %p", eglframe.width, eglframe.height, eglframe.frame.pArray[0], eglframe.frame.pArray[1]);
++        LOG("returned frame %dx%d %p %p", eglframe.width, eglframe.height, eglframe.frame.pArray[0], eglframe.frame.pArray[1]);
+         drv->numFramesPresented--;
+       }
+     }
+@@ -317,6 +352,7 @@ int exportCudaPtr(NVDriver *drv, CUdeviceptr ptr, NVSurface *surface, uint32_t p
+         CHECK_CUDA_RESULT(drv->cu->cuMemcpy2D(&cpy2));
+     }
+ 
++    LOG("presenting frame %dx%d %p %p", eglframe.width, eglframe.height, eglframe.frame.pArray[0], eglframe.frame.pArray[1]);
+     CUresult ret = drv->cu->cuEGLStreamProducerPresentFrame( &drv->cuStreamConnection, eglframe, NULL );
+     if (ret == CUDA_ERROR_UNKNOWN) {
+         reconnect(drv);
+@@ -334,7 +370,12 @@ int exportCudaPtr(NVDriver *drv, CUdeviceptr ptr, NVSurface *surface, uint32_t p
+         }
+ 
+         if (event == EGL_STREAM_IMAGE_ADD_NV) {
+-            eglCreateImage(drv->eglDisplay, EGL_NO_CONTEXT, EGL_STREAM_CONSUMER_IMAGE_NV, drv->eglStream, NULL);
++            EGLImage image = eglCreateImage(drv->eglDisplay, EGL_NO_CONTEXT, EGL_STREAM_CONSUMER_IMAGE_NV, drv->eglStream, NULL);
++            NVEGLImage* nvEglImage = (NVEGLImage*) calloc(1, sizeof(NVEGLImage));
++            LOG("Adding frame from EGLStream: %p", image);
++            nvEglImage->image = image;
++            nvEglImage->next = drv->allocatedEGLImages;
++            drv->allocatedEGLImages = nvEglImage;
+         } else if (event == EGL_STREAM_IMAGE_AVAILABLE_NV) {
+             EGLImage img;
+             //somehow we get here with the previous frame, not the next one
+@@ -343,13 +384,15 @@ int exportCudaPtr(NVDriver *drv, CUdeviceptr ptr, NVSurface *surface, uint32_t p
+                 return 0;
+             }
+ 
++            LOG("Acquired image from EGLStream: %p", img);
++
+             int planes = 0;
+             if (!eglExportDMABUFImageQueryMESA(drv->eglDisplay, img, fourcc, &planes, mods)) {
+                 LOG("eglExportDMABUFImageQueryMESA failed");
+                 return 0;
+             }
+ 
+-            LOG("eglExportDMABUFImageQueryMESA: %p %.4s (%x) planes:%d mods:%lx %lx", img, (char*)fourcc, *fourcc, planes, mods[0], mods[1]);
++            //LOG("eglExportDMABUFImageQueryMESA: %p %.4s (%x) planes:%d mods:%lx %lx", img, (char*)fourcc, *fourcc, planes, mods[0], mods[1]);
+ 
+             EGLBoolean r = eglExportDMABUFImageMESA(drv->eglDisplay, img, fds, strides, offsets);
+ 
+@@ -357,10 +400,10 @@ int exportCudaPtr(NVDriver *drv, CUdeviceptr ptr, NVSurface *surface, uint32_t p
+                 LOG("Unable to export image");
+                 return 0;
+             }
+-            LOG("eglExportDMABUFImageMESA: %d %d %d %d, strides: %d %d %d %d, offsets: %d %d %d %d",
+-                    fds[0], fds[1], fds[2], fds[3],
+-                    strides[0], strides[1], strides[2], strides[3],
+-                    offsets[0], offsets[1], offsets[2], offsets[3]);
++            //LOG("eglExportDMABUFImageMESA: %d %d %d %d, strides: %d %d %d %d, offsets: %d %d %d %d",
++            //        fds[0], fds[1], fds[2], fds[3],
++            //        strides[0], strides[1], strides[2], strides[3],
++            //        offsets[0], offsets[1], offsets[2], offsets[3]);
+ 
+             r = eglStreamReleaseImageNV(drv->eglDisplay, drv->eglStream, img, EGL_NO_SYNC_NV);
+             if (!r) {
+diff --git a/src/hevc.c b/src/hevc.c
+index 8c73b72..c21520d 100644
+--- a/src/hevc.c
++++ b/src/hevc.c
+@@ -1,7 +1,6 @@
+ #define _GNU_SOURCE
+ 
+ #include "vabackend.h"
+-
+ #include <stdlib.h>
+ 
+ static const uint8_t ff_hevc_diag_scan4x4_x[16] = {
+diff --git a/src/vabackend.c b/src/vabackend.c
+index a94e67c..79bc3c0 100644
+--- a/src/vabackend.c
++++ b/src/vabackend.c
+@@ -10,6 +10,7 @@
+ #include <malloc.h>
+ #include <sys/stat.h>
+ #include <fcntl.h>
++#include <sys/param.h>
+ 
+ #include <va/va_backend.h>
+ #include <va/va_drmcommon.h>
+@@ -107,6 +108,7 @@ void logger(const char *filename, const char *function, int line, const char *ms
+     va_end(argList);
+ 
+     fprintf(LOG_OUTPUT, "[%d-%d] %s:%4d %24s %s\n", getpid(), gettid(), filename, line, function, formattedMessage);
++    fflush(LOG_OUTPUT);
+ }
+ 
+ void checkCudaErrors(CUresult err, const char *file, const char *function, const int line)
+@@ -243,8 +245,7 @@ int pictureIdxFromSurfaceId(NVDriver *drv, VASurfaceID surf) {
+     return -1;
+ }
+ 
+-static cudaVideoCodec vaToCuCodec(VAProfile profile)
+-{
++static cudaVideoCodec vaToCuCodec(VAProfile profile) {
+     for (const NVCodec *c = __start_nvd_codecs; c < __stop_nvd_codecs; c++) {
+         cudaVideoCodec cvc = c->computeCudaCodec(profile);
+         if (cvc != cudaVideoCodec_NONE) {
+@@ -252,7 +253,6 @@ static cudaVideoCodec vaToCuCodec(VAProfile profile)
+         }
+     }
+ 
+-    //LOG("vaToCuCodec: Unknown codec: %d", profile);
+     return cudaVideoCodec_NONE;
+ }
+ 
+@@ -451,20 +451,23 @@ static VAStatus nvCreateConfig(
+         return VA_STATUS_ERROR_UNSUPPORTED_PROFILE;
+     }
+ 
++    if (entrypoint != VAEntrypointVLD) {
++        return VA_STATUS_ERROR_UNSUPPORTED_ENTRYPOINT;
++    }
++
+     Object obj = allocateObject(drv, OBJECT_TYPE_CONFIG, sizeof(NVConfig));
+     NVConfig *cfg = (NVConfig*) obj->obj;
+     cfg->profile = profile;
+     cfg->entrypoint = entrypoint;
+-    cfg->attributes = attrib_list; //TODO might need to make a copy of this
+-    cfg->numAttribs = num_attribs;
+ 
+-    for (int i = 0; i < num_attribs; i++)
+-    {
++    //this will contain all the attributes the client cares about
++    for (int i = 0; i < num_attribs; i++) {
+       LOG("got config attrib: %d %d %d", i, attrib_list[i].type, attrib_list[i].value);
+     }
+ 
+     cfg->cudaCodec = cudaCodec;
+ 
++    //these should be set from the attributes, or a default if the user doesn't care
+     if (profile == VAProfileHEVCMain10) {
+         cfg->surfaceFormat = cudaVideoSurfaceFormat_P016;
+         cfg->chromaFormat = cudaVideoChromaFormat_420;
+@@ -502,16 +505,19 @@ static VAStatus nvQueryConfigAttributes(
+     )
+ {
+     NVDriver *drv = (NVDriver*) ctx->pDriverData;
++    NVConfig *cfg = (NVConfig*) getObjectPtr(drv, config_id);
+ 
+-    Object obj = getObject(drv, config_id);
+-
+-    if (obj != NULL)
+-    {
+-        NVConfig *cfg = (NVConfig*) obj->obj;
++    if (cfg != NULL) {
+         *profile = cfg->profile;
+         *entrypoint = cfg->entrypoint;
+-        //*attrib_list = cfg->attrib_list; //TODO is that the right thing/type?
+-        *num_attribs = cfg->numAttribs;
++        int i = 0;
++        attrib_list[i].type = VAConfigAttribRTFormat;
++        attrib_list[i].value = VA_RT_FORMAT_YUV420;
++        if (cfg->profile == VAProfileHEVCMain10) {
++            attrib_list[i].value |= VA_RT_FORMAT_YUV420_10;
++        }
++        i++;
++        *num_attribs = i;
+         return VA_STATUS_SUCCESS;
+     }
+ 
+@@ -549,8 +555,7 @@ static VAStatus nvCreateSurfaces2(
+         return VA_STATUS_ERROR_UNSUPPORTED_RT_FORMAT;
+     }
+ 
+-    for (int i = 0; i < num_surfaces; i++)
+-    {
++    for (uint32_t i = 0; i < num_surfaces; i++) {
+         Object surfaceObject = allocateObject(drv, OBJECT_TYPE_SURFACE, sizeof(NVSurface));
+         surfaces[i] = surfaceObject->id;
+         NVSurface *suf = (NVSurface*) surfaceObject->obj;
+@@ -559,8 +564,11 @@ static VAStatus nvCreateSurfaces2(
+         suf->format = nvFormat;
+         suf->pictureIdx = -1;
+         suf->bitDepth = bitdepth;
++        suf->contextId = 0;
+     }
+ 
++    drv->surfaceCount += num_surfaces;
++
+     return VA_STATUS_SUCCESS;
+ }
+ 
+@@ -585,11 +593,12 @@ static VAStatus nvDestroySurfaces(
+ {
+     NVDriver *drv = (NVDriver*) ctx->pDriverData;
+ 
+-    for (int i = 0; i < num_surfaces; i++)
+-    {
++    for (int i = 0; i < num_surfaces; i++) {
+         deleteObject(drv, surface_list[i]);
+     }
+ 
++    drv->surfaceCount -= num_surfaces;
++
+     return VA_STATUS_SUCCESS;
+ }
+ 
+@@ -604,38 +613,55 @@ static VAStatus nvCreateContext(
+         VAContextID *context		/* out */
+     )
+ {
+-    LOG("with %d render targets, at %dx%d", num_render_targets, picture_width, picture_height);
+-
+     NVDriver *drv = (NVDriver*) ctx->pDriverData;
+-    NVConfig *cfg = (NVConfig*) getObject(drv, config_id)->obj;
++    NVConfig *cfg = (NVConfig*) getObjectPtr(drv, config_id);
++
++    LOG("with %d render targets, %d surfaces, at %dx%d", num_render_targets, drv->surfaceCount, picture_width, picture_height);
++
++    //find the codec they've selected
++    const NVCodec *selectedCodec = NULL;
++    for (const NVCodec *c = __start_nvd_codecs; c < __stop_nvd_codecs; c++) {
++        for (int i = 0; i < c->supportedProfileCount; i++) {
++            if (c->supportedProfiles[i] == cfg->profile) {
++                selectedCodec = c;
++                break;
++            }
++        }
++    }
++    if (selectedCodec == NULL) {
++        LOG("Unable to find codec for profile: %d", cfg->profile);
++        return VA_STATUS_ERROR_UNSUPPORTED_PROFILE; //TODO not sure this is the correct error
++    }
+ 
+-    CUvideodecoder decoder;
+     CUVIDDECODECREATEINFO vdci;
+     memset(&vdci, 0, sizeof(CUVIDDECODECREATEINFO));
+-    vdci.ulWidth = picture_width;
+-    vdci.ulHeight = picture_height;
+-    vdci.ulNumDecodeSurfaces = num_render_targets; //TODO is this correct? probably not, but the amount of decode surfaces needed is determined by codec, i think
++    vdci.ulWidth  = vdci.ulMaxWidth  = vdci.ulTargetWidth  = picture_width;
++    vdci.ulHeight = vdci.ulMaxHeight = vdci.ulTargetHeight = picture_height;
+     vdci.CodecType = cfg->cudaCodec;
+     vdci.ulCreationFlags = cudaVideoCreate_PreferCUVID;
+     vdci.ulIntraDecodeOnly = 0; //TODO (flag & VA_PROGRESSIVE) != 0
+     vdci.display_area.right = picture_width;
+     vdci.display_area.bottom = picture_height;
+-
+     vdci.ChromaFormat = cfg->chromaFormat;
+     vdci.OutputFormat = cfg->surfaceFormat;
+     vdci.bitDepthMinus8 = cfg->bitDepth - 8;
+ 
+     vdci.DeinterlaceMode = cudaVideoDeinterlaceMode_Weave;
+-    vdci.ulTargetWidth = picture_width;
+-    vdci.ulTargetHeight = picture_height;
+-    vdci.ulNumOutputSurfaces = num_render_targets;
++    //we only ever map one frame at a time, so we can set this to 1
++    //it isn't particually efficient to do this, but it is simple
++    vdci.ulNumOutputSurfaces = 1;
++    //just allocate as many surfaces as have been created since we can never have as much information as the decode to guess correctly
++    vdci.ulNumDecodeSurfaces = drv->surfaceCount;
++    //reset this to 0 as there are some cases where the context will be destroyed but not terminated, meaning if it's initialised again
++    //we'll have even more surfaces
++    drv->surfaceCount = 0;
+ 
+     cv->cuvidCtxLockCreate(&vdci.vidLock, drv->cudaContext);
+ 
++    CUvideodecoder decoder;
+     CUresult result = cv->cuvidCreateDecoder(&decoder, &vdci);
+ 
+-    if (result != CUDA_SUCCESS)
+-    {
++    if (result != CUDA_SUCCESS) {
+         LOG("cuvidCreateDecoder failed: %d", result);
+         return VA_STATUS_ERROR_ALLOCATION_FAILED;
+     }
+@@ -650,29 +676,7 @@ static VAStatus nvCreateContext(
+     nvCtx->entrypoint = cfg->entrypoint;
+     nvCtx->width = picture_width;
+     nvCtx->height = picture_height;
+-
+-    for (const NVCodec *c = __start_nvd_codecs; c < __stop_nvd_codecs; c++) {
+-        for (int i = 0; i < c->supportedProfileCount; i++) {
+-            if (c->supportedProfiles[i] == cfg->profile) {
+-                nvCtx->codec = c;
+-                break;
+-            }
+-        }
+-    }
+-
+-    if (nvCtx->codec == NULL) {
+-        LOG("Unable to find codec for profile: %d", cfg->profile);
+-        return VA_STATUS_ERROR_UNSUPPORTED_PROFILE; //TODO not sure this is the correct error
+-    }
+-
+-    //assign all the render targets unique ids up-front
+-    //this seems to be a simplier way to manage them
+-    for (int i = 0; i < num_render_targets; i++) {
+-        Object obj = getObject(drv, render_targets[i]);
+-        NVSurface *suf = obj->obj;
+-        //LOG("assigning surface id %d to picture index %d", obj->id, i);
+-        suf->pictureIdx = i;
+-    }
++    nvCtx->codec = selectedCodec;
+ 
+     return VA_STATUS_SUCCESS;
+ }
+@@ -688,6 +692,7 @@ static VAStatus nvDestroyContext(
+ 
+     if (nvCtx != NULL)
+     {
++      cu->cuCtxPushCurrent(drv->cudaContext);
+       CUvideodecoder decoder = nvCtx->decoder;
+       nvCtx->decoder = NULL;
+       freeBuffer(&nvCtx->sliceOffsets);
+@@ -700,6 +705,7 @@ static VAStatus nvDestroyContext(
+       if (decoder != NULL)
+       {
+         CUresult result = cv->cuvidDestroyDecoder(decoder);
++        cu->cuCtxPopCurrent(NULL);
+         if (result != CUDA_SUCCESS)
+         {
+             LOG("cuvidDestroyDecoder failed: %d", result);
+@@ -817,10 +823,15 @@ static VAStatus nvBeginPicture(
+     )
+ {
+     NVDriver *drv = (NVDriver*) ctx->pDriverData;
++    NVContext *nvCtx = (NVContext*) getObjectPtr(drv, context);
++    NVSurface *surf = (NVSurface*) getObjectPtr(drv, render_target);
++
++    if (surf->pictureIdx == -1) {
++        surf->pictureIdx = nvCtx->currentPictureId++;
++    }
+ 
+-    NVContext *nvCtx = (NVContext*) getObject(drv, context)->obj;
+     memset(&nvCtx->pPicParams, 0, sizeof(CUVIDPICPARAMS));
+-    nvCtx->renderTargets = (NVSurface*) getObject(drv, render_target)->obj;
++    nvCtx->renderTargets = surf;
+     nvCtx->pPicParams.CurrPicIdx = nvCtx->renderTargets->pictureIdx;
+ 
+     return VA_STATUS_SUCCESS;
+@@ -1093,13 +1104,12 @@ static VAStatus nvGetImage(
+ 
+     NVSurface *surfaceObj = (NVSurface*) getObject(drv, surface)->obj;
+     NVImage *imageObj = (NVImage*) getObject(drv, image)->obj;
++    NVContext *context = (NVContext*) getObjectPtr(drv, surfaceObj->contextId);
+ 
+-    if (getObject(drv, surfaceObj->contextId) == NULL) {
++    if (context == NULL) {
+         return VA_STATUS_ERROR_INVALID_CONTEXT;
+     }
+ 
+-    NVContext *context = (NVContext*) getObject(drv, surfaceObj->contextId)->obj;
+-
+     int bytesPerPixel = 1;
+     if (imageObj->format == VA_FOURCC_P010 || imageObj->format == VA_FOURCC_P012) {
+         bytesPerPixel = 2;
+@@ -1527,17 +1537,13 @@ static VAStatus nvExportSurfaceHandle(
+     cu->cuCtxPushCurrent(drv->cudaContext);
+ 
+     NVSurface *surfaceObj = (NVSurface*) getObjectPtr(drv, surface_id);
+-    //This will be NULL for surfaces that haven't been end
++    //This will be NULL for surfaces that haven't been decoded to
+     NVContext *context = (NVContext*) getObjectPtr(drv, surfaceObj->contextId);
+ 
+-    if (surfaceObj->pictureIdx != -1 && context == NULL) {
+-        return VA_STATUS_ERROR_INVALID_CONTEXT;
+-    }
+-
+     CUdeviceptr deviceMemory = (CUdeviceptr) NULL;
+     unsigned int pitch = 0;
+ 
+-    if (surfaceObj->pictureIdx != -1) {
++    if (surfaceObj->contextId != 0) {
+         CUVIDPROCPARAMS procParams = {0};
+         procParams.progressive_frame = surfaceObj->progressiveFrame;
+         procParams.top_field_first = surfaceObj->topFieldFirst;
+@@ -1572,7 +1578,7 @@ static VAStatus nvExportSurfaceHandle(
+     }
+ 
+     //since we have to make a copy of the data anyway, we can unmap here
+-    if (surfaceObj->pictureIdx != -1) {
++    if (deviceMemory != 0) {
+         cv->cuvidUnmapVideoFrame(context->decoder, deviceMemory);
+     }
+ 
+@@ -1614,6 +1620,8 @@ static VAStatus nvTerminate( VADriverContextP ctx )
+     NVDriver *drv = (NVDriver*) ctx->pDriverData;
+     LOG("In %s", __func__);
+ 
++    cu->cuCtxPushCurrent(drv->cudaContext);
++
+     releaseExporter(drv);
+ 
+     cu->cuCtxDestroy(drv->cudaContext);
+diff --git a/src/vabackend.h b/src/vabackend.h
+index a75688b..cd9f396 100644
+--- a/src/vabackend.h
++++ b/src/vabackend.h
+@@ -60,6 +60,11 @@ typedef struct
+     NVBuffer    *imageBuffer;
+ } NVImage;
+ 
++typedef struct _NVEGLImage {
++    EGLImage image;
++    struct _NVEGLImage *next;
++} NVEGLImage;
++
+ typedef struct
+ {
+     CudaFunctions           *cu;
+@@ -73,6 +78,8 @@ typedef struct
+     CUeglStreamConnection   cuStreamConnection;
+     int                     numFramesPresented;
+     bool                    useCorrectNV12Format;
++    NVEGLImage              *allocatedEGLImages;
++    int                     surfaceCount;
+ } NVDriver;
+ 
+ struct _NVCodec;
+@@ -92,14 +99,13 @@ typedef struct
+     AppendableBuffer    sliceOffsets;
+     CUVIDPICPARAMS      pPicParams;
+     const struct _NVCodec *codec;
++    int                 currentPictureId;
+ } NVContext;
+ 
+ typedef struct
+ {
+     VAProfile               profile;
+     VAEntrypoint            entrypoint;
+-    VAConfigAttrib          *attributes;
+-    int                     numAttribs;
+     cudaVideoSurfaceFormat  surfaceFormat;
+     cudaVideoChromaFormat   chromaFormat;
+     int                     bitDepth;
+@@ -109,6 +115,8 @@ typedef struct
+ typedef void (*HandlerFunc)(NVContext*, NVBuffer* , CUVIDPICPARAMS*);
+ typedef cudaVideoCodec (*ComputeCudaCodec)(VAProfile);
+ 
++//padding/alignment is very important to this structure as it's placed in it's own section
++//in the executable.
+ typedef struct _NVCodec
+ {
+     ComputeCudaCodec    computeCudaCodec;
