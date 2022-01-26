@@ -16,19 +16,15 @@ IUSE="av1 experimental"
 
 BDEPEND=">=media-libs/nv-codec-headers-11.1.5.1"
 DEPEND="media-libs/gst-plugins-bad
-	media-libs/libglvnd"
+	media-libs/libglvnd
+	!x11-libs/libva-vdpau-driver"
 RDEPEND="${DEPEND}"
+
+PATCHES=( "${FILESDIR}/${PN}-install-path.patch" )
 
 src_prepare() {
 	if use experimental; then
 		eapply "${FILESDIR}/${PN}-chrome-experimental.patch"
 	fi
 	default
-}
-
-src_configure() {
-	local emesonargs=(
-		$(meson_use av1)
-	)
-	meson_src_configure
 }
