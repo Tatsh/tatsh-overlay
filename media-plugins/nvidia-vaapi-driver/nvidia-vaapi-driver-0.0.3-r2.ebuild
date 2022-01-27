@@ -16,15 +16,24 @@ IUSE="av1 experimental"
 
 BDEPEND=">=media-libs/nv-codec-headers-11.1.5.1"
 DEPEND="media-libs/gst-plugins-bad
-	media-libs/libglvnd
-	!x11-libs/libva-vdpau-driver"
+	media-libs/libglvnd"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${PN}-install-path.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-01-install-path.patch"
+	"${FILESDIR}/${PN}-02-set-unique-name.patch"
+)
 
 src_prepare() {
 	if use experimental; then
 		eapply "${FILESDIR}/${PN}-chrome-experimental.patch"
 	fi
 	default
+}
+
+pkg_postinst() {
+	einfo "To force an app to use this library, set environment variable:"
+	einfo
+	einfo "  LIBVA_DRIVER_NAME=nvdec"
+	einfo
 }
