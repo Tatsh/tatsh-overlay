@@ -1,0 +1,6 @@
+{
+    "regex": "\"tag_name\":(?:\\s+)?\"v([^\"]+)\",",
+    "type": "regex",
+    "transformation_function": "dash_to_underscore",
+    "url": "https://api.github.com/repos/TeamRizu/OutFox-Serenity/releases"
+}
