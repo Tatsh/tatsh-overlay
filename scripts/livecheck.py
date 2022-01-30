@@ -491,11 +491,6 @@ def main() -> int:
                     with open(ebuild, 'r') as f:
                         old_content = f.read()
                     content = old_content.replace(version, top_hash)
-                    if cp == 'games-emulation/ryujinx':
-                        commit = cast(requests.Response,
-                                      r).json()['build']['commitId']
-                        content = re.sub(r'^SHA="[^"]+"', f'SHA="{commit}"',
-                                         content, 1, re.MULTILINE)
                     ps_ref = top_hash
                     if not is_sha(top_hash) and cp in TAG_NAME_FUNCTIONS:
                         ps_ref = TAG_NAME_FUNCTIONS[cp](top_hash)
