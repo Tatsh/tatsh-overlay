@@ -311,6 +311,8 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
                 tf = ls['transformation_function']
                 if tf == 'dotize':
                     transformations[catpkg] = dotize
+                elif tf == 'dash_to_underscore':
+                    transformations[catpkg] = lambda s: s.replace('-', '_')
                 elif tf == 'handle_stepmania_outfox':
                     transformations[catpkg] = handle_stepmania_outfox
                 elif tf == 'handle_re':
