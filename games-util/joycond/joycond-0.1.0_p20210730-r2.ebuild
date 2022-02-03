@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -17,8 +17,7 @@ KEYWORDS="~amd64 ~arm64"
 DEPEND="
 	dev-libs/libevdev
 	virtual/udev"
-RDEPEND="${DEPEND}
-	games-util/hid-nintendo"
+RDEPEND="${DEPEND}"
 IUSE="systemd"
 
 PATCHES=( "${FILESDIR}/${PN}-service-paranoia.patch" )
@@ -45,4 +44,12 @@ src_install() {
 		insinto /lib/modules-load.d
 		doins systemd/${PN}.conf
 	fi
+}
+
+pkg_postinst() {
+	einfo
+	einfo "For full functionality, a driver must be installed. You can enable"
+	einfo "HID_NINTENDO et al in kernel >= 5.16 or you can install"
+	einfo "games-util/hid-nintendo."
+	einfo
 }
