@@ -7,8 +7,7 @@ inherit cmake
 
 DESCRIPTION="Emulator of x86-based machines based on PCem."
 HOMEPAGE="https://github.com/86Box/86Box"
-SHA="88c1af40f329a7ee2e07872b0d3fd36c768158fd"
-SRC_URI="https://github.com/86Box/86Box/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/86Box/86Box/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -23,7 +22,7 @@ DEPEND="media-libs/alsa-lib
 	>media-libs/rtmidi-4.0.0"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/86Box-${SHA}"
+S="${WORKDIR}/86Box-${PV}"
 
 src_configure() {
 	local mycmakeargs=(
