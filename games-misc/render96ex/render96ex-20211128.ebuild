@@ -76,7 +76,7 @@ src_prepare() {
 		cp -fR "${WORKDIR}/ModelPack-${MODELS_SHA}/Render96/actors/"* actors/ || die
 	fi
 	if use goddard; then
-		cp -fR "${WORKDIR}/ModelPack-${MODELS_SHA}/Render96/Goddard/src/goddard/"* src/goddard/ || die
+		cp -fR "${WORKDIR}/ModelPack-${MODELS_SHA}/Goddard/src/goddard/"* src/goddard/ || die
 	fi
 	default
 }
