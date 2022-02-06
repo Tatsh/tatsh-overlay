@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<use>
+		<flag name="discord">Enable Discord presence</flag>
+		<flag name="eu">Use the EU ROM</flag>
+		<flag name="goddard">Enable enhancements to Mario's face</flag>
+		<flag name="jp">Use the Japanese ROM</flag>
+		<flag name="models">Enable higher quality models</flag>
+		<flag name="texture-fix">Enable texture bug fixes</flag>
+		<flag name="textures">Install high quality texture replacements</flag>
+		<flag name="us">Use the North American ROM</flag>
+	</use>
+</pkgmetadata>
