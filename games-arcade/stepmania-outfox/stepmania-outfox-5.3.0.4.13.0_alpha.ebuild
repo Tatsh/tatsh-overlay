@@ -13,9 +13,9 @@ MY_PN="${UPPER_PN:10:1}${PN:11:2}${UPPER_PN:13:1}${PN:14}"
 MAIN_PV="${PV:0:5}"
 MY_PV="${PV:6:4}"
 ALT_PV="${PV:6:6}"
-SHARED_DATE="20211231"
-SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${ALT_PV}/OutFox-${MAIN_PV}-alpha-${ALT_PV}-amd64-linux64bit-date-${SHARED_DATE}.tar.gz -> ${P}-amd64.tar.gz )
-	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${ALT_PV}/OutFox-${MAIN_PV}-alpha-${ALT_PV}-arm64v8-linuxARM64bit-date-${SHARED_DATE}.tar.gz -> ${P}-arm64.tar.gz )"
+SHARED_DATE="20220209"
+SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${ALT_PV}/OutFox-${MAIN_PV}-alpha-${ALT_PV}-amd64-Linux-date-${SHARED_DATE}.tar.gz -> ${P}-amd64.tar.gz )
+	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${ALT_PV}/OutFox-${MAIN_PV}-alpha-${ALT_PV}-arm64v8-RaspberryPi-date-${SHARED_DATE}.tar.gz -> ${P}-arm64.tar.gz )"
 
 LICENSE="MIT"
 SLOT="0"
