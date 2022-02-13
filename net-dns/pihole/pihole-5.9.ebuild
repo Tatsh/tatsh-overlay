@@ -15,7 +15,7 @@ IUSE="cron www"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
-FTL_VERSION="5.8.1"
+FTL_VERSION="5.9"
 RDEPEND="${DEPEND}
 	>=net-dns/${PN}-ftl-${FTL_VERSION}
 	app-admin/sudo
@@ -56,7 +56,6 @@ src_prepare() {
 			advanced/06-rfc6761.conf \
 			advanced/Templates/gravity_copy.sql \
 			advanced/Templates/${PN}-FTL.service \
-			manpages/${PN}-FTL.conf.5 \
 			advanced/Templates/logrotate || die
 }
 

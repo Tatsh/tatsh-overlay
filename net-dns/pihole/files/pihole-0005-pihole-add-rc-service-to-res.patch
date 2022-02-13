@@ -1,4 +1,4 @@
-From ea718ac490af47a8b84997047f1de4e4bb102ed3 Mon Sep 17 00:00:00 2001
+From 0c942e046be1f30b6d10e9daffadf963ef6c4468 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 16 Dec 2021 08:45:38 -0500
 Subject: [PATCH 05/12] pihole: add rc-service to restartDNS
@@ -8,10 +8,10 @@ Subject: [PATCH 05/12] pihole: add rc-service to restartDNS
  1 file changed, 2 insertions(+)
 
 diff --git a/pihole b/pihole
-index 5c60998e..905fa915 100755
+index 67a51fc6..6d4d999c 100755
 --- a/pihole
 +++ b/pihole
-@@ -136,6 +136,8 @@ restartDNS() {
+@@ -139,6 +139,8 @@ restartDNS() {
          svc="service pihole-FTL restart"
      elif command -v systemctl &>/dev/null; then
          svc="systemctl restart pihole-FTL"
@@ -21,5 +21,5 @@ index 5c60998e..905fa915 100755
          "Cannot restart Pi-hole"
          return 1
 -- 
-2.34.1
+2.35.1
 

@@ -1,15 +1,14 @@
-From 6247b2710a737483cb36f4fb5b3ff75a1a44bb73 Mon Sep 17 00:00:00 2001
+From f601f07a12b34d241c02c0040ac3b6a6b75e7b74 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 14 Jan 2022 18:21:09 -0500
 Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
 
 ---
  advanced/Scripts/piholeDebug.sh | 81 +++++++++++++++++++--------------
- advanced/Scripts/updatecheck.sh |  2 +-
  2 files changed, 48 insertions(+), 35 deletions(-)
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 9dc9a90e..55cc09ed 100755
+index f16a3f31..450cfb5c 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,9 +22,13 @@ set -o pipefail
@@ -160,7 +159,7 @@ index 9dc9a90e..55cc09ed 100755
              log_write "${CROSS} Error: ${COL_RED}${detected_os^} is supported but version ${detected_version} is currently unsupported (${FAQ_HARDWARE_REQUIREMENTS})${COL_NC}"
          fi
      else
-@@ -743,7 +744,7 @@ check_required_ports() {
+@@ -746,7 +747,7 @@ check_required_ports() {
      # Since Pi-hole needs 53, 80, and 4711, check what they are being used by
      # so we can detect any issues
      local resolver="pihole-FTL"
@@ -169,7 +168,7 @@ index 9dc9a90e..55cc09ed 100755
      local ftl="pihole-FTL"
      # Create an array for these ports in use
      ports_in_use=()
-@@ -792,6 +793,12 @@ check_networking() {
+@@ -808,6 +809,12 @@ check_networking() {
  }
 
  check_x_headers() {
@@ -182,7 +181,7 @@ index 9dc9a90e..55cc09ed 100755
      # The X-Headers allow us to determine from the command line if the Web
      # lighttpd.conf has a directive to show "X-Pi-hole: A black hole for Internet advertisements."
      # in the header of any Pi-holed domain
-@@ -801,31 +808,37 @@ check_x_headers() {
+@@ -817,31 +824,37 @@ check_x_headers() {
      echo_current_diagnostic "Dashboard and block page"
      # Use curl -I to get the header and parse out just the X-Pi-hole one
      local block_page
@@ -229,7 +228,7 @@ index 9dc9a90e..55cc09ed 100755
          # then we can show a success
          log_write "$TICK Web interface X-Header: ${COL_GREEN}${dashboard}${COL_NC}"
      else
-@@ -1139,9 +1152,9 @@ show_content_of_pihole_files() {
+@@ -1155,9 +1168,9 @@ show_content_of_pihole_files() {
      # Show the content of the files in each of Pi-hole's folders
      show_content_of_files_in_dir "${PIHOLE_DIRECTORY}"
      show_content_of_files_in_dir "${DNSMASQ_D_DIRECTORY}"
@@ -243,5 +242,5 @@ index 9dc9a90e..55cc09ed 100755
      show_content_of_files_in_dir "${SHM_DIRECTORY}"
      show_content_of_files_in_dir "${ETC}"
 --
-2.34.1
+2.35.1
 

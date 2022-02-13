@@ -1,4 +1,4 @@
-From 4b900a8dd8e68333ab81ac8793ded83c3ed2492d Mon Sep 17 00:00:00 2001
+From d83c3b2adcd862b1889fe25807de9e80560dda84 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 11:02:08 -0500
 Subject: [PATCH 09/12] fix calling valid_ip
@@ -8,7 +8,7 @@ Subject: [PATCH 09/12] fix calling valid_ip
  1 file changed, 42 insertions(+), 1 deletion(-)
 
 diff --git a/advanced/Scripts/webpage.sh b/advanced/Scripts/webpage.sh
-index ccec9c24..7bbb7f64 100755
+index 4cb38400..5d76ea3a 100755
 --- a/advanced/Scripts/webpage.sh
 +++ b/advanced/Scripts/webpage.sh
 @@ -20,11 +20,52 @@ readonly dnscustomcnamefile="@EPREFIX@/etc/pihole/dnsmasq.d/05-pihole-custom-cna
@@ -66,5 +66,5 @@ index ccec9c24..7bbb7f64 100755
  if [[ -f ${coltable} ]]; then
      source ${coltable}
 -- 
-2.34.1
+2.35.1
 

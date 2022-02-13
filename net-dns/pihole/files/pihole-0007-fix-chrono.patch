@@ -1,4 +1,4 @@
-From 41738c29ce68bace262acd7c091e62b69906cd8f Mon Sep 17 00:00:00 2001
+From e558e98d5648381047f99fe81636692d33c7f43b Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 16 Dec 2021 16:36:12 -0500
 Subject: [PATCH 07/12] fix chrono
@@ -8,7 +8,7 @@ Subject: [PATCH 07/12] fix chrono
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/advanced/Scripts/chronometer.sh b/advanced/Scripts/chronometer.sh
-index 114c3883..5f646d87 100755
+index 9c3a2af8..d9df84b5 100755
 --- a/advanced/Scripts/chronometer.sh
 +++ b/advanced/Scripts/chronometer.sh
 @@ -14,7 +14,7 @@ LC_NUMERIC=C
@@ -21,5 +21,5 @@ index 114c3883..5f646d87 100755
          # Open connection to FTL
          exec 3<>"/dev/tcp/127.0.0.1/$ftl_port"
 -- 
-2.34.1
+2.35.1
 

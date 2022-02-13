@@ -1,4 +1,4 @@
-From e1f494fa652f71290a10f55437f6eac630976756 Mon Sep 17 00:00:00 2001
+From 0541f05aad6bc5d8e3192e6f9c9844e1e48f97b4 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:11 -0500
 Subject: [PATCH 01/12] cron: remove flush/updatechecker
@@ -33,5 +33,5 @@ index 37724d2e..55303395 100644
 -@reboot root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker remote reboot
 +59 1    * * 7   root    PATH="$PATH:@EPREFIX@/usr/sbin:@EPREFIX@/usr/bin/" @EPREFIX@/usr/bin/pihole updateGravity >/var/log/pihole_updateGravity.log || cat /var/log/pihole_updateGravity.log
 -- 
-2.34.1
+2.35.1
 

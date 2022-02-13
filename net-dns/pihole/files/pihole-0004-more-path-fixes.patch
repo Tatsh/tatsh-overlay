@@ -1,15 +1,15 @@
-From 7b5ed00bdb0ae7fedca6b963f16611b4e44dc775 Mon Sep 17 00:00:00 2001
+From 6ccbf6566eb0a6bb2730ef506cf625d0f3f16912 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 07:24:10 -0500
 Subject: [PATCH 04/12] More path fixes
 
 ---
  advanced/Scripts/list.sh | 2 +-
- pihole                   | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ pihole                   | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/advanced/Scripts/list.sh b/advanced/Scripts/list.sh
-index 9148bea8..b13e0f52 100755
+index 1c4761fc..697b021e 100755
 --- a/advanced/Scripts/list.sh
 +++ b/advanced/Scripts/list.sh
 @@ -11,7 +11,7 @@
@@ -22,28 +22,10 @@ index 9148bea8..b13e0f52 100755
  # Source pihole-FTL from install script
  pihole_FTL="${piholeDir}/pihole-FTL.conf"
 diff --git a/pihole b/pihole
-index 3dab3f03..5c60998e 100755
+index 8768b83c..67a51fc6 100755
 --- a/pihole
 +++ b/pihole
-@@ -250,7 +250,7 @@ Options:
-   elif [[ "${1}" == "off" ]]; then
-     # Disable logging
-     sed -i 's/^log-queries/#log-queries/' @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf
--    sed -i 's/^QUERY_LOGGING=true/QUERY_LOGGING=false/' @EPREFIX@/etc/pihole/setupVars.conf
-+    sed -i 's/^QUERY_LOGGING=true/QUERY_LOGGING=false/' @EPREFIX@/var/lib/pihole/setupVars.conf
-     if [[ "${2}" != "noflush" ]]; then
-       # Flush logs
-       "${PI_HOLE_BIN_DIR}"/pihole -f
-@@ -260,7 +260,7 @@ Options:
-   elif [[ "${1}" == "on" ]]; then
-     # Enable logging
-     sed -i 's/^#log-queries/log-queries/' @EPREFIX@/etc/pihole/dnsmasq.d/01-pihole.conf
--    sed -i 's/^QUERY_LOGGING=false/QUERY_LOGGING=true/' @EPREFIX@/etc/pihole/setupVars.conf
-+    sed -i 's/^QUERY_LOGGING=false/QUERY_LOGGING=true/' @EPREFIX@/var/lib/pihole/setupVars.conf
-     echo -e "  ${INFO} Enabling logging..."
-     local str="Logging has been enabled!"
-   else
-@@ -318,13 +318,13 @@ statusFunc() {
+@@ -333,13 +333,13 @@ statusFunc() {
    fi
  
    # Determine if Pi-hole's blocking is enabled
@@ -58,7 +40,7 @@ index 3dab3f03..5c60998e 100755
 +  elif grep -q "BLOCKING_ENABLED=true" @EPREFIX@/var/lib/pihole/setupVars.conf;  then
      # Configs are set
      case "${1}" in
-       "web") echo 1;;
+       "web") echo "$port";;
 -- 
-2.34.1
+2.35.1
 
