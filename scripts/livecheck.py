@@ -512,7 +512,7 @@ def main() -> int:
                     if ebuild == new_filename:
                         name, ext = splitext(ebuild)
                         new_filename = f'{name}-r1{ext}'
-                    print(f'Renaming {ebuild} -> {new_filename}')
+                    print(f'{ebuild} -> {new_filename}')
                     sp.run(('git', 'mv', ebuild, new_filename), check=True)
                     with open(new_filename, 'w') as f:
                         f.write(content)
@@ -527,7 +527,9 @@ def main() -> int:
                             new_date = (' (' + ebuild_version[:m.span()[0]] +
                                         updated_el.text.split('T')[0].replace(
                                             '-', '') + ')')
-                    print(f'{cat}/{pkg}: {version} ({ebuild_version}) -> '
+                    ebv_str = (f' ({ebuild_version}) '
+                               if ebuild_version != version else ' ')
+                    print(f'{cat}/{pkg}: {version}{ebv_str}-> '
                           f'{top_hash}{new_date}')
         except (requests.exceptions.HTTPError,
                 requests.exceptions.SSLError) as e:
