@@ -1,6 +1,7 @@
 {
-    "regex": "\"tag_name\":(?:\\s+)?\"v([^\"]+)\",",
+    "regex": "<a href=\"/TeamRizu/OutFox-Serenity/archive/refs/tags/v(.*)\\.zip\" rel=\"nofollow\">",
     "type": "regex",
     "transformation_function": "dash_to_underscore",
-    "url": "https://api.github.com/repos/TeamRizu/OutFox-Serenity/releases"
+    "url": "https://github.com/TeamRizu/OutFox-Serenity/releases",
+    "use_vercmp": false
 }
