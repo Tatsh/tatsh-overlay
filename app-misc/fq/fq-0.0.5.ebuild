@@ -5,6 +5,8 @@ EAPI=8
 inherit go-module
 
 EGO_SUM=(
+	"github.com/golang/snappy v0.0.4"
+	"github.com/golang/snappy v0.0.4/go.mod"
 	"github.com/google/go-cmp v0.5.4/go.mod"
 	"github.com/google/gopacket v1.1.19"
 	"github.com/google/gopacket v1.1.19/go.mod"
@@ -16,8 +18,8 @@ EGO_SUM=(
 	"github.com/mitchellh/mapstructure v1.4.3/go.mod"
 	"github.com/pmezard/go-difflib v1.0.0"
 	"github.com/pmezard/go-difflib v1.0.0/go.mod"
-	"github.com/wader/gojq v0.12.1-0.20220108235115-6a05b6c59ace"
-	"github.com/wader/gojq v0.12.1-0.20220108235115-6a05b6c59ace/go.mod"
+	"github.com/wader/gojq v0.12.1-0.20220212115358-b98ce15ac16e"
+	"github.com/wader/gojq v0.12.1-0.20220212115358-b98ce15ac16e/go.mod"
 	"github.com/wader/readline v0.0.0-20220117233529-692d84ca36e2"
 	"github.com/wader/readline v0.0.0-20220117233529-692d84ca36e2/go.mod"
 	"golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod"
