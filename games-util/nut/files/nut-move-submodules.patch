@@ -1,0 +1,2548 @@
+From 56a2ea2030a0313f071857b10d1a7d140b2c8bd8 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 22 Feb 2022 14:36:59 -0500
+Subject: [PATCH] Fix paths and make everything inside nut module
+
+---
+ Fs/BaseFs.py              | 12 +++----
+ Fs/Bktr.py                |  6 ++--
+ Fs/Cnmt.py                |  4 +--
+ Fs/File.py                | 38 +++++++++++-----------
+ Fs/Hfs0.py                | 12 +++----
+ Fs/IndexedFile.py         | 10 +++---
+ Fs/Ivfc.py                |  4 +--
+ Fs/Nacp.py                |  4 +--
+ Fs/Nca.py                 | 52 +++++++++++++++---------------
+ Fs/Nsp.py                 | 14 ++++----
+ Fs/Pfs0.py                | 20 ++++++------
+ Fs/Rom.py                 | 10 +++---
+ Fs/Ticket.py              | 18 +++++------
+ Fs/Xci.py                 | 10 +++---
+ Fs/__init__.py            | 18 +++++------
+ Fs/driver/__init__.py     | 11 +++----
+ Fs/driver/curl.py         | 19 ++++++-----
+ Fs/driver/gdrive.py       | 38 +++++++++++-----------
+ Fs/driver/http.py         | 14 ++++----
+ Fs/driver/init.py         |  8 ++---
+ Fs/driver/native.py       | 14 ++++----
+ Server/Controller/Api.py  | 58 ++++++++++++++++-----------------
+ Server/__init__.py        |  8 ++---
+ gui/app.py                | 24 +++++++-------
+ gui/header.py             |  2 +-
+ gui/panes/dirlist.py      | 10 +++---
+ gui/panes/files.py        |  2 +-
+ gui/panes/filters.py      |  2 +-
+ nut.py                    | 42 ++++++++++++------------
+ nut/Config.py             | 37 ++++++++++++---------
+ nut/Hook.py               |  4 +--
+ nut/Keys.py               |  5 +--
+ nut/Nsps.py               | 10 +++---
+ nut/NszDecompressor.py    |  6 ++--
+ nut/Title.py              |  9 +++---
+ nut/Titles.py             | 23 +++++++------
+ nut/Usb.py                | 12 +++----
+ nut/Users.py              |  8 +++--
+ nut/Util.py               | 25 ++++++++++++++
+ nut/__init__.py           | 68 ++++++++++++++++++---------------------
+ nut/blockchain.py         | 45 +++++++++++++-------------
+ nut_gui.py                |  6 ++--
+ tests-gui/gui_app_test.py |  6 ++--
+ tests/translator_test.py  |  2 +-
+ 44 files changed, 398 insertions(+), 352 deletions(-)
+ create mode 100644 nut/Util.py
+
+diff --git a/Fs/BaseFs.py b/Fs/BaseFs.py
+index 85b2e6b..f201fa6 100644
+--- a/Fs/BaseFs.py
++++ b/Fs/BaseFs.py
+@@ -1,8 +1,8 @@
+-from Fs.File import File
+-from Fs import Type
++from nut.Fs.File import File
++from nut.Fs import Type
+ from nut import Print
+-from Fs.File import MemoryFile
+-from Fs import Bktr
++from nut.Fs.File import MemoryFile
++from nut.Fs import Bktr
+ from binascii import hexlify as hx, unhexlify as uhx
+ from nut import Hex
+ 
+@@ -37,12 +37,12 @@ class BaseFs(File):
+ 		if buffer:
+ 			self.buffer = buffer
+ 			try:
+-				self.fsType = Fs.Type.Fs(buffer[0x3])
++				self.fsType = nut.Fs.Type.nut.Fs(buffer[0x3])
+ 			except BaseException:
+ 				self.fsType = buffer[0x3]
+ 
+ 			try:
+-				self.cryptoType = Fs.Type.Crypto(buffer[0x4])
++				self.cryptoType = nut.Fs.Type.Crypto(buffer[0x4])
+ 			except BaseException:
+ 				self.cryptoType = buffer[0x4]
+ 
+diff --git a/Fs/Bktr.py b/Fs/Bktr.py
+index f826a74..05e3b1c 100644
+--- a/Fs/Bktr.py
++++ b/Fs/Bktr.py
+@@ -4,10 +4,10 @@ from nut import Titles
+ from nut import Hex
+ from binascii import hexlify as hx, unhexlify as uhx
+ from struct import pack as pk, unpack as upk
+-from Fs.File import File
+-from Fs.File import MemoryFile
++from nut.Fs.File import File
++from nut.Fs.File import MemoryFile
+ from hashlib import sha256
+-import Fs.Type
++import nut.Fs.Type
+ import os
+ import re
+ import pathlib
+diff --git a/Fs/Cnmt.py b/Fs/Cnmt.py
+index 100fd57..f361ffc 100644
+--- a/Fs/Cnmt.py
++++ b/Fs/Cnmt.py
+@@ -1,5 +1,5 @@
+-from Fs.File import File
+-import Fs.Type
++from nut.Fs.File import File
++import nut.Fs.Type
+ from binascii import hexlify as hx, unhexlify as uhx
+ from nut import Print
+ from nut import Keys
+diff --git a/Fs/File.py b/Fs/File.py
+index 986903c..788dfb0 100644
+--- a/Fs/File.py
++++ b/Fs/File.py
+@@ -1,5 +1,5 @@
+ from enum import IntEnum
+-import Fs.Type
++import nut.Fs.Type
+ from nut import aes128
+ from nut import Print
+ from nut import Hex
+@@ -15,7 +15,7 @@ class BaseFile:
+ 		self.f = None
+ 		self.crypto = None
+ 		self.cryptoKey = None
+-		self.cryptoType = Fs.Type.Crypto.NONE
++		self.cryptoType = nut.Fs.Type.Crypto.NONE
+ 		self.cryptoCounter = None
+ 		self.cryptoOffset = 0
+ 		self.ctr_val = 0
+@@ -145,14 +145,14 @@ class BaseFile:
+ 		if from_what == 0:
+ 			# seek from begining
+ 			self.f.seek(self.offset + offset)
+-			# if self.cryptoType == Fs.Type.Crypto.CTR:
++			# if self.cryptoType == nut.Fs.Type.Crypto.CTR:
+ 			#	self.crypto.set_ctr(self.setCounter(self.offset + self.tell()))
+ 			return
+ 		elif from_what == 1:
+ 			# seek from current position
+ 			self.f.seek(self.offset + offset)
+ 
+-			# if self.cryptoType == Fs.Type.Crypto.CTR:
++			# if self.cryptoType == nut.Fs.Type.Crypto.CTR:
+ 			#	self.crypto.set_ctr(self.setCounter(self.offset + self.tell()))
+ 			return
+ 		elif from_what == 2:
+@@ -162,7 +162,7 @@ class BaseFile:
+ 
+ 			self.f.seek(self.offset + offset + self.size)
+ 
+-			# if self.cryptoType == Fs.Type.Crypto.CTR:
++			# if self.cryptoType == nut.Fs.Type.Crypto.CTR:
+ 			#	self.crypto.set_ctr(self.setCounter(self.offset + self.tell()))
+ 			return
+ 
+@@ -184,17 +184,17 @@ class BaseFile:
+ 		if cryptoCounter != -1:
+ 			self.cryptoCounter = cryptoCounter
+ 
+-		if self.cryptoType == Fs.Type.Crypto.CTR or self.cryptoType == Fs.Type.Crypto.BKTR:
++		if self.cryptoType == nut.Fs.Type.Crypto.CTR or self.cryptoType == nut.Fs.Type.Crypto.BKTR:
+ 			if self.cryptoKey:
+ 				self.crypto = aes128.AESCTR(self.cryptoKey, nonce=self.cryptoCounter.copy())
+-				self.cryptoType = Fs.Type.Crypto.CTR
++				self.cryptoType = nut.Fs.Type.Crypto.CTR
+ 
+ 				self.enableBufferedIO(0x10, 0x10)
+ 
+-		elif self.cryptoType == Fs.Type.Crypto.XTS:
++		elif self.cryptoType == nut.Fs.Type.Crypto.XTS:
+ 			if self.cryptoKey:
+ 				self.crypto = aes128.AESXTS(self.cryptoKey)
+-				self.cryptoType = Fs.Type.Crypto.XTS
++				self.cryptoType = nut.Fs.Type.Crypto.XTS
+ 
+ 				if self.size < 1 or self.size > 0xFFFFFF:
+ 					raise IOError('AESXTS Block too large or small')
+@@ -202,12 +202,12 @@ class BaseFile:
+ 				self.rewind()
+ 				self.enableBufferedIO(self.size, 0x10)
+ 
+-		elif self.cryptoType == Fs.Type.Crypto.BKTR:
+-			self.cryptoType = Fs.Type.Crypto.BKTR
+-		elif self.cryptoType == Fs.Type.Crypto.NCA0:
+-			self.cryptoType = Fs.Type.Crypto.NCA0
+-		elif self.cryptoType == Fs.Type.Crypto.NONE:
+-			self.cryptoType = Fs.Type.Crypto.NONE
++		elif self.cryptoType == nut.Fs.Type.Crypto.BKTR:
++			self.cryptoType = nut.Fs.Type.Crypto.BKTR
++		elif self.cryptoType == nut.Fs.Type.Crypto.NCA0:
++			self.cryptoType = nut.Fs.Type.Crypto.NCA0
++		elif self.cryptoType == nut.Fs.Type.Crypto.NONE:
++			self.cryptoType = nut.Fs.Type.Crypto.NONE
+ 
+ 	def open(self, path, mode='rb', cryptoType=-1, cryptoKey=-1, cryptoCounter=-1):
+ 		if path is not None:
+@@ -393,9 +393,9 @@ class BufferedFile(BaseFile):
+ 
+ 	def getPageFlushBuffer(self, buffer):
+ 		if self.crypto:
+-			if self.cryptoType == Fs.Type.Crypto.CTR:
++			if self.cryptoType == nut.Fs.Type.Crypto.CTR:
+ 				self.crypto.seek(self.offset + self._bufferOffset)
+-			elif self.cryptoType == Fs.Type.Crypto.BKTR:
++			elif self.cryptoType == nut.Fs.Type.Crypto.BKTR:
+ 				self.crypto.seek(self.offset + self._bufferOffset)
+ 
+ 			return self.crypto.encrypt(buffer)
+@@ -452,7 +452,7 @@ class File(BufferedFile):
+ 
+ 	def pageRefreshed(self):
+ 		if self.crypto:
+-			if self.cryptoType == Fs.Type.Crypto.CTR or self.cryptoType == Fs.Type.Crypto.BKTR:
++			if self.cryptoType == nut.Fs.Type.Crypto.CTR or self.cryptoType == nut.Fs.Type.Crypto.BKTR:
+ 				#Print.info('reading ctr from ' + hex(self._bufferOffset))
+ 				self.crypto.seek(self.offset + self._bufferOffset)
+ 			else:
+@@ -470,7 +470,7 @@ class MemoryFile(File):
+ 		self.setupCrypto(cryptoType=cryptoType, cryptoKey=cryptoKey, cryptoCounter=cryptoCounter)
+ 
+ 		if self.crypto:
+-			if self.cryptoType == Fs.Type.Crypto.CTR or self.cryptoType == Fs.Type.Crypto.BKTR:
++			if self.cryptoType == nut.Fs.Type.Crypto.CTR or self.cryptoType == nut.Fs.Type.Crypto.BKTR:
+ 				self.crypto.seek(offset)
+ 
+ 			self.buffer = self.crypto.decrypt(self.buffer)
+diff --git a/Fs/Hfs0.py b/Fs/Hfs0.py
+index c4e07ac..dc77f2b 100644
+--- a/Fs/Hfs0.py
++++ b/Fs/Hfs0.py
+@@ -4,11 +4,11 @@ from nut import Titles
+ from nut import Hex
+ from binascii import hexlify as hx, unhexlify as uhx
+ from struct import pack as pk, unpack as upk
+-from Fs.File import File
++from nut.Fs.File import File
+ from hashlib import sha256
+-import Fs.Type
+-from Fs.Pfs0 import Pfs0
+-from Fs.BaseFs import BaseFs
++import nut.Fs.Type
++from nut.Fs.Pfs0 import Pfs0
++from nut.Fs.BaseFs import BaseFs
+ import os
+ import re
+ import pathlib
+@@ -16,7 +16,7 @@ from nut import Keys
+ from nut import Config
+ from nut import Print
+ from nut import Nsps
+-import Fs
++import nut.Fs
+ from tqdm import tqdm
+ 
+ MEDIA_SIZE = 0x200
+@@ -62,7 +62,7 @@ class Hfs0(Pfs0):
+ 				f = Hfs0(None)
+ 				#f = factory(name)
+ 			else:
+-				f = Fs.factory(name)
++				f = nut.Fs.factory(name)
+ 
+ 			f._path = name
+ 			f.offset = offset
+diff --git a/Fs/IndexedFile.py b/Fs/IndexedFile.py
+index dfb3b30..478021f 100644
+--- a/Fs/IndexedFile.py
++++ b/Fs/IndexedFile.py
+@@ -3,7 +3,7 @@ from nut import Title
+ from nut import Titles
+ from nut import Print
+ from nut import Nsps
+-import Fs
++import nut.Fs
+ import os
+ import re
+ import nut
+@@ -167,7 +167,7 @@ class IndexedFile:
+ 					return False
+ 			finally:
+ 				self.close()
+-		
++
+ 
+ 		try:
+ 			Print.info(self.path + ' -> ' + newPath)
+@@ -254,14 +254,14 @@ class IndexedFile:
+ 		if not hasattr(self, 'cr') or not self.cr:
+ 			Print.info('extracting CR for ' + str(self.path))
+ 			try:
+-				container = Fs.factory(self.path)
++				container = nut.Fs.factory(self.path)
+ 				container.open(self.path, 'rb')
+ 
+ 				compressedSize = 0
+ 				uncompressedSize = 0
+ 
+ 				for f in container:
+-					if not isinstance(f, Fs.Nca):
++					if not isinstance(f, nut.Fs.Nca):
+ 						continue
+ 					uncompressedSize += f.header.size
+ 					compressedSize += f.size
+@@ -334,7 +334,7 @@ class IndexedFile:
+ 			except BaseException as e:
+ 				Print.error('exception: could not find title id ' + str(self.titleId) + ' ' + str(e))
+ 				return None
+-			
++
+ 
+ 		isNsx = not self.hasValidTicket and not forceNsp
+ 
+diff --git a/Fs/Ivfc.py b/Fs/Ivfc.py
+index e5b6331..69d03a0 100644
+--- a/Fs/Ivfc.py
++++ b/Fs/Ivfc.py
+@@ -4,9 +4,9 @@ from nut import Titles
+ from nut import Hex
+ from binascii import hexlify as hx, unhexlify as uhx
+ from struct import pack as pk, unpack as upk
+-from Fs.File import File
++from nut.Fs.File import File
+ from hashlib import sha256
+-import Fs.Type
++import nut.Fs.Type
+ import os
+ import re
+ import pathlib
+diff --git a/Fs/Nacp.py b/Fs/Nacp.py
+index 0d3c677..ac84c7f 100644
+--- a/Fs/Nacp.py
++++ b/Fs/Nacp.py
+@@ -1,5 +1,5 @@
+-from Fs.File import File
+-import Fs.Type
++from nut.Fs.File import File
++import nut.Fs.Type
+ from binascii import hexlify as hx, unhexlify as uhx
+ from enum import IntEnum
+ from nut import Print
+diff --git a/Fs/Nca.py b/Fs/Nca.py
+index e24dfc9..021c754 100644
+--- a/Fs/Nca.py
++++ b/Fs/Nca.py
+@@ -5,7 +5,7 @@ from nut import Hex
+ from binascii import hexlify as hx, unhexlify as uhx
+ from struct import pack as pk, unpack as upk
+ from hashlib import sha256
+-import Fs.Type
++import nut.Fs.Type
+ import os
+ import re
+ import math
+@@ -15,13 +15,13 @@ from nut import Config
+ from nut import Print
+ from nut import Nsps
+ from tqdm import tqdm
+-import Fs
+-from Fs.File import File
+-from Fs.Rom import Rom
+-from Fs.Pfs0 import Pfs0
+-from Fs.BaseFs import BaseFs
+-from Fs import Type
+-from Fs.File import MemoryFile
++import nut.Fs
++from nut.Fs.File import File
++from nut.Fs.Rom import Rom
++from nut.Fs.Pfs0 import Pfs0
++from nut.Fs.BaseFs import BaseFs
++from nut.Fs import Type
++from nut.Fs.File import MemoryFile
+ import traceback
+ import sys
+ 
+@@ -60,7 +60,7 @@ class HierarchicalSha256:
+ 		self.size = int.from_bytes(d[0x30:0x38], byteorder='little', signed=False)
+ 
+ 		self.pfs0Offset = int.from_bytes(d[0x38:0x40], byteorder='little', signed=False)
+-		self.pfs0Size = int.from_bytes(d[0x40:0x48], byteorder='little', signed=False)		
++		self.pfs0Size = int.from_bytes(d[0x40:0x48], byteorder='little', signed=False)
+ 
+ 		self.multiplier = math.ceil(self.pfs0Size / self.blockSize)
+ 		self.header = header
+@@ -128,8 +128,8 @@ class HierarchicalSha256:
+ 		Print.info(tabs + 'PFS0 Size: ' + str(self.pfs0Size))
+ 		Print.info(tabs + 'Multiplier: ' + str(self.multiplier))
+ 
+-		
+-		
++
++
+ 		try:
+ 			storedHash = str(self.getHashTable()).lower()
+ 			calculatedHash = str(self.calculateHash()).lower()
+@@ -190,11 +190,11 @@ class FsHeader:
+ 
+ def GetSectionFilesystem(buffer, cryptoKey):
+ 	fsType = buffer[0x3]
+-	if fsType == Fs.Type.Fs.PFS0:
+-		return Fs.Pfs0(buffer, cryptoKey=cryptoKey)
++	if fsType == nut.Fs.Type.nut.Fs.PFS0:
++		return nut.Fs.Pfs0(buffer, cryptoKey=cryptoKey)
+ 
+-	if fsType == Fs.Type.Fs.ROMFS:
+-		return Fs.Rom(buffer, cryptoKey=cryptoKey)
++	if fsType == nut.Fs.Type.nut.Fs.ROMFS:
++		return nut.Fs.Rom(buffer, cryptoKey=cryptoKey)
+ 
+ 	return BaseFs(buffer, cryptoKey=cryptoKey)
+ 
+@@ -230,7 +230,7 @@ class NcaHeader(File):
+ 		self.contentType = self.readInt8()
+ 
+ 		try:
+-			self.contentType = Fs.Type.Content(self.contentType)
++			self.contentType = nut.Fs.Type.Content(self.contentType)
+ 		except BaseException:
+ 			pass
+ 
+@@ -254,7 +254,7 @@ class NcaHeader(File):
+ 			tikFile = os.path.join(os.path.dirname(containerPath), self.rightsId.decode('utf-8').lower()) + '.tik'
+ 
+ 			if os.path.isfile(tikFile):
+-				tik = Fs.factory(tikFile)
++				tik = nut.Fs.factory(tikFile)
+ 				tik.open(tikFile, 'r+b')
+ 				title = Titles.get(tik.titleId())
+ 				title.key = format(tik.getTitleKeyBlock(), 'X').zfill(32)
+@@ -310,7 +310,7 @@ class NcaHeader(File):
+ 
+ 	def getFsHeader(self, index, fs = None):
+ 		self.seek(0x400 + (index * 0x200))
+-		return FsHeader(self, fs = fs)
++		return nut.FsHeader(self, fs = fs)
+ 
+ 	def realTitleId(self):
+ 		if not self.hasTitleRights():
+@@ -504,7 +504,7 @@ class Nca(File):
+ 		super(Nca, self).open(file, mode, cryptoType, cryptoKey, cryptoCounter)
+ 
+ 		self.header = NcaHeader()
+-		self.partition(0x0, 0xC00, self.header, Fs.Type.Crypto.XTS, uhx(Keys.get('header_key')))
++		self.partition(0x0, 0xC00, self.header, nut.Fs.Type.Crypto.XTS, uhx(Keys.get('header_key')))
+ 		#Print.info('partition complete, seeking')
+ 		self.header.seek(0x400)
+ 		# Print.info('reading')
+@@ -550,7 +550,7 @@ class Nca(File):
+ 		return max(self.header.cryptoType, self.header.cryptoType2)
+ 
+ 	def buildId(self):
+-		if self.header.contentType != Fs.Type.Content.PROGRAM:
++		if self.header.contentType != nut.Fs.Type.Content.PROGRAM:
+ 			return None
+ 
+ 		if self._path.endswith('.ncz'):
+@@ -611,7 +611,7 @@ class Nca(File):
+ 			for fs in self:
+ 				# print(fs.fsType)
+ 				# print(fs.cryptoType)
+-				if fs.fsType == Type.Fs.PFS0 and fs.cryptoType == Type.Crypto.CTR:
++				if fs.fsType == Type.nut.Fs.PFS0 and fs.cryptoType == Type.Crypto.CTR:
+ 					f.seek(0)
+ 					ncaHeader = NcaHeader()
+ 					ncaHeader.open(MemoryFile(f.read(0x400), Type.Crypto.XTS, uhx(Keys.get('header_key'))))
+@@ -636,7 +636,7 @@ class Nca(File):
+ 					else:
+ 						return True
+ 
+-				if fs.fsType == Type.Fs.ROMFS and fs.cryptoType == Type.Crypto.CTR:
++				if fs.fsType == Type.nut.Fs.ROMFS and fs.cryptoType == Type.Crypto.CTR:
+ 					f.seek(0)
+ 					ncaHeader = NcaHeader()
+ 					ncaHeader.open(MemoryFile(f.read(0x400), Type.Crypto.XTS, uhx(Keys.get('header_key'))))
+@@ -679,7 +679,7 @@ class Nca(File):
+ 						else:
+ 							return True
+ 
+-				if fs.fsType == Type.Fs.ROMFS and fs.cryptoType == Type.Crypto.BKTR and str(f.header.contentType) == 'Content.PROGRAM':
++				if fs.fsType == Type.nut.Fs.ROMFS and fs.cryptoType == Type.Crypto.BKTR and str(f.header.contentType) == 'Content.PROGRAM':
+ 					f.seek(0)
+ 					ncaHeader = NcaHeader()
+ 					ncaHeader.open(MemoryFile(f.read(0x400), Type.Crypto.XTS, uhx(Keys.get('header_key'))))
+@@ -724,7 +724,7 @@ class Nca(File):
+ 		Print.info(tabs + 'key Index: ' + str(self.header.keyIndex))
+ 
+ 		try:
+-			Print.info('\n' + tabs + 'FsSections:')
++			Print.info('\n' + tabs + 'nut.FsSections:')
+ 			for i in range(4):
+ 				tbl = self.header.sectionTables[i]
+ 
+@@ -743,7 +743,7 @@ class Nca(File):
+ 			pass
+ 
+ 		try:
+-			Print.info('\n\n' + tabs + 'FsHeaders:')
++			Print.info('\n\n' + tabs + 'nut.FsHeaders:')
+ 			for i in range(4):
+ 				tbl = self.header.sectionTables[i]
+ 
+@@ -772,7 +772,7 @@ class Nca(File):
+ 			for s in self:
+ 				s.printInfo(maxDepth, indent+1)
+ 
+-		if self.header.contentType == Fs.Type.Content.PROGRAM:
++		if self.header.contentType == nut.Fs.Type.Content.PROGRAM:
+ 			Print.info(tabs + 'build Id: ' + str(self.buildId()))
+ 
+ 		if self.header.signature1:
+diff --git a/Fs/Nsp.py b/Fs/Nsp.py
+index 8b4d292..9c4407e 100644
+--- a/Fs/Nsp.py
++++ b/Fs/Nsp.py
+@@ -4,9 +4,9 @@ from nut import Titles
+ from nut import Hex
+ from binascii import hexlify as hx, unhexlify as uhx
+ from struct import pack as pk, unpack as upk
+-from Fs.File import File
++from nut.Fs.File import File
+ from hashlib import sha256
+-import Fs.Type
++import nut.Fs.Type
+ import os
+ import re
+ import pathlib
+@@ -15,9 +15,9 @@ from nut import Config
+ from nut import Print
+ from nut import Nsps
+ from tqdm import tqdm
+-from Fs.Pfs0 import Pfs0
+-from Fs.Nca import Nca
+-from Fs.IndexedFile import IndexedFile
++from nut.Fs.Pfs0 import Pfs0
++from nut.Fs.Nca import Nca
++from nut.Fs.IndexedFile import IndexedFile
+ import shutil
+ from nut import blockchain
+ 
+@@ -336,9 +336,9 @@ class Nsp(Pfs0, IndexedFile):
+ 			certFile = base + '.cert'
+ 			tikFile = base + '.tik'
+ 
+-			shutil.copyfile('Certificate.cert', certFile)
++			shutil.copyfile('/usr/share/blawar-nut/Certificate.cert', certFile)
+ 
+-			with open('Ticket.tik', 'rb') as intik:
++			with open('/usr/share/blawar-nut/Ticket.tik', 'rb') as intik:
+ 				data = bytearray(intik.read())
+ 				data[0x180:0x190] = uhx(key)
+ 				data[0x285] = int(rights_id[-2:], 16) + 1
+diff --git a/Fs/Pfs0.py b/Fs/Pfs0.py
+index 8e691a1..f98aca2 100644
+--- a/Fs/Pfs0.py
++++ b/Fs/Pfs0.py
+@@ -4,9 +4,9 @@ from nut import Titles
+ from nut import Hex
+ from binascii import hexlify as hx, unhexlify as uhx
+ from struct import pack as pk, unpack as upk
+-from Fs.File import File
++from nut.Fs.File import File
+ from hashlib import sha256
+-import Fs.Type
++import nut.Fs.Type
+ import os
+ import re
+ import pathlib
+@@ -15,8 +15,8 @@ from nut import Config
+ from nut import Print
+ from nut import Nsps
+ from tqdm import tqdm
+-import Fs
+-from Fs.BaseFs import BaseFs
++import nut.Fs
++from nut.Fs.BaseFs import BaseFs
+ import shutil
+ 
+ MEDIA_SIZE = 0x200
+@@ -169,7 +169,7 @@ class Pfs0(BaseFs):
+ 
+ 			self.readInt32()  # junk data
+ 
+-			f = Fs.factory(name)
++			f = nut.Fs.factory(name)
+ 
+ 			f._path = name
+ 			f.offset = offset
+@@ -219,7 +219,7 @@ class Pfs0(BaseFs):
+ 
+ 		if autoGenerate and rightsId is not None:
+ 			tikFile = os.path.join(os.path.dirname(self._path), rightsId.lower()) + '.tik'
+-			with open('Ticket.tik', 'rb') as intik:
++			with open('/usr/share/blawar-nut/Ticket.tik', 'rb') as intik:
+ 				data = bytearray(intik.read())
+ 				data[0x180:0x190] = b'\x00' * 0x10
+ 				data[0x285] = int(rightsId[-2:], 16) + 1
+@@ -232,7 +232,7 @@ class Pfs0(BaseFs):
+ 				except BaseException as e:
+ 					Print.error(str(e))
+ 
+-			f = Fs.factory(tikFile)
++			f = nut.Fs.factory(tikFile)
+ 			f.open(tikFile, 'r+b')
+ 			return f
+ 
+@@ -245,9 +245,9 @@ class Pfs0(BaseFs):
+ 
+ 		if autoGenerate and rightsId is not None:
+ 			certFile = os.path.join(os.path.dirname(self._path), rightsId.lower()) + '.cert'
+-			shutil.copyfile('Certificate.cert', certFile)
++			shutil.copyfile('/usr/share/blawar-nut/Certificate.cert', certFile)
+ 
+-			f = Fs.factory(certFile)
++			f = nut.Fs.factory(certFile)
+ 			f.open(certFile, 'r+b')
+ 			return f
+ 
+@@ -325,7 +325,7 @@ class Pfs0(BaseFs):
+ 
+ 					if newName != oldName:
+ 						renameNcas[oldName] = newName
+-					
++
+ 
+ 		if len(rightsIds) > ticketCount:
+ 			Print.error('missing tickets in NSP, expected %d got %d in %s' % (len(rightsIds), ticketCount, self._path))
+diff --git a/Fs/Rom.py b/Fs/Rom.py
+index 646b58d..a2fb92d 100644
+--- a/Fs/Rom.py
++++ b/Fs/Rom.py
+@@ -1,18 +1,18 @@
+ from binascii import hexlify as hx, unhexlify as uhx
+ from struct import pack as pk, unpack as upk
+-from Fs.File import File
+-from Fs.File import MemoryFile
++from nut.Fs.File import File
++from nut.Fs.File import MemoryFile
+ import os
+ import re
+ import pathlib
+-from Fs import Type
++from nut.Fs import Type
+ from nut import Keys
+ from nut import Config
+ from nut import Print
+ from nut import Nsps
+ from tqdm import tqdm
+-from Fs.BaseFs import BaseFs
+-from Fs.Ivfc import Ivfc
++from nut.Fs.BaseFs import BaseFs
++from nut.Fs.Ivfc import Ivfc
+ from nut import Hex
+ 
+ MEDIA_SIZE = 0x200
+diff --git a/Fs/Ticket.py b/Fs/Ticket.py
+index 08ed9ba..500deaf 100644
+--- a/Fs/Ticket.py
++++ b/Fs/Ticket.py
+@@ -1,5 +1,5 @@
+-from Fs.File import File
+-import Fs.Type
++from nut.Fs.File import File
++import nut.Fs.Type
+ from binascii import hexlify as hx, unhexlify as uhx
+ from nut import Print
+ from nut import Keys
+@@ -22,19 +22,19 @@ class Ticket(File):
+ 		self.accountId = None
+ 
+ 		self.signatureSizes = {}
+-		self.signatureSizes[Fs.Type.TicketSignature.RSA_4096_SHA1] = 0x200
+-		self.signatureSizes[Fs.Type.TicketSignature.RSA_2048_SHA1] = 0x100
+-		self.signatureSizes[Fs.Type.TicketSignature.ECDSA_SHA1] = 0x3C
+-		self.signatureSizes[Fs.Type.TicketSignature.RSA_4096_SHA256] = 0x200
+-		self.signatureSizes[Fs.Type.TicketSignature.RSA_2048_SHA256] = 0x100
+-		self.signatureSizes[Fs.Type.TicketSignature.ECDSA_SHA256] = 0x3C
++		self.signatureSizes[nut.Fs.Type.TicketSignature.RSA_4096_SHA1] = 0x200
++		self.signatureSizes[nut.Fs.Type.TicketSignature.RSA_2048_SHA1] = 0x100
++		self.signatureSizes[nut.Fs.Type.TicketSignature.ECDSA_SHA1] = 0x3C
++		self.signatureSizes[nut.Fs.Type.TicketSignature.RSA_4096_SHA256] = 0x200
++		self.signatureSizes[nut.Fs.Type.TicketSignature.RSA_2048_SHA256] = 0x100
++		self.signatureSizes[nut.Fs.Type.TicketSignature.ECDSA_SHA256] = 0x3C
+ 
+ 	def open(self, file=None, mode='rb', cryptoType=-1, cryptoKey=-1, cryptoCounter=-1):
+ 		super(Ticket, self).open(file, mode, cryptoType, cryptoKey, cryptoCounter)
+ 		self.rewind()
+ 		self.signatureType = self.readInt32()
+ 		try:
+-			self.signatureType = Fs.Type.TicketSignature(self.signatureType)
++			self.signatureType = nut.Fs.Type.TicketSignature(self.signatureType)
+ 		except BaseException:
+ 			raise IOError('Invalid ticket format')
+ 
+diff --git a/Fs/Xci.py b/Fs/Xci.py
+index d0fd19e..0f5953a 100644
+--- a/Fs/Xci.py
++++ b/Fs/Xci.py
+@@ -1,11 +1,11 @@
+ from binascii import hexlify as hx, unhexlify as uhx
+-from Fs.File import File
+-from Fs.Hfs0 import Hfs0
+-from Fs.Nca import Nca
++from nut.Fs.File import File
++from nut.Fs.Hfs0 import Hfs0
++from nut.Fs.Nca import Nca
+ import os
+-from Fs.IndexedFile import IndexedFile
++from nut.Fs.IndexedFile import IndexedFile
+ from nut import Print
+-from Fs.Pfs0 import Pfs0Stream
++from nut.Fs.Pfs0 import Pfs0Stream
+ 
+ 
+ MEDIA_SIZE = 0x200
+diff --git a/Fs/__init__.py b/Fs/__init__.py
+index bd78fc4..ac7f2bd 100644
+--- a/Fs/__init__.py
++++ b/Fs/__init__.py
+@@ -1,12 +1,12 @@
+-from Fs.Xci import Xci
+-from Fs.Nca import Nca
+-from Fs.Nsp import Nsp
+-from Fs.Rom import Rom
+-from Fs.Nacp import Nacp
+-from Fs.Pfs0 import Pfs0
+-from Fs.Ticket import Ticket
+-from Fs.Cnmt import Cnmt
+-from Fs.File import File
++from nut.Fs.Xci import Xci
++from nut.Fs.Nca import Nca
++from nut.Fs.Nsp import Nsp
++from nut.Fs.Rom import Rom
++from nut.Fs.Nacp import Nacp
++from nut.Fs.Pfs0 import Pfs0
++from nut.Fs.Ticket import Ticket
++from nut.Fs.Cnmt import Cnmt
++from nut.Fs.File import File
+ 
+ def factory(name, file=None, mode='rb'):
+ 	ext = name.split('.')[-1]
+diff --git a/Fs/driver/__init__.py b/Fs/driver/__init__.py
+index 825e39c..02a93f2 100644
+--- a/Fs/driver/__init__.py
++++ b/Fs/driver/__init__.py
+@@ -1,5 +1,5 @@
+ import sys
+-import Fs.driver.registry
++import nut.Fs.driver.registry
+ import urllib.parse
+ import os.path
+ from nut import Config
+@@ -116,10 +116,10 @@ def getScheme(url):
+ 
+ 
+ def openDir(url):
+-	return Fs.driver.registry.get(getScheme(url)).openDir(url)
++	return nut.Fs.driver.registry.get(getScheme(url)).openDir(url)
+ 
+ def openFile(url, mode='rb'):
+-	return Fs.driver.registry.get(getScheme(url)).openFile(url, mode)
++	return nut.Fs.driver.registry.get(getScheme(url)).openFile(url, mode)
+ 
+ 
+ customSchemes = ['gdrive:']
+@@ -139,7 +139,7 @@ def join(url1, url2):
+ 			tempUrl = urllib.parse.urljoin(tempUrl, url2)
+ 			return s + tempUrl[len(dummyScheme):]
+ 
+-	if Fs.driver.registry.isNative(url1):
++	if nut.Fs.driver.registry.isNative(url1):
+ 		return os.path.join(url1, url2).replace('/', '\\')
+ 	return urllib.parse.urljoin(url1, url2)
+ 
+@@ -153,7 +153,7 @@ def cleanPath(path=None):
+ 	if not path:
+ 		return None
+ 
+-	if not Fs.driver.registry.isNative(path):
++	if not nut.Fs.driver.registry.isNative(path):
+ 		return path.replace('\\', '/')
+ 
+ 	bits = path.replace('\\', '/').split('/')
+@@ -176,4 +176,3 @@ def cleanPath(path=None):
+ 		path = os.path.abspath('/'.join(bits))
+ 
+ 	return path
+-
+diff --git a/Fs/driver/curl.py b/Fs/driver/curl.py
+index 89edbe5..c368baa 100644
+--- a/Fs/driver/curl.py
++++ b/Fs/driver/curl.py
+@@ -2,11 +2,11 @@ import pycurl
+ import io
+ import os
+ import certifi
+-import Fs.driver
++import nut.Fs.driver
+ from bs4 import BeautifulSoup
+ from nut import Print
+ 
+-class FileContext(Fs.driver.FileContext):
++class FileContext(nut.Fs.driver.FileContext):
+ 	def __init__(self, url, sz, mode, parent):
+ 		super(FileContext, self).__init__(url, sz, mode, parent)
+ 
+@@ -51,7 +51,7 @@ class FileContext(Fs.driver.FileContext):
+ 		except BaseException as e:
+ 			Print.info('curl chunk exception: ' + str(e))
+ 
+-class DirContext(Fs.driver.DirContext):
++class DirContext(nut.Fs.driver.DirContext):
+ 	def __init__(self, url, parent):
+ 		super(DirContext, self).__init__(url, parent)
+ 
+@@ -61,7 +61,7 @@ class DirContext(Fs.driver.DirContext):
+ 			name = name.strip()
+ 			path = os.path.join(self.url, name)
+ 			if '.' in name:
+-				entries.append(Fs.driver.FileEntry(path, None))
++				entries.append(nut.Fs.driver.FileEntry(path, None))
+ 		return entries
+ 
+ 	def processHtml(self, result):
+@@ -77,7 +77,7 @@ class DirContext(Fs.driver.DirContext):
+ 			path = os.path.join(self.url, name)
+ 
+ 			if '.' in name:
+-				entries.append(Fs.driver.FileEntry(path, None))
++				entries.append(nut.Fs.driver.FileEntry(path, None))
+ 
+ 		return entries
+ 
+@@ -95,14 +95,13 @@ class DirContext(Fs.driver.DirContext):
+ 		return self.processLs(output.getvalue().decode('utf8'))
+ 
+ 
+-class Curl(Fs.driver.Interface):
++class Curl(nut.Fs.driver.Interface):
+ 	def __init__(self, url=None):
+ 		super(Curl, self).__init__(url)
+ 		self.dirContextType = DirContext
+ 		self.fileContextType = FileContext
+ 
+ 
+-Fs.driver.registry.add('ftp', Curl)
+-Fs.driver.registry.add('http', Curl)
+-Fs.driver.registry.add('https', Curl)
+-
++nut.Fs.driver.registry.add('ftp', Curl)
++nut.Fs.driver.registry.add('http', Curl)
++nut.Fs.driver.registry.add('https', Curl)
+diff --git a/Fs/driver/gdrive.py b/Fs/driver/gdrive.py
+index 14f8e44..7c7744a 100644
+--- a/Fs/driver/gdrive.py
++++ b/Fs/driver/gdrive.py
+@@ -1,6 +1,6 @@
+ import os
+ import io
+-import Fs.driver
++import nut.Fs.driver
+ from nut import Print
+ from nut import Config
+ import pickle
+@@ -11,6 +11,8 @@ import hashlib
+ import requests
+ import json
+ 
++from nut.Util import wrap_path
++
+ SCOPES = ['https://www.googleapis.com/auth/drive']
+ 
+ def resolveRelativeUrl(path, parent):
+@@ -275,8 +277,8 @@ def getFileInfo(service, path):
+ def getGdriveToken(request, response):
+ 	creds = None
+ 
+-	if os.path.exists('token.pickle'):
+-		with open('token.pickle', 'rb') as token:
++	if os.path.exists(wrap_path('token.pickle')):
++		with open(wrap_path('token.pickle'), 'rb') as token:
+ 			creds = pickle.load(token)
+ 
+ 	if not creds or not creds.valid:
+@@ -287,10 +289,10 @@ def getGdriveToken(request, response):
+ 				Config.getGdriveCredentialsFile(), SCOPES)
+ 			creds = flow.run_local_server(port=0)
+ 
+-		with open('token.pickle', 'wb') as token:
++		with open(wrap_path('token.pickle'), 'wb') as token:
+ 			pickle.dump(creds, token)
+ 
+-		with open('gdrive.token', 'w') as token:
++		with open(wrap_path('token.pickle'), 'w') as token:
+ 			token.write(json.dumps({
+ 				'access_token': creds.token,
+ 				'refresh_token': creds.refresh_token
+@@ -367,7 +369,7 @@ def download(url, callback, start=None, end=None, headers={}):
+ 
+ 	return bytes
+ 
+-class FileContext(Fs.driver.FileContext):
++class FileContext(nut.Fs.driver.FileContext):
+ 	def __init__(self, url, sz, mode, parent):
+ 		super(FileContext, self).__init__(url, sz, mode, parent)
+ 
+@@ -383,8 +385,8 @@ class FileContext(Fs.driver.FileContext):
+ 
+ 		creds = None
+ 
+-		if os.path.exists('token.pickle'):
+-			with open('token.pickle', 'rb') as token:
++		if os.path.exists(wrap_path('token.pickle')):
++			with open(wrap_path('token.pickle'), 'rb') as token:
+ 				creds = pickle.load(token)
+ 
+ 			if not creds or not creds.valid:
+@@ -395,7 +397,7 @@ class FileContext(Fs.driver.FileContext):
+ 						Config.getGdriveCredentialsFile(), SCOPES)
+ 					creds = flow.run_local_server(port=0)
+ 
+-				with open('token.pickle', 'wb') as token:
++				with open(wrap_path('token.pickle'), 'wb') as token:
+ 					pickle.dump(creds, token)
+ 
+ 			service = build('drive', 'v3', credentials=creds)
+@@ -413,7 +415,7 @@ class FileContext(Fs.driver.FileContext):
+ 				headers={'Authorization': 'Bearer ' + creds.token}
+ 			)
+ 
+-class DirContext(Fs.driver.DirContext):
++class DirContext(nut.Fs.driver.DirContext):
+ 	def __init__(self, url, parent):
+ 		super(DirContext, self).__init__(url, parent)
+ 
+@@ -424,8 +426,8 @@ class DirContext(Fs.driver.DirContext):
+ 
+ 		creds = None
+ 
+-		if os.path.exists('token.pickle'):
+-			with open('token.pickle', 'rb') as token:
++		if os.path.exists(wrap_path('token.pickle')):
++			with open(wrap_path('token.pickle'), 'rb') as token:
+ 				creds = pickle.load(token)
+ 
+ 		if not creds or not creds.valid:
+@@ -436,7 +438,7 @@ class DirContext(Fs.driver.DirContext):
+ 					Config.getGdriveCredentialsFile(), SCOPES)
+ 				creds = flow.run_local_server(port=0)
+ 
+-			with open('token.pickle', 'wb') as token:
++			with open(wrap_path('token.pickle'), 'wb') as token:
+ 				pickle.dump(creds, token)
+ 
+ 		service = build('drive', 'v3', credentials=creds)
+@@ -446,7 +448,7 @@ class DirContext(Fs.driver.DirContext):
+ 		if len(bits) == 0:
+ 			r['dirs'].append({'name': 'mydrive'})
+ 			for item in gdriveDrives(service):
+-				entries.append(Fs.driver.DirEntry(Fs.driver.join(self.url, item['name'])))
++				entries.append(nut.Fs.driver.DirEntry(nut.Fs.driver.join(self.url, item['name'])))
+ 		else:
+ 			teamDriveId = getTeamDriveId(service, path)
+ 			for item in gdriveQuery(service, "'%s' in parents and trashed=false" % gdriveGetFolderId(service, path), teamDriveId=teamDriveId):
+@@ -459,18 +461,18 @@ class DirContext(Fs.driver.DirContext):
+ 
+ 				if 'mimeType' in item and item['mimeType'] == \
+ 						'application/vnd.google-apps.folder':
+-					entries.append(Fs.driver.DirEntry(Fs.driver.join(self.url, o['name'])))
++					entries.append(nut.Fs.driver.DirEntry(nut.Fs.driver.join(self.url, o['name'])))
+ 				else:
+-					entries.append(Fs.driver.FileEntry(Fs.driver.join(self.url, o['name']), o['size']))
++					entries.append(nut.Fs.driver.FileEntry(nut.Fs.driver.join(self.url, o['name']), o['size']))
+ 
+ 		return entries
+ 
+ 
+-class GoogleDrive(Fs.driver.Interface):
++class GoogleDrive(nut.Fs.driver.Interface):
+ 	def __init__(self, url=None):
+ 		super(GoogleDrive, self).__init__(url)
+ 		self.dirContextType = DirContext
+ 		self.fileContextType = FileContext
+ 
+ 
+-Fs.driver.registry.add('gdrive', GoogleDrive)
++nut.Fs.driver.registry.add('gdrive', GoogleDrive)
+diff --git a/Fs/driver/http.py b/Fs/driver/http.py
+index 25cef30..a1af0f1 100644
+--- a/Fs/driver/http.py
++++ b/Fs/driver/http.py
+@@ -2,10 +2,10 @@ import os
+ import re
+ import html
+ import urllib.parse
+-import Fs.driver
+-import Fs.driver.curl
++import nut.Fs.driver
++import nut.Fs.driver.curl
+ 
+-class DirContext(Fs.driver.curl.DirContext):
++class DirContext(nut.Fs.driver.curl.DirContext):
+ 	"""DirContext class
+ 	"""
+ 
+@@ -15,7 +15,7 @@ class DirContext(Fs.driver.curl.DirContext):
+ 			name = name.strip()
+ 			path = os.path.join(self.url, name)
+ 			if '.' in name:
+-				entries.append(Fs.driver.FileEntry(path, None))
++				entries.append(nut.Fs.driver.FileEntry(path, None))
+ 
+ 		ms = re.findall('href="(.[^"]*)"', result)
+ 
+@@ -24,11 +24,11 @@ class DirContext(Fs.driver.curl.DirContext):
+ 				name = html.unescape(m.decode('utf8'))
+ 
+ 				if '.' in name:
+-					entries.append(Fs.driver.FileEntry(urllib.parse.urljoin(self.url, name), None))
++					entries.append(nut.Fs.driver.FileEntry(urllib.parse.urljoin(self.url, name), None))
+ 		return entries
+ 
+ 
+-class Http(Fs.driver.curl.Curl):
++class Http(nut.Fs.driver.curl.Curl):
+ 	"""Http class
+ 	"""
+ 	def __init__(self, url=None):
+@@ -36,4 +36,4 @@ class Http(Fs.driver.curl.Curl):
+ 		self.dirContextType = DirContext
+ 
+ 
+-Fs.driver.registry.add('http', Http)
++nut.Fs.driver.registry.add('http', Http)
+diff --git a/Fs/driver/init.py b/Fs/driver/init.py
+index 6f6eb0b..85c0a52 100644
+--- a/Fs/driver/init.py
++++ b/Fs/driver/init.py
+@@ -1,4 +1,4 @@
+-import Fs.driver.native
+-import Fs.driver.curl
+-import Fs.driver.gdrive
+-import Fs.driver.http
++import nut.Fs.driver.native
++import nut.Fs.driver.curl
++import nut.Fs.driver.gdrive
++import nut.Fs.driver.http
+diff --git a/Fs/driver/native.py b/Fs/driver/native.py
+index e80e70c..ef6c61c 100644
+--- a/Fs/driver/native.py
++++ b/Fs/driver/native.py
+@@ -1,8 +1,8 @@
+ import os.path
+-import Fs.driver
++import nut.Fs.driver
+ from nut import Print
+ 
+-class FileContext(Fs.driver.FileContext):
++class FileContext(nut.Fs.driver.FileContext):
+ 	def __init__(self, url, sz, mode, parent):
+ 		super(FileContext, self).__init__(url, sz, mode, parent)
+ 		if sz:
+@@ -47,7 +47,7 @@ class FileContext(Fs.driver.FileContext):
+ 		except BaseException as e:
+ 			Print.info('native chunk exception: ' + str(e))
+ 
+-class DirContext(Fs.driver.DirContext):
++class DirContext(nut.Fs.driver.DirContext):
+ 	def __init__(self, url, parent):
+ 		super(DirContext, self).__init__(url, parent)
+ 
+@@ -56,17 +56,17 @@ class DirContext(Fs.driver.DirContext):
+ 		for f in os.listdir(self.url):
+ 			path = os.path.join(self.url, f)
+ 			if os.path.isfile(path):
+-				entries.append(Fs.driver.FileEntry(path, os.path.getsize(path)))
++				entries.append(nut.Fs.driver.FileEntry(path, os.path.getsize(path)))
+ 			else:
+-				entries.append(Fs.driver.DirEntry(path))
++				entries.append(nut.Fs.driver.DirEntry(path))
+ 		return entries
+ 
+ 
+-class Native(Fs.driver.Interface):
++class Native(nut.Fs.driver.Interface):
+ 	def __init__(self, url=None):
+ 		super(Native, self).__init__(url)
+ 		self.dirContextType = DirContext
+ 		self.fileContextType = FileContext
+ 
+ 
+-Fs.driver.registry.add('', Native)
++nut.Fs.driver.registry.add('', Native)
+diff --git a/Server/Controller/Api.py b/Server/Controller/Api.py
+index 0504af3..f01864b 100644
+--- a/Server/Controller/Api.py
++++ b/Server/Controller/Api.py
+@@ -4,7 +4,7 @@ from nut import Titles
+ from nut import Status
+ from nut import Nsps
+ from nut import Print
+-import Server
++import nut.Server
+ from nut import Config
+ from nut import Hex
+ import socket
+@@ -22,15 +22,15 @@ from google_auth_oauthlib.flow import InstalledAppFlow
+ from google.auth.transport.requests import Request
+ import hashlib
+ import traceback
+-import Fs.driver
+-import Fs.driver.init
++import nut.Fs.driver
++import nut.Fs.driver.init
+ 
+ try:
+ 	from PIL import Image
+ except BaseException:
+ 	import Image
+ 
+-import Server
++import nut.Server
+ import os
+ 
+ SCOPES = ['https://www.googleapis.com/auth/drive']
+@@ -145,24 +145,24 @@ def getTitles(request, response):
+ 
+ def getTitleImage(request, response):
+ 	if len(request.bits) < 3:
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	id = request.bits[2]
+ 	try:
+ 		width = int(request.bits[3])
+ 	except BaseException:
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	if width < 32 or width > 1024:
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	if not Titles.contains(id):
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	path = Titles.get(id).iconFile(width) or Titles.get(id).frontBoxArtFile(width)
+ 
+ 	if not path:
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	response.setMime(path)
+ 	response.headers['Cache-Control'] = 'max-age=31536000'
+@@ -172,21 +172,21 @@ def getTitleImage(request, response):
+ 			response.write(f.read())
+ 			return
+ 
+-	return Server.Response500(request, response)
++	return nut.Server.Response500(request, response)
+ 
+ def getBannerImage(request, response):
+ 	if len(request.bits) < 3:
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	id = request.bits[2]
+ 
+ 	if not Titles.contains(id):
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	path = Titles.get(id).bannerFile()
+ 
+ 	if not path:
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	response.setMime(path)
+ 	response.headers['Cache-Control'] = 'max-age=31536000'
+@@ -196,29 +196,29 @@ def getBannerImage(request, response):
+ 			response.write(f.read())
+ 			return
+ 
+-	return Server.Response500(request, response)
++	return nut.Server.Response500(request, response)
+ 
+ def getFrontArtBoxImage(request, response):
+ 	return getTitleImage(request, response)
+ 
+ def getScreenshotImage(request, response):
+ 	if len(request.bits) < 3:
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	id = request.bits[2]
+ 
+ 	try:
+ 		i = int(request.bits[3])
+ 	except BaseException:
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	if not Titles.contains(id):
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	path = Titles.get(id).screenshotFile(i)
+ 
+ 	if not path:
+-		return Server.Response404(request, response)
++		return nut.Server.Response404(request, response)
+ 
+ 	response.setMime(path)
+ 	response.headers['Cache-Control'] = 'max-age=31536000'
+@@ -228,7 +228,7 @@ def getScreenshotImage(request, response):
+ 			response.write(f.read())
+ 			return
+ 
+-	return Server.Response500(request, response)
++	return nut.Server.Response500(request, response)
+ 
+ def getPreload(request, response):
+ 	Titles.queue.add(request.bits[2])
+@@ -344,7 +344,7 @@ class Progress:
+ 
+ 
+ def serveFile(response, path, filename=None, start=None, end=None):
+-	with Fs.driver.openFile(path) as f:
++	with nut.Fs.driver.openFile(path) as f:
+ 		try:
+ 			start, size = getOffsetAndSize(start, end, f.size)
+ 
+@@ -398,7 +398,7 @@ def getDownload(request, response, start=None, end=None):
+ 					start = int(start)
+ 
+ 				if start >= size or start < 0 or end <= 0:
+-					return Server.Response400(request, response, 'Invalid range request %d - %d' % (start, end))
++					return nut.Server.Response400(request, response, 'Invalid range request %d - %d' % (start, end))
+ 
+ 				response.setStatus(206)
+ 
+@@ -544,12 +544,12 @@ def getDirectoryList(request, response):
+ 			virtualDir = request.bits[2]
+ 			path = request.bits[2] + ':/'
+ 			for i in request.bits[3:]:
+-				path = Fs.driver.join(path, i)
++				path = nut.Fs.driver.join(path, i)
+ 		else:
+ 			virtualDir = ''
+ 			path = ''
+ 
+-		path = Fs.driver.cleanPath(path)
++		path = nut.Fs.driver.cleanPath(path)
+ 
+ 		r = {'dirs': [], 'files': []}
+ 
+@@ -562,7 +562,7 @@ def getDirectoryList(request, response):
+ 		if isBlockedPath(path):
+ 			raise IOError('forbidden')
+ 
+-		for f in Fs.driver.openDir(path).ls():
++		for f in nut.Fs.driver.openDir(path).ls():
+ 
+ 			if not f.isFile():
+ 				r['dirs'].append({'name': f.baseName()})
+@@ -619,8 +619,8 @@ def getFile(request, response, start=None, end=None):
+ 
+ 		path = virtualDir + ':/'
+ 		for i in request.bits[3:]:
+-			path = Fs.driver.join(path, i)
+-		path = Fs.driver.cleanPath(path)
++			path = nut.Fs.driver.join(path, i)
++		path = nut.Fs.driver.cleanPath(path)
+ 
+ 		if isBlocked(path):
+ 			raise IOError('access denied')
+@@ -652,8 +652,8 @@ def getFileSize(request, response):
+ 
+ 	path = virtualDir + ':/'
+ 	for i in request.bits[3:]:
+-		path = Fs.driver.join(path, i)
+-	path = Fs.driver.cleanPath(path)
++		path = nut.Fs.driver.join(path, i)
++	path = nut.Fs.driver.cleanPath(path)
+ 
+ 	try:
+ 		t['size'] = os.path.getsize(path)
+@@ -705,7 +705,7 @@ def getUpdateDb(request, response):
+ 
+ def getExport(request, response):
+ 	if len(request.bits) < 3:
+-		return Server.Response500(request, response)
++		return nut.Server.Response500(request, response)
+ 
+ 	if len(request.bits) == 3:
+ 		nut.export(request.bits[2])
+diff --git a/Server/__init__.py b/Server/__init__.py
+index 2458196..c0790b3 100644
+--- a/Server/__init__.py
++++ b/Server/__init__.py
+@@ -18,7 +18,7 @@ from urllib.parse import parse_qs
+ import collections
+ import queue
+ 
+-import Server.Controller.Api
++from .Controller import Api
+ import __main__
+ 
+ 
+@@ -33,7 +33,7 @@ sock = None
+ addr = None
+ threads = []
+ 
+-mappings = {'api': Server.Controller.Api}
++mappings = {'api': Api}
+ 
+ mimes = {
+ 	'.css': 'text/css',
+@@ -71,7 +71,7 @@ def run():
+ 
+ 	Watcher.start()
+ 
+-	Print.info(time.asctime() + ' Server Starts - %s:%s' % (Config.server.hostname, Config.server.port))
++	Print.info(time.asctime() + ' nut.Server Starts - %s:%s' % (Config.server.hostname, Config.server.port))
+ 	try:
+ 		addr = (Config.server.hostname, Config.server.port)
+ 		sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+@@ -85,7 +85,7 @@ def run():
+ 	except KeyboardInterrupt:
+ 		pass
+ 
+-	Print.info(time.asctime() + ' Server Stops - %s:%s' % (Config.server.hostname, Config.server.port))
++	Print.info(time.asctime() + ' nut.Server Stops - %s:%s' % (Config.server.hostname, Config.server.port))
+ 
+ class NutRequest:
+ 	def __init__(self, handler):
+diff --git a/gui/app.py b/gui/app.py
+index cff2c5d..bd9f387 100644
+--- a/gui/app.py
++++ b/gui/app.py
+@@ -5,20 +5,21 @@ import webbrowser
+ from PyQt5.QtCore import pyqtSlot
+ from PyQt5.QtWidgets import (QWidget, QDesktopWidget, QVBoxLayout, QMessageBox)
+ 
+-import gui.tabs
+-import gui.panes.files
+-import gui.panes.options
+-import gui.panes.format
+-import gui.panes.filters
+-import gui.panes.dirlist
++import nut.gui
++import nut.gui.tabs
++import nut.gui.panes.files
++import nut.gui.panes.options
++import nut.gui.panes.format
++import nut.gui.panes.filters
++import nut.gui.panes.dirlist
+ 
+-from gui.header import Header
+-from gui.progress import Progress
++from nut.gui.header import Header
++from nut.gui.progress import Progress
+ 
+ import nut
+ from nut import Config, Users, Nsps
+-import Fs.driver.init
+-from translator import tr
++import nut.Fs.driver.init
++from nut.translator import tr
+ 
+ class App(QWidget):
+ 	def __init__(self):
+@@ -45,6 +46,7 @@ class App(QWidget):
+ 
+ 		self.header = Header(self)
+ 		layout.addLayout(self.header.layout)
++		gui = nut.gui
+ 		self.files = gui.panes.files.Files()
+ 
+ 		self.tabs = gui.tabs.Tabs({
+@@ -176,7 +178,7 @@ class App(QWidget):
+ 				except OSError:
+ 					pass
+ 
+-				Fs.driver.gdrive.getGdriveToken(None, None)
++				nut.Fs.driver.gdrive.getGdriveToken(None, None)
+ 				QMessageBox.information(
+ 					self,
+ 					'Google Drive OAuth Setup',
+diff --git a/gui/header.py b/gui/header.py
+index e771b96..50db749 100644
+--- a/gui/header.py
++++ b/gui/header.py
+@@ -5,7 +5,7 @@ from PyQt5.QtCore import (Qt, QTimer)
+ from PyQt5.QtWidgets import (QVBoxLayout, QHBoxLayout, QPushButton, QLabel)
+ 
+ from nut import Config, Users, Usb
+-from translator import tr
++from nut.translator import tr
+ 
+ def _get_ip_address():
+ 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+diff --git a/gui/panes/dirlist.py b/gui/panes/dirlist.py
+index 2f43b48..5a3ecf1 100644
+--- a/gui/panes/dirlist.py
++++ b/gui/panes/dirlist.py
+@@ -6,9 +6,9 @@ from PyQt5.QtWidgets import (QComboBox, QDialog, QDialogButtonBox, QFileDialog,
+                              QFormLayout, QHBoxLayout, QLabel, QLineEdit,
+                              QListWidget, QPushButton, QVBoxLayout, QWidget, QScrollArea, QFrame)
+ 
+-import Fs.driver
++import nut.Fs.driver
+ from nut import Users
+-from translator import tr
++from nut.translator import tr
+ 
+ 
+ class Edit(QLineEdit):
+@@ -57,12 +57,12 @@ class FolderPicker(QDialog):
+ 		self.reject()
+ 
+ 	def onSelect(self, item):
+-		self.url = Fs.driver.join(self.url, item.text())
++		self.url = nut.Fs.driver.join(self.url, item.text())
+ 		self.refreshList()
+ 
+ 	def refreshList(self):
+ 		self.list.clear()
+-		for d in  Fs.driver.openDir(self.url).ls():
++		for d in  nut.Fs.driver.openDir(self.url).ls():
+ 			if d.isFile():
+ 				continue
+ 			self.list.addItem(d.baseName())
+@@ -149,7 +149,7 @@ class GdrivePicker(QDialog): # pylint: disable=too-many-instance-attributes
+ 				self.url += '/'
+ 
+ 			if self.path.getValue():
+-				self.url = Fs.driver.join(self.url, self.path.getValue())
++				self.url = nut.Fs.driver.join(self.url, self.path.getValue())
+ 
+ 			self.accept()
+ 		except BaseException: # pylint: disable=broad-except
+diff --git a/gui/panes/files.py b/gui/panes/files.py
+index 0db1f26..a7308ba 100644
+--- a/gui/panes/files.py
++++ b/gui/panes/files.py
+@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
+ from PyQt5.QtWidgets import QTableView
+ 
+ from nut import Nsps
+-from gui.table_model import TableModel
++from nut.gui.table_model import TableModel
+ 
+ 
+ class Files(QTableView):
+diff --git a/gui/panes/filters.py b/gui/panes/filters.py
+index 0d2cfd5..e8ea71d 100644
+--- a/gui/panes/filters.py
++++ b/gui/panes/filters.py
+@@ -7,7 +7,7 @@ from qt_range_slider import QtRangeSlider
+ import humanize
+ 
+ from nut import Config
+-from translator import tr
++from nut.translator import tr
+ 
+ 
+ 
+diff --git a/nut.py b/nut.py
+index 5ab4984..ac40579 100755
+--- a/nut.py
++++ b/nut.py
+@@ -9,6 +9,7 @@ import pathlib
+ import urllib3
+ import json
+ from filelock import Timeout, FileLock
++from pathlib import Path
+ 
+ if not getattr(sys, 'frozen', False):
+ 	os.chdir(os.path.dirname(os.path.abspath(__file__)))
+@@ -18,7 +19,7 @@ if not getattr(sys, 'frozen', False):
+ from nut import Title
+ from nut import Titles
+ from nut import Nsps
+-import Fs
++import nut.Fs
+ from nut import Config
+ import requests
+ from nut import Hex
+@@ -30,15 +31,16 @@ import signal
+ from nut import Status
+ import time
+ import colorama
+-import Server
++import nut.Server
+ import pprint
+ import random
+ import shutil
+-from Fs.Nsp import Nsp
++from nut.Fs.Nsp import Nsp
+ import traceback
+ import queue
+ import nut
+-import Fs.Type
++import nut.Fs.Type
++from nut.Util import wrap_path
+ 
+ try:
+ 	import cdn
+@@ -192,7 +194,7 @@ def genTinfoilTitles():
+ 	for region, languages in Config.regionLanguages().items():
+ 		for language in languages:
+ 			nut.importRegion(region, language, save=False)
+-			Titles.save('titledb/titles.%s.%s.json' % (region, language), False)
++			Titles.save(wrap_path('titledb/titles.%s.%s.json') % (region, language), False)
+ 			#Print.info('%s - %s' % (region, language))
+ 	nut.importRegion()
+ 	exit(0)
+@@ -229,14 +231,14 @@ def organizeNcas(dir):
+ 	for file in files:
+ 		try:
+ 			path = os.path.join(dir, file)
+-			f = Fs.Nca()
++			f = nut.Fs.Nca()
+ 			f.open(path, 'r+b')
+ 			f.close()
+ 			titleId = f.header.titleId
+ 			header = f.header
+ 			os.makedirs(os.path.join(dir, f.header.titleId), exist_ok=True)
+ 
+-			if f.header.contentType == Fs.Type.Content.META:
++			if f.header.contentType == nut.Fs.Type.Content.META:
+ 				dest = os.path.join(dir, f.header.titleId, file.split('.')[0] + '.cnmt.nca')
+ 			else:
+ 				dest = os.path.join(dir, f.header.titleId, file.split('.')[0] + '.nca')
+@@ -330,7 +332,7 @@ def exportNcaMap(path):
+ 			map[id]['version'] = int(title.version)
+ 			map[id]['files'] = []
+ 			for f in nsp:
+-				if isinstance(f, Fs.Nca):
++				if isinstance(f, nut.Fs.Nca):
+ 					map[id]['files'].append(f._path)
+ 
+ 			i += 1
+@@ -384,7 +386,7 @@ def download(id):
+ 
+ if __name__ == '__main__':
+ 	try:
+-		with FileLock("nut2.lock") as lock:
++		with FileLock(str(Path(os.environ['XDG_RUNTIME_DIR']) / 'nut2.lock')) as lock:
+ 			urllib3.disable_warnings()
+ 
+ 			#signal.signal(signal.SIGINT, handler)
+@@ -579,8 +581,8 @@ if __name__ == '__main__':
+ 			if args.extract:
+ 				nut.initTitles()
+ 				for filePath in args.extract:
+-					#f = Fs.Nsp(filePath, 'rb')
+-					f = Fs.factory(filePath)
++					#f = nut.Fs.Nsp(filePath, 'rb')
++					f = nut.Fs.factory(filePath)
+ 					f.open(filePath, 'rb')
+ 					dir = os.path.splitext(os.path.basename(filePath))[0]
+ 					f.unpack(dir)
+@@ -588,7 +590,7 @@ if __name__ == '__main__':
+ 
+ 			if args.create:
+ 				Print.info('creating ' + args.create)
+-				nsp = Fs.Nsp(None, None)
++				nsp = nut.Fs.Nsp(None, None)
+ 				nsp.path = args.create
+ 				nsp.pack(expandFiles(args.file), args.rights_id, args.key)
+ 
+@@ -597,7 +599,7 @@ if __name__ == '__main__':
+ 					if not input.endswith('.xci'):
+ 						continue
+ 
+-					f = Fs.factory(input)
++					f = nut.Fs.factory(input)
+ 					f.open(input, 'rb')
+ 					f.repack()
+ 					f.close()
+@@ -767,7 +769,7 @@ if __name__ == '__main__':
+ 
+ 				for path in expandFiles(args.file):
+ 					try:
+-						f = Fs.factory(str(path))
++						f = nut.Fs.factory(str(path))
+ 						f.setPath(str(path))
+ 						if f and f.titleId:
+ 							dt = Nsps.getByTitleId(f.titleId)
+@@ -801,7 +803,7 @@ if __name__ == '__main__':
+ 					Print.info('%s version = %s' % (args.info.upper(), cdn.version(args.info.lower())))
+ 				else:
+ 					print('reading')
+-					f = Fs.factory(args.info)
++					f = nut.Fs.factory(args.info)
+ 					f.open(args.info, 'rb')
+ 
+ 					f.printInfo(args.depth+1)
+@@ -809,7 +811,7 @@ if __name__ == '__main__':
+ 			if args.verify_ncas:
+ 				nut.initTitles()
+ 				nut.initFiles()
+-				f = Fs.factory(args.verify_ncas)
++				f = nut.Fs.factory(args.verify_ncas)
+ 				f.open(args.verify_ncas, 'r+b')
+ 				if not f.verify():
+ 					Print.error('Archive is INVALID: %s' % args.verify_ncas)
+@@ -884,7 +886,7 @@ if __name__ == '__main__':
+ 
+ 				if args.V:
+ 					nut.scanLatestTitleUpdates()
+-					nut.export('titledb/versions.txt', ['id', 'rightsId', 'version'])
++					nut.export(wrap_path('titledb/versions.txt'), ['id', 'rightsId', 'version'])
+ 
+ 				if args.scrape_title:
+ 					nut.initTitles()
+@@ -920,7 +922,7 @@ if __name__ == '__main__':
+ 					path = str(path)
+ 					Print.info('opening ' + path)
+ 					try:
+-						f = Fs.Nsp(getUnlockPath(path, args.copy), 'r+b')
++						f = nut.Fs.Nsp(getUnlockPath(path, args.copy), 'r+b')
+ 						if f.isUnlockable(True):
+ 							if not f.verifyKey(f.titleId, Titles.get(f.titleId).key):
+ 								raise IOError('Could not verify title key! %s / %s - %s' % (f.titleId, f.title().key, f.title().name))
+@@ -939,7 +941,7 @@ if __name__ == '__main__':
+ 
+ 				for path in expandFiles(args.file):
+ 					try:
+-						f = Fs.Nsp()
++						f = nut.Fs.Nsp()
+ 						f.setPath(str(path))
+ 						f.move()
+ 					except BaseException as e:
+@@ -991,7 +993,7 @@ if __name__ == '__main__':
+ 			if args.server:
+ 				nut.initTitles()
+ 				nut.initFiles()
+-				Server.run()
++				nut.Server.run()
+ 
+ 			if args.blockchain:
+ 				nut.initTitles()
+diff --git a/nut/Config.py b/nut/Config.py
+index eaf809f..8dc0f78 100644
+--- a/nut/Config.py
++++ b/nut/Config.py
+@@ -8,6 +8,8 @@ from binascii import unhexlify as uhx
+ from nut import Print
+ from nut.config_impl.download import Download
+ from collections.abc import Mapping
++from os.path import expanduser
++from nut.Util import wrap_path
+ 
+ threads = 1
+ jsonOutput = False
+@@ -62,7 +64,7 @@ def dict_merge(dct, merge_dct, add_keys=True):
+ 	return dct
+ 
+ def getGdriveCredentialsFile():
+-	files = ['credentials.json', 'conf/credentials.json']
++	files = ['credentials.json', wrap_path('conf/credentials.json')]
+ 
+ 	for file in files:
+ 		if os.path.exists(file):
+@@ -71,7 +73,7 @@ def getGdriveCredentialsFile():
+ 	return None
+ 
+ class Server:  # pylint: disable=too-few-public-methods
+-	"""Server-related settings
++	"""nut.Server-related settings
+ 	"""
+ 
+ 	def __init__(self):
+@@ -117,12 +119,13 @@ class Paths:  # pylint: disable=too-many-instance-attributes
+ 		self.xciTitleDemoUpdate = None
+ 
+ 		self.scan = ['.']
+-		self.titleDatabase = 'titledb'
+-		self.keys = 'keys.txt'
+-		self.calibration = 'PRODINFO.bin'
+-		self.shopNCert = 'ShopN.pem'
+-		self.nspOut = '_NSPOUT'
+-		self.titleImages = 'titles/images/'
++		self.titleDatabase = wrap_path('titledb')
++		self.keys = wrap_path('keys.txt')
++		self.calibration = wrap_path('PRODINFO.bin')
++		self.shopNCert = '/usr/share/blawar-nut/ShopN.pem'
++		self.nspOut = wrap_path('_NSPOUT')
++		self.titleImages = expanduser('~/.cache/titles/images/')
++		os.makedirs(self.titleImages, exist_ok=True)
+ 
+ 		self.duplicates = 'duplicates/'
+ 
+@@ -285,8 +288,11 @@ def jset(json_, paths_, value):  # pylint: disable=redefined-builtin
+ 		json_ = json_[path]
+ 	json_[last] = value
+ 
+-def save(confFile='conf/nut.conf'):
++USER_CONF_FILE = 'conf/nut.conf'
++
++def save(confFile=USER_CONF_FILE):
+ 	Print.debug("saving config")
++	confFile = wrap_path(confFile)
+ 	os.makedirs(os.path.dirname(confFile), exist_ok=True)
+ 	j = {}
+ 	try:
+@@ -684,6 +690,7 @@ def update_scan_paths(new_scan_paths, nsp_files):
+ 
+ 
+ def regionLanguages(fileName='titledb/languages.json'):
++	fileName = wrap_path(fileName)
+ 	global g_regionLanguages  # pylint: disable=global-statement
+ 
+ 	if g_regionLanguages is not None:
+@@ -703,7 +710,7 @@ def loadTitleWhitelist():
+ 	global titleWhitelist  # pylint: disable=global-statement
+ 	titleWhitelist = []
+ 	try:
+-		with open('conf/whitelist.txt', encoding='utf8') as f:
++		with open(wrap_path('conf/whitelist.txt'), encoding='utf8') as f:
+ 			for line in f.readlines():
+ 				titleWhitelist.append(line.strip().upper())
+ 	except BaseException:  # pylint: disable=broad-except
+@@ -753,7 +760,7 @@ class DAuthToken:
+ 		self.clientId = clientId
+ 
+ 	def fileName(self):
+-		return f"dauth.{self.clientId}.token"
++		return wrap_path(f"dauth.{self.clientId}.token")
+ 
+ 	def get(self):
+ 		if not self.token:
+@@ -871,11 +878,11 @@ download = Download()
+ proxies = Proxies()
+ dauth = DAuth()
+ 
+-if os.path.isfile('conf/nut.default.conf'):
+-	load('conf/nut.default.conf')
++if os.path.isfile('/usr/share/blawar-nut/nut.default.conf'):
++	load('/usr/share/blawar-nut/nut.default.conf')
+ 
+-if os.path.isfile('conf/nut.conf'):
+-	load('conf/nut.conf')
++if os.path.isfile(USER_CONF_FILE):
++	load(USER_CONF_FILE)
+ 
+ loadTitleWhitelist()
+ loadTitleBlacklist()
+diff --git a/nut/Hook.py b/nut/Hook.py
+index 279cf13..2ba5fd8 100644
+--- a/nut/Hook.py
++++ b/nut/Hook.py
+@@ -11,14 +11,14 @@ def init():
+ 		return False
+ 
+ 	initialized = True
+-	path = os.path.abspath(os.path.join(__file__, '../../plugins'))
++	path = os.path.abspath(os.path.join(__file__, '../../nut/plugins'))
+ 
+ 	for f in os.listdir(path):
+ 		try:
+ 			if not os.path.isfile(os.path.join(os.path.join(path, f), '__init__.py')) or os.path.isfile(os.path.join(os.path.join(path, f), 'disabled')):
+ 				continue
+ 			name = f
+-			importlib.import_module('plugins.%s' % name)
++			importlib.import_module('nut.plugins.%s' % name)
+ 		except BaseException as e:
+ 			Print.error("plugin loader exception: %s" % str(e))
+ 	return True
+diff --git a/nut/Keys.py b/nut/Keys.py
+index eb209b3..69d19d0 100644
+--- a/nut/Keys.py
++++ b/nut/Keys.py
+@@ -7,6 +7,7 @@ from Crypto.PublicKey import RSA
+ from Crypto.Signature import PKCS1_PSS, PKCS1_v1_5, pss
+ 
+ from nut import Print, aes128
++from nut.Util import wrap_path
+ 
+ keys = {}
+ titleKeks = []
+@@ -151,10 +152,10 @@ def load(fileName):
+ 
+ 
+ try:
+-	load('keys.txt')
++	load(wrap_path('keys.txt'))
+ except BaseException as e:
+ 	try:
+-		load('prod.keys')
++		load(wrap_path('prod.keys'))
+ 	except BaseException:
+ 		Print.error('could not load find or load keys.txt, all crypto operations will fail. See keys_template.txt for an example of how this file should look')
+ 
+diff --git a/nut/Nsps.py b/nut/Nsps.py
+index d2e2d42..31d57f4 100644
+--- a/nut/Nsps.py
++++ b/nut/Nsps.py
+@@ -6,7 +6,8 @@ import pathlib
+ import threading
+ import time
+ 
+-import Fs
++from nut.Util import wrap_path
++import nut.Fs
+ from nut import Config, Print, Status, Title, Hook
+ 
+ files = {}
+@@ -30,7 +31,7 @@ def registerFile(path, registerLUT = True):
+ 	path = os.path.abspath(path)
+ 
+ 	if not path in files:
+-		nsp = Fs.factory(path, path, None)
++		nsp = nut.Fs.factory(path, path, None)
+ 		nsp.timestamp = time.time()
+ 		nsp.getFileSize()
+ 
+@@ -212,6 +213,7 @@ class FileListCache: # pylint: disable=too-few-public-methods
+ 
+ 
+ def load(fileName='titledb/files.json', verify=True):
++	fileName = wrap_path(fileName)
+ 	global hasLoaded  # pylint: disable=global-statement
+ 
+ 	if hasLoaded:
+@@ -225,7 +227,7 @@ def load(fileName='titledb/files.json', verify=True):
+ 	if os.path.isfile(fileName):
+ 		with open(fileName, encoding="utf-8-sig") as f:
+ 			for k in json.loads(f.read()):
+-				_nsp = Fs.factory(k['path'], k['path'], None)
++				_nsp = nut.Fs.factory(k['path'], k['path'], None)
+ 
+ 				if not _load_nsp_filesize(k, _nsp) or not hasattr(_nsp, 'path') or not _nsp.path:
+ 					continue
+@@ -250,4 +252,4 @@ def save(fileName='titledb/files.json'):
+ 
+ 
+ if os.path.isfile('files.json'):
+-	os.rename('files.json', 'titledb/files.json')
++	os.rename('files.json', wrap_path('titledb/files.json'))
+diff --git a/nut/NszDecompressor.py b/nut/NszDecompressor.py
+index 20bcdd4..ba78987 100644
+--- a/nut/NszDecompressor.py
++++ b/nut/NszDecompressor.py
+@@ -2,9 +2,9 @@ from pathlib import Path
+ from hashlib import sha256
+ from nut import Print, aes128
+ from zstandard import ZstdDecompressor
+-from Fs import factory, Type, Pfs0, Hfs0, Xci
+-from Fs.Pfs0 import Pfs0Stream
+-import Fs
++from nut.Fs import factory, Type, Pfs0, Hfs0, Xci
++from nut.Fs.Pfs0 import Pfs0Stream
++import nut.Fs
+ from nut import Status
+ import os
+ from nut import Config
+diff --git a/nut/Title.py b/nut/Title.py
+index b9a848b..3026049 100644
+--- a/nut/Title.py
++++ b/nut/Title.py
+@@ -15,6 +15,7 @@ import threading
+ from nut import Nsps
+ import urllib.request
+ from nut import Config
++from nut.Util import wrap_path
+ try:
+ 	import cdn
+ except BaseException:
+@@ -30,8 +31,8 @@ grabUrlInit = False
+ urlCache = {}
+ urlLock = threading.Lock()
+ 
+-if os.path.isfile('titledb/redirectCache.json'):
+-	with open('titledb/redirectCache.json', encoding="utf-8-sig") as f:
++if os.path.isfile(wrap_path('titledb/redirectCache.json')):
++	with open(wrap_path('titledb/redirectCache.json'), encoding="utf-8-sig") as f:
+ 		urlCache = json.loads(f.read())
+ 
+ def grabCachedRedirectUrl(url, cookies=None):
+@@ -60,7 +61,7 @@ def grabCachedRedirectUrl(url, cookies=None):
+ 			# not sure but dont cache it
+ 			return result
+ 
+-		with open('titledb/redirectCache.json', 'w') as outfile:
++		with open(wrap_path('titledb/redirectCache.json'), 'w') as outfile:
+ 			json.dump(urlCache, outfile)
+ 		urlLock.release()
+ 		return result
+@@ -385,7 +386,7 @@ class Title:
+ 			self.setId(id)
+ 			break
+ 		self.ids = ids
+-		
++
+ 	def addId(self, id):
+ 		id = id.upper()
+ 		self.setId(id)
+diff --git a/nut/Titles.py b/nut/Titles.py
+index 3ce7ce8..a135fcb 100644
+--- a/nut/Titles.py
++++ b/nut/Titles.py
+@@ -9,6 +9,7 @@ from nut import Title
+ import operator
+ from nut import Config
+ from nut import Print
++from nut.Util import wrap_path
+ import threading
+ 
+ try:
+@@ -33,7 +34,7 @@ def data(region=None, language=None):
+ 			regionTitles[region] = {}
+ 
+ 		if language not in regionTitles[region]:
+-			filePath = 'titledb/%s.%s.json' % (region, language)
++			filePath = wrap_path('titledb/%s.%s.json') % (region, language)
+ 			if os.path.isfile(filePath):
+ 				regionTitles[region][language] = loadTitlesJson(filePath)
+ 			else:
+@@ -168,6 +169,7 @@ def loadTitleBuffer(buffer, silent=False):
+ confLock = threading.Lock()
+ 
+ def loadTitlesJson(filePath='titledb/titles.json'):
++	filePath = wrap_path(filePath)
+ 	newTitles = {}
+ 	confLock.acquire()
+ 	try:
+@@ -191,9 +193,9 @@ def load():
+ 	global titles
+ 	titles = {}
+ 
+-	if os.path.isfile("titledb/titles.json"):
++	if os.path.isfile(wrap_path("titledb/titles.json")):
+ 		timestamp = time.perf_counter()
+-		with open('titledb/titles.json', encoding="utf-8-sig") as f:
++		with open(wrap_path('titledb/titles.json'), encoding="utf-8-sig") as f:
+ 			try:
+ 				items = json.loads(f.read()).items()
+ 			except BaseException:
+@@ -257,8 +259,8 @@ def parsePersonalKeys(path):
+ def loadTxtDatabases():
+ 	confLock.acquire()
+ 
+-	if os.path.isfile("titles.txt"):
+-		loadTitleFile('titles.txt', True)
++	if os.path.isfile(wrap_path("titles.txt")):
++		loadTitleFile(wrap_path('titles.txt'), True)
+ 
+ 	try:
+ 		files = sorted([f for f in os.listdir(Config.paths.titleDatabase) if f.endswith('.txt')])
+@@ -285,6 +287,7 @@ def export(fileName='titles.txt', map=['id', 'rightsId', 'key', 'isUpdate', 'isD
+ 		csv.write(buffer)
+ 
+ def saveTitlesJson(newTitles, fileName='titledb/titles.json'):
++	fileName = wrap_path(fileName)
+ 	confLock.acquire()
+ 	try:
+ 		j = {}
+@@ -308,6 +311,7 @@ def saveTitlesJson(newTitles, fileName='titledb/titles.json'):
+ 	confLock.release()
+ 
+ def save(fileName='titledb/titles.json', full=True):
++	fileName = wrap_path(fileName)
+ 	confLock.acquire()
+ 	try:
+ 		j = {}
+@@ -327,7 +331,7 @@ def save(fileName='titledb/titles.json', full=True):
+ 	confLock.release()
+ 
+ def saveRegion(region, language):
+-	saveTitlesJson(data(region, language), 'titledb/%s.%s.json' % (region, language))
++	saveTitlesJson(data(region, language), wrap_path('titledb/%s.%s.json') % (region, language))
+ 
+ class Queue:
+ 	def __init__(self):
+@@ -367,7 +371,7 @@ class Queue:
+ 
+ 	def load(self):
+ 		try:
+-			with open('conf/queue.txt', encoding="utf-8-sig") as f:
++			with open(wrap_path('conf/queue.txt'), encoding="utf-8-sig") as f:
+ 				for line in f.read().split('\n'):
+ 					self.add(line.strip())
+ 		except BaseException:
+@@ -379,7 +383,7 @@ class Queue:
+ 	def save(self):
+ 		self.lock.acquire()
+ 		try:
+-			with open('conf/queue.txt', 'w', encoding='utf-8') as f:
++			with open(wrap_path('conf/queue.txt'), 'w', encoding='utf-8') as f:
+ 				for id in self.queue:
+ 					f.write(id + '\n')
+ 		except BaseException:
+@@ -391,8 +395,9 @@ global queue
+ queue = Queue()
+ 
+ def saveAll(fileName='titledb/titles.json'):
++	fileName = wrap_path(fileName)
+ 	for region in cdn.regions():
+ 		for language in cdn.Shogun.countryLanguages(region):
+-			saveTitlesJson(data(region, language), 'titledb/%s.%s.json' % (region, language))
++			saveTitlesJson(data(region, language), wrap_path('titledb/%s.%s.json') % (region, language))
+ 
+ 	save(fileName)
+diff --git a/nut/Usb.py b/nut/Usb.py
+index f522b8e..50d66dc 100644
+--- a/nut/Usb.py
++++ b/nut/Usb.py
+@@ -32,14 +32,14 @@ import struct
+ import sys
+ from binascii import hexlify as hx, unhexlify as uhx
+ from pathlib import Path
+-import Server
+-import Server.Controller.Api
++import nut.Server
++import nut.Server.Controller.Api
+ from nut import Print
+ from nut import Watcher
+ import time
+ from urllib.parse import urlparse
+ from urllib.parse import parse_qs
+-import Server.Controller.Api
++import nut.Server.Controller.Api
+ 
+ global status
+ status = 'initializing'
+@@ -51,7 +51,7 @@ def getFiles():
+ 
+ 	return json.dumps(o)
+ 
+-class UsbResponse(Server.NutResponse):
++class UsbResponse(nut.Server.NutResponse):
+ 	def __init__(self, packet):
+ 		super(UsbResponse, self).__init__(None)
+ 		self.packet = packet
+@@ -75,7 +75,7 @@ class UsbResponse(Server.NutResponse):
+ 		self.packet.send(10 * 60 * 1000)
+ 
+ 
+-class UsbRequest(Server.NutRequest):
++class UsbRequest(nut.Server.NutRequest):
+ 	def __init__(self, url):
+ 		self.headers = {}
+ 		self.path = url
+@@ -146,7 +146,7 @@ def poll_commands(in_ep, out_ep):
+ 				Print.debug('Recv command! %d' % p.command)
+ 				req = UsbRequest(p.payload.decode('utf-8'))
+ 				with UsbResponse(p) as resp:
+-					Server.route(req, resp)
++					nut.Server.route(req, resp)
+ 			else:
+ 				Print.error('Unknown command! %d' % p.command)
+ 		else:
+diff --git a/nut/Users.py b/nut/Users.py
+index ea8c7eb..ea909ba 100644
+--- a/nut/Users.py
++++ b/nut/Users.py
+@@ -2,6 +2,7 @@
+ import os
+ import re
+ from nut import Print
++from nut.Util import wrap_path
+ 
+ users = {}
+ 
+@@ -107,8 +108,11 @@ def auth(id, password, address):
+ 
+ 	return user
+ 
+-def load(path='conf/users.conf'):
++USERS_CONF = 'conf/nut/users.conf'
++
++def load(path=USERS_CONF):
+ 	global users
++	path = wrap_path(path)
+ 
+ 	if not os.path.isfile(path):
+ 		id = 'guest'
+@@ -137,7 +141,7 @@ def load(path='conf/users.conf'):
+ 
+ 			Print.info('loaded user ' + str(t.id))
+ 
+-def export(fileName='conf/users.conf', map=['id', 'password', 'isAdmin']):
++def export(fileName=USERS_CONF, map=['id', 'password', 'isAdmin']):
+ 	os.makedirs(os.path.dirname(fileName), exist_ok=True)
+ 	global users
+ 	buffer = ''
+diff --git a/nut/Util.py b/nut/Util.py
+new file mode 100644
+index 0000000..50b6325
+--- /dev/null
++++ b/nut/Util.py
+@@ -0,0 +1,25 @@
++from os import environ, makedirs
++from os.path import dirname
++from pathlib import Path
++import re
++
++def wrap_path(p):
++	if p.startswith(environ['HOME'] + '/'):
++		return p
++	if p.startswith('titledb/') or p == 'titledb':
++		ret = Path('~/.cache/nut/titledb').joinpath(p[8:]).expanduser()
++		makedirs(dirname(ret), exist_ok=True)
++		return str(ret)
++	if p.startswith('conf/'):
++		ret = Path('~/.config/nut').joinpath(re.sub(r'^nut/', '', p[5:])).expanduser()
++		makedirs(dirname(ret), exist_ok=True)
++		return str(ret)
++	if (p == 'keys.txt' or p == 'PRODINFO.bin' or p == 'titles.txt' or
++	    p == 'prod.keys'):
++		makedirs(Path('~/.config/nut').expanduser(), exist_ok=True)
++		return str(Path(f'~/.config/nut/{p}').expanduser())
++	if p == '_NSPOUT':
++		ret = Path('~/.local/share/nut/_NSPOUT').expanduser()
++		makedirs(ret, exist_ok=True)
++		return str(ret)
++	raise ValueError(f'Unknown path: {p}')
+diff --git a/nut/__init__.py b/nut/__init__.py
+index f4c709c..9e0a4e1 100644
+--- a/nut/__init__.py
++++ b/nut/__init__.py
+@@ -21,12 +21,13 @@ import requests
+ import zstandard
+ from tqdm import tqdm
+ 
+-import Fs
+-import Fs.Type
+-from Fs import Cnmt, Nca, Nsp, Pfs0, Rom, BaseFs
+-from Fs.Pfs0 import Pfs0Stream
++import nut.Fs
++import nut.Fs.Type
++from nut.Fs import Cnmt, Nca, Nsp, Pfs0, Rom, BaseFs
++from nut.Fs.Pfs0 import Pfs0Stream
+ from nut import (Config, Keys, Nsps, NszDecompressor, Print, Status, Title,
+                  Titles, aes128)
++from nut.Util import wrap_path
+ 
+ try:
+ 	import cdn
+@@ -35,7 +36,7 @@ try:
+ except BaseException:
+ 	hasCdn = False
+ 
+-from ganymede import Ganymede
++from nut.ganymede import Ganymede
+ 
+ isInitTitles = False
+ isInitFiles = False
+@@ -156,14 +157,14 @@ def compress(filePath, compressionLevel=19, outputDir=None):
+ 	if Config.dryRun:
+ 		return None
+ 
+-	container = Fs.factory(filePath)
++	container = nut.Fs.factory(filePath)
+ 
+ 	container.open(filePath, 'rb')
+ 
+ 	newNsp = Pfs0Stream(nszPath)
+ 
+ 	for nspf in container:
+-		if isinstance(nspf, Fs.Nca) and ((nspf.header.contentType == Fs.Type.Content.PROGRAM or nspf.header.contentType == Fs.Type.Content.PUBLICDATA) or int(nspf.header.titleId, 16) <= 0x0100000000001000):
++		if isinstance(nspf, nut.Fs.Nca) and ((nspf.header.contentType == nut.Fs.Type.Content.PROGRAM or nspf.header.contentType == nut.Fs.Type.Content.PUBLICDATA) or int(nspf.header.titleId, 16) <= 0x0100000000001000):
+ 			if nspf.size > ncaHeaderSize * 2:
+ 				cctx = zstandard.ZstdCompressor(level=compressionLevel)
+ 
+@@ -184,7 +185,7 @@ def compress(filePath, compressionLevel=19, outputDir=None):
+ 				# else:
+ 				#	raise IOError('unknown NCA magic')
+ 
+-				# self.partition(0x0, 0xC00, self.header, Fs.Type.Crypto.XTS, uhx(Keys.get('header_key')))
++				# self.partition(0x0, 0xC00, self.header, nut.Fs.Type.Crypto.XTS, uhx(Keys.get('header_key')))
+ 				f.write(h)
+ 				written = ncaHeaderSize
+ 
+@@ -205,7 +206,7 @@ def compress(filePath, compressionLevel=19, outputDir=None):
+ 							fs.size -= ncaHeaderSize - fs.offset
+ 							fs.offset = ncaHeaderSize
+ 					elif fs.offset > currentOffset:
+-						sections.append(BaseFs.EncryptedSection(currentOffset, fs.offset - currentOffset, Fs.Type.Crypto.NONE, None, None))
++						sections.append(BaseFs.EncryptedSection(currentOffset, fs.offset - currentOffset, nut.Fs.Type.Crypto.NONE, None, None))
+ 					elif fs.offset < currentOffset:
+ 						raise IOError("misaligned nca partitions")
+ 
+@@ -279,7 +280,7 @@ def compressWorker(q, level, output, totalStatus):
+ 			nszFile = compress(path, level, output)
+ 
+ 			if nszFile:
+-				nsp = Fs.Nsp(nszFile, None)
++				nsp = nut.Fs.Nsp(nszFile, None)
+ 				nsp.hasValidTicket = True
+ 				nsp.move(forceNsp=True)
+ 				Nsps.files[nsp.path] = nsp
+@@ -522,7 +523,7 @@ def importRegion(region='US', language='en', save=True):
+ 
+ def isTitleDbStale():
+ 	try:
+-		age = time.time() - os.path.getmtime('titledb/titles.json')
++		age = time.time() - os.path.getmtime(wrap_path('titledb/titles.json'))
+ 
+ 		if age < 0 or age > 48 * 60 * 60:
+ 			return True
+@@ -532,7 +533,7 @@ def isTitleDbStale():
+ 
+ def downloadRepoFile(path):
+ 	baseUrl = 'https://github.com/blawar/titledb/raw/master/'
+-	finalFile = os.path.join('titledb', path)
++	finalFile = wrap_path(os.path.join('titledb', path))
+ 	tmpFile = finalFile + '.tmp'
+ 	try:
+ 		with open(tmpFile, 'wb') as f:
+@@ -570,30 +571,25 @@ def updateTitleDb(force=False):
+ 	if not Config.autoUpdateTitleDb and not force:
+ 		return
+ 
+-	try:
+-		os.mkdir('titledb')
+-	except BaseException:
+-		pass
+-
+ 	Print.info('downloading titledb files')
+ 
+ 	try:
+-		with open('titledb/db.bin', 'wb') as f:
++		with open(wrap_path('titledb/db.bin'), 'wb') as f:
+ 			bytes = download('http://tinfoil.media/repo/db/db.bin', f, checkSize=False)
+ 
+-		decompressZstd('titledb/db.bin', 'titledb/db.nza')
+-		container = Fs.Nsp('titledb/db.nza')
++		decompressZstd(wrap_path('titledb/db.bin'), wrap_path('titledb/db.nza'))
++		container = nut.Fs.Nsp(wrap_path('titledb/db.nza'))
+ 
+-		container.open('titledb/db.nza', 'rb')
++		container.open(wrap_path('titledb/db.nza'), 'rb')
+ 		for nspf in container:
+-			with open(os.path.join('titledb', nspf._path), 'wb') as f:
++			with open(wrap_path(os.path.join('titledb', nspf._path)), 'wb') as f:
+ 				while not nspf.eof():
+ 					f.write(nspf.read(8 * 1000 * 1000))
+ 
+ 		container.close()
+ 
+ 		try:
+-			os.remove('titledb/db.nza')
++			os.remove(wrap_path('titledb/db.nza'))
+ 		except BaseException:
+ 			pass
+ 
+@@ -675,7 +671,7 @@ class Progress:
+ 
+ 
+ def serveFile(response, path, filename=None):
+-	with Fs.driver.openFile(path) as f:
++	with nut.Fs.driver.openFile(path) as f:
+ 		try:
+ 			with Progress(response=response, f=f) as progress:
+ 				f.chunk(progress.write, offset=None, size=None)
+@@ -711,7 +707,7 @@ def pullWorker(q, s):
+ 			with open(tmpFile, 'wb') as f:
+ 				serveFile(f, nsp.downloadPath, os.path.basename(nsp.path))
+ 
+-			nsp = Fs.factory(tmpFile, tmpFile, None)
++			nsp = nut.Fs.factory(tmpFile, tmpFile, None)
+ 			nsp.hasValidTicket = hasValidTicket
+ 			nsp.move(forceNsp=hasValidTicket)
+ 			Nsps.files[nsp.path] = nsp
+@@ -730,7 +726,7 @@ def _ftpsync(url):
+ 
+ 	fileList = []
+ 
+-	for f in Fs.driver.openDir(url).ls():
++	for f in nut.Fs.driver.openDir(url).ls():
+ 		if f.isFile():
+ 			fileList.append(f.url)
+ 
+@@ -740,7 +736,7 @@ def _ftpsync(url):
+ 				continue
+ 
+ 			unq = urllib.parse.unquote(path)
+-			nsp = Fs.factory(unq, unq, None)
++			nsp = nut.Fs.factory(unq, unq, None)
+ 			nsp.downloadPath = path
+ 
+ 			if not nsp.titleId:
+@@ -1051,7 +1047,7 @@ def downloadFile(url, fPath):
+ 		dlded = os.path.getsize(fPath)
+ 		r = makeRequest('GET', url, hdArgs={'Range': 'bytes=%s-' % dlded})
+ 
+-		if r.headers.get('Server') != 'openresty/1.9.7.4':
++		if r.headers.get('nut.Server') != 'openresty/1.9.7.4':
+ 			Print.info('Download is already complete, skipping!')
+ 			return fPath
+ 		elif r.headers.get('Content-Range') is None:  # CDN doesn't return a range if request >= filesize
+@@ -1104,11 +1100,11 @@ def loadNcaData():
+ 	global cnmtData
+ 	global ncaData
+ 
+-	if not os.path.isfile('titledb/cnmts.json'):
++	if not os.path.isfile(wrap_path('titledb/cnmts.json')):
+ 		return
+ 
+ 	try:
+-		with open('titledb/cnmts.json', encoding="utf-8-sig") as f:
++		with open(wrap_path('titledb/cnmts.json'), encoding="utf-8-sig") as f:
+ 			tmpData = json.loads(f.read())
+ 
+ 			for titleId, j in tmpData.items():
+@@ -1123,7 +1119,7 @@ def loadNcaData():
+ 		raise
+ 
+ 	try:
+-		with open('titledb/ncas.json', encoding="utf-8-sig") as f:
++		with open(wrap_path('titledb/ncas.json'), encoding="utf-8-sig") as f:
+ 			ncaData = json.loads(f.read())
+ 
+ 			for ncaId, data in ncaData.items():
+@@ -1144,7 +1140,7 @@ def saveNcaData():
+ 			for v, row in j.items():
+ 				out[k][v] = row.__dict__
+ 
+-		with open('titledb/cnmts.json', 'w') as f:
++		with open(wrap_path('titledb/cnmts.json'), 'w') as f:
+ 			json.dump(out, f, indent=4, sort_keys=True)
+ 	except BaseException:
+ 		raise
+@@ -1155,7 +1151,7 @@ def saveNcaData():
+ 		for k, v in ncaData.items():
+ 			out[k] = v.__dict__
+ 
+-		with open('titledb/ncas.json', 'w') as f:
++		with open(wrap_path('titledb/ncas.json'), 'w') as f:
+ 			json.dump(out, f, indent=4, sort_keys=True)
+ 	except BaseException:
+ 		raise
+@@ -1469,7 +1465,7 @@ def scanLatestTitleUpdates():
+ 	today = now.strftime("%Y-%m-%d")
+ 
+ 	try:
+-		with open('titledb/versions.json', 'r') as f:
++		with open(wrap_path('titledb/versions.json'), 'r') as f:
+ 			for titleId, vers in json.loads(f.read()).items():
+ 				for ver, date in vers.items():
+ 					setVersionHistory(titleId, ver, date)
+@@ -1502,7 +1498,7 @@ def scanLatestTitleUpdates():
+ 	Titles.save()
+ 
+ 	try:
+-		with open('titledb/versions.json', 'w') as outfile:
++		with open(wrap_path('titledb/versions.json'), 'w') as outfile:
+ 			json.dump(versionHistory, outfile, indent=4, sort_keys=True)
+ 	except BaseException as e:
+ 		Print.info(str(e))
+@@ -1521,7 +1517,7 @@ def downloadThread(i):
+ 				path = cdn.downloadTitle(t.id.lower(), None, t.key)
+ 
+ 				if path and os.path.isfile(path):
+-					nsp = Fs.Nsp(path, None)
++					nsp = nut.Fs.Nsp(path, None)
+ 					nsp.move()
+ 					Nsps.save()
+ 
+diff --git a/nut/blockchain.py b/nut/blockchain.py
+index bbf1af8..c8b0e6d 100644
+--- a/nut/blockchain.py
++++ b/nut/blockchain.py
+@@ -7,18 +7,19 @@ from uuid import uuid4
+ import os
+ from nut import Config
+ from nut import Nsps
+-import Fs
+-import Fs.File
+-from Fs import File
++import nut.Fs
++import nut.Fs.File
++from nut.Fs import File
+ from hashlib import sha256
+-from Fs.File import MemoryFile
+-from Fs import Nca
+-from Fs import Pfs0
+-from Fs.Nca import NcaHeader
+-from Fs import Type
++from nut.Fs.File import MemoryFile
++from nut.Fs import Nca
++from nut.Fs import Pfs0
++from nut.Fs.Nca import NcaHeader
++from nut.Fs import Type
+ from nut import Keys
+ from nut import Print
+ from nut import Hex
++from nut.Util import wrap_path
+ from binascii import hexlify as hx, unhexlify as uhx
+ 
+ import requests
+@@ -54,7 +55,7 @@ class KeyEntry:
+ 
+ 		decKey = Keys.decryptTitleKey(uhx(self.titleKey), ncaHeader.masterKey)
+ 
+-		pfs0 = Fs.Pfs0(self.sectionHeaderBlock)
++		pfs0 = nut.Fs.Pfs0(self.sectionHeaderBlock)
+ 
+ 		print('encKey = ' + str(self.titleKey))
+ 		print('decKey = ' + str(hx(decKey)))
+@@ -156,7 +157,7 @@ class Blockchain:
+ 		except BaseException:
+ 			pass
+ 		try:
+-			with open('titledb/blockchain.json', 'w') as outfile:
++			with open(wrap_path('titledb/blockchain.json'), 'w') as outfile:
+ 				obj = []
+ 				for i in self.chain:
+ 					obj.append(i.serialize())
+@@ -166,8 +167,8 @@ class Blockchain:
+ 
+ 	def load(self):
+ 		try:
+-			if os.path.isfile('titledb/blockchain.json'):
+-				with open('titledb/blockchain.json', encoding="utf-8-sig") as f:
++			if os.path.isfile(wrap_path('titledb/blockchain.json')):
++				with open(wrap_path('titledb/blockchain.json'), encoding="utf-8-sig") as f:
+ 					self.chain = []
+ 
+ 					for j in json.loads(f.read()):
+@@ -304,9 +305,9 @@ class Blockchain:
+ 		nsp.open()
+ 
+ 		for f in nsp:
+-			if isinstance(f, Fs.Nca) and f.header.contentType == Type.Content.PROGRAM:
++			if isinstance(f, nut.Fs.Nca) and f.header.contentType == Type.Content.PROGRAM:
+ 				for fs in f.sectionFilesystems:
+-					if fs.fsType == Type.Fs.PFS0 and fs.cryptoType == Type.Crypto.CTR:
++					if fs.fsType == Type.nut.Fs.PFS0 and fs.cryptoType == Type.Crypto.CTR:
+ 						f.seek(0)
+ 						ncaHeader = f.read(0x400)
+ 
+@@ -324,9 +325,9 @@ class Blockchain:
+ 						return True
+ 
+ 		for f in nsp:
+-			if isinstance(f, Fs.Nca):
++			if isinstance(f, nut.Fs.Nca):
+ 				for fs in f.sectionFilesystems:
+-					if fs.fsType == Type.Fs.ROMFS and fs.cryptoType == Type.Crypto.CTR:
++					if fs.fsType == Type.nut.Fs.ROMFS and fs.cryptoType == Type.Crypto.CTR:
+ 						f.seek(0)
+ 						ncaHeader = f.read(0x400)
+ 
+@@ -416,9 +417,9 @@ def verifyKey(titleId=None, titleKey=None):
+ 		nsp.open()
+ 
+ 		for f in nsp:
+-			if isinstance(f, Fs.Nca) and f.header.contentType == Type.Content.PROGRAM:
++			if isinstance(f, nut.Fs.Nca) and f.header.contentType == Type.Content.PROGRAM:
+ 				for fs in f.sectionFilesystems:
+-					if fs.fsType == Type.Fs.PFS0 and fs.cryptoType == Type.Crypto.CTR:
++					if fs.fsType == Type.nut.Fs.PFS0 and fs.cryptoType == Type.Crypto.CTR:
+ 						f.seek(0)
+ 						ncaHeader = f.read(0x400)
+ 
+@@ -436,9 +437,9 @@ def verifyKey(titleId=None, titleKey=None):
+ 						return True
+ 
+ 		for f in nsp:
+-			if isinstance(f, Fs.Nca):
++			if isinstance(f, nut.Fs.Nca):
+ 				for fs in f.sectionFilesystems:
+-					if fs.fsType == Type.Fs.ROMFS and fs.cryptoType == Type.Crypto.CTR:
++					if fs.fsType == Type.nut.Fs.ROMFS and fs.cryptoType == Type.Crypto.CTR:
+ 						f.seek(0)
+ 						ncaHeader = f.read(0x400)
+ 
+@@ -489,9 +490,9 @@ def new_suggestion():
+ 		nsp.open()
+ 
+ 		for f in nsp:
+-			if isinstance(f, Fs.Nca) and f.header.contentType == Type.Content.PROGRAM:
++			if isinstance(f, nut.Fs.Nca) and f.header.contentType == Type.Content.PROGRAM:
+ 				for fs in f.sectionFilesystems:
+-					if fs.fsType == Type.Fs.PFS0 and fs.cryptoType == Type.Crypto.CTR:
++					if fs.fsType == Type.nut.Fs.PFS0 and fs.cryptoType == Type.Crypto.CTR:
+ 						f.seek(0)
+ 						ncaHeader = f.read(0x400)
+ 
+diff --git a/nut_gui.py b/nut_gui.py
+index 4d6d343..b2885f3 100644
+--- a/nut_gui.py
++++ b/nut_gui.py
+@@ -9,8 +9,8 @@ from PyQt5.QtGui import (QIcon)
+ from PyQt5.QtWidgets import (QApplication)
+ 
+ import nut
+-import Server
+-from gui.app import App
++import nut.Server
++from nut.gui.app import App
+ from nut import Usb
+ from nut import Hook
+ 
+@@ -21,7 +21,7 @@ def usbThread():
+ 	Usb.daemon()
+ 
+ def nutThread():
+-	Server.run()
++	nut.Server.run()
+ 
+ def initThread(app):
+ 	print('initThread start')
+diff --git a/tests-gui/gui_app_test.py b/tests-gui/gui_app_test.py
+index 45bf41a..a38fc3b 100644
+--- a/tests-gui/gui_app_test.py
++++ b/tests-gui/gui_app_test.py
+@@ -7,9 +7,9 @@ from PyQt5.QtWidgets import (QApplication, QPushButton, QLineEdit, QSlider)
+ from PyQt5.QtTest import QTest
+ from PyQt5.QtCore import QEvent
+ 
+-from gui.app import App
+-from gui.panes.options import Threads, Compress
+-from gui.panes.dirlist import DirectoryLocal
++from nut.gui.app import App
++from nut.gui.panes.options import Threads, Compress
++from nut.gui.panes.dirlist import DirectoryLocal
+ 
+ from nut import Config, Users
+ 
+diff --git a/tests/translator_test.py b/tests/translator_test.py
+index 7bb6fa4..7e6e6ba 100644
+--- a/tests/translator_test.py
++++ b/tests/translator_test.py
+@@ -5,7 +5,7 @@ import unittest
+ 
+ from pyfakefs.fake_filesystem_unittest import TestCase
+ from nut import Config
+-from translator import tr, reload
++from nut.translator import tr, reload
+ 
+ ABOUT_KEY = "ABOUT"
+ TRANSLATION_FILE = "translate.json"
+-- 
+2.35.1
+
