@@ -1,4 +1,4 @@
-From 56a2ea2030a0313f071857b10d1a7d140b2c8bd8 Mon Sep 17 00:00:00 2001
+From 66e9922f2fb9df612b3705ed4eff577ce7932c0e Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 22 Feb 2022 14:36:59 -0500
 Subject: [PATCH] Fix paths and make everything inside nut module
@@ -45,10 +45,10 @@ Subject: [PATCH] Fix paths and make everything inside nut module
  nut/Util.py               | 25 ++++++++++++++
  nut/__init__.py           | 68 ++++++++++++++++++---------------------
  nut/blockchain.py         | 45 +++++++++++++-------------
- nut_gui.py                |  6 ++--
+ nut_gui.py                |  8 ++---
  tests-gui/gui_app_test.py |  6 ++--
  tests/translator_test.py  |  2 +-
- 44 files changed, 398 insertions(+), 352 deletions(-)
+ 44 files changed, 399 insertions(+), 353 deletions(-)
  create mode 100644 nut/Util.py
 
 diff --git a/Fs/BaseFs.py b/Fs/BaseFs.py
@@ -2490,7 +2490,7 @@ index bbf1af8..c8b0e6d 100644
  						ncaHeader = f.read(0x400)
  
 diff --git a/nut_gui.py b/nut_gui.py
-index 4d6d343..b2885f3 100644
+index 4d6d343..c3ab2c7 100644
 --- a/nut_gui.py
 +++ b/nut_gui.py
 @@ -9,8 +9,8 @@ from PyQt5.QtGui import (QIcon)
@@ -2513,6 +2513,15 @@ index 4d6d343..b2885f3 100644
  
  def initThread(app):
  	print('initThread start')
+@@ -47,7 +47,7 @@ def run():
+ 	Hook.init()
+ 
+ 	app = QApplication(sys.argv)
+-	app.setWindowIcon(QIcon('images/logo.jpg'))
++	app.setWindowIcon(QIcon('/usr/share/pixmaps/blawar-nut.png'))
+ 	ex = App()
+ 
+ 	threads = []
 diff --git a/tests-gui/gui_app_test.py b/tests-gui/gui_app_test.py
 index 45bf41a..a38fc3b 100644
 --- a/tests-gui/gui_app_test.py
