@@ -1,4 +1,4 @@
-From b2277022e82ac583968ade0334e55fde5b832b71 Mon Sep 17 00:00:00 2001
+From a09747101f67fa6d8af6614bcfebeda34f9fbd53 Mon Sep 17 00:00:00 2001
 From: Morph <39850852+Morph1984@users.noreply.github.com>
 Date: Tue, 3 Aug 2021 01:37:04 -0400
 Subject: [PATCH] main: Enable High DPI fixes for Qt >= 5.14
@@ -11,7 +11,7 @@ Therefore, we use a heuristic to select an appropriate integer scale value depen
  1 file changed, 39 insertions(+)
 
 diff --git a/src/yuzu/main.cpp b/src/yuzu/main.cpp
-index d9e689d14b2..574df19fa3f 100644
+index e3fd38a0265..963277852a3 100644
 --- a/src/yuzu/main.cpp
 +++ b/src/yuzu/main.cpp
 @@ -62,6 +62,7 @@ static FileSys::VirtualFile VfsDirectoryCreateFileWrapper(const FileSys::Virtual
@@ -22,7 +22,7 @@ index d9e689d14b2..574df19fa3f 100644
  #include <QShortcut>
  #include <QStatusBar>
  #include <QString>
-@@ -3657,6 +3658,41 @@ void GMainWindow::SetDiscordEnabled([[maybe_unused]] bool state) {
+@@ -3693,6 +3694,41 @@ void GMainWindow::SetDiscordEnabled([[maybe_unused]] bool state) {
  #undef main
  #endif
  
@@ -64,7 +64,7 @@ index d9e689d14b2..574df19fa3f 100644
  int main(int argc, char* argv[]) {
      Common::DetachedTasks detached_tasks;
      MicroProfileOnThreadCreate("Frontend");
-@@ -3689,8 +3725,11 @@ int main(int argc, char* argv[]) {
+@@ -3725,8 +3761,11 @@ int main(int argc, char* argv[]) {
      }
  #endif
  
