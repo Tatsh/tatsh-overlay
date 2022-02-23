@@ -1,4 +1,4 @@
-From 66e9922f2fb9df612b3705ed4eff577ce7932c0e Mon Sep 17 00:00:00 2001
+From 63e3a64c8e15bda599979e05623f28e6ff04094c Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 22 Feb 2022 14:36:59 -0500
 Subject: [PATCH] Fix paths and make everything inside nut module
@@ -9,7 +9,7 @@ Subject: [PATCH] Fix paths and make everything inside nut module
  Fs/Cnmt.py                |  4 +--
  Fs/File.py                | 38 +++++++++++-----------
  Fs/Hfs0.py                | 12 +++----
- Fs/IndexedFile.py         | 10 +++---
+ Fs/IndexedFile.py         | 12 +++----
  Fs/Ivfc.py                |  4 +--
  Fs/Nacp.py                |  4 +--
  Fs/Nca.py                 | 52 +++++++++++++++---------------
@@ -48,7 +48,7 @@ Subject: [PATCH] Fix paths and make everything inside nut module
  nut_gui.py                |  8 ++---
  tests-gui/gui_app_test.py |  6 ++--
  tests/translator_test.py  |  2 +-
- 44 files changed, 399 insertions(+), 353 deletions(-)
+ 44 files changed, 400 insertions(+), 354 deletions(-)
  create mode 100644 nut/Util.py
 
 diff --git a/Fs/BaseFs.py b/Fs/BaseFs.py
@@ -269,7 +269,7 @@ index c4e07ac..dc77f2b 100644
  			f._path = name
  			f.offset = offset
 diff --git a/Fs/IndexedFile.py b/Fs/IndexedFile.py
-index dfb3b30..478021f 100644
+index dfb3b30..03e322b 100644
 --- a/Fs/IndexedFile.py
 +++ b/Fs/IndexedFile.py
 @@ -3,7 +3,7 @@ from nut import Title
@@ -315,6 +315,15 @@ index dfb3b30..478021f 100644
 +
  
  		isNsx = not self.hasValidTicket and not forceNsp
+ 
+@@ -375,7 +375,7 @@ class IndexedFile:
+ 			format = format.replace('{icr}', str(self.getCr(True)))
+ 
+ 		bn = os.path.basename(self.path)
+-		if (not newName or len(newName) == 0) and not bn.upper().startswith(t.id.upper()):
++		if (not newName or len(newName) == 0) and (t and t.id and not bn.upper().startswith(t.id.upper())):
+ 			Print.error('could not get new name for ' + bn)
+ 			return os.path.join(os.path.dirname(format), os.path.basename(self.path))
  
 diff --git a/Fs/Ivfc.py b/Fs/Ivfc.py
 index e5b6331..69d03a0 100644
