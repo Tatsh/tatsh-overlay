@@ -1,0 +1,479 @@
+From bb1dc14cfb102da057131130fa503ac94a3f0c01 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Thu, 24 Feb 2022 23:36:06 -0500
+Subject: [PATCH 1/2] Move most code to be under nut/
+
+---
+ {Fs => nut/Fs}/BaseFs.py                            |   0
+ {Fs => nut/Fs}/Bktr.py                              |   0
+ {Fs => nut/Fs}/Cal0.py                              |   0
+ {Fs => nut/Fs}/Cnmt.py                              |   0
+ {Fs => nut/Fs}/File.py                              |   0
+ {Fs => nut/Fs}/Hfs0.py                              |   0
+ {Fs => nut/Fs}/IndexedFile.py                       |   0
+ {Fs => nut/Fs}/Ivfc.py                              |   0
+ {Fs => nut/Fs}/Nacp.py                              |   0
+ {Fs => nut/Fs}/Nca.py                               |   0
+ {Fs => nut/Fs}/Nsp.py                               |   0
+ {Fs => nut/Fs}/Pfs0.py                              |   0
+ {Fs => nut/Fs}/Rom.py                               |   0
+ {Fs => nut/Fs}/Ticket.py                            |   0
+ {Fs => nut/Fs}/Type.py                              |   0
+ {Fs => nut/Fs}/Xci.py                               |   0
+ {Fs => nut/Fs}/__init__.py                          |   0
+ {Fs => nut/Fs}/driver/__init__.py                   |   0
+ {Fs => nut/Fs}/driver/curl.py                       |   0
+ {Fs => nut/Fs}/driver/gdrive.py                     |   0
+ {Fs => nut/Fs}/driver/http.py                       |   0
+ {Fs => nut/Fs}/driver/init.py                       |   0
+ {Fs => nut/Fs}/driver/interface.py                  |   0
+ {Fs => nut/Fs}/driver/native.py                     |   0
+ {Fs => nut/Fs}/driver/registry.py                   |   0
+ {Server => nut/Server}/Controller/Api.py            |   0
+ {Server => nut/Server}/Controller/__init__.py       |   0
+ {Server => nut/Server}/__init__.py                  |   0
+ {ganymede => nut/ganymede}/__init__.py              |   0
+ {ganymede => nut/ganymede}/ganymede.sample.json     |   0
+ {gui => nut/gui}/__init__.py                        |   0
+ {gui => nut/gui}/app.py                             |   0
+ {gui => nut/gui}/header.py                          |   0
+ {gui => nut/gui}/panes/__init__.py                  |   0
+ {gui => nut/gui}/panes/dirlist.py                   |   0
+ {gui => nut/gui}/panes/files.py                     |   0
+ {gui => nut/gui}/panes/filters.py                   |   0
+ {gui => nut/gui}/panes/format.py                    |   0
+ {gui => nut/gui}/panes/options.py                   |   0
+ {gui => nut/gui}/progress.py                        |   0
+ {gui => nut/gui}/table_model.py                     |   0
+ {gui => nut/gui}/tabs.py                            |   0
+ {plugins => nut/plugins}/__init__.py                |   0
+ {plugins => nut/plugins}/discord/README.md          |   0
+ {plugins => nut/plugins}/discord/__init__.py        |   0
+ {plugins => nut/plugins}/discord/disabled           |   0
+ .../plugins}/import_lockpick/__init__.py            |   0
+ {public_html => nut/public_html}/images/close.png   | Bin
+ .../public_html}/images/download.png                | Bin
+ .../public_html}/images/download_white.png          | Bin
+ {public_html => nut/public_html}/images/favicon.ico | Bin
+ .../public_html}/images/flags/AU.png                | Bin
+ .../public_html}/images/flags/CH.png                | Bin
+ .../public_html}/images/flags/DE.png                | Bin
+ .../public_html}/images/flags/ES.png                | Bin
+ .../public_html}/images/flags/EU.png                | Bin
+ .../public_html}/images/flags/FR.png                | Bin
+ .../public_html}/images/flags/GB.png                | Bin
+ .../public_html}/images/flags/GR.png                | Bin
+ .../public_html}/images/flags/HK.png                | Bin
+ .../public_html}/images/flags/JP.png                | Bin
+ .../public_html}/images/flags/KR.png                | Bin
+ .../public_html}/images/flags/TW.png                | Bin
+ .../public_html}/images/flags/US.png                | Bin
+ {public_html => nut/public_html}/images/gear.png    | Bin
+ {public_html => nut/public_html}/images/logo.jpg    | Bin
+ .../public_html}/images/nutserver.png               | Bin
+ {public_html => nut/public_html}/images/queue.png   | Bin
+ {public_html => nut/public_html}/images/ss.jpg      | Bin
+ {public_html => nut/public_html}/images/update.png  | Bin
+ .../public_html}/images/update_white.png            | Bin
+ {public_html => nut/public_html}/index.html         |   0
+ {public_html => nut/public_html}/script/default.js  |   0
+ .../public_html}/script/jquery-3.3.1.min.js         |   0
+ {public_html => nut/public_html}/style/default.css  |   0
+ {public_html => nut/public_html}/style/reset.css    |   0
+ {public_html => nut/public_html}/translate.json     |   0
+ {translator => nut/translator}/__init__.py          |   0
+ 78 files changed, 0 insertions(+), 0 deletions(-)
+ rename {Fs => nut/Fs}/BaseFs.py (100%)
+ rename {Fs => nut/Fs}/Bktr.py (100%)
+ rename {Fs => nut/Fs}/Cal0.py (100%)
+ rename {Fs => nut/Fs}/Cnmt.py (100%)
+ rename {Fs => nut/Fs}/File.py (100%)
+ rename {Fs => nut/Fs}/Hfs0.py (100%)
+ rename {Fs => nut/Fs}/IndexedFile.py (100%)
+ rename {Fs => nut/Fs}/Ivfc.py (100%)
+ rename {Fs => nut/Fs}/Nacp.py (100%)
+ rename {Fs => nut/Fs}/Nca.py (100%)
+ rename {Fs => nut/Fs}/Nsp.py (100%)
+ rename {Fs => nut/Fs}/Pfs0.py (100%)
+ rename {Fs => nut/Fs}/Rom.py (100%)
+ rename {Fs => nut/Fs}/Ticket.py (100%)
+ rename {Fs => nut/Fs}/Type.py (100%)
+ rename {Fs => nut/Fs}/Xci.py (100%)
+ rename {Fs => nut/Fs}/__init__.py (100%)
+ rename {Fs => nut/Fs}/driver/__init__.py (100%)
+ rename {Fs => nut/Fs}/driver/curl.py (100%)
+ rename {Fs => nut/Fs}/driver/gdrive.py (100%)
+ rename {Fs => nut/Fs}/driver/http.py (100%)
+ rename {Fs => nut/Fs}/driver/init.py (100%)
+ rename {Fs => nut/Fs}/driver/interface.py (100%)
+ rename {Fs => nut/Fs}/driver/native.py (100%)
+ rename {Fs => nut/Fs}/driver/registry.py (100%)
+ rename {Server => nut/Server}/Controller/Api.py (100%)
+ rename {Server => nut/Server}/Controller/__init__.py (100%)
+ rename {Server => nut/Server}/__init__.py (100%)
+ rename {ganymede => nut/ganymede}/__init__.py (100%)
+ rename {ganymede => nut/ganymede}/ganymede.sample.json (100%)
+ rename {gui => nut/gui}/__init__.py (100%)
+ rename {gui => nut/gui}/app.py (100%)
+ rename {gui => nut/gui}/header.py (100%)
+ rename {gui => nut/gui}/panes/__init__.py (100%)
+ rename {gui => nut/gui}/panes/dirlist.py (100%)
+ rename {gui => nut/gui}/panes/files.py (100%)
+ rename {gui => nut/gui}/panes/filters.py (100%)
+ rename {gui => nut/gui}/panes/format.py (100%)
+ rename {gui => nut/gui}/panes/options.py (100%)
+ rename {gui => nut/gui}/progress.py (100%)
+ rename {gui => nut/gui}/table_model.py (100%)
+ rename {gui => nut/gui}/tabs.py (100%)
+ rename {plugins => nut/plugins}/__init__.py (100%)
+ rename {plugins => nut/plugins}/discord/README.md (100%)
+ rename {plugins => nut/plugins}/discord/__init__.py (100%)
+ rename {plugins => nut/plugins}/discord/disabled (100%)
+ rename {plugins => nut/plugins}/import_lockpick/__init__.py (100%)
+ rename {public_html => nut/public_html}/images/close.png (100%)
+ rename {public_html => nut/public_html}/images/download.png (100%)
+ rename {public_html => nut/public_html}/images/download_white.png (100%)
+ rename {public_html => nut/public_html}/images/favicon.ico (100%)
+ rename {public_html => nut/public_html}/images/flags/AU.png (100%)
+ rename {public_html => nut/public_html}/images/flags/CH.png (100%)
+ rename {public_html => nut/public_html}/images/flags/DE.png (100%)
+ rename {public_html => nut/public_html}/images/flags/ES.png (100%)
+ rename {public_html => nut/public_html}/images/flags/EU.png (100%)
+ rename {public_html => nut/public_html}/images/flags/FR.png (100%)
+ rename {public_html => nut/public_html}/images/flags/GB.png (100%)
+ rename {public_html => nut/public_html}/images/flags/GR.png (100%)
+ rename {public_html => nut/public_html}/images/flags/HK.png (100%)
+ rename {public_html => nut/public_html}/images/flags/JP.png (100%)
+ rename {public_html => nut/public_html}/images/flags/KR.png (100%)
+ rename {public_html => nut/public_html}/images/flags/TW.png (100%)
+ rename {public_html => nut/public_html}/images/flags/US.png (100%)
+ rename {public_html => nut/public_html}/images/gear.png (100%)
+ rename {public_html => nut/public_html}/images/logo.jpg (100%)
+ rename {public_html => nut/public_html}/images/nutserver.png (100%)
+ rename {public_html => nut/public_html}/images/queue.png (100%)
+ rename {public_html => nut/public_html}/images/ss.jpg (100%)
+ rename {public_html => nut/public_html}/images/update.png (100%)
+ rename {public_html => nut/public_html}/images/update_white.png (100%)
+ rename {public_html => nut/public_html}/index.html (100%)
+ rename {public_html => nut/public_html}/script/default.js (100%)
+ rename {public_html => nut/public_html}/script/jquery-3.3.1.min.js (100%)
+ rename {public_html => nut/public_html}/style/default.css (100%)
+ rename {public_html => nut/public_html}/style/reset.css (100%)
+ rename {public_html => nut/public_html}/translate.json (100%)
+ rename {translator => nut/translator}/__init__.py (100%)
+
+diff --git a/Fs/BaseFs.py b/nut/Fs/BaseFs.py
+similarity index 100%
+rename from Fs/BaseFs.py
+rename to nut/Fs/BaseFs.py
+diff --git a/Fs/Bktr.py b/nut/Fs/Bktr.py
+similarity index 100%
+rename from Fs/Bktr.py
+rename to nut/Fs/Bktr.py
+diff --git a/Fs/Cal0.py b/nut/Fs/Cal0.py
+similarity index 100%
+rename from Fs/Cal0.py
+rename to nut/Fs/Cal0.py
+diff --git a/Fs/Cnmt.py b/nut/Fs/Cnmt.py
+similarity index 100%
+rename from Fs/Cnmt.py
+rename to nut/Fs/Cnmt.py
+diff --git a/Fs/File.py b/nut/Fs/File.py
+similarity index 100%
+rename from Fs/File.py
+rename to nut/Fs/File.py
+diff --git a/Fs/Hfs0.py b/nut/Fs/Hfs0.py
+similarity index 100%
+rename from Fs/Hfs0.py
+rename to nut/Fs/Hfs0.py
+diff --git a/Fs/IndexedFile.py b/nut/Fs/IndexedFile.py
+similarity index 100%
+rename from Fs/IndexedFile.py
+rename to nut/Fs/IndexedFile.py
+diff --git a/Fs/Ivfc.py b/nut/Fs/Ivfc.py
+similarity index 100%
+rename from Fs/Ivfc.py
+rename to nut/Fs/Ivfc.py
+diff --git a/Fs/Nacp.py b/nut/Fs/Nacp.py
+similarity index 100%
+rename from Fs/Nacp.py
+rename to nut/Fs/Nacp.py
+diff --git a/Fs/Nca.py b/nut/Fs/Nca.py
+similarity index 100%
+rename from Fs/Nca.py
+rename to nut/Fs/Nca.py
+diff --git a/Fs/Nsp.py b/nut/Fs/Nsp.py
+similarity index 100%
+rename from Fs/Nsp.py
+rename to nut/Fs/Nsp.py
+diff --git a/Fs/Pfs0.py b/nut/Fs/Pfs0.py
+similarity index 100%
+rename from Fs/Pfs0.py
+rename to nut/Fs/Pfs0.py
+diff --git a/Fs/Rom.py b/nut/Fs/Rom.py
+similarity index 100%
+rename from Fs/Rom.py
+rename to nut/Fs/Rom.py
+diff --git a/Fs/Ticket.py b/nut/Fs/Ticket.py
+similarity index 100%
+rename from Fs/Ticket.py
+rename to nut/Fs/Ticket.py
+diff --git a/Fs/Type.py b/nut/Fs/Type.py
+similarity index 100%
+rename from Fs/Type.py
+rename to nut/Fs/Type.py
+diff --git a/Fs/Xci.py b/nut/Fs/Xci.py
+similarity index 100%
+rename from Fs/Xci.py
+rename to nut/Fs/Xci.py
+diff --git a/Fs/__init__.py b/nut/Fs/__init__.py
+similarity index 100%
+rename from Fs/__init__.py
+rename to nut/Fs/__init__.py
+diff --git a/Fs/driver/__init__.py b/nut/Fs/driver/__init__.py
+similarity index 100%
+rename from Fs/driver/__init__.py
+rename to nut/Fs/driver/__init__.py
+diff --git a/Fs/driver/curl.py b/nut/Fs/driver/curl.py
+similarity index 100%
+rename from Fs/driver/curl.py
+rename to nut/Fs/driver/curl.py
+diff --git a/Fs/driver/gdrive.py b/nut/Fs/driver/gdrive.py
+similarity index 100%
+rename from Fs/driver/gdrive.py
+rename to nut/Fs/driver/gdrive.py
+diff --git a/Fs/driver/http.py b/nut/Fs/driver/http.py
+similarity index 100%
+rename from Fs/driver/http.py
+rename to nut/Fs/driver/http.py
+diff --git a/Fs/driver/init.py b/nut/Fs/driver/init.py
+similarity index 100%
+rename from Fs/driver/init.py
+rename to nut/Fs/driver/init.py
+diff --git a/Fs/driver/interface.py b/nut/Fs/driver/interface.py
+similarity index 100%
+rename from Fs/driver/interface.py
+rename to nut/Fs/driver/interface.py
+diff --git a/Fs/driver/native.py b/nut/Fs/driver/native.py
+similarity index 100%
+rename from Fs/driver/native.py
+rename to nut/Fs/driver/native.py
+diff --git a/Fs/driver/registry.py b/nut/Fs/driver/registry.py
+similarity index 100%
+rename from Fs/driver/registry.py
+rename to nut/Fs/driver/registry.py
+diff --git a/Server/Controller/Api.py b/nut/Server/Controller/Api.py
+similarity index 100%
+rename from Server/Controller/Api.py
+rename to nut/Server/Controller/Api.py
+diff --git a/Server/Controller/__init__.py b/nut/Server/Controller/__init__.py
+similarity index 100%
+rename from Server/Controller/__init__.py
+rename to nut/Server/Controller/__init__.py
+diff --git a/Server/__init__.py b/nut/Server/__init__.py
+similarity index 100%
+rename from Server/__init__.py
+rename to nut/Server/__init__.py
+diff --git a/ganymede/__init__.py b/nut/ganymede/__init__.py
+similarity index 100%
+rename from ganymede/__init__.py
+rename to nut/ganymede/__init__.py
+diff --git a/ganymede/ganymede.sample.json b/nut/ganymede/ganymede.sample.json
+similarity index 100%
+rename from ganymede/ganymede.sample.json
+rename to nut/ganymede/ganymede.sample.json
+diff --git a/gui/__init__.py b/nut/gui/__init__.py
+similarity index 100%
+rename from gui/__init__.py
+rename to nut/gui/__init__.py
+diff --git a/gui/app.py b/nut/gui/app.py
+similarity index 100%
+rename from gui/app.py
+rename to nut/gui/app.py
+diff --git a/gui/header.py b/nut/gui/header.py
+similarity index 100%
+rename from gui/header.py
+rename to nut/gui/header.py
+diff --git a/gui/panes/__init__.py b/nut/gui/panes/__init__.py
+similarity index 100%
+rename from gui/panes/__init__.py
+rename to nut/gui/panes/__init__.py
+diff --git a/gui/panes/dirlist.py b/nut/gui/panes/dirlist.py
+similarity index 100%
+rename from gui/panes/dirlist.py
+rename to nut/gui/panes/dirlist.py
+diff --git a/gui/panes/files.py b/nut/gui/panes/files.py
+similarity index 100%
+rename from gui/panes/files.py
+rename to nut/gui/panes/files.py
+diff --git a/gui/panes/filters.py b/nut/gui/panes/filters.py
+similarity index 100%
+rename from gui/panes/filters.py
+rename to nut/gui/panes/filters.py
+diff --git a/gui/panes/format.py b/nut/gui/panes/format.py
+similarity index 100%
+rename from gui/panes/format.py
+rename to nut/gui/panes/format.py
+diff --git a/gui/panes/options.py b/nut/gui/panes/options.py
+similarity index 100%
+rename from gui/panes/options.py
+rename to nut/gui/panes/options.py
+diff --git a/gui/progress.py b/nut/gui/progress.py
+similarity index 100%
+rename from gui/progress.py
+rename to nut/gui/progress.py
+diff --git a/gui/table_model.py b/nut/gui/table_model.py
+similarity index 100%
+rename from gui/table_model.py
+rename to nut/gui/table_model.py
+diff --git a/gui/tabs.py b/nut/gui/tabs.py
+similarity index 100%
+rename from gui/tabs.py
+rename to nut/gui/tabs.py
+diff --git a/plugins/__init__.py b/nut/plugins/__init__.py
+similarity index 100%
+rename from plugins/__init__.py
+rename to nut/plugins/__init__.py
+diff --git a/plugins/discord/README.md b/nut/plugins/discord/README.md
+similarity index 100%
+rename from plugins/discord/README.md
+rename to nut/plugins/discord/README.md
+diff --git a/plugins/discord/__init__.py b/nut/plugins/discord/__init__.py
+similarity index 100%
+rename from plugins/discord/__init__.py
+rename to nut/plugins/discord/__init__.py
+diff --git a/plugins/discord/disabled b/nut/plugins/discord/disabled
+similarity index 100%
+rename from plugins/discord/disabled
+rename to nut/plugins/discord/disabled
+diff --git a/plugins/import_lockpick/__init__.py b/nut/plugins/import_lockpick/__init__.py
+similarity index 100%
+rename from plugins/import_lockpick/__init__.py
+rename to nut/plugins/import_lockpick/__init__.py
+diff --git a/public_html/images/close.png b/nut/public_html/images/close.png
+similarity index 100%
+rename from public_html/images/close.png
+rename to nut/public_html/images/close.png
+diff --git a/public_html/images/download.png b/nut/public_html/images/download.png
+similarity index 100%
+rename from public_html/images/download.png
+rename to nut/public_html/images/download.png
+diff --git a/public_html/images/download_white.png b/nut/public_html/images/download_white.png
+similarity index 100%
+rename from public_html/images/download_white.png
+rename to nut/public_html/images/download_white.png
+diff --git a/public_html/images/favicon.ico b/nut/public_html/images/favicon.ico
+similarity index 100%
+rename from public_html/images/favicon.ico
+rename to nut/public_html/images/favicon.ico
+diff --git a/public_html/images/flags/AU.png b/nut/public_html/images/flags/AU.png
+similarity index 100%
+rename from public_html/images/flags/AU.png
+rename to nut/public_html/images/flags/AU.png
+diff --git a/public_html/images/flags/CH.png b/nut/public_html/images/flags/CH.png
+similarity index 100%
+rename from public_html/images/flags/CH.png
+rename to nut/public_html/images/flags/CH.png
+diff --git a/public_html/images/flags/DE.png b/nut/public_html/images/flags/DE.png
+similarity index 100%
+rename from public_html/images/flags/DE.png
+rename to nut/public_html/images/flags/DE.png
+diff --git a/public_html/images/flags/ES.png b/nut/public_html/images/flags/ES.png
+similarity index 100%
+rename from public_html/images/flags/ES.png
+rename to nut/public_html/images/flags/ES.png
+diff --git a/public_html/images/flags/EU.png b/nut/public_html/images/flags/EU.png
+similarity index 100%
+rename from public_html/images/flags/EU.png
+rename to nut/public_html/images/flags/EU.png
+diff --git a/public_html/images/flags/FR.png b/nut/public_html/images/flags/FR.png
+similarity index 100%
+rename from public_html/images/flags/FR.png
+rename to nut/public_html/images/flags/FR.png
+diff --git a/public_html/images/flags/GB.png b/nut/public_html/images/flags/GB.png
+similarity index 100%
+rename from public_html/images/flags/GB.png
+rename to nut/public_html/images/flags/GB.png
+diff --git a/public_html/images/flags/GR.png b/nut/public_html/images/flags/GR.png
+similarity index 100%
+rename from public_html/images/flags/GR.png
+rename to nut/public_html/images/flags/GR.png
+diff --git a/public_html/images/flags/HK.png b/nut/public_html/images/flags/HK.png
+similarity index 100%
+rename from public_html/images/flags/HK.png
+rename to nut/public_html/images/flags/HK.png
+diff --git a/public_html/images/flags/JP.png b/nut/public_html/images/flags/JP.png
+similarity index 100%
+rename from public_html/images/flags/JP.png
+rename to nut/public_html/images/flags/JP.png
+diff --git a/public_html/images/flags/KR.png b/nut/public_html/images/flags/KR.png
+similarity index 100%
+rename from public_html/images/flags/KR.png
+rename to nut/public_html/images/flags/KR.png
+diff --git a/public_html/images/flags/TW.png b/nut/public_html/images/flags/TW.png
+similarity index 100%
+rename from public_html/images/flags/TW.png
+rename to nut/public_html/images/flags/TW.png
+diff --git a/public_html/images/flags/US.png b/nut/public_html/images/flags/US.png
+similarity index 100%
+rename from public_html/images/flags/US.png
+rename to nut/public_html/images/flags/US.png
+diff --git a/public_html/images/gear.png b/nut/public_html/images/gear.png
+similarity index 100%
+rename from public_html/images/gear.png
+rename to nut/public_html/images/gear.png
+diff --git a/public_html/images/logo.jpg b/nut/public_html/images/logo.jpg
+similarity index 100%
+rename from public_html/images/logo.jpg
+rename to nut/public_html/images/logo.jpg
+diff --git a/public_html/images/nutserver.png b/nut/public_html/images/nutserver.png
+similarity index 100%
+rename from public_html/images/nutserver.png
+rename to nut/public_html/images/nutserver.png
+diff --git a/public_html/images/queue.png b/nut/public_html/images/queue.png
+similarity index 100%
+rename from public_html/images/queue.png
+rename to nut/public_html/images/queue.png
+diff --git a/public_html/images/ss.jpg b/nut/public_html/images/ss.jpg
+similarity index 100%
+rename from public_html/images/ss.jpg
+rename to nut/public_html/images/ss.jpg
+diff --git a/public_html/images/update.png b/nut/public_html/images/update.png
+similarity index 100%
+rename from public_html/images/update.png
+rename to nut/public_html/images/update.png
+diff --git a/public_html/images/update_white.png b/nut/public_html/images/update_white.png
+similarity index 100%
+rename from public_html/images/update_white.png
+rename to nut/public_html/images/update_white.png
+diff --git a/public_html/index.html b/nut/public_html/index.html
+similarity index 100%
+rename from public_html/index.html
+rename to nut/public_html/index.html
+diff --git a/public_html/script/default.js b/nut/public_html/script/default.js
+similarity index 100%
+rename from public_html/script/default.js
+rename to nut/public_html/script/default.js
+diff --git a/public_html/script/jquery-3.3.1.min.js b/nut/public_html/script/jquery-3.3.1.min.js
+similarity index 100%
+rename from public_html/script/jquery-3.3.1.min.js
+rename to nut/public_html/script/jquery-3.3.1.min.js
+diff --git a/public_html/style/default.css b/nut/public_html/style/default.css
+similarity index 100%
+rename from public_html/style/default.css
+rename to nut/public_html/style/default.css
+diff --git a/public_html/style/reset.css b/nut/public_html/style/reset.css
+similarity index 100%
+rename from public_html/style/reset.css
+rename to nut/public_html/style/reset.css
+diff --git a/public_html/translate.json b/nut/public_html/translate.json
+similarity index 100%
+rename from public_html/translate.json
+rename to nut/public_html/translate.json
+diff --git a/translator/__init__.py b/nut/translator/__init__.py
+similarity index 100%
+rename from translator/__init__.py
+rename to nut/translator/__init__.py
+-- 
+2.35.1
+

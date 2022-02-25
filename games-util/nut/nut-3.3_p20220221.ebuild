@@ -45,12 +45,10 @@ BDEPEND="media-gfx/imagemagick"
 
 S="${WORKDIR}/${PN}-${SHA}"
 
-PATCHES=( "${FILESDIR}/${PN}-move-submodules.patch" )
-
-src_prepare() {
-	default
-	mv ganymede gui plugins translator public_html Fs Server ${PN}/ || die
-}
+PATCHES=(
+	"${FILESDIR}/${PN}-0001-move-most-code.patch"
+	"${FILESDIR}/${PN}-0002-fix-refs.patch"
+)
 
 src_install() {
 	python_domodule nut
