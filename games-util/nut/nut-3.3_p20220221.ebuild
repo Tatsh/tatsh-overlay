@@ -46,8 +46,8 @@ BDEPEND="media-gfx/imagemagick"
 S="${WORKDIR}/${PN}-${SHA}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-move-most-code.patch"
-	"${FILESDIR}/${PN}-0002-fix-refs.patch"
+	"${FILESDIR}/${PN}-0001-move-most-code-to-be-under-n.patch"
+	"${FILESDIR}/${PN}-0002-fix-paths-and-make-everythin.patch"
 )
 
 src_install() {

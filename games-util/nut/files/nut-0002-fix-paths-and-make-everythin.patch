@@ -1,11 +1,11 @@
-From 80144f8f7d11f41d1ae892a1ce9a09e7b5352c85 Mon Sep 17 00:00:00 2001
+From e116090cd0070f19e5912bd5d27293e0e4d93436 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 22 Feb 2022 14:36:59 -0500
 Subject: [PATCH 2/2] Fix paths and make everything inside nut module
 
 ---
  nut.py                       | 42 +++++++++++-----------
- nut/Config.py                | 37 ++++++++++++--------
+ nut/Config.py                | 47 ++++++++++++++-----------
  nut/Fs/BaseFs.py             | 12 +++----
  nut/Fs/Bktr.py               |  6 ++--
  nut/Fs/Cnmt.py               |  4 +--
@@ -36,7 +36,7 @@ Subject: [PATCH 2/2] Fix paths and make everything inside nut module
  nut/Title.py                 |  9 ++---
  nut/Titles.py                | 23 +++++++-----
  nut/Usb.py                   | 12 +++----
- nut/Users.py                 |  8 +++--
+ nut/Users.py                 |  9 +++--
  nut/Util.py                  | 29 +++++++++++++++
  nut/__init__.py              | 68 +++++++++++++++++-------------------
  nut/blockchain.py            | 45 ++++++++++++------------
@@ -48,7 +48,7 @@ Subject: [PATCH 2/2] Fix paths and make everything inside nut module
  nut_gui.py                   |  8 ++---
  tests-gui/gui_app_test.py    |  6 ++--
  tests/translator_test.py     |  2 +-
- 44 files changed, 404 insertions(+), 354 deletions(-)
+ 44 files changed, 410 insertions(+), 359 deletions(-)
  create mode 100644 nut/Util.py
 
 diff --git a/nut.py b/nut.py
@@ -229,7 +229,7 @@ index 5ab4984..ac40579 100755
  			if args.blockchain:
  				nut.initTitles()
 diff --git a/nut/Config.py b/nut/Config.py
-index eaf809f..8dc0f78 100644
+index eaf809f..42f353e 100644
 --- a/nut/Config.py
 +++ b/nut/Config.py
 @@ -8,6 +8,8 @@ from binascii import unhexlify as uhx
@@ -259,6 +259,23 @@ index eaf809f..8dc0f78 100644
  	"""
  
  	def __init__(self):
+@@ -92,11 +94,11 @@ class Paths:  # pylint: disable=too-many-instance-attributes
+ 	"""
+ 
+ 	def __init__(self):
+-		self.titleBase = 'titles/{name}[{id}][v{version}].nsp'
+-		self.titleDLC = 'titles/DLC/{name}[{id}][v{version}].nsp'
+-		self.titleUpdate = 'titles/updates/{name}[{id}][v{version}].nsp'
+-		self.titleDemo = 'titles/demos/{name}[{id}][v{version}].nsp'
+-		self.titleDemoUpdate = 'titles/demos/updates/{name}[{id}][v{version}].nsp'
++		self.titleBase = wrap_path('titles/{name}[{id}][v{version}].nsp')
++		self.titleDLC = wrap_path('titles/DLC/{name}[{id}][v{version}].nsp')
++		self.titleUpdate = wrap_path('titles/updates/{name}[{id}][v{version}].nsp')
++		self.titleDemo = wrap_path('titles/demos/{name}[{id}][v{version}].nsp')
++		self.titleDemoUpdate = wrap_path('titles/demos/updates/{name}[{id}][v{version}].nsp')
+ 
+ 		self.nsxTitleBase = None
+ 		self.nsxTitleDLC = None
 @@ -117,12 +119,13 @@ class Paths:  # pylint: disable=too-many-instance-attributes
  		self.xciTitleDemoUpdate = None
  
@@ -1783,7 +1800,7 @@ index b9a848b..3026049 100644
  		id = id.upper()
  		self.setId(id)
 diff --git a/nut/Titles.py b/nut/Titles.py
-index 3ce7ce8..a135fcb 100644
+index 3ce7ce8..11b9814 100644
 --- a/nut/Titles.py
 +++ b/nut/Titles.py
 @@ -9,6 +9,7 @@ from nut import Title
@@ -1799,7 +1816,7 @@ index 3ce7ce8..a135fcb 100644
  
  		if language not in regionTitles[region]:
 -			filePath = 'titledb/%s.%s.json' % (region, language)
-+			filePath = wrap_path('titledb/%s.%s.json') % (region, language)
++			filePath = wrap_path('titledb/%s.%s.json' % (region, language))
  			if os.path.isfile(filePath):
  				regionTitles[region][language] = loadTitlesJson(filePath)
  			else:
@@ -1855,7 +1872,7 @@ index 3ce7ce8..a135fcb 100644
  
  def saveRegion(region, language):
 -	saveTitlesJson(data(region, language), 'titledb/%s.%s.json' % (region, language))
-+	saveTitlesJson(data(region, language), wrap_path('titledb/%s.%s.json') % (region, language))
++	saveTitlesJson(data(region, language), wrap_path('titledb/%s.%s.json' % (region, language)))
  
  class Queue:
  	def __init__(self):
@@ -1885,7 +1902,7 @@ index 3ce7ce8..a135fcb 100644
  	for region in cdn.regions():
  		for language in cdn.Shogun.countryLanguages(region):
 -			saveTitlesJson(data(region, language), 'titledb/%s.%s.json' % (region, language))
-+			saveTitlesJson(data(region, language), wrap_path('titledb/%s.%s.json') % (region, language))
++			saveTitlesJson(data(region, language), wrap_path('titledb/%s.%s.json' % (region, language)))
  
  	save(fileName)
 diff --git a/nut/Usb.py b/nut/Usb.py
@@ -1938,7 +1955,7 @@ index f522b8e..50d66dc 100644
  				Print.error('Unknown command! %d' % p.command)
  		else:
 diff --git a/nut/Users.py b/nut/Users.py
-index ea8c7eb..ea909ba 100644
+index ea8c7eb..7e97609 100644
 --- a/nut/Users.py
 +++ b/nut/Users.py
 @@ -2,6 +2,7 @@
@@ -1962,18 +1979,19 @@ index ea8c7eb..ea909ba 100644
  
  	if not os.path.isfile(path):
  		id = 'guest'
-@@ -137,7 +141,7 @@ def load(path='conf/users.conf'):
+@@ -137,7 +141,8 @@ def load(path='conf/users.conf'):
  
  			Print.info('loaded user ' + str(t.id))
  
 -def export(fileName='conf/users.conf', map=['id', 'password', 'isAdmin']):
 +def export(fileName=USERS_CONF, map=['id', 'password', 'isAdmin']):
++	fileName = wrap_path(fileName)
  	os.makedirs(os.path.dirname(fileName), exist_ok=True)
  	global users
  	buffer = ''
 diff --git a/nut/Util.py b/nut/Util.py
 new file mode 100644
-index 0000000..61efe1c
+index 0000000..9ebbd9c
 --- /dev/null
 +++ b/nut/Util.py
 @@ -0,0 +1,29 @@
@@ -1996,7 +2014,7 @@ index 0000000..61efe1c
 +	if (p == 'keys.txt' or p == 'PRODINFO.bin' or p == 'titles.txt' or
 +	    p == 'prod.keys'):
 +		makedirs(Path('~/.config/nut').expanduser(), exist_ok=True)
-+		return str(Path(f'~/.config/nut/{p}').expanduser())
++		return str(Path('~/.config/nut').joinpath(p).expanduser())
 +	if p.startswith('titles/'):
 +		ret = Path('~/.local/share/nut/titles').joinpath(p[7:]).expanduser()
 +		makedirs(dirname(ret), exist_ok=True)
