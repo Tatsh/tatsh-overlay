@@ -1,4 +1,4 @@
-From 72e1a02f81d5d04834657636085a9cc00479ab05 Mon Sep 17 00:00:00 2001
+From 8d644e54b94eeb4ecfcb4fe957000da8164eb77d Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 22 Feb 2022 14:36:59 -0500
 Subject: [PATCH 2/2] Fix paths and make everything inside nut module
@@ -34,7 +34,7 @@ Subject: [PATCH 2/2] Fix paths and make everything inside nut module
  nut/Server/Controller/Api.py | 58 +++++++++++++++---------------
  nut/Server/__init__.py       |  8 ++---
  nut/Title.py                 |  9 ++---
- nut/Titles.py                | 23 +++++++-----
+ nut/Titles.py                | 25 +++++++------
  nut/Usb.py                   | 12 +++----
  nut/Users.py                 |  9 +++--
  nut/Util.py                  | 29 +++++++++++++++
@@ -48,7 +48,7 @@ Subject: [PATCH 2/2] Fix paths and make everything inside nut module
  nut_gui.py                   |  8 ++---
  tests-gui/gui_app_test.py    |  6 ++--
  tests/translator_test.py     |  2 +-
- 44 files changed, 410 insertions(+), 359 deletions(-)
+ 44 files changed, 411 insertions(+), 360 deletions(-)
  create mode 100644 nut/Util.py
 
 diff --git a/nut.py b/nut.py
@@ -1800,7 +1800,7 @@ index b9a848b..3026049 100644
  		id = id.upper()
  		self.setId(id)
 diff --git a/nut/Titles.py b/nut/Titles.py
-index 3ce7ce8..11b9814 100644
+index 3ce7ce8..af867f8 100644
 --- a/nut/Titles.py
 +++ b/nut/Titles.py
 @@ -9,6 +9,7 @@ from nut import Title
@@ -1811,7 +1811,7 @@ index 3ce7ce8..11b9814 100644
  import threading
  
  try:
-@@ -33,7 +34,7 @@ def data(region=None, language=None):
+@@ -33,12 +34,12 @@ def data(region=None, language=None):
  			regionTitles[region] = {}
  
  		if language not in regionTitles[region]:
@@ -1820,6 +1820,12 @@ index 3ce7ce8..11b9814 100644
  			if os.path.isfile(filePath):
  				regionTitles[region][language] = loadTitlesJson(filePath)
  			else:
+ 				try:
+-					os.mkdir('titledb')
++					os.mkdir(wrap_path('titledb'))
+ 				except BaseException:
+ 					pass
+ 
 @@ -168,6 +169,7 @@ def loadTitleBuffer(buffer, silent=False):
  confLock = threading.Lock()
  
