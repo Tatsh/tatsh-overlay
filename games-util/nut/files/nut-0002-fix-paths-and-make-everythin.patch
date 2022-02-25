@@ -1,4 +1,4 @@
-From e116090cd0070f19e5912bd5d27293e0e4d93436 Mon Sep 17 00:00:00 2001
+From 72e1a02f81d5d04834657636085a9cc00479ab05 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 22 Feb 2022 14:36:59 -0500
 Subject: [PATCH 2/2] Fix paths and make everything inside nut module
@@ -1991,7 +1991,7 @@ index ea8c7eb..7e97609 100644
  	buffer = ''
 diff --git a/nut/Util.py b/nut/Util.py
 new file mode 100644
-index 0000000..9ebbd9c
+index 0000000..f45ac05
 --- /dev/null
 +++ b/nut/Util.py
 @@ -0,0 +1,29 @@
@@ -2012,7 +2012,7 @@ index 0000000..9ebbd9c
 +		makedirs(dirname(ret), exist_ok=True)
 +		return str(ret)
 +	if (p == 'keys.txt' or p == 'PRODINFO.bin' or p == 'titles.txt' or
-+	    p == 'prod.keys'):
++	    p == 'prod.keys' or p == 'token.pickle'):
 +		makedirs(Path('~/.config/nut').expanduser(), exist_ok=True)
 +		return str(Path('~/.config/nut').joinpath(p).expanduser())
 +	if p.startswith('titles/'):
