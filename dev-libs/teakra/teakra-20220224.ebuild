@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,7 +6,7 @@ inherit cmake
 
 DESCRIPTION="Emulator, assembler, etc for XpertTeak, the DSP used by DSi/3DS."
 HOMEPAGE="https://github.com/wwylele/teakra"
-SHA="d4bea3ec3acd5ea9cc23f096ed0af4de1c002201"
+SHA="01db7cdd00aabcce559a8dddce8798dabb71949b"
 SRC_URI="https://github.com/wwylele/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
