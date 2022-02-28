@@ -6,6 +6,8 @@ EAPI=7
 inherit go-module
 
 EGO_SUM=(
+	"codeberg.org/Codeberg/avatars v0.0.0-20211228163022-8da63012fe69"
+	"codeberg.org/Codeberg/avatars v0.0.0-20211228163022-8da63012fe69/go.mod"
 	"github.com/AndreasBriese/bbloom v0.0.0-20190306092124-e2d15f34fcf9/go.mod"
 	"github.com/BurntSushi/toml v0.3.1/go.mod"
 	"github.com/BurntSushi/toml v0.4.1"
@@ -115,6 +117,8 @@ EGO_SUM=(
 	"github.com/gorilla/securecookie v1.1.1/go.mod"
 	"github.com/gorilla/websocket v1.4.1/go.mod"
 	"github.com/hashicorp/go-version v1.2.0/go.mod"
+	"github.com/hashicorp/golang-lru v0.5.4"
+	"github.com/hashicorp/golang-lru v0.5.4/go.mod"
 	"github.com/hashicorp/hcl v1.0.0/go.mod"
 	"github.com/hpcloud/tail v1.0.0/go.mod"
 	"github.com/imkira/go-interpol v1.1.0/go.mod"
