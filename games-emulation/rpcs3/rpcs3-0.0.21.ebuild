@@ -10,13 +10,15 @@ ASMJIT_SHA="fc2a5d82f7434d7d03161275a764c051f970f41c"
 HIDAPI_SHA="6cf133697c4413dc9ae0fefefeba5f33587dff76"
 ITTAPI_VERSION="3.18.12"
 LLVM_SHA="509d31ad89676522f7121b3bb8688f7d29b7ee60"
+SOUNDTOUCH_SHA="83cfba67b6af80bb9bfafc0b324718c4841f2991"
 YAML_CPP_SHA="0b67821f307e8c6bf0eba9b6d3250e3cf1441450"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${PN}-llvm-${LLVM_SHA:0:7}.tar.gz
 	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${PN}-asmjit-${ASMJIT_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${PN}-hidapi-${HIDAPI_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${PN}-yaml-cpp-${YAML_CPP_SHA:0:7}.tar.gz
-	https://github.com/intel/ittapi/archive/refs/tags/v${ITTAPI_VERSION}.tar.gz -> ${PN}-ittapi-${ITTAPI_VERSION}.tar.gz"
+	https://github.com/intel/ittapi/archive/refs/tags/v${ITTAPI_VERSION}.tar.gz -> ${PN}-ittapi-${ITTAPI_VERSION}.tar.gz
+	https://github.com/RPCS3/soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-${SOUNDTOUCH_SHA:0:7}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -90,6 +92,8 @@ src_prepare() {
 	sed -i -e 's|FAudio.h|FAudio/FAudio.h|' rpcs3/Emu/Audio/FAudio/FAudioBackend.h || die
 	sed -i -r -e '/\s+add_compile_options\(-Werror=missing-noreturn\).*/d' buildfiles/cmake/ConfigureCompiler.cmake || die
 	mv "${WORKDIR}/ittapi-${ITTAPI_VERSION}" "${WORKDIR}/ittapi"
+	rmdir "${S}/3rdparty/SoundTouch/soundtouch" || die
+	mv "${WORKDIR}/soundtouch-${SOUNDTOUCH_SHA}" "${S}/3rdparty/SoundTouch/soundtouch" || die
 	cmake_src_prepare
 }
 
