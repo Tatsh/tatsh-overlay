@@ -6,10 +6,10 @@ inherit cmake xdg
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
-ASMJIT_SHA="eae7197fce03fd52a6e71ca89207a88ce270fb1a"
-HIDAPI_SHA="01f601a1509bf9c67819fbf521df39644bab52d5"
+ASMJIT_SHA="fc2a5d82f7434d7d03161275a764c051f970f41c"
+HIDAPI_SHA="6cf133697c4413dc9ae0fefefeba5f33587dff76"
 ITTAPI_VERSION="3.18.12"
-LLVM_SHA="1c0ca194dc501ffb1674868babf8bd52658a0734"
+LLVM_SHA="509d31ad89676522f7121b3bb8688f7d29b7ee60"
 YAML_CPP_SHA="0b67821f307e8c6bf0eba9b6d3250e3cf1441450"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${PN}-llvm-${LLVM_SHA:0:7}.tar.gz
