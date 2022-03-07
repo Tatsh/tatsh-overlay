@@ -58,6 +58,7 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
         '3rdparty/asmjit/asmjit',
         '3rdparty/hidapi/hidapi',
         '3rdparty/yaml-cpp/yaml-cpp',
+        '3rdparty/SoundTouch/soundtouch',
         'llvm',
     },
     'games-emulation/xemu': {
