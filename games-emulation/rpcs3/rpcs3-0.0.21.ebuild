@@ -85,12 +85,13 @@ src_prepare() {
 	echo "#define RPCS3_GIT_VERSION \"0000-v${PV}\"" > rpcs3/git-version.h
 	echo '#define RPCS3_GIT_BRANCH "master"' >> rpcs3/git-version.h
 	echo '#define RPCS3_GIT_VERSION_NO_UPDATE 1' >> rpcs3/git-version.h
-	sed -r \
-		-e 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
+	sed -re 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
 		-i "${S}/llvm/CMakeLists.txt" || die
-	sed -i -e '/find_program(CCACHE_FOUND/d' CMakeLists.txt || die
-	sed -i -e 's|FAudio.h|FAudio/FAudio.h|' rpcs3/Emu/Audio/FAudio/FAudioBackend.h || die
-	sed -i -r -e '/\s+add_compile_options\(-Werror=missing-noreturn\).*/d' buildfiles/cmake/ConfigureCompiler.cmake || die
+	sed -e '/find_program(CCACHE_FOUND/d' -i CMakeLists.txt || die
+	sed -e 's|FAudio.h|FAudio/FAudio.h|' -i rpcs3/Emu/Audio/FAudio/FAudioBackend.h || die
+	sed -re '/\s+add_compile_options\(-Werror=missing-noreturn\).*/d' \
+		-e '/\s+add_compile_options\(-Werror=old-style-cast\).*/d' \
+		-i buildfiles/cmake/ConfigureCompiler.cmake || die
 	mv "${WORKDIR}/ittapi-${ITTAPI_VERSION}" "${WORKDIR}/ittapi"
 	rmdir "${S}/3rdparty/SoundTouch/soundtouch" || die
 	mv "${WORKDIR}/soundtouch-${SOUNDTOUCH_SHA}" "${S}/3rdparty/SoundTouch/soundtouch" || die
