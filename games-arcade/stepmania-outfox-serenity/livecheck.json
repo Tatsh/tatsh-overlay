@@ -1,5 +1,5 @@
 {
-    "regex": "<a href=\"/TeamRizu/OutFox-Serenity/archive/refs/tags/v(.*)\\.zip\" rel=\"nofollow\">",
+    "regex": "<a href=\"/TeamRizu/OutFox-Serenity/archive/refs/tags/v(.*)\\.zip\" rel=\"nofollow\"",
     "type": "regex",
     "transformation_function": "dash_to_underscore",
     "url": "https://github.com/TeamRizu/OutFox-Serenity/releases",
