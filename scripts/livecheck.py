@@ -309,23 +309,15 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
             if ls.get('no_auto_update', None):
                 no_auto_update.add(catpkg)
             if ls.get('transformation_function', None):
-                tf = ls['transformation_function']
-                if tf == 'dotize':
-                    transformations[catpkg] = dotize
-                elif tf == 'dash_to_underscore':
-                    transformations[catpkg] = lambda s: s.replace('-', '_')
-                elif tf == 'handle_stepmania_outfox':
-                    transformations[catpkg] = handle_stepmania_outfox
-                elif tf == 'handle_re':
-                    transformations[catpkg] = handle_re
-                elif tf == 'handle_bsnes_hd':
-                    transformations[catpkg] = handle_bsnes_hd
-                elif tf == 'handle_glabels':
-                    transformations[catpkg] = handle_glabels
-                elif tf == 'handle_cython_post_suffix':
-                    transformations[catpkg] = handle_cython_post_suffix
-                else:
-                    raise Exception(f'Unknown transformation function: {tf}')
+                try:
+                    tf = globals()[ls['transformation_function']]
+                except KeyError as e:
+                    if ls['transformation_function'] == 'dash_to_underscore':
+                        tf = lambda s: s.replace('-', '_')
+                    else:
+                        raise NameError('Unknown transformation '
+                                        f'function: {tf}') from e
+                transformations[catpkg] = tf
     return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
                              ignored_packages, no_auto_update, transformations)
 
