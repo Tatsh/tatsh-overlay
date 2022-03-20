@@ -12,17 +12,24 @@ SRC_URI="https://github.com/86Box/86Box/archive/refs/tags/v${PV}.tar.gz -> ${P}.
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+dynrec +fluidsynth mt-32 new-dynrec usb vramdump"
+IUSE="+dynrec +fluidsynth mt-32 new-dynrec openal"
 
-DEPEND="media-libs/alsa-lib
+DEPEND="app-emulation/faudio
+	media-libs/alsa-lib
 	media-libs/freetype
 	media-libs/libpng
 	media-libs/libsdl2[X,opengl]
-	media-libs/openal
-	>media-libs/rtmidi-4.0.0"
+	openal? ( media-libs/openal )
+	>media-libs/rtmidi-4.0.0
+	net-libs/libslirp"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/86Box-${PV}"
+
+src_prepare() {
+	sed -e 's|FAudio.h|FAudio/FAudio.h|' -i src/sound/xaudio2.c || die
+	cmake_src_prepare
+}
 
 src_configure() {
 	local mycmakeargs=(
@@ -32,9 +39,9 @@ src_configure() {
 		-DMINITRACE=OFF
 		-DMUNT=$(usex mt-32)
 		-DNEW_DYNAREC=$(usex new-dynrec)
+		-DOPENAL=$(usex openal)
 		-DRELEASE=ON
-		-DUSB=$(usex usb)
-		-DVRAMDUMP=$(usex vramdump)
+		-DSLIRP_EXTERNAL=ON
 		# Does not work on non-Windows. Attempts to link with ws2_32
 		-DVNC=OFF
 	)

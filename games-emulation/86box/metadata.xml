@@ -10,6 +10,5 @@
 		<flag name="fluidsynth">Use media-sound/fluidsynth for MIDI emulation</flag>
 		<flag name="mt-32">Use media-libs/munt-mt32emu for MT-32 emulation</flag>
 		<flag name="new-dynrec">Use the PCem v15 (&quot;new&quot;) dynamic recompiler</flag>
-		<flag name="vramdump">Enable video RAM dumping</flag>
 	</use>
 </pkgmetadata>
