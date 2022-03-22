@@ -35,6 +35,7 @@ DEPEND="app-arch/lz4
 	dev-libs/inih
 	>=dev-libs/libfmt-8.0.0
 	dev-libs/libzip
+	>=dev-libs/xbyak-6.03
 	dev-cpp/robin-map
 	dev-qt/qtcore
 	dev-qt/qtdbus
