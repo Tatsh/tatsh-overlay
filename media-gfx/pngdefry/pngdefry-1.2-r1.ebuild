@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,8 +6,8 @@ EAPI=7
 inherit toolchain-funcs
 
 DESCRIPTION="Convert iOS and macOS compressed PNG files to normal."
-HOMEPAGE="http://www.jongware.com/pngdefry.html"
-SRC_URI="http://www.jongware.com/binaries/pngdefry.zip -> ${P}.zip"
+HOMEPAGE="https://web.archive.org/web/20211120053356/http://www.jongware.com/pngdefry.html"
+SRC_URI="https://web.archive.org/web/20211205021959/http://www.jongware.com/binaries/${PN}.zip -> ${P}.zip"
 
 LICENSE="public-domain"
 SLOT="0"
