@@ -12,7 +12,8 @@ UPPER_PN="${PN^^}"
 MY_PN="${UPPER_PN:10:1}${PN:11:2}${UPPER_PN:13:1}${PN:14}"
 MY_PV="${PV:6:4}"
 ALT_PV="${PV:6:6}"
-SRC_URI="https://github.com/TeamRizu/OutFox/releases/download/OF${PV:2:6}/${MY_PN}-alpha-${PV:0:8}-Linux-amd64-date-${PV:10}.tar.gz -> ${P}-amd64.tar.gz"
+SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${PV:2:6}/${MY_PN}-alpha-${PV:0:8}HF-Linux-amd64-date-${PV:10}.tar.gz -> ${P}-amd64.tar.gz )
+	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${PV:2:6}/${MY_PN}-alpha-${PV:0:8}HF-RPi-Linux-arm64v8-date-${PV:10}.tar.gz )"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -39,7 +40,9 @@ S="${WORKDIR}"
 
 src_prepare() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-${PV:0:8}-amd64-date-${PV:10}" || die
+		cd "${MY_PN}-alpha-${PV:0:8}HF-amd64-date-${PV:10}" || die
+	elif use arm64; then
+		cd "${MY_PN}-alpha-${PV:0:8}HF-arm64-date-${PV:10}" || die
 	else
 		die 'Unsupported architecture'
 	fi
@@ -59,7 +62,9 @@ src_prepare() {
 
 src_install() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-${PV:0:8}-amd64-date-${PV:10}" || die
+		cd "${MY_PN}-alpha-${PV:0:8}HF-amd64-date-${PV:10}" || die
+	elif use arm64; then
+		cd "${MY_PN}-alpha-${PV:0:8}HF-arm64-date-${PV:10}" || die
 	else
 		die 'Unsupported architecture'
 	fi
