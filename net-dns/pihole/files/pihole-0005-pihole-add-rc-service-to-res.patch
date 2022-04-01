@@ -1,4 +1,4 @@
-From 0c942e046be1f30b6d10e9daffadf963ef6c4468 Mon Sep 17 00:00:00 2001
+From b15874ccdb53ad7c7fe8c6089268d327e9f9fc25 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 16 Dec 2021 08:45:38 -0500
 Subject: [PATCH 05/12] pihole: add rc-service to restartDNS
