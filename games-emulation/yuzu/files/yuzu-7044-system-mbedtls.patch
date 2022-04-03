@@ -1,4 +1,4 @@
-From 0e766de9b040db53ce8ccb671e5c577eb70e38af Mon Sep 17 00:00:00 2001
+From 5cb0c4eb3b0b98133ed72a963119a34f23af01f3 Mon Sep 17 00:00:00 2001
 From: Andrea Pappacoda <andrea@pappacoda.it>
 Date: Sat, 18 Sep 2021 15:39:20 +0200
 Subject: [PATCH] build(cmake): use system MbedTLS when available
@@ -10,9 +10,6 @@ FindMbedTLS.cmake file.
 Since yuzu requires CMAC support it is also needed to check for the
 `mbedtls_cipher_cmac` symbol.
 
-To avoid API incompatibilities, find_package() only accepts version
-2.16.x LTS.
-
 I also changed src/core/CMakeLists.txt to only link against mbedcrypto,
 as yuzu doesn't use the full MbedTLS library
 ---
@@ -23,13 +20,13 @@ as yuzu doesn't use the full MbedTLS library
  create mode 100644 externals/find-modules/FindMbedTLS.cmake
 
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index a76a3d8006e..c8b2c28090f 100644
+index 82e8ef18cfe..35bb9a8820c 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -36,9 +36,13 @@ add_subdirectory(glad)
+@@ -32,9 +32,13 @@ add_subdirectory(glad)
  # inih
  add_subdirectory(inih)
-
+ 
 -# mbedtls
 -add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
 -target_include_directories(mbedtls PUBLIC ./mbedtls/include)
@@ -40,7 +37,7 @@ index a76a3d8006e..c8b2c28090f 100644
 +    add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
 +    target_include_directories(mbedcrypto PUBLIC ./mbedtls/include)
 +endif()
-
+ 
  # MicroProfile
  add_library(microprofile INTERFACE)
 diff --git a/externals/find-modules/FindMbedTLS.cmake b/externals/find-modules/FindMbedTLS.cmake
@@ -98,15 +95,15 @@ index 00000000000..d7f2544bb65
 +    VERSION_VAR MbedTLS_VERSION
 +)
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index 50688565907..e5bbb7b0045 100644
+index 6536d054402..dbfad63a2e9 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -701,7 +701,7 @@ endif()
+@@ -744,7 +744,7 @@ endif()
  create_target_directory_groups(core)
-
+ 
  target_link_libraries(core PUBLIC common PRIVATE audio_core video_core)
 -target_link_libraries(core PUBLIC Boost::boost PRIVATE fmt::fmt nlohmann_json::nlohmann_json mbedtls Opus::Opus)
 +target_link_libraries(core PUBLIC Boost::boost PRIVATE fmt::fmt nlohmann_json::nlohmann_json mbedcrypto Opus::Opus)
-
+ 
  if (ENABLE_WEB_SERVICE)
      target_compile_definitions(core PRIVATE -DENABLE_WEB_SERVICE)

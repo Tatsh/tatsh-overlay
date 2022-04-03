@@ -8,15 +8,13 @@ DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 
 MY_PV="mainline-${PV/./-}"
-DYNARMIC_SHA="e1a266b9299be81cc0318c7e25b00388c342704f"
+DYNARMIC_SHA="af2d50288fc537201014c4230bb55ab9018a7438"
 HTTPLIB_SHA="9648f950f5a8a41d18833cf4a85f5821b1bcac54"
 SDL_SHA="e2ade2bfc46d915cd306c63c830b81d800b2575f"
 SIRIT_SHA="a39596358a3a5488c06554c0c15184a6af71e433"
-SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/ReinUsesLisp/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
-	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
 	https://github.com/yhirose/cpp-httplib/archive/${HTTPLIB_SHA}.tar.gz -> ${PN}-httplib-${HTTPLIB_SHA:0:7}.tar.gz
 	https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz"
 
@@ -69,9 +67,8 @@ pkg_setup() {
 
 src_prepare() {
 	rm .gitmodules || die
-	rmdir "${S}/externals/"{soundtouch,dynarmic,sirit,cpp-httplib,SDL} || die
+	rmdir "${S}/externals/"{dynarmic,sirit,cpp-httplib,SDL} || die
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
-	mv "${WORKDIR}/ext-soundtouch-${SOUNDTOUCH_SHA}" "${S}/externals/soundtouch" || die
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
 	mv "${WORKDIR}/cpp-httplib-${HTTPLIB_SHA}" "${S}/externals/cpp-httplib" || die
 	mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
@@ -86,7 +83,7 @@ src_prepare() {
 		eapply "${FILESDIR}/${PN}-6769-create-shortcuts.patch"
 		eapply "${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
 		eapply "${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
-		eapply "${FILESDIR}/${PN}-7213-openssl"*.patch
+		eapply "${FILESDIR}/${PN}-7213-openssl.patch"
 	else
 		eapply "${FILESDIR}/${PN}-7044-system-mbedtls.patch"
 	fi
@@ -109,8 +106,9 @@ src_configure() {
 		-DYUZU_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)
 		-DYUZU_USE_BUNDLED_BOOST=OFF
 		-DYUZU_USE_BUNDLED_CUBEB=OFF
+		-DYUZU_USE_BUNDLED_HTTPLIB=ON
 		-DYUZU_USE_BUNDLED_INIH=OFF
-		-DYUZU_USE_BUNDLED_OPUS=oFF
+		-DYUZU_USE_BUNDLED_OPUS=OFF
 		-DYUZU_USE_BUNDLED_XBYAK=OFF
 		-DYUZU_USE_OPENSSL_CRYPTO=$(usex experimental)
 		-DYUZU_USE_QT_WEB_ENGINE=ON

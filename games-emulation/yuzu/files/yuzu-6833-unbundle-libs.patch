@@ -1,25 +1,8 @@
-From b7712ad0174ef6299d75ab9e001a29a02d6ac70a Mon Sep 17 00:00:00 2001
-From: Alexandre Bouvier <contact@amb.tf>
-Date: Fri, 20 Aug 2021 06:07:12 +0200
-Subject: [PATCH] cmake: Allow unbundling some external libraries
-
-Add option for:
-
-* cubeb
-* inih
-* xbyak
----
- CMakeLists.txt                | 36 +++++++++++++++++++++++++++++++++++
- externals/CMakeLists.txt      |  8 +++++---
- externals/inih/CMakeLists.txt |  2 +-
- src/yuzu_cmd/config.cpp       |  2 +-
- 4 files changed, 43 insertions(+), 5 deletions(-)
-
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0e064ab4452..57c7292c849 100644
+index 57d0da67d..e06bca344 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -27,6 +27,12 @@ option(YUZU_USE_BUNDLED_LIBUSB "Compile bundled libusb" OFF)
+@@ -27,6 +27,18 @@ option(YUZU_USE_BUNDLED_LIBUSB "Compile bundled libusb" OFF)
  
  option(YUZU_USE_BUNDLED_FFMPEG "Download/Build bundled FFmpeg" "${WIN32}")
  
@@ -29,40 +12,67 @@ index 0e064ab4452..57c7292c849 100644
 +
 +option(YUZU_USE_BUNDLED_CUBEB "Compile bundled cubeb" ON)
 +
++option(YUZU_USE_BUNDLED_DYNARMIC "Compile bundled dynarmic" ON)
++
++option(YUZU_USE_BUNDLED_HTTPLIB "Compile bundled httplib" ON)
++
++option(YUZU_USE_BUNDLED_DISCORD_RPC "Compile bundled discord-rpc" ON)
++
  option(YUZU_USE_QT_WEB_ENGINE "Use QtWebEngine for web applet implementation" OFF)
  
- option(YUZU_ENABLE_BOXCAT "Enable the Boxcat service, a yuzu high-level implementation of BCAT" ON)
-@@ -691,6 +697,36 @@ unset(FFmpeg_COMPONENTS)
+ option(ENABLE_CUBEB "Enables the cubeb audio backend" ON)
+@@ -549,6 +561,57 @@ endif()
  set(THREADS_PREFER_PTHREAD_FLAG ON)
  find_package(Threads REQUIRED)
  
-+if (NOT YUZU_USE_BUNDLED_XBYAK)
-+    find_package(xbyak QUIET)
++if ((ARCHITECTURE_x86 OR ARCHITECTURE_x86_64) AND NOT YUZU_USE_BUNDLED_XBYAK)
++    find_package(xbyak)
 +    if (xbyak_FOUND)
 +        add_library(xbyak ALIAS xbyak::xbyak)
 +    else()
 +        message(STATUS "xbyak not found, falling back to externals")
++        set(YUZU_USE_BUNDLED_XBYAK ON)
 +    endif()
 +endif()
 +
 +if (NOT YUZU_USE_BUNDLED_INIH)
 +    find_package(PkgConfig QUIET)
 +    if (PKG_CONFIG_FOUND)
-+        pkg_check_modules(inih QUIET IMPORTED_TARGET INIReader)
++        pkg_check_modules(inih IMPORTED_TARGET INIReader)
 +    endif()
 +    if (inih_FOUND)
 +        add_library(inih ALIAS PkgConfig::inih)
 +    else()
 +        message(STATUS "inih not found, falling back to externals")
++        set(YUZU_USE_BUNDLED_INIH ON)
 +    endif()
 +endif()
 +
 +if (ENABLE_CUBEB AND NOT YUZU_USE_BUNDLED_CUBEB)
-+    find_package(cubeb QUIET)
++    find_package(cubeb)
 +    if (cubeb_FOUND)
 +        add_library(cubeb ALIAS cubeb::cubeb)
 +    else()
 +        message(STATUS "cubeb not found, falling back to externals")
++        set(YUZU_USE_BUNDLED_CUBEB ON)
++    endif()
++endif()
++
++if (ARCHITECTURE_x86_64 AND NOT YUZU_USE_BUNDLED_DYNARMIC)
++    find_package(dynarmic)
++    if (dynarmic_FOUND)
++        add_library(dynarmic ALIAS dynarmic::dynarmic)
++    else()
++        message(STATUS "dynarmic not found, falling back to externals")
++        set(YUZU_USE_BUNDLED_DYNARMIC ON)
++    endif()
++endif()
++
++if (ENABLE_WEB_SERVICE AND NOT YUZU_USE_BUNDLED_HTTPLIB)
++    find_package(httplib MODULE)
++    if (NOT httplib_FOUND)
++        message(STATUS "httplib not found, falling back to externals")
++        set(YUZU_USE_BUNDLED_HTTPLIB ON)
 +    endif()
 +endif()
 +
@@ -70,7 +80,7 @@ index 0e064ab4452..57c7292c849 100644
  # ======================================
  
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 0c2c059a980..5235dcf53cc 100644
+index f8555fee7..c0c3c0f4d 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -5,7 +5,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
@@ -82,7 +92,16 @@ index 0c2c059a980..5235dcf53cc 100644
      add_library(xbyak INTERFACE)
      file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
      file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
-@@ -34,7 +34,9 @@ endif()
+@@ -14,7 +14,7 @@ if (ARCHITECTURE_x86 OR ARCHITECTURE_x86_64)
+ endif()
+ 
+ # Dynarmic
+-if (ARCHITECTURE_x86_64)
++if (ARCHITECTURE_x86_64 AND NOT TARGET dynarmic)
+     set(DYNARMIC_TESTS OFF)
+     set(DYNARMIC_NO_BUNDLED_FMT ON)
+     set(DYNARMIC_IGNORE_ASSERTS ON CACHE BOOL "" FORCE)
+@@ -30,7 +30,9 @@ endif()
  add_subdirectory(glad)
  
  # inih
@@ -91,10 +110,10 @@ index 0c2c059a980..5235dcf53cc 100644
 +    add_subdirectory(inih)
 +endif()
  
- # mbedtls
- add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
-@@ -79,7 +81,7 @@ endif()
- add_subdirectory(soundtouch)
+ # MicroProfile
+ add_library(microprofile INTERFACE)
+@@ -65,21 +67,26 @@ if (YUZU_USE_EXTERNAL_SDL2)
+ endif()
  
  # Cubeb
 -if(ENABLE_CUBEB)
@@ -102,8 +121,113 @@ index 0c2c059a980..5235dcf53cc 100644
      set(BUILD_TESTS OFF CACHE BOOL "")
      add_subdirectory(cubeb EXCLUDE_FROM_ALL)
  endif()
+ 
+ # DiscordRPC
+ if (USE_DISCORD_PRESENCE)
+-    add_subdirectory(discord-rpc EXCLUDE_FROM_ALL)
+-    target_include_directories(discord-rpc INTERFACE ./discord-rpc/include)
++    if (YUZU_USE_BUNDLED_DISCORD_RPC)
++        add_subdirectory(discord-rpc EXCLUDE_FROM_ALL)
++        target_include_directories(discord-rpc INTERFACE ./discord-rpc/include)
++        add_library(DiscordRPC::discord-rpc ALIAS discord-rpc)
++    else()
++        find_package(DiscordRPC REQUIRED)
++    endif()
+ endif()
+ 
+ # Sirit
+ add_subdirectory(sirit)
+ 
+-if (ENABLE_WEB_SERVICE OR YUZU_USE_OPENSSL_CRYPTO)
++if ((ENABLE_WEB_SERVICE AND NOT TARGET httplib::httplib) OR YUZU_USE_OPENSSL_CRYPTO)
+     find_package(OpenSSL 1.1)
+     if (OPENSSL_FOUND)
+         set(OPENSSL_LIBRARIES OpenSSL::SSL OpenSSL::Crypto)
+@@ -101,6 +108,7 @@ if (ENABLE_WEB_SERVICE OR YUZU_USE_OPENSSL_CRYPTO)
+ 
+     # httplib
+     add_library(httplib INTERFACE)
++    add_library(httplib::httplib ALIAS httplib)
+     target_include_directories(httplib INTERFACE ./cpp-httplib)
+     target_compile_definitions(httplib INTERFACE -DCPPHTTPLIB_OPENSSL_SUPPORT)
+     target_link_libraries(httplib INTERFACE ${OPENSSL_LIBRARIES})
+@@ -113,6 +121,7 @@ else()
+     target_include_directories(mbedtls PUBLIC ./mbedtls/include)
+     set(YUZU_CRYPTO_BACKEND mbedtls)
+     set(YUZU_CRYPTO_DEFINITION -DYUZU_USE_MBEDTLS_CRYPTO)
++    add_library(httplib::httplib ALIAS httplib)
+ endif()
+ 
+ add_library(crypto-backend INTERFACE)
+diff --git a/externals/find-modules/FindDiscordRPC.cmake b/externals/find-modules/FindDiscordRPC.cmake
+new file mode 100644
+index 000000000..d230001fd
+--- /dev/null
++++ b/externals/find-modules/FindDiscordRPC.cmake
+@@ -0,0 +1,33 @@
++
++find_path(DiscordRPC_INCLUDE_DIR
++  NAMES discord_rpc.h
++)
++
++find_library(DiscordRPC_LIBRARY
++  NAMES discord-rpc
++)
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(DiscordRPC
++  REQUIRED_VARS
++    DiscordRPC_LIBRARY
++    DiscordRPC_INCLUDE_DIR
++)
++
++if(DiscordRPC_FOUND)
++  set(DiscordRPC_LIBRARIES ${DiscordRPC_LIBRARY})
++  set(DiscordRPC_INCLUDE_DIRS ${DiscordRPC_INCLUDE_DIR})
++endif()
++
++if(DiscordRPC_FOUND AND NOT TARGET DiscordRPC::discord-rpc)
++  add_library(DiscordRPC::discord-rpc UNKNOWN IMPORTED GLOBAL)
++  set_target_properties(DiscordRPC::discord-rpc PROPERTIES
++    IMPORTED_LOCATION "${DiscordRPC_LIBRARY}"
++    INTERFACE_INCLUDE_DIRECTORIES "${DiscordRPC_INCLUDE_DIR}"
++  )
++endif()
++
++mark_as_advanced(
++    DiscordRPC_INCLUDE_DIR
++    DiscordRPC_LIBRARY
++)
+diff --git a/externals/find-modules/Findhttplib.cmake b/externals/find-modules/Findhttplib.cmake
+new file mode 100644
+index 000000000..0c7374c21
+--- /dev/null
++++ b/externals/find-modules/Findhttplib.cmake
+@@ -0,0 +1,22 @@
++# SPDX-FileCopyrightText: 2022 Andrea Pappacoda <andrea@pappacoda.it>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++find_package(httplib CONFIG)
++if (NOT httplib_FOUND)
++    find_package(PkgConfig QUIET)
++    if (PKG_CONFIG_FOUND)
++        pkg_search_module(cpp-httplib IMPORTED_TARGET cpp-httplib)
++        if (cpp-httplib_FOUND)
++            set(httplib_FOUND True)
++            set(HTTPLIB_VERSION "${cpp-httplib_VERSION}")
++            add_library(httplib::httplib ALIAS PkgConfig::cpp-httplib)
++        endif()
++    endif()
++endif()
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(httplib
++    REQUIRED_VARS httplib_FOUND
++    VERSION_VAR HTTPLIB_VERSION
++)
 diff --git a/externals/inih/CMakeLists.txt b/externals/inih/CMakeLists.txt
-index 2a75852c211..275f17434a0 100644
+index 2a75852c2..275f17434 100644
 --- a/externals/inih/CMakeLists.txt
 +++ b/externals/inih/CMakeLists.txt
 @@ -6,4 +6,4 @@ add_library(inih
@@ -112,11 +236,50 @@ index 2a75852c211..275f17434a0 100644
  create_target_directory_groups(inih)
 -target_include_directories(inih INTERFACE .)
 +target_include_directories(inih INTERFACE inih/cpp)
+diff --git a/src/tests/core/crypto.cpp b/src/tests/core/crypto.cpp
+index 5f2da7c90..1f34733cc 100644
+--- a/src/tests/core/crypto.cpp
++++ b/src/tests/core/crypto.cpp
+@@ -205,9 +205,9 @@ TEST_CASE("SPEED", "[core]") {
+ #ifdef ARCHITECTURE_x86_64
+     const auto& caps = Common::GetCPUCaps();
+     std::string cpu_string = caps.cpu_string;
+-    if (caps.avx || caps.avx2 || caps.avx512) {
++    if (caps.avx || caps.avx2 || caps.avx512f) {
+         cpu_string += " | AVX";
+-        if (caps.avx512) {
++        if (caps.avx512f) {
+             cpu_string += "512";
+         } else if (caps.avx2) {
+             cpu_string += '2';
+diff --git a/src/web_service/CMakeLists.txt b/src/web_service/CMakeLists.txt
+index ae85a72ea..87f92ecff 100644
+--- a/src/web_service/CMakeLists.txt
++++ b/src/web_service/CMakeLists.txt
+@@ -9,4 +9,4 @@ add_library(web_service STATIC
+ )
+ 
+ create_target_directory_groups(web_service)
+-target_link_libraries(web_service PRIVATE common nlohmann_json::nlohmann_json httplib)
++target_link_libraries(web_service PRIVATE common nlohmann_json::nlohmann_json httplib::httplib)
+diff --git a/src/yuzu/CMakeLists.txt b/src/yuzu/CMakeLists.txt
+index b1467d016..5a1bb5f8b 100644
+--- a/src/yuzu/CMakeLists.txt
++++ b/src/yuzu/CMakeLists.txt
+@@ -283,7 +283,7 @@ if (USE_DISCORD_PRESENCE)
+         discord_impl.cpp
+         discord_impl.h
+     )
+-    target_link_libraries(yuzu PRIVATE discord-rpc)
++    target_link_libraries(yuzu PRIVATE DiscordRPC::discord-rpc)
+     target_compile_definitions(yuzu PRIVATE -DUSE_DISCORD_PRESENCE)
+ endif()
+ 
 diff --git a/src/yuzu_cmd/config.cpp b/src/yuzu_cmd/config.cpp
-index 4f14be524c8..3c4d89e82d9 100644
+index fc16f0f0c..5ce14a273 100644
 --- a/src/yuzu_cmd/config.cpp
 +++ b/src/yuzu_cmd/config.cpp
-@@ -15,7 +15,7 @@
+@@ -16,7 +16,7 @@
  #pragma clang diagnostic pop
  #endif
  
