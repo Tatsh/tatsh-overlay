@@ -1,0 +1,9 @@
+// You should generate your own keys. You can do so with the following command:
+// tr -dc A-F0-9 < /dev/urandom | head -c32; echo
+// Copy this file to /etc/zwave-js-server.keys.js and replace the below strings.
+module.exports = {
+  S0_Legacy: '5C14897467C42598518AF155DE6CCEA8',
+  S2_AccessControl: '6D4255BE3AA5B624D99D4275CF75D010',
+  S2_Authenticated: '1A0DDF6544F67A6BF1BF04CB4A5A38CE',
+  S2_Unauthenticated: 'B0229CCC80BEE01D0F2F2E401A1CA023',
+}
