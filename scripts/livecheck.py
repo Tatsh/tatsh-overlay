@@ -73,7 +73,6 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
         'externals/SDL',
         'externals/dynarmic',
         'externals/sirit',
-        'externals/soundtouch',
         ('externals/cpp-httplib', 'HTTPLIB_SHA'),
     },
     'media-sound/sony-headphones-client': {'Client/imgui'},
