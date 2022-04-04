@@ -38,6 +38,9 @@ src_install() {
 }
 
 pkg_postinst() {
+	cd "${EPREFIX}/usr/$(get_libdir)/node_modules/@zwave-js/server" || die
+	npm rebuild >/dev/null || die
+
 	elog
 	elog "You need to set up security keys. See"
 	elog "${PN}.keys.js.example in the documentation directory for more"
