@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 from dataclasses import dataclass
 from functools import cmp_to_key, lru_cache
+from os import environ
 from os.path import basename, dirname, join as path_join, realpath, splitext
 from os.path import expanduser
+from pathlib import Path
+from shutil import copytree
+from tempfile import TemporaryDirectory
 from typing import (Any, Callable, Dict, Final, Iterator, Mapping, Optional,
                     Sequence, Set, Tuple, TypeVar, Union, cast)
 from urllib.parse import urlparse
@@ -84,6 +88,51 @@ TAG_NAME_FUNCTIONS: Final[Mapping[str, Callable[[str], str]]] = {
     'games-emulation/yuzu': lambda x: f'mainline-{x.replace(".", "-")}',
     'media-sound/sony-headphones-client': lambda s: f'v{s}',
 }
+
+# From parse-package-name
+# https://github.com/egoist/parse-package-name/blob/main/src/index.ts
+RE_SCOPED = r'^(@[^\/]+\/[^@\/]+)(?:@([^\/]+))?(\/.*)?$'
+RE_NON_SCOPED = r'^([^@\/]+)(?:@([^\/]+))?(\/.*)?$'
+
+
+def parse_npm_package_name(s: str) -> Tuple[str, Optional[str], Optional[str]]:
+    m = re.match(RE_SCOPED, s) or re.match(RE_NON_SCOPED, s)
+    if not m:
+        raise Exception(f'Invalid package name: {s}')
+    return m[1], m[2], m[3]
+
+
+def make_npm_dist_tarball(package_spec: str) -> str:
+    log = logging.getLogger(LOG_NAME)
+    with TemporaryDirectory() as td:
+        log.debug('Temporary directory: %s', td)
+        td_path = Path(td)
+        npmrc_path = td_path / '.npmrc'
+        node_root = f'{td}/node'
+        with open(npmrc_path, 'w') as f:
+            f.write(f'prefix={node_root}\n')
+        log.debug('Wrote npmrc: %s', npmrc_path)
+        cmd = ('npm', 'install', '-g', package_spec)
+        log.debug('Running command: %s', ' '.join(cmd))
+        sp.run(cmd, env={**environ, **dict(HOME=td)}, check=True)
+        package_name, version, _ = parse_npm_package_name(package_spec)
+        log.debug('Package name: %s', package_name)
+        package_json = (td_path / 'node/lib/node_modules' / package_name /
+                        'package.json')
+        log.debug('package.json path: %s', package_json)
+        if not version:
+            with open(package_json) as f:
+                version = json.load(f)['version']
+        escaped_package_name = re.sub(r'^@', '',
+                                      package_name.replace('/', '-'))
+        pv = f'{escaped_package_name}-{version}'
+        outdir = td_path / pv
+        log.debug('Copying %s to %s', node_root, outdir)
+        copytree(node_root, outdir)
+        outfile = td_path / f'{pv}.tar.gz'
+        log.debug('Creating archive %s', outfile)
+        sp.run(('tar', 'zcf', outfile, pv), check=True, cwd=td)
+        return str(outfile)
 
 
 @lru_cache()
