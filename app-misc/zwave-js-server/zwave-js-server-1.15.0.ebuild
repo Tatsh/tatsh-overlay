@@ -46,6 +46,6 @@ pkg_postinst() {
 	elog "systemd: To create the service, the device path must be specified"
 	elog "with systemd-escape:"
 	elog
-	elog "  systemctl enable --now ${PN}@$(systemd-escape --path /dev/ttyACM0)"
+	elog "  systemctl enable --now ${PN}@\$(systemd-escape --path /dev/ttyACM0)"
 	elog
 }
