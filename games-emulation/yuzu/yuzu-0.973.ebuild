@@ -57,7 +57,6 @@ BDEPEND=">=dev-cpp/catch-2.13.7
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
 	"${FILESDIR}/${PN}-system-robin-map.patch"
 )
 
@@ -84,8 +83,10 @@ src_prepare() {
 		eapply "${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
 		eapply "${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
 		eapply "${FILESDIR}/${PN}-7213-openssl.patch"
+		eapply "${FILESDIR}/${PN}-6833-unbundle-libs-exp.patch"
 	else
 		eapply "${FILESDIR}/${PN}-7044-system-mbedtls.patch"
+		eapply "${FILESDIR}/${PN}-6833-unbundle-libs.patch"
 	fi
 	cmake_src_prepare
 }

@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 11a459813..0e23eacea 100644
+index 57d0da67d..e06bca344 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -27,6 +27,18 @@ option(YUZU_USE_BUNDLED_LIBUSB "Compile bundled libusb" OFF)
@@ -21,7 +21,7 @@ index 11a459813..0e23eacea 100644
  option(YUZU_USE_QT_WEB_ENGINE "Use QtWebEngine for web applet implementation" OFF)
  
  option(ENABLE_CUBEB "Enables the cubeb audio backend" ON)
-@@ -548,6 +560,57 @@ endif()
+@@ -549,6 +561,57 @@ endif()
  set(THREADS_PREFER_PTHREAD_FLAG ON)
  find_package(Threads REQUIRED)
  
@@ -80,7 +80,7 @@ index 11a459813..0e23eacea 100644
  # ======================================
  
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 64361de5f..cb9168ca7 100644
+index f8555fee7..c0c3c0f4d 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -5,7 +5,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
@@ -110,9 +110,9 @@ index 64361de5f..cb9168ca7 100644
 +    add_subdirectory(inih)
 +endif()
  
- # mbedtls
- add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
-@@ -69,21 +71,26 @@ if (YUZU_USE_EXTERNAL_SDL2)
+ # MicroProfile
+ add_library(microprofile INTERFACE)
+@@ -65,21 +67,26 @@ if (YUZU_USE_EXTERNAL_SDL2)
  endif()
  
  # Cubeb
@@ -138,19 +138,27 @@ index 64361de5f..cb9168ca7 100644
  # Sirit
  add_subdirectory(sirit)
  
--if (ENABLE_WEB_SERVICE)
-+if (ENABLE_WEB_SERVICE AND NOT TARGET httplib::httplib)
+-if (ENABLE_WEB_SERVICE OR YUZU_USE_OPENSSL_CRYPTO)
++if ((ENABLE_WEB_SERVICE AND NOT TARGET httplib::httplib) OR YUZU_USE_OPENSSL_CRYPTO)
      find_package(OpenSSL 1.1)
      if (OPENSSL_FOUND)
          set(OPENSSL_LIBRARIES OpenSSL::SSL OpenSSL::Crypto)
-@@ -107,6 +114,7 @@ if (ENABLE_WEB_SERVICE)
-     if (WIN32)
-         target_link_libraries(httplib INTERFACE crypt32 cryptui ws2_32)
-     endif()
+@@ -101,6 +108,7 @@ if (ENABLE_WEB_SERVICE OR YUZU_USE_OPENSSL_CRYPTO)
+ 
+     # httplib
+     add_library(httplib INTERFACE)
++    add_library(httplib::httplib ALIAS httplib)
+     target_include_directories(httplib INTERFACE ./cpp-httplib)
+     target_compile_definitions(httplib INTERFACE -DCPPHTTPLIB_OPENSSL_SUPPORT)
+     target_link_libraries(httplib INTERFACE ${OPENSSL_LIBRARIES})
+@@ -113,6 +121,7 @@ else()
+     target_include_directories(mbedtls PUBLIC ./mbedtls/include)
+     set(YUZU_CRYPTO_BACKEND mbedtls)
+     set(YUZU_CRYPTO_DEFINITION -DYUZU_USE_MBEDTLS_CRYPTO)
 +    add_library(httplib::httplib ALIAS httplib)
  endif()
  
- # Opus
+ add_library(crypto-backend INTERFACE)
 diff --git a/externals/find-modules/FindDiscordRPC.cmake b/externals/find-modules/FindDiscordRPC.cmake
 new file mode 100644
 index 000000000..d230001fd
@@ -228,6 +236,22 @@ index 2a75852c2..275f17434 100644
  create_target_directory_groups(inih)
 -target_include_directories(inih INTERFACE .)
 +target_include_directories(inih INTERFACE inih/cpp)
+diff --git a/src/tests/core/crypto.cpp b/src/tests/core/crypto.cpp
+index 5f2da7c90..1f34733cc 100644
+--- a/src/tests/core/crypto.cpp
++++ b/src/tests/core/crypto.cpp
+@@ -205,9 +205,9 @@ TEST_CASE("SPEED", "[core]") {
+ #ifdef ARCHITECTURE_x86_64
+     const auto& caps = Common::GetCPUCaps();
+     std::string cpu_string = caps.cpu_string;
+-    if (caps.avx || caps.avx2 || caps.avx512) {
++    if (caps.avx || caps.avx2 || caps.avx512f) {
+         cpu_string += " | AVX";
+-        if (caps.avx512) {
++        if (caps.avx512f) {
+             cpu_string += "512";
+         } else if (caps.avx2) {
+             cpu_string += '2';
 diff --git a/src/web_service/CMakeLists.txt b/src/web_service/CMakeLists.txt
 index ae85a72ea..87f92ecff 100644
 --- a/src/web_service/CMakeLists.txt
