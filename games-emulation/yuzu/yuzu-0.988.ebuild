@@ -21,15 +21,14 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+compatibility-reporting +cubeb experimental +web-service"
+IUSE="+compatibility-reporting +cubeb +web-service"
 REQUIRED_USE="compatibility-reporting? ( web-service )"
 
 DEPEND="app-arch/lz4
 	>=app-arch/zstd-1.5.0
 	dev-libs/boost:=[context]
 	cubeb? ( media-libs/cubeb )
-	experimental? ( dev-libs/openssl )
-	!experimental? ( <net-libs/mbedtls-3.1.0[cmac] )
+	dev-libs/openssl
 	dev-libs/inih
 	>=dev-libs/libfmt-8.0.0
 	dev-libs/libzip
@@ -57,6 +56,12 @@ BDEPEND=">=dev-cpp/catch-2.13.7
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
+	"${FILESDIR}/${PN}-4949-high-dpi-fixes.patch"
+	"${FILESDIR}/${PN}-6769-create-shortcuts.patch"
+	"${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
+	"${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
+	"${FILESDIR}/${PN}-7213-openssl.patch"
+	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
 	"${FILESDIR}/${PN}-system-robin-map.patch"
 )
 
@@ -75,19 +80,6 @@ src_prepare() {
 	sed -e '/enable_testing.*/d' -e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' -i externals/sirit/CMakeLists.txt || die
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
 	mv -f "${T}/compatibility_list.json" "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
-	if use experimental; then
-		# Disable due to 7213 issue https://github.com/yuzu-emu/yuzu/pull/7213#issuecomment-1001306268
-		sed -e '/-Werror=missing-declarations/d' -i src/CMakeLists.txt || die
-		eapply "${FILESDIR}/${PN}-4949-high-dpi-fixes.patch"
-		eapply "${FILESDIR}/${PN}-6769-create-shortcuts.patch"
-		eapply "${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
-		eapply "${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
-		eapply "${FILESDIR}/${PN}-7213-openssl.patch"
-		eapply "${FILESDIR}/${PN}-6833-unbundle-libs-exp.patch"
-	else
-		eapply "${FILESDIR}/${PN}-7044-system-mbedtls.patch"
-		eapply "${FILESDIR}/${PN}-6833-unbundle-libs.patch"
-	fi
 	cmake_src_prepare
 }
 
@@ -111,7 +103,7 @@ src_configure() {
 		-DYUZU_USE_BUNDLED_INIH=OFF
 		-DYUZU_USE_BUNDLED_OPUS=OFF
 		-DYUZU_USE_BUNDLED_XBYAK=OFF
-		-DYUZU_USE_OPENSSL_CRYPTO=$(usex experimental)
+		-DYUZU_USE_OPENSSL_CRYPTO=ON
 		-DYUZU_USE_QT_WEB_ENGINE=ON
 		-Wno-dev
 	)

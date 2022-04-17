@@ -8,7 +8,6 @@
 	<use>
 		<flag name="cubeb">Build with cubeb audio backend</flag>
 		<flag name="compatibility-reporting">Enable compatibility reporting</flag>
-		<flag name="experimental">Enable experimental patches</flag>
 		<flag name="web-service">Enable web-services</flag>
 	</use>
 </pkgmetadata>
