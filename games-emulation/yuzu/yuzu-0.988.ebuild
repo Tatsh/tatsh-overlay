@@ -80,6 +80,7 @@ src_prepare() {
 	sed -e '/enable_testing.*/d' -e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' -i externals/sirit/CMakeLists.txt || die
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
 	mv -f "${T}/compatibility_list.json" "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
+	sed -e '/-Werror=missing-declarations/d' -i src/CMakeLists.txt || die
 	cmake_src_prepare
 }
 
