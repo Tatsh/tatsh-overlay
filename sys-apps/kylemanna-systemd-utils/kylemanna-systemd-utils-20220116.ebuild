@@ -7,7 +7,8 @@ inherit udev
 DESCRIPTION="Random systemd utilities."
 HOMEPAGE="https://github.com/kylemanna/systemd-utils"
 SHA="eadaa1c9878553b7c032bf2911321fd6374fdeaa"
-SRC_URI="https://github.com/kylemanna/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+MY_PN="${PN/kylemanna-}"
+SRC_URI="https://github.com/kylemanna/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -23,7 +24,7 @@ RDEPEND="btrfs? ( sys-fs/btrfs-progs )
 	youtube? ( www-client/chromium )"
 REQUIRED_USE="cmsis-dap? ( multilib )"
 
-S="${WORKDIR}/${PN}-${SHA}"
+S="${WORKDIR}/${MY_PN}-${SHA}"
 
 src_prepare() {
 	default
