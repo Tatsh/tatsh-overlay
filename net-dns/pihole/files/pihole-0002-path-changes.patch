@@ -1,4 +1,4 @@
-From 9e5843617e59d1ae1a973ce8feca76e4731b7d0c Mon Sep 17 00:00:00 2001
+From bc754899d271956f10170b8f63422bffb41e794c Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:49 -0500
 Subject: [PATCH 02/12] Path changes
@@ -15,13 +15,13 @@ Subject: [PATCH 02/12] Path changes
  advanced/Scripts/query.sh                     |  6 +-
  advanced/Scripts/setupLCD.sh                  | 18 ++--
  advanced/Scripts/version.sh                   | 64 ++------------
- advanced/Scripts/webpage.sh                   | 19 ++--
+ advanced/Scripts/webpage.sh                   | 21 +++--
  advanced/Templates/gravity_copy.sql           |  2 +-
  advanced/Templates/pihole-FTL.service         | 28 +++---
  advanced/index.php                            | 10 +--
  gravity.sh                                    | 23 ++---
  pihole                                        | 87 +++++--------------
- 18 files changed, 137 insertions(+), 232 deletions(-)
+ 18 files changed, 138 insertions(+), 233 deletions(-)
 
 diff --git a/advanced/01-pihole.conf b/advanced/01-pihole.conf
 index 02bc93bf..4c0a2b22 100644
@@ -176,7 +176,7 @@ index 5daa025d..14517d09 100755
 
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 7d3e7acf..f16a3f31 100755
+index 844cbd23..ed53c856 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,8 +22,8 @@ set -o pipefail
@@ -262,7 +262,7 @@ index 7d3e7acf..f16a3f31 100755
              enforcing)
                  log_write "${CROSS} ${COL_RED}Default SELinux: $DEFAULT_SELINUX${COL_NC}"
 diff --git a/advanced/Scripts/piholeLogFlush.sh b/advanced/Scripts/piholeLogFlush.sh
-index 7547a5fd..9635f47b 100755
+index 57f901f5..d316bc41 100755
 --- a/advanced/Scripts/piholeLogFlush.sh
 +++ b/advanced/Scripts/piholeLogFlush.sh
 @@ -8,58 +8,58 @@
@@ -350,7 +350,7 @@ index 7547a5fd..9635f47b 100755
      echo -e "  ${TICK} Deleted ${deleted} queries from database"
  fi
 diff --git a/advanced/Scripts/query.sh b/advanced/Scripts/query.sh
-index 20c891bf..91ce6622 100755
+index 8f7bfea4..935ef4bc 100755
 --- a/advanced/Scripts/query.sh
 +++ b/advanced/Scripts/query.sh
 @@ -11,8 +11,8 @@
@@ -535,10 +535,10 @@ index 0b7b29dd..8809b5fb 100755
      if [[ ! "${branch}" =~ ^v ]]; then
          if [[ "${branch}" == "master" ]]; then
 diff --git a/advanced/Scripts/webpage.sh b/advanced/Scripts/webpage.sh
-index aa4795dd..4cb38400 100755
+index de06d60c..df47631a 100755
 --- a/advanced/Scripts/webpage.sh
 +++ b/advanced/Scripts/webpage.sh
-@@ -10,23 +10,22 @@
+@@ -12,26 +12,25 @@
  # This file is copyright under the latest version of the EUPL.
  # Please see LICENSE file for your rights under this license.
 
@@ -565,6 +565,10 @@ index aa4795dd..4cb38400 100755
  # shellcheck disable=SC2034  # used in basic-install
  PH_TEST="true"
 -source "${PI_HOLE_FILES_DIR}/automated install/basic-install.sh"
+
+-utilsfile="/opt/pihole/utils.sh"
++utilsfile="@EPREFIX@/usr/@LIBDIR@/pihole/pihole/utils.sh"
+ source "${utilsfile}"
 
 -coltable="/opt/pihole/COL_TABLE"
 +coltable="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
@@ -636,7 +640,7 @@ index 41ab8018..7e7858e5 100644
  }
 
 diff --git a/advanced/index.php b/advanced/index.php
-index d0c5fc5d..666713b8 100644
+index cf0ab854..59523318 100644
 --- a/advanced/index.php
 +++ b/advanced/index.php
 @@ -11,11 +11,11 @@ $serverName = htmlspecialchars($_SERVER["SERVER_NAME"]);
@@ -667,7 +671,7 @@ index d0c5fc5d..666713b8 100644
  }
 
  // Connect to gravity.db
-@@ -240,7 +240,7 @@ $wlOutputClass = (isset($wlInfo) && $wlInfo === "recentwl") ? $wlInfo : "hidden"
+@@ -262,7 +262,7 @@ $wlOutputClass = (isset($wlInfo) && $wlInfo === "recentwl") ? $wlInfo : "hidden"
  $wlOutput = (isset($wlInfo) && $wlInfo !== "recentwl") ? "<a href='http://$wlInfo'>$wlInfo</a>" : "";
 
  // Get Pi-hole Core version
@@ -677,7 +681,7 @@ index d0c5fc5d..666713b8 100644
  // Print $execTime on development branches
  // Testing for - is marginally faster than "git rev-parse --abbrev-ref HEAD"
 diff --git a/gravity.sh b/gravity.sh
-index 9c11fa98..ca666d56 100755
+index c5e9e414..9a680108 100755
 --- a/gravity.sh
 +++ b/gravity.sh
 @@ -13,15 +13,16 @@
@@ -730,7 +734,7 @@ index 9c11fa98..ca666d56 100755
  if [[ -f "${pihole_FTL}" ]]; then
    source "${pihole_FTL}"
  fi
-@@ -987,7 +988,7 @@ if [[ "${forceDelete:-}" == true ]]; then
+@@ -988,7 +989,7 @@ if [[ "${forceDelete:-}" == true ]]; then
    str="Deleting existing list cache"
    echo -ne "${INFO} ${str}..."
 
@@ -740,7 +744,7 @@ index 9c11fa98..ca666d56 100755
  fi
 
 diff --git a/pihole b/pihole
-index 56d47eca..8768b83c 100755
+index f51fd956..b96ef573 100755
 --- a/pihole
 +++ b/pihole
 @@ -9,16 +9,16 @@
@@ -764,7 +768,7 @@ index 56d47eca..8768b83c 100755
 +readonly colfile="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
  source "${colfile}"
 
- readonly utilsfile="${PI_HOLE_SCRIPT_DIR}/utils.sh"
+ utilsfile="${PI_HOLE_SCRIPT_DIR}/utils.sh"
 @@ -62,17 +62,6 @@ arpFunc() {
    exit 0
  }
@@ -825,7 +829,7 @@ index 56d47eca..8768b83c 100755
      exit 0
    elif [[ "${1}" == "off" ]]; then
      # Disable logging
-@@ -343,13 +333,13 @@ statusFunc() {
+@@ -344,13 +334,13 @@ statusFunc() {
    fi
 
    # Determine if Pi-hole's blocking is enabled
@@ -841,7 +845,7 @@ index 56d47eca..8768b83c 100755
      # Configs are set
      case "${1}" in
        "web") echo "$port";;
-@@ -369,7 +359,7 @@ statusFunc() {
+@@ -370,7 +360,7 @@ exit 0
 
  tailFunc() {
    # Warn user if Pi-hole's logging is disabled
@@ -850,7 +854,7 @@ index 56d47eca..8768b83c 100755
    if [[ "${logging_enabled}" == "0" ]]; then
      # No "log-queries" lines are found.
      # Commented out lines (such as "#log-queries") are ignored
-@@ -381,7 +371,7 @@ tailFunc() {
+@@ -382,7 +372,7 @@ tailFunc() {
    # Color blocklist/blacklist/wildcard entries as red
    # Color A/AAAA/DHCP strings as white
    # Color everything else as gray
@@ -859,7 +863,7 @@ index 56d47eca..8768b83c 100755
      -e "s,($(date +'%b %d ')| dnsmasq\[[0-9]*\]),,g" \
      -e "s,(.*(blacklisted |gravity blocked ).*),${COL_RED}&${COL_NC}," \
      -e "s,.*(query\\[A|DHCP).*,${COL_NC}&${COL_NC}," \
-@@ -389,29 +379,6 @@ tailFunc() {
+@@ -390,29 +380,6 @@ tailFunc() {
    exit 0
  }
 
@@ -889,7 +893,7 @@ index 56d47eca..8768b83c 100755
  tricorderFunc() {
    local tricorder_token
    if [[ ! -p "/dev/stdin" ]]; then
-@@ -433,11 +400,6 @@ tricorderFunc() {
+@@ -434,11 +401,6 @@ tricorderFunc() {
    exit 0
  }
 
@@ -901,7 +905,7 @@ index 56d47eca..8768b83c 100755
  helpFunc() {
    echo "Usage: pihole [options]
  Example: 'pihole -w -h'
-@@ -456,7 +418,6 @@ Debugging Options:
+@@ -457,7 +419,6 @@ Debugging Options:
    -d, debug           Start a debugging session
                          Add '-a' to automatically upload the log to tricorder.pi-hole.net
    -f, flush           Flush the Pi-hole log
@@ -909,7 +913,7 @@ index 56d47eca..8768b83c 100755
    -t, tail [arg]      View the live output of the Pi-hole log.
                        Add an optional argument to filter the log
                        (regular expressions are supported)
-@@ -473,11 +434,8 @@ Options:
+@@ -474,11 +435,8 @@ Options:
                          Add '-h' for more info on logging usage
    -q, query           Query the adlists for a specified domain
                          Add '-h' for more info on query usage
@@ -921,7 +925,7 @@ index 56d47eca..8768b83c 100755
    status              Display the running status of Pi-hole subsystems
    enable              Enable Pi-hole subsystems
    disable             Disable Pi-hole subsystems
-@@ -485,8 +443,6 @@ Options:
+@@ -486,8 +444,6 @@ Options:
    restartdns          Full restart Pi-hole subsystems
                          Add 'reload' to update the lists and flush the cache without restarting the DNS server
                          Add 'reload-lists' to only update the lists WITHOUT flushing the cache or restarting the DNS server
@@ -930,22 +934,18 @@ index 56d47eca..8768b83c 100755
    arpflush            Flush information stored in Pi-hole's network tables";
    exit 0
  }
-@@ -520,15 +476,12 @@ case "${1}" in
+@@ -551,11 +507,8 @@ case "${1}" in
    "--white-wild" | "white-wild"   ) listFunc "$@";;
    "-d" | "debug"                ) debugFunc "$@";;
    "-f" | "flush"                ) flushFunc "$@";;
 -  "-up" | "updatePihole"        ) updatePiholeFunc "$@";;
 -  "-r"  | "reconfigure"         ) reconfigurePiholeFunc;;
    "-g" | "updateGravity"        ) updateGravityFunc "$@";;
-   "-c" | "chronometer"          ) chronometerFunc "$@";;
-   "-h" | "help"                 ) helpFunc;;
-   "-v" | "version"              ) versionFunc "$@";;
-   "-q" | "query"                ) queryFunc "$@";;
    "-l" | "logging"              ) piholeLogging "$@";;
 -  "uninstall"                   ) uninstallFunc;;
    "enable"                      ) piholeEnable 1;;
    "disable"                     ) piholeEnable 0 "$2";;
-   "status"                      ) statusFunc "$2";;
+   "restartdns"                  ) restartDNS "$2";;
 --
 2.35.1
 

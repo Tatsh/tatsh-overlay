@@ -1,4 +1,4 @@
-From 4c1cfe2e8105d173d3adc88d498cec1c96453635 Mon Sep 17 00:00:00 2001
+From 329c2b4b94b4750123220719fe00637a5a23201f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 07:24:10 -0500
 Subject: [PATCH 04/12] More path fixes
@@ -22,10 +22,10 @@ index 1c4761fc..697b021e 100755
  # Source pihole-FTL from install script
  pihole_FTL="${piholeDir}/pihole-FTL.conf"
 diff --git a/pihole b/pihole
-index 8768b83c..67a51fc6 100755
+index b96ef573..407f4fb6 100755
 --- a/pihole
 +++ b/pihole
-@@ -333,13 +333,13 @@ statusFunc() {
+@@ -334,13 +334,13 @@ statusFunc() {
    fi
  
    # Determine if Pi-hole's blocking is enabled

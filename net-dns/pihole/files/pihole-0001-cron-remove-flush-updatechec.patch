@@ -1,4 +1,4 @@
-From 55946d6735ee99bae41680f9b2f19a5c502cdd78 Mon Sep 17 00:00:00 2001
+From be3584cb25a1e80f2395ecb1158706237553ec86 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:11 -0500
 Subject: [PATCH 01/12] cron: remove flush/updatechecker

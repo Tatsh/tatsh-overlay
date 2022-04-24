@@ -1,14 +1,15 @@
-From 1aa0bf51f5c60767c26996c6bebbda78af3b1270 Mon Sep 17 00:00:00 2001
+From 28d684789648dbb2e3b6e955e3af1c66ecf9de36 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 14 Jan 2022 18:21:09 -0500
 Subject: [PATCH 12/12] piholeDebug Gentoo/vhost fixes
 
 ---
  advanced/Scripts/piholeDebug.sh | 81 +++++++++++++++++++--------------
+ advanced/Scripts/updatecheck.sh |  2 +-
  2 files changed, 48 insertions(+), 35 deletions(-)
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index f16a3f31..450cfb5c 100755
+index ed53c856..b59d8024 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,9 +22,13 @@ set -o pipefail
@@ -228,7 +229,7 @@ index f16a3f31..450cfb5c 100755
          # then we can show a success
          log_write "$TICK Web interface X-Header: ${COL_GREEN}${dashboard}${COL_NC}"
      else
-@@ -1155,9 +1168,9 @@ show_content_of_pihole_files() {
+@@ -1157,9 +1170,9 @@ show_content_of_pihole_files() {
      # Show the content of the files in each of Pi-hole's folders
      show_content_of_files_in_dir "${PIHOLE_DIRECTORY}"
      show_content_of_files_in_dir "${DNSMASQ_D_DIRECTORY}"

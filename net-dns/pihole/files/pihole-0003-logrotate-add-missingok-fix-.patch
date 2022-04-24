@@ -1,4 +1,4 @@
-From d0d149c8999a55b46705032e09c787f5fd1ea863 Mon Sep 17 00:00:00 2001
+From d13a57fcaf9ae493e855770ae10da804adc1150a Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:37:37 -0500
 Subject: [PATCH 03/12] logrotate: add missingok, fix paths

@@ -1,17 +1,17 @@
-From a6cb44015bbcc566814047e9218d1b5204465dac Mon Sep 17 00:00:00 2001
+From 08bf26d6124ad4f5318c7d716df3d40f137ddfc2 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 11:02:08 -0500
 Subject: [PATCH 09/12] fix calling valid_ip
 
 ---
- advanced/Scripts/webpage.sh | 43 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 42 insertions(+), 1 deletion(-)
+ advanced/Scripts/webpage.sh | 42 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 41 insertions(+), 1 deletion(-)
 
 diff --git a/advanced/Scripts/webpage.sh b/advanced/Scripts/webpage.sh
-index 4cb38400..5d76ea3a 100755
+index df47631a..16e94fca 100755
 --- a/advanced/Scripts/webpage.sh
 +++ b/advanced/Scripts/webpage.sh
-@@ -20,11 +20,52 @@ readonly dnscustomcnamefile="@EPREFIX@/etc/pihole/dnsmasq.d/05-pihole-custom-cna
+@@ -22,13 +22,53 @@ readonly dnscustomcnamefile="@EPREFIX@/etc/pihole/dnsmasq.d/05-pihole-custom-cna
  
  readonly gravityDBfile="@EPREFIX@/var/lib/gravity.db"
  
@@ -21,6 +21,8 @@ index 4cb38400..5d76ea3a 100755
  # shellcheck disable=SC2034  # used in basic-install
  PH_TEST="true"
  
+ utilsfile="@EPREFIX@/usr/@LIBDIR@/pihole/pihole/utils.sh"
+ source "${utilsfile}"
 +# Check an IP address to see if it is a valid one
 +valid_ip() {
 +    # Local, named variables
@@ -61,10 +63,9 @@ index 4cb38400..5d76ea3a 100755
 +    stat=$?
 +    return "${stat}"
 +}
-+
+ 
  coltable="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
  if [[ -f ${coltable} ]]; then
-     source ${coltable}
 -- 
 2.35.1
 
