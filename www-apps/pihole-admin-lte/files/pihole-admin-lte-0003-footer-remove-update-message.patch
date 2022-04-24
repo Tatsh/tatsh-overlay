@@ -1,26 +1,29 @@
-From 9f672005702a81892b08a03177a6435a039b027e Mon Sep 17 00:00:00 2001
+From 08b3d704375dcc417873e285557609aea2e1a3e5 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:24 -0500
 Subject: [PATCH 3/4] footer: remove update message
 
 ---
- scripts/pi-hole/php/footer.php | 3 ---
- 1 file changed, 3 deletions(-)
+ scripts/pi-hole/php/footer.php | 6 ------
+ 1 file changed, 6 deletions(-)
 
 diff --git a/scripts/pi-hole/php/footer.php b/scripts/pi-hole/php/footer.php
-index 0d2d2485..8e60490e 100644
+index 9ab68cfb..358e10c9 100644
 --- a/scripts/pi-hole/php/footer.php
 +++ b/scripts/pi-hole/php/footer.php
-@@ -95,9 +95,6 @@
-                         <?php if ($web_update) { ?> &middot; <a class="lookatme" href="<?php echo $webReleasesUrl . "/latest"; ?>" rel="noopener" target="_blank">Update available!</a><?php } ?>
+@@ -102,12 +102,6 @@
+                         <?php if ($web_update) { ?> &middot; <a class="lookatme" lookatme-text="Update available!" href="<?php echo $webReleasesUrl . "/latest"; ?>" rel="noopener" target="_blank">Update available!</a><?php } ?>
                      </li>
                  </ul>
 -                <?php if($core_update || $web_update || $FTL_update) { ?>
+-                <?php if($dockerTag) { ?>
+-                    <p>To install updates, <a href="https://github.com/pi-hole/docker-pi-hole#upgrading--reconfiguring" rel="noopener" target="_blank">replace this old container with a fresh upgraded image</a>.</p>
+-                <?php } else { ?>
 -                    <p>To install updates, run <code><a href="https://docs.pi-hole.net/main/update/" rel="noopener" target="_blank">pihole -up</a></code>.</p>
 -                <?php } ?>
                  <?php } ?>
+                 <?php } ?>
              </div>
-         </div>
 -- 
-2.34.1
+2.35.1
 

@@ -1,4 +1,4 @@
-From cc4bf2267542f45d566749bc0f87e87a2fac5f35 Mon Sep 17 00:00:00 2001
+From 4fad42006e1b3528995e9d574562a0e13d6ac2f1 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:41 -0500
 Subject: [PATCH 4/4] header: add HWMON_NAME
@@ -8,10 +8,10 @@ Subject: [PATCH 4/4] header: add HWMON_NAME
  1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/pi-hole/php/header.php b/scripts/pi-hole/php/header.php
-index 175fd41f..57125360 100644
+index aa59eb7f..56b3173b 100644
 --- a/scripts/pi-hole/php/header.php
 +++ b/scripts/pi-hole/php/header.php
-@@ -25,7 +25,21 @@
+@@ -26,7 +26,21 @@
      $token = $_SESSION['token'];
  
      // Try to get temperature value from different places (OS dependent)
@@ -35,5 +35,5 @@ index 175fd41f..57125360 100644
          $output = rtrim(file_get_contents("/sys/class/thermal/thermal_zone0/temp"));
      }
 -- 
-2.34.1
+2.35.1
 
