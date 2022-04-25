@@ -23,11 +23,11 @@ RDEPEND="
 	$(python_gen_cond_dep 'dev-python/regex[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/waitress[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
-	|| ( sys-devel/clang:11[static-analyzer]
+	|| ( sys-devel/clang:14[static-analyzer]
 		sys-devel/clang:13[static-analyzer]
 		sys-devel/clang:12[static-analyzer] )
-	|| ( sys-libs/compiler-rt:11.1.0
-		sys-libs/compiler-rt:13.0.0
+	|| ( sys-libs/compiler-rt:14.0.1
+		sys-libs/compiler-rt:13.0.1
 		sys-libs/compiler-rt:12.0.1 )"
 
 S="${WORKDIR}/${PN}-${SHA}/cpp"
