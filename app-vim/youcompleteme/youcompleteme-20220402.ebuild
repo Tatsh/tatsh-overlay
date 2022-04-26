@@ -18,10 +18,7 @@ SRC_URI="https://github.com/ycm-core/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 
 DEPEND="|| ( >=app-editors/vim-7.3 >=app-editors/gvim-7.3 )"
 RDEPEND="${DEPEND}
-	|| (
-		sys-devel/clang:11
-		sys-devel/clang:12
-		sys-devel/clang:13 )
+	sys-devel/clang:=
 	$(python_gen_cond_dep 'dev-python/requests-futures[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/requests[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-util/ycmd[${PYTHON_SINGLE_USEDEP}]' ${PYTHON_COMPAT[*]})"
