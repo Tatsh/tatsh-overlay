@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -14,8 +14,8 @@ KEYWORDS="~amd64"
 IUSE="openmp"
 
 DEPEND="media-libs/vulkan-loader
-	media-libs/libwebp
-	dev-libs/ncnn[vulkan]"
+	media-libs/libwebp:=
+	dev-libs/ncnn:=[vulkan]"
 RDEPEND="${DEPEND}"
 BDEPEND="openmp? ( sys-devel/gcc:=[openmp] )
 	dev-util/glslang"
