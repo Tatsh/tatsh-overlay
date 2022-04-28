@@ -66,7 +66,9 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
         'llvm',
     },
     'games-emulation/xemu': {
+        'genconfig',
         'slirp',
+        'tomlplusplus',
         'ui/imgui',
         'ui/implot',
         'ui/keycodemapdb',
@@ -146,7 +148,9 @@ def process_submodules(pkg_name: str, ref: str, contents: str,
                        repo_uri: str) -> str:
     if pkg_name not in SUBMODULES:
         return contents
-    repo_root = '/'.join([''] + urlparse(repo_uri).path.split('/')[1:3])
+    repo_root = '/'.join([''] +
+                         [x for x in urlparse(repo_uri).path.split('/')
+                          if x][1:3])
     ebuild_lines = contents.splitlines(keepends=True)
     for item in SUBMODULES[pkg_name]:
         name = item
@@ -402,7 +406,8 @@ def handle_stepmania_outfox(s: str) -> str:
         commit_url,
         headers=dict(Authorization=f'token {get_github_api_credentials()}'))
     r.raise_for_status()
-    date = r.json()['commit']['committer']['date'].split('T')[0].replace('-', '')
+    date = r.json()['commit']['committer']['date'].split('T')[0].replace(
+        '-', '')
     ret = f'{version}_p{date}'
     log.debug('handle_stepmania_outfox() -> "%s"', ret)
     return ret
