@@ -1,4 +1,4 @@
-From 11c4120e3ffc6278f2f548e21f4cd20d2411a411 Mon Sep 17 00:00:00 2001
+From c03b0649e6027cc693111eface997a5bcc84fb9f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 7 Oct 2021 07:24:39 -0400
 Subject: [PATCH 7/7] not for upstream: remove keymaps
@@ -17,5 +17,5 @@ index f2b3259..d8d166e 100644
  subdir('descriptors')
 -subdir('keymaps')
 -- 
-2.33.0
+2.35.1
 

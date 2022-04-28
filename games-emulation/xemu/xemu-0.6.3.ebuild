@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -10,18 +10,22 @@ inherit eutils flag-o-matic python-r1 xdg-utils
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/mborgerson/xemu"
+GENCONFIG_SHA="8220e8748922ddd9bba4cbacd608601586c9a4bb"
 IMGUI_SHA="e18abe3619cfa0eced163c027d0349506814816c"
-IMPLOT_SHA="dea3387cdcc1d6a7ee3607f8a37a9dce8a85224f"
+IMPLOT_SHA="a6bab98517b1baa3116db52518dda1eb2d7eaab7"
 KEYCODEMAPDB_SHA="d21009b1c9f94b740ea66be8e48a1d8ad8124023"
 SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
 SLIRP_SHA="a88d9ace234a24ce1c17189642ef9104799425e0"
 TESTFLOAT_SHA="5a59dcec19327396a011a17fd924aed4fec416b3"
+TOMLPLUSPLUS_SHA="0f6a856dc436ef72667830de993f027c132b0529"
 SRC_URI="https://github.com/mborgerson/xemu/archive/${PN}-v${PV}.tar.gz -> ${P}.tar.gz
 	https://gitlab.com/qemu-project/keycodemapdb/-/archive/${KEYCODEMAPDB_SHA}/keycodemapdb-${KEYCODEMAPDB_SHA}.tar.gz -> ${PN}-keycodemapdb-${KEYCODEMAPDB_SHA:0:7}.tar.gz
 	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> ${PN}-imgui-${IMGUI_SHA:0:7}.tar.gz
 	https://github.com/epezent/implot/archive/${IMPLOT_SHA}.tar.gz -> ${PN}-implot-${IMPLOT_SHA:0:7}.tar.gz
 	https://gitlab.com/qemu-project/berkeley-softfloat-3/-/archive/${SOFTFLOAT_SHA}/berkeley-softfloat-3-${SOFTFLOAT_SHA}.tar.gz -> ${PN}-softfloat-${SOFTFLOAT_SHA:0:7}.tar.gz
-	https://gitlab.com/qemu-project/berkeley-testfloat-3/-/archive/${TESTFLOAT_SHA}/berkeley-testfloat-3-${TESTFLOAT_SHA}.tar.gz -> ${PN}-testfloat-${TESTFLOAT_SHA:0:7}.tar.gz"
+	https://gitlab.com/qemu-project/berkeley-testfloat-3/-/archive/${TESTFLOAT_SHA}/berkeley-testfloat-3-${TESTFLOAT_SHA}.tar.gz -> ${PN}-testfloat-${TESTFLOAT_SHA:0:7}.tar.gz
+	https://github.com/mborgerson/genconfig/archive/${GENCONFIG_SHA}.tar.gz -> ${PN}-genconfig-${GENCONFIG_SHA:0:7}.tar.gz
+	https://github.com/marzer/tomlplusplus/archive/${TOMLPLUSPLUS_SHA}.tar.gz -> ${PN}-tomlplusplus-${TOMLPLUSPLUS_SHA:0:7}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -66,14 +70,13 @@ BDEPEND="dev-lang/perl
 	)"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-make-target-list-xemu-work-with-bin-name-set-to-xemu.patch"
-	"${FILESDIR}/${PN}-0002-make-running-tests-configurable.patch"
-	"${FILESDIR}/${PN}-0003-ui-qemu-xemu-do-not-install-bmp.patch"
+	"${FILESDIR}/${PN}-0001-make-target-list-xemu-work-w.patch"
+	"${FILESDIR}/${PN}-0002-make-running-tests-configura.patch"
+	"${FILESDIR}/${PN}-0003-ui-qemu-xemu-do-not-install-.patch"
 	"${FILESDIR}/${PN}-0004-meson-let-version-get-stale.patch"
-	"${FILESDIR}/${PN}-0005-allow-use-of-system-xxhash-header.patch"
-	"${FILESDIR}/${PN}-0006-not-for-upstream-remove-trace-events-all.patch"
-	"${FILESDIR}/${PN}-0007-not-for-upstream-remove-keymaps.patch"
-	"${FILESDIR}/${PN}-9999-respect-pitch-yuv-conversion.patch"
+	"${FILESDIR}/${PN}-0005-allow-use-of-system-xxhash-h.patch"
+	"${FILESDIR}/${PN}-0006-not-for-upstream-remove-trac.patch"
+	"${FILESDIR}/${PN}-0007-not-for-upstream-remove-keym.patch"
 )
 DOCS=( README.md )
 
@@ -85,6 +88,8 @@ src_prepare() {
 	{ rmdir ui/imgui && mv "${WORKDIR}/imgui-${IMGUI_SHA}" ui/imgui; } || die
 	{ rmdir ui/implot && mv "${WORKDIR}/implot-${IMPLOT_SHA}" ui/implot; } || die
 	{ rmdir ui/keycodemapdb && mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" ui/keycodemapdb; } || die
+	{ rmdir genconfig && mv "${WORKDIR}/genconfig-${GENCONFIG_SHA}" genconfig; } || die
+	{ rmdir tomlplusplus && mv "${WORKDIR}/tomlplusplus-${TOMLPLUSPLUS_SHA}" tomlplusplus; } || die
 	echo "${PV}" > XEMU_VERSION || die
 	echo master > XEMU_BRANCH || die
 	touch XEMU_COMMIT || die

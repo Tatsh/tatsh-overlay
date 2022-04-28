@@ -1,7 +1,7 @@
-From 0a7dd79112da31bca05f2284d09fdbf65532129f Mon Sep 17 00:00:00 2001
+From 0afcf11eaf94e16904e21a11370d9ea2bcf7836d Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 6 Oct 2021 02:35:51 -0400
-Subject: [PATCH 2/4] Make running tests configurable
+Subject: [PATCH 2/7] Make running tests configurable
 
 ---
  configure         |  7 ++++++-
@@ -10,10 +10,10 @@ Subject: [PATCH 2/4] Make running tests configurable
  3 files changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/configure b/configure
-index c8bf6db..b40c584 100755
+index 1cf3051..2b6b14d 100755
 --- a/configure
 +++ b/configure
-@@ -1549,6 +1549,10 @@ for opt do
+@@ -1554,6 +1554,10 @@ for opt do
    ;;
    --disable-containers) use_containers="no"
    ;;
@@ -24,7 +24,7 @@ index c8bf6db..b40c584 100755
    --enable-fuzzing) fuzzing=yes
    ;;
    --disable-fuzzing) fuzzing=no
-@@ -1848,6 +1852,7 @@ Advanced options (experts only):
+@@ -1853,6 +1857,7 @@ Advanced options (experts only):
    --enable-plugins
                             enable plugins via shared library loading
    --disable-containers     don't use containers for cross-building
@@ -32,7 +32,7 @@ index c8bf6db..b40c584 100755
    --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
  
  Optional features, enabled with --enable-FEATURE and
-@@ -5309,7 +5314,7 @@ if test "$skip_meson" = no; then
+@@ -5315,7 +5320,7 @@ if test "$skip_meson" = no; then
          -Db_pie=$(if test "$pie" = yes; then echo true; else echo false; fi) \
          ${staticpic:+-Db_staticpic=$staticpic} \
          -Db_coverage=$(if test "$gcov" = yes; then echo true; else echo false; fi) \
@@ -42,10 +42,10 @@ index c8bf6db..b40c584 100755
          -Dkvm=$kvm -Dhax=$hax -Dwhpx=$whpx -Dhvf=$hvf -Dnvmm=$nvmm \
          -Dxen=$xen -Dxen_pci_passthrough=$xen_pci_passthrough -Dtcg=$tcg \
 diff --git a/meson.build b/meson.build
-index 40e45ce..ee177de 100644
+index 319c1fb..f490991 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -2334,8 +2334,10 @@ linux_user_ss.add(files('gdbstub.c', 'thunk.c'))
+@@ -2374,8 +2374,10 @@ linux_user_ss.add(files('gdbstub.c', 'thunk.c'))
  specific_ss.add_all(when: 'CONFIG_LINUX_USER', if_true: linux_user_ss)
  
  # needed for fuzzing binaries
@@ -58,7 +58,7 @@ index 40e45ce..ee177de 100644
  
  # accel modules
  tcg_real_module_ss = ss.source_set()
-@@ -2840,7 +2842,9 @@ subdir('scripts')
+@@ -2880,7 +2882,9 @@ subdir('scripts')
  subdir('tools')
  subdir('pc-bios')
  subdir('docs')
@@ -69,7 +69,7 @@ index 40e45ce..ee177de 100644
  if gtk.found()
    subdir('po')
  endif
-@@ -2922,6 +2926,7 @@ summary_info += {'system-mode emulation': have_system}
+@@ -2962,6 +2966,7 @@ summary_info += {'system-mode emulation': have_system}
  summary_info += {'user-mode emulation': have_user}
  summary_info += {'block layer':       have_block}
  summary_info += {'Install blobs':     get_option('install_blobs')}
@@ -78,7 +78,7 @@ index 40e45ce..ee177de 100644
  if config_host.has_key('CONFIG_MODULES')
    summary_info += {'alternative module path': config_host.has_key('CONFIG_MODULE_UPGRADES')}
 diff --git a/meson_options.txt b/meson_options.txt
-index a9a9b8f..d770e1f 100644
+index 685baef..fbf91e0 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
 @@ -19,6 +19,8 @@ option('sparse', type : 'feature', value : 'auto',
@@ -91,5 +91,5 @@ index a9a9b8f..d770e1f 100644
  option('malloc_trim', type : 'feature', value : 'auto',
         description: 'enable libc malloc_trim() for memory optimization')
 -- 
-2.33.0
+2.35.1
 

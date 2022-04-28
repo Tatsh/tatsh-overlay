@@ -1,4 +1,4 @@
-From b8b8e1c15b2497008283ed67378765813fd87c10 Mon Sep 17 00:00:00 2001
+From ac2e9800cebbe2ba51a406784cf97adea5a3c949 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 7 Oct 2021 07:24:08 -0400
 Subject: [PATCH 6/7] not for upstream: remove trace-events-all
@@ -27,5 +27,5 @@ index ef18f11..8efd92c 100644
    ['generated-tcg-tracers.h', 'tcg-h'],
    ['generated-helpers.c', 'tcg-helper-c'],
 -- 
-2.33.0
+2.35.1
 

@@ -1,28 +1,30 @@
-From 205a41d0d5ac6103205676fd307ae936d43319fc Mon Sep 17 00:00:00 2001
+From 61b14f4dbb0bd6cecc84da5f4e0393d80cf89443 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 7 Oct 2021 07:12:59 -0400
 Subject: [PATCH 5/7] allow use of system xxHash header
 
 ---
- configure         | 21 +++++++++++++++++++--
+ configure         | 23 ++++++++++++++++++++---
  meson.build       | 16 ++++++++++++++++
  meson_options.txt |  3 +++
  util/fast-hash.c  |  2 +-
- 4 files changed, 39 insertions(+), 3 deletions(-)
+ 4 files changed, 40 insertions(+), 4 deletions(-)
 
 diff --git a/configure b/configure
-index d5f47f1..dcdf692 100755
+index 2b6b14d..1aacb87 100755
 --- a/configure
 +++ b/configure
-@@ -359,6 +359,7 @@ module_upgrades="no"
+@@ -359,7 +359,8 @@ modules="no"
+ module_upgrades="no"
  prefix="/usr/local"
  qemu_suffix="qemu"
- slirp="auto"
-+xxhash="internal"
+-slirp="internal"
++slirp="auto"
++xxhash="auto"
  oss_lib=""
  bsd="no"
  linux="no"
-@@ -1076,6 +1077,10 @@ for opt do
+@@ -1077,6 +1078,10 @@ for opt do
    ;;
    --enable-slirp=system) slirp="system"
    ;;
@@ -33,7 +35,7 @@ index d5f47f1..dcdf692 100755
    --disable-vde) vde="no"
    ;;
    --enable-vde) vde="yes"
-@@ -1834,6 +1839,8 @@ Advanced options (experts only):
+@@ -1839,6 +1844,8 @@ Advanced options (experts only):
    --with-trace-file=NAME   Full PATH,NAME of file to store traces
                             Default:trace-<pid>
    --disable-slirp          disable SLIRP userspace network connectivity
@@ -42,7 +44,7 @@ index d5f47f1..dcdf692 100755
    --enable-tcg-interpreter enable TCI (TCG with bytecode interpreter, experimental and slow)
    --enable-malloc-trim     enable libc malloc_trim() for memory optimization
    --oss-lib                path to OSS library
-@@ -4359,6 +4366,16 @@ if test "$slirp_smbd" != "no" ; then
+@@ -4365,6 +4372,16 @@ if test "$slirp_smbd" != "no" ; then
    fi
  fi
  
@@ -59,7 +61,7 @@ index d5f47f1..dcdf692 100755
  ##########################################
  # check for usable __NR_keyctl syscall
  
-@@ -5314,9 +5331,9 @@ if test "$skip_meson" = no; then
+@@ -5320,9 +5337,9 @@ if test "$skip_meson" = no; then
          -Db_pie=$(if test "$pie" = yes; then echo true; else echo false; fi) \
          ${staticpic:+-Db_staticpic=$staticpic} \
          -Db_coverage=$(if test "$gcov" = yes; then echo true; else echo false; fi) \
@@ -72,10 +74,10 @@ index d5f47f1..dcdf692 100755
          -Dcocoa=$cocoa -Dgtk=$gtk -Dmpath=$mpath -Dsdl=$sdl -Dsdl_image=$sdl_image \
          -Dlibusb=$libusb -Dsmartcard=$smartcard -Dusb_redir=$usb_redir -Dvte=$vte \
 diff --git a/meson.build b/meson.build
-index f394ea1..1dca05c 100644
+index 3b961ce..2ef7358 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1924,6 +1924,19 @@ if get_option('cfi') and slirp_opt == 'system'
+@@ -1946,6 +1946,19 @@ if get_option('cfi') and slirp_opt == 'system'
           + ' Please configure with --enable-slirp=git')
  endif
  
@@ -95,7 +97,7 @@ index f394ea1..1dca05c 100644
  fdt = not_found
  fdt_opt = get_option('fdt')
  if have_system
-@@ -2571,6 +2584,9 @@ foreach target : target_dirs
+@@ -2611,6 +2624,9 @@ foreach target : target_dirs
  
    config_target += config_host
    target_inc = [include_directories('target' / config_target['TARGET_BASE_ARCH'])]
@@ -106,10 +108,10 @@ index f394ea1..1dca05c 100644
      target_inc += include_directories('linux-headers', is_system: true)
    endif
 diff --git a/meson_options.txt b/meson_options.txt
-index d770e1f..265e0e1 100644
+index fbf91e0..c7640cb 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -157,3 +157,6 @@ option('slirp', type: 'combo', value: 'auto',
+@@ -159,3 +159,6 @@ option('slirp', type: 'combo', value: 'auto',
  option('fdt', type: 'combo', value: 'auto',
         choices: ['disabled', 'enabled', 'auto', 'system', 'internal'],
         description: 'Whether and how to find the libfdt library')
@@ -128,5 +130,5 @@ index 90d2b1c..8b3095e 100644
  uint64_t fast_hash(const uint8_t *data, size_t len)
  {
 -- 
-2.33.1
+2.35.1
 

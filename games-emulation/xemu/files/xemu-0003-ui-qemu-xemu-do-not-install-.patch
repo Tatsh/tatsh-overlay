@@ -1,7 +1,7 @@
-From 20b3ead294745644534dd93a9d6f3fc4d42f5052 Mon Sep 17 00:00:00 2001
+From 4d1ad16990030b327e8edce4b6fc21660f0b3efa Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 6 Oct 2021 03:33:25 -0400
-Subject: [PATCH 3/4] ui: qemu -> xemu; do not install bmp
+Subject: [PATCH 3/7] ui: qemu -> xemu; do not install bmp
 
 ---
  ui/icons/meson.build | 10 +++-------
@@ -30,10 +30,10 @@ index 12c5208..7893e4b 100644
 +install_data('xemu.svg',
               install_dir: qemu_icondir / 'hicolor' / 'scalable' / 'apps')
 diff --git a/ui/meson.build b/ui/meson.build
-index abd516b..e101a11 100644
+index d735123..473a8f1 100644
 --- a/ui/meson.build
 +++ b/ui/meson.build
-@@ -201,7 +201,7 @@ subdir('shader')
+@@ -206,7 +206,7 @@ subdir('shader')
  if have_system
    subdir('icons')
  
@@ -43,5 +43,5 @@ index abd516b..e101a11 100644
  
  modules += {'ui': ui_modules}
 -- 
-2.33.0
+2.35.1
 
