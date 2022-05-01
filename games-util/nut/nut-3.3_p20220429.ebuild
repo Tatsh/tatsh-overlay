@@ -8,7 +8,7 @@ inherit desktop python-single-r1
 
 DESCRIPTION="Multi-purpose utility to manage and install Switch files (NSP, NSZ, XCI, XCZ)."
 HOMEPAGE="https://github.com/blawar/nut"
-SHA="e29d3738efc412ca14281b154f16a4adeeb33c52"
+SHA="78f1b68d384b5bc7ea2d0547f252381a7a1f2144"
 SRC_URI="https://github.com/blawar/nut/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3 MIT"
