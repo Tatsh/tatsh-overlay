@@ -150,7 +150,7 @@ def process_submodules(pkg_name: str, ref: str, contents: str,
         return contents
     repo_root = '/'.join([''] +
                          [x for x in urlparse(repo_uri).path.split('/')
-                          if x][1:3])
+                          if x][0:2])
     ebuild_lines = contents.splitlines(keepends=True)
     for item in SUBMODULES[pkg_name]:
         name = item
