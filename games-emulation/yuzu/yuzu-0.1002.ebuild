@@ -11,7 +11,7 @@ MY_PV="mainline-${PV/./-}"
 DYNARMIC_SHA="57af72a567454b93c757e087b4510a24b81911b1"
 HTTPLIB_SHA="9648f950f5a8a41d18833cf4a85f5821b1bcac54"
 SDL_SHA="e2ade2bfc46d915cd306c63c830b81d800b2575f"
-SIRIT_SHA="a39596358a3a5488c06554c0c15184a6af71e433"
+SIRIT_SHA="b8f133bf631ace5a613bbd7e8329300358cacbd2"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/ReinUsesLisp/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
