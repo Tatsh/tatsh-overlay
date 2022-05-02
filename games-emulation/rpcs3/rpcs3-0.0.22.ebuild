@@ -50,7 +50,7 @@ DEPEND="dev-libs/pugixml
 	net-misc/curl
 	sys-libs/ncurses
 	sys-libs/zlib
-	virtual/jpeg
+	media-libs/libjpeg-turbo
 	virtual/libusb:1
 	virtual/opengl
 	virtual/udev
