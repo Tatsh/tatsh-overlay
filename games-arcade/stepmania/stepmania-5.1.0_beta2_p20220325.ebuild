@@ -20,7 +20,7 @@ IUSE="+alsa +crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +networking +ogg
 DEPEND="X? ( x11-libs/libX11 )
 	alsa? ( media-libs/alsa-lib )
 	jack? ( virtual/jack )
-	jpeg? ( virtual/jpeg )
+	jpeg? ( media-libs/libjpeg-turbo )
 	mp3? ( media-libs/libmad )
 	ogg? ( media-libs/libogg media-libs/libvorbis )
 	pulseaudio? ( media-sound/pulseaudio )
