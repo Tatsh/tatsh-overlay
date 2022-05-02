@@ -1,4 +1,4 @@
-From 78680aaeb7533f8d34eee5d6e413f1e5cc250917 Mon Sep 17 00:00:00 2001
+From 617d28cfe85961a8ef1634ad6a596603fe9b5fec Mon Sep 17 00:00:00 2001
 From: Morph <39850852+Morph1984@users.noreply.github.com>
 Date: Tue, 3 Aug 2021 01:37:04 -0400
 Subject: [PATCH] main: Enable High DPI fixes for Qt >= 5.14
@@ -7,11 +7,11 @@ This uses Qt's new high DPI application attributes for scaling the current windo
 However, these aren't perfect as scaling with non integer scales will cause artifacts in UI, icons and other elements.
 Therefore, we use a heuristic to select an appropriate integer scale value depending on the current screen resolution and applies this to the application.
 ---
- src/yuzu/main.cpp | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ src/yuzu/main.cpp | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
 diff --git a/src/yuzu/main.cpp b/src/yuzu/main.cpp
-index ecd2f9f2490..974b7cced60 100644
+index f607f464a65..dc98f678787 100644
 --- a/src/yuzu/main.cpp
 +++ b/src/yuzu/main.cpp
 @@ -60,6 +60,7 @@ static FileSys::VirtualFile VfsDirectoryCreateFileWrapper(const FileSys::Virtual
@@ -22,21 +22,17 @@ index ecd2f9f2490..974b7cced60 100644
  #include <QShortcut>
  #include <QStatusBar>
  #include <QString>
-@@ -3700,6 +3701,41 @@ void GMainWindow::SetDiscordEnabled([[maybe_unused]] bool state) {
+@@ -3753,6 +3754,37 @@ void GMainWindow::SetDiscordEnabled([[maybe_unused]] bool state) {
  #undef main
  #endif
  
 +static void SetHighDPIAttributes(int argc, char* argv[]) {
-+    // Create a temporary QApplication as a workaround to get the current screen geometry.
-+    QApplication* temp_app = new QApplication(argc, argv);
-+
-+    const QScreen* primary_screen = temp_app->primaryScreen();
++    // Get the current screen geometry.
++    const QScreen* primary_screen = QGuiApplication::primaryScreen();
 +    const QRect screen_rect = primary_screen->geometry();
 +    const int real_width = screen_rect.width();
 +    const int real_height = screen_rect.height();
 +    const float real_ratio = primary_screen->logicalDotsPerInch() / 96.0f;
-+
-+    delete temp_app;
 +
 +    // Recommended minimum width and height for proper window fit.
 +    // Any screen with a lower resolution than this will still have a scale of 1.
@@ -64,7 +60,7 @@ index ecd2f9f2490..974b7cced60 100644
  int main(int argc, char* argv[]) {
      Common::DetachedTasks detached_tasks;
      MicroProfileOnThreadCreate("Frontend");
-@@ -3732,8 +3768,11 @@ int main(int argc, char* argv[]) {
+@@ -3785,8 +3817,11 @@ int main(int argc, char* argv[]) {
      }
  #endif
  
