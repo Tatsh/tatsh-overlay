@@ -7,12 +7,12 @@ inherit mpv-plugin
 
 MPV_REQ_USE="lua"
 
-DESCRIPTION="mpv plugin for automatic reloading of slow/stuck video streams"
-HOMEPAGE="https://github.com/4e6/mpv-reload"
+DESCRIPTION="Keeps track of your watched files."
+HOMEPAGE="https://github.com/jonniek/unseen-playlistmaker"
 SHA="9ee4843fe6153bcf86a15ddbde8958783bafd6e6"
 SRC_URI="https://github.com/jonniek/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="public-domain"
+LICENSE="Unlicense"
 SLOT="0"
 KEYWORDS="~amd64"
 
