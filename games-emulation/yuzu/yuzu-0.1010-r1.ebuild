@@ -56,7 +56,6 @@ BDEPEND=">=dev-cpp/catch-2.13.7
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-4949-high-dpi-fixes.patch"
 	"${FILESDIR}/${PN}-6769-create-shortcuts.patch"
 	"${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
 	"${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
