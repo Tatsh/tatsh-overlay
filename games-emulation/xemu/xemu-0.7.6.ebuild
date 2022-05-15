@@ -10,14 +10,18 @@ inherit eutils flag-o-matic python-r1 xdg-utils
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/mborgerson/xemu"
-GENCONFIG_SHA="8220e8748922ddd9bba4cbacd608601586c9a4bb"
+GENCONFIG_SHA="5da3fd2463288d9e048dbf3ea41f2bad0a4287a8"
+IMGUI_SHA="c71a50deb5ddf1ea386b91e60fa2e4a26d080074"
+IMPLOT_SHA="b47c8bacdbc78bc521691f70666f13924bb522ab"
 KEYCODEMAPDB_SHA="d21009b1c9f94b740ea66be8e48a1d8ad8124023"
 SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
 SLIRP_SHA="a88d9ace234a24ce1c17189642ef9104799425e0"
 TESTFLOAT_SHA="5a59dcec19327396a011a17fd924aed4fec416b3"
-TOMLPLUSPLUS_SHA="0f6a856dc436ef72667830de993f027c132b0529"
-SRC_URI="https://github.com/mborgerson/xemu/archive/v${PV}.tar.gz -> ${P}.tar.gz
+TOMLPLUSPLUS_SHA="27816dbbd168a84a0a7a252d7d75b0ca4dc1e073"
+SRC_URI="https://github.com/mborgerson/xemu/archive/${PN}-v${PV}.tar.gz -> ${P}.tar.gz
 	https://gitlab.com/qemu-project/keycodemapdb/-/archive/${KEYCODEMAPDB_SHA}/keycodemapdb-${KEYCODEMAPDB_SHA}.tar.gz -> ${PN}-keycodemapdb-${KEYCODEMAPDB_SHA:0:7}.tar.gz
+	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> ${PN}-imgui-${IMGUI_SHA:0:7}.tar.gz
+	https://github.com/epezent/implot/archive/${IMPLOT_SHA}.tar.gz -> ${PN}-implot-${IMPLOT_SHA:0:7}.tar.gz
 	https://gitlab.com/qemu-project/berkeley-softfloat-3/-/archive/${SOFTFLOAT_SHA}/berkeley-softfloat-3-${SOFTFLOAT_SHA}.tar.gz -> ${PN}-softfloat-${SOFTFLOAT_SHA:0:7}.tar.gz
 	https://gitlab.com/qemu-project/berkeley-testfloat-3/-/archive/${TESTFLOAT_SHA}/berkeley-testfloat-3-${TESTFLOAT_SHA}.tar.gz -> ${PN}-testfloat-${TESTFLOAT_SHA:0:7}.tar.gz
 	https://github.com/mborgerson/genconfig/archive/${GENCONFIG_SHA}.tar.gz -> ${PN}-genconfig-${GENCONFIG_SHA:0:7}.tar.gz
@@ -77,11 +81,13 @@ PATCHES=(
 DOCS=( README.md )
 
 src_prepare() {
+	{ rmdir genconfig && mv "${WORKDIR}/genconfig-${GENCONFIG_SHA}" genconfig; } || die
 	{ rmdir tests/fp/berkeley-softfloat-3 && mv "${WORKDIR}/berkeley-softfloat-3-${SOFTFLOAT_SHA}" tests/fp/berkeley-softfloat-3; } || die
 	{ rmdir tests/fp/berkeley-testfloat-3 && mv "${WORKDIR}/berkeley-testfloat-3-${TESTFLOAT_SHA}" tests/fp/berkeley-testfloat-3; } || die
-	{ rmdir ui/keycodemapdb && mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" ui/keycodemapdb; } || die
-	{ rmdir genconfig && mv "${WORKDIR}/genconfig-${GENCONFIG_SHA}" genconfig; } || die
 	{ rmdir tomlplusplus && mv "${WORKDIR}/tomlplusplus-${TOMLPLUSPLUS_SHA}" tomlplusplus; } || die
+	{ rmdir ui/keycodemapdb && mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" ui/keycodemapdb; } || die
+	{ rmdir ui/thirdparty/imgui && mv "${WORKDIR}/imgui-${IMGUI_SHA}" ui/thirdparty/imgui; } || die
+	{ rmdir ui/thirdparty/implot && mv "${WORKDIR}/implot-${IMPLOT_SHA}" ui/thirdparty/implot; } || die
 	echo "${PV}" > XEMU_VERSION || die
 	echo master > XEMU_BRANCH || die
 	touch XEMU_COMMIT || die
@@ -102,20 +108,20 @@ src_configure() {
 	use pulseaudio && audio_drv_list+=( pa )
 	use sdl && audio_drv_list+=( sdl )
 	local other_opts=(
-		--docdir=/usr/share/doc/${PF}/html
-		--libdir=/usr/$(get_libdir)
-		--disable-bsd-user
-		--disable-containers # bug #732972
-		--disable-guest-agent
-		--disable-tcg-interpreter
-		--cc="$(tc-getCC)"
-		--cxx="$(tc-getCXX)"
-		--host-cc="$(tc-getBUILD_CC)"
 		$(use_enable debug debug-info)
 		$(use_enable debug debug-tcg)
 		$(use_enable doc docs)
 		$(use_enable nls gettext)
 		$(use_enable xattr attr)
+		--cc="$(tc-getCC)"
+		--cxx="$(tc-getCXX)"
+		--disable-bsd-user
+		--disable-containers # bug #732972
+		--disable-guest-agent
+		--disable-tcg-interpreter
+		--docdir=/usr/share/doc/${PF}/html
+		--host-cc="$(tc-getBUILD_CC)"
+		--libdir=/usr/$(get_libdir)
 		# From qemu ebuild
 		# We support gnutls/nettle for crypto operations.  It is possible
 		# to use gcrypt when gnutls/nettle are disabled (but not when they
@@ -127,25 +133,25 @@ src_configure() {
 		--enable-libxml2
 	)
 	econf \
-		$(use_enable malloc-trim) \
-		$(use_enable lto) \
-		${debug_flag} \
-		$(use_enable io-uring linux-io-uring) \
-		--disable-blobs \
-		--disable-qom-cast-debug \
-		$(use_enable membarrier) \
-		--disable-strip \
+		$(use_enable aio linux-aio) \
 		$(use_enable cpu_flags_x86_avx2 avx2) \
 		$(use_enable cpu_flags_x86_avx512f avx512f) \
-		--disable-werror \
+		${debug_flag} \
+		$(use_enable io-uring linux-io-uring) \
+		$(use_enable lto) \
+		$(use_enable malloc-trim) \
+		$(use_enable membarrier) \
 		$(use_enable test tests) \
-		$(use_enable aio linux-aio) \
+		"--audio-drv-list=${audio_drv_list[*]}" \
+		--disable-blobs \
+		--disable-qom-cast-debug \
+		--disable-strip \
+		--disable-werror \
 		--enable-slirp=system \
 		"--extra-cflags=-DXBOX=1 ${build_cflags[@]} -Wno-error=redundant-decls ${CFLAGS}" \
 		--target-list=xemu \
 		--with-git-submodules=ignore \
 		--with-xxhash=system \
-		"--audio-drv-list=${audio_drv_list[*]}" \
 		"${other_opts[@]}"
 }
 
