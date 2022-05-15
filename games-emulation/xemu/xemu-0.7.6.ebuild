@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7,8,9,10} )
+PYTHON_COMPAT=( python3_{8,9,10} )
 PYTHON_REQ_USE="ncurses,readline"
 
 inherit eutils flag-o-matic python-r1 xdg-utils
@@ -11,17 +11,13 @@ inherit eutils flag-o-matic python-r1 xdg-utils
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/mborgerson/xemu"
 GENCONFIG_SHA="8220e8748922ddd9bba4cbacd608601586c9a4bb"
-IMGUI_SHA="e18abe3619cfa0eced163c027d0349506814816c"
-IMPLOT_SHA="a6bab98517b1baa3116db52518dda1eb2d7eaab7"
 KEYCODEMAPDB_SHA="d21009b1c9f94b740ea66be8e48a1d8ad8124023"
 SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
 SLIRP_SHA="a88d9ace234a24ce1c17189642ef9104799425e0"
 TESTFLOAT_SHA="5a59dcec19327396a011a17fd924aed4fec416b3"
 TOMLPLUSPLUS_SHA="0f6a856dc436ef72667830de993f027c132b0529"
-SRC_URI="https://github.com/mborgerson/xemu/archive/${PN}-v${PV}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/mborgerson/xemu/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://gitlab.com/qemu-project/keycodemapdb/-/archive/${KEYCODEMAPDB_SHA}/keycodemapdb-${KEYCODEMAPDB_SHA}.tar.gz -> ${PN}-keycodemapdb-${KEYCODEMAPDB_SHA:0:7}.tar.gz
-	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> ${PN}-imgui-${IMGUI_SHA:0:7}.tar.gz
-	https://github.com/epezent/implot/archive/${IMPLOT_SHA}.tar.gz -> ${PN}-implot-${IMPLOT_SHA:0:7}.tar.gz
 	https://gitlab.com/qemu-project/berkeley-softfloat-3/-/archive/${SOFTFLOAT_SHA}/berkeley-softfloat-3-${SOFTFLOAT_SHA}.tar.gz -> ${PN}-softfloat-${SOFTFLOAT_SHA:0:7}.tar.gz
 	https://gitlab.com/qemu-project/berkeley-testfloat-3/-/archive/${TESTFLOAT_SHA}/berkeley-testfloat-3-${TESTFLOAT_SHA}.tar.gz -> ${PN}-testfloat-${TESTFLOAT_SHA:0:7}.tar.gz
 	https://github.com/mborgerson/genconfig/archive/${GENCONFIG_SHA}.tar.gz -> ${PN}-genconfig-${GENCONFIG_SHA:0:7}.tar.gz
@@ -80,13 +76,9 @@ PATCHES=(
 )
 DOCS=( README.md )
 
-S="${WORKDIR}/${PN}-${PN}-v${PV}"
-
 src_prepare() {
 	{ rmdir tests/fp/berkeley-softfloat-3 && mv "${WORKDIR}/berkeley-softfloat-3-${SOFTFLOAT_SHA}" tests/fp/berkeley-softfloat-3; } || die
 	{ rmdir tests/fp/berkeley-testfloat-3 && mv "${WORKDIR}/berkeley-testfloat-3-${TESTFLOAT_SHA}" tests/fp/berkeley-testfloat-3; } || die
-	{ rmdir ui/imgui && mv "${WORKDIR}/imgui-${IMGUI_SHA}" ui/imgui; } || die
-	{ rmdir ui/implot && mv "${WORKDIR}/implot-${IMPLOT_SHA}" ui/implot; } || die
 	{ rmdir ui/keycodemapdb && mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" ui/keycodemapdb; } || die
 	{ rmdir genconfig && mv "${WORKDIR}/genconfig-${GENCONFIG_SHA}" genconfig; } || die
 	{ rmdir tomlplusplus && mv "${WORKDIR}/tomlplusplus-${TOMLPLUSPLUS_SHA}" tomlplusplus; } || die
