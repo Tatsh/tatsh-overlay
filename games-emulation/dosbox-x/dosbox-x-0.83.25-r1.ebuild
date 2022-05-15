@@ -32,6 +32,8 @@ DEPEND="debug? ( sys-libs/ncurses:0= )
 	)
 	media-libs/alsa-lib
 	media-libs/libglvnd
+	media-libs/libsdl2[X?]
+	media-libs/sdl2-net
 	net-libs/libpcap
 	sys-libs/zlib"
 RDEPEND="${DEPEND}"
@@ -44,48 +46,9 @@ S="${WORKDIR}/${PN}-${PN}-v${PV}"
 src_prepare() {
 	default
 	eautoreconf
-	pushd vs/sdlnet || die
-	eautoreconf
-	popd || die
 }
 
 src_configure() {
-	pushd vs/sdl || die
-	mkdir linux-host
-	ac_cv_header_iconv_h=no \
-	ac_cv_func_iconv=no \
-	ac_cv_lib_iconv_libiconv_open=no \
-	./configure \
-		--disable-dependency-tracking \
-		--disable-silent-rules \
-		--enable-static \
-		--disable-shared \
-		--disable-x11-shared \
-		--disable-video-x11-xrandr \
-		--disable-video-x11-vm \
-		--disable-video-x11-xv \
-		"--prefix=$(pwd -P)/linux-host"
-	emake
-	emake install
-	popd || die
-
-	pushd vs/sdlnet || die
-	mkdir linux-host || die
-	./configure \
-		--disable-dependency-tracking \
-		--disable-silent-rules \
-		--enable-static \
-		--disable-shared \
-		"--prefix=$(pwd -P)/linux-host" \
-		"--with-sdl-prefix=$(pwd -P)/../sdl/linux-host"
-	emake
-	emake install
-	popd || die
-
-	local debug_arg=debug
-	if use debug; then
-		debug_arg='debug=heavy'
-	fi
 	local fpu_arg='--disable-fpu-x86 --disable-fpu-x64'
 	if use fpu; then
 		if use x86; then
@@ -96,24 +59,24 @@ src_configure() {
 	fi
 	ac_cv_lib_X11_main=$(usex X yes no) \
 	econf \
-		$(use_enable midi alsa-midi) \
-		$(use_enable core-inline) \
-		--disable-optimize \
-		$(use_enable debug ${debug_arg}) \
-		$(use_enable mt-32 mt32) \
 		$(use_enable !hardened dynamic-core) \
 		$(use_enable !hardened dynamic-x86) \
+		$(use_enable X x11) \
+		$(use_enable core-inline) \
+		$(use_enable debug ${debug_arg}) \
 		$(use_enable dynrec) \
-		$(use_enable fpu) \
-		${fpu_arg} \
-		$(use_enable unaligned unaligned-memory) \
+		$(use_enable ffmpeg avcodec) \
+		$(use_enable fluidsynth libfluidsynth) \
+		$(use_enable fpu) ${fpu_arg} \
+		$(use_enable freetype) \
+		$(use_enable midi alsa-midi) \
+		$(use_enable mt-32 mt32) \
+		$(use_enable opengl) \
+		$(use_enable printer) \
 		$(use_enable screenshots) \
 		$(use_enable slirp libslirp) \
-		$(use_enable fluidsynth libfluidsynth) \
-		$(use_enable ffmpeg avcodec) \
-		$(use_enable opengl) \
-		$(use_enable X x11) \
-		$(use_enable freetype) \
+		$(use_enable unaligned unaligned-memory) \
 		$(use_enable xbrz) \
-		$(use_enable printer)
+		--disable-optimize \
+		--enable-sdl2
 }
