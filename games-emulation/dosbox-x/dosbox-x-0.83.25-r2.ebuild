@@ -13,6 +13,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="X +core-inline debug dynrec ffmpeg +fluidsynth +freetype +fpu hardened midi mt-32 opengl printer +screenshots slirp unaligned +xbrz"
+REQUIRED_USE="hardened? ( !dynrec )"
 
 DEPEND="debug? ( sys-libs/ncurses:0= )
 	ffmpeg? ( media-video/ffmpeg )
@@ -39,7 +40,10 @@ DEPEND="debug? ( sys-libs/ncurses:0= )
 RDEPEND="${DEPEND}"
 BDEPEND="dev-lang/nasm"
 
-PATCHES=( "${FILESDIR}/${PN}-fix-rpath.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-fix-rpath.patch"
+	"${FILESDIR}/${PN}-invert-1624f04.patch"
+)
 
 S="${WORKDIR}/${PN}-${PN}-v${PV}"
 
