@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="AMD FidelityFX Contrast Adaptive Sharpening."
+DESCRIPTION="AMD FidelityFX Super Resolution v1.0.2 for mpv."
 HOMEPAGE="https://gist.github.com/agyild/82219c545228d70c5604f865ce0b0ce5"
 GIST_ID="82219c545228d70c5604f865ce0b0ce5"
 SHA="2623d743b9c23f500ba086f05b385dcb1557e15d"
