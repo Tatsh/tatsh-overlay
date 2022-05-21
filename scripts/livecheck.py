@@ -70,7 +70,7 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
         'slirp',
         'tomlplusplus',
         'ui/thirdparty/imgui',
-        'ui/thirdpraty/implot',
+        'ui/thirdparty/implot',
         'ui/keycodemapdb',
         ('tests/fp/berkeley-softfloat-3', 'SOFTFLOAT_SHA'),
         ('tests/fp/berkeley-testfloat-3', 'TESTFLOAT_SHA'),
@@ -189,8 +189,11 @@ def get_highest_matches2(names: Sequence[str]) -> Iterator[str]:
 
 
 def catpkg_catpkgsplit(s: str) -> Tuple[str, str, str, str]:
-    cat, pkg, ebuild_version = catpkgsplit(s)[0:3]
-    return '/'.join((cat, pkg)), cat, pkg, ebuild_version
+    result = catpkgsplit(s)
+    if result:
+        cat, pkg, ebuild_version = result[0:3]
+        return '/'.join((cat, pkg)), cat, pkg, ebuild_version
+    raise ValueError()
 
 
 def chunks(l: Sequence[Any], n: int) -> Iterator[Sequence[Any]]:
@@ -314,6 +317,11 @@ def get_props(search_dir: str,
                         str(len(version)) + r'})[0-9a-f]*</id>'), False)
             else:
                 raise ValueError(f'Unhandled GitHub package: {catpkg}')
+        elif src_uri.startswith('https://gist.github.com'):
+            home = P.aux_get(match, ['HOMEPAGE'])[0]
+            yield (cat, pkg, ebuild_version, ebuild_version,
+                   f'{home}/revisions',
+                   r'<relative-time datetime="([0-9-]{10})', False)
         elif src_uri.startswith('mirror://pypi/'):
             dist_name = src_uri.split('/')[4]
             yield (cat, pkg, ebuild_version, ebuild_version,
@@ -361,14 +369,15 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
             if ls.get('no_auto_update', None):
                 no_auto_update.add(catpkg)
             if ls.get('transformation_function', None):
+                tfs = ls["transformation_function"]
                 try:
-                    tf = globals()[ls['transformation_function']]
+                    tf: Callable[[str], str] = globals()[tfs]
                 except KeyError as e:
-                    if ls['transformation_function'] == 'dash_to_underscore':
+                    if tfs == 'dash_to_underscore':
                         tf = lambda s: s.replace('-', '_')
                     else:
                         raise NameError('Unknown transformation '
-                                        f'function: {tf}') from e
+                                        f'function: {tfs}') from e
                 transformations[catpkg] = tf
     return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
                              ignored_packages, no_auto_update, transformations)
@@ -499,7 +508,7 @@ def main() -> int:
                                   version) and regex.startswith('archive/'):
                 log.debug('Adjusting RE for semantic versioning')
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+(?:\.\d+)?)')
-            prefixes = cast(Optional[Dict[str, str]], None)
+            prefixes: Optional[Dict[str, str]] = None
             if not regex:
                 if 'www.jetbrains.com/updates' in url:
                     if pkg.startswith('idea'):
@@ -537,6 +546,9 @@ def main() -> int:
             if prefixes:
                 assert top_hash in prefixes
                 top_hash = f'{prefixes[top_hash]}{top_hash}'
+            if (re.match(r'[0-9]{4}-[0-9]{2}-[0-9]{2}$', top_hash)
+                    and 'gist.github.com' in url):
+                top_hash = top_hash.replace('-', '')
             log.debug(
                 'Comparing current ebuild version %s with live version %s',
                 version, top_hash)
