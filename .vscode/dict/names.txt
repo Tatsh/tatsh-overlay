@@ -17,6 +17,7 @@ libchdr
 libudev
 lodepng
 mbedtls
+npmrc
 nuanceur
 pthread
 qfile
@@ -30,6 +31,7 @@ stdc
 stepmania
 tasksh
 tatsh
+tomlplusplus
 tsschecker
 udev
 udvare
