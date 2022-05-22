@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/CogentRedTester/mpv-scroll-list"
 SHA="36a37c0ce6c33cce1470df0f535300d0cf698eff"
 SRC_URI="https://github.com/CogentRedTester/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="all-rights-reserved"
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
