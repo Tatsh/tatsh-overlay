@@ -13,7 +13,7 @@ SRC_URI="https://github.com/CogentRedTester/${PN}/archive/${SHA}.tar.gz -> ${P}.
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
-RDEPEND="mpv-plugin/mpv-scroll-list"
+RDEPEND="media-video/lsdvd mpv-plugin/mpv-scroll-list"
 
 MPV_PLUGIN_FILES=(
 	${PN:4}.lua
