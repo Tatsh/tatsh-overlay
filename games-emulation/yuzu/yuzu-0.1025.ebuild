@@ -61,6 +61,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
 	"${FILESDIR}/${PN}-7213-openssl.patch"
 	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
+	"${FILESDIR}/${PN}-revert-new-vkresult.patch"
 	"${FILESDIR}/${PN}-system-robin-map.patch"
 )
 
@@ -94,10 +95,10 @@ src_configure() {
 		-DGIT_BRANCH="${PN}"
 		-DGIT_DESC="${PV}"
 		-DGIT_REV="${PV}"
+		-DSIRIT_USE_SYSTEM_SPIRV_HEADERS=ON
 		-DUSE_DISCORD_PRESENCE=OFF
 		-DYUZU_USE_EXTERNAL_SDL2=ON
 		-DYUZU_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)
-		-DYUZU_USE_BUNDLED_BOOST=OFF
 		-DYUZU_USE_BUNDLED_CUBEB=OFF
 		-DYUZU_USE_BUNDLED_HTTPLIB=ON
 		-DYUZU_USE_BUNDLED_INIH=OFF
