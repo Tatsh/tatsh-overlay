@@ -11,7 +11,7 @@ SHA="de5ba0fc41ef9475189cc0a1064c5f2c90b88c87"
 MY_PN="VR-reversal"
 SRC_URI="https://github.com/dfaker/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="all-rights-reserved"
+LICENSE="Unlicense"
 SLOT="0"
 KEYWORDS="~amd64"
 
