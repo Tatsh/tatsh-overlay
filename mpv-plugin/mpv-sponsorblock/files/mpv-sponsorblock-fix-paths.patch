@@ -13,25 +13,25 @@ index 77ade20..edccffa 100644
 --- a/sponsorblock.lua
 +++ b/sponsorblock.lua
 @@ -21,7 +21,7 @@ local options = {
- 
+
      -- Note that sponsored segments may ocasionally be inaccurate if this is turned off
      -- see https://blog.ajay.app/voting-and-pseudo-randomness-or-sponsorblock-or-youtube-sponsorship-segment-blocker
 -    local_database = true,
 +    local_database = false,
- 
+
      -- Update database on first run, does nothing if local_database is false
      auto_update = true,
 @@ -89,11 +89,11 @@ if legacy then
  end
- 
+
  local utils = require "mp.utils"
 -scripts_dir = mp.find_config_file("scripts")
 +user_scripts_dir = mp.find_config_file("scripts")
- 
+
 -local sponsorblock = utils.join_path(scripts_dir, "sponsorblock_shared/sponsorblock.py")
 -local uid_path = utils.join_path(scripts_dir, "sponsorblock_shared/sponsorblock.txt")
 -local database_file = options.local_database and utils.join_path(scripts_dir, "sponsorblock_shared/sponsorblock.db") or ""
-+local sponsorblock = "@EPREFIX@/usr/bin/mpv_sponsorblock.py"
++local sponsorblock = "@EPREFIX@/usr/@LIBDIR@/mpv/sponsorblock_shared/sponsorblock.py"
 +local uid_path = utils.join_path(user_scripts_dir, "sponsorblock_shared/sponsorblock.txt")
 +local database_file = options.local_database and utils.join_path(user_scripts_dir, "sponsorblock_shared/sponsorblock.db") or ""
  local youtube_id = nil
@@ -46,6 +46,6 @@ index 8370a6a..edb90de 100644
  import urllib.request
  import urllib.parse
  import hashlib
--- 
+--
 2.33.1
 

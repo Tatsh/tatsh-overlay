@@ -27,7 +27,9 @@ MPV_PLUGIN_FILES=(
 
 src_prepare() {
 	default
-	sed -r -e "s|@EPREFIX@|${EPREFIX}|g" -i sponsorblock.lua \
+	sed -re "s|@EPREFIX@|${EPREFIX}|g" \
+		-e "s|@LIBDIR@|$(get_libdir)|g" \
+		-i sponsorblock.lua \
 		sponsorblock_shared/sponsorblock.py || die
 }
 
