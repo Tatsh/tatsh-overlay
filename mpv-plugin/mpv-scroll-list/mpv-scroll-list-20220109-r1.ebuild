@@ -2,10 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
-inherit mpv-plugin
-
-MPV_REQ_USE="lua"
+LUA_COMPAT=( lua5-1 luajit )
+inherit lua
 
 DESCRIPTION="API to allow scripts to create interactive scrollable lists in mpv player."
 HOMEPAGE="https://github.com/CogentRedTester/mpv-scroll-list"
@@ -16,8 +14,18 @@ LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
 
-MPV_PLUGIN_FILES=(
-	${PN:4}.lua
-)
+REQUIRED_USE="${LUA_REQUIRED_USE}"
+DEPEND="${LUA_DEPS}"
+RDEPEND="${DEPEND} media-video/mpv[lua]"
 
 S="${WORKDIR}/${PN}-${SHA}"
+
+_install_module() {
+	insinto "$(lua_get_lmod_dir)"
+	doins "${PN:4}.lua"
+}
+
+src_install() {
+	lua_foreach_impl _install_module
+	einstalldocs
+}
