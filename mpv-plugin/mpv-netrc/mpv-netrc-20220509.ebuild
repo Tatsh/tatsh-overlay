@@ -2,10 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
-inherit mpv-plugin
-
 MPV_REQ_USE="lua"
+inherit mpv-plugin
 
 DESCRIPTION="Reads ~/.netrc and sets up authorisation for URIs."
 HOMEPAGE="https://github.com/Tatsh/mpv-netrc"
