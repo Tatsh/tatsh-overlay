@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/CogentRedTester/mpv-dvd-browser"
 SHA="114417bbfa1fc6dd17162fa84cd1c0e5d78cc0dd"
 SRC_URI="https://github.com/CogentRedTester/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="all-rights-reserved"
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 RDEPEND="media-video/lsdvd mpv-plugin/mpv-scroll-list"
