@@ -2,10 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
-inherit mpv-plugin
-
 MPV_REQ_USE="lua"
+inherit mpv-plugin
 
 DESCRIPTION="Play upcoming videos from YouTube."
 HOMEPAGE="https://github.com/cvzi/mpv-youtube-upnext"
