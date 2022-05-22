@@ -2,10 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
-inherit mpv-plugin
-
 MPV_REQ_USE="lua"
+inherit mpv-plugin
 
 DESCRIPTION="mpv plugin for automatic reloading of slow/stuck video streams"
 HOMEPAGE="https://github.com/4e6/mpv-reload"
