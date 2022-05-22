@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/cvzi/mpv-youtube-upnext"
 SHA="d3d7b1d5ed0d2afb3227ec1ef1155a6bd7f6481d"
 SRC_URI="https://github.com/cvzi/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="all-rights-reserved"
+LICENSE="ISC"
 SLOT="0"
 KEYWORDS="~amd64"
 
