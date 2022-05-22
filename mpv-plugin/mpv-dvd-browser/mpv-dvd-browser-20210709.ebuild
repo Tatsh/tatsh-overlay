@@ -2,10 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
-inherit mpv-plugin
-
 MPV_REQ_USE="lua"
+inherit mpv-plugin
 
 DESCRIPTION="API to allow scripts to create interactive scrollable lists in mpv player."
 HOMEPAGE="https://github.com/CogentRedTester/mpv-dvd-browser"
