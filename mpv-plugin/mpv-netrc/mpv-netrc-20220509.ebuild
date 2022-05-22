@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/Tatsh/mpv-netrc"
 SHA="da40a39a32a1f1cf27a3abbc73ac2faceded06c6"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="all-rights-reserved"
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
