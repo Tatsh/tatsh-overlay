@@ -1,4 +1,4 @@
-# Copyright 2019-2021 Gentoo Authors
+# Copyright 2019-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -15,6 +15,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc weave"
 
 RDEPENDS="media-libs/alsa-lib"
+
+PATCHES=( "${FILESDIR}/${PN}-dma-api.patch" )
 
 S="${WORKDIR}/ProCaptureForLinux_${SUFFIX}"
 
