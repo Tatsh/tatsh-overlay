@@ -12,7 +12,8 @@ SRC_URI="https://github.com/GerbilSoft/${PN}/archive/refs/tags/v${PV}.tar.gz -> 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="achievements cli crypt gtk kde nls lto lz4 lzo pvr unice68 xbox-360 xfce xml zstd"
+IUSE="achievements +astc cli +crypt gtk kde nls lto +lz4 +lzo +pvr +unice68 +xbox-360 xfce +xml +zstd"
+REQUIRED_USE="pvr? ( astc )"
 
 DEPEND="
 	dev-libs/nettle
@@ -32,16 +33,8 @@ DEPEND="
 REQUIRED_USE="|| ( cli gtk kde xfce )"
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${PN}-0001-gentoo.patch" )
 DOCS=( README.md NEWS.md )
-
-src_prepare() {
-	sed -e '/assert(img != INVALID_IMG_PTR);/d' -i src/librpbase/RomData.cpp || die
-	{ head -n 17 doc/CMakeLists.txt > new && mv new doc/CMakeLists.txt; } || die
-	sed -r -e '/COMPILING\.md/d' \
-		-e 's/DIR_INSTALL_DOC/DIR_INSTALL_SHARE/g' \
-		-i doc/CMakeLists.txt || die
-	cmake_src_prepare
-}
 
 src_configure() {
 	local mycmakeargs=(
@@ -50,6 +43,7 @@ src_configure() {
 		-DBUILD_KF5=$(usex kde)
 		-DBUILD_XFCE=$(usex xfce)
 		-DENABLE_ACHIEVEMENTS=$(usex achievements)
+		-DENABLE_ASTC=$(usex astc)
 		-DENABLE_DECRYPTION=$(usex crypt)
 		-DENABLE_JPEG=ON
 		-DENABLE_LIBMSPACK=$(usex xbox-360)

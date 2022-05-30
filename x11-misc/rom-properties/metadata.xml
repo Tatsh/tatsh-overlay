@@ -7,6 +7,7 @@
 	</maintainer>
 	<use>
 		<flag name="achievements">Enable achievement pop-ups.</flag>
+		<flag name="astc">Enable ASTC texture support</flag>
 		<flag name="cli">Build rpcli command.</flag>
 		<flag name="lto">Enable link-time optimization.</flag>
 		<flag name="pvr">Enable the PowerVR Native SDK subset for PVRTC decompression.</flag>

@@ -1,0 +1,137 @@
+From 402368135d2694189c95ea307da2f1e7ba80e45d Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 29 May 2022 20:06:15 -0400
+Subject: [PATCH] Gentoo
+
+---
+ CMakeLists.txt                   | 10 ----------
+ src/kde/kf5/CMakeLists.txt       | 10 +++++-----
+ src/librpbase/RomData.cpp        |  1 -
+ src/libunixcommon/CMakeLists.txt |  8 ++++----
+ xdg/rp-config.desktop.in         |  3 +--
+ 5 files changed, 10 insertions(+), 22 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3cdbc589e..cf9ade8c6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -159,7 +159,6 @@ ENDIF(ENABLE_NLS)
+ # Project subdirectories.
+ ADD_SUBDIRECTORY(extlib)
+ ADD_SUBDIRECTORY(src)
+-ADD_SUBDIRECTORY(doc)
+ ADD_SUBDIRECTORY(xdg)
+ 
+ ### Build summary ###
+@@ -324,15 +323,6 @@ SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+ SET(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
+ #SET(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_SOURCE_DIR}/doc/WELCOME.txt")
+ 
+-# Additional document files for the root directory.
+-# TODO: Convert from Unix line endings to Windows when
+-# compiling for Windows?
+-INCLUDE(DirInstallPaths)
+-INSTALL(FILES NETWORK.md
+-	DESTINATION "${DIR_INSTALL_DOC_ROOT}"
+-	COMPONENT "doc"
+-	)
+-
+ # CPack: Source package settings.
+ # NOTE: Double-escape is required because the unescaped
+ # string # is written to CPackSourceConfig.cmake, which
+diff --git a/src/kde/kf5/CMakeLists.txt b/src/kde/kf5/CMakeLists.txt
+index c12e59fd5..b5d3ea1b9 100644
+--- a/src/kde/kf5/CMakeLists.txt
++++ b/src/kde/kf5/CMakeLists.txt
+@@ -33,7 +33,7 @@ IF(ECM_MODULE_PATH AND ECM_KDE_MODULE_DIR)
+ 	FIND_PACKAGE(Qt5 ${REQUIRE_KF5} COMPONENTS Core Gui Widgets DBus)
+ 	IF(Qt5Core_FOUND AND Qt5Gui_FOUND AND Qt5Widgets_FOUND)
+ 		# NOTE: QT_PLUGIN_INSTALL_DIR is missing the 'qt5' directory.
+-		# Use `qtpaths` instead to get the actual path.
++		# Use `qtpaths5` instead to get the actual path.
+ 		#
+ 		# Ubuntu:
+ 		# - Expected: lib/${DEB_HOST_MULTIARCH}/qt5/plugins
+@@ -48,10 +48,10 @@ IF(ECM_MODULE_PATH AND ECM_KDE_MODULE_DIR)
+ 		# - Actual:   (FIXME)
+ 		#
+ 
+-		# Find the qtpaths executable.
+-		FIND_PROGRAM(QTPATHS qtpaths)
++		# Find the qtpaths5 executable.
++		FIND_PROGRAM(QTPATHS qtpaths5)
+ 		IF(NOT QTPATHS)
+-			MESSAGE(FATAL_ERROR "qtpaths not found. Install one of these packages:
++			MESSAGE(FATAL_ERROR "qtpaths5 not found. Install one of these packages:
+   - Debian/Ubuntu: qttools5-dev-tools
+   - Red Hat/Fedora: qt5-qttools")
+ 		ENDIF(NOT QTPATHS)
+@@ -60,7 +60,7 @@ IF(ECM_MODULE_PATH AND ECM_KDE_MODULE_DIR)
+ 		# Prefix will be removed from the plugin directory if necessary.
+ 		EXEC_PROGRAM(${QTPATHS} ARGS --plugin-dir OUTPUT_VARIABLE KF5_PLUGIN_INSTALL_DIR)
+ 		IF(NOT KF5_PLUGIN_INSTALL_DIR)
+-			MESSAGE(FATAL_ERROR "`qtpaths` isn't working correctly.")
++			MESSAGE(FATAL_ERROR "`qtpaths5` isn't working correctly.")
+ 		ENDIF(NOT KF5_PLUGIN_INSTALL_DIR)
+ 		# FIXME: Mageia has the Qt path set to "/usr/lib64/qt5" instead of "/usr".
+ 		# Reference: https://github.com/GerbilSoft/rom-properties/issues/69
+diff --git a/src/librpbase/RomData.cpp b/src/librpbase/RomData.cpp
+index 1e702bf19..1ff3b4479 100644
+--- a/src/librpbase/RomData.cpp
++++ b/src/librpbase/RomData.cpp
+@@ -849,7 +849,6 @@ const rp_image *RomData::image(ImageType imageType) const
+ 
+ #ifdef _DEBUG // Must be guarded with this in case neither `_DEBUG` nor `NDEBUG` are defined
+ 	// SANITY CHECK: `img` must not be -1LL.
+-	assert(img != INVALID_IMG_PTR);
+ #endif
+ 
+ 	return (ret == 0 ? img : nullptr);
+diff --git a/src/libunixcommon/CMakeLists.txt b/src/libunixcommon/CMakeLists.txt
+index 99e9aeaf7..27ab3168e 100644
+--- a/src/libunixcommon/CMakeLists.txt
++++ b/src/libunixcommon/CMakeLists.txt
+@@ -31,12 +31,12 @@ IF(BUILD_KDE4)
+ 	STRING(REPLACE "-std=iso9899:1990" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+ ENDIF(BUILD_KDE4)
+ 
+-# Find the qtpaths executable.
++# Find the qtpaths5 executable.
+ IF(BUILD_KF5)
+ 	SET(ENV{QT_SELECT} qt5)
+-	FIND_PROGRAM(QTPATHS qtpaths)
++	FIND_PROGRAM(QTPATHS qtpaths5)
+ 	IF(NOT QTPATHS)
+-		MESSAGE(FATAL_ERROR "qtpaths not found. Install one of these packages:
++		MESSAGE(FATAL_ERROR "qtpaths5 not found. Install one of these packages:
+   - Debian/Ubuntu: qttools5-dev-tools
+   - Red Hat/Fedora: qt5-qttools")
+ 	ENDIF(NOT QTPATHS)
+@@ -45,7 +45,7 @@ IF(BUILD_KF5)
+ 	# Prefix will be removed from the plugin directory if necessary.
+ 	EXEC_PROGRAM(${QTPATHS} ARGS --plugin-dir OUTPUT_VARIABLE KF5_PLUGIN_INSTALL_DIR)
+ 	IF(NOT KF5_PLUGIN_INSTALL_DIR)
+-		MESSAGE(FATAL_ERROR "`qtpaths` isn't working correctly.")
++		MESSAGE(FATAL_ERROR "`qtpaths5` isn't working correctly.")
+ 	ENDIF(NOT KF5_PLUGIN_INSTALL_DIR)
+ 	EXEC_PROGRAM(${QTPATHS} ARGS --install-prefix OUTPUT_VARIABLE QT5_INSTALL_PREFIX)
+ 	INCLUDE(ReplaceHardcodedPrefix)
+diff --git a/xdg/rp-config.desktop.in b/xdg/rp-config.desktop.in
+index e721b9af7..34ddbc2ed 100644
+--- a/xdg/rp-config.desktop.in
++++ b/xdg/rp-config.desktop.in
+@@ -1,10 +1,9 @@
+ [Desktop Entry]
+-Version=@RP_DISPLAY_VERSION@
+ Icon=media-flash
+ Exec=rp-config
+ Terminal=false
+ Type=Application
+-Categories=System;Settings;QT;
++Categories=System;Settings;
+ Name=ROM Properties configurator
+ Name[de]=ROM Properties konfigurator
+ Name[en_GB]=ROM Properties configurator
+-- 
+2.35.1
+
