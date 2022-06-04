@@ -60,6 +60,7 @@ BDEPEND="dev-lang/perl
 	sys-apps/texinfo
 	virtual/pkgconfig
 	$(python_gen_impl_dep)
+	$(python_gen_any_dep 'dev-python/pyyaml[${PYTHON_USEDEP}]')
 	doc? (
 			dev-python/sphinx
 			dev-python/sphinx_rtd_theme
