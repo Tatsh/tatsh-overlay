@@ -13,7 +13,7 @@ SRC_URI="https://github.com/andrivet/python-asn1/archive/refs/tags/v${PV}.tar.gz
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~ppc64"
 
 S="${WORKDIR}/python-${P}"
 
