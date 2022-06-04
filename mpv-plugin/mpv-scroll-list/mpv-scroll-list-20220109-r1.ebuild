@@ -12,7 +12,7 @@ SRC_URI="https://github.com/CogentRedTester/${PN}/archive/${SHA}.tar.gz -> ${P}.
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~ppc64"
 
 REQUIRED_USE="${LUA_REQUIRED_USE}"
 DEPEND="${LUA_DEPS}"
