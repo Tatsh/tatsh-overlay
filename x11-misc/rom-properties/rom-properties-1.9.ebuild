@@ -11,7 +11,7 @@ SRC_URI="https://github.com/GerbilSoft/${PN}/archive/refs/tags/v${PV}.tar.gz -> 
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="achievements +astc cli +crypt gtk kde nls lto +lz4 +lzo +pvr +unice68 +xbox-360 xfce +xml +zstd"
 REQUIRED_USE="pvr? ( astc )"
 
