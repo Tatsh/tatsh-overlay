@@ -12,7 +12,7 @@ SRC_URI="https://github.com/zenyd/mpv-scripts/archive/${SHA}.tar.gz -> zenyd-mpv
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~ppc64"
 
 MPV_PLUGIN_FILES=(
 	"${PN/-/_}.lua"
