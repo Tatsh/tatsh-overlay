@@ -10,7 +10,7 @@ SRC_URI="https://www.wolfssl.com/${P}.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="debug cpu_flags_x86_aes sniffer"
 
 DEPEND="sniffer? ( net-libs/libpcap )"
