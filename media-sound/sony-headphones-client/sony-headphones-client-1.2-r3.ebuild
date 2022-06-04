@@ -12,7 +12,7 @@ SRC_URI="https://github.com/Plutoberth/SonyHeadphonesClient/archive/${SHA}.tar.g
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
 
 DEPEND="dev-qt/qtcore
 	dev-qt/qtgui
