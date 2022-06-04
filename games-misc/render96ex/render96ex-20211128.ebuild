@@ -19,7 +19,7 @@ RESTRICT="fetch"
 
 LICENSE="all-rights-reserved"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~ppc64"
 IUSE="+goddard
 	+models
 	+texture-fix
