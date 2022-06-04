@@ -12,7 +12,7 @@ SRC_URI="https://github.com/nicman23/dkms-hid-nintendo/archive/${SHA}.tar.gz -> 
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="~amd64 ~arm64 ~ppc64"
 
 S="${WORKDIR}/dkms-${PN}-${SHA}"
 MODULE_NAMES="${PN}(kernel/drivers/hid:${S}/src)"
