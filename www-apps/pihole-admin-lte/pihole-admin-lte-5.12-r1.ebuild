@@ -15,7 +15,7 @@ SRC_URI="https://github.com/pi-hole/AdminLTE/archive/refs/tags/v${PV}.tar.gz -> 
 
 LICENSE="EUPL-1.2"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~ppc64"
 
 BDEPEND="app-misc/jq app-portage/portage-utils"
 RDEPEND="app-admin/sudo
