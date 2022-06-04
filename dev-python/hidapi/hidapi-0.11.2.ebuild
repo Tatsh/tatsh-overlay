@@ -13,7 +13,7 @@ SRC_URI="https://github.com/trezor/cython-hidapi/archive/refs/tags/${MY_PV}.tar.
 
 LICENSE="|| ( BSD GPL-3 HIDAPI )"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 
 DEPEND=">=dev-libs/hidapi-$(ver_cut 1-2)"
 RDEPEND="${DEPEND}"
