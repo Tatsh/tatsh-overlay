@@ -12,7 +12,7 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="+alsa +crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +networking +ogg
 	+wav +xinerama +sdl +xrandr +X +bundled-songs +bundled-courses lto minimaid
 	parallel-port profiling pulseaudio jack"
