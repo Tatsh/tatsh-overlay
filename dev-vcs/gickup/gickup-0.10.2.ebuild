@@ -693,7 +693,7 @@ SRC_URI="https://github.com/cooperspencer/${PN}/archive/refs/tags/v${MY_PV}.tar.
 
 LICENSE="Apache-2.0 BSD-2 BSD MIT MPL-2.0"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~ppc64"
 
 S="${WORKDIR}/${PN}-${MY_PV}"
 
