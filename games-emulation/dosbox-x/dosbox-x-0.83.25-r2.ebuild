@@ -11,7 +11,7 @@ SRC_URI="https://github.com/joncampbell123/dosbox-x/archive/refs/tags/${PN}-v${P
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="X +core-inline debug dynrec ffmpeg +fluidsynth +freetype +fpu hardened midi mt-32 opengl printer +screenshots slirp unaligned +xbrz"
 REQUIRED_USE="hardened? ( !dynrec )"
 
