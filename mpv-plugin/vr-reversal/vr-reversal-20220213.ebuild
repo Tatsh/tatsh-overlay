@@ -13,7 +13,7 @@ SRC_URI="https://github.com/dfaker/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 
 LICENSE="Unlicense"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~ppc64"
 
 MPV_PLUGIN_FILES=(
 	360plugin.lua
