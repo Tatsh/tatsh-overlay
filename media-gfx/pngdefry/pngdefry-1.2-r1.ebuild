@@ -11,7 +11,7 @@ SRC_URI="https://web.archive.org/web/20211205021959/http://www.jongware.com/bina
 
 LICENSE="public-domain"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 
 S="${WORKDIR}/source"
 
