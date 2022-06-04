@@ -9,7 +9,7 @@ inherit python-single-r1
 DESCRIPTION="A code-completion engine for Vim."
 HOMEPAGE="https://github.com/ycm-core/YouCompleteMe"
 LICENSE="GPL-3"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc64 ~x86"
 
 SLOT="0"
 SHA="3ededaed2f9923d50bf3860ba8dace0f7d2724cd"
