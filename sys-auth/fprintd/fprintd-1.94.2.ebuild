@@ -13,7 +13,7 @@ SRC_URI="https://gitlab.freedesktop.org/libfprint/fprintd/-/archive/v${PV}/${P}.
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="gtk-doc +pam static-libs systemd test"
 REQUIRED_USE="systemd? ( pam )
 	test? ( ${PYTHON_REQUIRED_USE} )"
