@@ -1,7 +1,7 @@
-From 402368135d2694189c95ea307da2f1e7ba80e45d Mon Sep 17 00:00:00 2001
+From e6a53d368e2407d73a9b2241d88bd80a259159b2 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 29 May 2022 20:06:15 -0400
-Subject: [PATCH] Gentoo
+Subject: [PATCH 37/38] Gentoo
 
 ---
  CMakeLists.txt                   | 10 ----------
@@ -76,7 +76,7 @@ index c12e59fd5..b5d3ea1b9 100644
  		# FIXME: Mageia has the Qt path set to "/usr/lib64/qt5" instead of "/usr".
  		# Reference: https://github.com/GerbilSoft/rom-properties/issues/69
 diff --git a/src/librpbase/RomData.cpp b/src/librpbase/RomData.cpp
-index 1e702bf19..1ff3b4479 100644
+index c693e6193..f0f9859fe 100644
 --- a/src/librpbase/RomData.cpp
 +++ b/src/librpbase/RomData.cpp
 @@ -849,7 +849,6 @@ const rp_image *RomData::image(ImageType imageType) const

@@ -1,0 +1,40 @@
+From 2a98fa7e735c55b5ab5c4885f6bb1ee794c5d937 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 5 Jun 2022 04:03:35 -0400
+Subject: [PATCH 38/38] ppc64 support
+
+---
+ cmake/macros/CPUInstructionSetFlags.cmake | 3 +++
+ cmake/macros/DirInstallPaths.cmake        | 2 ++
+ 2 files changed, 5 insertions(+)
+
+diff --git a/cmake/macros/CPUInstructionSetFlags.cmake b/cmake/macros/CPUInstructionSetFlags.cmake
+index cce9b7b38..dc7584305 100644
+--- a/cmake/macros/CPUInstructionSetFlags.cmake
++++ b/cmake/macros/CPUInstructionSetFlags.cmake
+@@ -52,6 +52,9 @@ ELSE()
+ 			SET(CPU_arm 1)
+ 			SET(WIN32_MANIFEST_PROCESSOR_ARCHITECTURE "arm")
+ 		ENDIF()
++  ELSEIF(arch MATCHES "^ppc64")
++    SET(CPU_ppc64 1)
++    SET(WIN32_MANIFEST_PROCESSOR_ARCHITECTURE "ppc64")
+ 	ENDIF()
+ 	UNSET(arch)
+ ENDIF()
+diff --git a/cmake/macros/DirInstallPaths.cmake b/cmake/macros/DirInstallPaths.cmake
+index 2343b8ba3..ecaf2eda1 100644
+--- a/cmake/macros/DirInstallPaths.cmake
++++ b/cmake/macros/DirInstallPaths.cmake
+@@ -23,6 +23,8 @@ ELSEIF(CPU_arm)
+ 	SET(arch "arm")
+ ELSEIF(CPU_arm64)
+ 	SET(arch "arm64")
++ELSEIF(CPU_ppc64)
++  SET(arch "ppc64")
+ ELSE()
+ 	MESSAGE(FATAL_ERROR "Unsupported CPU architecture, please fix!")
+ ENDIF()
+-- 
+2.35.1
+
