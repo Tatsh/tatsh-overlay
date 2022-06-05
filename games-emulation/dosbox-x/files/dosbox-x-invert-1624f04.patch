@@ -1,16 +1,3 @@
---- b/src/hardware/voodoo_opengl.cpp
-+++ a/src/hardware/voodoo_opengl.cpp
-@@ -1745,8 +1745,8 @@
-     GFX_ReleaseMouse();
-     GFX_ForceFullscreenExit();
- 
-+	if (new_height<v->fbi.height) new_height = v->fbi.height;
-+	if (new_width < v->fbi.width) new_width = v->fbi.width;
--	/*if (new_height<v->fbi.height) */new_height = v->fbi.height;
--	/*if (new_width < v->fbi.width) */new_width = v->fbi.width;
- 
- 	if (GFX_LazyFullscreenRequested()) GFX_SwitchFullscreenNoReset();
- 
 --- b/src/output/output_opengl.cpp
 +++ a/src/output/output_opengl.cpp
 @@ -199,11 +199,7 @@
