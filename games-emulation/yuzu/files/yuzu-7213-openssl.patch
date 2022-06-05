@@ -92,9 +92,9 @@ index 6536d0544..e9d8671ed 100644
  target_link_libraries(core PUBLIC common PRIVATE audio_core video_core)
 -target_link_libraries(core PUBLIC Boost::boost PRIVATE fmt::fmt nlohmann_json::nlohmann_json mbedtls Opus::Opus)
 +target_link_libraries(core PUBLIC Boost::boost PRIVATE fmt::fmt nlohmann_json::nlohmann_json Opus::Opus crypto-backend)
- 
- if (ENABLE_WEB_SERVICE)
-     target_compile_definitions(core PRIVATE -DENABLE_WEB_SERVICE)
+ if (MINGW)
+     target_link_libraries(core PRIVATE ${MSWSOCK_LIBRARY})
+ endif()
 diff --git a/src/core/crypto/aes_util.cpp b/src/core/crypto/aes_util_mbedtls.cpp
 similarity index 99%
 rename from src/core/crypto/aes_util.cpp
