@@ -12,7 +12,7 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc64 ~x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE="+alsa +crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +networking +ogg
 	+wav +xinerama +sdl +xrandr +X +bundled-songs +bundled-courses lto minimaid
 	parallel-port profiling pulseaudio jack"
@@ -43,6 +43,8 @@ DEPEND="X? ( x11-libs/libX11 )
 	x11-libs/gtk+:2
 	x11-libs/libXext
 	x11-libs/libXtst"
+
+PATCHES=( "${FILESDIR}/${PN}-add-ppc64-detection.patch" )
 
 S="${WORKDIR}/${PN}-${SHA}"
 CMAKE_MAKEFILE_GENERATOR=ninja

@@ -1,0 +1,45 @@
+diff --git a/configure.ac b/configure.ac
+index e0a66a8d72..9ae7953011 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -168,6 +168,10 @@ i?86*)
+ x86_64*)
+ 	AC_DEFINE(CPU_X86_64, 1, [x86-64])
+ 	;;
++powerpc64)
++	AC_DEFINE(CPU_PPC64, 1, [PPC64])
++	have_parallel_port=no
++	;;
+ powerpc*)
+ 	AC_DEFINE(CPU_PPC, 1, [PPC])
+ 	have_parallel_port=no
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 5c21874212..fa9e7d9622 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -390,6 +390,12 @@ else() # Linux
+     elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
+       message("Host processor is 64bit ARM")
+       sm_add_compile_definition("${SM_EXE_NAME}" CPU_AARCH64)
++    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "ppc64")
++      message("Host processor is 64bit PPC")
++      sm_add_compile_definition("${SM_EXE_NAME}" CPU_PPC64)
++    elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "ppc")
++      message("Host processor is 32bit PPC")
++      sm_add_compile_definition("${SM_EXE_NAME}" CPU_PPC)
+     else()
+       message("Unrecognized host processor type")
+     endif()
+diff --git a/src/archutils/Common/PthreadHelpers.cpp b/src/archutils/Common/PthreadHelpers.cpp
+index 05eec07045..32ebbcfe4a 100644
+--- a/src/archutils/Common/PthreadHelpers.cpp
++++ b/src/archutils/Common/PthreadHelpers.cpp
+@@ -244,7 +244,7 @@ bool GetThreadBacktraceContext( uint64_t ThreadID, BacktraceContext *ctx )
+ 	ctx->PC = (void *)ptrace( PTRACE_PEEKUSER, pid_t(ThreadID), (void *)(PT_NIP<<2), 0 );
+ 	if( errno )
+ 		return false;
+-#elif defined(CPU_AARCH64)
++#elif defined(CPU_AARCH64) || defined(CPU_PPC64)
+ 	// NYI
+ 	return false;
+ #else
