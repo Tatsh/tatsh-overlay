@@ -18,9 +18,9 @@ diff -urN a/configure.ac b/configure.ac
 -AC_DEFINE([VERSION_COMMIT_SHA], "m4_esyscmd([git rev-parse HEAD | tr -d '\n'])", [Git commit sha])
 -AC_SUBST([VERSION_COMMIT_COUNT], ["m4_esyscmd([git rev-list --count HEAD | tr -d '\n'])"])
 -AC_SUBST([VERSION_COMMIT_SHA], ["m4_esyscmd([git rev-parse HEAD | tr -d '\n'])"])
-+AC_DEFINE([VERSION_COMMIT_COUNT], "56", [Git commit count])
-+AC_DEFINE([VERSION_COMMIT_SHA], "e0d98cbeedece5d62e3e9432c3ed37cd87da5338", [Git commit sha])
-+AC_SUBST([VERSION_COMMIT_COUNT], ["56"])
-+AC_SUBST([VERSION_COMMIT_COUNT], ["e0d98cbeedece5d62e3e9432c3ed37cd87da5338"])
++AC_DEFINE([VERSION_COMMIT_COUNT], "63", [Git commit count])
++AC_DEFINE([VERSION_COMMIT_SHA], "017d71edb0a12ff4fa01a39d12cd297d8b3d8d34", [Git commit sha])
++AC_SUBST([VERSION_COMMIT_COUNT], ["63"])
++AC_SUBST([VERSION_COMMIT_SHA], ["017d71edb0a12ff4fa01a39d12cd297d8b3d8d34"])
 
  # Checks for programs.
