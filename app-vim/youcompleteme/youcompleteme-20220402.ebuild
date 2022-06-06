@@ -16,7 +16,7 @@ SHA="3ededaed2f9923d50bf3860ba8dace0f7d2724cd"
 MY_PN="YouCompleteMe"
 SRC_URI="https://github.com/ycm-core/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
-DEPEND="|| ( >=app-editors/vim-7.3 >=app-editors/gvim-7.3 )"
+DEPEND="|| ( >=app-editors/vim-7.3[python] >=app-editors/gvim-7.3[python] )"
 RDEPEND="${DEPEND}
 	sys-devel/clang:=
 	$(python_gen_cond_dep 'dev-python/requests-futures[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
