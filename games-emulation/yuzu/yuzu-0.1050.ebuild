@@ -47,7 +47,7 @@ DEPEND="app-arch/lz4
 	virtual/libusb:="
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
-BDEPEND=">=dev-cpp/catch-2.13.7
+BDEPEND="<dev-cpp/catch-3.0.0
 	dev-cpp/nlohmann_json
 	dev-util/glslang
 	dev-util/vulkan-headers
