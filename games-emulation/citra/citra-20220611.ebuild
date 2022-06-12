@@ -26,7 +26,6 @@ IUSE="web-service"
 
 # System xbyak is still used by Dynarmic, but not Citra itself
 DEPEND="app-arch/zstd
-	dev-cpp/catch:0
 	dev-libs/boost:0
 	dev-libs/crypto++:=
 	media-libs/cubeb
@@ -44,6 +43,7 @@ DEPEND="app-arch/zstd
 	net-libs/enet:=
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
+BDEPEND="<dev-cpp/catch-3.0.0"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-inih.patch"
