@@ -34,7 +34,7 @@ RDEPEND="app-arch/bzip2
 	virtual/jack
 	virtual/opengl
 	virtual/udev"
-RESTRICT="splitdebug"
+RESTRICT="split-debug strip"
 
 S="${WORKDIR}"
 
@@ -62,9 +62,9 @@ src_prepare() {
 
 src_install() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-${PV:0:8}HF-amd64-date-${PV:10}" || die
+		cd "${MY_PN}-alpha-${PV:0:8}-amd64-date-${PV:10}" || die
 	elif use arm64; then
-		cd "${MY_PN}-alpha-${PV:0:8}HF-arm64-date-${PV:10}" || die
+		cd "${MY_PN}-alpha-${PV:0:8}-arm64-date-${PV:10}" || die
 	else
 		die 'Unsupported architecture'
 	fi
