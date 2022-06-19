@@ -9,7 +9,7 @@ HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 
 MY_PV="mainline-${PV/./-}"
 DYNARMIC_SHA="57af72a567454b93c757e087b4510a24b81911b1"
-HTTPLIB_SHA="9648f950f5a8a41d18833cf4a85f5821b1bcac54"
+HTTPLIB_SHA="305a7abcb9b4e9e349843c6d563212e6c1bbbf21"
 SDL_SHA="e2ade2bfc46d915cd306c63c830b81d800b2575f"
 SIRIT_SHA="aa292d56650bc28f2b2d75973fab2e61d0136f9c"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
