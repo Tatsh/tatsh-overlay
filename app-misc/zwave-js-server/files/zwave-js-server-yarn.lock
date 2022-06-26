@@ -266,10 +266,10 @@
     serialport "^10.4.0"
     winston "^3.7.2"
 
-"@zwave-js/server@^1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@zwave-js/server/-/server-1.18.0.tgz#0b10ad5016926a9eff172a10e583da70456e3d1e"
-  integrity sha512-Cth27vwOpRpM5abw/NwJG7vLzSTYlsFi5ATdNvASersYFqFr0+lxRuwZZ7Mm6chdMChNVYgucK2bahWdxwz+1g==
+"@zwave-js/server@^1.20.0":
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/@zwave-js/server/-/server-1.20.0.tgz#13dc9982a4e7731fe6a1ba63d1f7c2e938f5c7f5"
+  integrity sha512-qQ6tVOjhRwbcNNHQPPrJOIEniid/1qjBkoWEb8L4Pf92wpFOoC/A8fkuqbJNTVgUlHqqfjnSJ4B/eThuZgEaNA==
   dependencies:
     "@homebridge/ciao" "^1.1.3"
     minimist "^1.2.5"
