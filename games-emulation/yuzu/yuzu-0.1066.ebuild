@@ -61,7 +61,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
 	"${FILESDIR}/${PN}-7213-openssl.patch"
 	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
-	"${FILESDIR}/${PN}-revert-new-vkresult.patch"
 	"${FILESDIR}/${PN}-system-robin-map.patch"
 )
 
