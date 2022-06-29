@@ -71,3 +71,10 @@ src_configure() {
 	)
 	cmake_src_configure
 }
+
+src_install() {
+	cmake_src_install
+	if ! use kde && ! use gtk; then
+		rm "${D}/usr/share/applications/rp-config.desktop" || die
+	fi
+}
