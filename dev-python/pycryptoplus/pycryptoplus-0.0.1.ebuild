@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_9 )
+PYTHON_COMPAT=( python3_{9,10} )
 inherit distutils-r1
 
 DESCRIPTION="Cipher extension (used by games-util/nut)."
