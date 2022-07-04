@@ -10,16 +10,17 @@ inherit eutils flag-o-matic python-r1 xdg-utils
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/mborgerson/xemu"
-GENCONFIG_SHA="5da3fd2463288d9e048dbf3ea41f2bad0a4287a8"
+GENCONFIG_SHA="44bab849ce87fceafd74703bfcf2b61a1a1b738f"
 IMGUI_SHA="c71a50deb5ddf1ea386b91e60fa2e4a26d080074"
 IMPLOT_SHA="b47c8bacdbc78bc521691f70666f13924bb522ab"
 KEYCODEMAPDB_SHA="d21009b1c9f94b740ea66be8e48a1d8ad8124023"
+NV2A_VSH_CPU_SHA="d5a7308809a80e1b01b5c016127d4f1b91c8673b"
 SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
-SLIRP_SHA="a88d9ace234a24ce1c17189642ef9104799425e0"
 TESTFLOAT_SHA="5a59dcec19327396a011a17fd924aed4fec416b3"
 TOMLPLUSPLUS_SHA="27816dbbd168a84a0a7a252d7d75b0ca4dc1e073"
 SRC_URI="https://github.com/mborgerson/xemu/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://gitlab.com/qemu-project/keycodemapdb/-/archive/${KEYCODEMAPDB_SHA}/keycodemapdb-${KEYCODEMAPDB_SHA}.tar.gz -> ${PN}-keycodemapdb-${KEYCODEMAPDB_SHA:0:7}.tar.gz
+	https://github.com/abaire/nv2a_vsh_cpu/archive/${NV2A_VSH_CPU_SHA}.tar.gz -> ${PN}-nv2a_vsh_cpu-${NV2A_VSH_CPU_SHA:0:7}.tar.gz
 	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> ${PN}-imgui-${IMGUI_SHA:0:7}.tar.gz
 	https://github.com/epezent/implot/archive/${IMPLOT_SHA}.tar.gz -> ${PN}-implot-${IMPLOT_SHA:0:7}.tar.gz
 	https://gitlab.com/qemu-project/berkeley-softfloat-3/-/archive/${SOFTFLOAT_SHA}/berkeley-softfloat-3-${SOFTFLOAT_SHA}.tar.gz -> ${PN}-softfloat-${SOFTFLOAT_SHA:0:7}.tar.gz
@@ -83,6 +84,7 @@ DOCS=( README.md )
 
 src_prepare() {
 	{ rmdir genconfig && mv "${WORKDIR}/genconfig-${GENCONFIG_SHA}" genconfig; } || die
+	{ rmdir hw/xbox/nv2a/thirdparty/nv2a_vsh_cpu && mv "${WORKDIR}/nv2a_vsh_cpu-${NV2A_VSH_CPU_SHA}" hw/xbox/nv2a/thirdparty/nv2a_vsh_cpu; } || die
 	{ rmdir tests/fp/berkeley-softfloat-3 && mv "${WORKDIR}/berkeley-softfloat-3-${SOFTFLOAT_SHA}" tests/fp/berkeley-softfloat-3; } || die
 	{ rmdir tests/fp/berkeley-testfloat-3 && mv "${WORKDIR}/berkeley-testfloat-3-${TESTFLOAT_SHA}" tests/fp/berkeley-testfloat-3; } || die
 	{ rmdir tomlplusplus && mv "${WORKDIR}/tomlplusplus-${TOMLPLUSPLUS_SHA}" tomlplusplus; } || die

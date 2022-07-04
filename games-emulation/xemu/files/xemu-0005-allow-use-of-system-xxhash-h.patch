@@ -47,7 +47,7 @@ index 2b6b14d..1aacb87 100755
 @@ -4365,6 +4372,16 @@ if test "$slirp_smbd" != "no" ; then
    fi
  fi
- 
+
 +##########################################
 +# check for xxHash
 +case "$xxhash" in
@@ -60,7 +60,7 @@ index 2b6b14d..1aacb87 100755
 +
  ##########################################
  # check for usable __NR_keyctl syscall
- 
+
 @@ -5320,9 +5337,9 @@ if test "$skip_meson" = no; then
          -Db_pie=$(if test "$pie" = yes; then echo true; else echo false; fi) \
          ${staticpic:+-Db_staticpic=$staticpic} \
@@ -80,7 +80,7 @@ index 3b961ce..2ef7358 100644
 @@ -1946,6 +1946,19 @@ if get_option('cfi') and slirp_opt == 'system'
           + ' Please configure with --enable-slirp=git')
  endif
- 
+
 +xxhash = not_found
 +xxhash_opt = get_option('xxhash')
 +if xxhash_opt == 'system'
@@ -98,7 +98,7 @@ index 3b961ce..2ef7358 100644
  fdt_opt = get_option('fdt')
  if have_system
 @@ -2611,6 +2624,9 @@ foreach target : target_dirs
- 
+
    config_target += config_host
    target_inc = [include_directories('target' / config_target['TARGET_BASE_ARCH'])]
 +  if xxhash_opt == 'internal' and target == 'xemu'
@@ -118,17 +118,6 @@ index fbf91e0..c7640cb 100644
 +option('xxhash', type: 'combo', value: 'internal',
 +       choices: ['internal', 'system'],
 +       description: 'Whether and how to find the xxHash library')
-diff --git a/util/fast-hash.c b/util/fast-hash.c
-index 90d2b1c..8b3095e 100644
---- a/util/fast-hash.c
-+++ b/util/fast-hash.c
-@@ -1,5 +1,5 @@
- #include "qemu/fast-hash.h"
--#include "util/xxHash/xxh3.h"
-+#include <xxh3.h>
- 
- uint64_t fast_hash(const uint8_t *data, size_t len)
- {
--- 
+--
 2.35.1
 
