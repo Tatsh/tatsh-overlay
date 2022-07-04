@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_9 )
+PYTHON_COMPAT=( python3_{9,10} )
 inherit desktop python-single-r1
 
 DESCRIPTION="Multi-purpose utility to manage and install Switch files (NSP, NSZ, XCI, XCZ)."
