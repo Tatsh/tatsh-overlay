@@ -3,7 +3,7 @@
 
 EAPI=7
 DISTUTILS_USE_SETUPTOOLS=no
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 inherit distutils-r1
 
 DESCRIPTION="An kill-switch that waits for a change on your USB ports."
