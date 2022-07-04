@@ -8,7 +8,7 @@ DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 
 MY_PV="mainline-${PV/./-}"
-DYNARMIC_SHA="5ad1d02351bf4fee681a3d701d210b419f41a505"
+DYNARMIC_SHA="7f84870712ac2fe06aa62dc2bebbe46b51a2cc2e"
 HTTPLIB_SHA="305a7abcb9b4e9e349843c6d563212e6c1bbbf21"
 SDL_SHA="e2ade2bfc46d915cd306c63c830b81d800b2575f"
 SIRIT_SHA="aa292d56650bc28f2b2d75973fab2e61d0136f9c"
@@ -50,7 +50,7 @@ RDEPEND="${DEPEND}
 BDEPEND="<dev-cpp/catch-3.0.0
 	dev-cpp/nlohmann_json
 	dev-util/glslang
-	dev-util/vulkan-headers
+	>=dev-util/vulkan-headers-1.3.216
 	dev-util/spirv-headers"
 
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
