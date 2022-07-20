@@ -30,7 +30,7 @@ DEPEND="app-arch/lz4
 	cubeb? ( media-libs/cubeb )
 	dev-libs/openssl
 	dev-libs/inih
-	>=dev-libs/libfmt-8.0.0
+	dev-libs/libfmt:0/8.1.1
 	dev-libs/libzip
 	>=dev-libs/xbyak-6.03
 	dev-cpp/robin-map
