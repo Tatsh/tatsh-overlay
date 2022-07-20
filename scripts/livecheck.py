@@ -318,7 +318,8 @@ def get_props(search_dir: str,
                         str(len(version)) + r'})[0-9a-f]*</id>'), False)
             else:
                 raise ValueError(f'Unhandled GitHub package: {catpkg}')
-        elif src_uri.startswith('https://gist.github.com'):
+        elif (src_uri.startswith('https://gist.github.com')
+              or src_uri.startswith('https://gist.githubusercontent.com')):
             home = P.aux_get(match, ['HOMEPAGE'])[0]
             yield (cat, pkg, ebuild_version, ebuild_version,
                    f'{home}/revisions',
