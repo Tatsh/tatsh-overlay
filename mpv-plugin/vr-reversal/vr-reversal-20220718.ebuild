@@ -7,7 +7,7 @@ inherit mpv-plugin
 
 DESCRIPTION="Play 3D side-by-side video as a 2D video and look around."
 HOMEPAGE="https://github.com/dfaker/VR-reversal"
-SHA="de5ba0fc41ef9475189cc0a1064c5f2c90b88c87"
+SHA="91f4aeed43b8febf099af10df13a24151256d8a7"
 MY_PN="VR-reversal"
 SRC_URI="https://github.com/dfaker/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
