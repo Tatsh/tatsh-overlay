@@ -6,7 +6,7 @@ EAPI=7
 inherit cmake autotools eutils desktop wrapper xdg
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
-SHA="2a699fb215c646ad466c478e24d766c4fa090d92"
+SHA="675c752e9e2eb5848c7fdb87bf516da02b39fab0"
 HOMEPAGE="http://www.stepmania.com/"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
