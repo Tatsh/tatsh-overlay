@@ -1,7 +1,7 @@
-From 329c2b4b94b4750123220719fe00637a5a23201f Mon Sep 17 00:00:00 2001
+From 3f9633adbb347555a39f8d932dfaae3940b4ee43 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 07:24:10 -0500
-Subject: [PATCH 04/12] More path fixes
+Subject: [PATCH 04/14] More path fixes
 
 ---
  advanced/Scripts/list.sh | 2 +-
@@ -9,7 +9,7 @@ Subject: [PATCH 04/12] More path fixes
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/advanced/Scripts/list.sh b/advanced/Scripts/list.sh
-index 1c4761fc..697b021e 100755
+index eb5c0fec..99efc8da 100755
 --- a/advanced/Scripts/list.sh
 +++ b/advanced/Scripts/list.sh
 @@ -11,7 +11,7 @@
@@ -22,7 +22,7 @@ index 1c4761fc..697b021e 100755
  # Source pihole-FTL from install script
  pihole_FTL="${piholeDir}/pihole-FTL.conf"
 diff --git a/pihole b/pihole
-index b96ef573..407f4fb6 100755
+index 182c01c0..4b508180 100755
 --- a/pihole
 +++ b/pihole
 @@ -334,13 +334,13 @@ statusFunc() {

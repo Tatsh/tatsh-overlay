@@ -1,14 +1,14 @@
-From 717cad15b74bc26ec5b908aed5864a37db646d03 Mon Sep 17 00:00:00 2001
+From be6904240e0286fd9ee38f5cefd0f21c49932956 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 16 Dec 2021 08:45:38 -0500
-Subject: [PATCH 05/12] pihole: add rc-service to restartDNS
+Subject: [PATCH 05/14] pihole: add rc-service to restartDNS
 
 ---
  pihole | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/pihole b/pihole
-index 407f4fb6..7ca7fa9e 100755
+index 4b508180..1c1b8325 100755
 --- a/pihole
 +++ b/pihole
 @@ -139,6 +139,8 @@ restartDNS() {

@@ -1,18 +1,18 @@
-From d13a57fcaf9ae493e855770ae10da804adc1150a Mon Sep 17 00:00:00 2001
+From 24036fc7b6783a890f91c3f8af242f9fe824d678 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:37:37 -0500
-Subject: [PATCH 03/12] logrotate: add missingok, fix paths
+Subject: [PATCH 03/14] logrotate: add missingok, fix paths
 
 ---
  advanced/Templates/logrotate | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/advanced/Templates/logrotate b/advanced/Templates/logrotate
-index ffed910b..0a2e3fbd 100644
+index 9a56b552..0a2e3fbd 100644
 --- a/advanced/Templates/logrotate
 +++ b/advanced/Templates/logrotate
 @@ -1,4 +1,4 @@
--/var/log/pihole.log {
+-/var/log/pihole/pihole.log {
 +@EPREFIX@/var/log/pihole.log {
  	# su #
  	daily
@@ -24,7 +24,7 @@ index ffed910b..0a2e3fbd 100644
 +    missingok
  }
  
--/var/log/pihole-FTL.log {
+-/var/log/pihole/FTL.log {
 +@EPREFIX@/var/log/pihole-FTL.log {
  	# su #
  	weekly

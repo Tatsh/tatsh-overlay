@@ -15,7 +15,7 @@ IUSE="cron www"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
-FTL_VERSION="5.10"
+FTL_VERSION="5.11.4"
 RDEPEND="${DEPEND}
 	>=net-dns/${PN}-ftl-${FTL_VERSION}
 	app-admin/sudo
@@ -24,7 +24,7 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/pi-hole-${PV}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-cron-remove-flush-updatechec.patch"
+	# "${FILESDIR}/${PN}-0001-cron-remove-flush-updatechec.patch"
 	"${FILESDIR}/${PN}-0002-path-changes.patch"
 	"${FILESDIR}/${PN}-0003-logrotate-add-missingok-fix-.patch"
 	"${FILESDIR}/${PN}-0004-more-path-fixes.patch"
@@ -36,12 +36,11 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0010-fix-path-in-generated-dhcp-c.patch"
 	"${FILESDIR}/${PN}-0011-more-path-fixes.patch"
 	"${FILESDIR}/${PN}-0012-piholedebug-gentoo-vhost-fix.patch"
+	"${FILESDIR}/${PN}-0013-remove-updatecheck.patch"
+	"${FILESDIR}/${PN}-0014-remove-more-unused.patch"
 )
 
 src_prepare() {
-	rm advanced/Scripts/update{,check}.sh \
-		advanced/Scripts/${PN}Checkout.sh \
-		advanced/Templates/${PN}.sudo || die
 	default
 	sed -r -e "s/@EPREFIX@/${EPREFIX}/g" -e "s/@LIBDIR@/$(get_libdir)/g" \
 		-e "s/@PIHOLE_FTL_VERSION@/${PIHOLE_FTL_VERSION}/g" \

@@ -1,7 +1,7 @@
-From 25fa678bb2403ca2661b4264697ab0e04f007192 Mon Sep 17 00:00:00 2001
+From 04fd793a12ae3fbd33113a30b93bd677ed7935a5 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 16 Dec 2021 16:36:12 -0500
-Subject: [PATCH 07/12] fix chrono
+Subject: [PATCH 07/14] fix chrono
 
 ---
  advanced/Scripts/chronometer.sh | 2 +-
