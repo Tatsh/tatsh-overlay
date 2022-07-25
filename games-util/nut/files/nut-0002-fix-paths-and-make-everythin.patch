@@ -1,4 +1,4 @@
-From 8d644e54b94eeb4ecfcb4fe957000da8164eb77d Mon Sep 17 00:00:00 2001
+From 75885ce2c79e00fe5171a78d35f486a0e30b9971 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 22 Feb 2022 14:36:59 -0500
 Subject: [PATCH 2/2] Fix paths and make everything inside nut module
@@ -11,7 +11,7 @@ Subject: [PATCH 2/2] Fix paths and make everything inside nut module
  nut/Fs/Cnmt.py               |  4 +--
  nut/Fs/File.py               | 38 ++++++++++----------
  nut/Fs/Hfs0.py               | 12 +++----
- nut/Fs/IndexedFile.py        | 12 +++----
+ nut/Fs/IndexedFile.py        | 14 ++++----
  nut/Fs/Ivfc.py               |  4 +--
  nut/Fs/Nacp.py               |  4 +--
  nut/Fs/Nca.py                | 52 +++++++++++++--------------
@@ -48,11 +48,11 @@ Subject: [PATCH 2/2] Fix paths and make everything inside nut module
  nut_gui.py                   |  8 ++---
  tests-gui/gui_app_test.py    |  6 ++--
  tests/translator_test.py     |  2 +-
- 44 files changed, 411 insertions(+), 360 deletions(-)
+ 44 files changed, 412 insertions(+), 361 deletions(-)
  create mode 100644 nut/Util.py
 
 diff --git a/nut.py b/nut.py
-index 5ab4984..ac40579 100755
+index b55bdf7..bb8b1a6 100755
 --- a/nut.py
 +++ b/nut.py
 @@ -9,6 +9,7 @@ import pathlib
@@ -136,7 +136,7 @@ index 5ab4984..ac40579 100755
  			urllib3.disable_warnings()
  
  			#signal.signal(signal.SIGINT, handler)
-@@ -579,8 +581,8 @@ if __name__ == '__main__':
+@@ -580,8 +582,8 @@ if __name__ == '__main__':
  			if args.extract:
  				nut.initTitles()
  				for filePath in args.extract:
@@ -147,7 +147,7 @@ index 5ab4984..ac40579 100755
  					f.open(filePath, 'rb')
  					dir = os.path.splitext(os.path.basename(filePath))[0]
  					f.unpack(dir)
-@@ -588,7 +590,7 @@ if __name__ == '__main__':
+@@ -589,7 +591,7 @@ if __name__ == '__main__':
  
  			if args.create:
  				Print.info('creating ' + args.create)
@@ -156,7 +156,7 @@ index 5ab4984..ac40579 100755
  				nsp.path = args.create
  				nsp.pack(expandFiles(args.file), args.rights_id, args.key)
  
-@@ -597,7 +599,7 @@ if __name__ == '__main__':
+@@ -598,7 +600,7 @@ if __name__ == '__main__':
  					if not input.endswith('.xci'):
  						continue
  
@@ -165,7 +165,7 @@ index 5ab4984..ac40579 100755
  					f.open(input, 'rb')
  					f.repack()
  					f.close()
-@@ -767,7 +769,7 @@ if __name__ == '__main__':
+@@ -768,7 +770,7 @@ if __name__ == '__main__':
  
  				for path in expandFiles(args.file):
  					try:
@@ -174,7 +174,7 @@ index 5ab4984..ac40579 100755
  						f.setPath(str(path))
  						if f and f.titleId:
  							dt = Nsps.getByTitleId(f.titleId)
-@@ -801,7 +803,7 @@ if __name__ == '__main__':
+@@ -802,7 +804,7 @@ if __name__ == '__main__':
  					Print.info('%s version = %s' % (args.info.upper(), cdn.version(args.info.lower())))
  				else:
  					print('reading')
@@ -183,7 +183,7 @@ index 5ab4984..ac40579 100755
  					f.open(args.info, 'rb')
  
  					f.printInfo(args.depth+1)
-@@ -809,7 +811,7 @@ if __name__ == '__main__':
+@@ -810,7 +812,7 @@ if __name__ == '__main__':
  			if args.verify_ncas:
  				nut.initTitles()
  				nut.initFiles()
@@ -192,7 +192,7 @@ index 5ab4984..ac40579 100755
  				f.open(args.verify_ncas, 'r+b')
  				if not f.verify():
  					Print.error('Archive is INVALID: %s' % args.verify_ncas)
-@@ -884,7 +886,7 @@ if __name__ == '__main__':
+@@ -888,7 +890,7 @@ if __name__ == '__main__':
  
  				if args.V:
  					nut.scanLatestTitleUpdates()
@@ -201,7 +201,7 @@ index 5ab4984..ac40579 100755
  
  				if args.scrape_title:
  					nut.initTitles()
-@@ -920,7 +922,7 @@ if __name__ == '__main__':
+@@ -924,7 +926,7 @@ if __name__ == '__main__':
  					path = str(path)
  					Print.info('opening ' + path)
  					try:
@@ -210,7 +210,7 @@ index 5ab4984..ac40579 100755
  						if f.isUnlockable(True):
  							if not f.verifyKey(f.titleId, Titles.get(f.titleId).key):
  								raise IOError('Could not verify title key! %s / %s - %s' % (f.titleId, f.title().key, f.title().name))
-@@ -939,7 +941,7 @@ if __name__ == '__main__':
+@@ -943,7 +945,7 @@ if __name__ == '__main__':
  
  				for path in expandFiles(args.file):
  					try:
@@ -219,7 +219,7 @@ index 5ab4984..ac40579 100755
  						f.setPath(str(path))
  						f.move()
  					except BaseException as e:
-@@ -991,7 +993,7 @@ if __name__ == '__main__':
+@@ -995,7 +997,7 @@ if __name__ == '__main__':
  			if args.server:
  				nut.initTitles()
  				nut.initFiles()
@@ -384,7 +384,7 @@ index 85b2e6b..f201fa6 100644
  				self.cryptoType = buffer[0x4]
  
 diff --git a/nut/Fs/Bktr.py b/nut/Fs/Bktr.py
-index f826a74..05e3b1c 100644
+index 4f4e87d..593b811 100644
 --- a/nut/Fs/Bktr.py
 +++ b/nut/Fs/Bktr.py
 @@ -4,10 +4,10 @@ from nut import Titles
@@ -569,7 +569,7 @@ index c4e07ac..dc77f2b 100644
  			f._path = name
  			f.offset = offset
 diff --git a/nut/Fs/IndexedFile.py b/nut/Fs/IndexedFile.py
-index dfb3b30..03e322b 100644
+index 2e4a685..c90355a 100644
 --- a/nut/Fs/IndexedFile.py
 +++ b/nut/Fs/IndexedFile.py
 @@ -3,7 +3,7 @@ from nut import Title
@@ -581,16 +581,18 @@ index dfb3b30..03e322b 100644
  import os
  import re
  import nut
-@@ -167,7 +167,7 @@ class IndexedFile:
- 					return False
- 			finally:
- 				self.close()
+@@ -171,8 +171,8 @@ class IndexedFile:
+ 		except BaseException as e:
+ 			if not str(e).startswith('too many bktr entries'):
+ 				raise
+-			
 -		
++
 +
  
  		try:
  			Print.info(self.path + ' -> ' + newPath)
-@@ -254,14 +254,14 @@ class IndexedFile:
+@@ -259,14 +259,14 @@ class IndexedFile:
  		if not hasattr(self, 'cr') or not self.cr:
  			Print.info('extracting CR for ' + str(self.path))
  			try:
@@ -607,7 +609,7 @@ index dfb3b30..03e322b 100644
  						continue
  					uncompressedSize += f.header.size
  					compressedSize += f.size
-@@ -334,7 +334,7 @@ class IndexedFile:
+@@ -339,7 +339,7 @@ class IndexedFile:
  			except BaseException as e:
  				Print.error('exception: could not find title id ' + str(self.titleId) + ' ' + str(e))
  				return None
@@ -616,7 +618,7 @@ index dfb3b30..03e322b 100644
  
  		isNsx = not self.hasValidTicket and not forceNsp
  
-@@ -375,7 +375,7 @@ class IndexedFile:
+@@ -380,7 +380,7 @@ class IndexedFile:
  			format = format.replace('{icr}', str(self.getCr(True)))
  
  		bn = os.path.basename(self.path)
@@ -1451,7 +1453,7 @@ index eb209b3..69d19d0 100644
  		Print.error('could not load find or load keys.txt, all crypto operations will fail. See keys_template.txt for an example of how this file should look')
  
 diff --git a/nut/Nsps.py b/nut/Nsps.py
-index d2e2d42..31d57f4 100644
+index 830f52d..b0bc068 100644
 --- a/nut/Nsps.py
 +++ b/nut/Nsps.py
 @@ -6,7 +6,8 @@ import pathlib
@@ -1462,9 +1464,9 @@ index d2e2d42..31d57f4 100644
 +from nut.Util import wrap_path
 +import nut.Fs
  from nut import Config, Print, Status, Title, Hook
+ import nut
  
- files = {}
-@@ -30,7 +31,7 @@ def registerFile(path, registerLUT = True):
+@@ -31,7 +32,7 @@ def registerFile(path, registerLUT = True):
  	path = os.path.abspath(path)
  
  	if not path in files:
@@ -1473,7 +1475,7 @@ index d2e2d42..31d57f4 100644
  		nsp.timestamp = time.time()
  		nsp.getFileSize()
  
-@@ -212,6 +213,7 @@ class FileListCache: # pylint: disable=too-few-public-methods
+@@ -213,6 +214,7 @@ class FileListCache: # pylint: disable=too-few-public-methods
  
  
  def load(fileName='titledb/files.json', verify=True):
@@ -1481,7 +1483,7 @@ index d2e2d42..31d57f4 100644
  	global hasLoaded  # pylint: disable=global-statement
  
  	if hasLoaded:
-@@ -225,7 +227,7 @@ def load(fileName='titledb/files.json', verify=True):
+@@ -226,7 +228,7 @@ def load(fileName='titledb/files.json', verify=True):
  	if os.path.isfile(fileName):
  		with open(fileName, encoding="utf-8-sig") as f:
  			for k in json.loads(f.read()):
@@ -1759,10 +1761,10 @@ index 2458196..c0790b3 100644
  class NutRequest:
  	def __init__(self, handler):
 diff --git a/nut/Title.py b/nut/Title.py
-index b9a848b..3026049 100644
+index d4fbcaa..9efd2ce 100644
 --- a/nut/Title.py
 +++ b/nut/Title.py
-@@ -15,6 +15,7 @@ import threading
+@@ -17,6 +17,7 @@ import sys
  from nut import Nsps
  import urllib.request
  from nut import Config
@@ -1770,7 +1772,7 @@ index b9a848b..3026049 100644
  try:
  	import cdn
  except BaseException:
-@@ -30,8 +31,8 @@ grabUrlInit = False
+@@ -32,8 +33,8 @@ grabUrlInit = False
  urlCache = {}
  urlLock = threading.Lock()
  
@@ -1781,7 +1783,7 @@ index b9a848b..3026049 100644
  		urlCache = json.loads(f.read())
  
  def grabCachedRedirectUrl(url, cookies=None):
-@@ -60,7 +61,7 @@ def grabCachedRedirectUrl(url, cookies=None):
+@@ -62,7 +63,7 @@ def grabCachedRedirectUrl(url, cookies=None):
  			# not sure but dont cache it
  			return result
  
@@ -1790,7 +1792,7 @@ index b9a848b..3026049 100644
  			json.dump(urlCache, outfile)
  		urlLock.release()
  		return result
-@@ -385,7 +386,7 @@ class Title:
+@@ -387,7 +388,7 @@ class Title:
  			self.setId(id)
  			break
  		self.ids = ids
@@ -1800,7 +1802,7 @@ index b9a848b..3026049 100644
  		id = id.upper()
  		self.setId(id)
 diff --git a/nut/Titles.py b/nut/Titles.py
-index 3ce7ce8..af867f8 100644
+index 74be5b3..8a2c207 100644
 --- a/nut/Titles.py
 +++ b/nut/Titles.py
 @@ -9,6 +9,7 @@ from nut import Title
@@ -1826,7 +1828,7 @@ index 3ce7ce8..af867f8 100644
  				except BaseException:
  					pass
  
-@@ -168,6 +169,7 @@ def loadTitleBuffer(buffer, silent=False):
+@@ -179,6 +180,7 @@ def loadTitleBuffer(buffer, silent=False):
  confLock = threading.Lock()
  
  def loadTitlesJson(filePath='titledb/titles.json'):
@@ -1834,7 +1836,7 @@ index 3ce7ce8..af867f8 100644
  	newTitles = {}
  	confLock.acquire()
  	try:
-@@ -191,9 +193,9 @@ def load():
+@@ -202,9 +204,9 @@ def load():
  	global titles
  	titles = {}
  
@@ -1846,7 +1848,7 @@ index 3ce7ce8..af867f8 100644
  			try:
  				items = json.loads(f.read()).items()
  			except BaseException:
-@@ -257,8 +259,8 @@ def parsePersonalKeys(path):
+@@ -268,8 +270,8 @@ def parsePersonalKeys(path):
  def loadTxtDatabases():
  	confLock.acquire()
  
@@ -1857,7 +1859,7 @@ index 3ce7ce8..af867f8 100644
  
  	try:
  		files = sorted([f for f in os.listdir(Config.paths.titleDatabase) if f.endswith('.txt')])
-@@ -285,6 +287,7 @@ def export(fileName='titles.txt', map=['id', 'rightsId', 'key', 'isUpdate', 'isD
+@@ -296,6 +298,7 @@ def export(fileName='titles.txt', map=['id', 'rightsId', 'key', 'isUpdate', 'isD
  		csv.write(buffer)
  
  def saveTitlesJson(newTitles, fileName='titledb/titles.json'):
@@ -1865,7 +1867,7 @@ index 3ce7ce8..af867f8 100644
  	confLock.acquire()
  	try:
  		j = {}
-@@ -308,6 +311,7 @@ def saveTitlesJson(newTitles, fileName='titledb/titles.json'):
+@@ -318,6 +321,7 @@ def saveTitlesJson(newTitles, fileName='titledb/titles.json'):
  	confLock.release()
  
  def save(fileName='titledb/titles.json', full=True):
@@ -1873,7 +1875,7 @@ index 3ce7ce8..af867f8 100644
  	confLock.acquire()
  	try:
  		j = {}
-@@ -327,7 +331,7 @@ def save(fileName='titledb/titles.json', full=True):
+@@ -336,7 +340,7 @@ def save(fileName='titledb/titles.json', full=True):
  	confLock.release()
  
  def saveRegion(region, language):
@@ -1882,7 +1884,7 @@ index 3ce7ce8..af867f8 100644
  
  class Queue:
  	def __init__(self):
-@@ -367,7 +371,7 @@ class Queue:
+@@ -376,7 +380,7 @@ class Queue:
  
  	def load(self):
  		try:
@@ -1891,7 +1893,7 @@ index 3ce7ce8..af867f8 100644
  				for line in f.read().split('\n'):
  					self.add(line.strip())
  		except BaseException:
-@@ -379,7 +383,7 @@ class Queue:
+@@ -388,7 +392,7 @@ class Queue:
  	def save(self):
  		self.lock.acquire()
  		try:
@@ -1900,7 +1902,7 @@ index 3ce7ce8..af867f8 100644
  				for id in self.queue:
  					f.write(id + '\n')
  		except BaseException:
-@@ -391,8 +395,9 @@ global queue
+@@ -400,8 +404,9 @@ global queue
  queue = Queue()
  
  def saveAll(fileName='titledb/titles.json'):
@@ -2031,7 +2033,7 @@ index 0000000..f45ac05
 +		return str(ret)
 +	raise ValueError(f'Unknown path: {p}')
 diff --git a/nut/__init__.py b/nut/__init__.py
-index f4c709c..9e0a4e1 100644
+index dd44ec2..ce56045 100644
 --- a/nut/__init__.py
 +++ b/nut/__init__.py
 @@ -21,12 +21,13 @@ import requests
@@ -2196,7 +2198,7 @@ index f4c709c..9e0a4e1 100644
  			nsp.downloadPath = path
  
  			if not nsp.titleId:
-@@ -1051,7 +1047,7 @@ def downloadFile(url, fPath):
+@@ -1042,7 +1038,7 @@ def downloadFile(url, fPath):
  		dlded = os.path.getsize(fPath)
  		r = makeRequest('GET', url, hdArgs={'Range': 'bytes=%s-' % dlded})
  
@@ -2205,7 +2207,7 @@ index f4c709c..9e0a4e1 100644
  			Print.info('Download is already complete, skipping!')
  			return fPath
  		elif r.headers.get('Content-Range') is None:  # CDN doesn't return a range if request >= filesize
-@@ -1104,11 +1100,11 @@ def loadNcaData():
+@@ -1095,11 +1091,11 @@ def loadNcaData():
  	global cnmtData
  	global ncaData
  
@@ -2219,7 +2221,7 @@ index f4c709c..9e0a4e1 100644
  			tmpData = json.loads(f.read())
  
  			for titleId, j in tmpData.items():
-@@ -1123,7 +1119,7 @@ def loadNcaData():
+@@ -1114,7 +1110,7 @@ def loadNcaData():
  		raise
  
  	try:
@@ -2228,7 +2230,7 @@ index f4c709c..9e0a4e1 100644
  			ncaData = json.loads(f.read())
  
  			for ncaId, data in ncaData.items():
-@@ -1144,7 +1140,7 @@ def saveNcaData():
+@@ -1135,7 +1131,7 @@ def saveNcaData():
  			for v, row in j.items():
  				out[k][v] = row.__dict__
  
@@ -2237,7 +2239,7 @@ index f4c709c..9e0a4e1 100644
  			json.dump(out, f, indent=4, sort_keys=True)
  	except BaseException:
  		raise
-@@ -1155,7 +1151,7 @@ def saveNcaData():
+@@ -1146,7 +1142,7 @@ def saveNcaData():
  		for k, v in ncaData.items():
  			out[k] = v.__dict__
  
@@ -2246,7 +2248,7 @@ index f4c709c..9e0a4e1 100644
  			json.dump(out, f, indent=4, sort_keys=True)
  	except BaseException:
  		raise
-@@ -1469,7 +1465,7 @@ def scanLatestTitleUpdates():
+@@ -1494,7 +1490,7 @@ def scanLatestTitleUpdates():
  	today = now.strftime("%Y-%m-%d")
  
  	try:
@@ -2255,7 +2257,7 @@ index f4c709c..9e0a4e1 100644
  			for titleId, vers in json.loads(f.read()).items():
  				for ver, date in vers.items():
  					setVersionHistory(titleId, ver, date)
-@@ -1502,7 +1498,7 @@ def scanLatestTitleUpdates():
+@@ -1527,7 +1523,7 @@ def scanLatestTitleUpdates():
  	Titles.save()
  
  	try:
@@ -2264,7 +2266,7 @@ index f4c709c..9e0a4e1 100644
  			json.dump(versionHistory, outfile, indent=4, sort_keys=True)
  	except BaseException as e:
  		Print.info(str(e))
-@@ -1521,7 +1517,7 @@ def downloadThread(i):
+@@ -1546,7 +1542,7 @@ def downloadThread(i):
  				path = cdn.downloadTitle(t.id.lower(), None, t.key)
  
  				if path and os.path.isfile(path):
