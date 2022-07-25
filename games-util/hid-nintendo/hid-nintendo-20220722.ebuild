@@ -7,7 +7,7 @@ inherit linux-mod
 
 DESCRIPTION="A Nintendo HID kernel module"
 HOMEPAGE="https://github.com/nicman23/dkms-hid-nintendo https://github.com/DanielOgorchock/linux"
-SHA="859397425ceec5a1267e3aeaa9631f3e94497659"
+SHA="2712136b19eed75bff01c1a6ffe2a23daf78a7bb"
 SRC_URI="https://github.com/nicman23/dkms-hid-nintendo/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
