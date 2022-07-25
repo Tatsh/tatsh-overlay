@@ -1,4 +1,4 @@
-From 4c23fe6794ff1c8d9c35d90ce304afdc3c153820 Mon Sep 17 00:00:00 2001
+From a304b908639d55759fd186ac44b4c80356d3ae44 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:13 -0500
 Subject: [PATCH 2/4] settings: disable power off and restart system buttons
@@ -9,21 +9,21 @@ Update paths
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/settings.php b/settings.php
-index 420aae36..7591ce9a 100644
+index 4c55087e..791d44f4 100644
 --- a/settings.php
 +++ b/settings.php
-@@ -9,8 +9,8 @@ require "scripts/pi-hole/php/header.php";
- require "scripts/pi-hole/php/savesettings.php";
+@@ -10,8 +10,8 @@ require "scripts/pi-hole/php/savesettings.php";
  require_once "scripts/pi-hole/php/FTL.php";
  // Reread ini file as things might have been changed
+ // DEFAULT_FTLCONFFILE is set in "scripts/pi-hole/php/FTL.php";
 -$setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
--$piholeFTLConf = piholeFTLConfig(true);
+-$piholeFTLConf = piholeFTLConfig(DEFAULT_FTLCONFFILE ,true);
 +$setupVars = parse_ini_file("/var/lib/pihole/setupVars.conf");
 +$piholeFTLConf = piholeFTLConfig(DEFAULT_FTLCONFFILE, true);
  
  // Handling of PHP internal errors
  $last_error = error_get_last();
-@@ -342,11 +342,11 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
+@@ -337,11 +337,11 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
                                          </div>
                                          <p class="hidden-md hidden-lg"></p>
                                          <div class="col-md-4">
@@ -37,7 +37,7 @@ index 420aae36..7591ce9a 100644
                                          </div>
                                      </div>
  
-@@ -560,7 +560,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
+@@ -555,7 +555,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
                              if ($DHCP) {
                                  // Read leases file
                                  $leasesfile = true;

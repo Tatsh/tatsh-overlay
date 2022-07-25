@@ -1,4 +1,4 @@
-From 32e84a57044def90ee10f4ab678b93dff26eaa14 Mon Sep 17 00:00:00 2001
+From 4e236f9435d65a174c33afa0a7721163e9ec7bb7 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:24 -0500
 Subject: [PATCH 3/4] footer: remove update message

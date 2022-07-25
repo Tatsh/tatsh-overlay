@@ -1,4 +1,4 @@
-From 5895db5ae778f62b8d19b5ec4c838cf3285f2e06 Mon Sep 17 00:00:00 2001
+From bb4b2291237379aa8a49757e67d8da1492cd2a31 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:45:41 -0500
 Subject: [PATCH 1/4] Path changes
@@ -7,20 +7,19 @@ Subject: [PATCH 1/4] Path changes
  api_db.php                             |  2 +-
  dns_records.php                        |  4 ++--
  scripts/pi-hole/js/queryads.js         |  2 +-
- scripts/pi-hole/php/auth.php           |  2 +-
  scripts/pi-hole/php/database.php       |  4 ++--
  scripts/pi-hole/php/func.php           |  4 ++--
  scripts/pi-hole/php/password.php       |  2 +-
  scripts/pi-hole/php/savesettings.php   |  4 ++--
  scripts/pi-hole/php/teleporter.php     | 10 +++++-----
  scripts/pi-hole/php/update_checker.php |  6 +++---
- 10 files changed, 20 insertions(+), 20 deletions(-)
+ 9 files changed, 19 insertions(+), 19 deletions(-)
 
 diff --git a/api_db.php b/api_db.php
-index a10212a7..974a3267 100644
+index 15f58047..c393859b 100644
 --- a/api_db.php
 +++ b/api_db.php
-@@ -294,7 +294,7 @@ if (isset($_GET['getQueriesCount']) && $auth)
+@@ -317,7 +317,7 @@ if (isset($_GET['getQueriesCount']) && $auth)
  
  if (isset($_GET['getDBfilesize']) && $auth)
  {
@@ -30,10 +29,10 @@ index a10212a7..974a3267 100644
  	$data = array_merge($data, $result);
  }
 diff --git a/dns_records.php b/dns_records.php
-index 1782d146..82d67f13 100644
+index dcf9cf25..2c0b81c8 100644
 --- a/dns_records.php
 +++ b/dns_records.php
-@@ -43,9 +43,9 @@
+@@ -44,9 +44,9 @@ require "scripts/pi-hole/php/header.php";
                <p>The order of locally defined DNS records is: </p>
                <ol>
                    <li>The device's host name and <code>pi.hole</code></li>
@@ -46,7 +45,7 @@ index 1782d146..82d67f13 100644
                <p>Only the first record will trigger an address-to-name association.</p>
                  <button type="button" id="btnAdd" class="btn btn-primary pull-right">Add</button>
 diff --git a/scripts/pi-hole/js/queryads.js b/scripts/pi-hole/js/queryads.js
-index a97eadd9..5f330230 100644
+index cb8625ac..1177d1e7 100644
 --- a/scripts/pi-hole/js/queryads.js
 +++ b/scripts/pi-hole/js/queryads.js
 @@ -11,7 +11,7 @@ function quietfilter(ta, data) {
@@ -58,19 +57,6 @@ index a97eadd9..5f330230 100644
        // Remove "(x results)"
        shortstring = shortstring.replace(/\(.*/, "");
        ta.append(shortstring + "\n");
-diff --git a/scripts/pi-hole/php/auth.php b/scripts/pi-hole/php/auth.php
-index fbf6b76c..04858ae8 100644
---- a/scripts/pi-hole/php/auth.php
-+++ b/scripts/pi-hole/php/auth.php
-@@ -30,7 +30,7 @@ function log_and_die($message) {
- }
- 
- function check_cors() {
--    $setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
-+    $setupVars = parse_ini_file("/var/lib/pihole/setupVars.conf");
-     $ipv4 = isset($setupVars["IPV4_ADDRESS"]) ? explode("/", $setupVars["IPV4_ADDRESS"])[0] : $_SERVER['SERVER_ADDR'];
-     $ipv6 = isset($setupVars["IPV6_ADDRESS"]) ? explode("/", $setupVars["IPV6_ADDRESS"])[0] : $_SERVER['SERVER_ADDR'];
- 
 diff --git a/scripts/pi-hole/php/database.php b/scripts/pi-hole/php/database.php
 index ee9cff69..dd03e346 100644
 --- a/scripts/pi-hole/php/database.php
@@ -94,10 +80,10 @@ index ee9cff69..dd03e346 100644
  }
  
 diff --git a/scripts/pi-hole/php/func.php b/scripts/pi-hole/php/func.php
-index 8724b06a..c8300caf 100644
+index bede54eb..e3f57f8a 100644
 --- a/scripts/pi-hole/php/func.php
 +++ b/scripts/pi-hole/php/func.php
-@@ -153,7 +153,7 @@ function pihole_execute($argument_string, $error_on_failure = true) {
+@@ -152,7 +152,7 @@ function pihole_execute($argument_string) {
  }
  
  // Custom DNS
@@ -106,7 +92,7 @@ index 8724b06a..c8300caf 100644
  
  function echoCustomDNSEntries()
  {
-@@ -301,7 +301,7 @@ function deleteAllCustomDNSEntries($reload="")
+@@ -300,7 +300,7 @@ function deleteAllCustomDNSEntries($reload="")
  }
  
  // CNAME
@@ -129,7 +115,7 @@ index 038d4bbb..b702ee17 100644
      if(isset($setupVars['WEBPASSWORD']))
      {
 diff --git a/scripts/pi-hole/php/savesettings.php b/scripts/pi-hole/php/savesettings.php
-index 6178902e..5ebc34da 100644
+index b1ab18d2..a9aa7149 100644
 --- a/scripts/pi-hole/php/savesettings.php
 +++ b/scripts/pi-hole/php/savesettings.php
 @@ -35,7 +35,7 @@ function formatMAC($mac_addr)
@@ -151,10 +137,10 @@ index 6178902e..5ebc34da 100644
  	{
  		while (($line = fgets($handle)) !== false)
 diff --git a/scripts/pi-hole/php/teleporter.php b/scripts/pi-hole/php/teleporter.php
-index 774d10c7..6d5d1100 100644
+index 84abf502..7888f87f 100644
 --- a/scripts/pi-hole/php/teleporter.php
 +++ b/scripts/pi-hole/php/teleporter.php
-@@ -494,7 +494,7 @@ if(isset($_POST["action"]))
+@@ -495,7 +495,7 @@ if(isset($_POST["action"]))
  			if(isset($_POST["staticdhcpleases"]) && $file->getFilename() === "04-pihole-static-dhcp.conf")
  			{
  				if($flushtables) {
@@ -163,7 +149,7 @@ index 774d10c7..6d5d1100 100644
  					if ($local_file !== false) {
  						ftruncate($local_file, 0);
  						fclose($local_file);
-@@ -624,12 +624,12 @@ else
+@@ -628,12 +628,12 @@ else
  	archive_add_table("adlist_by_group.json", "adlist_by_group");
  	archive_add_table("client_by_group.json", "client_by_group");
  
@@ -178,7 +164,7 @@ index 774d10c7..6d5d1100 100644
 -	archive_add_directory("/etc/dnsmasq.d/","dnsmasq.d/");
 +	archive_add_directory("/etc/pihole/","dnsmasq.d/");
  
- 	$archive->compress(Phar::GZ); // Creates a gziped copy
+ 	$archive->compress(Phar::GZ); // Creates a gzipped copy
  	unlink($archive_file_name); // Unlink original tar file as it is not needed anymore
 diff --git a/scripts/pi-hole/php/update_checker.php b/scripts/pi-hole/php/update_checker.php
 index d479318a..a58376e5 100644

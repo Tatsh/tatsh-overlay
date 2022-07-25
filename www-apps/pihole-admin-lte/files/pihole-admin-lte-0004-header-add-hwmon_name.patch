@@ -1,4 +1,4 @@
-From 4fad42006e1b3528995e9d574562a0e13d6ac2f1 Mon Sep 17 00:00:00 2001
+From 0584efa516d7724a06bff02df8e3cc226ede51a9 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:41 -0500
 Subject: [PATCH 4/4] header: add HWMON_NAME
@@ -8,7 +8,7 @@ Subject: [PATCH 4/4] header: add HWMON_NAME
  1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/pi-hole/php/header.php b/scripts/pi-hole/php/header.php
-index aa59eb7f..56b3173b 100644
+index e7bf8f3e..beb07f60 100644
 --- a/scripts/pi-hole/php/header.php
 +++ b/scripts/pi-hole/php/header.php
 @@ -26,7 +26,21 @@
