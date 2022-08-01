@@ -11,7 +11,6 @@ LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="games-arcade/stepmania-outfox"
 BDEPEND="app-arch/unrar"
 
 src_unpack() {
