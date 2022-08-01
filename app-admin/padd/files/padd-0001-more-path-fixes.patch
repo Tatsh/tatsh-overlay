@@ -12,43 +12,24 @@ index 5468f3f..7ca81f6 100755
 --- a/padd.sh
 +++ b/padd.sh
 @@ -25,6 +25,9 @@ cd "$tmpdir/padd_$(id -u)/" > /dev/null || {
- 
+
  ############################################ VARIABLES #############################################
- 
+
 +pihole_version=${XDG_RUNTIME_DIR:-/tmp}/padd.pihole_version
 +padd_pid=${XDG_RUNTIME_DIR:-/tmp}/padd.pid
 +
  # VERSION
  padd_version="v3.7.1"
- 
-@@ -36,7 +39,7 @@ core_count=1
- core_count=$(cat /sys/devices/system/cpu/kernel_max 2> /dev/null)+1
- 
- # Get Config variables
--. /etc/pihole/setupVars.conf
-+. /var/lib/pihole/setupVars.conf
- 
- piHoleVersion_file="./piHoleVersion"
- 
-@@ -370,7 +373,7 @@ GetNetworkInformation() {
-     # if the DHCP Router variable isn't set
-     # Issue 3: https://github.com/jpmck/PADD/issues/3
-     if [ -z ${DHCP_ROUTER+x} ]; then
--      DHCP_ROUTER=$(/sbin/ip route | awk '/default/ { printf "%s\t", $3 }')
-+      DHCP_ROUTER=$(/bin/ip route | awk '/default/ { printf "%s\t", $3 }')
-     fi
- 
-     dhcp_info=" Router:   ${DHCP_ROUTER}"
-@@ -636,8 +639,7 @@ CleanEcho() {
- # wrapper - printf
- CleanPrintf() {
- # tput el
--# disabling shellcheck here because we pass formatting instructions within `"${@}"`
--# shellcheck disable=SC2059
-+  # shellcheck disable=SC2059
-   printf "$@"
- }
- 
--- 
+
+@@ -1015,7 +1018,7 @@ }
+
+ StartupRoutine(){
+     # Get config variables
+-  . /etc/pihole/setupVars.conf
++  . /var/lib/pihole/setupVars.conf
+
+   if [ "$1" = "pico" ] || [ "$1" = "nano" ] || [ "$1" = "micro" ]; then
+     PrintLogo "$1"
+--
 2.35.1
 
