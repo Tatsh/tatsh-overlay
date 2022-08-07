@@ -78,7 +78,9 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
     },
     'games-emulation/yuzu': {
         'externals/SDL',
+        'externals/cpp-jwt',
         'externals/dynarmic',
+        'externals/mbedtls',
         'externals/sirit',
         ('externals/cpp-httplib', 'HTTPLIB_SHA'),
     },
