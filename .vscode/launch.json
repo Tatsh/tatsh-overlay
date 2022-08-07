@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "args": ["-a", "-d", "xemu"],
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "name": "livecheck",
+      "program": "${workspaceFolder}/scripts/livecheck.py",
+      "request": "launch",
+      "type": "python"
+    }
+  ],
+  "version": "0.2.0"
+}
