@@ -1,7 +1,7 @@
-diff --git a/build_cmake/Framework/CMakeLists.txt b/build_cmake/Framework/CMakeLists.txt
+diff --git a/deps/Framework/build_cmake/Framework/CMakeLists.txt b/deps/Framework/build_cmake/Framework/CMakeLists.txt
 index 0109c6d..65cc58c 100644
---- a/build_cmake/Framework/CMakeLists.txt
-+++ b/build_cmake/Framework/CMakeLists.txt
+--- a/deps/Framework/build_cmake/Framework/CMakeLists.txt
++++ b/deps/Framework/build_cmake/Framework/CMakeLists.txt
 @@ -19,14 +19,14 @@ if(NOT TARGET ghc_filesystem)
  endif()
  LIST(APPEND PROJECT_LIBS ghc_filesystem)
@@ -28,10 +28,10 @@ index 0109c6d..65cc58c 100644
  		../../include/android/android_content_ContentResolver.h
  		../../include/android/android_database_Cursor.h
  		../../include/android/android_net_Uri.h
-diff --git a/build_cmake/FrameworkOpenGl/CMakeLists.txt b/build_cmake/FrameworkOpenGl/CMakeLists.txt
+diff --git a/deps/Framework/build_cmake/FrameworkOpenGl/CMakeLists.txt b/deps/Framework/build_cmake/FrameworkOpenGl/CMakeLists.txt
 index c242179..67ab556 100644
---- a/build_cmake/FrameworkOpenGl/CMakeLists.txt
-+++ b/build_cmake/FrameworkOpenGl/CMakeLists.txt
+--- a/deps/Framework/build_cmake/FrameworkOpenGl/CMakeLists.txt
++++ b/deps/Framework/build_cmake/FrameworkOpenGl/CMakeLists.txt
 @@ -16,7 +16,7 @@ endif()
  
  set(USE_GLEW OFF)
@@ -41,10 +41,10 @@ index c242179..67ab556 100644
  	if(GLEW_FOUND)
  		list(APPEND PROJECT_LIBS GLEW::GLEW)
  	else()
-diff --git a/build_cmake/FrameworkSqlite/CMakeLists.txt b/build_cmake/FrameworkSqlite/CMakeLists.txt
+diff --git a/deps/Framework/build_cmake/FrameworkSqlite/CMakeLists.txt b/deps/Framework/build_cmake/FrameworkSqlite/CMakeLists.txt
 index bc05147..9a874c0 100644
---- a/build_cmake/FrameworkSqlite/CMakeLists.txt
-+++ b/build_cmake/FrameworkSqlite/CMakeLists.txt
+--- a/deps/Framework/build_cmake/FrameworkSqlite/CMakeLists.txt
++++ b/deps/Framework/build_cmake/FrameworkSqlite/CMakeLists.txt
 @@ -3,7 +3,7 @@ project(Framework_Sqlite)
  
  include(../Framework_Common.cmake)

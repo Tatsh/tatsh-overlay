@@ -7,21 +7,21 @@ inherit cmake xdg
 DESCRIPTION="PlayStation 2 emulator."
 HOMEPAGE="http://purei.org/ https://github.com/jpd002/Play-"
 MY_PV="${PV:0:4}"
-BOOST_CMAKE_SHA="e97843ed8d7d069a278e6f2adf33a9f91638c73f"
-CODEGEN_SHA="e03003c1462aa7a12575fab56299a55f25e3eef0"
-DEPS_SHA="2068201d97951327e015b521590bb3117fbc7a50"
+CODEGEN_SHA="185d1e26ac91f608f3f7e9c5a635620b8ef80311"
+DEPS_SHA="7d8bfd36fa609355e4087f7d661fc512bf77754c"
 GHC_FILESYSTEM="2a8b380f8d4e77b389c42a194ab9c70d8e3a0f1e"
-FRAMEWORK_SHA="7d7d069cc39798880176f1c0648340b54ece73ca"
+FRAMEWORK_SHA="4d63a1089a7991c3089d667446fcf6770a51d06b"
 LIBCHDR_SHA="532a3f60f75eec3454ff4e52cad8862afc40e65f"
 NUANCEUR_SHA="8e2f8649b38322e1f97b05b87e2876c6de53462e"
+ZSTD_SHA="1e09cffd9b15b39379810a39ffae182b4a7e7b78"
 SRC_URI="https://github.com/jpd002/Play-/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/jpd002/boost-cmake/archive/${BOOST_CMAKE_SHA}.tar.gz -> ${PN}-boost-cmake-${BOOST_CMAKE_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Play--CodeGen/archive/${CODEGEN_SHA}.tar.gz -> ${PN}-codegen-${CODEGEN_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Play-Dependencies/archive/${DEPS_SHA}.tar.gz -> ${PN}-deps-${DEPS_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Play--Framework/archive/${FRAMEWORK_SHA}.tar.gz -> ${PN}-framework-${FRAMEWORK_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Nuanceur/archive/${NUANCEUR_SHA}.tar.gz -> ${PN}-nuanceur-${NUANCEUR_SHA:0:7}.tar.gz
 	https://github.com/gulrak/filesystem/archive/${GHC_FILESYSTEM}.tar.gz -> ${PN}-filesystem-${GHC_FILESYSTEM:0:7}.tar.gz
-	https://github.com/jpd002/libchdr/archive/${LIBCHDR_SHA}.tar.gz -> ${PN}-libchdr-${LIBCHDR_SHA:0:7}.tar.gz"
+	https://github.com/jpd002/libchdr/archive/${LIBCHDR_SHA}.tar.gz -> ${PN}-libchdr-${LIBCHDR_SHA:0:7}.tar.gz
+	https://github.com/facebook/zstd/archive/${ZSTD_SHA}.tar.gz -> ${PN}-zstd-${ZSTD_SHA:0:7}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -50,21 +50,23 @@ UPPER_PN="${PN^^}"
 MY_PN="${UPPER_PN:0:1}${PN:1}-"
 S="${WORKDIR}/${MY_PN}-${MY_PV}"
 
-PATCHES=( "${FILESDIR}/${PN}-system-deps.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-0001-source-system-deps.patch"
+	"${FILESDIR}/${PN}-framework-system-deps.patch"
+)
 
 src_prepare() {
 	rmdir deps/{CodeGen,Dependencies,Framework,Nuanceur} || die
 	mv "${WORKDIR}/${MY_PN}-CodeGen-${CODEGEN_SHA}" deps/CodeGen || die
 	mv "${WORKDIR}/${MY_PN}Dependencies-${DEPS_SHA}" deps/Dependencies || die
-	rmdir deps/Dependencies/{boost-cmake,ghc_filesystem} || die
-	mv "${WORKDIR}/boost-cmake-${BOOST_CMAKE_SHA}" deps/Dependencies/boost-cmake || die
+	rmdir deps/Dependencies/{ghc_filesystem,zstd} || die
 	mv "${WORKDIR}/filesystem-${GHC_FILESYSTEM}" deps/Dependencies/ghc_filesystem || die
 	mv "${WORKDIR}/${MY_PN}-Framework-${FRAMEWORK_SHA}" deps/Framework || die
 	mv "${WORKDIR}/Nuanceur-${NUANCEUR_SHA}" deps/Nuanceur || die
+	mv "${WORKDIR}/zstd-${ZSTD_SHA}" deps/Dependencies/zstd || die
 	rmdir deps/libchdr || die
 	mv "${WORKDIR}/libchdr-${LIBCHDR_SHA}" deps/libchdr || die
 	sed -e '/^set(PROJECT_Version/d' -i CMakeLists.txt || die
-	{ cd deps/Framework && eapply -p1 "${FILESDIR}/${PN}-framework-system-deps.patch"; } || die
 	cmake_src_prepare
 }
 
@@ -75,6 +77,7 @@ src_configure() {
 		-DBUILD_LIBRETRO_CORE=$(usex libretro)
 		-DUSE_GSH_VULKAN=$(usex vulkan)
 		-DPROJECT_Version=${PV}
+		-Wno-dev
 	)
 	# https://github.com/jpd002/Play-/issues/911
 	append-cppflags -DNDEBUG
