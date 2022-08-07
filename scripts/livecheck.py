@@ -86,12 +86,18 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
     },
     'media-sound/sony-headphones-client': {'Client/imgui'},
 }
+
+
+def prefix_v(s: str) -> str:
+    return f'v{s}'
+
+
 TAG_NAME_FUNCTIONS: Final[Mapping[str, Callable[[str], str]]] = {
-    'app-misc/tasksh': lambda s: f'v{s}',
-    'games-emulation/rpcs3': lambda s: f'v{s}',
-    'games-emulation/xemu': lambda s: f'xemu-v{s}',
+    'app-misc/tasksh': prefix_v,
+    'games-emulation/rpcs3': prefix_v,
+    'games-emulation/xemu': prefix_v,
     'games-emulation/yuzu': lambda x: f'mainline-{x.replace(".", "-")}',
-    'media-sound/sony-headphones-client': lambda s: f'v{s}',
+    'media-sound/sony-headphones-client': prefix_v,
 }
 
 # From parse-package-name
@@ -151,9 +157,10 @@ def process_submodules(pkg_name: str, ref: str, contents: str,
                        repo_uri: str) -> str:
     if pkg_name not in SUBMODULES:
         return contents
-    repo_root = '/'.join([''] +
-                         [x for x in urlparse(repo_uri).path.split('/')
-                          if x][0:2])
+    offset_a, offset_b = ((1, 3) if 'api.github.com/repos/' in repo_uri else
+                          (0, 2))
+    repo_root = '/'.join([x for x in urlparse(repo_uri).path.split('/')
+                          if x][offset_a:offset_b])
     ebuild_lines = contents.splitlines(keepends=True)
     for item in SUBMODULES[pkg_name]:
         name = item
@@ -163,7 +170,7 @@ def process_submodules(pkg_name: str, ref: str, contents: str,
         else:
             grep_for = f"{basename(item).upper().replace('-', '_')}_SHA=\""
         r = requests.get(
-            (f'https://api.github.com/repos{repo_root}/contents/{name}'
+            (f'https://api.github.com/repos/{repo_root}/contents/{name}'
              f'?ref={ref}'),
             headers=dict(
                 Authorization=f'token {get_github_api_credentials()}'))
@@ -474,6 +481,10 @@ def latest_jetbrains_versions(xml_content: str,
 
 
 def main() -> int:
+
+    def vc(x: str, y: str) -> int:
+        return -1 if (ret := vercmp(x, y)) is None else ret
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', '--auto-update', action='store_true')
     parser.add_argument('-D',
@@ -532,14 +543,7 @@ def main() -> int:
             else:
                 log.debug('Using RE: "%s"', regex)
                 results = re.findall(regex, r.text)
-            top_hash = (list(
-                reversed(
-                    sorted(results,
-                           key=cmp_to_key(
-                               cast(
-                                   Callable[[str, str],
-                                            int], lambda x, y: -1 if
-                                   (ret := vercmp(x, y)) is None else ret)))))
+            top_hash = (list(reversed(sorted(results, key=cmp_to_key(vc))))
                         if use_vercmp else results)[0]
             log.debug('re.findall() -> "%s"', top_hash)
             cp = f'{cat}/{pkg}'
