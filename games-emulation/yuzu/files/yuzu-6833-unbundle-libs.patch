@@ -1,4 +1,4 @@
-From 8215ff988c8a632c653087b4ad7f25cedbd0050a Mon Sep 17 00:00:00 2001
+From 7843a3fe964917aeead11dc1283862d3d2bd15b0 Mon Sep 17 00:00:00 2001
 From: Alexandre Bouvier <contact@amb.tf>
 Date: Fri, 20 Aug 2021 06:07:12 +0200
 Subject: [PATCH 1/3] cmake: Allow unbundling some external libraries
@@ -18,7 +18,7 @@ Add support for linking against the following system libraries:
  4 files changed, 72 insertions(+), 7 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5f508d61a..722e181a8 100644
+index 5f508d61a17..722e181a86c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -28,6 +28,16 @@ option(YUZU_USE_BUNDLED_LIBUSB "Compile bundled libusb" OFF)
@@ -99,7 +99,7 @@ index 5f508d61a..722e181a8 100644
  # ======================================
  
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 6d04ace1d..a137ffe67 100644
+index 6d04ace1d1d..a137ffe672b 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -6,7 +6,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
@@ -150,7 +150,7 @@ index 6d04ace1d..a137ffe67 100644
      if (OPENSSL_FOUND)
          set(OPENSSL_LIBRARIES OpenSSL::SSL OpenSSL::Crypto)
 diff --git a/externals/inih/CMakeLists.txt b/externals/inih/CMakeLists.txt
-index b686e3cf5..827ac3bbc 100644
+index b686e3cf580..827ac3bbcf3 100644
 --- a/externals/inih/CMakeLists.txt
 +++ b/externals/inih/CMakeLists.txt
 @@ -9,4 +9,4 @@ add_library(inih
@@ -160,7 +160,7 @@ index b686e3cf5..827ac3bbc 100644
 -target_include_directories(inih INTERFACE .)
 +target_include_directories(inih INTERFACE inih/cpp)
 diff --git a/src/yuzu_cmd/config.cpp b/src/yuzu_cmd/config.cpp
-index bd0fb75f8..7e14049cc 100644
+index bd0fb75f8db..7e14049ccd6 100644
 --- a/src/yuzu_cmd/config.cpp
 +++ b/src/yuzu_cmd/config.cpp
 @@ -15,7 +15,7 @@
@@ -172,10 +172,8 @@ index bd0fb75f8..7e14049cc 100644
  #include "common/fs/file.h"
  #include "common/fs/fs.h"
  #include "common/fs/path_util.h"
--- 
-2.35.1
 
-From 71739b31241167f05a7623d6d4b6a06039d16065 Mon Sep 17 00:00:00 2001
+From 07341d4cbe5030278970583c1eb37ab6abe2361f Mon Sep 17 00:00:00 2001
 From: Andrea Pappacoda <andrea@pappacoda.it>
 Date: Fri, 25 Mar 2022 23:22:58 +0100
 Subject: [PATCH 2/3] build: also look for cpp-httplib via pkg-config
@@ -189,7 +187,7 @@ Subject: [PATCH 2/3] build: also look for cpp-httplib via pkg-config
  create mode 100644 externals/find-modules/Findhttplib.cmake
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 722e181a8..026b86981 100644
+index 722e181a86c..026b8698107 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -479,10 +479,8 @@ if (ARCHITECTURE_x86_64 AND NOT YUZU_USE_BUNDLED_DYNARMIC)
@@ -206,7 +204,7 @@ index 722e181a8..026b86981 100644
          set(YUZU_USE_BUNDLED_HTTPLIB ON)
      endif()
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index a137ffe67..7b2f16c0b 100644
+index a137ffe672b..7b2f16c0b7d 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -95,7 +95,7 @@ endif()
@@ -229,7 +227,7 @@ index a137ffe67..7b2f16c0b 100644
      target_include_directories(cpp-jwt INTERFACE ./cpp-jwt/include)
 diff --git a/externals/find-modules/Findhttplib.cmake b/externals/find-modules/Findhttplib.cmake
 new file mode 100644
-index 000000000..0c7374c21
+index 00000000000..0c7374c21d1
 --- /dev/null
 +++ b/externals/find-modules/Findhttplib.cmake
 @@ -0,0 +1,22 @@
@@ -256,7 +254,7 @@ index 000000000..0c7374c21
 +    VERSION_VAR HTTPLIB_VERSION
 +)
 diff --git a/src/web_service/CMakeLists.txt b/src/web_service/CMakeLists.txt
-index 3f75d97d1..cbd4a814e 100644
+index 3f75d97d178..cbd4a814e87 100644
 --- a/src/web_service/CMakeLists.txt
 +++ b/src/web_service/CMakeLists.txt
 @@ -16,4 +16,4 @@ add_library(web_service STATIC
@@ -265,10 +263,8 @@ index 3f75d97d1..cbd4a814e 100644
  create_target_directory_groups(web_service)
 -target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib cpp-jwt)
 +target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib::httplib cpp-jwt)
--- 
-2.35.1
 
-From ddce7bd105ba7a609361fed3b4e21d313483f30d Mon Sep 17 00:00:00 2001
+From d1e848c6c9cab7a742b3be724160b38660939f85 Mon Sep 17 00:00:00 2001
 From: Alexandre Bouvier <contact@amb.tf>
 Date: Mon, 28 Mar 2022 01:16:58 +0200
 Subject: [PATCH 3/3] cmake: Add option for every external
@@ -287,7 +283,7 @@ Subject: [PATCH 3/3] cmake: Add option for every external
  externals/find-modules/Findlz4.cmake          |  55 +------
  .../find-modules/Findnlohmann_json.cmake      |  51 -------
  externals/find-modules/Findopus.cmake         |  44 ------
- externals/find-modules/Findzstd.cmake         |  60 ++------
+ externals/find-modules/Findzstd.cmake         |  76 ++++------
  externals/inih/CMakeLists.txt                 |   1 +
  externals/opus/CMakeLists.txt                 |   2 +-
  src/audio_core/CMakeLists.txt                 |   4 +-
@@ -298,7 +294,7 @@ Subject: [PATCH 3/3] cmake: Add option for every external
  src/web_service/CMakeLists.txt                |   2 +-
  src/yuzu/CMakeLists.txt                       |   6 +-
  src/yuzu_cmd/CMakeLists.txt                   |   4 +-
- 24 files changed, 268 insertions(+), 437 deletions(-)
+ 24 files changed, 283 insertions(+), 438 deletions(-)
  delete mode 100644 externals/find-modules/FindCatch2.cmake
  create mode 100644 externals/find-modules/FindDiscordRPC.cmake
  create mode 100644 externals/find-modules/FindOpus.cmake
@@ -310,7 +306,7 @@ Subject: [PATCH 3/3] cmake: Add option for every external
  delete mode 100644 externals/find-modules/Findopus.cmake
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 026b86981..36fc07101 100644
+index 026b8698107..36fc071012b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -28,16 +28,6 @@ option(YUZU_USE_BUNDLED_LIBUSB "Compile bundled libusb" OFF)
@@ -508,7 +504,7 @@ index 026b86981..36fc07101 100644
  # ======================================
  
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 7b2f16c0b..18b7fb1dc 100644
+index 7b2f16c0b7d..18b7fb1dc09 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -6,20 +6,22 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
@@ -624,7 +620,7 @@ index 7b2f16c0b..18b7fb1dc 100644
 +endif()
 diff --git a/externals/find-modules/FindCatch2.cmake b/externals/find-modules/FindCatch2.cmake
 deleted file mode 100644
-index bded15951..000000000
+index bded1595168..00000000000
 --- a/externals/find-modules/FindCatch2.cmake
 +++ /dev/null
 @@ -1,51 +0,0 @@
@@ -681,7 +677,7 @@ index bded15951..000000000
 -)
 diff --git a/externals/find-modules/FindDiscordRPC.cmake b/externals/find-modules/FindDiscordRPC.cmake
 new file mode 100644
-index 000000000..44ca9904f
+index 00000000000..44ca9904f4a
 --- /dev/null
 +++ b/externals/find-modules/FindDiscordRPC.cmake
 @@ -0,0 +1,27 @@
@@ -714,7 +710,7 @@ index 000000000..44ca9904f
 +)
 diff --git a/externals/find-modules/FindOpus.cmake b/externals/find-modules/FindOpus.cmake
 new file mode 100644
-index 000000000..a2f0f4e40
+index 00000000000..a2f0f4e40b5
 --- /dev/null
 +++ b/externals/find-modules/FindOpus.cmake
 @@ -0,0 +1,18 @@
@@ -738,7 +734,7 @@ index 000000000..a2f0f4e40
 +)
 diff --git a/externals/find-modules/FindVulkanHeaders.cmake b/externals/find-modules/FindVulkanHeaders.cmake
 new file mode 100644
-index 000000000..4a36972f6
+index 00000000000..4a36972f629
 --- /dev/null
 +++ b/externals/find-modules/FindVulkanHeaders.cmake
 @@ -0,0 +1,47 @@
@@ -791,7 +787,7 @@ index 000000000..4a36972f6
 +mark_as_advanced(VulkanHeaders_INCLUDE_DIR)
 diff --git a/externals/find-modules/Findenet.cmake b/externals/find-modules/Findenet.cmake
 new file mode 100644
-index 000000000..4cf49d4c7
+index 00000000000..4cf49d4c783
 --- /dev/null
 +++ b/externals/find-modules/Findenet.cmake
 @@ -0,0 +1,18 @@
@@ -815,7 +811,7 @@ index 000000000..4cf49d4c7
 +)
 diff --git a/externals/find-modules/Findfmt.cmake b/externals/find-modules/Findfmt.cmake
 deleted file mode 100644
-index d11e98a69..000000000
+index d11e98a6963..00000000000
 --- a/externals/find-modules/Findfmt.cmake
 +++ /dev/null
 @@ -1,71 +0,0 @@
@@ -891,7 +887,7 @@ index d11e98a69..000000000
 -    fmt_LIBRARY
 -)
 diff --git a/externals/find-modules/Findhttplib.cmake b/externals/find-modules/Findhttplib.cmake
-index 0c7374c21..3c3fc7da8 100644
+index 0c7374c21d1..3c3fc7da883 100644
 --- a/externals/find-modules/Findhttplib.cmake
 +++ b/externals/find-modules/Findhttplib.cmake
 @@ -2,21 +2,22 @@
@@ -932,7 +928,7 @@ index 0c7374c21..3c3fc7da8 100644
 -)
 diff --git a/externals/find-modules/Findinih.cmake b/externals/find-modules/Findinih.cmake
 new file mode 100644
-index 000000000..d2b6644ac
+index 00000000000..d2b6644ac23
 --- /dev/null
 +++ b/externals/find-modules/Findinih.cmake
 @@ -0,0 +1,18 @@
@@ -955,7 +951,7 @@ index 000000000..d2b6644ac
 +    VERSION_VAR inih_VERSION
 +)
 diff --git a/externals/find-modules/Findlz4.cmake b/externals/find-modules/Findlz4.cmake
-index 56dcca8f6..f8df9fd5f 100644
+index 56dcca8f6cf..f8df9fd5f49 100644
 --- a/externals/find-modules/Findlz4.cmake
 +++ b/externals/find-modules/Findlz4.cmake
 @@ -2,55 +2,16 @@
@@ -1024,7 +1020,7 @@ index 56dcca8f6..f8df9fd5f 100644
  )
 diff --git a/externals/find-modules/Findnlohmann_json.cmake b/externals/find-modules/Findnlohmann_json.cmake
 deleted file mode 100644
-index 8a3958cf1..000000000
+index 8a3958cf14f..00000000000
 --- a/externals/find-modules/Findnlohmann_json.cmake
 +++ /dev/null
 @@ -1,51 +0,0 @@
@@ -1081,7 +1077,7 @@ index 8a3958cf1..000000000
 -)
 diff --git a/externals/find-modules/Findopus.cmake b/externals/find-modules/Findopus.cmake
 deleted file mode 100644
-index ec7b4f61f..000000000
+index ec7b4f61fa1..00000000000
 --- a/externals/find-modules/Findopus.cmake
 +++ /dev/null
 @@ -1,44 +0,0 @@
@@ -1130,10 +1126,10 @@ index ec7b4f61f..000000000
 -    opus_LIBRARY
 -)
 diff --git a/externals/find-modules/Findzstd.cmake b/externals/find-modules/Findzstd.cmake
-index f0c56f499..c6147cd1a 100644
+index f0c56f49998..300f7ea16cb 100644
 --- a/externals/find-modules/Findzstd.cmake
 +++ b/externals/find-modules/Findzstd.cmake
-@@ -1,57 +1,17 @@
+@@ -1,57 +1,31 @@
  # SPDX-FileCopyrightText: 2020 yuzu Emulator Project
  # SPDX-License-Identifier: GPL-2.0-or-later
  
@@ -1161,8 +1157,7 @@ index f0c56f499..c6147cd1a 100644
 -  unset(_zstd_version_release)
 -  unset(_zstd_version_lines)
 -endif()
-+find_package(zstd QUIET CONFIG)
- 
+-
  include(FindPackageHandleStandardArgs)
 -find_package_handle_standard_args(zstd
 -  FOUND_VAR zstd_FOUND
@@ -1172,20 +1167,36 @@ index f0c56f499..c6147cd1a 100644
 -    zstd_VERSION
 -  VERSION_VAR zstd_VERSION
 -)
-+find_package_handle_standard_args(zstd CONFIG_MODE)
  
 -if(zstd_FOUND)
 -  set(zstd_LIBRARIES ${zstd_LIBRARY})
 -  set(zstd_INCLUDE_DIRS ${zstd_INCLUDE_DIR})
 -  set(zstd_DEFINITIONS ${PC_zstd_CFLAGS_OTHER})
-+if (zstd_FOUND AND NOT TARGET zstd::zstd)
-+    if (TARGET zstd::libzstd_shared)
-+        set_target_properties(zstd::libzstd_shared PROPERTIES IMPORTED_GLOBAL TRUE)
-+        add_library(zstd::zstd ALIAS zstd::libzstd_shared)
-+    else()
-+        set_target_properties(zstd::libzstd_static PROPERTIES IMPORTED_GLOBAL TRUE)
-+        add_library(zstd::zstd ALIAS zstd::libzstd_static)
++find_package(zstd QUIET CONFIG)
++if (zstd_FOUND)
++    find_package_handle_standard_args(zstd CONFIG_MODE)
++    if (NOT TARGET zstd::zstd)
++        if (TARGET zstd::libzstd_shared)
++            set_target_properties(zstd::libzstd_shared PROPERTIES IMPORTED_GLOBAL TRUE)
++            add_library(zstd::zstd ALIAS zstd::libzstd_shared)
++        else()
++            set_target_properties(zstd::libzstd_static PROPERTIES IMPORTED_GLOBAL TRUE)
++            add_library(zstd::zstd ALIAS zstd::libzstd_static)
++        endif()
 +    endif()
++else()
++    find_package(PkgConfig QUIET)
++    if (PKG_CONFIG_FOUND)
++        pkg_search_module(ZSTD QUIET IMPORTED_TARGET GLOBAL libzstd)
++        if (ZSTD_FOUND)
++            add_library(zstd::zstd ALIAS PkgConfig::ZSTD)
++            set(zstd_VERSION ${ZSTD_VERSION})
++        endif()
++    endif()
++    find_package_handle_standard_args(zstd
++        REQUIRED_VARS ZSTD_LINK_LIBRARIES
++        VERSION_VAR zstd_VERSION
++    )
  endif()
 -
 -if(zstd_FOUND AND NOT TARGET zstd::zstd)
@@ -1202,7 +1213,7 @@ index f0c56f499..c6147cd1a 100644
 -    zstd_LIBRARY
 -)
 diff --git a/externals/inih/CMakeLists.txt b/externals/inih/CMakeLists.txt
-index 827ac3bbc..ebb60a976 100644
+index 827ac3bbcf3..ebb60a976e4 100644
 --- a/externals/inih/CMakeLists.txt
 +++ b/externals/inih/CMakeLists.txt
 @@ -10,3 +10,4 @@ add_library(inih
@@ -1211,7 +1222,7 @@ index 827ac3bbc..ebb60a976 100644
  target_include_directories(inih INTERFACE inih/cpp)
 +add_library(inih::INIReader ALIAS inih)
 diff --git a/externals/opus/CMakeLists.txt b/externals/opus/CMakeLists.txt
-index a92ffbd69..410ff7c08 100644
+index a92ffbd6932..410ff7c0876 100644
 --- a/externals/opus/CMakeLists.txt
 +++ b/externals/opus/CMakeLists.txt
 @@ -256,4 +256,4 @@ PRIVATE
@@ -1221,7 +1232,7 @@ index a92ffbd69..410ff7c08 100644
 -add_library(Opus::Opus ALIAS opus)
 +add_library(Opus::opus ALIAS opus)
 diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
-index 5fe1d5fa5..9c6bbd27d 100644
+index 5fe1d5fa5f4..9c6bbd27d2d 100644
 --- a/src/audio_core/CMakeLists.txt
 +++ b/src/audio_core/CMakeLists.txt
 @@ -226,11 +226,11 @@ endif()
@@ -1239,7 +1250,7 @@ index 5fe1d5fa5..9c6bbd27d 100644
  endif()
  if(ENABLE_SDL2)
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index a6dc31b53..f8970473a 100644
+index a6dc31b53b5..f8970473a89 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
 @@ -188,10 +188,4 @@ endif()
@@ -1255,10 +1266,10 @@ index a6dc31b53..f8970473a 100644
 -endif()
 +target_link_libraries(common PRIVATE lz4::lz4 xbyak::xbyak zstd::zstd)
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index 40b1ea4a2..930fa5143 100644
+index 9dbe5bdcac1..6b26af0721c 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -787,7 +787,7 @@ endif()
+@@ -785,7 +785,7 @@ endif()
  create_target_directory_groups(core)
  
  target_link_libraries(core PUBLIC common PRIVATE audio_core network video_core)
@@ -1267,7 +1278,7 @@ index 40b1ea4a2..930fa5143 100644
  if (MINGW)
      target_link_libraries(core PRIVATE ${MSWSOCK_LIBRARY})
  endif()
-@@ -806,5 +806,5 @@ if (ARCHITECTURE_x86_64)
+@@ -804,5 +804,5 @@ if (ARCHITECTURE_x86_64)
          arm/dynarmic/arm_dynarmic_cp15.cpp
          arm/dynarmic/arm_dynarmic_cp15.h
      )
@@ -1275,7 +1286,7 @@ index 40b1ea4a2..930fa5143 100644
 +    target_link_libraries(core PRIVATE dynarmic::dynarmic)
  endif()
 diff --git a/src/network/CMakeLists.txt b/src/network/CMakeLists.txt
-index 312f79b68..3d6f8cf41 100644
+index 312f79b6869..3d6f8cf4124 100644
 --- a/src/network/CMakeLists.txt
 +++ b/src/network/CMakeLists.txt
 @@ -16,4 +16,4 @@ add_library(network STATIC
@@ -1285,7 +1296,7 @@ index 312f79b68..3d6f8cf41 100644
 -target_link_libraries(network PRIVATE common enet Boost::boost)
 +target_link_libraries(network PRIVATE common enet::enet Boost::boost)
 diff --git a/src/video_core/CMakeLists.txt b/src/video_core/CMakeLists.txt
-index 5b3808351..18380f014 100644
+index 5b380835168..18380f014c7 100644
 --- a/src/video_core/CMakeLists.txt
 +++ b/src/video_core/CMakeLists.txt
 @@ -231,7 +231,7 @@ add_library(video_core STATIC
@@ -1315,7 +1326,7 @@ index 5b3808351..18380f014 100644
 +    target_link_libraries(video_core PRIVATE dynarmic::dynarmic)
  endif()
 diff --git a/src/web_service/CMakeLists.txt b/src/web_service/CMakeLists.txt
-index cbd4a814e..b548fada6 100644
+index cbd4a814e87..b548fada623 100644
 --- a/src/web_service/CMakeLists.txt
 +++ b/src/web_service/CMakeLists.txt
 @@ -16,4 +16,4 @@ add_library(web_service STATIC
@@ -1325,7 +1336,7 @@ index cbd4a814e..b548fada6 100644
 -target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib::httplib cpp-jwt)
 +target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib::httplib cpp-jwt::cpp-jwt)
 diff --git a/src/yuzu/CMakeLists.txt b/src/yuzu/CMakeLists.txt
-index f6b389ede..25800473b 100644
+index f6b389ede52..25800473b17 100644
 --- a/src/yuzu/CMakeLists.txt
 +++ b/src/yuzu/CMakeLists.txt
 @@ -289,7 +289,7 @@ target_link_libraries(yuzu PRIVATE common core input_common network video_core)
@@ -1354,7 +1365,7 @@ index f6b389ede..25800473b 100644
 +    target_link_libraries(yuzu PRIVATE dynarmic::dynarmic)
  endif()
 diff --git a/src/yuzu_cmd/CMakeLists.txt b/src/yuzu_cmd/CMakeLists.txt
-index 7d8ca3d8a..a967359f8 100644
+index 7d8ca3d8a0b..a967359f8b1 100644
 --- a/src/yuzu_cmd/CMakeLists.txt
 +++ b/src/yuzu_cmd/CMakeLists.txt
 @@ -31,7 +31,7 @@ add_executable(yuzu-cmd
@@ -1375,6 +1386,3 @@ index 7d8ca3d8a..a967359f8 100644
  
  if (YUZU_USE_EXTERNAL_SDL2)
      target_compile_definitions(yuzu-cmd PRIVATE -DYUZU_USE_EXTERNAL_SDL2)
--- 
-2.35.1
-

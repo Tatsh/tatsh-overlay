@@ -83,9 +83,7 @@ src_prepare() {
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
 	mv -f "${T}/compatibility_list.json" "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
 	sed -e '/-Werror=missing-declarations/d' -i src/CMakeLists.txt || die
-	cp externals/find-modules/Findzstd.cmake fz.cmake || die
 	cmake_src_prepare
-	mv fz.cmake externals/find-modules/Findzstd.cmake || die
 }
 
 src_configure() {
