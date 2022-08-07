@@ -8,11 +8,15 @@ DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 
 MY_PV="mainline-${PV/./-}"
-DYNARMIC_SHA="7f84870712ac2fe06aa62dc2bebbe46b51a2cc2e"
+CPP_JWT_SHA="e12ef06218596b52d9b5d6e1639484866a8e7067"
+DYNARMIC_SHA="91d1f944e3870e0f3c505b48f5ec00ca9a82b95d"
 HTTPLIB_SHA="305a7abcb9b4e9e349843c6d563212e6c1bbbf21"
-SDL_SHA="e2ade2bfc46d915cd306c63c830b81d800b2575f"
+MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
+SDL_SHA="b424665e0899769b200231ba943353a5fee1b6b6"
 SIRIT_SHA="aa292d56650bc28f2b2d75973fab2e61d0136f9c"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
+	https://github.com/arun11299/cpp-jwt/archive/${CPP_JWT_SHA}.tar.gz -> ${PN}-cpp-jwt-${CPP_JWT_SHA:0:7}.tar.gz
+	https://github.com/yuzu-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
 	https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/ReinUsesLisp/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/yhirose/cpp-httplib/archive/${HTTPLIB_SHA}.tar.gz -> ${PN}-httplib-${HTTPLIB_SHA:0:7}.tar.gz
@@ -28,7 +32,6 @@ DEPEND="app-arch/lz4
 	>=app-arch/zstd-1.5.0
 	dev-libs/boost:=[context]
 	cubeb? ( media-libs/cubeb )
-	dev-libs/openssl
 	dev-libs/inih
 	dev-libs/libfmt:0/8.1.1
 	dev-libs/libzip
@@ -41,6 +44,7 @@ DEPEND="app-arch/lz4
 	dev-qt/qtwidgets
 	media-libs/opus
 	>=media-video/ffmpeg-4.3
+	net-libs/enet:=
 	sys-libs/libunwind
 	sys-libs/zlib
 	x11-libs/libva
@@ -56,10 +60,7 @@ BDEPEND="<dev-cpp/catch-3.0.0
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-6769-create-shortcuts.patch"
 	"${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
-	"${FILESDIR}/${PN}-7259-ioctrlfreeventbatch.patch"
-	"${FILESDIR}/${PN}-7213-openssl.patch"
 	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
 	"${FILESDIR}/${PN}-system-robin-map.patch"
 )
@@ -70,24 +71,27 @@ pkg_setup() {
 
 src_prepare() {
 	rm .gitmodules || die
-	rmdir "${S}/externals/"{dynarmic,sirit,cpp-httplib,SDL} || die
+	rmdir "${S}/externals/"{dynarmic,mbedtls,sirit,cpp-httplib,cpp-jwt,SDL} || die
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
 	mv "${WORKDIR}/cpp-httplib-${HTTPLIB_SHA}" "${S}/externals/cpp-httplib" || die
+	mv "${WORKDIR}/cpp-jwt-${CPP_JWT_SHA}" "${S}/externals/cpp-jwt" || die
 	mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
+	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' -i src/common/CMakeLists.txt || die
 	sed -e '/enable_testing.*/d' -e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' -i externals/sirit/CMakeLists.txt || die
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
 	mv -f "${T}/compatibility_list.json" "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
 	sed -e '/-Werror=missing-declarations/d' -i src/CMakeLists.txt || die
+	cp externals/find-modules/Findzstd.cmake fz.cmake || die
 	cmake_src_prepare
+	mv fz.cmake externals/find-modules/Findzstd.cmake || die
 }
 
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_FULLNAME="${MY_PV}"
 		-DBUILD_SHARED_LIBS=OFF
-		-DCONAN_REQUIRED_LIBS=OFF
 		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=OFF
 		-DENABLE_CUBEB=$(usex cubeb)
 		-DENABLE_WEB_SERVICE=$(usex web-service)
@@ -99,13 +103,14 @@ src_configure() {
 		-DYUZU_USE_EXTERNAL_SDL2=ON
 		-DYUZU_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)
 		-DYUZU_USE_BUNDLED_CUBEB=OFF
+		-DYUZU_USE_BUNDLED_ENET=OFF
 		-DYUZU_USE_BUNDLED_HTTPLIB=ON
 		-DYUZU_USE_BUNDLED_INIH=OFF
 		-DYUZU_USE_BUNDLED_OPUS=OFF
 		-DYUZU_USE_BUNDLED_XBYAK=OFF
-		-DYUZU_USE_OPENSSL_CRYPTO=ON
+		-DYUZU_USE_BUNDLED_VULKAN_HEADERS=OFF
 		-DYUZU_USE_QT_WEB_ENGINE=ON
-		-Wno-dev
+ 		-Wno-dev
 	)
 	cmake_src_configure
 }
