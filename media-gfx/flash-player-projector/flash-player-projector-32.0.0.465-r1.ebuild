@@ -1,13 +1,15 @@
-# Copyright 2019-2021 Gentoo Authors
+# Copyright 2019-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
+
 inherit desktop xdg
 
 DESCRIPTION="Stand-alone viewer of SWF files."
 HOMEPAGE="https://www.adobe.com/support/flashplayer/debug_downloads.html"
+AF_URI="https://web.archive.org/web/20210126102538if_/https://fpdownload.adobe.com/pub/flashplayer/pdc/${PV}"
 SRC_URI="https://fpdownload.macromedia.com/pub/flashplayer/updaters/32/flash_player_sa_linux.x86_64.tar.gz -> ${P}.tar.gz
-	https://fpdownload.adobe.com/pub/flashplayer/pdc/${PV}/flash_player_npapi_linux.x86_64.tar.gz -> ${PN}-${PV}-assets.tar.gz"
+	${AF_URI}/flash_player_npapi_linux.x86_64.tar.gz -> ${P}-assets.tar.gz"
 
 LICENSE="AdobeFlash-11.x"
 SLOT="0"
