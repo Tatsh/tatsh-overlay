@@ -590,7 +590,7 @@ def main() -> int:
                         name, ext = splitext(ebuild)
                         new_filename = f'{name}-r1{ext}'
                     print(f'{ebuild} -> {new_filename}')
-                    sp.run(('git', 'mv', ebuild, new_filename), check=True)
+                    sp.run(('mv', ebuild, new_filename), check=True)
                     with open(new_filename, 'w') as f:
                         f.write(content)
                 else:
