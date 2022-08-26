@@ -35,6 +35,8 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_PN}-${SHA}"
 
+PATCHES=( "${FILESDIR}/${PN}-deps.patch" )
+
 src_configure() {
 	AR=llvm-ar
 	CC=${CHOST}-clang
