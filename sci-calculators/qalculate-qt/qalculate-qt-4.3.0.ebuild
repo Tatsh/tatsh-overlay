@@ -6,7 +6,7 @@ inherit qmake-utils
 
 DESCRIPTION="Qt-based UI for libqalculate."
 HOMEPAGE="https://github.com/Qalculate/qalculate-qt"
-SRC_URI="https://github.com/Qalculate/${PN}/releases/download/v${PV}/${P}b.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/Qalculate/${PN}/releases/download/v${PV}/${P}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
