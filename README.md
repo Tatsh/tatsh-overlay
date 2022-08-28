@@ -27,3 +27,13 @@ In `/etc/portage/package.unmask/tatsh-overlay`, allow packages from this reposit
 ```plain
 games-arcade/stepmania::tatsh-overlay
 ```
+
+## Cemu
+
+To install Cemu you must add _stefantalpalaru_ repository for wxGTK 3.2:
+
+```shell
+eselect repository enable stefantalpalaru
+```
+
+You can try other repositories that provide wxGTK 3.2 but this is the version being tested against.
