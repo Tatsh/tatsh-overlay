@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="Library for creating and reading zstd-compressed file archives (.zar)"
 HOMEPAGE="https://github.com/Exzap/ZArchive"
-SHA="f1edd5ae9bd1e9a96bc42f191b15158dd5704cb9"
+SHA="48914a07df3c213333c580bb5e5bb3393442ca5b"
 MY_PN="ZArchive"
 SRC_URI="https://github.com/Exzap/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
@@ -18,5 +18,3 @@ KEYWORDS="~amd64"
 DEPEND="app-arch/zstd"
 
 S="${WORKDIR}/${MY_PN}-${SHA}"
-
-PATCHES=( "${FILESDIR}/${PN}-deps.patch" )
