@@ -1,0 +1,15 @@
+BDEPEND=sys-devel/clang:= >=dev-util/ninja-1.8.2 >=dev-util/cmake-3.20.5
+DEFINED_PHASES=compile configure install prepare test
+DEPEND=app-arch/zarchive app-arch/zstd dev-libs/boost dev-libs/libzip dev-libs/openssl dev-libs/pugixml dev-libs/rapidjson dev-util/glslang dev-util/vulkan-headers media-libs/cubeb media-libs/libsdl2[joystick,threads] net-misc/curl sys-libs/zlib x11-libs/wxGTK:3.2-gtk3
+DESCRIPTION=Wii U emulator.
+EAPI=8
+HOMEPAGE=https://cemu.info/ https://github.com/cemu-project/Cemu
+INHERIT=cmake
+IUSE=+clang lto
+KEYWORDS=~amd64
+LICENSE=MPL-2.0
+RDEPEND=app-arch/zarchive app-arch/zstd dev-libs/boost dev-libs/libzip dev-libs/openssl dev-libs/pugixml dev-libs/rapidjson dev-util/glslang dev-util/vulkan-headers media-libs/cubeb media-libs/libsdl2[joystick,threads] net-misc/curl sys-libs/zlib x11-libs/wxGTK:3.2-gtk3
+SLOT=0
+SRC_URI=https://github.com/cemu-project/Cemu/archive/ef61361b87592d96f9aba32de23dc954370fead3.tar.gz -> cemu-2.0_p20220827.tar.gz
+_eclasses_=toolchain-funcs	1542e649be915f43f6908a9e93909961	multilib	5ca4e49abed8e3a2f7b56920eadee157	flag-o-matic	29a755b1291d64133634d80b0328f153	multiprocessing	b4e253ab22cef7b1085e9b67c7a3b730	ninja-utils	58ec4e54962bf45d065fb95030701514	xdg-utils	fffb53a53cf17c9c0c998a3c0a590c7e	cmake	44afbf15c35884f7c840470f1cf05d0d
+_md5_=f856ee147ea3a18e03181c6f7f76bcdf
