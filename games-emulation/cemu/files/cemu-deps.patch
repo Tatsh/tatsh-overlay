@@ -1,17 +1,22 @@
 diff --git a/.github/workflows/build.yml b/.github/workflows/build.yml
-index 8a8dddf..d630147 100644
+index 8a8dddf..38efbf2 100644
 --- a/.github/workflows/build.yml
 +++ b/.github/workflows/build.yml
-@@ -70,15 +70,10 @@ jobs:
+@@ -70,15 +70,15 @@ jobs:
          -source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
          
      - name: "cmake"
--      run: |
++      run: cmake -B build ${{ env.BUILD_FLAGS }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_MODE }} -DCMAKE_C_COMPILER=/usr/bin/clang-12 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-12 -G Ninja -DCMAKE_MAKE_PROGRAM=/usr/bin/ninja -DENABLE_VCPKG=true
++
++    - name: debugging
+       run: |
 -        mkdir -p build
 -        cd build
 -        cmake .. ${{ env.BUILD_FLAGS }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_MODE }} -DCMAKE_C_COMPILER=/usr/bin/clang-12 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-12 -G Ninja -DCMAKE_MAKE_PROGRAM=/usr/bin/ninja
-+      run: cmake -B build ${{ env.BUILD_FLAGS }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_MODE }} -DCMAKE_C_COMPILER=/usr/bin/clang-12 -DCMAKE_CXX_COMPILER=/usr/bin/clang++-12 -G Ninja -DCMAKE_MAKE_PROGRAM=/usr/bin/ninja -DENABLE_VCPKG=true
-         
+-        
++        cat /home/runner/work/Cemu/Cemu/build/vcpkg_installed/x64-linux/include/glslang/Include/ResourceLimits.h || printf 'glslang/Include/ResourceLimits.h not here\n\n\n\n\n----------------------------------------------------------------\n\n\n\n\n'
++        cat /home/runner/work/Cemu/Cemu/build/vcpkg_installed/x64-linux/include/glslang/build_info.h || printf 'glslang/build_info.h not here\n'
++
      - name: "Build Cemu"
 -      run: |
 -        cd build
@@ -20,6 +25,25 @@ index 8a8dddf..d630147 100644
          
      - name: Upload artifact
        uses: actions/upload-artifact@v3
+diff --git a/.gitignore b/.gitignore
+index 85a5924..c858991 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -20,6 +20,7 @@ out/
+ bin/Cemu
+ 
+ # Cemu bin files
++/bin/Cemu
+ bin/otp.bin
+ bin/seeprom.bin
+ bin/Cemu.pdb
+@@ -33,4 +34,4 @@ bin/shaderCache/*
+ bin/controllerProfiles/*
+ 
+ !bin/gameProfiles/default/*
+-bin/gameProfiles/*
+\ No newline at end of file
++bin/gameProfiles/*
 diff --git a/BUILD.md b/BUILD.md
 index ab0dd10..4c1d0e1 100644
 --- a/BUILD.md
@@ -33,7 +57,7 @@ index ab0dd10..4c1d0e1 100644
  - git
  
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9666005..f195064 100644
+index 9666005..490db0f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,26 +1,34 @@
@@ -102,7 +126,7 @@ index 9666005..f195064 100644
  endif()
  
  option(ENABLE_OPENGL "Enables the OpenGL backend" ON)
-@@ -43,73 +50,76 @@ option(ENABLE_DISCORD_RPC "Enables the Discord Rich Presence feature" ON)
+@@ -43,73 +50,81 @@ option(ENABLE_DISCORD_RPC "Enables the Discord Rich Presence feature" ON)
  
  # input backends
  if (WIN32)
@@ -143,12 +167,17 @@ index 9666005..f195064 100644
  find_package(glslang REQUIRED)
  find_package(ZLIB REQUIRED)
 -find_package(zstd CONFIG REQUIRED)
-+find_package(zstd REQUIRED)
++find_package(zstd MODULE REQUIRED) # MODULE so that zstd::zstd is available
 +find_package(OpenSSL COMPONENTS Crypto SSL REQUIRED)
 +find_package(X11)
 +find_package(glm REQUIRED)
 +find_package(fmt 7.0.0 REQUIRED)
 +find_package(PNG REQUIRED)
++
++# glslang versions older than 11.11.0 define targets without a namespace
++if (NOT TARGET glslang::SPIRV AND TARGET SPIRV)
++	add_library(glslang::SPIRV ALIAS SPIRV)
++endif()
  
  if (ENABLE_VULKAN)
 -  include_directories("dependencies/Vulkan-Headers/include")
@@ -164,15 +193,15 @@ index 9666005..f195064 100644
 -  add_definitions(-DENABLE_DISCORD_RPC)
 -  add_subdirectory(dependencies/discord-rpc EXCLUDE_FROM_ALL)
 -  target_include_directories(discord-rpc INTERFACE ./dependencies/discord-rpc/include)
+-endif()
+-
+-if (ENABLE_WXWIDGETS)
+-  find_package(wxWidgets CONFIG REQUIRED)
 +	add_compile_definitions(ENABLE_DISCORD_RPC)
 +	add_subdirectory("dependencies/discord-rpc" EXCLUDE_FROM_ALL)
 +	target_include_directories(discord-rpc INTERFACE "./dependencies/discord-rpc/include")
  endif()
  
- if (ENABLE_WXWIDGETS)
--  find_package(wxWidgets CONFIG REQUIRED)
--endif()
--
 -find_package(OpenSSL REQUIRED)
 -find_package(X11)
 -
@@ -180,7 +209,7 @@ index 9666005..f195064 100644
 -link_libraries(${Boost_LIBRARIES})
 -link_libraries(${X11_LIBRARIES})
 -link_libraries(SDL2::SDL2 SDL2::SDL2main SDL2::SDL2-static)
--if (ENABLE_WXWIDGETS)
+ if (ENABLE_WXWIDGETS)
 -  link_libraries(wx::core wx::base)
 +	find_package(wxWidgets 3.2 REQUIRED COMPONENTS base core gl propgrid xrc)
  endif()
@@ -328,29 +357,43 @@ index 0000000..46abca0
 +endif()
 diff --git a/cmake/Findzstd.cmake b/cmake/Findzstd.cmake
 new file mode 100644
-index 0000000..ebc9da6
+index 0000000..a8a45a6
 --- /dev/null
 +++ b/cmake/Findzstd.cmake
-@@ -0,0 +1,19 @@
+@@ -0,0 +1,33 @@
 +# SPDX-FileCopyrightText: 2022 Andrea Pappacoda <andrea@pappacoda.it>
 +# SPDX-License-Identifier: ISC
 +
-+find_package(PkgConfig)
-+
-+if (PKG_CONFIG_FOUND)
-+	pkg_search_module(libzstd IMPORTED_TARGET GLOBAL libzstd)
-+	if (libzstd_FOUND)
-+		add_library(zstd::zstd ALIAS PkgConfig::libzstd)
-+	endif()
-+endif()
-+
 +include(FindPackageHandleStandardArgs)
-+find_package_handle_standard_args(zstd
-+	REQUIRED_VARS
-+		libzstd_LINK_LIBRARIES
-+		libzstd_FOUND
-+	VERSION_VAR libzstd_VERSION
-+)
++
++find_package(zstd CONFIG)
++if (zstd_FOUND)
++	# Use upstream zstdConfig.cmake if possible
++	if (NOT TARGET zstd::zstd)
++		if (TARGET zstd::libzstd_static)
++			add_library(zstd::zstd ALIAS zstd::libzstd_static)
++		elseif (TARGET zstd::libzstd_shared)
++			add_library(zstd::zstd ALIAS zstd::libzstd_shared)
++		endif()
++	endif()
++	find_package_handle_standard_args(zstd CONFIG_MODE)
++else()
++	# Fallback to pkg-config otherwise
++	find_package(PkgConfig)
++	if (PKG_CONFIG_FOUND)
++		pkg_search_module(libzstd IMPORTED_TARGET GLOBAL libzstd)
++		if (libzstd_FOUND)
++			add_library(zstd::zstd ALIAS PkgConfig::libzstd)
++		endif()
++	endif()
++
++	find_package_handle_standard_args(zstd
++		REQUIRED_VARS
++			libzstd_LINK_LIBRARIES
++			libzstd_FOUND
++		VERSION_VAR libzstd_VERSION
++	)
++endif()
 diff --git a/dependencies/discord-rpc/src/CMakeLists.txt b/dependencies/discord-rpc/src/CMakeLists.txt
 index 2eeacf4..afd8902 100644
 --- a/dependencies/discord-rpc/src/CMakeLists.txt
@@ -366,7 +409,7 @@ index 2eeacf4..afd8902 100644
  if (NOT ${ENABLE_IO_THREAD})
      target_compile_definitions(discord-rpc PUBLIC -DDISCORD_DISABLE_IO_THREAD)
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index adebc32..d3c750c 100644
+index fd2c4ad..b110024 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
 @@ -2,23 +2,21 @@ project(cemuMain)
@@ -403,7 +446,7 @@ index adebc32..d3c750c 100644
  elseif(UNIX)
      if(NOT APPLE)
          add_definitions(-DVK_USE_PLATFORM_XLIB_KHR) # legacy. Do we need to support XLIB surfaces?
-@@ -63,31 +61,37 @@ endif()
+@@ -66,31 +64,37 @@ endif()
  target_precompile_headers(CemuBin PRIVATE Common/precompiled.h)
  
  if(WIN32)
@@ -459,17 +502,18 @@ index adebc32..d3c750c 100644
 +	target_link_libraries(CemuBin PRIVATE wx::base wx::core)
 +endif()
 diff --git a/src/Cafe/CMakeLists.txt b/src/Cafe/CMakeLists.txt
-index ff0f3e1..a0a1ba1 100644
+index ae0b3e6..ed1baea 100644
 --- a/src/Cafe/CMakeLists.txt
 +++ b/src/Cafe/CMakeLists.txt
-@@ -1,6 +1,5 @@
+@@ -1,7 +1,5 @@
  project(CemuCafe)
  
 -include_directories(".")
- file(GLOB_RECURSE CPP_FILES *.cpp)
- file(GLOB_RECURSE H_FILES *.h)
- add_library(CemuCafe ${CPP_FILES} ${H_FILES})
-@@ -9,21 +8,41 @@ set_property(TARGET CemuCafe PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CON
+-
+ if((CMAKE_C_COMPILER_ID STREQUAL "GNU") OR (CMAKE_C_COMPILER_ID STREQUAL "Clang"))
+ 	add_compile_options(-mssse3 -mavx2)
+ endif()
+@@ -14,20 +12,41 @@ set_property(TARGET CemuCafe PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CON
  
  target_precompile_headers(CemuCafe PRIVATE ../Common/precompiled.h)
  
@@ -488,6 +532,10 @@ index ff0f3e1..a0a1ba1 100644
 -target_link_libraries(CemuCafe ih264d zarchive)
  #target_link_libraries(CemuCafe zstd::libzstd_static)
  
+-IF(WIN32)
+-target_link_libraries(CemuCafe iphlpapi)
+-ENDIF()
+\ No newline at end of file
 +target_link_libraries(CemuCafe PRIVATE
 +	CemuAsm
 +	CemuAudio
@@ -507,11 +555,7 @@ index ff0f3e1..a0a1ba1 100644
 +	Boost::headers
 +	Boost::nowide
 +)
- 
--IF(WIN32)
--target_link_libraries(CemuCafe iphlpapi)
--ENDIF()
-\ No newline at end of file
++
 +if (ENABLE_WXWIDGETS)
 +	target_link_libraries(CemuCafe PRIVATE wx::base wx::core)
 +endif()
@@ -520,12 +564,18 @@ index ff0f3e1..a0a1ba1 100644
 +	target_link_libraries(CemuCafe iphlpapi)
 +endif()
 diff --git a/src/Cafe/HW/Latte/Renderer/Vulkan/RendererShaderVk.cpp b/src/Cafe/HW/Latte/Renderer/Vulkan/RendererShaderVk.cpp
-index b107e56..cef7702 100644
+index 0d41156..09acaed 100644
 --- a/src/Cafe/HW/Latte/Renderer/Vulkan/RendererShaderVk.cpp
 +++ b/src/Cafe/HW/Latte/Renderer/Vulkan/RendererShaderVk.cpp
-@@ -7,13 +7,8 @@
+@@ -3,17 +3,13 @@
+ #if __has_include(<glslang/build_info.h>)
+ #include <glslang/build_info.h>
+ #else
+-#define GLSLANG_VERSION_LESS_OR_EQUAL_TO (false)
++#define GLSLANG_VERSION_GREATER_OR_EQUAL_TO (false)
  #endif
  
++#include <glslang/Include/ResourceLimits.h> // TBuiltInResource
  #include <glslang/Public/ShaderLang.h>
 -#if GLSLANG_VERSION_LESS_OR_EQUAL_TO(11, 0, 0)
  #include <glslang/SPIRV/GlslangToSpv.h>
@@ -538,20 +588,20 @@ index b107e56..cef7702 100644
  
  #include "Cafe/HW/Latte/Renderer/Vulkan/VulkanAPI.h"
  #include "Cafe/HW/Latte/Renderer/Vulkan/VulkanRenderer.h"
-@@ -127,7 +122,7 @@ const TBuiltInResource DefaultTBuiltInResource = {
+@@ -127,7 +123,7 @@ const TBuiltInResource DefaultTBuiltInResource = {
  	/* .maxTaskWorkGroupSizeZ_NV = */ 1,
  	/* .maxMeshViewCountNV = */ 4,
  
 -#if GLSLANG_VERSION_LESS_OR_EQUAL_TO(11, 0, 0)
-+#if GLSLANG_VERSION_GREATER_OR_EQUAL_TO(11, 0, 0)
++#if GLSLANG_VERSION_GREATER_OR_EQUAL_TO(11, 8, 1) // FIXME: should be 11, 0, 0
  	/* .maxDualSourceDrawBuffersEXT = */ 1,
  #endif
  
 diff --git a/src/Cemu/CMakeLists.txt b/src/Cemu/CMakeLists.txt
-index 8c9136f..cd598b8 100644
+index 0e02699..bd8f40a 100644
 --- a/src/Cemu/CMakeLists.txt
 +++ b/src/Cemu/CMakeLists.txt
-@@ -8,8 +8,19 @@ set_property(TARGET CemuComponents PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$
+@@ -8,9 +8,20 @@ set_property(TARGET CemuComponents PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$
  
  target_precompile_headers(CemuComponents PRIVATE ../Common/precompiled.h)
  
@@ -573,8 +623,10 @@ index 8c9136f..cd598b8 100644
 -target_link_libraries(CemuComponents PRIVATE discord-rpc)
 +	target_link_libraries(CemuComponents PRIVATE discord-rpc)
  endif()
+ target_link_libraries(CemuComponents PRIVATE CemuUtil)
+\ No newline at end of file
 diff --git a/src/Common/CMakeLists.txt b/src/Common/CMakeLists.txt
-index bee159c..d6a6ef9 100644
+index bee159c..eaff1c4 100644
 --- a/src/Common/CMakeLists.txt
 +++ b/src/Common/CMakeLists.txt
 @@ -1,7 +1,5 @@
@@ -585,7 +637,7 @@ index bee159c..d6a6ef9 100644
  file(GLOB CPP_FILES *.cpp)
  file(GLOB H_FILES *.h)
  add_library(CemuCommon ${CPP_FILES} ${H_FILES})
-@@ -9,24 +7,34 @@ add_library(CemuCommon ${CPP_FILES} ${H_FILES})
+@@ -9,24 +7,36 @@ add_library(CemuCommon ${CPP_FILES} ${H_FILES})
  set_property(TARGET CemuCommon PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
  
  if(WIN32)
@@ -629,7 +681,6 @@ index bee159c..d6a6ef9 100644
 +	CemuCafe
 +	CemuConfig
 +	CemuComponents
-+	Boost::headers
 +	Boost::nowide
 +	Boost::filesystem
 +	glm::glm
@@ -637,6 +688,9 @@ index bee159c..d6a6ef9 100644
 +	X11::Xrender
 +	X11::Xutil
 +)
++
++# PUBLIC because boost/predef/os.h is included in platform.h
++target_link_libraries(CemuCommon PUBLIC Boost::headers)
 diff --git a/src/audio/CMakeLists.txt b/src/audio/CMakeLists.txt
 index 6a11033..135fbb7 100644
 --- a/src/audio/CMakeLists.txt

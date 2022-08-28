@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
-SHA="ef61361b87592d96f9aba32de23dc954370fead3"
+SHA="454b587e3625aa4b8204101d1eb52894f0da0829"
 MY_PN="Cemu"
 SRC_URI="https://github.com/cemu-project/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
@@ -45,16 +45,8 @@ src_prepare() {
 }
 
 src_configure() {
-	CC=${CHOST}-clang
-	CXX=${CHOST}-clang++
-	OBJCOPY=llvm-objcopy
-	OBJDUMP=llvm-objdump
-	NM=llvm-nm
-	tc-export CC CXX LD NM OBJDUMP OBJCOPY
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
-		-DCMAKE_C_COMPILER_AR=llvm-ar
-		-DCMAKE_C_COMPILER_RANLIB=llvm-ranlib
 		-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=$(usex lto)
 		-DENABLE_CUBEB=ON
 		-DENABLE_DISCORD_RPC=OFF
