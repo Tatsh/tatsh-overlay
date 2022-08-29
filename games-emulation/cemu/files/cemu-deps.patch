@@ -1,8 +1,13 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 82599f2..9931c7c 100644
+index 82599f2..8979fde 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -76,12 +76,12 @@ find_package(imgui REQUIRED)
+@@ -72,16 +72,16 @@ find_package(Threads REQUIRED)
+ find_package(SDL2 REQUIRED)
+ find_package(CURL REQUIRED)
+ find_package(pugixml REQUIRED)
+-find_package(imgui REQUIRED)
++add_subdirectory(imgui)
  find_package(RapidJSON REQUIRED)
  find_package(Boost COMPONENTS program_options filesystem nowide REQUIRED)
  find_package(libzip REQUIRED)
