@@ -1,3 +1,4 @@
 .*~
 .directory
-/metadata
+/metadata/*
+!/metadata/layout.conf
