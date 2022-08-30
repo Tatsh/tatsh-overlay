@@ -1,0 +1,1221 @@
+From 757ab5cc736e62b2dde5116f9ed8528eec0646e3 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 30 Aug 2022 11:48:47 -0400
+Subject: [PATCH] Add ability to save/read files based on XDG specification
+
+---
+ CMakeLists.txt                                | 11 +++
+ src/Cafe/Account/Account.cpp                  |  4 +-
+ src/Cafe/CafeSystem.cpp                       |  6 +-
+ src/Cafe/Filesystem/FST/KeyCache.cpp          |  2 +-
+ src/Cafe/GameProfile/GameProfile.cpp          |  6 +-
+ src/Cafe/GraphicPack/GraphicPack.cpp          |  2 +-
+ src/Cafe/HW/Latte/Core/LatteShaderCache.cpp   | 10 +--
+ .../Renderer/OpenGL/RendererShaderGL.cpp      |  2 +-
+ src/Cafe/HW/Latte/Renderer/Renderer.cpp       |  2 +-
+ .../Renderer/Vulkan/RendererShaderVk.cpp      |  2 +-
+ .../Vulkan/VulkanPipelineStableCache.cpp      | 12 ++-
+ .../Latte/Renderer/Vulkan/VulkanRenderer.cpp  |  4 +-
+ src/Cafe/HW/MMU/MMU.cpp                       |  2 +-
+ src/Cafe/IOSU/legacy/iosu_crypto.cpp          |  8 +-
+ src/Cafe/OS/RPL/rpl.cpp                       |  2 +-
+ src/Cafe/OS/libs/coreinit/coreinit_FS.cpp     |  4 +-
+ src/Cemu/Logging/CemuLogging.cpp              |  2 +-
+ .../ExceptionHandler/ExceptionHandler.cpp     |  6 +-
+ src/config/ActiveSettings.cpp                 | 61 +++++++++++++-
+ src/config/ActiveSettings.h                   | 53 +++++++++++-
+ src/gui/CemuApp.cpp                           | 21 +++--
+ src/gui/ChecksumTool.cpp                      |  6 +-
+ src/gui/DownloadGraphicPacksWindow.cpp        | 10 +--
+ src/gui/MainWindow.cpp                        | 80 +++++++++----------
+ src/gui/MemorySearcherTool.cpp                |  4 +-
+ src/gui/debugger/DebuggerWindow2.cpp          |  4 +-
+ src/gui/input/InputSettings2.cpp              |  4 +-
+ src/input/InputManager.cpp                    | 16 ++--
+ src/main.cpp                                  |  6 +-
+ src/util/libusbWrapper/libusbWrapper.cpp      |  2 +-
+ 30 files changed, 234 insertions(+), 120 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 82599f2..7943cd4 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -50,6 +50,13 @@ option(ENABLE_OPENGL "Enables the OpenGL backend" ON)
+ option(ENABLE_VULKAN "Enables the Vulkan backend" ON)
+ option(ENABLE_DISCORD_RPC "Enables the Discord Rich Presence feature" ON)
+ 
++if (UNIX)
++  option(ENABLE_XDG_DIRS "Enable storage according to XDG specification" ON)
++endif()
++if (SYSTEM_DATA_PATH)
++  add_definitions(-DSYSTEM_DATA_PATH=\"${SYSTEM_DATA_PATH}\")
++endif()
++
+ # input backends
+ if (WIN32)
+   option(ENABLE_XINPUT "Enables the usage of XInput" ON)
+@@ -125,6 +132,10 @@ if (ENABLE_CUBEB)
+ 	add_compile_definitions("HAS_CUBEB=1")
+ endif()
+ 
++if (ENABLE_XDG_DIRS)
++  add_definitions(-DXDG)
++endif()
++
+ add_subdirectory("dependencies/ih264d")
+ 
+ find_package(ZArchive)
+diff --git a/src/Cafe/Account/Account.cpp b/src/Cafe/Account/Account.cpp
+index b8d3d52..49b6efa 100644
+--- a/src/Cafe/Account/Account.cpp
++++ b/src/Cafe/Account/Account.cpp
+@@ -424,7 +424,7 @@ OnlineValidator Account::ValidateOnlineFiles() const
+ {
+ 	OnlineValidator result{};
+ 	
+-	const auto otp = ActiveSettings::GetPath("otp.bin");
++	const auto otp = ActiveSettings::GetDataPath("otp.bin");
+ 	if (!fs::exists(otp))
+ 		result.otp = OnlineValidator::FileState::Missing;
+ 	else if (fs::file_size(otp) != 1024)
+@@ -432,7 +432,7 @@ OnlineValidator Account::ValidateOnlineFiles() const
+ 	else
+ 		result.otp = OnlineValidator::FileState::Ok;
+ 	
+-	const auto seeprom = ActiveSettings::GetPath("seeprom.bin");
++	const auto seeprom = ActiveSettings::GetDataPath("seeprom.bin");
+ 	if (!fs::exists(seeprom))
+ 		result.seeprom = OnlineValidator::FileState::Missing;
+ 	else if (fs::file_size(seeprom) != 512)
+diff --git a/src/Cafe/CafeSystem.cpp b/src/Cafe/CafeSystem.cpp
+index add9d1c..8275698 100644
+--- a/src/Cafe/CafeSystem.cpp
++++ b/src/Cafe/CafeSystem.cpp
+@@ -289,7 +289,7 @@ uint32 loadSharedData()
+ 	for (sint32 i = 0; i < sizeof(shareddataDef) / sizeof(shareddataDef[0]); i++)
+ 	{
+ 		bool existsInMLC = fs::exists(ActiveSettings::GetMlcPath(shareddataDef[i].mlcPath));
+-		bool existsInResources = fs::exists(ActiveSettings::GetPath(shareddataDef[i].resourcePath));
++		bool existsInResources = fs::exists(ActiveSettings::GetSystemDataPath(shareddataDef[i].resourcePath));
+ 
+ 		if (!existsInMLC && !existsInResources)
+ 		{
+@@ -314,7 +314,7 @@ uint32 loadSharedData()
+ 			// alternatively fall back to our shared fonts
+ 			if (!fontFile)
+ 			{
+-				path = ActiveSettings::GetPath(shareddataDef[i].resourcePath);
++				path = ActiveSettings::GetSystemDataPath(shareddataDef[i].resourcePath);
+ 				fontFile = FileStream::openFile2(path);
+ 			}
+ 			if (!fontFile)
+@@ -340,7 +340,7 @@ uint32 loadSharedData()
+ 		return memory_getVirtualOffsetFromPointer(dataWritePtr);
+ 	}
+ 	// alternative method: load RAM dump
+-	const auto path = ActiveSettings::GetPath("shareddata.bin");
++	const auto path = ActiveSettings::GetSystemDataPath("shareddata.bin");
+ 	FileStream* ramDumpFile = FileStream::openFile2(path);
+ 	if (ramDumpFile)
+ 	{
+diff --git a/src/Cafe/Filesystem/FST/KeyCache.cpp b/src/Cafe/Filesystem/FST/KeyCache.cpp
+index 7fedc3d..124611f 100644
+--- a/src/Cafe/Filesystem/FST/KeyCache.cpp
++++ b/src/Cafe/Filesystem/FST/KeyCache.cpp
+@@ -59,7 +59,7 @@ void KeyCache_Prepare()
+ 	sKeyCachePrepared = true;
+ 	g_keyCache.clear();
+ 	// load keys
+-	auto keysPath = ActiveSettings::GetPath("keys.txt");
++	auto keysPath = ActiveSettings::GetConfigPath("keys.txt");
+ 	FileStream* fs_keys = FileStream::openFile2(keysPath);
+ 	if( !fs_keys )
+ 	{
+diff --git a/src/Cafe/GameProfile/GameProfile.cpp b/src/Cafe/GameProfile/GameProfile.cpp
+index d3e930e..2fc0029 100644
+--- a/src/Cafe/GameProfile/GameProfile.cpp
++++ b/src/Cafe/GameProfile/GameProfile.cpp
+@@ -180,12 +180,12 @@ void gameProfile_load()
+ 
+ bool GameProfile::Load(uint64_t title_id)
+ {
+-	auto gameProfilePath = ActiveSettings::GetPath("gameProfiles/{:016x}.ini", title_id);
++	auto gameProfilePath = ActiveSettings::GetDataPath("gameProfiles/{:016x}.ini", title_id);
+ 
+ 	std::optional<std::vector<uint8>> profileContents = FileStream::LoadIntoMemory(gameProfilePath);
+ 	if (!profileContents)
+ 	{
+-		gameProfilePath = ActiveSettings::GetPath("gameProfiles/default/{:016x}.ini", title_id);
++		gameProfilePath = ActiveSettings::GetSystemDataPath("gameProfiles/default/{:016x}.ini", title_id);
+ 		profileContents = FileStream::LoadIntoMemory(gameProfilePath);
+ 		if (!profileContents)
+ 			return false;
+@@ -276,7 +276,7 @@ bool GameProfile::Load(uint64_t title_id)
+ 
+ void GameProfile::Save(uint64_t title_id)
+ {
+-	auto gameProfilePath = ActiveSettings::GetPath("gameProfiles/{:016x}.ini", title_id);
++	auto gameProfilePath = ActiveSettings::GetConfigPath("gameProfiles/{:016x}.ini", title_id);
+ 	FileStream* fs = FileStream::createFile2(gameProfilePath);
+ 	if (!fs)
+ 	{
+diff --git a/src/Cafe/GraphicPack/GraphicPack.cpp b/src/Cafe/GraphicPack/GraphicPack.cpp
+index c41ca94..1139204 100644
+--- a/src/Cafe/GraphicPack/GraphicPack.cpp
++++ b/src/Cafe/GraphicPack/GraphicPack.cpp
+@@ -84,7 +84,7 @@ void graphicPack_loadAll()
+ {
+ 	// recursively iterate all directories in graphicPacks/ folder
+ 	std::wstring graphicPackRelativePath;
+-	graphicPack_scanForGFXPackFolders(ActiveSettings::GetPath("graphicPacks/"), graphicPackRelativePath);
++	graphicPack_scanForGFXPackFolders(ActiveSettings::GetDataPath("graphicPacks/"), graphicPackRelativePath);
+ }
+ 
+ void graphicPack_activateForCurrentTitle(uint64 titleId)
+diff --git a/src/Cafe/HW/Latte/Core/LatteShaderCache.cpp b/src/Cafe/HW/Latte/Core/LatteShaderCache.cpp
+index fe1388f..9fe6dc0 100644
+--- a/src/Cafe/HW/Latte/Core/LatteShaderCache.cpp
++++ b/src/Cafe/HW/Latte/Core/LatteShaderCache.cpp
+@@ -198,17 +198,17 @@ void LatteShaderCache_load()
+ 	LatteShaderCache_initCompileQueue();
+ 	// create directories
+ 	std::error_code ec;
+-	fs::create_directories(ActiveSettings::GetPath("shaderCache/transferable"), ec);
+-	fs::create_directories(ActiveSettings::GetPath("shaderCache/precompiled"), ec);
++	fs::create_directories(ActiveSettings::GetCachePath("shaderCache/transferable"), ec);
++	fs::create_directories(ActiveSettings::GetCachePath("shaderCache/precompiled"), ec);
+ 	// initialize renderer specific caches
+ 	if (g_renderer->GetType() == RendererAPI::Vulkan)
+ 		RendererShaderVk::ShaderCacheLoading_begin(cacheTitleId);
+ 	else if (g_renderer->GetType() == RendererAPI::OpenGL)
+ 		RendererShaderGL::ShaderCacheLoading_begin(cacheTitleId);
+ 	// get cache file name
+-	const auto pathGeneric = ActiveSettings::GetPath("shaderCache/transferable/{:016x}_shaders.bin", cacheTitleId);
+-	const auto pathGenericPre1_25_0 = ActiveSettings::GetPath("shaderCache/transferable/{:016x}.bin", cacheTitleId); // before 1.25.0
+-	const auto pathGenericPre1_16_0 = ActiveSettings::GetPath("shaderCache/transferable/{:08x}.bin", CafeSystem::GetRPXHashBase()); // before 1.16.0
++	const auto pathGeneric = ActiveSettings::GetCachePath("shaderCache/transferable/{:016x}_shaders.bin", cacheTitleId);
++	const auto pathGenericPre1_25_0 = ActiveSettings::GetCachePath("shaderCache/transferable/{:016x}.bin", cacheTitleId); // before 1.25.0
++	const auto pathGenericPre1_16_0 = ActiveSettings::GetCachePath("shaderCache/transferable/{:08x}.bin", CafeSystem::GetRPXHashBase()); // before 1.16.0
+ 
+ 	LatteShaderCache_handleDeprecatedCacheFiles(pathGeneric, pathGenericPre1_25_0, pathGenericPre1_16_0);
+ 	// calculate extraVersion for transferable and precompiled shader cache
+diff --git a/src/Cafe/HW/Latte/Renderer/OpenGL/RendererShaderGL.cpp b/src/Cafe/HW/Latte/Renderer/OpenGL/RendererShaderGL.cpp
+index e9e86f5..dc088ae 100644
+--- a/src/Cafe/HW/Latte/Renderer/OpenGL/RendererShaderGL.cpp
++++ b/src/Cafe/HW/Latte/Renderer/OpenGL/RendererShaderGL.cpp
+@@ -279,7 +279,7 @@ void RendererShaderGL::ShaderCacheLoading_begin(uint64 cacheTitleId)
+ 	{
+ 		const uint32 cacheMagic = GeneratePrecompiledCacheId();
+ 		const std::string cacheFilename = fmt::format("{:016x}_gl.bin", cacheTitleId);
+-		const std::wstring cachePath = ActiveSettings::GetPath("shaderCache/precompiled/{}", cacheFilename).generic_wstring();
++		const std::wstring cachePath = ActiveSettings::GetCachePath("shaderCache/precompiled/{}", cacheFilename).generic_wstring();
+ 		g_programBinaryCache = FileCache::Open(cachePath, true, cacheMagic);
+ 		if (g_programBinaryCache == nullptr)
+ 			cemuLog_log(LogType::Force, "Unable to open OpenGL precompiled cache {}", cacheFilename);
+diff --git a/src/Cafe/HW/Latte/Renderer/Renderer.cpp b/src/Cafe/HW/Latte/Renderer/Renderer.cpp
+index c7f7b81..366ce54 100644
+--- a/src/Cafe/HW/Latte/Renderer/Renderer.cpp
++++ b/src/Cafe/HW/Latte/Renderer/Renderer.cpp
+@@ -133,7 +133,7 @@ void Renderer::SaveScreenshot(const std::vector<uint8>& rgb_data, int width, int
+ 		// save to png file
+ 		if (save_screenshot)
+ 		{
+-			fs::path screendir = ActiveSettings::GetPath("screenshots");
++			fs::path screendir = ActiveSettings::GetDataPath("screenshots");
+ 			if (!fs::exists(screendir))
+ 				fs::create_directory(screendir);
+ 
+diff --git a/src/Cafe/HW/Latte/Renderer/Vulkan/RendererShaderVk.cpp b/src/Cafe/HW/Latte/Renderer/Vulkan/RendererShaderVk.cpp
+index 7af5204..703c92d 100644
+--- a/src/Cafe/HW/Latte/Renderer/Vulkan/RendererShaderVk.cpp
++++ b/src/Cafe/HW/Latte/Renderer/Vulkan/RendererShaderVk.cpp
+@@ -456,7 +456,7 @@ void RendererShaderVk::ShaderCacheLoading_begin(uint64 cacheTitleId)
+ 	}
+ 	uint32 spirvCacheMagic = GeneratePrecompiledCacheId();
+ 	const std::string cacheFilename = fmt::format("{:016x}_spirv.bin", cacheTitleId);
+-	const std::wstring cachePath = ActiveSettings::GetPath("shaderCache/precompiled/{}", cacheFilename).generic_wstring();
++	const std::wstring cachePath = ActiveSettings::GetCachePath("shaderCache/precompiled/{}", cacheFilename).generic_wstring();
+ 	s_spirvCache = FileCache::Open(cachePath, true, spirvCacheMagic);
+ 	if (s_spirvCache == nullptr)
+ 		cemuLog_log(LogType::Force, "Unable to open SPIR-V cache {}", cacheFilename);
+diff --git a/src/Cafe/HW/Latte/Renderer/Vulkan/VulkanPipelineStableCache.cpp b/src/Cafe/HW/Latte/Renderer/Vulkan/VulkanPipelineStableCache.cpp
+index 50d5a25..1bed0b7 100644
+--- a/src/Cafe/HW/Latte/Renderer/Vulkan/VulkanPipelineStableCache.cpp
++++ b/src/Cafe/HW/Latte/Renderer/Vulkan/VulkanPipelineStableCache.cpp
+@@ -17,7 +17,7 @@ struct
+ {
+ 	uint32 pipelineLoadIndex;
+ 	uint32 pipelineMaxFileIndex;
+-	
++
+ 	std::atomic_uint32_t pipelinesQueued;
+ 	std::atomic_uint32_t pipelinesLoaded;
+ }g_vkCacheState;
+@@ -32,17 +32,15 @@ VulkanPipelineStableCache& VulkanPipelineStableCache::GetInstance()
+ uint32 VulkanPipelineStableCache::BeginLoading(uint64 cacheTitleId)
+ {
+ 	std::error_code ec;
+-	fs::create_directories(ActiveSettings::GetPath("shaderCache/transferable"), ec);
+-	const auto pathCacheFile = ActiveSettings::GetPath("shaderCache/transferable/{:016x}_vkpipeline.bin", cacheTitleId);
+-	
++	fs::create_directories(ActiveSettings::GetCachePath("shaderCache/transferable"), ec);
++	const auto pathCacheFile = ActiveSettings::GetCachePath("shaderCache/transferable/{:016x}_vkpipeline.bin", cacheTitleId);
+ 	// init cache loader state
+ 	g_vkCacheState.pipelineLoadIndex = 0;
+ 	g_vkCacheState.pipelineMaxFileIndex = 0;
+ 	g_vkCacheState.pipelinesLoaded = 0;
+ 	g_vkCacheState.pipelinesQueued = 0;
+-	
+ 	// start async compilation threads
+-	m_compilationCount.store(0);	
++	m_compilationCount.store(0);
+ 	m_compilationQueue.clear();
+ 
+ 	// get core count
+@@ -430,4 +428,4 @@ void VulkanPipelineStableCache::WorkerThread()
+ 		s_cache->AddFileAsync({ nameA, nameB }, blob.data(), blob.size());
+ 		delete job;
+ 	}
+-}
+\ No newline at end of file
++}
+diff --git a/src/Cafe/HW/Latte/Renderer/Vulkan/VulkanRenderer.cpp b/src/Cafe/HW/Latte/Renderer/Vulkan/VulkanRenderer.cpp
+index e35ef6f..778df70 100644
+--- a/src/Cafe/HW/Latte/Renderer/Vulkan/VulkanRenderer.cpp
++++ b/src/Cafe/HW/Latte/Renderer/Vulkan/VulkanRenderer.cpp
+@@ -2294,7 +2294,7 @@ void VulkanRenderer::WaitCommandBufferFinished(uint64 commandBufferId)
+ 
+ void VulkanRenderer::PipelineCacheSaveThread(size_t cache_size)
+ {
+-	const auto dir = ActiveSettings::GetPath("shaderCache/driver/vk");
++	const auto dir = ActiveSettings::GetCachePath("shaderCache/driver/vk");
+ 	if (!fs::exists(dir))
+ 	{
+ 		try
+@@ -2371,7 +2371,7 @@ void VulkanRenderer::PipelineCacheSaveThread(size_t cache_size)
+ void VulkanRenderer::CreatePipelineCache()
+ {
+ 	std::vector<uint8_t> cacheData;
+-	const auto dir = ActiveSettings::GetPath("shaderCache/driver/vk");
++	const auto dir = ActiveSettings::GetCachePath("shaderCache/driver/vk");
+ 	if (fs::exists(dir))
+ 	{
+ 		const auto filename = dir / fmt::format("{:016x}.bin", CafeSystem::GetForegroundTitleId());
+diff --git a/src/Cafe/HW/MMU/MMU.cpp b/src/Cafe/HW/MMU/MMU.cpp
+index 87bf572..10d69ef 100644
+--- a/src/Cafe/HW/MMU/MMU.cpp
++++ b/src/Cafe/HW/MMU/MMU.cpp
+@@ -409,7 +409,7 @@ void memory_writeDumpFile(uint32 startAddr, uint32 size, const fs::path& path)
+ void memory_createDump()
+ {
+ 	const uint32 pageSize = MemMapper::GetPageSize();
+-	fs::path path = ActiveSettings::GetPath("dump/ramDump{:}", (uint32)time(nullptr));
++	fs::path path = ActiveSettings::GetDataPath("dump/ramDump{:}", (uint32)time(nullptr));
+ 	fs::create_directories(path);
+ 
+ 	for (auto& itr : g_mmuRanges)
+diff --git a/src/Cafe/IOSU/legacy/iosu_crypto.cpp b/src/Cafe/IOSU/legacy/iosu_crypto.cpp
+index 0433995..ef30a2b 100644
+--- a/src/Cafe/IOSU/legacy/iosu_crypto.cpp
++++ b/src/Cafe/IOSU/legacy/iosu_crypto.cpp
+@@ -563,7 +563,7 @@ void iosuCrypto_loadSSLCertificates()
+ void iosuCrypto_init()
+ {
+ 	// load OTP dump
+-	if (std::ifstream otp_file(ActiveSettings::GetPath("otp.bin"), std::ifstream::in | std::ios::binary); otp_file.is_open())
++	if (std::ifstream otp_file(ActiveSettings::GetDataPath("otp.bin"), std::ifstream::in | std::ios::binary); otp_file.is_open())
+ 	{
+ 		otp_file.seekg(0, std::ifstream::end);
+ 		const auto length = otp_file.tellg();
+@@ -586,7 +586,7 @@ void iosuCrypto_init()
+ 		hasOtpMem = false;
+ 	}
+ 
+-	if (std::ifstream seeprom_file(ActiveSettings::GetPath("seeprom.bin"), std::ifstream::in | std::ios::binary); seeprom_file.is_open())
++	if (std::ifstream seeprom_file(ActiveSettings::GetDataPath("seeprom.bin"), std::ifstream::in | std::ios::binary); seeprom_file.is_open())
+ 	{
+ 		seeprom_file.seekg(0, std::ifstream::end);
+ 		const auto length = seeprom_file.tellg();
+@@ -630,13 +630,13 @@ sint32 iosuCrypt_checkRequirementsForOnlineMode(std::wstring& additionalErrorInf
+ {
+ 	std::error_code ec;
+ 	// check if otp.bin is present
+-	const auto otp_file = ActiveSettings::GetPath("otp.bin");
++	const auto otp_file = ActiveSettings::GetDataPath("otp.bin");
+ 	if(!fs::exists(otp_file, ec))
+ 		return IOS_CRYPTO_ONLINE_REQ_OTP_MISSING;
+ 	if(fs::file_size(otp_file, ec) != 1024)
+ 		return IOS_CRYPTO_ONLINE_REQ_OTP_CORRUPTED;
+ 	// check if seeprom.bin is present
+-	const auto seeprom_file = ActiveSettings::GetPath("seeprom.bin");
++	const auto seeprom_file = ActiveSettings::GetDataPath("seeprom.bin");
+ 	if (!fs::exists(seeprom_file, ec))
+ 		return IOS_CRYPTO_ONLINE_REQ_SEEPROM_MISSING;
+ 	if (fs::file_size(seeprom_file, ec) != 512)
+diff --git a/src/Cafe/OS/RPL/rpl.cpp b/src/Cafe/OS/RPL/rpl.cpp
+index 75b1a37..fb1bd81 100644
+--- a/src/Cafe/OS/RPL/rpl.cpp
++++ b/src/Cafe/OS/RPL/rpl.cpp
+@@ -2122,7 +2122,7 @@ void RPLLoader_LoadDependency(rplDependency_t* dependency)
+ 	// attempt to load rpl from Cemu's /cafeLibs/ directory
+ 	if (ActiveSettings::LoadSharedLibrariesEnabled())
+ 	{
+-		const auto filePath = ActiveSettings::GetPath("cafeLibs/{}", dependency->filepath);
++		const auto filePath = ActiveSettings::GetDataPath("cafeLibs/{}", dependency->filepath);
+ 		auto fileData = FileStream::LoadIntoMemory(filePath);
+ 		if (fileData)
+ 		{
+diff --git a/src/Cafe/OS/libs/coreinit/coreinit_FS.cpp b/src/Cafe/OS/libs/coreinit/coreinit_FS.cpp
+index 3d13fdb..fb72ca8 100644
+--- a/src/Cafe/OS/libs/coreinit/coreinit_FS.cpp
++++ b/src/Cafe/OS/libs/coreinit/coreinit_FS.cpp
+@@ -107,7 +107,7 @@ namespace coreinit
+ 			return;
+ 
+ 		std::error_code ec;
+-		const auto path = ActiveSettings::GetPath("sdcard/");
++		const auto path = ActiveSettings::GetDataPath("sdcard/");
+ 		fs::create_directories(path, ec);
+ 		FSCDeviceHostFS_Mount("/vol/external01", path.generic_wstring().c_str() , FSC_PRIORITY_BASE);
+ 
+@@ -140,7 +140,7 @@ namespace coreinit
+ 				return FS_RESULT::ERR_PLACEHOLDER;
+ 
+ 			std::error_code ec;
+-			const auto path = ActiveSettings::GetPath("sdcard/");
++			const auto path = ActiveSettings::GetDataPath("sdcard/");
+ 			fs::create_directories(path, ec);
+ 			if (!FSCDeviceHostFS_Mount(mountPathOut, path.generic_wstring().c_str(), FSC_PRIORITY_BASE))
+ 				return FS_RESULT::ERR_PLACEHOLDER;
+diff --git a/src/Cemu/Logging/CemuLogging.cpp b/src/Cemu/Logging/CemuLogging.cpp
+index f58e798..6d403de 100644
+--- a/src/Cemu/Logging/CemuLogging.cpp
++++ b/src/Cemu/Logging/CemuLogging.cpp
+@@ -98,7 +98,7 @@ void cemuLog_createLogFile(bool triggeredByCrash)
+ 	if (LogContext.file_stream.is_open())
+ 		return;
+ 
+-	const auto path = ActiveSettings::GetPath("log.txt");
++	const auto path = ActiveSettings::GetDataPath("log.txt");
+ 	LogContext.file_stream.open(path, std::ios::out);
+ 	if (LogContext.file_stream.fail())
+ 	{
+diff --git a/src/Common/ExceptionHandler/ExceptionHandler.cpp b/src/Common/ExceptionHandler/ExceptionHandler.cpp
+index 20074fb..3a02b81 100644
+--- a/src/Common/ExceptionHandler/ExceptionHandler.cpp
++++ b/src/Common/ExceptionHandler/ExceptionHandler.cpp
+@@ -72,7 +72,7 @@ bool CreateMiniDump(CrashDump dump, EXCEPTION_POINTERS* pep)
+ 	if (dump == CrashDump::Disabled)
+ 		return true;
+ 
+-	fs::path p = ActiveSettings::GetPath("crashdump");
++	fs::path p = ActiveSettings::GetDataPath("crashdump");
+ 
+ 	std::error_code ec;
+ 	fs::create_directories(p, ec);
+@@ -367,11 +367,11 @@ void createCrashlog(EXCEPTION_POINTERS* e, PCONTEXT context)
+ 		const auto temp_time = std::chrono::system_clock::to_time_t(now);
+ 		const auto& time = *std::gmtime(&temp_time);
+ 
+-		fs::path p = ActiveSettings::GetPath("crashdump");
++		fs::path p = ActiveSettings::GetDataPath("crashdump");
+ 		p /= fmt::format("log_{:04d}{:02d}{:02d}_{:02d}{:02d}{:02d}.txt", 1900 + time.tm_year, time.tm_mon + 1, time.tm_mday, time.tm_year, time.tm_hour, time.tm_min, time.tm_sec);
+ 
+ 		std::error_code ec;
+-		fs::copy_file(ActiveSettings::GetPath("log.txt"), p, ec);
++		fs::copy_file(ActiveSettings::GetDataPath("log.txt"), p, ec);
+ 	}
+ 
+ 	exit(0);
+diff --git a/src/config/ActiveSettings.cpp b/src/config/ActiveSettings.cpp
+index c7ff4fe..9352b9e 100644
+--- a/src/config/ActiveSettings.cpp
++++ b/src/config/ActiveSettings.cpp
+@@ -18,7 +18,7 @@ void ActiveSettings::LoadOnce()
+ 	s_path = s_full_path.parent_path();
+ 	s_filename = s_full_path.filename();
+ 
+-	g_config.SetFilename(GetPath("settings.xml").generic_wstring());
++	g_config.SetFilename(GetConfigPath("settings.xml").generic_wstring());
+ 	g_config.Load();
+ 
+ 	std::wstring additionalErrorInfo;
+@@ -220,8 +220,63 @@ fs::path ActiveSettings::GetMlcPath()
+ 	return GetDefaultMLCPath();
+ }
+ 
++fs::path ActiveSettings::GetConfigPath() {
++#ifdef XDG
++    auto config_home = std::getenv("XDG_CONFIG_HOME");
++    auto config_home_s = std::string();
++    if (!config_home) {
++        config_home_s = fmt::format("{}/.config", std::getenv("HOME"));
++    }
++    auto dir = fs::path(fmt::format("{}/cemu", config_home ? config_home : config_home_s));
++    if (!fs::exists(dir)) {
++      fs::create_directories(dir);
++    }
++    return dir;
++#endif
++    return s_full_path;
++}
++
++fs::path ActiveSettings::GetCachePath() {
++#ifdef XDG
++    auto cache_home_env = std::getenv("XDG_CACHE_HOME");
++    auto cache_home_s = std::string();
++    if (!cache_home_env) {
++        cache_home_s = fmt::format("{}/.cache", std::getenv("HOME"));
++    }
++    auto dir = fs::path(fmt::format("{}/cemu", cache_home_env ? cache_home_env : cache_home_s));
++    if (!fs::exists(dir)) {
++      fs::create_directories(dir);
++    }
++    return dir;
++#endif
++    return s_full_path;
++}
++
++fs::path ActiveSettings::GetDataPath() {
++#ifdef XDG
++    auto data_home = std::getenv("XDG_DATA_HOME");
++    auto data_home_s = std::string();
++    if (!data_home) {
++        data_home_s = fmt::format("{}/.local/share", std::getenv("HOME"));
++    }
++    auto dir = fs::path(fmt::format("{}/cemu", data_home ? data_home : data_home_s));
++    if (!fs::exists(dir)) {
++      fs::create_directories(dir);
++    }
++    return dir;
++#endif
++    return s_full_path;
++}
++
++fs::path ActiveSettings::GetSystemDataPath() {
++#ifdef SYSTEM_DATA_PATH
++  return fs::path(SYSTEM_DATA_PATH);
++#endif
++  return s_full_path;
++}
++
++
+ fs::path ActiveSettings::GetDefaultMLCPath()
+ {
+-	return GetPath("mlc01");
++	return GetDataPath("mlc01");
+ }
+-
+diff --git a/src/config/ActiveSettings.h b/src/config/ActiveSettings.h
+index 44b5f50..2fe064e 100644
+--- a/src/config/ActiveSettings.h
++++ b/src/config/ActiveSettings.h
+@@ -13,6 +13,10 @@ class ActiveSettings
+ 	[[nodiscard]] static fs::path GetFilename() { return s_filename; }
+ 	
+ 	[[nodiscard]] static fs::path GetMlcPath();
++  [[nodiscard]] static fs::path GetCachePath();
++	[[nodiscard]] static fs::path GetConfigPath();
++	[[nodiscard]] static fs::path GetDataPath();
++  [[nodiscard]] static fs::path GetSystemDataPath();
+ 
+ 	[[nodiscard]] static fs::path GetPath(std::string_view p) 
+ 	{
+@@ -57,6 +61,54 @@ class ActiveSettings
+ 		return GetMlcPath() / fmt::format(format, std::forward<TArgs>(args)...);
+ 	}
+ 	
++  template <typename ...TArgs>
++  [[nodiscard]] static fs::path GetCachePath(std::string_view format, TArgs&&... args) {
++    cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
++    return GetCachePath() / fmt::format(format, std::forward<TArgs>(args)...);
++  }
++
++  template <typename ...TArgs>
++  [[nodiscard]] static fs::path GetCachePath(std::wstring_view format, TArgs&&... args) {
++    cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
++    return GetCachePath() / fmt::format(format, std::forward<TArgs>(args)...);
++  }
++
++  template <typename ...TArgs>
++  [[nodiscard]] static fs::path GetConfigPath(std::string_view format, TArgs&&... args) {
++    cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
++    return GetConfigPath() / fmt::format(format, std::forward<TArgs>(args)...);
++  }
++
++  template <typename ...TArgs>
++  [[nodiscard]] static fs::path GetConfigPath(std::wstring_view format, TArgs&&... args) {
++    cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
++    return GetConfigPath() / fmt::format(format, std::forward<TArgs>(args)...);
++  }
++
++  template <typename ...TArgs>
++  [[nodiscard]] static fs::path GetDataPath(std::string_view format, TArgs&&... args) {
++    cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
++    return GetDataPath() / fmt::format(format, std::forward<TArgs>(args)...);
++  }
++
++  template <typename ...TArgs>
++  [[nodiscard]] static fs::path GetDataPath(std::wstring_view format, TArgs&&... args) {
++    cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
++    return GetDataPath() / fmt::format(format, std::forward<TArgs>(args)...);
++  }
++
++  template <typename ...TArgs>
++  [[nodiscard]] static fs::path GetSystemDataPath(std::string_view format, TArgs&&... args) {
++    cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
++    return GetSystemDataPath() / fmt::format(format, std::forward<TArgs>(args)...);
++  }
++
++  template <typename ...TArgs>
++  [[nodiscard]] static fs::path GetSystemDataPath(std::wstring_view format, TArgs&&... args) {
++    cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
++    return GetSystemDataPath() / fmt::format(format, std::forward<TArgs>(args)...);
++  }
++
+ 	// get mlc path to default cemu root dir/mlc01
+ 	[[nodiscard]] static fs::path GetDefaultMLCPath();
+ 
+@@ -126,4 +178,3 @@ class ActiveSettings
+ 
+ 	inline static bool s_has_required_online_files = false;
+ };
+-
+diff --git a/src/gui/CemuApp.cpp b/src/gui/CemuApp.cpp
+index 37a40ba..bf2df7a 100644
+--- a/src/gui/CemuApp.cpp
++++ b/src/gui/CemuApp.cpp
+@@ -30,7 +30,7 @@ void unused_translation_dummy()
+ 	void(_("Browse"));
+ 	void(_("Select a file"));
+ 	void(_("Select a directory"));
+-	
++
+ 	void(_("base"));
+ 	void(_("update"));
+ 	void(_("dlc"));
+@@ -110,12 +110,12 @@ bool CemuApp::OnInit()
+ 
+ 	// init input
+ 	InputManager::instance().load();
+-	
++
+ 	InitializeGlobalVulkan();
+ 
+ 	Bind(wxEVT_ACTIVATE_APP, &CemuApp::ActivateApp, this);
+ 
+-	if (!TestWriteAccess(ActiveSettings::GetPath()))
++	if (!TestWriteAccess(ActiveSettings::GetConfigPath()))
+ 		wxMessageBox(_("Cemu can't write to its directory.\nPlease move it to a different location or run Cemu as administrator!"), _("Warning"), wxOK | wxCENTRE | wxICON_EXCLAMATION, nullptr);
+ 
+ 	auto& config = GetConfig();
+@@ -183,10 +183,10 @@ int CemuApp::FilterEvent(wxEvent& event)
+ 
+ std::vector<const wxLanguageInfo*> CemuApp::GetAvailableLanguages()
+ {
+-	const auto path = ActiveSettings::GetPath("resources");
++	const auto path = ActiveSettings::GetSystemDataPath("resources");
+ 	if (!exists(path))
+ 		return {};
+-	
++
+ 	std::vector<const wxLanguageInfo*> result;
+ 	for (const auto& p : fs::directory_iterator(path))
+ 	{
+@@ -218,7 +218,7 @@ void CemuApp::CreateDefaultFiles(bool first_start)
+ 	if (!fs::exists(mlc) && !first_start)
+ 	{
+ 		const std::wstring message = fmt::format(_(L"Your mlc01 folder seems to be missing.\n\nThis is where Cemu stores save files, game updates and other Wii U files.\n\nThe expected path is:\n{}\n\nDo you want to create the folder at the expected path?").ToStdWstring(), mlc);
+-		
++
+ 		wxMessageDialog dialog(nullptr, message, "Error", wxCENTRE | wxYES_NO | wxCANCEL| wxICON_WARNING);
+ 		dialog.SetYesNoCancelLabels(_("Yes"), _("No"), _("Select a custom path"));
+ 		const auto dialogResult = dialog.ShowModal();
+@@ -308,11 +308,11 @@ void CemuApp::CreateDefaultFiles(bool first_start)
+ 	// cemu directories
+ 	try
+ 	{
+-		const auto controllerProfileFolder = GetCemuPath(L"controllerProfiles").ToStdWstring();
++		const auto controllerProfileFolder = ActiveSettings::GetConfigPath(L"controllerProfiles").generic_wstring();
+ 		if (!fs::exists(controllerProfileFolder))
+ 			fs::create_directories(controllerProfileFolder);
+ 
+-		const auto memorySearcherFolder = GetCemuPath(L"memorySearcher").ToStdWstring();
++		const auto memorySearcherFolder = ActiveSettings::GetConfigPath(L"memorySearcher").generic_wstring();
+ 		if (!fs::exists(memorySearcherFolder))
+ 			fs::create_directories(memorySearcherFolder);
+ 	}
+@@ -338,7 +338,7 @@ void CemuApp::CreateDefaultFiles(bool first_start)
+ bool CemuApp::SelectMLCPath(wxWindow* parent)
+ {
+ 	auto& config = GetConfig();
+-	
++
+ 	std::wstring default_path;
+ 	if (fs::exists(config.mlc_path.GetValue()))
+ 		default_path = config.mlc_path.GetValue();
+@@ -357,7 +357,7 @@ bool CemuApp::SelectMLCPath(wxWindow* parent)
+ 			const auto result = wxMessageBox(_("Cemu can't write to the selected mlc path!\nDo you want to select another path?"), _("Error"), wxYES_NO | wxCENTRE | wxICON_ERROR);
+ 			if (result == wxYES)
+ 				continue;
+-			
++
+ 			break;
+ 		}
+ 
+@@ -406,4 +406,3 @@ extern "C"
+ 		return *static_cast<CemuApp*>(wxApp::GetInstance());
+ 	};
+ }
+-
+diff --git a/src/gui/ChecksumTool.cpp b/src/gui/ChecksumTool.cpp
+index 1c38e2f..b4ce776 100644
+--- a/src/gui/ChecksumTool.cpp
++++ b/src/gui/ChecksumTool.cpp
+@@ -137,7 +137,7 @@ ChecksumTool::ChecksumTool(wxWindow* parent, wxTitleManagerList::TitleEntry& ent
+ 				const auto title_id_str = fmt::format("{:016x}", m_json_entry.title_id);
+ 				const auto default_file = fmt::format("{}_v{}.json", title_id_str, m_info.GetAppTitleVersion());
+ 
+-				const auto checksum_path = ActiveSettings::GetPath("resources/checksums/{}", default_file);
++				const auto checksum_path = ActiveSettings::GetDataPath("resources/checksums/{}", default_file);
+ 				if (exists(checksum_path))
+ 					m_verify_online->Enable();
+ 			}
+@@ -189,7 +189,7 @@ void ChecksumTool::LoadOnlineData() const
+ 
+ 		std::string latest_commit;
+ 
+-		const auto checksum_path = ActiveSettings::GetPath("resources/checksums");
++		const auto checksum_path = ActiveSettings::GetSystemDataPath("resources/checksums");
+ 		if (exists(checksum_path))
+ 		{
+ 			std::string current_commit;
+@@ -600,7 +600,7 @@ void ChecksumTool::OnVerifyOnline(wxCommandEvent& event)
+ 	const auto title_id_str = fmt::format("{:016x}", m_json_entry.title_id);
+ 	const auto default_file = fmt::format("{}_v{}.json", title_id_str, m_info.GetAppTitleVersion());
+ 	
+-	const auto checksum_path = ActiveSettings::GetPath("resources/checksums/{}", default_file);
++	const auto checksum_path = ActiveSettings::GetDataPath("resources/checksums/{}", default_file);
+ 	if(!exists(checksum_path))
+ 		return;
+ 	
+diff --git a/src/gui/DownloadGraphicPacksWindow.cpp b/src/gui/DownloadGraphicPacksWindow.cpp
+index 8835b9f..bed688f 100644
+--- a/src/gui/DownloadGraphicPacksWindow.cpp
++++ b/src/gui/DownloadGraphicPacksWindow.cpp
+@@ -67,7 +67,7 @@ bool DownloadGraphicPacksWindow::curlDownloadFile(const char *url, curlDownloadF
+ bool checkGraphicPackDownloadedVersion(const char* nameVersion, bool& hasVersionFile)
+ {
+ 	hasVersionFile = false;
+-	const auto path = ActiveSettings::GetPath("graphicPacks/downloadedGraphicPacks/version.txt");
++	const auto path = ActiveSettings::GetDataPath("graphicPacks/downloadedGraphicPacks/version.txt");
+ 	std::unique_ptr<FileStream> file(FileStream::openFile2(path));
+ 
+ 	std::string versionInFile;
+@@ -80,7 +80,7 @@ bool checkGraphicPackDownloadedVersion(const char* nameVersion, bool& hasVersion
+ 
+ void createGraphicPackDownloadedVersionFile(const char* nameVersion)
+ {
+-	const auto path = ActiveSettings::GetPath("graphicPacks/downloadedGraphicPacks/version.txt");
++	const auto path = ActiveSettings::GetDataPath("graphicPacks/downloadedGraphicPacks/version.txt");
+ 	std::unique_ptr<FileStream> file(FileStream::createFile2(path));
+ 	if (file)
+ 		file->writeString(nameVersion);
+@@ -92,7 +92,7 @@ void createGraphicPackDownloadedVersionFile(const char* nameVersion)
+ 
+ void deleteDownloadedGraphicPacks()
+ {
+-	const auto path = ActiveSettings::GetPath("graphicPacks/downloadedGraphicPacks");
++	const auto path = ActiveSettings::GetDataPath("graphicPacks/downloadedGraphicPacks");
+ 	std::error_code er;
+ 	if (!fs::exists(path))
+ 		return;
+@@ -240,7 +240,7 @@ void DownloadGraphicPacksWindow::UpdateThread()
+ 		return;
+ 	}
+ 
+-	auto path = ActiveSettings::GetPath("graphicPacks/downloadedGraphicPacks");
++	auto path = ActiveSettings::GetDataPath("graphicPacks/downloadedGraphicPacks");
+ 	std::error_code er;
+ 	//fs::remove_all(path, er); -> Don't delete the whole folder and recreate it immediately afterwards because sometimes it just fails
+ 	deleteDownloadedGraphicPacks();
+@@ -260,7 +260,7 @@ void DownloadGraphicPacksWindow::UpdateThread()
+ 			std::strstr(sb.name, "..\\") != nullptr)
+ 			continue; // bad path
+ 
+-		path = ActiveSettings::GetPath("graphicPacks/downloadedGraphicPacks/{}", sb.name);
++		path = ActiveSettings::GetDataPath("graphicPacks/downloadedGraphicPacks/{}", sb.name);
+ 
+ 		size_t sbNameLen = strlen(sb.name);
+ 		if(sbNameLen == 0)
+diff --git a/src/gui/MainWindow.cpp b/src/gui/MainWindow.cpp
+index 8989550..3e44f29 100644
+--- a/src/gui/MainWindow.cpp
++++ b/src/gui/MainWindow.cpp
+@@ -97,7 +97,7 @@ enum
+ 	// options -> account
+ 	MAINFRAME_MENU_ID_OPTIONS_ACCOUNT_1 = 20350,
+ 	MAINFRAME_MENU_ID_OPTIONS_ACCOUNT_12 = 20350 + 11,
+-	
++
+ 	// options -> system language
+ 	MAINFRAME_MENU_ID_OPTIONS_LANGUAGE_JAPANESE = 20500,
+ 	MAINFRAME_MENU_ID_OPTIONS_LANGUAGE_ENGLISH,
+@@ -246,7 +246,7 @@ class wxGameDropTarget : public wxFileDropTarget
+ 	{
+ 		if(!m_window->IsGameLaunched() && filenames.GetCount() == 1)
+ 			return m_window->FileLoad(filenames[0].wc_str(), wxLaunchGameEvent::INITIATED_BY::DRAG_AND_DROP);
+-		
++
+ 		return false;
+ 	}
+ 
+@@ -262,7 +262,7 @@ class wxAmiiboDropTarget : public wxFileDropTarget
+ 	{
+ 		if (!m_window->IsGameLaunched() || filenames.GetCount() != 1)
+ 			return false;
+-		
++
+ 		uint32 nfcError;
+ 		if (nnNfp_touchNfcTagFromFile(filenames[0].wc_str(), &nfcError))
+ 		{
+@@ -372,14 +372,14 @@ wxString MainWindow::GetInitialWindowTitle()
+ }
+ 
+ void MainWindow::ShowGettingStartedDialog()
+-{	
++{
+ 	GettingStartedDialog dia(this);
+ 	dia.ShowModal();
+ 	if (dia.HasGamePathChanged() || dia.HasMLCChanged())
+ 		m_game_list->ReloadGameEntries();
+-		
++
+ 	TogglePadView();
+-	
++
+ 	auto& config = GetConfig();
+ 	m_padViewMenuItem->Check(config.pad_open.GetValue());
+ 	m_fullscreenMenuItem->Check(config.fullscreen.GetValue());
+@@ -428,7 +428,7 @@ bool MainWindow::InstallUpdate(const fs::path& metaFilePath)
+ 			{
+ 				throw std::runtime_error(frame.GetExceptionMessage());
+ 			}
+-		}		
++		}
+ 	}
+ 	catch(const AbortException&)
+ 	{
+@@ -595,15 +595,15 @@ void MainWindow::OnFileMenu(wxCommandEvent& event)
+ 			_("Wii U image (wud, wux, iso, wad)"),
+ 			_("Wii U archive (wua)"),
+ 			_("Wii U executable (rpx, elf)"),
+-			_("All files (*.*)")		
++			_("All files (*.*)")
+ 		);
+-		
++
+ 		wxFileDialog openFileDialog(this, _("Open file to launch"), wxEmptyString, wxEmptyString, wildcard, wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+ 
+ 		if (openFileDialog.ShowModal() == wxID_CANCEL)
+ 			return;
+ 
+-		const wxString wxStrFilePath = openFileDialog.GetPath();	
++		const wxString wxStrFilePath = openFileDialog.GetPath();
+ 		FileLoad(wxStrFilePath.wc_str(), wxLaunchGameEvent::INITIATED_BY::MENU);
+ 	}
+ 	else if (menuId >= MAINFRAME_MENU_ID_FILE_RECENT_0 && menuId <= MAINFRAME_MENU_ID_FILE_RECENT_LAST)
+@@ -731,7 +731,7 @@ void MainWindow::TogglePadView()
+ 	{
+ 		if (m_padView)
+ 			return;
+-		
++
+ 		m_padView = new PadViewFrame(this);
+ 
+ 		m_padView->Bind(wxEVT_CLOSE_WINDOW, &MainWindow::OnPadClose, this);
+@@ -899,7 +899,7 @@ void MainWindow::OnAccountSelect(wxCommandEvent& event)
+ //	default:
+ //		cemu_assert_debug(false);
+ //	}
+-//	
++//
+ //	g_config.Save();
+ //}
+ 
+@@ -961,7 +961,7 @@ void MainWindow::OnConsoleLanguage(wxCommandEvent& event)
+ //		GetConfig().cpu_mode = CPUMode::TriplecoreRecompiler;
+ //	else
+ //		cemu_assert_debug(false);
+-//	
++//
+ //	g_config.Save();
+ //}
+ 
+@@ -1002,7 +1002,7 @@ void MainWindow::OnDebugSetting(wxCommandEvent& event)
+ 		{
+ 			try
+ 			{
+-				const auto path = CemuApp::GetCemuPath(L"dump\\curl").ToStdWstring();
++				const auto path = ActiveSettings::GetDataPath(L"dump\\curl").generic_wstring();
+ 				fs::create_directories(path);
+ 			}
+ 			catch (const std::exception& ex)
+@@ -1029,7 +1029,7 @@ void MainWindow::OnDebugSetting(wxCommandEvent& event)
+ 		ActiveSettings::SetTimerShiftFactor(6);
+ 	else
+ 		cemu_assert_debug(false);
+-	
++
+ 	g_config.Save();
+ }
+ 
+@@ -1059,8 +1059,8 @@ void MainWindow::OnDebugDumpUsedTextures(wxCommandEvent& event)
+ 		try
+ 		{
+ 			// create directory
+-			const auto path = CemuApp::GetCemuPath(L"dump\\textures");
+-			fs::create_directories(path.ToStdWstring());
++			const auto path = ActiveSettings::GetDataPath(L"dump\\textures");
++			fs::create_directories(path.generic_wstring());
+ 		}
+ 		catch (const std::exception& ex)
+ 		{
+@@ -1080,8 +1080,8 @@ void MainWindow::OnDebugDumpUsedShaders(wxCommandEvent& event)
+ 		try
+ 		{
+ 			// create directory
+-			const auto path = CemuApp::GetCemuPath(L"dump\\shaders");
+-			fs::create_directories(path.ToStdWstring());
++			const auto path = ActiveSettings::GetDataPath(L"dump\\shaders");
++			fs::create_directories(path.generic_wstring());
+ 		}
+ 		catch (const std::exception & ex)
+ 		{
+@@ -1098,7 +1098,7 @@ void MainWindow::OnLoggingWindow(wxCommandEvent& event)
+ 		return;
+ 
+ 	m_logging_window = new LoggingWindow(this);
+-	m_logging_window->Bind(wxEVT_CLOSE_WINDOW, 
++	m_logging_window->Bind(wxEVT_CLOSE_WINDOW,
+ 		[this](wxCloseEvent& event) {
+ 		m_logging_window = nullptr;
+ 		event.Skip();
+@@ -1254,7 +1254,7 @@ void MainWindow::SaveSettings()
+ {
+ 	auto lock = g_config.Lock();
+ 	auto& config = GetConfig();
+-	
++
+ 	if (config.window_position != Vector2i{ -1,-1 })
+ 	{
+ 		config.window_position.x = m_restored_position.x;
+@@ -1291,7 +1291,7 @@ void MainWindow::SaveSettings()
+ 
+ 	if(m_game_list)
+ 		m_game_list->SaveConfig();
+-	
++
+ 	g_config.Save();
+ }
+ 
+@@ -1320,13 +1320,13 @@ void MainWindow::OnMouseMove(wxMouseEvent& event)
+ void MainWindow::OnMouseLeft(wxMouseEvent& event)
+ {
+ 	auto& instance = InputManager::instance();
+-	
++
+ 	std::scoped_lock lock(instance.m_main_mouse.m_mutex);
+ 	instance.m_main_mouse.left_down = event.ButtonDown(wxMOUSE_BTN_LEFT);
+ 	instance.m_main_mouse.position = { event.GetPosition().x, event.GetPosition().y };
+ 	if (event.ButtonDown(wxMOUSE_BTN_LEFT))
+ 		instance.m_main_mouse.left_down_toggle = true;
+-	
++
+ 	event.Skip();
+ }
+ 
+@@ -1339,7 +1339,7 @@ void MainWindow::OnMouseRight(wxMouseEvent& event)
+ 	instance.m_main_mouse.position = { event.GetPosition().x, event.GetPosition().y };
+ 	if(event.ButtonDown(wxMOUSE_BTN_RIGHT))
+ 		instance.m_main_mouse.right_down_toggle = true;
+-	
++
+ 	event.Skip();
+ }
+ 
+@@ -1393,7 +1393,7 @@ void MainWindow::OnChar(wxKeyEvent& event)
+ {
+ 	if (swkbd_hasKeyboardInputHook())
+ 		swkbd_keyInput(event.GetUnicodeKey());
+-	
++
+ 	event.Skip();
+ }
+ 
+@@ -1418,7 +1418,7 @@ void MainWindow::OnToolsInput(wxCommandEvent& event)
+ 	case MAINFRAME_MENU_ID_TOOLS_DOWNLOAD_MANAGER:
+ 	{
+ 		const auto default_tab = id == MAINFRAME_MENU_ID_TOOLS_TITLE_MANAGER ? TitleManagerPage::TitleManager : TitleManagerPage::DownloadManager;
+-			
++
+ 		if (m_title_manager)
+ 			m_title_manager->SetFocusAndTab(default_tab);
+ 		else
+@@ -1444,7 +1444,7 @@ void MainWindow::OnGesturePan(wxPanGestureEvent& event)
+ 	instance.m_main_touch.left_down = event.IsGestureStart() || !event.IsGestureEnd();
+ 	if (event.IsGestureStart() || !event.IsGestureEnd())
+ 		instance.m_main_touch.left_down_toggle = true;
+-	
++
+ 
+ 	event.Skip();
+ }
+@@ -1701,10 +1701,10 @@ void MainWindow::UpdateNFCMenu()
+ 		const auto& entry = config.recent_nfc_files[i];
+ 		if (entry.empty())
+ 			continue;
+-		
++
+ 		if (!fs::exists(entry))
+ 			continue;
+-		
++
+ 		if (recentFileIndex == 0)
+ 			m_nfcMenuSeparator0 = m_nfcMenu->AppendSeparator();
+ 
+@@ -1756,7 +1756,7 @@ void MainWindow::OnTimer(wxTimerEvent& event)
+ 	{
+ 		ShowCursor(false);
+ 	}
+-		
++
+ }
+ 
+ void MainWindow::OnHelpVistWebpage(wxCommandEvent& event) {}
+@@ -2030,9 +2030,9 @@ void MainWindow::RecreateMenu()
+ 		m_menuBar->Destroy();
+ 		m_menuBar = nullptr;
+ 	}
+-	
++
+ 	auto& config = GetConfig();
+-	
++
+ 	m_menuBar = new wxMenuBar;
+ 	// file submenu
+ 	m_fileMenu = new wxMenu;
+@@ -2086,12 +2086,12 @@ void MainWindow::RecreateMenu()
+ 		item->Check(account_id == account.GetPersistentId());
+ 		if (m_game_launched || LaunchSettings::GetPersistentId().has_value())
+ 			item->Enable(false);
+-		
++
+ 		++index;
+ 	}
+ 	//optionsAccountMenu->AppendSeparator(); TODO
+ 	//optionsAccountMenu->AppendCheckItem(MAINFRAME_MENU_ID_OPTIONS_ACCOUNT_1 + index, _("Online enabled"))->Check(config.account.online_enabled);
+-	
++
+ 	// options->region submenu
+ 	//wxMenu* optionsRegionMenu = new wxMenu;
+ 	//optionsRegionMenu->AppendRadioItem(MAINFRAME_MENU_ID_OPTIONS_REGION_AUTO, _("&Auto"), wxEmptyString)->Check(config.console_region == ConsoleRegion::Auto);
+@@ -2122,8 +2122,8 @@ void MainWindow::RecreateMenu()
+ 	// options submenu
+ 	wxMenu* optionsMenu = new wxMenu;
+ 	m_fullscreenMenuItem = optionsMenu->AppendCheckItem(MAINFRAME_MENU_ID_OPTIONS_FULLSCREEN, _("&Fullscreen"), wxEmptyString);
+-	m_fullscreenMenuItem->Check(ActiveSettings::FullscreenEnabled());		
+-	
++	m_fullscreenMenuItem->Check(ActiveSettings::FullscreenEnabled());
++
+ 	optionsMenu->Append(MAINFRAME_MENU_ID_OPTIONS_GRAPHIC_PACKS2, _("&Graphic packs"));
+ 	//optionsMenu->AppendSubMenu(optionsVCAMenu, _("&GPU buffer cache accuracy"));
+ 	m_padViewMenuItem = optionsMenu->AppendCheckItem(MAINFRAME_MENU_ID_OPTIONS_SECOND_WINDOW_PADVIEW, _("&Separate GamePad view"), wxEmptyString);
+@@ -2205,7 +2205,7 @@ void MainWindow::RecreateMenu()
+ 	debugMenu->AppendSubMenu(debugLoggingMenu, _("&Logging"));
+ 	debugMenu->AppendSubMenu(debugDumpMenu, _("&Dump"));
+ 	debugMenu->AppendSeparator();
+-	
++
+ 	auto upsidedownItem = debugMenu->AppendCheckItem(MAINFRAME_MENU_ID_DEBUG_RENDER_UPSIDE_DOWN, _("&Render upside-down"), wxEmptyString);
+ 	upsidedownItem->Check(ActiveSettings::RenderUpsideDownEnabled());
+ 	if(LaunchSettings::RenderUpsideDownEnabled().has_value())
+@@ -2254,7 +2254,7 @@ void MainWindow::RecreateMenu()
+ 
+ 		m_memorySearcherMenuItem->Enable(true);
+ 		m_nfcMenu->Enable(MAINFRAME_MENU_ID_NFC_TOUCH_NFC_FILE, true);
+-		
++
+ 		// disable OpenGL logging (currently cant be toggled after OpenGL backend is initialized)
+ 		m_loggingSubmenu->Enable(MAINFRAME_MENU_ID_DEBUG_LOGGING0 + LOG_TYPE_OPENGL, false);
+ 		m_loggingSubmenu->Enable(MAINFRAME_MENU_ID_DEBUG_LOGGING0 + LOG_TYPE_VULKAN_VALIDATION, false);
+@@ -2278,7 +2278,7 @@ void MainWindow::OnAfterCallShowErrorDialog()
+ bool MainWindow::EnableOnlineMode() const
+ {
+ 	// TODO: not used anymore
+-	// 
++	//
+ 	// if enabling online mode, check if all requirements are met
+ 	std::wstring additionalErrorInfo;
+ 	const sint32 onlineReqError = iosuCrypt_checkRequirementsForOnlineMode(additionalErrorInfo);
+diff --git a/src/gui/MemorySearcherTool.cpp b/src/gui/MemorySearcherTool.cpp
+index f86bf46..97252f3 100644
+--- a/src/gui/MemorySearcherTool.cpp
++++ b/src/gui/MemorySearcherTool.cpp
+@@ -270,7 +270,7 @@ void MemorySearcherTool::OnFilter(wxCommandEvent& event)
+ 
+ void MemorySearcherTool::Load()
+ {
+-	const auto memorySearcherPath = ActiveSettings::GetPath("memorySearcher/{:016x}.ini", CafeSystem::GetForegroundTitleId());
++	const auto memorySearcherPath = ActiveSettings::GetConfigPath("memorySearcher/{:016x}.ini", CafeSystem::GetForegroundTitleId());
+ 	auto memSearcherIniContents = FileStream::LoadIntoMemory(memorySearcherPath);
+ 	if (!memSearcherIniContents)
+ 		return;
+@@ -322,7 +322,7 @@ void MemorySearcherTool::Load()
+ 
+ void MemorySearcherTool::Save()
+ {
+-	const auto memorySearcherPath = ActiveSettings::GetPath("memorySearcher/{:016x}.ini", CafeSystem::GetForegroundTitleId());
++	const auto memorySearcherPath = ActiveSettings::GetConfigPath("memorySearcher/{:016x}.ini", CafeSystem::GetForegroundTitleId());
+ 	FileStream* fs = FileStream::createFile2(memorySearcherPath);
+ 	if (fs)
+ 	{
+diff --git a/src/gui/debugger/DebuggerWindow2.cpp b/src/gui/debugger/DebuggerWindow2.cpp
+index 7465c71..b6dc3fe 100644
+--- a/src/gui/debugger/DebuggerWindow2.cpp
++++ b/src/gui/debugger/DebuggerWindow2.cpp
+@@ -272,7 +272,7 @@ DebuggerWindow2::DebuggerWindow2(wxFrame& parent, const wxRect& display_size)
+ {
+ 	this->wxWindowBase::SetBackgroundColour(*wxWHITE);
+ 
+-	const auto file = ActiveSettings::GetPath("debugger/config.xml");
++	const auto file = ActiveSettings::GetConfigPath("debugger/config.xml");
+ 	m_config.SetFilename(file.generic_wstring());
+ 	m_config.Load();
+ 
+@@ -472,7 +472,7 @@ bool DebuggerWindow2::Show(bool show)
+ std::wstring DebuggerWindow2::GetModuleStoragePath(std::string module_name, uint32_t crc_hash) const
+ {
+ 	if (module_name.empty() || crc_hash == 0) return std::wstring();
+-	return ActiveSettings::GetPath("debugger/{}_{:#10x}.xml", module_name, crc_hash).generic_wstring();
++	return ActiveSettings::GetConfigPath("debugger/{}_{:#10x}.xml", module_name, crc_hash).generic_wstring();
+ }
+ 
+ void DebuggerWindow2::OnBreakpointHit(wxCommandEvent& event)
+diff --git a/src/gui/input/InputSettings2.cpp b/src/gui/input/InputSettings2.cpp
+index 62a7045..aa11f28 100644
+--- a/src/gui/input/InputSettings2.cpp
++++ b/src/gui/input/InputSettings2.cpp
+@@ -672,10 +672,10 @@ void InputSettings2::on_profile_delete(wxCommandEvent& event)
+ 	}
+ 	try
+ 	{
+-		const fs::path old_path = ActiveSettings::GetPath(fmt::format("controllerProfiles/{}.txt", selection));
++		const fs::path old_path = ActiveSettings::GetConfigPath(fmt::format("controllerProfiles/{}.txt", selection));
+ 		fs::remove(old_path);
+ 
+-		const fs::path path = ActiveSettings::GetPath(fmt::format("controllerProfiles/{}.xml", selection));
++		const fs::path path = ActiveSettings::GetConfigPath(fmt::format("controllerProfiles/{}.xml", selection));
+ 		fs::remove(path);
+ 
+ 		profile_names->ChangeValue(_(kDefaultProfileName));
+diff --git a/src/input/InputManager.cpp b/src/input/InputManager.cpp
+index 4ae43ce..852c918 100644
+--- a/src/input/InputManager.cpp
++++ b/src/input/InputManager.cpp
+@@ -76,9 +76,9 @@ bool InputManager::load(size_t player_index, std::string_view filename)
+ {
+ 	fs::path file_path;
+ 	if (filename.empty())
+-		file_path = ActiveSettings::GetPath(fmt::format("controllerProfiles/controller{}", player_index));
++		file_path = ActiveSettings::GetConfigPath(fmt::format("controllerProfiles/controller{}", player_index));
+ 	else
+-		file_path = ActiveSettings::GetPath(fmt::format("controllerProfiles/{}", filename));
++		file_path = ActiveSettings::GetConfigPath(fmt::format("controllerProfiles/{}", filename));
+ 
+ 	auto old_file = file_path;
+ 	old_file.replace_extension(".txt"); // test .txt extension
+@@ -448,7 +448,7 @@ bool InputManager::save(size_t player_index, std::string_view filename)
+ 	if (!emulated_controller)
+ 		return false;
+ 
+-	fs::path file_path = ActiveSettings::GetPath("controllerProfiles");
++	fs::path file_path = ActiveSettings::GetConfigPath("controllerProfiles");
+ 	fs::create_directories(file_path);
+ 
+ 	const auto is_default_file = filename.empty();
+@@ -664,8 +664,8 @@ EmulatedControllerPtr InputManager::delete_controller(size_t player_index, bool
+ 			if(delete_profile)
+ 			{
+ 				std::error_code ec{};
+-				fs::remove(ActiveSettings::GetPath(fmt::format("controllerProfiles/controller{}.xml", player_index)), ec);
+-				fs::remove(ActiveSettings::GetPath(fmt::format("controllerProfiles/controller{}.txt", player_index)), ec);
++				fs::remove(ActiveSettings::GetConfigPath(fmt::format("controllerProfiles/controller{}.xml", player_index)), ec);
++				fs::remove(ActiveSettings::GetConfigPath(fmt::format("controllerProfiles/controller{}.txt", player_index)), ec);
+ 			}
+ 
+ 			return result;
+@@ -680,8 +680,8 @@ EmulatedControllerPtr InputManager::delete_controller(size_t player_index, bool
+ 			controller = {};
+ 
+ 			std::error_code ec{};
+-			fs::remove(ActiveSettings::GetPath(fmt::format("controllerProfiles/controller{}.xml", player_index)), ec);
+-			fs::remove(ActiveSettings::GetPath(fmt::format("controllerProfiles/controller{}.txt", player_index)), ec);
++			fs::remove(ActiveSettings::GetConfigPath(fmt::format("controllerProfiles/controller{}.xml", player_index)), ec);
++			fs::remove(ActiveSettings::GetConfigPath(fmt::format("controllerProfiles/controller{}.txt", player_index)), ec);
+ 
+ 			return result;
+ 		}
+@@ -782,7 +782,7 @@ void InputManager::apply_game_profile()
+ 
+ std::vector<std::string> InputManager::get_profiles()
+ {
+-	const auto path = ActiveSettings::GetPath("controllerProfiles");
++	const auto path = ActiveSettings::GetConfigPath("controllerProfiles");
+ 	if (!exists(path))
+ 		return {};
+ 
+diff --git a/src/main.cpp b/src/main.cpp
+index e652939..8af057e 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -160,7 +160,7 @@ void _putenvSafe(const char* c)
+ void reconfigureGLDrivers()
+ {
+ 	// reconfigure GL drivers to store 
+-	const fs::path nvCacheDir = ActiveSettings::GetPath("shaderCache/driver/nvidia/");
++	const fs::path nvCacheDir = ActiveSettings::GetCachePath("shaderCache/driver/nvidia/");
+ 
+ 	std::error_code err;
+ 	fs::create_directories(nvCacheDir, err);
+@@ -242,7 +242,7 @@ void unitTests()
+ 
+ int mainEmulatorHLE()
+ {
+-	if (!TestWriteAccess(ActiveSettings::GetPath()))
++	if (!TestWriteAccess(ActiveSettings::GetConfigPath()))
+ 		wxMessageBox("Cemu doesn't have write access to it's own directory.\nPlease move it to a different location or run Cemu as administrator!", "Warning", wxOK|wxICON_ERROR); // todo - different error messages per OS
+ 	LatteOverlay_init();
+ 	// run a couple of tests if in non-release mode
+@@ -264,7 +264,7 @@ int mainEmulatorHLE()
+ 	// init Cafe system (todo - the stuff above should be part of this too)
+ 	CafeSystem::Initialize();
+ 	// init title list
+-	CafeTitleList::Initialize(ActiveSettings::GetPath("title_list_cache.xml"));
++	CafeTitleList::Initialize(ActiveSettings::GetCachePath("title_list_cache.xml"));
+ 	for (auto& it : GetConfig().game_paths)
+ 		CafeTitleList::AddScanPath(it);
+ 	fs::path mlcPath = ActiveSettings::GetMlcPath();
+diff --git a/src/util/libusbWrapper/libusbWrapper.cpp b/src/util/libusbWrapper/libusbWrapper.cpp
+index e1d7298..6e498c8 100644
+--- a/src/util/libusbWrapper/libusbWrapper.cpp
++++ b/src/util/libusbWrapper/libusbWrapper.cpp
+@@ -18,7 +18,7 @@ void libusbWrapper::init()
+ 	m_module = LoadLibraryW(L"libusb-1.0.dll");
+ 	if (!m_module)
+ 	{
+-		const auto path = ActiveSettings::GetPath("resources/libusb-1.0.dll");
++		const auto path = ActiveSettings::GetSystemDataPath("resources/libusb-1.0.dll");
+ 		m_module = LoadLibraryW(path.generic_wstring().c_str());
+ 		if (!m_module)
+ 		{

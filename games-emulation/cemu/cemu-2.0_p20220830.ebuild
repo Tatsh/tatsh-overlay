@@ -7,7 +7,7 @@ inherit cmake desktop wrapper xdg
 
 DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
-SHA="d94ecfe078eb4e78500c40daf29c3536edc3041e"
+SHA="15b71c57ddc6e30783ef8ca7fd2ac8d4f4db59de"
 MY_PN="Cemu"
 FMT_PV="7.1.3"
 GLSLANG_PV="11.8.0"
@@ -39,7 +39,8 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_PN}-${SHA}"
 
-PATCHES=( "${FILESDIR}/${PN}-deps.patch" )
+PATCHES=( "${FILESDIR}/${PN}-deps.patch"
+	"${FILESDIR}/${PN}-126-xdg.patch" )
 
 src_prepare() {
 	cmake_src_prepare
@@ -60,7 +61,9 @@ src_configure() {
 		-DENABLE_SDL=ON
 		-DENABLE_VULKAN=ON
 		-DENABLE_WXWIDGETS=ON
+		-DENABLE_XDG_DIRS=ON
 		-DPUBLIC_RELEASE=ON
+		-DSYSTEM_DATA_PATH=/usr/share/${PN}
 		-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3
 		-Wno-dev
 	)
@@ -68,12 +71,10 @@ src_configure() {
 }
 
 src_install() {
-	exeinto /usr/$(get_libdir)/${PN}
-	newexe "${BUILD_DIR}/src/${MY_PN}2" "${PN}"
-	insinto /usr/$(get_libdir)/${PN}
+	newbin "${BUILD_DIR}/src/${MY_PN}2" "${PN}"
+	insinto /usr/share/${PN}
 	doins -r bin/*
 	einstalldocs
-	make_wrapper "${PN}" "/usr/$(get_libdir)/${PN}/${PN}" "/usr/$(get_libdir)/${PN}"
 	newicon -s 128 src/resource/logo_icon.png "info.${PN}.${MY_PN}.png"
 	domenu "dist/linux/info.${PN}.${MY_PN}.desktop"
 }
