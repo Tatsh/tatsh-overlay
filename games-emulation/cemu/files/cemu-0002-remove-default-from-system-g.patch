@@ -1,0 +1,39 @@
+From 6b84b99bcdd0aba55e811d668e844299bd88158f Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 2 Sep 2022 00:19:59 -0400
+Subject: [PATCH 2/5] Remove /default/ from system gameProfiles path
+
+---
+ src/Cafe/CafeSystem.cpp              | 2 +-
+ src/Cafe/GameProfile/GameProfile.cpp | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Cafe/CafeSystem.cpp b/src/Cafe/CafeSystem.cpp
+index 8275698..7733d85 100644
+--- a/src/Cafe/CafeSystem.cpp
++++ b/src/Cafe/CafeSystem.cpp
+@@ -216,7 +216,7 @@ void InfoLog_TitleLoaded()
+ 	// game profile info
+ 	std::string gameProfilePath;
+ 	if(g_current_game_profile->IsDefaultProfile())
+-		gameProfilePath = fmt::format("gameProfiles/default/{:016x}.ini", titleId);
++		gameProfilePath = fmt::format("gameProfiles/{:016x}.ini", titleId);
+ 	else
+ 		gameProfilePath = fmt::format("gameProfiles/{:016x}.ini", titleId);
+ 	cemuLog_log(LogType::Force, "gameprofile path: {}", g_current_game_profile->IsLoaded() ? gameProfilePath : std::string(" (not present)"));
+diff --git a/src/Cafe/GameProfile/GameProfile.cpp b/src/Cafe/GameProfile/GameProfile.cpp
+index 85de1f4..0e7702b 100644
+--- a/src/Cafe/GameProfile/GameProfile.cpp
++++ b/src/Cafe/GameProfile/GameProfile.cpp
+@@ -185,7 +185,7 @@ bool GameProfile::Load(uint64_t title_id)
+ 	std::optional<std::vector<uint8>> profileContents = FileStream::LoadIntoMemory(gameProfilePath);
+ 	if (!profileContents)
+ 	{
+-		gameProfilePath = ActiveSettings::GetSystemDataPath("gameProfiles/default/{:016x}.ini", title_id);
++		gameProfilePath = ActiveSettings::GetSystemDataPath("gameProfiles/{:016x}.ini", title_id);
+ 		profileContents = FileStream::LoadIntoMemory(gameProfilePath);
+ 		if (!profileContents)
+ 			return false;
+-- 
+2.37.2
+

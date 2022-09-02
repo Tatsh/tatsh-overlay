@@ -1,0 +1,36 @@
+From e5e796280ea37cb3ed1e67a0aa3298bd85805d3a Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 2 Sep 2022 00:30:36 -0400
+Subject: [PATCH 4/5] Switch to submodules for some deps
+
+---
+ CMakeLists.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e9802cb..b249b09 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -84,16 +84,16 @@ find_package(Threads REQUIRED)
+ find_package(SDL2 REQUIRED)
+ find_package(CURL REQUIRED)
+ find_package(pugixml REQUIRED)
+-find_package(imgui REQUIRED)
++add_subdirectory(imgui)
+ find_package(RapidJSON REQUIRED)
+ find_package(Boost COMPONENTS program_options filesystem nowide REQUIRED)
+ find_package(libzip REQUIRED)
+-find_package(glslang REQUIRED)
+ find_package(ZLIB REQUIRED)
+ find_package(zstd MODULE REQUIRED) # MODULE so that zstd::zstd is available
+ find_package(OpenSSL COMPONENTS Crypto SSL REQUIRED)
+ find_package(glm REQUIRED)
+-find_package(fmt 7.0.0 REQUIRED)
++add_subdirectory(fmt)
++add_subdirectory(glslang)
+ find_package(PNG REQUIRED)
+ 
+ # glslang versions older than 11.11.0 define targets without a namespace
+-- 
+2.37.2
+

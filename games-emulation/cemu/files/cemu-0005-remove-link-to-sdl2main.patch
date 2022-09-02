@@ -1,0 +1,25 @@
+From fd7eebeaf5730335e578d64e4a018492a27b70e8 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 2 Sep 2022 00:30:50 -0400
+Subject: [PATCH 5/5] Remove link to SDL2main
+
+---
+ src/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 9fd18d7..7b815a7 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -93,7 +93,7 @@ target_link_libraries(CemuBin PRIVATE
+ )
+ 
+ target_link_libraries(CemuBin PRIVATE CemuAsm)
+-target_link_libraries(CemuBin PRIVATE SDL2::SDL2 SDL2::SDL2main) # is SDL2main needed?
++target_link_libraries(CemuBin PRIVATE SDL2::SDL2)
+ target_link_libraries(CemuBin PRIVATE imguiImpl OpenGL::GL)
+ 
+ if (ENABLE_WXWIDGETS)
+-- 
+2.37.2
+
