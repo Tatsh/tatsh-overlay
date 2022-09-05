@@ -3,9 +3,9 @@ index 6cd015d..8fe786d 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
 @@ -42,6 +42,7 @@ crossbeam-channel = "0.5.2"
- loop9 = "0.1.3"
  # noisy-float 0.2 bug
  num-traits = { version = "0.2.14", features = ["i128", "std"] }
+ crossbeam-utils = "0.8.11"
 +ffmpeg-sys-next = "4.4.0"
  
  [dependencies.ffmpeg]

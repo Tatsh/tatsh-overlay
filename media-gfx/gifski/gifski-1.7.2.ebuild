@@ -11,15 +11,14 @@ CRATES="
 	arrayvec-0.7.2
 	atty-0.2.14
 	autocfg-1.1.0
-	bindgen-0.54.0
+	bindgen-0.59.2
 	bitflags-1.3.2
-	bytemuck-1.12.0
+	bytemuck-1.12.1
 	cc-1.0.73
-	cexpr-0.4.0
-	cfg-if-0.1.10
+	cexpr-0.6.0
 	cfg-if-1.0.0
-	clang-sys-0.29.3
-	clap-3.2.17
+	clang-sys-1.3.3
+	clap-3.2.18
 	clap_lex-0.2.4
 	color_quant-1.1.0
 	crc32fast-1.3.2
@@ -28,10 +27,9 @@ CRATES="
 	crossbeam-epoch-0.9.10
 	crossbeam-utils-0.8.11
 	dunce-1.0.2
-	either-1.7.0
+	either-1.8.0
 	fallible_collections-0.4.5
 	ffmpeg-next-4.4.0
-	ffmpeg-sys-next-4.4.0
 	flate2-1.0.24
 	getrandom-0.2.7
 	gif-0.11.4
@@ -40,24 +38,25 @@ CRATES="
 	glob-0.3.0
 	hashbrown-0.12.3
 	hermit-abi-0.1.19
-	imagequant-4.0.1
-	imgref-1.9.2
+	imagequant-4.0.4
+	imgref-1.9.3
 	indexmap-1.9.1
 	lazy_static-1.4.0
 	lazycell-1.3.0
-	libc-0.2.131
-	libloading-0.5.2
+	libc-0.2.132
+	libloading-0.7.3
 	lodepng-3.7.0
 	loop9-0.1.3
 	memchr-2.5.0
 	memoffset-0.6.5
+	minimal-lexical-0.2.1
 	miniz_oxide-0.5.3
 	natord-1.0.9
 	noisy_float-0.2.0
-	nom-5.1.2
+	nom-7.1.1
 	num-traits-0.2.15
 	num_cpus-1.13.1
-	once_cell-1.13.0
+	once_cell-1.13.1
 	os_str_bytes-6.3.0
 	pbr-1.0.4
 	peeking_take_while-0.1.2
@@ -69,11 +68,11 @@ CRATES="
 	rayon-core-1.9.3
 	regex-1.6.0
 	regex-syntax-0.6.27
-	resize-0.7.3
+	resize-0.7.4
 	rgb-0.8.33
 	rustc-hash-1.1.0
 	scopeguard-1.1.0
-	shlex-0.1.1
+	shlex-1.1.0
 	strsim-0.10.0
 	termcolor-1.1.3
 	textwrap-0.15.0
