@@ -21,7 +21,7 @@ ExecStartPre=+/bin/chown pihole: \
                /run/pihole/FTL.port \
                /var/lib/pihole/dhcp.leases \
                /var/log/pihole/FTL.log \
-               /var/log/pihole/log
+               /var/log/pihole.log
 ExecStartPre=+/bin/rm -f \
                /dev/shm/FTL-clients \
                /dev/shm/FTL-counters \
