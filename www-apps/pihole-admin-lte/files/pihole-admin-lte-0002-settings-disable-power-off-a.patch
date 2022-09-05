@@ -1,29 +1,27 @@
-From a304b908639d55759fd186ac44b4c80356d3ae44 Mon Sep 17 00:00:00 2001
+From 063e165ad719e94cc082e243ed4727faca8e11b7 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:13 -0500
 Subject: [PATCH 2/4] settings: disable power off and restart system buttons
 
 Update paths
 ---
- settings.php | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ settings.php | 35 ++++++++++++++++++++++++-----------
+ 1 file changed, 24 insertions(+), 11 deletions(-)
 
 diff --git a/settings.php b/settings.php
-index 4c55087e..791d44f4 100644
+index 7ff980f6..045e6d0a 100644
 --- a/settings.php
 +++ b/settings.php
-@@ -10,8 +10,8 @@ require "scripts/pi-hole/php/savesettings.php";
- require_once "scripts/pi-hole/php/FTL.php";
+@@ -14,7 +14,7 @@ require_once 'scripts/pi-hole/php/FTL.php';
+ 
  // Reread ini file as things might have been changed
  // DEFAULT_FTLCONFFILE is set in "scripts/pi-hole/php/FTL.php";
--$setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
--$piholeFTLConf = piholeFTLConfig(DEFAULT_FTLCONFFILE ,true);
+-$setupVars = parse_ini_file('/etc/pihole/setupVars.conf');
 +$setupVars = parse_ini_file("/var/lib/pihole/setupVars.conf");
-+$piholeFTLConf = piholeFTLConfig(DEFAULT_FTLCONFFILE, true);
+ $piholeFTLConf = piholeFTLConfig(DEFAULT_FTLCONFFILE, true);
  
  // Handling of PHP internal errors
- $last_error = error_get_last();
-@@ -337,11 +337,11 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
+@@ -338,11 +338,11 @@ if ($FTLpid !== 0) {
                                          </div>
                                          <p class="hidden-md hidden-lg"></p>
                                          <div class="col-md-4">
@@ -37,15 +35,42 @@ index 4c55087e..791d44f4 100644
                                          </div>
                                      </div>
  
-@@ -555,7 +555,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
-                             if ($DHCP) {
-                                 // Read leases file
-                                 $leasesfile = true;
--                                $dhcpleases = @fopen('/etc/pihole/dhcp.leases', 'r');
+@@ -562,14 +562,27 @@ if (!$DHCP) { ?> disabled<?php } ?>
+                         <!-- DHCP Leases Box -->
+                         <div class="row">
+                             <?php
+-$dhcp_leases = array();
+-if ($DHCP) {
+-    // Read leases file
+-    $leasesfile = true;
+-    $dhcpleases = @fopen('/etc/pihole/dhcp.leases', 'r');
+-    if (!is_resource($dhcpleases)) {
+-        $leasesfile = false;
+-    }
++                            $dhcp_leases = array();
++                            if ($DHCP) {
++                                // Read leases file
++                                $leasesfile = true;
 +                                $dhcpleases = @fopen('/var/lib/pihole/dhcp.leases', 'r');
-                                 if (!is_resource($dhcpleases))
-                                     $leasesfile = false;
++                                if (!is_resource($dhcpleases))
++                                    $leasesfile = false;
++
++                                function convertseconds($argument)
++                                {
++                                    $seconds = round($argument);
++                                    if ($seconds < 60) {
++                                        return sprintf('%ds', $seconds);
++                                    } elseif ($seconds < 3600) {
++                                        return sprintf('%dm %ds', ($seconds / 60), ($seconds % 60));
++                                    } elseif ($seconds < 86400) {
++                                        return sprintf('%dh %dm %ds', ($seconds / 3600 % 24), ($seconds / 60 % 60), ($seconds % 60));
++                                    } else {
++                                        return sprintf('%dd %dh %dm %ds', ($seconds / 86400), ($seconds / 3600 % 24), ($seconds / 60 % 60), ($seconds % 60));
++                                    }
++                                }
  
+     while (!feof($dhcpleases) && $leasesfile) {
+         $line = explode(' ', trim(fgets($dhcpleases)));
 -- 
-2.35.1
+2.37.3
 

@@ -1,30 +1,32 @@
-From 4e236f9435d65a174c33afa0a7721163e9ec7bb7 Mon Sep 17 00:00:00 2001
+From 15dfbf5a38f6e9861079ac6239bdf99676cef509 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:24 -0500
 Subject: [PATCH 3/4] footer: remove update message
 
 ---
- scripts/pi-hole/php/footer.php | 7 -------
- 1 file changed, 7 deletions(-)
+ scripts/pi-hole/php/footer.php | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/scripts/pi-hole/php/footer.php b/scripts/pi-hole/php/footer.php
-index 9ab68cfb..8858c1d9 100644
+index c4ca7a1d..7c0bca1e 100644
 --- a/scripts/pi-hole/php/footer.php
 +++ b/scripts/pi-hole/php/footer.php
-@@ -102,13 +102,6 @@
-                         <?php if ($web_update) { ?> &middot; <a class="lookatme" lookatme-text="Update available!" href="<?php echo $webReleasesUrl . "/latest"; ?>" rel="noopener" target="_blank">Update available!</a><?php } ?>
+@@ -88,14 +88,7 @@ if (isset($core_commit) || isset($web_commit) || isset($FTL_commit)) {
+                         <?php if ($web_update) { ?> &middot; <a class="lookatme" lookatme-text="Update available!" href="<?php echo $webUrl.'/latest'; ?>" rel="noopener" target="_blank">Update available!</a><?php } ?>
                      </li>
                  </ul>
--                <?php if($core_update || $web_update || $FTL_update) { ?>
--                <?php if($dockerTag) { ?>
--                    <p>To install updates, <a href="https://github.com/pi-hole/docker-pi-hole#upgrading--reconfiguring" rel="noopener" target="_blank">replace this old container with a fresh upgraded image</a>.</p>
--                <?php } else { ?>
--                    <p>To install updates, run <code><a href="https://docs.pi-hole.net/main/update/" rel="noopener" target="_blank">pihole -up</a></code>.</p>
--                <?php } ?>
--                <?php } ?>
-                 <?php } ?>
+-
+-                <p style="margin: 15px 0 0;">
+-                    <?php if ($docker_update) { ?>
+-                        To install updates, <a href="https://github.com/pi-hole/docker-pi-hole#upgrading-persistence-and-customizations" rel="noopener" target="_blank">replace this old container with a fresh upgraded image</a>.
+-                    <?php } elseif ($core_update || $web_update || $FTL_update) { ?>
+-                        To install updates, run <code><a href="https://docs.pi-hole.net/main/update/" rel="noopener" target="_blank">pihole -up</a></code>.
+-                    <?php } ?>
+-                </p>
++                <?php } ?>
              </div>
          </div>
+     </footer>
 -- 
-2.35.1
+2.37.3
 
