@@ -23,7 +23,7 @@ start_pre() {
 	# Prepare config and database files to the user FTL runs as.
 	checkpath -o "$command_user" -f \
 		/run/pihole/FTL.port \
-		/var/log/pihole-FTL.log \
+		/var/log/pihole/FTL.log \
 		/var/log/pihole.log \
 		/var/lib/pihole/dhcp.leases
 	chown -f "$command_user" \

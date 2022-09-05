@@ -5,24 +5,24 @@ Wants=network-online.target
 
 [Service]
 ExecReload=/bin/kill -HUP $MAINPID
-ExecStartPre=/bin/touch \
+ExecStartPre=+/bin/touch \
                /run/pihole/FTL.pid \
                /run/pihole/FTL.port \
-               /var/log/pihole-FTL.log \
+               /var/log/pihole/FTL.log \
                /var/log/pihole.log
-ExecStartPre=/bin/chmod 0644 \
+ExecStartPre=+/bin/chmod 0644 \
                /run/pihole/FTL.pid \
                /run/pihole/FTL.port \
-               /var/log/pihole-FTL.log \
+               /var/log/pihole/FTL.log \
                /var/log/pihole.log
-ExecStartPre=/bin/chown pihole. \
+ExecStartPre=+/bin/chown pihole: \
                /run/pihole \
                /run/pihole/FTL.pid \
                /run/pihole/FTL.port \
                /var/lib/pihole/dhcp.leases \
-               /var/log/pihole-FTL.log \
-               /var/log/pihole.log
-ExecStartPre=/bin/rm -f \
+               /var/log/pihole/FTL.log \
+               /var/log/pihole/log
+ExecStartPre=+/bin/rm -f \
                /dev/shm/FTL-clients \
                /dev/shm/FTL-counters \
                /dev/shm/FTL-dns-cache \
