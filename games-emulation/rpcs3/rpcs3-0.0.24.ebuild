@@ -6,7 +6,7 @@ inherit cmake xdg
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
-ASMJIT_SHA="fc2a5d82f7434d7d03161275a764c051f970f41c"
+ASMJIT_SHA="06d0badec53710a4f572cf5642881ce570c5d274"
 HIDAPI_SHA="c2aa9dd37c7b401b918fd56e18a3bac7f8f00ec2"
 ITTAPI_VERSION="3.18.12"
 LLVM_SHA="5521155be5c869b0b760e1dec86c41cdbb7a75c0"
