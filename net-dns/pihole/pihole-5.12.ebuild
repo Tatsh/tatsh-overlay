@@ -15,7 +15,7 @@ IUSE="cron www"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
-FTL_VERSION="5.11.4"
+FTL_VERSION="5.12"
 RDEPEND="${DEPEND}
 	>=net-dns/${PN}-ftl-${FTL_VERSION}
 	app-admin/sudo
@@ -24,7 +24,7 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/pi-hole-${PV}"
 
 PATCHES=(
-	# "${FILESDIR}/${PN}-0001-cron-remove-flush-updatechec.patch"
+	"${FILESDIR}/${PN}-0001-cron-remove-flush-updatechec.patch"
 	"${FILESDIR}/${PN}-0002-path-changes.patch"
 	"${FILESDIR}/${PN}-0003-logrotate-add-missingok-fix-.patch"
 	"${FILESDIR}/${PN}-0004-more-path-fixes.patch"

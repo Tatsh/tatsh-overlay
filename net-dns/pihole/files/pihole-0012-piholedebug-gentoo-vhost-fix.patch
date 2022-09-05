@@ -1,15 +1,15 @@
-From e09d8dfa9bfbd4927afbb3e974a61f850e34f281 Mon Sep 17 00:00:00 2001
+From f5d5d1cad63d0a40958947af46a2990fc9c1b215 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 14 Jan 2022 18:21:09 -0500
 Subject: [PATCH 12/14] piholeDebug Gentoo/vhost fixes
 
 ---
- advanced/Scripts/piholeDebug.sh | 81 +++++++++++++++++++--------------
+ advanced/Scripts/piholeDebug.sh | 61 ++++++++++++++++++---------------
  advanced/Scripts/updatecheck.sh |  2 +-
- 2 files changed, 48 insertions(+), 35 deletions(-)
+ 2 files changed, 35 insertions(+), 28 deletions(-)
 
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 8d36b44f..7f9e8745 100755
+index d0847b8e..ca2fc476 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,9 +22,13 @@ set -o pipefail
@@ -90,14 +90,16 @@ index 8d36b44f..7f9e8745 100755
              fi
  
              # Print the repo upstreams
-@@ -341,16 +341,12 @@ check_ftl_version() {
+@@ -345,7 +345,7 @@ check_ftl_version() {
          log_write "${TICK} ${ftl_name}: ${COL_GREEN}${FTL_VERSION}${COL_NC}"
      else
          # If not, show it in yellow, signifying there is an update
--        log_write "${TICK} ${ftl_name}: ${COL_YELLOW}${FTL_VERSION}${COL_NC} (${FAQ_UPDATE_PI_HOLE})"
+-        log_write "${INFO} ${ftl_name}: ${COL_YELLOW}${FTL_VERSION}${COL_NC} (${FAQ_UPDATE_PI_HOLE})"
 +        log_write "${TICK} ${ftl_name}: ${COL_YELLOW}${FTL_VERSION}${COL_NC}"
      fi
- }
+ 
+     # If they use the master branch, they are on the stable codebase
+@@ -364,10 +364,6 @@ check_ftl_version() {
  
  # Checks the core version of the Pi-hole codebase
  check_component_versions() {
@@ -108,7 +110,7 @@ index 8d36b44f..7f9e8745 100755
      # Check the FTL version
      check_ftl_version
  }
-@@ -367,8 +363,12 @@ get_program_version() {
+@@ -384,8 +380,12 @@ get_program_version() {
                      ;;
          "php") program_version="$(${program_name} -v 2> /dev/null | head -n1 | cut -d '-' -f1 | cut -d ' ' -f2)"
                  ;;
@@ -122,7 +124,7 @@ index 8d36b44f..7f9e8745 100755
      esac
      # If the program does not have a version (the variable is empty)
      if [[ -z "${program_version}" ]]; then
-@@ -384,7 +384,7 @@ get_program_version() {
+@@ -401,7 +401,7 @@ get_program_version() {
  # and their versions, using the functions above.
  check_critical_program_versions() {
      # Use the function created earlier and bundle them into one function that checks all the version numbers
@@ -131,7 +133,7 @@ index 8d36b44f..7f9e8745 100755
      get_program_version "php"
  }
  
-@@ -403,6 +403,7 @@ os_check() {
+@@ -420,6 +420,7 @@ os_check() {
  
      # Extract dig response
      response="${cmdResult%%$'\n'*}"
@@ -139,7 +141,7 @@ index 8d36b44f..7f9e8745 100755
  
      IFS=" " read -r -a supportedOS < <(echo "${response}" | tr -d '"')
      for distro_and_versions in "${supportedOS[@]}"
-@@ -415,7 +416,7 @@ os_check() {
+@@ -432,7 +433,7 @@ os_check() {
              IFS="," read -r -a supportedVer <<<"${versions_part}"
              for version in "${supportedVer[@]}"
              do
@@ -148,7 +150,7 @@ index 8d36b44f..7f9e8745 100755
                      valid_version=true
                      break
                  fi
-@@ -431,9 +432,9 @@ os_check() {
+@@ -448,9 +449,9 @@ os_check() {
          log_write "${TICK} Distro:  ${COL_GREEN}${detected_os^}${COL_NC}"
  
          if [ "$valid_version" = true ]; then
@@ -160,7 +162,7 @@ index 8d36b44f..7f9e8745 100755
              log_write "${CROSS} Error: ${COL_RED}${detected_os^} is supported but version ${detected_version} is currently unsupported (${FAQ_HARDWARE_REQUIREMENTS})${COL_NC}"
          fi
      else
-@@ -727,7 +728,7 @@ check_required_ports() {
+@@ -744,7 +745,7 @@ check_required_ports() {
      # Since Pi-hole needs 53, 80, and 4711, check what they are being used by
      # so we can detect any issues
      local resolver="pihole-FTL"
@@ -169,7 +171,7 @@ index 8d36b44f..7f9e8745 100755
      local ftl="pihole-FTL"
      # Create an array for these ports in use
      ports_in_use=()
-@@ -789,6 +790,12 @@ check_networking() {
+@@ -806,6 +807,12 @@ check_networking() {
  }
  
  check_x_headers() {
@@ -182,46 +184,16 @@ index 8d36b44f..7f9e8745 100755
      # The X-Headers allow us to determine from the command line if the Web
      # lighttpd.conf has a directive to show "X-Pi-hole: A black hole for Internet advertisements."
      # in the header of any Pi-holed domain
-@@ -798,31 +805,37 @@ check_x_headers() {
-     echo_current_diagnostic "Dashboard and block page"
+@@ -816,14 +823,14 @@ check_x_headers() {
      # Use curl -I to get the header and parse out just the X-Pi-hole one
-     local block_page
--    block_page=$(curl -Is localhost | awk '/X-Pi-hole/' | tr -d '\r')
-+    if [ -n "${BLOCK_PAGE_HOST}" ]; then
-+        block_page=$(curl -Is "${BLOCK_PAGE_HOST}" | awk 'BEGIN{IGNORECASE=1}/X-Pi-hole/' | tr -d '\r')
-+    fi
-     # Do it for the dashboard as well, as the header is different than above
-     local dashboard
--    dashboard=$(curl -Is localhost/admin/ | awk '/X-Pi-hole/' | tr -d '\r')
-+    dashboard=$(curl -Is "${DASHBOARD_HOST}/admin/" | awk 'BEGIN{IGNORECASE=1}/X-Pi-hole/' | tr -d '\r')
-     # Store what the X-Header should be in variables for comparison later
-     local block_page_working
-     block_page_working="X-Pi-hole: A black hole for Internet advertisements."
-     local dashboard_working
-     dashboard_working="X-Pi-hole: The Pi-hole Web interface is working!"
-     local full_curl_output_block_page
--    full_curl_output_block_page="$(curl -Is localhost)"
-+    full_curl_output_block_page="$(curl -Is "${BLOCK_PAGE_HOST}")"
      local full_curl_output_dashboard
+     local dashboard
 -    full_curl_output_dashboard="$(curl -Is localhost/admin/)"
 +    full_curl_output_dashboard="$(curl -Is "${DASHBOARD_HOST}/admin/")"
-     # If the X-header found by curl matches what is should be,
--    if [[ $block_page == "$block_page_working" ]]; then
-+    if [[ ${block_page,,} == "${block_page_working,,}" ]]; then
-         # display a success message
-         log_write "$TICK Block page X-Header: ${COL_GREEN}${block_page}${COL_NC}"
-     else
--        # Otherwise, show an error
--        log_write "$CROSS Block page X-Header: ${COL_RED}X-Header does not match or could not be retrieved.${COL_NC}"
--        log_write "${COL_RED}${full_curl_output_block_page}${COL_NC}"
-+        if [ -z "$BLOCK_PAGE_HOST" ]; then
-+            log_write "${INFO} Block page host is not specified. Assuming it is not used."
-+        else
-+            # Otherwise, show an error
-+            log_write "$CROSS Block page X-Header: ${COL_RED}X-Header does not match or could not be retrieved.${COL_NC}"
-+            log_write "${COL_RED}${full_curl_output_block_page}${COL_NC}"
-+        fi
-     fi
+     dashboard=$(echo "${full_curl_output_dashboard}" | awk '/X-Pi-hole/' | tr -d '\r')
+     # Store what the X-Header should be in variables for comparison later
+     local dashboard_working
+     dashboard_working="X-Pi-hole: The Pi-hole Web interface is working!"
  
      # Same logic applies to the dashboard as above, if the X-Header matches what a working system should have,
 -    if [[ $dashboard == "$dashboard_working" ]]; then
@@ -229,7 +201,7 @@ index 8d36b44f..7f9e8745 100755
          # then we can show a success
          log_write "$TICK Web interface X-Header: ${COL_GREEN}${dashboard}${COL_NC}"
      else
-@@ -1138,9 +1151,9 @@ show_content_of_pihole_files() {
+@@ -1140,9 +1147,9 @@ show_content_of_pihole_files() {
      # Show the content of the files in each of Pi-hole's folders
      show_content_of_files_in_dir "${PIHOLE_DIRECTORY}"
      show_content_of_files_in_dir "${DNSMASQ_D_DIRECTORY}"
@@ -243,18 +215,18 @@ index 8d36b44f..7f9e8745 100755
      show_content_of_files_in_dir "${SHM_DIRECTORY}"
      show_content_of_files_in_dir "${ETC}"
 diff --git a/advanced/Scripts/updatecheck.sh b/advanced/Scripts/updatecheck.sh
-index 526afd04..afb03ebb 100755
+index 36c189ac..37211cc6 100755
 --- a/advanced/Scripts/updatecheck.sh
 +++ b/advanced/Scripts/updatecheck.sh
-@@ -39,7 +39,7 @@ function get_local_version() {
+@@ -22,7 +22,7 @@ function get_local_version() {
  
  # Source the setupvars config file
  # shellcheck disable=SC1091
 -. @EPREFIX@/var/lib/setupVars.conf
 +. /etc/pihole/setupVars.conf
  
- if [[ "$2" == "remote" ]]; then
- 
+ # Source the utils file
+ # shellcheck disable=SC1091
 -- 
-2.35.1
+2.37.3
 

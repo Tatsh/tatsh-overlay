@@ -1,4 +1,4 @@
-From 7c91290774dd7a54f46ea6ae83ea3668905da9e4 Mon Sep 17 00:00:00 2001
+From dd187037cff57f209e9a5ffeabc72e68f7e6f571 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 24 Dec 2021 00:16:15 -0500
 Subject: [PATCH 08/14] version.sh path fix
@@ -8,7 +8,7 @@ Subject: [PATCH 08/14] version.sh path fix
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/advanced/Scripts/version.sh b/advanced/Scripts/version.sh
-index 8809b5fb..772d1886 100755
+index 63f3bfc6..9175ad76 100755
 --- a/advanced/Scripts/version.sh
 +++ b/advanced/Scripts/version.sh
 @@ -15,7 +15,7 @@ WEBGITDIR="@EPREFIX@/var/www/localhost/htdocs/pihole-admin"
@@ -21,5 +21,5 @@ index 8809b5fb..772d1886 100755
  getLocalVersion() {
      # FTL requires a different method
 -- 
-2.35.1
+2.37.3
 

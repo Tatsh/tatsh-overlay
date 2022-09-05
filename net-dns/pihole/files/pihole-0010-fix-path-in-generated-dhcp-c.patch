@@ -1,4 +1,4 @@
-From d25ee46ae0921c867bd36cfa8130dd69a0e8991b Mon Sep 17 00:00:00 2001
+From 2c974abd94cdf9003973d5246b9fb7a9a4687aa7 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 11:11:56 -0500
 Subject: [PATCH 10/14] fix path in generated DHCP config
@@ -8,10 +8,10 @@ Subject: [PATCH 10/14] fix path in generated DHCP config
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/advanced/Scripts/webpage.sh b/advanced/Scripts/webpage.sh
-index 30c1e693..0a91ff44 100755
+index 8f3e6fdb..000f52ac 100755
 --- a/advanced/Scripts/webpage.sh
 +++ b/advanced/Scripts/webpage.sh
-@@ -452,7 +452,7 @@ ProcessDHCPSettings() {
+@@ -451,7 +451,7 @@ ProcessDHCPSettings() {
  dhcp-authoritative
  dhcp-range=${DHCP_START},${DHCP_END},${leasetime}
  dhcp-option=option:router,${DHCP_ROUTER}
@@ -21,5 +21,5 @@ index 30c1e693..0a91ff44 100755
  " > "${dhcpconfig}"
          chmod 644 "${dhcpconfig}"
 -- 
-2.35.1
+2.37.3
 
