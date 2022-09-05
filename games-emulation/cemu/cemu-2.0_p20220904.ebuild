@@ -74,7 +74,7 @@ src_configure() {
 }
 
 src_install() {
-	newbin "${BUILD_DIR}/src/${MY_PN}2" "${PN}"
+	newbin "bin/${MY_PN}_relwithdebinfo" "${PN}"
 	insinto /usr/share/${PN}/gameProfiles
 	doins -r bin/gameProfiles/default/*
 	insinto /usr/share/${PN}
