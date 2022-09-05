@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit cmake xdg
+inherit cmake flag-o-matic xdg
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
@@ -100,10 +100,13 @@ src_prepare() {
 }
 
 src_configure() {
+	append-cflags -DNDEBUG
+	append-cxxflags -DNDEBUG
 	mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
 		-DBUILD_LLVM_SUBMODULE=ON
 		"-DITTAPI_SOURCE_DIR=${WORKDIR}"
+		-DLLVM_COMPILE_DEFINITIONS=NDEBUG
 		-DUSE_PRECOMPILED_HEADERS=OFF
 		-DUSE_DISCORD_RPC=OFF
 		-DUSE_FAUDIO=$(usex faudio)
