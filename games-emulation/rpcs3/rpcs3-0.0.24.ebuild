@@ -89,7 +89,7 @@ src_prepare() {
 	sed -re 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
 		-i "${S}/llvm/CMakeLists.txt" || die
 	sed -e '/find_program(CCACHE_FOUND/d' -i CMakeLists.txt || die
-	sed -e 's|FAudio.h|FAudio/FAudio.h|' -i rpcs3/Emu/Audio/FAudio/FAudioBackend.h || die
+	sed -e 's|FAudio.h|FAudio/FAudio.h|' -i rpcs3/Emu/Audio/FAudio/FAudioBackend.h rpcs3/Emu/Audio/FAudio/faudio_enumerator.h || die
 	sed -re '/\s+add_compile_options\(-Werror=missing-noreturn\).*/d' \
 		-e '/\s+add_compile_options\(-Werror=old-style-cast\).*/d' \
 		-i buildfiles/cmake/ConfigureCompiler.cmake || die
