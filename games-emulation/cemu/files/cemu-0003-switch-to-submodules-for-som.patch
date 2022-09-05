@@ -1,17 +1,17 @@
-From e5e796280ea37cb3ed1e67a0aa3298bd85805d3a Mon Sep 17 00:00:00 2001
+From 8b0832d8a72107855b22e3714388f7a98635df6a Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 2 Sep 2022 00:30:36 -0400
-Subject: [PATCH 4/5] Switch to submodules for some deps
+Subject: [PATCH 3/3] Switch to submodules for some deps
 
 ---
  CMakeLists.txt | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e9802cb..b249b09 100644
+index 317438b..9ff250d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -84,16 +84,16 @@ find_package(Threads REQUIRED)
+@@ -87,16 +87,16 @@ find_package(Threads REQUIRED)
  find_package(SDL2 REQUIRED)
  find_package(CURL REQUIRED)
  find_package(pugixml REQUIRED)
@@ -32,5 +32,5 @@ index e9802cb..b249b09 100644
  
  # glslang versions older than 11.11.0 define targets without a namespace
 -- 
-2.37.2
+2.37.3
 

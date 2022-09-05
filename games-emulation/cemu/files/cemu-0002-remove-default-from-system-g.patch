@@ -1,7 +1,7 @@
-From 6b84b99bcdd0aba55e811d668e844299bd88158f Mon Sep 17 00:00:00 2001
+From 65cc252c62769131cc846ec2c8585c8f706cf2ee Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 2 Sep 2022 00:19:59 -0400
-Subject: [PATCH 2/5] Remove /default/ from system gameProfiles path
+Subject: [PATCH 2/3] Remove /default/ from system gameProfiles path
 
 ---
  src/Cafe/CafeSystem.cpp              | 2 +-
@@ -9,7 +9,7 @@ Subject: [PATCH 2/5] Remove /default/ from system gameProfiles path
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/Cafe/CafeSystem.cpp b/src/Cafe/CafeSystem.cpp
-index 8275698..7733d85 100644
+index 50f46d1..1691679 100644
 --- a/src/Cafe/CafeSystem.cpp
 +++ b/src/Cafe/CafeSystem.cpp
 @@ -216,7 +216,7 @@ void InfoLog_TitleLoaded()
@@ -35,5 +35,5 @@ index 85de1f4..0e7702b 100644
  		if (!profileContents)
  			return false;
 -- 
-2.37.2
+2.37.3
 
