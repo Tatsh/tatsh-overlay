@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="Library for creating and reading zstd-compressed file archives (.zar)"
 HOMEPAGE="https://github.com/Exzap/ZArchive"
-SHA="48914a07df3c213333c580bb5e5bb3393442ca5b"
+SHA="d2c717730092c7bf8cbb033b12fd4001b7c4d932"
 MY_PN="ZArchive"
 SRC_URI="https://github.com/Exzap/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
