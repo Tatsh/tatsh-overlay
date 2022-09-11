@@ -373,3 +373,4 @@ src_install() {
 	insinto /etc/${PN}
 	newins config.default.yml config.yml
 }
+
