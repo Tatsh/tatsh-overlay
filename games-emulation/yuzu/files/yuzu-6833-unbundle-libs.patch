@@ -122,10 +122,10 @@ index 2ab0ea589..a4e740099 100644
  endif()
  if (NOT YUZU_USE_BUNDLED_FFMPEG)
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index eea70fc27..18b7fb1dc 100644
+index e80fd124e..18b7fb1dc 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -6,20 +6,22 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
+@@ -6,19 +6,22 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
  include(DownloadExternals)
  
  # xbyak
@@ -142,7 +142,7 @@ index eea70fc27..18b7fb1dc 100644
  # Dynarmic
 -if (ARCHITECTURE_x86_64)
 +if (ARCHITECTURE_x86_64 AND NOT TARGET dynarmic::dynarmic)
-     set(DYNARMIC_TESTS OFF)
++    set(DYNARMIC_TESTS OFF)
      set(DYNARMIC_NO_BUNDLED_FMT ON)
      set(DYNARMIC_IGNORE_ASSERTS ON CACHE BOOL "" FORCE)
      add_subdirectory(dynarmic)
@@ -150,7 +150,7 @@ index eea70fc27..18b7fb1dc 100644
  endif()
  
  # getopt
-@@ -31,11 +33,14 @@ endif()
+@@ -30,11 +33,14 @@ endif()
  add_subdirectory(glad)
  
  # inih
@@ -167,7 +167,7 @@ index eea70fc27..18b7fb1dc 100644
  
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -75,25 +80,31 @@ if (YUZU_USE_EXTERNAL_SDL2)
+@@ -74,25 +80,31 @@ if (YUZU_USE_EXTERNAL_SDL2)
  endif()
  
  # ENet
@@ -204,7 +204,7 @@ index eea70fc27..18b7fb1dc 100644
      find_package(OpenSSL 1.1)
      if (OPENSSL_FOUND)
          set(OPENSSL_LIBRARIES OpenSSL::SSL OpenSSL::Crypto)
-@@ -117,18 +128,20 @@ if (ENABLE_WEB_SERVICE)
+@@ -116,18 +128,20 @@ if (ENABLE_WEB_SERVICE)
      if (WIN32)
          target_link_libraries(httplib INTERFACE crypt32 cryptui ws2_32)
      endif()
@@ -230,7 +230,7 @@ index eea70fc27..18b7fb1dc 100644
  endif()
  
  # FFMpeg
-@@ -139,3 +152,8 @@ if (YUZU_USE_BUNDLED_FFMPEG)
+@@ -138,3 +152,8 @@ if (YUZU_USE_BUNDLED_FFMPEG)
      set(FFmpeg_LIBRARIES "${FFmpeg_LIBRARIES}" PARENT_SCOPE)
      set(FFmpeg_INCLUDE_DIR "${FFmpeg_INCLUDE_DIR}" PARENT_SCOPE)
  endif()
@@ -463,10 +463,10 @@ index b686e3cf5..ebb60a976 100644
 +target_include_directories(inih INTERFACE inih/cpp)
 +add_library(inih::INIReader ALIAS inih)
 diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
-index 5fe1d5fa5..9c6bbd27d 100644
+index 144f1bab2..183adfedb 100644
 --- a/src/audio_core/CMakeLists.txt
 +++ b/src/audio_core/CMakeLists.txt
-@@ -226,11 +226,11 @@ endif()
+@@ -227,11 +227,11 @@ endif()
  
  target_link_libraries(audio_core PUBLIC common core)
  if (ARCHITECTURE_x86_64)
@@ -517,14 +517,14 @@ index 806e7ff6c..4db5ce5e8 100644
 +    target_link_libraries(core PRIVATE dynarmic::dynarmic)
  endif()
 diff --git a/src/dedicated_room/CMakeLists.txt b/src/dedicated_room/CMakeLists.txt
-index 737aedbe4..01447829e 100644
+index 1efdbc1f7..01447829e 100644
 --- a/src/dedicated_room/CMakeLists.txt
 +++ b/src/dedicated_room/CMakeLists.txt
 @@ -16,7 +16,7 @@ if (ENABLE_WEB_SERVICE)
      target_link_libraries(yuzu-room PRIVATE web_service)
  endif()
  
--target_link_libraries(yuzu-room PRIVATE mbedtls)
+-target_link_libraries(yuzu-room PRIVATE mbedtls mbedcrypto)
 +target_link_libraries(yuzu-room PRIVATE MbedTLS::mbedcrypto)
  if (MSVC)
      target_link_libraries(yuzu-room PRIVATE getopt)
@@ -634,7 +634,7 @@ index 7d8ca3d8a..a967359f8 100644
  if (YUZU_USE_EXTERNAL_SDL2)
      target_compile_definitions(yuzu-cmd PRIVATE -DYUZU_USE_EXTERNAL_SDL2)
 diff --git a/src/yuzu_cmd/config.cpp b/src/yuzu_cmd/config.cpp
-index bd0fb75f8..7e14049cc 100644
+index 66dd0dc15..3ced6d782 100644
 --- a/src/yuzu_cmd/config.cpp
 +++ b/src/yuzu_cmd/config.cpp
 @@ -15,7 +15,7 @@
