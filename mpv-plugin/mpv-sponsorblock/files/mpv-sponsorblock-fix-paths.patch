@@ -12,15 +12,6 @@ diff --git a/sponsorblock.lua b/sponsorblock.lua
 index 77ade20..edccffa 100644
 --- a/sponsorblock.lua
 +++ b/sponsorblock.lua
-@@ -21,7 +21,7 @@ local options = {
-
-     -- Note that sponsored segments may ocasionally be inaccurate if this is turned off
-     -- see https://blog.ajay.app/voting-and-pseudo-randomness-or-sponsorblock-or-youtube-sponsorship-segment-blocker
--    local_database = true,
-+    local_database = false,
-
-     -- Update database on first run, does nothing if local_database is false
-     auto_update = true,
 @@ -89,11 +89,11 @@ if legacy then
  end
 
