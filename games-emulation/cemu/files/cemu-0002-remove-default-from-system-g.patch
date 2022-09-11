@@ -1,4 +1,4 @@
-From 65cc252c62769131cc846ec2c8585c8f706cf2ee Mon Sep 17 00:00:00 2001
+From 0b773c56febf7feeda819dc072eb73c99c364070 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 2 Sep 2022 00:19:59 -0400
 Subject: [PATCH 2/3] Remove /default/ from system gameProfiles path
@@ -9,7 +9,7 @@ Subject: [PATCH 2/3] Remove /default/ from system gameProfiles path
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/Cafe/CafeSystem.cpp b/src/Cafe/CafeSystem.cpp
-index 50f46d1..1691679 100644
+index 19b6c49..f00c469 100644
 --- a/src/Cafe/CafeSystem.cpp
 +++ b/src/Cafe/CafeSystem.cpp
 @@ -216,7 +216,7 @@ void InfoLog_TitleLoaded()
@@ -22,7 +22,7 @@ index 50f46d1..1691679 100644
  		gameProfilePath = fmt::format("gameProfiles/{:016x}.ini", titleId);
  	cemuLog_log(LogType::Force, "gameprofile path: {}", g_current_game_profile->IsLoaded() ? gameProfilePath : std::string(" (not present)"));
 diff --git a/src/Cafe/GameProfile/GameProfile.cpp b/src/Cafe/GameProfile/GameProfile.cpp
-index 85de1f4..0e7702b 100644
+index 24aee64..06f233b 100644
 --- a/src/Cafe/GameProfile/GameProfile.cpp
 +++ b/src/Cafe/GameProfile/GameProfile.cpp
 @@ -185,7 +185,7 @@ bool GameProfile::Load(uint64_t title_id)
