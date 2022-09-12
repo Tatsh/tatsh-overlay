@@ -1,4 +1,4 @@
-From 0b773c56febf7feeda819dc072eb73c99c364070 Mon Sep 17 00:00:00 2001
+From 64707c83cd3e060606781b87813ff6b73566d342 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 2 Sep 2022 00:19:59 -0400
 Subject: [PATCH 2/3] Remove /default/ from system gameProfiles path

@@ -1,11 +1,11 @@
-From ff559149dce94a418843772cdb418511f3fa1071 Mon Sep 17 00:00:00 2001
+From 00dbe939f29c6fa6670a6f71946e52b520d51033 Mon Sep 17 00:00:00 2001
 From: Marcin Chojnacki <marcinch7@gmail.com>
 Date: Tue, 30 Aug 2022 17:55:34 +0200
 Subject: [PATCH 1/3] Add ability to save/read files based on XDG specification
 
 Fix some \ in paths to use /
 ---
- CMakeLists.txt                                | 11 ++++
+ CMakeLists.txt                                | 11 +++
  src/Cafe/Account/Account.cpp                  |  4 +-
  src/Cafe/CafeSystem.cpp                       |  6 +-
  src/Cafe/Filesystem/FST/KeyCache.cpp          |  2 +-
@@ -18,24 +18,24 @@ Fix some \ in paths to use /
  .../Vulkan/VulkanPipelineStableCache.cpp      |  4 +-
  .../Latte/Renderer/Vulkan/VulkanRenderer.cpp  |  4 +-
  src/Cafe/HW/MMU/MMU.cpp                       |  2 +-
- src/Cafe/IOSU/legacy/iosu_crypto.cpp          |  8 +--
+ src/Cafe/IOSU/legacy/iosu_crypto.cpp          |  8 +-
  src/Cafe/OS/RPL/rpl.cpp                       |  2 +-
  src/Cafe/OS/libs/coreinit/coreinit_FS.cpp     |  4 +-
  src/Cemu/Logging/CemuLogging.cpp              |  2 +-
  .../ExceptionHandler_win32.cpp                |  6 +-
- src/config/ActiveSettings.cpp                 | 57 ++++++++++++++++-
- src/config/ActiveSettings.h                   | 62 ++++++++++++++++++-
- src/gui/CemuApp.cpp                           | 13 ++--
+ src/config/ActiveSettings.cpp                 | 57 +++++++++++-
+ src/config/ActiveSettings.h                   | 90 +++++++++++++++----
+ src/gui/CemuApp.cpp                           | 13 +--
  src/gui/ChecksumTool.cpp                      |  6 +-
  src/gui/DownloadGraphicPacksWindow.cpp        | 10 +--
  src/gui/MainWindow.cpp                        | 10 +--
  src/gui/MemorySearcherTool.cpp                |  4 +-
  src/gui/debugger/DebuggerWindow2.cpp          |  4 +-
  src/gui/input/InputSettings2.cpp              |  4 +-
- src/input/InputManager.cpp                    | 16 ++---
+ src/input/InputManager.cpp                    | 16 ++--
  src/main.cpp                                  |  6 +-
  src/util/libusbWrapper/libusbWrapper.cpp      |  2 +-
- 30 files changed, 199 insertions(+), 74 deletions(-)
+ 30 files changed, 213 insertions(+), 88 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index e9f7458..9135c62 100644
@@ -478,12 +478,20 @@ index c7ff4fe..23bc364 100644
 +	return GetDataPath("mlc01");
 +}
 diff --git a/src/config/ActiveSettings.h b/src/config/ActiveSettings.h
-index 69f6d34..ddd9786 100644
+index 69f6d34..83bfb56 100644
 --- a/src/config/ActiveSettings.h
 +++ b/src/config/ActiveSettings.h
-@@ -13,6 +13,11 @@ public:
+@@ -7,25 +7,30 @@ class ActiveSettings
+ {
+ public:
+ 	static void LoadOnce();
+-	
++
+ 	[[nodiscard]] static fs::path GetFullPath() { return s_full_path; }
+ 	[[nodiscard]] static fs::path GetPath() { return s_path; }
  	[[nodiscard]] static fs::path GetFilename() { return s_filename; }
- 	
+-	
++
  	[[nodiscard]] static fs::path GetMlcPath();
 +	[[nodiscard]] static fs::path GetCachePath();
 +	[[nodiscard]] static fs::path GetConfigPath();
@@ -491,71 +499,138 @@ index 69f6d34..ddd9786 100644
 +	[[nodiscard]] static fs::path GetSystemDataPath();
 +	[[nodiscard]] static std::string GetXDGPath(const char* envVar, const std::string& defaultValue);
  
- 	[[nodiscard]] static fs::path GetPath(std::string_view p) 
+-	[[nodiscard]] static fs::path GetPath(std::string_view p) 
++	[[nodiscard]] static fs::path GetPath(std::string_view p)
  	{
-@@ -57,6 +62,62 @@ public:
+ 		std::basic_string_view<char8_t> s((const char8_t*)p.data(), p.size());
+ 		return s_path / fs::path(s);
+ 	}
+ 
+-	[[nodiscard]] static fs::path GetMlcPath(std::string_view p) 
+-	{ 
++	[[nodiscard]] static fs::path GetMlcPath(std::string_view p)
++	{
+ 		std::basic_string_view<char8_t> s((const char8_t*)p.data(), p.size());
+ 		return GetMlcPath() / fs::path(s);
+ 	}
+-	
++
+ 	template <typename ...TArgs>
+ 	[[nodiscard]] static fs::path GetPath(std::string_view format, TArgs&&... args)
+ 	{
+@@ -34,14 +39,14 @@ public:
+ 		std::basic_string_view<char8_t> s((const char8_t*)tmpPathStr.data(), tmpPathStr.size());
+ 		return s_path / fs::path(s);
+ 	}
+-	
++
+ 	template <typename ...TArgs>
+ 	[[nodiscard]] static fs::path GetPath(std::wstring_view format, TArgs&&... args)
+ 	{
+ 		cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
+-		return s_path / fmt::format(format, std::forward<TArgs>(args)...);
++		return s_path / fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
+ 	}
+-	
++
+ 	template <typename ...TArgs>
+ 	[[nodiscard]] static fs::path GetMlcPath(std::string_view format, TArgs&&... args)
+ 	{
+@@ -49,14 +54,70 @@ public:
+ 		auto tmp = fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
+ 		return GetMlcPath() / _utf8ToPath(tmp);
+ 	}
+-	
++
+ 	template <typename ...TArgs>
+ 	[[nodiscard]] static fs::path GetMlcPath(std::wstring_view format, TArgs&&... args)
+ 	{
+ 		cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
  		return GetMlcPath() / fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
  	}
- 	
+-	
++
 +	template <typename ...TArgs>
 +	[[nodiscard]] static fs::path GetCachePath(std::string_view format, TArgs&&... args)
 +	{
 +		cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
-+		return GetCachePath() / fmt::format(format, std::forward<TArgs>(args)...);
++		return GetCachePath() / fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
 +	}
 +
 +	template <typename ...TArgs>
 +	[[nodiscard]] static fs::path GetCachePath(std::wstring_view format, TArgs&&... args)
 +	{
 +		cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
-+		return GetCachePath() / fmt::format(format, std::forward<TArgs>(args)...);
++		return GetCachePath() / fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
 +	}
 +
 +	template <typename ...TArgs>
 +	[[nodiscard]] static fs::path GetConfigPath(std::string_view format, TArgs&&... args)
 +	{
 +		cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
-+		return GetConfigPath() / fmt::format(format, std::forward<TArgs>(args)...);
++		return GetConfigPath() / fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
 +	}
 +
 +	template <typename ...TArgs>
 +	[[nodiscard]] static fs::path GetConfigPath(std::wstring_view format, TArgs&&... args)
 +	{
 +		cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
-+		return GetConfigPath() / fmt::format(format, std::forward<TArgs>(args)...);
++		return GetConfigPath() / fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
 +	}
 +
 +	template <typename ...TArgs>
 +	[[nodiscard]] static fs::path GetDataPath(std::string_view format, TArgs&&... args)
 +	{
 +		cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
-+		return GetDataPath() / fmt::format(format, std::forward<TArgs>(args)...);
++		return GetDataPath() / fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
 +	}
 +
 +	template <typename ...TArgs>
 +	[[nodiscard]] static fs::path GetDataPath(std::wstring_view format, TArgs&&... args)
 +	{
 +		cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
-+		return GetDataPath() / fmt::format(format, std::forward<TArgs>(args)...);
++		return GetDataPath() / fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
 +	}
 +
 +	template<typename ...TArgs>
 +	[[nodiscard]] static fs::path GetSystemDataPath(std::string_view format, TArgs&&... args)
 +	{
 +		cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
-+		return GetSystemDataPath() / fmt::format(format, std::forward<TArgs>(args)...);
++		return GetSystemDataPath() / fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
 +	}
 +
 +	template<typename ...TArgs>
 +	[[nodiscard]] static fs::path GetSystemDataPath(std::wstring_view format, TArgs&&... args)
 +	{
 +		cemu_assert_debug(format.empty() || (format[0] != L'/' && format[0] != L'\\'));
-+		return GetSystemDataPath() / fmt::format(format, std::forward<TArgs>(args)...);
++		return GetSystemDataPath() / fmt::format(fmt::runtime(format), std::forward<TArgs>(args)...);
 +	}
 +
  	// get mlc path to default cemu root dir/mlc01
  	[[nodiscard]] static fs::path GetDefaultMLCPath();
  
+@@ -66,18 +127,18 @@ private:
+ 	inline static fs::path s_filename; // cemu.exe
+ 	inline static fs::path s_mlc_path;
+ 
+-public:	
++public:
+ 	// general
+ 	[[nodiscard]] static bool LoadSharedLibrariesEnabled();
+ 	[[nodiscard]] static bool DisplayDRCEnabled();
+ 	[[nodiscard]] static bool FullscreenEnabled();
+-	
++
+ 	// cpu
+ 	[[nodiscard]] static CPUMode GetCPUMode();
+ 	[[nodiscard]] static uint8 GetTimerShiftFactor();
+ 
+ 	static void SetTimerShiftFactor(uint8 shiftFactor);
+-	
++
+ 	// gpu
+ 	[[nodiscard]] static PrecompiledShaderOption GetPrecompiledShadersOption();
+ 	[[nodiscard]] static bool RenderUpsideDownEnabled();
 @@ -126,4 +187,3 @@ private:
  
  	inline static bool s_has_required_online_files = false;
