@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 
 RDEPEND=">=dev-python/GitPython-3.1.8
 	>=dev-python/colorama-0.3.7
-	>=dev-python/termcolor-1.1.0
+	<dev-python/termcolor-2.0.0
 	>=dev-python/six-1.10.0
 	>=dev-python/click-8.0.1"
 DEPEND="${RDEPEND}"
