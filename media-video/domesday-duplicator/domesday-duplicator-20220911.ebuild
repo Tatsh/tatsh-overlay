@@ -11,7 +11,7 @@ SHA="4c079ccf06d7a879196ed5a9a6a357abb1c98b25"
 MY_PN="DomesdayDuplicator"
 SRC_URI="https://github.com/harrypm/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
-LICENSE=""
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
