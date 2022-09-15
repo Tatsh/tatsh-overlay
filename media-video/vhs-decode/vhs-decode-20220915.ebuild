@@ -16,7 +16,6 @@ IUSE="gtk"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 DEPEND="x11-libs/qwt:6
 	dev-qt/qtcore
