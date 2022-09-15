@@ -11,6 +11,7 @@ DESCRIPTION="Turn (almost) any command line program into a full GUI application 
 HOMEPAGE="https://pypi.org/project/gooey/"
 MY_PN="G${PN:1}"
 SRC_URI="https://github.com/chriskiehl/${MY_PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 LICENSE="MIT"
 SLOT="0"
