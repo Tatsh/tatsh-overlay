@@ -16,14 +16,14 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=dev-python/wxpython-4.1.1
-	dev-python/pillow
-	dev-python/psutil:0
-	dev-python/colored
-	dev-python/pygtrie
-	dev-python/re-wx
-	dev-python/typing-extensions
-	dev-python/mypy_extensions"
+RDEPEND=">=dev-python/wxpython-4.1.1[${PYTHON_USEDEP}]
+	dev-python/pillow[${PYTHON_USEDEP}]
+	dev-python/psutil:0[${PYTHON_USEDEP}]
+	dev-python/colored[${PYTHON_USEDEP}]
+	dev-python/pygtrie[${PYTHON_USEDEP}]
+	dev-python/re-wx[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]
+	dev-python/mypy_extensions[${PYTHON_USEDEP}]"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 
