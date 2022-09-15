@@ -5,7 +5,7 @@ EAPI=8
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_10 )
 
-inherit cmake distutils-r1
+inherit cmake desktop distutils-r1
 
 DESCRIPTION="Software defined VHS decoder."
 HOMEPAGE="https://github.com/oyvindln/vhs-decode"
@@ -61,5 +61,6 @@ src_install() {
 	distutils-r1_src_install
 	if use gtk; then
 		dobin "${PN}-gui"
+		make_desktop_entry "${PN}-gui" "VHS decode" "camera-video"
 	fi
 }
