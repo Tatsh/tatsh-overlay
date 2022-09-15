@@ -199,7 +199,6 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 BDEPEND="sys-apps/yarn"
 RDEPEND="net-libs/nodejs:= ${PYTHON_DEPS}"
