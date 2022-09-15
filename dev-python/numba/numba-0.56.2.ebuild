@@ -15,9 +15,9 @@ LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-BDEPEND="dev-python/numpy"
-RDEPEND="dev-python/llvmlite
-	dev-python/setuptools:0
+BDEPEND="dev-python/numpy[${PYTHON_USEDEP}]"
+RDEPEND="dev-python/llvmlite[${PYTHON_USEDEP}]
+	dev-python/setuptools:0[${PYTHON_USEDEP}]
 	${BDEPEND}"
 
 distutils_enable_tests pytest
