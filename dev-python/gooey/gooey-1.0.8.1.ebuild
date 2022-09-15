@@ -16,7 +16,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=dev-python/wxpython-4.1.1[${PYTHON_USEDEP}]
+RDEPEND=">=dev-python/wxpython-4.1.1-r2[${PYTHON_USEDEP}]
 	dev-python/pillow[${PYTHON_USEDEP}]
 	dev-python/psutil:0[${PYTHON_USEDEP}]
 	dev-python/colored[${PYTHON_USEDEP}]
