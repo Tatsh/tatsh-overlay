@@ -16,7 +16,6 @@ LICENSE="GPL-3 LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="nls"
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RDEPEND="$(python_gen_cond_dep '
 		dev-python/colorama[${PYTHON_USEDEP}]
