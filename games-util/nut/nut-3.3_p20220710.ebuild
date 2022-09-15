@@ -14,7 +14,6 @@ SRC_URI="https://github.com/blawar/nut/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-3 MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RDEPEND="${PYTHON_DEPS}
 	$(python_gen_cond_dep 'dev-python/PyQt5[${PYTHON_USEDEP}]')
