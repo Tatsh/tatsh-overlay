@@ -1,4 +1,4 @@
-From 1fda9de6f75e02531891c5920c05e72fa39037bf Mon Sep 17 00:00:00 2001
+From 73bc8a2404b232596b58b8a98160218f85f070f9 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:45:41 -0500
 Subject: [PATCH 1/4] Path changes
@@ -7,13 +7,14 @@ Subject: [PATCH 1/4] Path changes
  api_db.php                             |  9 ++---
  dns_records.php                        | 18 +++++-----
  scripts/pi-hole/js/queryads.js         |  2 +-
+ scripts/pi-hole/php/FTL.php            |  2 +-
  scripts/pi-hole/php/database.php       | 29 ++++++++--------
  scripts/pi-hole/php/func.php           |  4 +--
  scripts/pi-hole/php/password.php       |  2 +-
  scripts/pi-hole/php/savesettings.php   | 46 ++++++++++++++------------
  scripts/pi-hole/php/teleporter.php     | 42 +++++++++++------------
  scripts/pi-hole/php/update_checker.php |  2 +-
- 9 files changed, 78 insertions(+), 76 deletions(-)
+ 10 files changed, 79 insertions(+), 77 deletions(-)
 
 diff --git a/api_db.php b/api_db.php
 index 5612de26..b0ed0aff 100644
@@ -77,6 +78,19 @@ index cb8625ac..1177d1e7 100644
        // Remove "(x results)"
        shortstring = shortstring.replace(/\(.*/, "");
        ta.append(shortstring + "\n");
+diff --git a/scripts/pi-hole/php/FTL.php b/scripts/pi-hole/php/FTL.php
+index ac7ecee8..fba78750 100644
+--- a/scripts/pi-hole/php/FTL.php
++++ b/scripts/pi-hole/php/FTL.php
+@@ -10,7 +10,7 @@
+ const DEFAULT_FTLCONFFILE = '/etc/pihole/pihole-FTL.conf';
+ const DEFAULT_FTL_IP = '127.0.0.1';
+ const DEFAULT_FTL_PORT = 4711;
+-const DEFAULT_FTL_PORTFILE = '/run/pihole-FTL.port';
++const DEFAULT_FTL_PORTFILE = '/run/pihole/FTL.port';
+ 
+ function piholeFTLConfig($piholeFTLConfFile = DEFAULT_FTLCONFFILE, $force = false)
+ {
 diff --git a/scripts/pi-hole/php/database.php b/scripts/pi-hole/php/database.php
 index f3fe3487..c1f8d50b 100644
 --- a/scripts/pi-hole/php/database.php
