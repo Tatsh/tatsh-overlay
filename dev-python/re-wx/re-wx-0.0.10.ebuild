@@ -15,9 +15,9 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=dev-python/wxpython-4.1.0
-	dev-python/typing-extensions
-	dev-python/mypy_extensions"
+RDEPEND=">=dev-python/wxpython-4.1.0[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]
+	dev-python/mypy_extensions[${PYTHON_USEDEP}]"
 
 python_prepare_all() {
 	rm -R tests || die
