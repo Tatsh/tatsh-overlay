@@ -2,25 +2,20 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python3_{4,5,6} )
+PYTHON_COMPAT=( python3_{9,10} )
 
-inherit python-r1 python-utils-r1
+inherit distutils-r1
 
 DESCRIPTION="mawen1250's VapourSynth functions"
 HOMEPAGE="https://github.com/HomeOfVapourSynthEvolution/mvsfunc"
-SRC_URI="https://github.com/HomeOfVapourSynthEvolution/mvsfunc/archive/r8.tar.gz -> ${P}.tar.gz"
-RESTRICT="mirror"
+SHA="f3167b8a2789ea1527e5249b02906420c95f2c7b"
+SRC_URI="https://github.com/HomeOfVapourSynthEvolution/mvsfunc/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=""
 RDEPEND="${DEPEND} >=media-video/vapoursynth-37"
 
-S="${WORKDIR}/${PN}-r${PV}"
-
-src_install () {
-	python_foreach_impl python_domodule mvsfunc.py
-}
+S="${WORKDIR}/${PN}-${SHA}"
