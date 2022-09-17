@@ -9,7 +9,7 @@ DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
 HOMEPAGE="https://projectoutfox.com/"
 
 UPPER_PN="${PN^^}"
-MY_PN="${UPPER_PN:10:1}${PN:11:2}${UPPER_PN:13:1}${PN:14}"
+MY_PN="${UPPER_PN:0:1}${PN:1:1}${PN:2:1}${PN:3}"
 MY_PV="${PV:6:4}"
 ALT_PV="${PV:6:6}"
 DATE="20220801"
