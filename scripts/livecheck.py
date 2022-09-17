@@ -346,6 +346,12 @@ def get_props(search_dir: str,
         elif 'download.jetbrains.com' in src_uri:
             yield (cat, pkg, ebuild_version, ebuild_version,
                    'https://www.jetbrains.com/updates/updates.xml', None, True)
+        elif src_uri.startswith(
+                'https://gitlab.com/') and '-/archive/' in src_uri:
+            author, proj = src_uri.split('/')[3:5]
+            yield (cat, pkg, ebuild_version, ebuild_version,
+                   f'https://gitlab.com/{author}/{proj}/-/tags?format=atom',
+                   r'<title>v?([0-9][^>]+)</title', True)
         else:
             home = P.aux_get(match, ['HOMEPAGE'])[0]
             raise RuntimeError(
