@@ -1,7 +1,7 @@
 {
-    "regex": "<a href=\"/TeamRizu/OutFox-Serenity/archive/refs/tags/v(.*)\\.zip\" rel=\"nofollow\"",
+    "regex": "<id>tag:github.com,2008:Repository/399859603/v?([0-9a-z\\.-]+)</id>",
     "type": "regex",
     "transformation_function": "dash_to_underscore",
-    "url": "https://github.com/TeamRizu/OutFox-Serenity/releases",
+    "url": "https://github.com/TeamRizu/OutFox-Serenity/releases.atom",
     "use_vercmp": false
 }
