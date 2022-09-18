@@ -80,10 +80,10 @@ src_prepare() {
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' -i src/common/CMakeLists.txt || die
 	sed -e '/enable_testing.*/d' -e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' -i externals/sirit/CMakeLists.txt || die
-	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
-	mv -f "${T}/compatibility_list.json" "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
 	sed -e '/-Werror=missing-declarations/d' -i src/CMakeLists.txt || die
 	cmake_src_prepare
+	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
+	mv -f "${T}/compatibility_list.json" "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
 }
 
 src_configure() {
