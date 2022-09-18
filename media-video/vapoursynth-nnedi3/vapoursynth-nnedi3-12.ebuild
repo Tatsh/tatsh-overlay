@@ -1,7 +1,7 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=8
 
 inherit autotools
 
@@ -13,7 +13,6 @@ RESTRICT="mirror"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
 DEPEND=">=media-video/vapoursynth-37"
 RDEPEND="${DEPEND}"
@@ -24,7 +23,7 @@ src_prepare () {
 }
 
 src_install () {
-	dodoc gpl2.txt readme.rst
 	default
 	dosym /usr/lib/libnnedi3.so /usr/lib/vapoursynth/libnnedi3.so
+	einstalldocs
 }
