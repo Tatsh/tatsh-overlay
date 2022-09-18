@@ -4,23 +4,10 @@
 	<maintainer type="person">
 		<email>audvare@gmail.com</email>
 	</maintainer>
-	<longdescription lang="en">
-	A video processing framework with simplicity in mind.
-	</longdescription>
 	<use>
 		<flag name="guard-pattern">Adds 32 bytes on the left and the right sides of each frame, fills them with a certain value, and checks their integrity after each filter. It can be used to detect buggy filters that write a little outside the frame.</flag>
 		<flag name="x86-asm">Enable assembler code for x86 CPUs (requires <pkg>dev-lang/yasm</pkg>).</flag>
 		<flag name="vsscript">Enable VSScript.</flag>
 		<flag name="vspipe">Build vspipe command.</flag>
-		<flag name="plugins">Enable all included plugins.</flag>
-		<flag name="subtext">Enable the subtitle rendering plugin. Requires <pkg>media-libs/libass</pkg> and <pkg>virtual/ffmpeg</pkg>.</flag>
-		<flag name="eedi3">Enable the eedi3 plugin.</flag>
-		<flag name="imwri">Enable the image reader/writer plugin. Requires <pkg>media-gfx/imagemagick</pkg>.</flag>
-		<flag name="miscfilters">Enable the miscellaneous filters plugin.</flag>
-		<flag name="morpho">Enable the morpho plugin.</flag>
-		<flag name="ocr">Enable the ocr plugin. Requires <pkg>app-text/tesseract</pkg>.</flag>
-		<flag name="removegrain">Enable the removegrain plugin.</flag>
-		<flag name="vinverse">Enable the vinverse plugin.</flag>
-		<flag name="vivtc">Enable the vivtc plugin.</flag>
 	</use>
 </pkgmetadata>
