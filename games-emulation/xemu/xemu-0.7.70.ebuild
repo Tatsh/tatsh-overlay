@@ -52,7 +52,7 @@ DEPEND="dev-libs/glib
 	alsa? ( media-libs/alsa-lib )
 	io-uring? ( sys-libs/liburing )
 	jack? ( virtual/jack )
-	pulseaudio? ( media-sound/pulseaudio )
+	pulseaudio? ( media-libs/libpulse )
 	xattr? ( sys-apps/attr )"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-lang/perl
