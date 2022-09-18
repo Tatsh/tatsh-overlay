@@ -1,7 +1,7 @@
 # Copyright 2020-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DESCRIPTION="A small, 0BSD-licensed metaprogramming library for C++17."
 HOMEPAGE="https://github.com/MerryMage/mp"
