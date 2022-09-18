@@ -10,11 +10,12 @@ import portage
 P = portage.db[portage.root]['porttree'].dbapi
 
 IGNORE = {
-    'games-arcade/stepmania-outfox': {
+    'games-arcade/outfox': {
         'media-video/ffmpeg',
         'media-video/pipewire',  # ignored because virtual/jack is listed
         'virtual/libusb',
-    }
+    },
+    'games-arcade/stepmania': { 'media-video/pipewire' }
 }
 
 
