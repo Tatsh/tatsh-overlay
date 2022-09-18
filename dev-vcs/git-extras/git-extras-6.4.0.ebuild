@@ -1,7 +1,7 @@
 # Copyright 2019-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DESCRIPTION="Git utilties: repo summary, repl, changelog population, and more."
 HOMEPAGE="https://github.com/tj/git-extras"
