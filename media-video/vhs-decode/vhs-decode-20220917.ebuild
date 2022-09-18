@@ -18,12 +18,13 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="x11-libs/qwt:6
-	dev-qt/qtcore
-	dev-qt/qtwidgets
-	dev-qt/qtprintsupport
-	dev-qt/qtconcurrent
-	dev-qt/qtopengl
-	dev-qt/qtsvg
+	dev-qt/qtcore:=
+	dev-qt/qtwidgets:=
+	dev-qt/qtprintsupport:=
+	dev-qt/qtgui:=
+	dev-qt/qtconcurrent:=
+	dev-qt/qtopengl:=
+	dev-qt/qtsvg:=
 	sci-libs/fftw"
 RDEPEND="${DEPEND}
 	${PYTHON_DEPS}
