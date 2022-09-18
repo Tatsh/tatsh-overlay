@@ -14,7 +14,7 @@ KEYWORDS="~amd64 ~x86"
 
 RDEPEND=">=media-video/vapoursynth-37"
 
-S="${WORKDIR}/${P}-2/src"
+S="${WORKDIR}/${PN}-${PV:0:5}-2/src"
 
 src_prepare () {
 	cp "${DISTDIR}/${P}-Makefile" "${S}/Makefile"
