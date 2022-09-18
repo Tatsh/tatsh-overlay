@@ -50,7 +50,9 @@ DEPEND="app-arch/lz4
 	sys-libs/libunwind
 	sys-libs/zlib
 	x11-libs/libva
-	virtual/libusb:="
+	virtual/libusb:=
+	dev-libs/openssl
+	dev-qt/qtmultimedia"
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="<dev-cpp/catch-3.0.0
