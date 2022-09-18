@@ -1,4 +1,4 @@
-# Copyright 2021-2022 Gentoo Authors
+#1 Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -40,7 +40,7 @@ DEPEND="dev-libs/atk
 	alsa? ( media-libs/alsa-lib )
 	xv? ( x11-libs/libXv )
 	opengl? ( virtual/opengl )
-	pulseaudio? ( media-sound/pulseaudio )
+	pulseaudio? ( media-libs/libpulse )
 	sdl? ( media-libs/libsdl[X,joystick,video] )
 	udev? ( virtual/udev )"
 RDEPEND="${DEPEND}"
