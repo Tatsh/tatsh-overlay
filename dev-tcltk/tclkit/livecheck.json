@@ -1,0 +1,6 @@
+{
+    "regex": "<id>tag:github.com,2008:Repository/102725527/([^<]+)</id>",
+    "transformation_function": "dotize",
+    "type": "regex",
+    "url": "https://github.com/stiefel40k/kitgen/releases.atom"
+}
