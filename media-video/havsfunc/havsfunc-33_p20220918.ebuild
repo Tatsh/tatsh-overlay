@@ -21,7 +21,7 @@ RDEPEND=">=media-video/ffms2-2.23.1
 	>=media-video/fmtconv-20
 	>=media-video/mvsfunc-8
 	>=media-video/scenechange-0.2.0-r2
-	>=media-video/vapoursynth-37[eedi3,miscfilters,plugins,vspipe]
+	>=media-video/vapoursynth-37[vspipe]
 	>=media-video/vapoursynth-mvtools-17
 	>=media-video/vapoursynth-nnedi3-11"
 
