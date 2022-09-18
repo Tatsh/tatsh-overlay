@@ -1,7 +1,7 @@
 # Copyright 2020-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DESCRIPTION="Converts DiscJuggler CDI files to NRG (Nero)."
 HOMEPAGE="http://digitalimagecorp.de/software/cdi2nero/"
