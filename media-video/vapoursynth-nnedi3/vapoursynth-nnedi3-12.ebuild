@@ -14,7 +14,8 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=">=media-video/vapoursynth-37"
+DEPEND=">=media-video/vapoursynth-37
+	media-video/vapoursynth-nnedi3-weights"
 RDEPEND="${DEPEND}"
 
 src_prepare () {
