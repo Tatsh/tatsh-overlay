@@ -13,6 +13,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
 
 DEPEND=">=sci-libs/libqalculate-${PV}
+	dev-qt/qtcore:=
+	dev-qt/qtgui:=
 	dev-qt/qtnetwork:=
 	dev-qt/qtwidgets:="
 RDEPEND="${DEPEND}"
