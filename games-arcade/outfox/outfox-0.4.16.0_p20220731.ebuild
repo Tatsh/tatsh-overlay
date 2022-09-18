@@ -30,11 +30,13 @@ RDEPEND="app-arch/bzip2
 	media-libs/libsdl2
 	media-libs/libvorbis
 	media-libs/vulkan-loader
-	|| ( media-sound/pulseaudio media-sound/apulse )
+	media-libs/libpulse
 	virtual/glu
 	virtual/jack
 	virtual/opengl
-	virtual/udev"
+	virtual/udev
+	media-video/ffmpeg
+	virtual/libusb"
 RESTRICT="split-debug strip"
 
 S="${WORKDIR}"
