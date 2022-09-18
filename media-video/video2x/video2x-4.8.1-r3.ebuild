@@ -1,7 +1,7 @@
 # Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 PYTHON_COMPAT=( python3_{9,10} )
 
 inherit desktop python-single-r1
@@ -17,7 +17,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="nls"
 
-RDEPEND="$(python_gen_cond_dep '
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+RDEPEND="${PYTHON_DEPS}
+	$(python_gen_cond_dep '
 		dev-python/colorama[${PYTHON_USEDEP}]
 		app-arch/patool[${PYTHON_USEDEP}]
 		dev-python/pillow[${PYTHON_USEDEP}]
