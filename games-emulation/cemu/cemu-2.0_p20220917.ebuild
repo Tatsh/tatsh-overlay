@@ -34,7 +34,9 @@ DEPEND="app-arch/zarchive
 	media-libs/libsdl2[joystick,threads]
 	net-misc/curl
 	sys-libs/zlib
-	x11-libs/wxGTK:3.2-gtk3"
+	x11-libs/wxGTK:3.2-gtk3
+	x11-libs/libX11
+	media-libs/libglvnd"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_PN}-${SHA}"
