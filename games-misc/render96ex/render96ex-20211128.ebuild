@@ -31,7 +31,7 @@ IUSE="+goddard
 	us"
 REQUIRED_USE="|| ( eu jp us )"
 
-DEPEND="media-libs/glew:= media-libs/libsdl2 virtual/opengl"
+DEPEND="media-libs/glew:= media-libs/libsdl2 virtual/opengl media-libs/libglvnd"
 RDEPEND="${DEPEND}"
 BDEPEND="app-arch/p7zip"
 
