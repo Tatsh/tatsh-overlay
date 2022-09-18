@@ -1,0 +1,6 @@
+{
+    "regex": ">scenechange-([0-9\\.-]+)\\.7z</a>",
+    "transformation_function": "dotize",
+    "type": "regex",
+    "url": "https://forum.doom9.org/showthread.php?t=166769"
+}
