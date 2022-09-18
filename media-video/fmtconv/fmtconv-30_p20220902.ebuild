@@ -7,18 +7,14 @@ inherit autotools
 
 DESCRIPTION="Format conversion tools for Vapoursynth"
 HOMEPAGE="https://github.com/EleonoreMizo/fmtconv"
-SRC_URI="https://github.com/EleonoreMizo/${PN}/archive/r${PV}.tar.gz -> ${P}.tar.gz"
-RESTRICT="mirror"
+SHA="f27be2dd6feabc4289b631f06a16028f29761c38"
+SRC_URI="https://github.com/EleonoreMizo/fmtconv/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="WTFPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/${PN}-r${PV}/build/unix"
+S="${WORKDIR}/${PN}-${SHA}/build/unix"
 
 src_prepare () {
 	eautoreconf
@@ -26,11 +22,10 @@ src_prepare () {
 }
 
 src_install () {
-	# TODO doc directory HTML
 	cd ../..
-	dodoc doc/license.txt README.md
-	cd build/unix
+	einstalldocs
+	cd "${S}"
 	default
-	keepdir /usr/lib/vapoursynth/
-	dosym /usr/lib/libfmtconv.so /usr/lib/vapoursynth/libfmtconv.so
+	keepdir /usr/$(get_libdir)/vapoursynth/
+	dosym /usr/$(get_libdir)/libfmtconv.so /usr/$(get_libdir)/vapoursynth/libfmtconv.so
 }
