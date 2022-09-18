@@ -21,7 +21,14 @@ DEPEND="app-emulation/faudio
 	media-libs/libsdl2[X,opengl]
 	openal? ( media-libs/openal )
 	>media-libs/rtmidi-4.0.0
-	net-libs/libslirp"
+	net-libs/libslirp
+	dev-libs/libevdev
+	dev-libs/wayland
+	dev-qt/qtcore:=
+	dev-qt/qtgui:=
+	dev-qt/qtnetwork:=
+	dev-qt/qtwidgets:=
+	x11-libs/libX11"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/86Box-${PV}"
