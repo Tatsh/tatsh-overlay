@@ -1,7 +1,7 @@
 # Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DESCRIPTION="Unpack ALZ archives."
 HOMEPAGE="https://web.archive.org/web/20201025202521/http://kippler.com/win/unalz/"
