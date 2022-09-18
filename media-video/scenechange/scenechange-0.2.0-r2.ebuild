@@ -26,7 +26,7 @@ src_compile () {
 }
 
 src_install () {
-	keepdir /usr/lib/vapoursynth
-	exeinto /usr/lib/vapoursynth
+	keepdir /usr/$(get_libdir)/vapoursynth
+	exeinto /usr/$(get_libdir)/vapoursynth
 	doexe libscenechange.so libtemporalsoften2.so
 }
