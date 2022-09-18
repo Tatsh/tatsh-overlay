@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-DEPEND=">=virtual/ffmpeg-9-r2"
+DEPEND="media-video/ffmpeg"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}-${SHA}"
