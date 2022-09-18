@@ -55,6 +55,7 @@ disable_module() {
 
 src_prepare() {
 	xdg_src_prepare
+	default
 	sed -i \
 		-e "/handle/s#/usr/local/lib#/usr/$(get_libdir)#" \
 		nall/dl.hpp || die "fixing libdir failed!"
@@ -72,6 +73,9 @@ src_prepare() {
 	# input modules
 	use sdl || disable_module input.sdl
 	use udev || disable_module input.udev
+	default
+	default
+	default
 }
 
 src_compile() {
