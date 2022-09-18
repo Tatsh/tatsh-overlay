@@ -17,7 +17,8 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-RDEPEND=">=media-video/ffms2-2.23.1
+RDEPEND="dev-python/vsutil
+	>=media-video/ffms2-2.23.1
 	>=media-video/fmtconv-20
 	>=media-video/mvsfunc-8
 	>=media-video/scenechange-0.2.0-r2
