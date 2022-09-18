@@ -1,7 +1,7 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DESCRIPTION="Yamaha XG re-mapped soundfont by ZSF on SF2 forums."
 HOMEPAGE="https://www.ronimusic.com/smp_ios_dls_files.htm"
