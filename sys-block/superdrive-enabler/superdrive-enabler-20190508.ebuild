@@ -1,7 +1,7 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 inherit linux-info toolchain-funcs
 
 DESCRIPTION="Hack for Apple's Superdrive to work with other systems than OS X."
