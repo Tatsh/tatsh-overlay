@@ -58,7 +58,7 @@ src_prepare() {
 	fi
 	if ! use bundled-songs; then
 		einfo 'Removing bundled songs'
-		rm -rf 'Songs/StepMania 5' Songs/Outfox
+		rm -rf Songs/Outfox
 	fi
 	default
 }
@@ -89,5 +89,5 @@ src_install() {
 	use doc && dodoc -r Docs/*
 	newicon "Appearance/Themes/default/Graphics/Common window icon.png" \
 		${PN}.png
-	make_desktop_entry "${PN}" "StepMania OutFox"
+	make_desktop_entry "${PN}" "OutFox"
 }
