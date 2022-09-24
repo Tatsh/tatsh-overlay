@@ -29,6 +29,6 @@ src_unpack() {
 }
 
 src_install() {
-	insinto /opt/stepmania-outfox/Songs
+	insinto /opt/outfox/Songs
 	doins -r OutFox*
 }
