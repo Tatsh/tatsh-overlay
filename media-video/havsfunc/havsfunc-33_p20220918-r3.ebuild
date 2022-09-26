@@ -27,6 +27,7 @@ RDEPEND=">=media-video/ffms2-2.23.1
 	dev-python/vsutil
 	media-video/vapoursynth-eedi3
 	media-video/vs-miscfilters-obsolete
+	media-video/vapoursynth-fft3dfilter
 	media-video/znedi3"
 
 S="${WORKDIR}/${PN}-${SHA}"
