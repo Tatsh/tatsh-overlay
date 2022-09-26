@@ -7,18 +7,47 @@ inherit multiprocessing systemd
 
 DESCRIPTION="Small server wrapper around Z-Wave JS to access it via a WebSocket."
 HOMEPAGE="https://github.com/zwave-js/zwave-js-server"
-SRC_URI="https://registry.yarnpkg.com/@alcalzone/jsonl-db/-/jsonl-db-2.5.2.tgz -> node-@alcalzone-jsonl-db-2.5.2.tgz
+SRC_URI="
+	https://registry.yarnpkg.com/json-buffer/-/json-buffer-3.0.1.tgz -> node-json-buffer-3.0.1.tgz
+	https://registry.yarnpkg.com/defer-to-connect/-/defer-to-connect-2.0.1.tgz -> node-defer-to-connect-2.0.1.tgz
+	https://registry.yarnpkg.com/keyv/-/keyv-4.5.0.tgz -> node-keyv-4.5.0.tgz
+	https://registry.yarnpkg.com/http-cache-semantics/-/http-cache-semantics-4.1.0.tgz -> node-http-cache-semantics-4.1.0.tgz
+	https://registry.yarnpkg.com/@esm2cjs/responselike/-/responselike-3.0.0.tgz -> node-@esm2cjs-responselike-3.0.0.tgz
+	https://registry.yarnpkg.com/@esm2cjs/normalize-url/-/normalize-url-7.1.0.tgz -> node-@esm2cjs-normalize-url-7.1.0.tgz
+	https://registry.yarnpkg.com/mimic-response/-/mimic-response-3.1.0.tgz -> node-mimic-response-3.1.0.tgz
+	https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz -> node-quick-lru-5.1.1.tgz
+	https://registry.yarnpkg.com/resolve-alpn/-/resolve-alpn-1.2.1.tgz -> node-resolve-alpn-1.2.1.tgz
+	https://registry.yarnpkg.com/@esm2cjs/mimic-response/-/mimic-response-4.0.0.tgz -> node-@esm2cjs-mimic-response-4.0.0.tgz
+	https://registry.yarnpkg.com/@sentry/types/-/types-7.13.0.tgz -> node-@sentry-types-7.13.0.tgz
+	https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz -> node-eventemitter3-4.0.7.tgz
+	https://registry.yarnpkg.com/@esm2cjs/p-timeout/-/p-timeout-5.1.0.tgz -> node-@esm2cjs-p-timeout-5.1.0.tgz
+	https://registry.yarnpkg.com/responselike/-/responselike-3.0.0.tgz -> node-responselike-3.0.0.tgz
+	https://registry.yarnpkg.com/http2-wrapper/-/http2-wrapper-2.1.11.tgz -> node-http2-wrapper-2.1.11.tgz
+	https://registry.yarnpkg.com/decompress-response/-/decompress-response-6.0.0.tgz -> node-decompress-response-6.0.0.tgz
+	https://registry.yarnpkg.com/cacheable-lookup/-/cacheable-lookup-6.1.0.tgz -> node-cacheable-lookup-6.1.0.tgz
+	https://registry.yarnpkg.com/@esm2cjs/p-cancelable/-/p-cancelable-3.0.0.tgz -> node-@esm2cjs-p-cancelable-3.0.0.tgz
+	https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-3.0.0.tgz -> node-lowercase-keys-3.0.0.tgz
+	https://registry.yarnpkg.com/@esm2cjs/lowercase-keys/-/lowercase-keys-3.0.0.tgz -> node-@esm2cjs-lowercase-keys-3.0.0.tgz
+	https://registry.yarnpkg.com/@esm2cjs/is/-/is-5.3.0.tgz -> node-@esm2cjs-is-5.3.0.tgz
+	https://registry.yarnpkg.com/@esm2cjs/http-timer/-/http-timer-5.0.1.tgz -> node-@esm2cjs-http-timer-5.0.1.tgz
+	https://registry.yarnpkg.com/@esm2cjs/form-data-encoder/-/form-data-encoder-2.1.2.tgz -> node-@esm2cjs-form-data-encoder-2.1.2.tgz
+	https://registry.yarnpkg.com/@esm2cjs/cacheable-request/-/cacheable-request-10.2.0.tgz -> node-@esm2cjs-cacheable-request-10.2.0.tgz
+	https://registry.yarnpkg.com/@zwave-js/testing/-/testing-10.2.0.tgz -> node-@zwave-js-testing-10.2.0.tgz
+	https://registry.yarnpkg.com/@zwave-js/cc/-/cc-10.2.0.tgz -> node-@zwave-js-cc-10.2.0.tgz
+	https://registry.yarnpkg.com/@sentry/node/-/node-7.13.0.tgz -> node-@sentry-node-7.13.0.tgz
+	https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.13.0.tgz -> node-@sentry-integrations-7.13.0.tgz
+	https://registry.yarnpkg.com/@esm2cjs/p-queue/-/p-queue-7.3.0.tgz -> node-@esm2cjs-p-queue-7.3.0.tgz
+	https://registry.yarnpkg.com/@esm2cjs/got/-/got-12.5.0.tgz -> node-@esm2cjs-got-12.5.0.tgz
+	https://registry.yarnpkg.com/@alcalzone/jsonl-db/-/jsonl-db-2.5.3.tgz -> node-@alcalzone-jsonl-db-2.5.3.tgz
 	https://registry.yarnpkg.com/@alcalzone/pak/-/pak-0.8.1.tgz -> node-@alcalzone-pak-0.8.1.tgz
 	https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz -> node-@colors-colors-1.5.0.tgz
 	https://registry.yarnpkg.com/@dabh/diagnostics/-/diagnostics-2.0.3.tgz -> node-@dabh-diagnostics-2.0.3.tgz
 	https://registry.yarnpkg.com/@homebridge/ciao/-/ciao-1.1.4.tgz -> node-@homebridge-ciao-1.1.4.tgz
-	https://registry.yarnpkg.com/@sentry/core/-/core-6.19.7.tgz -> node-@sentry-core-6.19.7.tgz
-	https://registry.yarnpkg.com/@sentry/hub/-/hub-6.19.7.tgz -> node-@sentry-hub-6.19.7.tgz
-	https://registry.yarnpkg.com/@sentry/integrations/-/integrations-6.19.7.tgz -> node-@sentry-integrations-6.19.7.tgz
-	https://registry.yarnpkg.com/@sentry/minimal/-/minimal-6.19.7.tgz -> node-@sentry-minimal-6.19.7.tgz
-	https://registry.yarnpkg.com/@sentry/node/-/node-6.19.7.tgz -> node-@sentry-node-6.19.7.tgz
-	https://registry.yarnpkg.com/@sentry/types/-/types-6.19.7.tgz -> node-@sentry-types-6.19.7.tgz
-	https://registry.yarnpkg.com/@sentry/utils/-/utils-6.19.7.tgz -> node-@sentry-utils-6.19.7.tgz
+	https://registry.yarnpkg.com/@sentry/core/-/core-7.13.0.tgz -> node-@sentry-core-7.13.0.tgz
+	https://registry.yarnpkg.com/@sentry/hub/-/hub-7.13.0.tgz -> node-@sentry-hub-7.13.0.tgz
+	https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.13.0.tgz -> node-@sentry-integrations-7.13.0.tgz
+	https://registry.yarnpkg.com/@sentry/node/-/node-7.13.0.tgz -> node-@sentry-node-7.13.0.tgz
+	https://registry.yarnpkg.com/@sentry/utils/-/utils-7.13.0.tgz -> node-@sentry-utils-7.13.0.tgz
 	https://registry.yarnpkg.com/@serialport/binding-mock/-/binding-mock-10.2.2.tgz -> node-@serialport-binding-mock-10.2.2.tgz
 	https://registry.yarnpkg.com/@serialport/bindings-cpp/-/bindings-cpp-10.7.0.tgz -> node-@serialport-bindings-cpp-10.7.0.tgz
 	https://registry.yarnpkg.com/@serialport/bindings-interface/-/bindings-interface-1.2.1.tgz -> node-@serialport-bindings-interface-1.2.1.tgz
@@ -34,17 +63,17 @@ SRC_URI="https://registry.yarnpkg.com/@alcalzone/jsonl-db/-/jsonl-db-2.5.2.tgz -
 	https://registry.yarnpkg.com/@serialport/parser-slip-encoder/-/parser-slip-encoder-10.3.0.tgz -> node-@serialport-parser-slip-encoder-10.3.0.tgz
 	https://registry.yarnpkg.com/@serialport/parser-spacepacket/-/parser-spacepacket-10.3.0.tgz -> node-@serialport-parser-spacepacket-10.3.0.tgz
 	https://registry.yarnpkg.com/@serialport/stream/-/stream-10.3.0.tgz -> node-@serialport-stream-10.3.0.tgz
-	https://registry.yarnpkg.com/@zwave-js/config/-/config-9.6.1.tgz -> node-@zwave-js-config-9.6.1.tgz
-	https://registry.yarnpkg.com/@zwave-js/core/-/core-9.6.0.tgz -> node-@zwave-js-core-9.6.0.tgz
-	https://registry.yarnpkg.com/@zwave-js/host/-/host-9.6.0.tgz -> node-@zwave-js-host-9.6.0.tgz
+	https://registry.yarnpkg.com/@zwave-js/config/-/config-10.2.0.tgz -> node-@zwave-js-config-10.2.0.tgz
+	https://registry.yarnpkg.com/@zwave-js/core/-/core-10.2.0.tgz -> node-@zwave-js-core-10.2.0.tgz
+	https://registry.yarnpkg.com/@zwave-js/host/-/host-10.2.0.tgz -> node-@zwave-js-host-10.2.0.tgz
 	https://registry.yarnpkg.com/file-stream-rotator/-/file-stream-rotator-0.6.1.tgz -> node-file-stream-rotator-0.6.1.tgz
-	https://registry.yarnpkg.com/@zwave-js/nvmedit/-/nvmedit-9.6.0.tgz -> node-@zwave-js-nvmedit-9.6.0.tgz
-	https://registry.yarnpkg.com/@zwave-js/serial/-/serial-9.6.0.tgz -> node-@zwave-js-serial-9.6.0.tgz
+	https://registry.yarnpkg.com/@zwave-js/nvmedit/-/nvmedit-10.2.0.tgz -> node-@zwave-js-nvmedit-10.2.0.tgz
+	https://registry.yarnpkg.com/@zwave-js/serial/-/serial-10.2.0.tgz -> node-@zwave-js-serial-10.2.0.tgz
 	https://registry.yarnpkg.com/@zwave-js/server/-/server-${PV}.tgz -> node-@${P}.tgz
-	https://registry.yarnpkg.com/@zwave-js/shared/-/shared-9.6.0.tgz -> node-@zwave-js-shared-9.6.0.tgz
+	https://registry.yarnpkg.com/@zwave-js/shared/-/shared-10.2.0.tgz -> node-@zwave-js-shared-10.2.0.tgz
 	https://registry.yarnpkg.com/winston-daily-rotate-file/-/winston-daily-rotate-file-4.7.1.tgz -> node-winston-daily-rotate-file-4.7.1.tgz
 	https://registry.yarnpkg.com/agent-base/-/agent-base-6.0.2.tgz -> node-agent-base-6.0.2.tgz
-	https://registry.yarnpkg.com/alcalzone-shared/-/alcalzone-shared-4.0.1.tgz -> node-alcalzone-shared-4.0.1.tgz
+	https://registry.yarnpkg.com/alcalzone-shared/-/alcalzone-shared-4.0.8.tgz -> node-alcalzone-shared-4.0.8.tgz
 	https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-4.1.3.tgz -> node-ansi-colors-4.1.3.tgz
 	https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-5.0.1.tgz -> node-ansi-regex-5.0.1.tgz
 	https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-4.3.0.tgz -> node-ansi-styles-4.3.0.tgz
@@ -62,7 +91,7 @@ SRC_URI="https://registry.yarnpkg.com/@alcalzone/jsonl-db/-/jsonl-db-2.5.2.tgz -
 	https://registry.yarnpkg.com/colorspace/-/colorspace-1.1.4.tgz -> node-colorspace-1.1.4.tgz
 	https://registry.yarnpkg.com/cookie/-/cookie-0.4.2.tgz -> node-cookie-0.4.2.tgz
 	https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz -> node-cross-spawn-7.0.3.tgz
-	https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.4.tgz -> node-dayjs-1.11.4.tgz
+	https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.5.tgz -> node-dayjs-1.11.5.tgz
 	https://registry.yarnpkg.com/debug/-/debug-4.3.4.tgz -> node-debug-4.3.4.tgz
 	https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz -> node-emoji-regex-8.0.0.tgz
 	https://registry.yarnpkg.com/enabled/-/enabled-2.0.0.tgz -> node-enabled-2.0.0.tgz
@@ -109,6 +138,7 @@ SRC_URI="https://registry.yarnpkg.com/@alcalzone/jsonl-db/-/jsonl-db-2.5.2.tgz -
 	https://registry.yarnpkg.com/one-time/-/one-time-1.0.0.tgz -> node-one-time-1.0.0.tgz
 	https://registry.yarnpkg.com/onetime/-/onetime-5.1.2.tgz -> node-onetime-5.1.2.tgz
 	https://registry.yarnpkg.com/path-key/-/path-key-3.1.1.tgz -> node-path-key-3.1.1.tgz
+	https://registry.yarnpkg.com/@alcalzone/proper-lockfile/-/proper-lockfile-4.1.3-0.tgz -> node-@alcalzone-proper-lockfile-4.1.3-0.tgz
 	https://registry.yarnpkg.com/proper-lockfile/-/proper-lockfile-4.1.2.tgz -> node-proper-lockfile-4.1.2.tgz
 	https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.6.0.tgz -> node-readable-stream-3.6.0.tgz
 	https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz -> node-reflect-metadata-0.1.13.tgz
@@ -137,14 +167,14 @@ SRC_URI="https://registry.yarnpkg.com/@alcalzone/jsonl-db/-/jsonl-db-2.5.2.tgz -
 	https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz -> node-util-deprecate-1.0.2.tgz
 	https://registry.yarnpkg.com/which/-/which-2.0.2.tgz -> node-which-2.0.2.tgz
 	https://registry.yarnpkg.com/winston-transport/-/winston-transport-4.5.0.tgz -> node-winston-transport-4.5.0.tgz
-	https://registry.yarnpkg.com/winston/-/winston-3.7.2.tgz -> node-winston-3.7.2.tgz
+	https://registry.yarnpkg.com/winston/-/winston-3.8.2.tgz -> node-winston-3.8.2.tgz
 	https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz -> node-wrap-ansi-7.0.0.tgz
 	https://registry.yarnpkg.com/ws/-/ws-8.6.0.tgz -> node-ws-8.6.0.tgz
 	https://registry.yarnpkg.com/xstate/-/xstate-4.32.0.tgz -> node-xstate-4.32.0.tgz
 	https://registry.yarnpkg.com/y18n/-/y18n-5.0.8.tgz -> node-y18n-5.0.8.tgz
 	https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-21.0.1.tgz -> node-yargs-parser-21.0.1.tgz
 	https://registry.yarnpkg.com/yargs/-/yargs-17.5.1.tgz -> node-yargs-17.5.1.tgz
-	https://registry.yarnpkg.com/zwave-js/-/zwave-js-9.6.2.tgz -> node-zwave-js-9.6.2.tgz
+	https://registry.yarnpkg.com/zwave-js/-/zwave-js-10.2.0.tgz -> node-zwave-js-10.2.0.tgz
 	https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz -> node-form-data-4.0.0.tgz
 	https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz -> node-asynckit-0.4.0.tgz
 	https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz -> node-combined-stream-1.0.8.tgz
