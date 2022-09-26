@@ -18,7 +18,7 @@ index d0847b8e..ca2fc476 100755
  # but we need them to be first in order to get the colors needed for the script output
 -PIHOLE_SCRIPTS_DIRECTORY="@EPREFIX@/usr/@LIBDIR@/pihole"
  PIHOLE_COLTABLE_FILE="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
- 
+
 +VHOST_SERVER=lighttpd
 +if [ -f /etc/vhosts/webapp-config ]; then
 +    VHOST_SERVER=$(grep -F vhost_server= /etc/vhosts/webapp-config | head -n1 | cut '-d"' -f2)
@@ -27,9 +27,9 @@ index d0847b8e..ca2fc476 100755
  # These provide the colors we need for making the log more readable
  if [[ -f ${PIHOLE_COLTABLE_FILE} ]]; then
      source ${PIHOLE_COLTABLE_FILE}
-@@ -44,13 +48,11 @@ fi
+@@ -44,12 +48,11 @@ fi
  OBFUSCATED_PLACEHOLDER="<DOMAIN OBFUSCATED>"
- 
+
  # FAQ URLs for use in showing the debug log
 -FAQ_UPDATE_PI_HOLE="${COL_CYAN}https://discourse.pi-hole.net/t/how-do-i-update-pi-hole/249${COL_NC}"
  FAQ_CHECKOUT_COMMAND="${COL_CYAN}https://discourse.pi-hole.net/t/the-pihole-command-with-examples/738#checkout${COL_NC}"
@@ -37,12 +37,11 @@ index d0847b8e..ca2fc476 100755
  FAQ_HARDWARE_REQUIREMENTS_PORTS="${COL_CYAN}https://docs.pi-hole.net/main/prerequisites/#ports${COL_NC}"
  FAQ_HARDWARE_REQUIREMENTS_FIREWALLD="${COL_CYAN}https://docs.pi-hole.net/main/prerequisites/#firewalld${COL_NC}"
  FAQ_GATEWAY="${COL_CYAN}https://discourse.pi-hole.net/t/why-is-a-default-gateway-important-for-pi-hole/3546${COL_NC}"
--FAQ_ULA="${COL_CYAN}https://discourse.pi-hole.net/t/use-ipv6-ula-addresses-for-pi-hole/2127${COL_NC}"
  FAQ_FTL_COMPATIBILITY="${COL_CYAN}https://github.com/pi-hole/FTL#compatibility-list${COL_NC}"
  FAQ_BAD_ADDRESS="${COL_CYAN}https://discourse.pi-hole.net/t/why-do-i-see-bad-address-at-in-pihole-log/3972${COL_NC}"
- 
+
 @@ -59,18 +61,14 @@ FORUMS_URL="${COL_CYAN}https://discourse.pi-hole.net${COL_NC}"
- 
+
  # Directories required by Pi-hole
  # https://discourse.pi-hole.net/t/what-files-does-pi-hole-use/1684
 -CORE_GIT_DIRECTORY="@EPREFIX@/usr/@LIBDIR@/pihole"
@@ -63,24 +62,24 @@ index d0847b8e..ca2fc476 100755
  ETC="/etc"
 @@ -138,7 +136,7 @@ RESOLVCONF="${ETC}/resolv.conf"
  DNSMASQ_CONF="${ETC}/dnsmasq.conf"
- 
+
  # Store Pi-hole's processes in an array for easy use and parsing
 -PIHOLE_PROCESSES=( "lighttpd" "pihole-FTL" )
 +PIHOLE_PROCESSES=( "pihole-FTL" "$VHOST_SERVER" )
- 
+
  # Store the required directories in an array so it can be parsed through
  REQUIRED_FILES=("${PIHOLE_CRON_FILE}"
 @@ -164,7 +162,9 @@ REQUIRED_FILES=("${PIHOLE_CRON_FILE}"
  "${DNSMASQ_CONF}"
  "${PIHOLE_CUSTOM_HOSTS_FILE}")
- 
+
 -DISCLAIMER="This process collects information from your Pi-hole, and optionally uploads it to a unique and random directory on tricorder.pi-hole.net.
 +DISCLAIMER="tatsh-overlay message: The following output may differ significantly from a standard Pi-hole installation's. Any issues should be posted WITHOUT this log to https://github.com/Tatsh/tatsh-overlay/issues before sending an issue upstream. You will then be advised if upstream is relevant for the issue. If a log is necessary, it will be requested.
 +
 +This process collects information from your Pi-hole, and optionally uploads it to a unique and random directory on tricorder.pi-hole.net.
- 
+
  The intent of this script is to allow users to self-diagnose their installations.  This is accomplished by running tests against our software and providing the user with links to FAQ articles when a problem is detected.  Since we are a small team and Pi-hole has been growing steadily, it is our hope that this will help us spend more time on development.
- 
+
 @@ -280,7 +280,7 @@ compare_local_version_to_git_version() {
              else
                  # echo the current version in yellow, signifying it's something to take a look at, but not a critical error
@@ -88,7 +87,7 @@ index d0847b8e..ca2fc476 100755
 -                log_write "${INFO} ${pihole_component}: ${COL_YELLOW}${remote_version:-Untagged}${COL_NC} (${FAQ_UPDATE_PI_HOLE})"
 +                log_write "${INFO} ${pihole_component}: ${COL_YELLOW}${remote_version:-Untagged}${COL_NC}"
              fi
- 
+
              # Print the repo upstreams
 @@ -345,7 +345,7 @@ check_ftl_version() {
          log_write "${TICK} ${ftl_name}: ${COL_GREEN}${FTL_VERSION}${COL_NC}"
@@ -97,10 +96,10 @@ index d0847b8e..ca2fc476 100755
 -        log_write "${INFO} ${ftl_name}: ${COL_YELLOW}${FTL_VERSION}${COL_NC} (${FAQ_UPDATE_PI_HOLE})"
 +        log_write "${TICK} ${ftl_name}: ${COL_YELLOW}${FTL_VERSION}${COL_NC}"
      fi
- 
+
      # If they use the master branch, they are on the stable codebase
 @@ -364,10 +364,6 @@ check_ftl_version() {
- 
+
  # Checks the core version of the Pi-hole codebase
  check_component_versions() {
 -    # Check the Web version, branch, and commit
@@ -132,13 +131,13 @@ index d0847b8e..ca2fc476 100755
 +    get_program_version "$VHOST_SERVER"
      get_program_version "php"
  }
- 
+
 @@ -420,6 +420,7 @@ os_check() {
- 
+
      # Extract dig response
      response="${cmdResult%%$'\n'*}"
 +    response="${response} Gentoo=1"
- 
+
      IFS=" " read -r -a supportedOS < <(echo "${response}" | tr -d '"')
      for distro_and_versions in "${supportedOS[@]}"
 @@ -432,7 +433,7 @@ os_check() {
@@ -152,7 +151,7 @@ index d0847b8e..ca2fc476 100755
                  fi
 @@ -448,9 +449,9 @@ os_check() {
          log_write "${TICK} Distro:  ${COL_GREEN}${detected_os^}${COL_NC}"
- 
+
          if [ "$valid_version" = true ]; then
 -            log_write "${TICK} Version: ${COL_GREEN}${detected_version}${COL_NC}"
 +            log_write "${TICK} Version: ${COL_GREEN}${detected_version:-1}${COL_NC}"
@@ -173,7 +172,7 @@ index d0847b8e..ca2fc476 100755
      ports_in_use=()
 @@ -806,6 +807,12 @@ check_networking() {
  }
- 
+
  check_x_headers() {
 +    if emerge --search www-apps/pihole-admin-lte | grep -F installed | grep -Fq 'Not Installed'; then
 +        return
@@ -194,8 +193,8 @@ index d0847b8e..ca2fc476 100755
      # Store what the X-Header should be in variables for comparison later
      local dashboard_working
      dashboard_working="X-Pi-hole: The Pi-hole Web interface is working!"
- 
-     # Same logic applies to the dashboard as above, if the X-Header matches what a working system should have,
+
+     # If the X-Header matches what a working system should have,
 -    if [[ $dashboard == "$dashboard_working" ]]; then
 +    if [[ ${dashboard,,} == "${dashboard_working,,}" ]]; then
          # then we can show a success
@@ -219,14 +218,14 @@ index 36c189ac..37211cc6 100755
 --- a/advanced/Scripts/updatecheck.sh
 +++ b/advanced/Scripts/updatecheck.sh
 @@ -22,7 +22,7 @@ function get_local_version() {
- 
+
  # Source the setupvars config file
  # shellcheck disable=SC1091
 -. @EPREFIX@/var/lib/setupVars.conf
 +. /etc/pihole/setupVars.conf
- 
+
  # Source the utils file
  # shellcheck disable=SC1091
--- 
+--
 2.37.3
 

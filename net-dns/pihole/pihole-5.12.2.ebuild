@@ -15,7 +15,7 @@ IUSE="cron www"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
-FTL_VERSION="5.12.1"
+FTL_VERSION="5.12.2"
 RDEPEND="${DEPEND}
 	>=net-dns/${PN}-ftl-${FTL_VERSION}
 	app-admin/sudo
@@ -36,7 +36,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0010-fix-path-in-generated-dhcp-c.patch"
 	"${FILESDIR}/${PN}-0011-more-path-fixes.patch"
 	"${FILESDIR}/${PN}-0012-piholedebug-gentoo-vhost-fix.patch"
-	"${FILESDIR}/${PN}-0013-remove-updatecheck.patch"
 	"${FILESDIR}/${PN}-0014-remove-more-unused.patch"
 )
 
@@ -56,6 +55,7 @@ src_prepare() {
 			advanced/Templates/gravity_copy.sql \
 			advanced/Templates/${PN}-FTL.service \
 			advanced/Templates/logrotate || die
+	rm advanced/Scripts/updatecheck.sh || die
 }
 
 src_install() {
