@@ -9,6 +9,10 @@ while read -r ebuild; do
     cat=$(dirname "$dn")
     pn=$(basename "$dn")
     pushd "$dn" || exit 1
+    if grep -E 'EGO_SUM|registry.yarnpkg.com' ./*.ebuild; then
+        popd || exit 1
+        continue
+    fi
     old_ifs="$IFS"
     phases=( clean manifest prepare )
     if [[ " ${test_install[*]} " =~ " ${cat}/${pn} " ]]; then
