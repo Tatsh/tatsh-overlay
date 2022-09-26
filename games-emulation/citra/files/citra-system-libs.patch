@@ -59,8 +59,8 @@ index 24e881b19..bfee14919 100644
  
  # Add additional boost libs here; remember to ALIAS them in the root CMakeLists!
  
-@@ -28,13 +30,21 @@ add_library(catch-single-include INTERFACE)
- target_include_directories(catch-single-include INTERFACE catch/single_include)
+@@ -28,13 +30,21 @@ set(CATCH_INSTALL_EXTRAS OFF)
+ add_subdirectory(catch2)
  
  # Crypto++
 -add_subdirectory(cryptopp)
@@ -85,12 +85,11 @@ index 24e881b19..bfee14919 100644
  endif()
  
  # Dynarmic
-@@ -46,8 +56,12 @@ if (ARCHITECTURE_x86_64 OR ARCHITECTURE_ARM64)
+@@ -46,7 +56,12 @@ if (ARCHITECTURE_x86_64 OR ARCHITECTURE_ARM64)
  endif()
  
  # libfmt
 -add_subdirectory(fmt)
--add_library(fmt::fmt ALIAS fmt)
 +if (NOT USE_SYSTEM_FMT)
 +    add_subdirectory(fmt)
 +    add_library(fmt::fmt ALIAS fmt)
@@ -113,7 +112,8 @@ index 24e881b19..bfee14919 100644
  
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -77,20 +95,36 @@ add_subdirectory(soundtouch)
+@@ -77,28 +95,44 @@ add_subdirectory(soundtouch)
+ # The SoundTouch target doesn't export the necessary include paths as properties by default
  target_include_directories(SoundTouch INTERFACE ./soundtouch/include)
  
  # Teakra
@@ -123,8 +123,16 @@ index 24e881b19..bfee14919 100644
 +else()
 +    find_library(TEAKRA_LIBS teakra REQUIRED)
 +endif()
+
+ # SDL2
+ if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
+     add_subdirectory(sdl2)
+ endif()
  
  # Zstandard
+ set(ZSTD_LEGACY_SUPPORT OFF)
+ set(ZSTD_BUILD_PROGRAMS OFF)
+ set(ZSTD_BUILD_SHARED OFF)
 -add_subdirectory(zstd/build/cmake EXCLUDE_FROM_ALL)
 -target_include_directories(libzstd_static INTERFACE $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/externals/zstd/lib>)
 +if (NOT USE_SYSTEM_ZSTD)
@@ -182,13 +190,27 @@ index 5d65965fa..22519073d 100644
 @@ -130,7 +130,11 @@ endif()
  create_target_directory_groups(common)
  
- target_link_libraries(common PUBLIC fmt microprofile Boost::boost Boost::serialization)
+ target_link_libraries(common PUBLIC fmt::fmt microprofile Boost::boost Boost::serialization)
 -target_link_libraries(common PRIVATE libzstd_static)
 +if (NOT USE_SYSTEM_ZSTD)
 +    target_link_libraries(common PRIVATE libzstd_static)
 +else()
 +    target_link_libraries(common PUBLIC zstd)
 +endif()
+ set_target_properties(common PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
+
  if (ARCHITECTURE_x86_64)
      target_link_libraries(common PRIVATE xbyak)
- endif()
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index e4b53f706..43510c382 100644
+--- a/externals/CMakeLists.txt
++++ b/externals/CMakeLists.txt
+@@ -26,7 +26,7 @@ target_link_libraries(boost_serialization PUBLIC boost)
+ # Catch2
+ set(CATCH_INSTALL_DOCS OFF)
+ set(CATCH_INSTALL_EXTRAS OFF)
+-add_subdirectory(catch2)
++find_package(Catch2 REQUIRED)
+
+ # Crypto++
+ add_subdirectory(cryptopp)

@@ -6,10 +6,10 @@ inherit cmake xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/ https://github.com/citra-emu/citra"
-SHA="baecc18d8c5365af0dddb231bc8c0a9c03850bf6"
-DYNARMIC_SHA="9f88f234a180a5e8d5620b4803c971fb6dc2d9f2"
-FMT_SHA="cc09f1a6798c085c325569ef466bcdcffdc266d4"
-LODEPNG_SHA="31d9704fdcca0b68fb9656d4764fa0fb60e460c2"
+SHA="030ecaa83c825bf4c91915d629adca2dadb9aaac"
+DYNARMIC_SHA="460617901965ef7cd73cfbcf289fe367bf11c99e"
+FMT_SHA="a33701196adfad74917046096bf5a2aa0ab0bb50"
+LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
 XBYAK_SHA="c306b8e5786eeeb87b8925a8af5c3bf057ff5a90"
 SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}.tar.gz
@@ -68,6 +68,7 @@ src_prepare() {
 	mv -f "${T}/compatibility_list.json" "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
 	sed -e 's|${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak|/usr/include/xbyak|' \
 		-i externals/dynarmic/externals/CMakeLists.txt || die
+	sed -re 's|^add_subdirectory\(tests\)$||' -i src/CMakeLists.txt || die
 	cmake_src_prepare
 }
 
@@ -83,6 +84,7 @@ src_configure() {
 		-DUSE_SYSTEM_CUBEB=ON
 		-DUSE_SYSTEM_ENET=ON
 		-DUSE_SYSTEM_INIH=ON
+		-DUSE_SYSTEM_SDL2=ON
 		-DUSE_SYSTEM_TEAKRA=ON
 		-DUSE_SYSTEM_XBYAK=OFF
 		-DUSE_SYSTEM_ZSTD=ON
