@@ -21,12 +21,12 @@ index 3cdbc589e..cf9ade8c6 100644
  ADD_SUBDIRECTORY(src)
 -ADD_SUBDIRECTORY(doc)
  ADD_SUBDIRECTORY(xdg)
- 
+
  ### Build summary ###
 @@ -324,15 +323,6 @@ SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
  SET(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
  #SET(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_SOURCE_DIR}/doc/WELCOME.txt")
- 
+
 -# Additional document files for the root directory.
 -# TODO: Convert from Unix line endings to Windows when
 -# compiling for Windows?
@@ -55,7 +55,7 @@ index c12e59fd5..b5d3ea1b9 100644
 @@ -48,10 +48,10 @@ IF(ECM_MODULE_PATH AND ECM_KDE_MODULE_DIR)
  		# - Actual:   (FIXME)
  		#
- 
+
 -		# Find the qtpaths executable.
 -		FIND_PROGRAM(QTPATHS qtpaths)
 +		# Find the qtpaths5 executable.
@@ -80,12 +80,12 @@ index c693e6193..f0f9859fe 100644
 --- a/src/librpbase/RomData.cpp
 +++ b/src/librpbase/RomData.cpp
 @@ -849,7 +849,6 @@ const rp_image *RomData::image(ImageType imageType) const
- 
+
  #ifdef _DEBUG // Must be guarded with this in case neither `_DEBUG` nor `NDEBUG` are defined
  	// SANITY CHECK: `img` must not be -1LL.
 -	assert(img != INVALID_IMG_PTR);
  #endif
- 
+
  	return (ret == 0 ? img : nullptr);
 diff --git a/src/libunixcommon/CMakeLists.txt b/src/libunixcommon/CMakeLists.txt
 index 99e9aeaf7..27ab3168e 100644
@@ -94,7 +94,7 @@ index 99e9aeaf7..27ab3168e 100644
 @@ -31,12 +31,12 @@ IF(BUILD_KDE4)
  	STRING(REPLACE "-std=iso9899:1990" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
  ENDIF(BUILD_KDE4)
- 
+
 -# Find the qtpaths executable.
 +# Find the qtpaths5 executable.
  IF(BUILD_KF5)
@@ -116,22 +116,6 @@ index 99e9aeaf7..27ab3168e 100644
  	ENDIF(NOT KF5_PLUGIN_INSTALL_DIR)
  	EXEC_PROGRAM(${QTPATHS} ARGS --install-prefix OUTPUT_VARIABLE QT5_INSTALL_PREFIX)
  	INCLUDE(ReplaceHardcodedPrefix)
-diff --git a/xdg/rp-config.desktop.in b/xdg/rp-config.desktop.in
-index e721b9af7..34ddbc2ed 100644
---- a/xdg/rp-config.desktop.in
-+++ b/xdg/rp-config.desktop.in
-@@ -1,10 +1,9 @@
- [Desktop Entry]
--Version=@RP_DISPLAY_VERSION@
- Icon=media-flash
- Exec=rp-config
- Terminal=false
- Type=Application
--Categories=System;Settings;QT;
-+Categories=System;Settings;
- Name=ROM Properties configurator
- Name[de]=ROM Properties konfigurator
- Name[en_GB]=ROM Properties configurator
--- 
+--
 2.35.1
 
