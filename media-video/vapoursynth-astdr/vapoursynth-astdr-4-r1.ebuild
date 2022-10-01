@@ -17,6 +17,8 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RDEPEND="media-video/vapoursynth
 	media-video/vapoursynth-hqdn3d
+	media-video/vapoursynth-mvtools
+	media-video/vs-removegrain
 	${PYTHON_DEPS}"
 
 DOCS=( readme.rst )
