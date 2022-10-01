@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit desktop toolchain-funcs xdg
+inherit desktop toolchain-funcs
 
 DESCRIPTION="bsnes fork that adds HD video features."
 HOMEPAGE="https://github.com/DerKoun/bsnes-hd"
@@ -48,33 +48,26 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${PN}-${SHA}"
 
 disable_module() {
-	sed -i \
-		-e "s|$1\b||" \
-		"${S}"/${BIN_PN}/target-${BIN_PN}/GNUmakefile || die
+	sed -i -e "s|$1\b||" ruby/GNUmakefile || die
 }
 
 src_prepare() {
-	xdg_src_prepare
-	default
 	sed -i \
 		-e "/handle/s#/usr/local/lib#/usr/$(get_libdir)#" \
 		nall/dl.hpp || die "fixing libdir failed!"
 	# audio modules
+	use alsa || disable_module audio.alsa
 	use ao || disable_module audio.ao
 	use openal || disable_module audio.openal
-	use pulseaudio ||  { disable_module audio.pulseaudio
-			disable_module audio.pulseaudiosimple ;}
+	use pulseaudio || { disable_module audio.pulseaudio && disable_module audio.pulseaudiosimple; }
 	use oss || disable_module audio.oss
-	use alsa || disable_module audio.alsa
 	# video modules
-	use opengl || disable_module video.glx
+	use opengl || { disable_module video.glx && disable_module video.glx2; }
 	use xv || disable_module video.xvideo
 	use sdl || disable_module video.sdl
 	# input modules
 	use sdl || disable_module input.sdl
 	use udev || disable_module input.udev
-	default
-	default
 	default
 }
 
@@ -82,10 +75,9 @@ src_compile() {
 	# Needed for fluent audio (even on i5 hardware)
 	export CFLAGS="${CFLAGS} -O3"
 	export CXXFLAGS="${CXXFLAGS} -O3"
-	emake -C "${BIN_PN}" \
-		"compiler=$(tc-getCXX)"
-	mkdir saved
-	cp ${BIN_PN}/out/${BIN_PN} saved/
+	emake -C "${BIN_PN}" "compiler=$(tc-getCXX)"
+	mkdir saved || die
+	cp ${BIN_PN}/out/${BIN_PN} saved/ || die
 	if use libretro; then
 		emake -C "${BIN_PN}" clean
 		emake -C "${BIN_PN}" \
