@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{9,10} )
+PYTHON_COMPAT=( python3_{9,10,11} )
 
 inherit python-r1
 
@@ -12,9 +12,12 @@ SRC_URI="https://github.com/dubhater/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${
 
 LICENSE="all-rights-reserved"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-RDEPEND="media-video/vapoursynth"
+RDEPEND="media-video/vapoursynth
+	media-video/vapoursynth-hqdn3d
+	${PYTHON_DEPS}"
 
 DOCS=( readme.rst )
 
