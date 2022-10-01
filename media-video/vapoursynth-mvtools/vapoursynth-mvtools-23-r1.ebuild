@@ -3,28 +3,25 @@
 
 EAPI=8
 
-inherit autotools
+inherit meson
 
-DESCRIPTION=""
+DESCRIPTION="Motion compensation, etc for VapourSynth."
 HOMEPAGE="https://github.com/dubhater/vapoursynth-mvtools/"
 SRC_URI="https://github.com/dubhater/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
+BDEPEND="dev-lang/nasm"
 DEPEND=">=media-video/vapoursynth-37
 		>=sci-libs/fftw-3.3.4"
 RDEPEND="${DEPEND}"
 
-src_prepare () {
-	eautoreconf
-	default
-}
-
-src_install () {
-	default
-	dosym /usr/$(get_libdir)/libmvtools.so /usr/$(get_libdir)/vapoursynth/libmvtools.so
-	einstalldocs
+src_configure() {
+	emesonargs=(
+		"--libdir=/usr/$(get_libdir)/vapoursynth"
+		"-Dwith_nasm=${EPREFIX}/usr/bin/nasm"
+	)
+	meson_src_configure
 }
