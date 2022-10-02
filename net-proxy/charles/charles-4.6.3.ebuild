@@ -24,7 +24,7 @@ src_prepare() {
 	find . -name application-vnd.tcpdump.pcap.png -delete
 	rm -R lib/jdk || die
 	sed -e "s/^Icon=.*/Icon=${PN}-proxy/" -i etc/${PN}-proxy.desktop || die
-	xdg_src_prepare
+	default
 	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i bin/${PN}
 }
 
@@ -34,7 +34,6 @@ src_install() {
 	doins lib/*.jar
 	insinto /usr/share/icons/hicolor
 	doins -r icon/*
-	insinto /usr/share/applications
 	domenu etc/*.desktop
 	insinto /usr/share/mime/packages
 	doins etc/mime/*.xml
