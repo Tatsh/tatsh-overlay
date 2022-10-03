@@ -9,7 +9,7 @@ while read -r ebuild; do
     cat=$(dirname "$dn")
     pn=$(basename "$dn")
     pushd "$dn" || exit 1
-    if grep -E 'EGO_SUM|registry.yarnpkg.com' ./*.ebuild; then
+    if grep -qE 'EGO_SUM|registry.yarnpkg.com' ./*.ebuild; then
         popd || exit 1
         continue
     fi
