@@ -7,17 +7,19 @@ inherit cmake python-single-r1
 
 DESCRIPTION="A code-completion & code-comprehension server."
 HOMEPAGE="https://github.com/ycm-core/ycmd"
-CORE_VERSION=46
+CORE_VERSION=47
 SHA="0e13fecefb629dfadfce948b5f350bf9d763a883"
 SRC_URI="https://github.com/ycm-core/ycmd/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 DEPEND="dev-cpp/abseil-cpp"
 RDEPEND="
 	${DEPEND}
+	${PYTHON_DEPS}
 	$(python_gen_cond_dep 'dev-python/bottle[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/jedi[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
 	$(python_gen_cond_dep 'dev-python/regex[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
