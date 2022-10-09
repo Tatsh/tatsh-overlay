@@ -1,4 +1,4 @@
-From 8f91da6fe1d407ec7a1b945a03908508406da60a Mon Sep 17 00:00:00 2001
+From 8641ee96aad852743740cad0aa43d610feb0df3b Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 4 Oct 2022 21:18:49 -0400
 Subject: [PATCH] No conflicts
@@ -22,7 +22,7 @@ Subject: [PATCH] No conflicts
  15 files changed, 55 insertions(+), 66 deletions(-)
 
 diff --git a/hifi-decode b/hifi-decode
-index 270a456e..3059eef0 100755
+index fcf76666..7577ff04 100755
 --- a/hifi-decode
 +++ b/hifi-decode
 @@ -4,14 +4,14 @@ from multiprocessing import cpu_count
@@ -36,9 +36,9 @@ index 270a456e..3059eef0 100755
      select_system,
      get_basics
  )
--from vhsdecode.hifi.HiFiDecode import HiFiDecode
+-from vhsdecode.hifi.HiFiDecode import HiFiDecode, NoiseReduction
 -from vhsdecode.hifi.TimeProgressBar import TimeProgressBar
-+from hifidecode.hifi.HiFiDecode import HiFiDecode
++from hifidecode.hifi.HiFiDecode import HiFiDecode, NoiseReduction
 +from hifidecode.hifi.TimeProgressBar import TimeProgressBar
  
  parser, _ = common_parser_cli("Extracts audio from raw VHS HiFi FM capture", default_threads=round(cpu_count() / 2) + 1)
@@ -332,25 +332,24 @@ index a796c312..36e2cbb7 100644
              get_sysparams_mpal_vhs,
          )
 diff --git a/vhsdecode/hifi/HiFiDecode.py b/vhsdecode/hifi/HiFiDecode.py
-index 59c33976..bd1b3252 100644
+index a91e0526..f6ecc1a3 100644
 --- a/vhsdecode/hifi/HiFiDecode.py
 +++ b/vhsdecode/hifi/HiFiDecode.py
-@@ -6,11 +6,11 @@ from concurrent.futures import ThreadPoolExecutor
+@@ -12,10 +12,10 @@ from scipy.signal import iirpeak, iirnotch
+ from scipy.signal.signaltools import hilbert
  
- import numpy as np
- 
--# from vhsdecode.addons.gnuradioZMQ import ZMQSend
--from vhsdecode.utils import firdes_lowpass, firdes_highpass, FiltersClass, plot_scope, dualplot_scope, \
-+# from hifidecode.addons.gnuradioZMQ import ZMQSend
-+from hifidecode.utils import firdes_lowpass, firdes_highpass, FiltersClass, plot_scope, dualplot_scope, \
-     filter_plot, gen_wave_at_frequency, StackableMA
+ from lddecode.utils import unwrap_hilbert
+-from vhsdecode.addons.FMdeemph import FMDeEmphasisC
 -from vhsdecode.addons.chromasep import samplerate_resample
--from vhsdecode.addons.FMdeemph import FMDeEmphasis, FMDeEmphasisC
+-from vhsdecode.addons.gnuradioZMQ import ZMQSend
+-from vhsdecode.utils import firdes_lowpass, firdes_highpass, FiltersClass, gen_wave_at_frequency, StackableMA
++from hifidecode.addons.FMdeemph import FMDeEmphasisC
 +from hifidecode.addons.chromasep import samplerate_resample
-+from hifidecode.addons.FMdeemph import FMDeEmphasis, FMDeEmphasisC
- from math import log, pi
- from fractions import Fraction
- from pyhht.utils import inst_freq
++from hifidecode.addons.gnuradioZMQ import ZMQSend
++from hifidecode.utils import firdes_lowpass, firdes_highpass, FiltersClass, gen_wave_at_frequency, StackableMA
+ 
+ 
+ @dataclass
 diff --git a/vhsdecode/main.py b/vhsdecode/main.py
 index 88f4d81d..0209b27c 100644
 --- a/vhsdecode/main.py
@@ -440,5 +439,5 @@ index 2edbd2a3..fa5f2538 100644
              plot_input_data(
                  raw_data=data,
 -- 
-2.37.3
+2.38.0
 
