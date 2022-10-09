@@ -135,7 +135,7 @@ SRC_URI="https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz -> node-abbrev-1
 	https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz -> node-natural-compare-1.4.0.tgz
 	https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz -> node-negotiator-0.6.3.tgz
 	https://registry.yarnpkg.com/node-gyp/-/${P}.tgz -> node-${P}.tgz
-	https://registry.yarnpkg.com/nopt/-/nopt-5.0.0.tgz -> node-nopt-5.0.0.tgz
+	https://registry.yarnpkg.com/nopt/-/nopt-6.0.0.tgz -> node-nopt-6.0.0.tgz
 	https://registry.yarnpkg.com/@npmcli/fs/-/fs-2.1.0.tgz -> node-@npmcli-fs-2.1.0.tgz
 	https://registry.yarnpkg.com/@npmcli/move-file/-/move-file-2.0.0.tgz -> node-@npmcli-move-file-2.0.0.tgz
 	https://registry.yarnpkg.com/npmlog/-/npmlog-6.0.1.tgz -> node-npmlog-6.0.1.tgz
