@@ -1,4 +1,4 @@
-# Copyright 2022 Gentoo Authors
+#1 Copyright 2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -19,6 +19,7 @@ KEYWORDS="~amd64"
 DEPEND="sci-libs/fftw"
 RDEPEND="${DEPEND}
 	${PYTHON_DEPS}
+	dev-python/pyzmq[${PYTHON_USEDEP}]
 	dev-python/pandas[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
 	media-video/ffmpeg
