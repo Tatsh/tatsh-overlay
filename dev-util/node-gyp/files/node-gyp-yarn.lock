@@ -416,10 +416,10 @@ negotiator@^0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-node-gyp@^9.2.0:
-  version "9.2.0"
-  resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-9.2.0.tgz#b3b56144828a98018a4cfb3033095e0f5b874d72"
-  integrity sha512-/+/YxGfIJOh/fnMsr4Ep0v6oOIjnO1BgLd2dcDspBX1spTkQU7xSIox5RdRE/2/Uq3ZwK8Z5swRIbMUmPlslmg==
+node-gyp@^9.3.0:
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-9.3.0.tgz#f8eefe77f0ad8edb3b3b898409b53e697642b319"
+  integrity sha512-A6rJWfXFz7TQNjpldJ915WFb1LnhO4lIve3ANPbWreuEoLoKlFT3sxIepPBkLhM27crW8YmN+pjlgbasH6cH/Q==
   dependencies:
     env-paths "^2.2.0"
     glob "^7.1.4"
