@@ -1,4 +1,4 @@
-From 73bc8a2404b232596b58b8a98160218f85f070f9 Mon Sep 17 00:00:00 2001
+From 9380f31dd33ae0831bd6fcfcd6353a7431955ad0 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:45:41 -0500
 Subject: [PATCH 1/4] Path changes
@@ -7,20 +7,19 @@ Subject: [PATCH 1/4] Path changes
  api_db.php                             |  9 ++---
  dns_records.php                        | 18 +++++-----
  scripts/pi-hole/js/queryads.js         |  2 +-
- scripts/pi-hole/php/FTL.php            |  2 +-
  scripts/pi-hole/php/database.php       | 29 ++++++++--------
  scripts/pi-hole/php/func.php           |  4 +--
  scripts/pi-hole/php/password.php       |  2 +-
  scripts/pi-hole/php/savesettings.php   | 46 ++++++++++++++------------
  scripts/pi-hole/php/teleporter.php     | 42 +++++++++++------------
  scripts/pi-hole/php/update_checker.php |  2 +-
- 10 files changed, 79 insertions(+), 77 deletions(-)
+ 9 files changed, 78 insertions(+), 76 deletions(-)
 
 diff --git a/api_db.php b/api_db.php
-index 5612de26..b0ed0aff 100644
+index fca897a2..359715ee 100644
 --- a/api_db.php
 +++ b/api_db.php
-@@ -284,10 +284,11 @@ if (isset($_GET['getQueriesCount']) && $auth) {
+@@ -285,10 +285,11 @@ if (isset($_GET['getQueriesCount']) && $auth) {
      $data = array_merge($data, $result);
  }
  
@@ -78,24 +77,11 @@ index cb8625ac..1177d1e7 100644
        // Remove "(x results)"
        shortstring = shortstring.replace(/\(.*/, "");
        ta.append(shortstring + "\n");
-diff --git a/scripts/pi-hole/php/FTL.php b/scripts/pi-hole/php/FTL.php
-index ac7ecee8..fba78750 100644
---- a/scripts/pi-hole/php/FTL.php
-+++ b/scripts/pi-hole/php/FTL.php
-@@ -10,7 +10,7 @@
- const DEFAULT_FTLCONFFILE = '/etc/pihole/pihole-FTL.conf';
- const DEFAULT_FTL_IP = '127.0.0.1';
- const DEFAULT_FTL_PORT = 4711;
--const DEFAULT_FTL_PORTFILE = '/run/pihole-FTL.port';
-+const DEFAULT_FTL_PORTFILE = '/run/pihole/FTL.port';
- 
- function piholeFTLConfig($piholeFTLConfFile = DEFAULT_FTLCONFFILE, $force = false)
- {
 diff --git a/scripts/pi-hole/php/database.php b/scripts/pi-hole/php/database.php
-index f3fe3487..c1f8d50b 100644
+index f52c6169..502a3067 100644
 --- a/scripts/pi-hole/php/database.php
 +++ b/scripts/pi-hole/php/database.php
-@@ -9,24 +9,23 @@
+@@ -15,24 +15,23 @@ const LISTTYPE_REGEX_BLACKLIST = 3;
  
  function getGravityDBFilename()
  {
@@ -135,10 +121,10 @@ index f3fe3487..c1f8d50b 100644
  
  function SQLite3_connect_try($filename, $mode, $trytoreconnect)
 diff --git a/scripts/pi-hole/php/func.php b/scripts/pi-hole/php/func.php
-index 76a19cd8..591aeb6e 100644
+index ea2f60a7..a800e2ef 100644
 --- a/scripts/pi-hole/php/func.php
 +++ b/scripts/pi-hole/php/func.php
-@@ -158,7 +158,7 @@ function pihole_execute($argument_string)
+@@ -162,7 +162,7 @@ function pihole_execute($argument_string)
  }
  
  // Custom DNS
@@ -147,7 +133,7 @@ index 76a19cd8..591aeb6e 100644
  
  function echoCustomDNSEntries()
  {
-@@ -312,7 +312,7 @@ function deleteAllCustomDNSEntries($reload = '')
+@@ -316,7 +316,7 @@ function deleteAllCustomDNSEntries($reload = '')
  }
  
  // CNAME
@@ -157,11 +143,11 @@ index 76a19cd8..591aeb6e 100644
  function echoCustomCNAMEEntries()
  {
 diff --git a/scripts/pi-hole/php/password.php b/scripts/pi-hole/php/password.php
-index b2f014fb..b40ef98f 100644
+index 7724cd05..d01ab964 100644
 --- a/scripts/pi-hole/php/password.php
 +++ b/scripts/pi-hole/php/password.php
-@@ -18,7 +18,7 @@ ini_set('session.use_only_cookies', 1);
- session_start();
+@@ -13,7 +13,7 @@ require_once 'func.php';
+ start_php_session();
  
  // Read setupVars.conf file
 -$setupVars = parse_ini_file('/etc/pihole/setupVars.conf');
@@ -234,7 +220,7 @@ index 41f03a64..06dc6a6c 100644
          }
          fclose($handle);
 diff --git a/scripts/pi-hole/php/teleporter.php b/scripts/pi-hole/php/teleporter.php
-index d9a4ba27..8496cd72 100644
+index 0161a9ad..ecf02e73 100644
 --- a/scripts/pi-hole/php/teleporter.php
 +++ b/scripts/pi-hole/php/teleporter.php
 @@ -464,23 +464,23 @@ if (isset($_POST['action'])) {
@@ -296,7 +282,7 @@ index d9a4ba27..8496cd72 100644
      $archive->compress(Phar::GZ); // Creates a gzipped copy
      unlink($archive_file_name); // Unlink original tar file as it is not needed anymore
 diff --git a/scripts/pi-hole/php/update_checker.php b/scripts/pi-hole/php/update_checker.php
-index 733b1574..363d7a73 100644
+index 95c5d610..ae740dbe 100644
 --- a/scripts/pi-hole/php/update_checker.php
 +++ b/scripts/pi-hole/php/update_checker.php
 @@ -11,7 +11,7 @@ function checkUpdate($currentVersion, $latestVersion)
@@ -309,5 +295,5 @@ index 733b1574..363d7a73 100644
  if (!is_readable($versionsfile)) {
      $core_branch = 'master';
 -- 
-2.37.3
+2.38.0
 

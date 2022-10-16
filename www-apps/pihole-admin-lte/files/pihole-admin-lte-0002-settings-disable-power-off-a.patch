@@ -1,4 +1,4 @@
-From 063e165ad719e94cc082e243ed4727faca8e11b7 Mon Sep 17 00:00:00 2001
+From 01e472ee3b1cfdae1b23c53a5b97be84ac4c970b Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:13 -0500
 Subject: [PATCH 2/4] settings: disable power off and restart system buttons
@@ -72,5 +72,5 @@ index 7ff980f6..045e6d0a 100644
      while (!feof($dhcpleases) && $leasesfile) {
          $line = explode(' ', trim(fgets($dhcpleases)));
 -- 
-2.37.3
+2.38.0
 
