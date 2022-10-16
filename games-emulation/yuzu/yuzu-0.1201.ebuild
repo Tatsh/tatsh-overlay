@@ -49,7 +49,7 @@ DEPEND="app-arch/lz4
 	net-libs/enet:=
 	sys-libs/libunwind
 	sys-libs/zlib
-	x11-libs/libva
+	media-libs/libva
 	virtual/libusb:=
 	dev-libs/openssl
 	dev-qt/qtmultimedia"
