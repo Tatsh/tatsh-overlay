@@ -7,7 +7,7 @@ inherit mpv-plugin
 
 DESCRIPTION="Play upcoming videos from YouTube."
 HOMEPAGE="https://github.com/cvzi/mpv-youtube-upnext"
-SHA="753157433c10720fc6d95bd22319223447513abe"
+SHA="01d38b8d5ff325af873f6bcd8c78d284b0b21065"
 SRC_URI="https://github.com/cvzi/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="ISC"
