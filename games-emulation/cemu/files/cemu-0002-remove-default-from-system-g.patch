@@ -29,11 +29,11 @@ index 24aee64..06f233b 100644
  	std::optional<std::vector<uint8>> profileContents = FileStream::LoadIntoMemory(gameProfilePath);
  	if (!profileContents)
  	{
--		gameProfilePath = ActiveSettings::GetSystemDataPath("gameProfiles/default/{:016x}.ini", title_id);
-+		gameProfilePath = ActiveSettings::GetSystemDataPath("gameProfiles/{:016x}.ini", title_id);
+-		gameProfilePath = ActiveSettings::GetDataPath("gameProfiles/default/{:016x}.ini", title_id);
++		gameProfilePath = ActiveSettings::GetDataPath("gameProfiles/{:016x}.ini", title_id);
  		profileContents = FileStream::LoadIntoMemory(gameProfilePath);
  		if (!profileContents)
  			return false;
--- 
+--
 2.37.3
 

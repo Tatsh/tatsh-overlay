@@ -7,7 +7,7 @@ inherit cmake desktop wrapper xdg
 
 DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
-SHA="0c9fb3143f491d60959b3f2ca0aa8a04ab38b47c"
+SHA="e88d20cbfbada6b1d144c4944f080f70299c1506"
 MY_PN="Cemu"
 FMT_PV="9.1.0"
 GLSLANG_PV="11.8.0"
@@ -42,18 +42,16 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${MY_PN}-${SHA}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-add-ability-to-save-read-fil.patch"
 	"${FILESDIR}/${PN}-0002-remove-default-from-system-g.patch"
 	"${FILESDIR}/${PN}-0003-switch-to-submodules-for-som.patch"
 )
 
 src_prepare() {
 	cmake_src_prepare
-	mv "${WORKDIR}/fmt-${FMT_PV}" "${S}/fmt" || die
-	mv "${WORKDIR}/glslang-${GLSLANG_PV}" "${S}/glslang" || die
-	mv "${WORKDIR}/imgui-${IMGUI_PV}" "${S}/imgui" || die
-	cp "${FILESDIR}/${PN}-imgui-CMakeLists.txt" imgui/CMakeLists.txt || die
-	cp "${FILESDIR}/${PN}-imgui-config.cmake.in" imgui/imgui-config.cmake.in || die
+	mv "${WORKDIR}/fmt-${FMT_PV}" fmt || die
+	mv "${WORKDIR}/glslang-${GLSLANG_PV}" glslang || die
+	rmdir dependencies/imgui || die
+	mv "${WORKDIR}/imgui-${IMGUI_PV}" dependencies/imgui || die
 }
 
 src_configure() {
@@ -66,9 +64,6 @@ src_configure() {
 		-DENABLE_SDL=ON
 		-DENABLE_VULKAN=ON
 		-DENABLE_WXWIDGETS=ON
-		-DENABLE_XDG_DIRS=ON
-		-DPUBLIC_RELEASE=ON
-		-DSYSTEM_DATA_PATH=/usr/share/${PN}
 		-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3
 		-Wno-dev
 	)

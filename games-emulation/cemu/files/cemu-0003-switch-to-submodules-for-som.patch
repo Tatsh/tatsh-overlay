@@ -1,22 +1,8 @@
-From b14e8f3a1a068a28ee6e4941334f3958a7ce4e9f Mon Sep 17 00:00:00 2001
-From: Andrew Udvare <audvare@gmail.com>
-Date: Fri, 2 Sep 2022 00:30:36 -0400
-Subject: [PATCH 3/3] Switch to submodules for some deps
-
----
- CMakeLists.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9135c62..9ff250d 100644
+index b973a3f..f80c62b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -87,16 +87,16 @@ find_package(Threads REQUIRED)
- find_package(SDL2 REQUIRED)
- find_package(CURL REQUIRED)
- find_package(pugixml REQUIRED)
--find_package(imgui REQUIRED)
-+add_subdirectory(imgui)
+@@ -91,13 +91,13 @@ find_package(pugixml REQUIRED)
  find_package(RapidJSON REQUIRED)
  find_package(Boost COMPONENTS program_options filesystem nowide REQUIRED)
  find_package(libzip REQUIRED)
@@ -26,11 +12,9 @@ index 9135c62..9ff250d 100644
  find_package(OpenSSL COMPONENTS Crypto SSL REQUIRED)
  find_package(glm REQUIRED)
 -find_package(fmt 9.1.0 REQUIRED)
+ find_package(PNG REQUIRED)
 +add_subdirectory(fmt)
 +add_subdirectory(glslang)
- find_package(PNG REQUIRED)
  
  # glslang versions older than 11.11.0 define targets without a namespace
--- 
-2.37.3
-
+ if (NOT TARGET glslang::SPIRV AND TARGET SPIRV)
