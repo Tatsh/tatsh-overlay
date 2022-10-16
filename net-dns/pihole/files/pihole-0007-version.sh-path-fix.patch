@@ -1,7 +1,7 @@
-From dd187037cff57f209e9a5ffeabc72e68f7e6f571 Mon Sep 17 00:00:00 2001
+From 5a9ba11077c964b1f6e21a382c3f9a049be80ff6 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 24 Dec 2021 00:16:15 -0500
-Subject: [PATCH 08/14] version.sh path fix
+Subject: [PATCH 07/13] version.sh path fix
 
 ---
  advanced/Scripts/version.sh | 2 +-
@@ -21,5 +21,5 @@ index 63f3bfc6..9175ad76 100755
  getLocalVersion() {
      # FTL requires a different method
 -- 
-2.37.3
+2.38.0
 

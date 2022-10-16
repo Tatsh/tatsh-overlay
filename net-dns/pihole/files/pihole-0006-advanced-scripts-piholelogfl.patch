@@ -1,7 +1,7 @@
-From 08c46f1c1123b426d0e73c09b857e2b77c01170e Mon Sep 17 00:00:00 2001
+From e3d5025a6a1729b788143fdcf58003404f3cb033 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 16 Dec 2021 08:46:50 -0500
-Subject: [PATCH 06/14] advanced/Scripts/piholeLogFlush: change STATEFILE path
+Subject: [PATCH 06/13] advanced/Scripts/piholeLogFlush: change STATEFILE path
 
 ---
  advanced/Scripts/piholeLogFlush.sh | 2 +-
@@ -21,5 +21,5 @@ index d316bc41..ad669776 100755
  # Determine database location
  # Obtain DBFILE=... setting from pihole-FTL.db
 -- 
-2.37.3
+2.38.0
 

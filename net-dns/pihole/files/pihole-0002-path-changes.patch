@@ -1,7 +1,7 @@
-From 19b5487eb4e6c225c28044c7b6f285347eaf04a0 Mon Sep 17 00:00:00 2001
+From 70b6c773a84743f572d4683906c18498b9b9613a Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:49 -0500
-Subject: [PATCH 02/14] Path changes
+Subject: [PATCH 02/13] Path changes
 
 ---
  advanced/01-pihole.conf                       | 10 +--
@@ -17,13 +17,13 @@ Subject: [PATCH 02/14] Path changes
  advanced/Scripts/version.sh                   | 64 ++-------------
  advanced/Scripts/webpage.sh                   | 25 +++---
  advanced/Templates/gravity_copy.sql           |  2 +-
- advanced/Templates/pihole-FTL.service         | 23 +++---
+ advanced/Templates/pihole-FTL.service         | 22 ++---
  gravity.sh                                    | 23 +++---
  pihole                                        | 81 ++++---------------
- 16 files changed, 121 insertions(+), 217 deletions(-)
+ 16 files changed, 121 insertions(+), 216 deletions(-)
 
 diff --git a/advanced/01-pihole.conf b/advanced/01-pihole.conf
-index 1fb34905..4c0a2b22 100644
+index 677910f6..d03bbab2 100644
 --- a/advanced/01-pihole.conf
 +++ b/advanced/01-pihole.conf
 @@ -12,14 +12,14 @@
@@ -45,8 +45,8 @@ index 1fb34905..4c0a2b22 100644
  
  domain-needed
  
-@@ -37,6 +37,6 @@ interface=@INT@
- cache-size=@CACHE_SIZE@
+@@ -30,6 +30,6 @@ bogus-priv
+ no-resolv
  
  log-queries
 -log-facility=/var/log/pihole/pihole.log
@@ -54,19 +54,19 @@ index 1fb34905..4c0a2b22 100644
  
  log-async
 diff --git a/advanced/Scripts/chronometer.sh b/advanced/Scripts/chronometer.sh
-index fddb3936..9c3a2af8 100755
+index d69a56d3..90da4d64 100755
 --- a/advanced/Scripts/chronometer.sh
 +++ b/advanced/Scripts/chronometer.sh
-@@ -14,7 +14,7 @@ LC_NUMERIC=C
- # Retrieve stats from FTL engine
+@@ -15,7 +15,7 @@ LC_NUMERIC=C
  pihole-FTL() {
      local ftl_port LINE
--    ftl_port=$(cat /run/pihole-FTL.port 2> /dev/null)
-+    ftl_port=$(cat @EPREFIX@/run/pihole-FTL.port 2> /dev/null)
+     # shellcheck disable=SC1091
+-    . /opt/pihole/utils.sh
++    . @EPREFIX@/usr/lib64/pihole/utils.sh
+     ftl_port=$(getFTLAPIPort)
      if [[ -n "$ftl_port" ]]; then
          # Open connection to FTL
-         exec 3<>"/dev/tcp/127.0.0.1/$ftl_port"
-@@ -134,7 +134,7 @@ get_init_stats() {
+@@ -136,7 +136,7 @@ get_init_stats() {
      }
  
      # Set Color Codes
@@ -75,7 +75,7 @@ index fddb3936..9c3a2af8 100755
      if [[ -f "${coltable}" ]]; then
          source ${coltable}
      else
-@@ -187,7 +187,7 @@ get_init_stats() {
+@@ -189,7 +189,7 @@ get_init_stats() {
          esac
          sys_type="Raspberry Pi$sys_model"
      else
@@ -84,7 +84,7 @@ index fddb3936..9c3a2af8 100755
          CODENAME=$(sed 's/[()]//g' <<< "${VERSION/* /}")
          sys_type="${NAME/ */} ${CODENAME^} $VERSION_ID"
      fi
-@@ -210,8 +210,8 @@ get_init_stats() {
+@@ -212,8 +212,8 @@ get_init_stats() {
      fi
  
      # Test existence of setupVars config
@@ -175,7 +175,7 @@ index 5daa025d..14517d09 100755
  
  
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 6543efbb..d0847b8e 100755
+index dbf56709..c70639ac 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,8 +22,8 @@ set -o pipefail
@@ -189,7 +189,7 @@ index 6543efbb..d0847b8e 100755
  
  # These provide the colors we need for making the log more readable
  if [[ -f ${PIHOLE_COLTABLE_FILE} ]]; then
-@@ -59,18 +59,18 @@ FORUMS_URL="${COL_CYAN}https://discourse.pi-hole.net${COL_NC}"
+@@ -61,18 +61,18 @@ FORUMS_URL="${COL_CYAN}https://discourse.pi-hole.net${COL_NC}"
  
  # Directories required by Pi-hole
  # https://discourse.pi-hole.net/t/what-files-does-pi-hole-use/1684
@@ -220,7 +220,7 @@ index 6543efbb..d0847b8e 100755
  #BLOCK_PAGE_DIRECTORY="${HTML_DIRECTORY}/pihole"
  SHM_DIRECTORY="/dev/shm"
  ETC="/etc"
-@@ -87,7 +87,7 @@ PIHOLE_RAW_BLOCKLIST_FILES="${PIHOLE_DIRECTORY}/list.*"
+@@ -89,7 +89,7 @@ PIHOLE_RAW_BLOCKLIST_FILES="${PIHOLE_DIRECTORY}/list.*"
  PIHOLE_LOCAL_HOSTS_FILE="${PIHOLE_DIRECTORY}/local.list"
  PIHOLE_LOGROTATE_FILE="${PIHOLE_DIRECTORY}/logrotate"
  PIHOLE_SETUP_VARS_FILE="${PIHOLE_DIRECTORY}/setupVars.conf"
@@ -241,7 +241,7 @@ index 6543efbb..d0847b8e 100755
      cmdResult="$(dig +short -t txt "${remote_os_domain}" @ns1.pi-hole.net 2>&1; echo $?)"
      #Get the return code of the previous command (last line)
 @@ -469,7 +469,7 @@ diagnose_operating_system() {
-     [ -n "${PIHOLE_DOCKER_TAG}" ] && log_write "${INFO} Pi-hole Docker Container: ${PIHOLE_DOCKER_TAG}"
+     [ -n "${DOCKER_VERSION}" ] && log_write "${INFO} Pi-hole Docker Container: ${DOCKER_VERSION}"
  
      # If there is a /etc/*release file, it's probably a supported operating system, so we can
 -    if ls /etc/*release 1> /dev/null 2>&1; then
@@ -374,7 +374,7 @@ index ae266ec0..dd4d43d2 100755
  
  # Scan an array of files for matching strings
 diff --git a/advanced/Scripts/updatecheck.sh b/advanced/Scripts/updatecheck.sh
-index 37211cc6..36c189ac 100755
+index a9d7523e..49227a56 100755
 --- a/advanced/Scripts/updatecheck.sh
 +++ b/advanced/Scripts/updatecheck.sh
 @@ -22,7 +22,7 @@ function get_local_version() {
@@ -492,7 +492,7 @@ index 7f44d35e..63f3bfc6 100755
      if [[ ! "${branch}" =~ ^v ]]; then
          if [[ "${branch}" == "master" ]]; then
 diff --git a/advanced/Scripts/webpage.sh b/advanced/Scripts/webpage.sh
-index 3ee48aef..b8a562dd 100755
+index e02e03f9..0ccb099d 100755
 --- a/advanced/Scripts/webpage.sh
 +++ b/advanced/Scripts/webpage.sh
 @@ -12,26 +12,25 @@
@@ -547,21 +547,20 @@ index 3bea731d..e7832e4e 100644
  BEGIN TRANSACTION;
  
 diff --git a/advanced/Templates/pihole-FTL.service b/advanced/Templates/pihole-FTL.service
-index 46e5c1f2..6d0ffa5a 100644
+index bc1b1d20..2e8bd620 100644
 --- a/advanced/Templates/pihole-FTL.service
 +++ b/advanced/Templates/pihole-FTL.service
-@@ -29,19 +29,18 @@ start() {
+@@ -29,18 +29,18 @@ start() {
      echo "pihole-FTL is already running"
    else
      # Touch files to ensure they exist (create if non-existing, preserve if existing)
 -    mkdir -pm 0755 /run/pihole /var/log/pihole
 -    [ ! -f "${FTL_PID_FILE}" ] && install -D -m 644 -o pihole -g pihole /dev/null "${FTL_PID_FILE}"
--    [ ! -f "${FTL_PORT_FILE}" ] && install -D -m 644 -o pihole -g pihole /dev/null "${FTL_PORT_FILE}"
 -    [ ! -f /var/log/pihole/FTL.log ] && install -m 644 -o pihole -g pihole /dev/null /var/log/pihole/FTL.log
 -    [ ! -f /var/log/pihole/pihole.log ] && install -m 640 -o pihole -g pihole /dev/null /var/log/pihole/pihole.log
 -    [ ! -f /etc/pihole/dhcp.leases ] && install -m 644 -o pihole -g pihole /dev/null /etc/pihole/dhcp.leases
 +    mkdir -pm 0755 @EPREFIX@/run/pihole
-+    [ ! -f /run/pihole-FTL.pid ] && install -m 644 -o pihole -g pihole /dev/null @EPREFIX@/run/pihole-FTL.pid
++    [ ! -f "${FTL_PID_FILE}" ] && install -m 644 -o pihole -g pihole /dev/null "${FTL_PID_FILE}"
 +    [ ! -f /run/pihole-FTL.port ] && install -m 644 -o pihole -g pihole /dev/null @EPREFIX@/run/pihole-FTL.port
 +    [ ! -f /var/log/pihole-FTL.log ] && install -m 644 -o pihole -g pihole /dev/null @EPREFIX@/var/log/pihole-FTL.log
 +    [ ! -f /var/log/pihole.log ] && install -m 644 -o pihole -g pihole /dev/null @EPREFIX@/var/log/pihole.log
@@ -579,7 +578,7 @@ index 46e5c1f2..6d0ffa5a 100644
      # Chown database file permissions so that the pihole group (web interface) can edit the file. We ignore errors as the files may not (yet) exist
      chmod -f 0664 /etc/pihole/pihole-FTL.db
  
-@@ -61,7 +60,7 @@ start() {
+@@ -60,7 +60,7 @@ start() {
        su -s /bin/sh -c "/usr/bin/pihole-FTL" pihole || exit $?
      else
        echo "Warning: Starting pihole-FTL as root because setting capabilities is not supported on this system"
@@ -588,17 +587,17 @@ index 46e5c1f2..6d0ffa5a 100644
      fi
      echo
    fi
-@@ -91,7 +90,7 @@ stop() {
+@@ -90,7 +90,7 @@ stop() {
      echo "Not running"
    fi
    # Cleanup
--  rm -f /run/pihole/FTL.sock /dev/shm/FTL-* "${FTL_PID_FILE}" "${FTL_PORT_FILE}"
-+  rm -f @EPREFIX@/run/pihole/FTL.sock /dev/shm/FTL-*
+-  rm -f /run/pihole/FTL.sock /dev/shm/FTL-* "${FTL_PID_FILE}"
++  rm -f @EPREFIX@/run/pihole/FTL.sock /dev/shm/FTL-*  "${FTL_PID_FILE}"
    echo
  }
  
 diff --git a/gravity.sh b/gravity.sh
-index 6f96b845..803537c0 100755
+index 7c831b22..bb751860 100755
 --- a/gravity.sh
 +++ b/gravity.sh
 @@ -13,15 +13,16 @@
@@ -641,8 +640,8 @@ index 6f96b845..803537c0 100755
 +gravityDBcopy="${piholeGitDir}/Templates/gravity_copy.sql"
  
  domainsExtension="domains"
- 
-@@ -52,7 +53,7 @@ else
+ curl_connect_timeout=10
+@@ -53,7 +54,7 @@ else
  fi
  
  # Source pihole-FTL from install script
@@ -651,7 +650,7 @@ index 6f96b845..803537c0 100755
  if [[ -f "${pihole_FTL}" ]]; then
    source "${pihole_FTL}"
  fi
-@@ -992,7 +993,7 @@ if [[ "${forceDelete:-}" == true ]]; then
+@@ -993,7 +994,7 @@ if [[ "${forceDelete:-}" == true ]]; then
    str="Deleting existing list cache"
    echo -ne "${INFO} ${str}..."
  
@@ -661,7 +660,7 @@ index 6f96b845..803537c0 100755
  fi
  
 diff --git a/pihole b/pihole
-index eb825965..8c8570c7 100755
+index aad83451..5c2df129 100755
 --- a/pihole
 +++ b/pihole
 @@ -9,7 +9,7 @@
@@ -742,7 +741,7 @@ index eb825965..8c8570c7 100755
      exit 0
    elif [[ "${1}" == "off" ]]; then
      # Disable logging
-@@ -335,13 +325,13 @@ statusFunc() {
+@@ -334,13 +324,13 @@ statusFunc() {
      fi
  
    # Determine if Pi-hole's blocking is enabled
@@ -758,7 +757,7 @@ index eb825965..8c8570c7 100755
      # Configs are set
      case "${1}" in
        "web") echo "$port";;
-@@ -361,7 +351,7 @@ exit 0
+@@ -360,7 +350,7 @@ exit 0
  
  tailFunc() {
    # Warn user if Pi-hole's logging is disabled
@@ -767,7 +766,7 @@ index eb825965..8c8570c7 100755
    if [[ "${logging_enabled}" == "0" ]]; then
      # No "log-queries" lines are found.
      # Commented out lines (such as "#log-queries") are ignored
-@@ -373,7 +363,7 @@ tailFunc() {
+@@ -372,7 +362,7 @@ tailFunc() {
    # Color blocklist/blacklist/wildcard entries as red
    # Color A/AAAA/DHCP strings as white
    # Color everything else as gray
@@ -776,7 +775,7 @@ index eb825965..8c8570c7 100755
      -e "s,($(date +'%b %d ')| dnsmasq\[[0-9]*\]),,g" \
      -e "s,(.*(blacklisted |gravity blocked ).*),${COL_RED}&${COL_NC}," \
      -e "s,.*(query\\[A|DHCP).*,${COL_NC}&${COL_NC}," \
-@@ -381,29 +371,6 @@ tailFunc() {
+@@ -380,29 +370,6 @@ tailFunc() {
    exit 0
  }
  
@@ -806,7 +805,7 @@ index eb825965..8c8570c7 100755
  tricorderFunc() {
    local tricorder_token
    if [[ ! -p "/dev/stdin" ]]; then
-@@ -425,11 +392,6 @@ tricorderFunc() {
+@@ -424,11 +391,6 @@ tricorderFunc() {
    exit 0
  }
  
@@ -818,7 +817,7 @@ index eb825965..8c8570c7 100755
  helpFunc() {
    echo "Usage: pihole [options]
  Example: 'pihole -w -h'
-@@ -449,7 +411,6 @@ Debugging Options:
+@@ -448,7 +410,6 @@ Debugging Options:
                          Add '-c' or '--check-database' to include a Pi-hole database integrity check
                          Add '-a' to automatically upload the log to tricorder.pi-hole.net
    -f, flush           Flush the Pi-hole log
@@ -826,7 +825,7 @@ index eb825965..8c8570c7 100755
    -t, tail [arg]      View the live output of the Pi-hole log.
                        Add an optional argument to filter the log
                        (regular expressions are supported)
-@@ -466,11 +427,8 @@ Options:
+@@ -465,11 +426,8 @@ Options:
                          Add '-h' for more info on logging usage
    -q, query           Query the adlists for a specified domain
                          Add '-h' for more info on query usage
@@ -838,7 +837,7 @@ index eb825965..8c8570c7 100755
    status              Display the running status of Pi-hole subsystems
    enable              Enable Pi-hole subsystems
    disable             Disable Pi-hole subsystems
-@@ -478,8 +436,6 @@ Options:
+@@ -477,8 +435,6 @@ Options:
    restartdns          Full restart Pi-hole subsystems
                          Add 'reload' to update the lists and flush the cache without restarting the DNS server
                          Add 'reload-lists' to only update the lists WITHOUT flushing the cache or restarting the DNS server
@@ -847,7 +846,7 @@ index eb825965..8c8570c7 100755
    arpflush            Flush information stored in Pi-hole's network tables";
    exit 0
  }
-@@ -544,11 +500,8 @@ case "${1}" in
+@@ -543,11 +499,8 @@ case "${1}" in
    "--white-wild" | "white-wild"   ) listFunc "$@";;
    "-d" | "debug"                ) debugFunc "$@";;
    "-f" | "flush"                ) flushFunc "$@";;
@@ -860,5 +859,5 @@ index eb825965..8c8570c7 100755
    "disable"                     ) piholeEnable 0 "$2";;
    "restartdns"                  ) restartDNS "$2";;
 -- 
-2.37.3
+2.38.0
 

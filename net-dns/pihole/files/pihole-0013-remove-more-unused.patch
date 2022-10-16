@@ -1,23 +1,23 @@
-From 2ef70da0540184b8888c6652620d5b5f6c9933df Mon Sep 17 00:00:00 2001
+From ca9e9fcae3cd57b66f53ec8fd37e23dfbbf83594 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 25 Jul 2022 06:33:41 -0400
-Subject: [PATCH 14/14] remove more unused
+Subject: [PATCH 13/13] remove more unused
 
 ---
- advanced/Scripts/piholeCheckout.sh | 204 -------------------------
+ advanced/Scripts/piholeCheckout.sh | 213 --------------------------
  advanced/Scripts/update.sh         | 233 -----------------------------
  advanced/Templates/pihole.sudo     |   9 --
- 3 files changed, 446 deletions(-)
+ 3 files changed, 455 deletions(-)
  delete mode 100755 advanced/Scripts/piholeCheckout.sh
  delete mode 100755 advanced/Scripts/update.sh
  delete mode 100644 advanced/Templates/pihole.sudo
 
 diff --git a/advanced/Scripts/piholeCheckout.sh b/advanced/Scripts/piholeCheckout.sh
 deleted file mode 100755
-index 7c4a1f77..00000000
+index 8c4c6db3..00000000
 --- a/advanced/Scripts/piholeCheckout.sh
 +++ /dev/null
-@@ -1,204 +0,0 @@
+@@ -1,213 +0,0 @@
 -#!/usr/bin/env bash
 -# Pi-hole: A black hole for Internet advertisements
 -# (c) 2017 Pi-hole, LLC (https://pi-hole.net)
@@ -60,6 +60,11 @@ index 7c4a1f77..00000000
 -            return 1
 -            ;;
 -    esac
+-}
+-
+-updateCheckFunc() {
+-    /opt/pihole/updatecheck.sh
+-    /opt/pihole/updatecheck.sh x remote
 -}
 -
 -checkout() {
@@ -184,6 +189,8 @@ index 7c4a1f77..00000000
 -            exit 1
 -        fi
 -        checkout_pull_branch "${webInterfaceDir}" "${2}"
+-        # Force an update of the updatechecker
+-        updateCheckFunc
 -    elif [[ "${1}" == "ftl" ]] ; then
 -        local path
 -        local oldbranch
@@ -198,6 +205,8 @@ index 7c4a1f77..00000000
 -            FTLinstall "${binary}"
 -            restart_service pihole-FTL
 -            enable_service pihole-FTL
+-            # Force an update of the updatechecker
+-            updateCheckFunc
 -        else
 -            echo "  ${CROSS} Requested branch \"${2}\" is not available"
 -            ftlbranches=( $(git ls-remote https://github.com/pi-hole/ftl | grep 'heads' | sed 's/refs\/heads\///;s/ //g' | awk '{print $2}') )
@@ -477,5 +486,5 @@ index 708309be..00000000
 -# Please see LICENSE file for your rights under this license.
 -#
 -- 
-2.37.3
+2.38.0
 

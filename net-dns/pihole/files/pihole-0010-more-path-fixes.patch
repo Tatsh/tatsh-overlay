@@ -1,7 +1,7 @@
-From ce9c0773135a4805540d521b6aef0ba3a2f6b2f8 Mon Sep 17 00:00:00 2001
+From 077b90c00b2515eb09b9cfd8f19f6a877f1ddac5 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 11:27:45 -0500
-Subject: [PATCH 11/14] more path fixes
+Subject: [PATCH 10/13] more path fixes
 
 ---
  advanced/01-pihole.conf         | 4 ++--
@@ -9,7 +9,7 @@ Subject: [PATCH 11/14] more path fixes
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/advanced/01-pihole.conf b/advanced/01-pihole.conf
-index 4c0a2b22..7c33c7b8 100644
+index d03bbab2..2f0954fd 100644
 --- a/advanced/01-pihole.conf
 +++ b/advanced/01-pihole.conf
 @@ -18,8 +18,8 @@
@@ -24,10 +24,10 @@ index 4c0a2b22..7c33c7b8 100644
  domain-needed
  
 diff --git a/advanced/Scripts/chronometer.sh b/advanced/Scripts/chronometer.sh
-index d9df84b5..49b1ed57 100755
+index 90da4d64..0d81886b 100755
 --- a/advanced/Scripts/chronometer.sh
 +++ b/advanced/Scripts/chronometer.sh
-@@ -369,7 +369,7 @@ get_sys_stats() {
+@@ -371,7 +371,7 @@ get_sys_stats() {
          ph_dhcp_range=$(seq -s "|" -f "${DHCP_START%.*}.%g" "${DHCP_START##*.}" "${DHCP_END##*.}")
  
          # Count dynamic leases from available range, and not static leases
@@ -37,5 +37,5 @@ index d9df84b5..49b1ed57 100755
      fi
  }
 -- 
-2.37.3
+2.38.0
 

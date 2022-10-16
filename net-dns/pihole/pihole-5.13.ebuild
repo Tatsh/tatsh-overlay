@@ -15,7 +15,7 @@ IUSE="cron www"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
-FTL_VERSION="5.12.2"
+FTL_VERSION="5.13"
 RDEPEND="${DEPEND}
 	>=net-dns/${PN}-ftl-${FTL_VERSION}
 	app-admin/sudo
@@ -24,19 +24,18 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/pi-hole-${PV}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-cron-remove-flush-updatechec.patch"
 	"${FILESDIR}/${PN}-0002-path-changes.patch"
 	"${FILESDIR}/${PN}-0003-logrotate-add-missingok-fix-.patch"
 	"${FILESDIR}/${PN}-0004-more-path-fixes.patch"
 	"${FILESDIR}/${PN}-0005-pihole-add-rc-service-to-res.patch"
 	"${FILESDIR}/${PN}-0006-advanced-scripts-piholelogfl.patch"
-	"${FILESDIR}/${PN}-0007-fix-chrono.patch"
-	"${FILESDIR}/${PN}-0008-version.sh-path-fix.patch"
-	"${FILESDIR}/${PN}-0009-fix-calling-valid_ip.patch"
-	"${FILESDIR}/${PN}-0010-fix-path-in-generated-dhcp-c.patch"
-	"${FILESDIR}/${PN}-0011-more-path-fixes.patch"
-	"${FILESDIR}/${PN}-0012-piholedebug-gentoo-vhost-fix.patch"
-	"${FILESDIR}/${PN}-0014-remove-more-unused.patch"
+	"${FILESDIR}/${PN}-0007-version.sh-path-fix.patch"
+	"${FILESDIR}/${PN}-0008-fix-calling-valid_ip.patch"
+	"${FILESDIR}/${PN}-0009-fix-path-in-generated-dhcp-c.patch"
+	"${FILESDIR}/${PN}-0010-more-path-fixes.patch"
+	"${FILESDIR}/${PN}-0011-piholedebug-gentoo-vhost-fix.patch"
+	"${FILESDIR}/${PN}-0012-remove-updatecheck.patch"
+	"${FILESDIR}/${PN}-0013-remove-more-unused.patch"
 )
 
 src_prepare() {
@@ -55,7 +54,6 @@ src_prepare() {
 			advanced/Templates/gravity_copy.sql \
 			advanced/Templates/${PN}-FTL.service \
 			advanced/Templates/logrotate || die
-	rm advanced/Scripts/updatecheck.sh || die
 }
 
 src_install() {

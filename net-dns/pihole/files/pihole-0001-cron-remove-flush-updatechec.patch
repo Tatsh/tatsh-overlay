@@ -1,37 +1,35 @@
-From 51c8eb16e8828864c70179e1bd10718b336bfc7e Mon Sep 17 00:00:00 2001
+From 3e3a1bc37d6a84ad143d26c16929a0da4b92af6c Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:11 -0500
-Subject: [PATCH 01/14] cron: remove flush/updatechecker
+Subject: [PATCH 01/13] cron: remove flush/updatechecker
 
 ---
- advanced/Templates/pihole.cron | 17 +----------------
- 1 file changed, 1 insertion(+), 16 deletions(-)
+ advanced/Templates/pihole.cron | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/advanced/Templates/pihole.cron b/advanced/Templates/pihole.cron
-index 46640fbb..55303395 100644
+index 336a66fe..837a8767 100644
 --- a/advanced/Templates/pihole.cron
 +++ b/advanced/Templates/pihole.cron
-@@ -18,19 +18,4 @@
+@@ -18,16 +18,10 @@
  #          early morning. Download any updates from the adlists
  #          Squash output to log, then splat the log to stdout on error to allow for
  #          standard crontab job error handling.
 -59 1    * * 7   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updateGravity >/var/log/pihole/pihole_updateGravity.log || cat /var/log/pihole/pihole_updateGravity.log
--
--# Pi-hole: Flush the log daily at 00:00
--#          The flush script will use logrotate if available
--#          parameter "once": logrotate only once (default is twice)
--#          parameter "quiet": don't print messages
++59 1    * * 7   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" @EPREFIX@/usr/bin/pihole updateGravity >/var/log/pihole/pihole_updateGravity.log || cat /var/log/pihole/pihole_updateGravity.log
+ 
+ # Pi-hole: Flush the log daily at 00:00
+ #          The flush script will use logrotate if available
+ #          parameter "once": logrotate only once (default is twice)
+ #          parameter "quiet": don't print messages
 -00 00   * * *   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole flush once quiet
 -
 -@reboot root /usr/sbin/logrotate --state /var/lib/logrotate/pihole /etc/pihole/logrotate
 -
--# Pi-hole: Grab local version and branch every 10 minutes
--*/10 *  * * *   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker local
--
 -# Pi-hole: Grab remote version every 24 hours
 -59 17  * * *   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker remote
 -@reboot root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker remote reboot
-+59 1    * * 7   root    PATH="$PATH:@EPREFIX@/usr/sbin:@EPREFIX@/usr/bin/" @EPREFIX@/usr/bin/pihole updateGravity >/var/log/pihole_updateGravity.log || cat /var/log/pihole_updateGravity.log
++00 00   * * *   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" @EPREFIX@/usr/bin/pihole flush once quiet
 -- 
-2.37.3
+2.38.0
 

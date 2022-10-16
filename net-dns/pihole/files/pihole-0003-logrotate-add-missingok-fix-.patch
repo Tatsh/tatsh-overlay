@@ -1,7 +1,7 @@
-From ef8fcba859d753b0dd294c6671117c2f19db2ae2 Mon Sep 17 00:00:00 2001
+From 66fbb06d969074fe5758e58130b51aaf77266095 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:37:37 -0500
-Subject: [PATCH 03/14] logrotate: add missingok, fix paths
+Subject: [PATCH 03/13] logrotate: add missingok, fix paths
 
 ---
  advanced/Templates/logrotate | 6 ++++--
@@ -36,5 +36,5 @@ index 9a56b552..0a2e3fbd 100644
 +    missingok
  }
 -- 
-2.37.3
+2.38.0
 
