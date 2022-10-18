@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_10 )
-inherit distutils-r1
+inherit distutils-r1 flag-o-matic
 
 DESCRIPTION="NumPy aware dynamic Python compiler using LLVM"
 HOMEPAGE="https://pypi.org/project/numba/"
@@ -21,6 +21,11 @@ DEPEND="tbb? ( <dev-cpp/tbb-2021.5.0-r1 )"
 RDEPEND="dev-python/llvmlite[${PYTHON_USEDEP}]
 	dev-python/setuptools:0[${PYTHON_USEDEP}]
 	${BDEPEND}"
+
+src_configure() {
+	filter-ldflags *
+	distutils-r1_src_configure
+}
 
 src_compile() {
 	! use tbb && export NUMBA_DISABLE_TBB=1
