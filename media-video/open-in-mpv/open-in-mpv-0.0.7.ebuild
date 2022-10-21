@@ -17,14 +17,14 @@ RDEPEND="${PYTHON_DEPS}
 	media-video/mpv"
 
 src_prepare() {
-	cp host/sh.tat.open_in_mpv.json.in sh.tat.sh.open_in_mpv.json || die
-	sed -re "s|@BINPATH@|${EPREFIX}/usr/bin|g" -i sh.tat.sh.open_in_mpv.json
+	cp host/sh.tat.open_in_mpv.json.in sh.tat.open_in_mpv.json || die
+	sed -re "s|@BIN_PATH@|${EPREFIX}/usr/bin|g" -i sh.tat.open_in_mpv.json || die
 	default
 }
 
 src_install() {
 	python_newscript "host/${PN}" "${PN}"
 	insinto /etc/opt/chrome/native-messaging-hosts
-	doins sh.tat.sh.open_in_mpv.json
+	doins sh.tat.open_in_mpv.json
 	einstalldocs
 }
