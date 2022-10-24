@@ -23,11 +23,12 @@ RDEPEND="dev-python/llvmlite[${PYTHON_USEDEP}]
 	${BDEPEND}"
 
 src_configure() {
-	filter-ldflags *
+	append-ldflags $(no-as-needed)
 	distutils-r1_src_configure
 }
 
 src_compile() {
+	export MAKEOPTS=-j1
 	! use tbb && export NUMBA_DISABLE_TBB=1
 	distutils-r1_src_compile
 }
