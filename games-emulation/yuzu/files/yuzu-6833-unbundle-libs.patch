@@ -1,4 +1,4 @@
-From e2deaeee334df79c2a585c1390955ecee4e8a699 Mon Sep 17 00:00:00 2001
+From 96b19f60148c1d027e9b20ec14e10169f6c430cc Mon Sep 17 00:00:00 2001
 From: Alexandre Bouvier <contact@amb.tf>
 Date: Fri, 20 Aug 2021 06:07:12 +0200
 Subject: [PATCH 1/4] cmake: Allow unbundling some external libraries
@@ -173,7 +173,7 @@ index 66dd0dc154d4..3ced6d782d31 100644
  #include "common/fs/fs.h"
  #include "common/fs/path_util.h"
 
-From 48ef123cc4d6fb33e26436b84b889dd8f2324341 Mon Sep 17 00:00:00 2001
+From 2b0571628bff6be458a50d5e5ad57f361fdd54e6 Mon Sep 17 00:00:00 2001
 From: Andrea Pappacoda <andrea@pappacoda.it>
 Date: Fri, 25 Mar 2022 23:22:58 +0100
 Subject: [PATCH 2/4] build: also look for cpp-httplib via pkg-config
@@ -264,7 +264,7 @@ index 3f75d97d178f..cbd4a814e87a 100644
 -target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib cpp-jwt)
 +target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib::httplib cpp-jwt)
 
-From 5db1f91407f022d4bd069b0ee80fa13dcf4b7f4a Mon Sep 17 00:00:00 2001
+From 1443fe99f3a0c782e8b1ecd07b57f1a45b988733 Mon Sep 17 00:00:00 2001
 From: Alexandre Bouvier <contact@amb.tf>
 Date: Mon, 28 Mar 2022 01:16:58 +0200
 Subject: [PATCH 3/4] cmake: Add option to unbundle every external
@@ -280,7 +280,7 @@ Subject: [PATCH 3/4] cmake: Add option to unbundle every external
  externals/find-modules/Findzstd.cmake         |  38 +++--
  externals/inih/CMakeLists.txt                 |   1 +
  src/audio_core/CMakeLists.txt                 |   4 +-
- src/common/CMakeLists.txt                     |  10 +-
+ src/common/CMakeLists.txt                     |  14 +-
  src/core/CMakeLists.txt                       |   4 +-
  src/dedicated_room/CMakeLists.txt             |   2 +-
  src/network/CMakeLists.txt                    |   2 +-
@@ -288,7 +288,7 @@ Subject: [PATCH 3/4] cmake: Add option to unbundle every external
  src/web_service/CMakeLists.txt                |   2 +-
  src/yuzu/CMakeLists.txt                       |   6 +-
  src/yuzu_cmd/CMakeLists.txt                   |   4 +-
- 18 files changed, 256 insertions(+), 135 deletions(-)
+ 18 files changed, 256 insertions(+), 139 deletions(-)
  create mode 100644 externals/find-modules/FindDiscordRPC.cmake
  create mode 100644 externals/find-modules/FindVulkanHeaders.cmake
  create mode 100644 externals/find-modules/Findenet.cmake
@@ -831,7 +831,7 @@ index 144f1bab2987..183adfedb6e2 100644
  endif()
  if(ENABLE_SDL2)
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index a0269687348a..1c0f7e273505 100644
+index 46cf75fdebd6..1c0f7e273505 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
 @@ -145,7 +145,7 @@ if(ARCHITECTURE_x86_64)
@@ -843,11 +843,15 @@ index a0269687348a..1c0f7e273505 100644
  endif()
  
  if (MSVC)
-@@ -169,10 +169,4 @@ endif()
+@@ -169,14 +169,4 @@ endif()
  create_target_directory_groups(common)
  
  target_link_libraries(common PUBLIC ${Boost_LIBRARIES} fmt::fmt microprofile Threads::Threads)
--target_link_libraries(common PRIVATE lz4::lz4)
+-if (TARGET lz4::lz4)
+-  target_link_libraries(common PRIVATE lz4::lz4)
+-else()
+-  target_link_libraries(common PRIVATE LZ4::lz4_shared)
+-endif()
 -if (TARGET zstd::zstd)
 -  target_link_libraries(common PRIVATE zstd::zstd)
 -else()
@@ -856,10 +860,10 @@ index a0269687348a..1c0f7e273505 100644
 -endif()
 +target_link_libraries(common PRIVATE lz4::lz4 zstd::zstd)
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index 95302c419a44..30423ee51a15 100644
+index abeb5859b524..d415846a9960 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -790,7 +790,7 @@ endif()
+@@ -788,7 +788,7 @@ endif()
  create_target_directory_groups(core)
  
  target_link_libraries(core PUBLIC common PRIVATE audio_core network video_core)
@@ -868,7 +872,7 @@ index 95302c419a44..30423ee51a15 100644
  if (MINGW)
      target_link_libraries(core PRIVATE ${MSWSOCK_LIBRARY})
  endif()
-@@ -809,5 +809,5 @@ if (ARCHITECTURE_x86_64)
+@@ -807,5 +807,5 @@ if (ARCHITECTURE_x86_64)
          arm/dynarmic/arm_dynarmic_cp15.cpp
          arm/dynarmic/arm_dynarmic_cp15.h
      )
@@ -993,26 +997,27 @@ index 7d8ca3d8a0b3..a967359f8b1c 100644
  if (YUZU_USE_EXTERNAL_SDL2)
      target_compile_definitions(yuzu-cmd PRIVATE -DYUZU_USE_EXTERNAL_SDL2)
 
-From 39483d9047dceee79bc7e6a079ebffb063564aeb Mon Sep 17 00:00:00 2001
+From 29379c97b9010e6ca9eed001a5bad311eccdf370 Mon Sep 17 00:00:00 2001
 From: Alexandre Bouvier <contact@amb.tf>
 Date: Tue, 20 Sep 2022 21:46:46 +0200
 Subject: [PATCH 4/4] cmake: Remove options and fix versions
 
 ---
- CMakeLists.txt                                | 66 +++++--------------
+ CMakeLists.txt                                | 64 ++++---------------
  externals/CMakeLists.txt                      |  7 +-
- .../find-modules/FindVulkanHeaders.cmake      | 47 -------------
+ .../find-modules/FindVulkanHeaders.cmake      | 47 --------------
  externals/find-modules/Findenet.cmake         |  3 +-
  externals/find-modules/Findhttplib.cmake      |  3 +-
  externals/find-modules/Findinih.cmake         |  3 +-
+ externals/find-modules/Findlz4.cmake          | 37 +++++++----
  externals/find-modules/Findzstd.cmake         | 11 ++--
  src/core/CMakeLists.txt                       |  2 +-
  src/dedicated_room/CMakeLists.txt             |  2 +-
- 9 files changed, 28 insertions(+), 116 deletions(-)
+ 10 files changed, 51 insertions(+), 128 deletions(-)
  delete mode 100644 externals/find-modules/FindVulkanHeaders.cmake
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1af5eb717bba..60a8ffb0e267 100644
+index 1af5eb717bba..bc5d511641aa 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -34,8 +34,6 @@ option(ENABLE_CUBEB "Enables the cubeb audio backend" ON)
@@ -1049,7 +1054,7 @@ index 1af5eb717bba..60a8ffb0e267 100644
  if (YUZU_USE_BUNDLED_VCPKG)
      if (YUZU_TESTS)
          list(APPEND VCPKG_MANIFEST_FEATURES "yuzu-tests")
-@@ -193,55 +173,39 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+@@ -193,51 +173,35 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
  # System imported libraries
  # =======================================================================
  
@@ -1115,11 +1120,6 @@ index 1af5eb717bba..60a8ffb0e267 100644
  endif()
  
  if (YUZU_TESTS)
--    find_package(Catch2 2.13.7 REQUIRED)
-+    find_package(Catch2 2.13 REQUIRED)
- endif()
- 
- find_package(Boost 1.73.0 COMPONENTS context)
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
 index a3479bb58c3b..3bffacb8022e 100644
 --- a/externals/CMakeLists.txt
@@ -1258,6 +1258,54 @@ index d2b6644ac233..844396471f46 100644
 -    VERSION_VAR inih_VERSION
 +    VERSION_VAR INIREADER_VERSION
  )
+diff --git a/externals/find-modules/Findlz4.cmake b/externals/find-modules/Findlz4.cmake
+index 13ca5de66d7b..a928c43077f7 100644
+--- a/externals/find-modules/Findlz4.cmake
++++ b/externals/find-modules/Findlz4.cmake
+@@ -1,19 +1,30 @@
+ # SPDX-FileCopyrightText: 2022 yuzu Emulator Project
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-find_package(PkgConfig)
++include(FindPackageHandleStandardArgs)
+ 
+-if (PKG_CONFIG_FOUND)
+-    pkg_search_module(liblz4 IMPORTED_TARGET GLOBAL liblz4)
+-    if (liblz4_FOUND)
+-        add_library(lz4::lz4 ALIAS PkgConfig::liblz4)
++find_package(lz4 QUIET CONFIG)
++if (lz4_FOUND)
++    find_package_handle_standard_args(lz4 CONFIG_MODE)
++    if (NOT TARGET lz4::lz4)
++        if (TARGET LZ4::lz4_shared)
++            set_target_properties(LZ4::lz4_shared PROPERTIES IMPORTED_GLOBAL TRUE)
++            add_library(lz4::lz4 ALIAS LZ4::lz4_shared)
++        else()
++            set_target_properties(LZ4::lz4_static PROPERTIES IMPORTED_GLOBAL TRUE)
++            add_library(lz4::lz4 ALIAS LZ4::lz4_static)
++        endif()
++    endif()
++else()
++    find_package(PkgConfig QUIET)
++    if (PKG_CONFIG_FOUND)
++        pkg_search_module(liblz4 QUIET IMPORTED_TARGET GLOBAL liblz4)
++        if (liblz4_FOUND)
++            add_library(lz4::lz4 ALIAS PkgConfig::liblz4)
++        endif()
+     endif()
++    find_package_handle_standard_args(lz4
++        REQUIRED_VARS liblz4_LINK_LIBRARIES
++        VERSION_VAR liblz4_VERSION
++    )
+ endif()
+-
+-include(FindPackageHandleStandardArgs)
+-find_package_handle_standard_args(lz4
+-    REQUIRED_VARS
+-        liblz4_LINK_LIBRARIES
+-        liblz4_FOUND
+-    VERSION_VAR liblz4_VERSION
+-)
 diff --git a/externals/find-modules/Findzstd.cmake b/externals/find-modules/Findzstd.cmake
 index 62c93b73497a..1c29f3598464 100644
 --- a/externals/find-modules/Findzstd.cmake
@@ -1283,10 +1331,10 @@ index 62c93b73497a..1c29f3598464 100644
      )
  endif()
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index 30423ee51a15..ae44a941f4c2 100644
+index d415846a9960..68f88c5650e9 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -790,7 +790,7 @@ endif()
+@@ -788,7 +788,7 @@ endif()
  create_target_directory_groups(core)
  
  target_link_libraries(core PUBLIC common PRIVATE audio_core network video_core)
