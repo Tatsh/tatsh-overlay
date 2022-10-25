@@ -89,7 +89,7 @@ src_install() {
 
 	if use www; then
 		insinto /usr/share/webapps/${PN}-blocking-page
-		doins advanced/index.php advanced/blockingpage.css
+		doins advanced/index.php
 	fi
 
 	doman manpages/${PN}*
