@@ -58,10 +58,15 @@ src_compile() {
 }
 
 src_install() {
+	local size
 	cmake_src_install
 	distutils-r1_src_install
 	if use gtk; then
 		dobin "${PN}-gui"
 		make_desktop_entry "${PN}-gui" "VHS decode" "camera-video"
 	fi
+	for size in 256 128 64; do
+		newicon -s "${size}" "tools/ld-analyse/Graphics/${size}-analyse.png" ld-analyse.png
+	done
+	make_desktop_entry ld-analyse ld-analyse ld-analyse Video
 }
