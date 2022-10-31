@@ -7,7 +7,7 @@ inherit meson
 
 DESCRIPTION="VapourSynth port of RemoveGrain and Repair plugins from Avisynth"
 HOMEPAGE="https://github.com/vapoursynth/vs-removegrain"
-SHA="ea3d1566b7d82e1efb2f30612d6951dc61ebba65"
+SHA="89ca38a6971e371bdce2778291393258daa5f03b"
 SRC_URI="https://github.com/vapoursynth/vs-removegrain/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
