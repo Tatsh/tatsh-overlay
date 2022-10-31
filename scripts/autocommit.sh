@@ -2,14 +2,13 @@
 cd "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/.."
 test_install=(
     games-arcade/outfox
-    games-emulation/ryujinx
 )
 while read -r ebuild; do
     dn=$(dirname "$ebuild")
     cat=$(dirname "$dn")
     pn=$(basename "$dn")
     pushd "$dn" || exit 1
-    if grep -qE 'EGO_SUM|registry.yarnpkg.com' ./*.ebuild; then
+    if grep -qE 'EGO_SUM|registry.yarnpkg.com|ryujinx' ./*.ebuild; then
         popd || exit 1
         continue
     fi
