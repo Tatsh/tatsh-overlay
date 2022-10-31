@@ -6,12 +6,12 @@ inherit cmake xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/ https://github.com/citra-emu/citra"
-SHA="a2daef29857e7f64a4f5dc7c196a5bbe8e11367b"
-DYNARMIC_SHA="460617901965ef7cd73cfbcf289fe367bf11c99e"
+SHA="a93d7a8d3ab02e3ba72013cbf92d5cae84d555d3"
+DYNARMIC_SHA="3946dcf005c6e8f3d91cfb0bc5debfd0446daa39"
 FMT_SHA="a33701196adfad74917046096bf5a2aa0ab0bb50"
 LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
-XBYAK_SHA="c306b8e5786eeeb87b8925a8af5c3bf057ff5a90"
+XBYAK_SHA="48457bfa0ded67bb4ae2d4c141c36b35469257ee"
 SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
@@ -47,8 +47,8 @@ RDEPEND="${DEPEND}"
 BDEPEND="<dev-cpp/catch-3.0.0"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-inih.patch"
-	"${FILESDIR}/${PN}-system-libs.patch"
+	"${FILESDIR}/${PN}-0001-system-libraries.patch"
+	"${FILESDIR}/${PN}-0002-inih-fix.patch"
 )
 
 S="${WORKDIR}/${PN}-${SHA}"

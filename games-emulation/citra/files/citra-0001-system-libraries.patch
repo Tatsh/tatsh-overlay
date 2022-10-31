@@ -1,8 +1,20 @@
+From 18cbd986fa4484c90aaee368382655eef951038c Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 30 Oct 2022 22:55:31 -0400
+Subject: [PATCH 1/2] System libraries
+
+---
+ CMakeLists.txt            | 12 +++++-
+ externals/CMakeLists.txt  | 83 ++++++++++++++++++++++++++++-----------
+ src/citra/CMakeLists.txt  |  7 +++-
+ src/common/CMakeLists.txt |  6 ++-
+ 4 files changed, 81 insertions(+), 27 deletions(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9fbbb0497..26e37b71f 100644
+index 46675583a..5a91536c2 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -40,6 +40,14 @@ CMAKE_DEPENDENT_OPTION(ENABLE_MF "Use Media Foundation decoder (preferred over F
+@@ -48,6 +48,14 @@ CMAKE_DEPENDENT_OPTION(ENABLE_MF "Use Media Foundation decoder (preferred over F
  CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ON "MINGW" OFF)
  
  option(USE_SYSTEM_BOOST "Use the system Boost libs (instead of the bundled ones)" OFF)
@@ -17,7 +29,7 @@ index 9fbbb0497..26e37b71f 100644
  
  CMAKE_DEPENDENT_OPTION(ENABLE_FDK "Use FDK AAC decoder" OFF "NOT ENABLE_FFMPEG_AUDIO_DECODER;NOT ENABLE_MF" OFF)
  
-@@ -63,7 +71,9 @@ function(check_submodules_present)
+@@ -95,7 +103,9 @@ function(check_submodules_present)
          endif()
      endforeach()
  endfunction()
@@ -29,10 +41,10 @@ index 9fbbb0497..26e37b71f 100644
  configure_file(${PROJECT_SOURCE_DIR}/dist/compatibility_list/compatibility_list.qrc
                 ${PROJECT_BINARY_DIR}/dist/compatibility_list/compatibility_list.qrc
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 24e881b19..bfee14919 100644
+index c2385c48e..1b9d10874 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -10,16 +10,18 @@ include(DownloadExternals)
+@@ -10,38 +10,53 @@ include(DownloadExternals)
  include(ExternalProject)
  
  # Boost
@@ -59,8 +71,11 @@ index 24e881b19..bfee14919 100644
  
  # Add additional boost libs here; remember to ALIAS them in the root CMakeLists!
  
-@@ -28,13 +30,21 @@ set(CATCH_INSTALL_EXTRAS OFF)
- add_subdirectory(catch2)
+ # Catch2
+ set(CATCH_INSTALL_DOCS OFF)
+ set(CATCH_INSTALL_EXTRAS OFF)
+-add_subdirectory(catch2)
++find_package(Catch2 REQUIRED)
  
  # Crypto++
 -add_subdirectory(cryptopp)
@@ -70,24 +85,7 @@ index 24e881b19..bfee14919 100644
 +    find_library(CRYPTOPP_LIBS cryptopp REQUIRED)
 +endif()
  
- # Xbyak
- if (ARCHITECTURE_x86_64)
--    add_library(xbyak INTERFACE)
--    target_include_directories(xbyak SYSTEM INTERFACE ./xbyak/xbyak)
--    target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
-+    if (NOT USE_SYSTEM_XBYAK)
-+        add_library(xbyak INTERFACE)
-+        target_include_directories(xbyak SYSTEM INTERFACE ./xbyak/xbyak)
-+        target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
-+    else()
-+        find_path(XBYAK_INCLUDE xbyak.h PATH_SUFFIXES xbyak REQUIRED)
-+    endif()
- endif()
- 
- # Dynarmic
-@@ -46,7 +56,12 @@ if (ARCHITECTURE_x86_64 OR ARCHITECTURE_ARM64)
- endif()
- 
+ # fmt and Xbyak need to be added before dynarmic
  # libfmt
 -add_subdirectory(fmt)
 +if (NOT USE_SYSTEM_FMT)
@@ -97,9 +95,26 @@ index 24e881b19..bfee14919 100644
 +    find_package(fmt REQUIRED)
 +endif()
  
- # getopt
- if (MSVC)
-@@ -58,7 +72,11 @@ endif()
+ # Xbyak
+ if (ARCHITECTURE_x86_64)
+-    add_library(xbyak INTERFACE)
+-    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
+-    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
+-    target_include_directories(xbyak SYSTEM INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
+-    target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
++    if (NOT USE_SYSTEM_XBYAK)
++        add_library(xbyak INTERFACE)
++        file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
++        file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
++        target_include_directories(xbyak SYSTEM INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
++        target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
++    else()
++        find_path(XBYAK_INCLUDE xbyak.h PATH_SUFFIXES xbyak REQUIRED)
++    endif()
+ endif()
+ 
+ # Dynarmic
+@@ -61,7 +76,11 @@ endif()
  add_subdirectory(glad)
  
  # inih
@@ -112,8 +127,7 @@ index 24e881b19..bfee14919 100644
  
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -77,28 +95,44 @@ add_subdirectory(soundtouch)
- # The SoundTouch target doesn't export the necessary include paths as properties by default
+@@ -80,7 +99,11 @@ add_subdirectory(soundtouch)
  target_include_directories(SoundTouch INTERFACE ./soundtouch/include)
  
  # Teakra
@@ -123,13 +137,10 @@ index 24e881b19..bfee14919 100644
 +else()
 +    find_library(TEAKRA_LIBS teakra REQUIRED)
 +endif()
-
+ 
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-     add_subdirectory(sdl2)
- endif()
- 
- # Zstandard
+@@ -91,17 +114,29 @@ endif()
  set(ZSTD_LEGACY_SUPPORT OFF)
  set(ZSTD_BUILD_PROGRAMS OFF)
  set(ZSTD_BUILD_SHARED OFF)
@@ -166,7 +177,7 @@ index 24e881b19..bfee14919 100644
  
  # DiscordRPC
 diff --git a/src/citra/CMakeLists.txt b/src/citra/CMakeLists.txt
-index 86066dfe9..fadc07e98 100644
+index f5ef660ca..7ac1e74ea 100644
 --- a/src/citra/CMakeLists.txt
 +++ b/src/citra/CMakeLists.txt
 @@ -16,7 +16,12 @@ add_executable(citra
@@ -184,10 +195,10 @@ index 86066dfe9..fadc07e98 100644
      target_link_libraries(citra PRIVATE getopt)
  endif()
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index 5d65965fa..22519073d 100644
+index 62e47e65a..8e3976930 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
-@@ -130,7 +130,11 @@ endif()
+@@ -139,7 +139,11 @@ endif()
  create_target_directory_groups(common)
  
  target_link_libraries(common PUBLIC fmt::fmt microprofile Boost::boost Boost::serialization)
@@ -198,19 +209,8 @@ index 5d65965fa..22519073d 100644
 +    target_link_libraries(common PUBLIC zstd)
 +endif()
  set_target_properties(common PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
-
+ 
  if (ARCHITECTURE_x86_64)
-     target_link_libraries(common PRIVATE xbyak)
-diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index e4b53f706..43510c382 100644
---- a/externals/CMakeLists.txt
-+++ b/externals/CMakeLists.txt
-@@ -26,7 +26,7 @@ target_link_libraries(boost_serialization PUBLIC boost)
- # Catch2
- set(CATCH_INSTALL_DOCS OFF)
- set(CATCH_INSTALL_EXTRAS OFF)
--add_subdirectory(catch2)
-+find_package(Catch2 REQUIRED)
+-- 
+2.38.1
 
- # Crypto++
- add_subdirectory(cryptopp)
