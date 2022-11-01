@@ -44,7 +44,8 @@ DEPEND="app-arch/zstd
 	net-libs/enet:=
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
-BDEPEND="<dev-cpp/catch-3.0.0"
+BDEPEND="<dev-cpp/catch-3.0.0
+	dev-cpp/robin-map"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libraries.patch"
