@@ -38,6 +38,7 @@ DEPEND="app-arch/zarchive
 	x11-libs/libX11
 	media-libs/libglvnd"
 RDEPEND="${DEPEND}"
+BDEPEND="media-libs/glm"
 
 S="${WORKDIR}/${MY_PN}-${SHA}"
 
