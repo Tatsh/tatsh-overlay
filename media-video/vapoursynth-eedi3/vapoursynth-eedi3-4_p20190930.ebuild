@@ -14,6 +14,9 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="media-video/vapoursynth"
+DEPEND="media-video/vapoursynth
+	dev-libs/boost
+	virtual/opencl"
+RDEPEND="|| ( dev-libs/opencl-icd-loader dev-libs/ocl-icd )"
 
 S="${WORKDIR}/VapourSynth-EEDI3-${SHA}"
