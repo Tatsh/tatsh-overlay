@@ -651,4 +651,3 @@ src_test() {
 src_install() {
 	dobin ${MY_PN}
 }
-
