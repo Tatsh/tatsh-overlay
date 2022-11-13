@@ -1,4 +1,4 @@
-From 96b19f60148c1d027e9b20ec14e10169f6c430cc Mon Sep 17 00:00:00 2001
+From 19f4899f015619ee3d40c07fc919be82fc8e8645 Mon Sep 17 00:00:00 2001
 From: Alexandre Bouvier <contact@amb.tf>
 Date: Fri, 20 Aug 2021 06:07:12 +0200
 Subject: [PATCH 1/4] cmake: Allow unbundling some external libraries
@@ -18,7 +18,7 @@ Add support for linking against the following system libraries:
  4 files changed, 72 insertions(+), 7 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 957df54f54d8..b1b36f9f3881 100644
+index 1d13dc74e564..3d97b1e98f21 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -28,6 +28,16 @@ option(YUZU_USE_BUNDLED_LIBUSB "Compile bundled libusb" OFF)
@@ -99,28 +99,25 @@ index 957df54f54d8..b1b36f9f3881 100644
  # ======================================
  
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index e80fd124eb3e..41edea0fe67a 100644
+index 7f0a6d069e37..a0abe197a2b6 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -6,7 +6,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
+@@ -6,12 +6,12 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
  include(DownloadExternals)
  
  # xbyak
 -if (ARCHITECTURE_x86 OR ARCHITECTURE_x86_64)
 +if ((ARCHITECTURE_x86 OR ARCHITECTURE_x86_64) AND NOT TARGET xbyak)
-     add_library(xbyak INTERFACE)
-     file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
-     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
-@@ -15,7 +15,7 @@ if (ARCHITECTURE_x86 OR ARCHITECTURE_x86_64)
+     add_subdirectory(xbyak)
  endif()
  
  # Dynarmic
--if (ARCHITECTURE_x86_64)
-+if (ARCHITECTURE_x86_64 AND NOT TARGET dynarmic)
-     set(DYNARMIC_NO_BUNDLED_FMT ON)
-     set(DYNARMIC_IGNORE_ASSERTS ON CACHE BOOL "" FORCE)
-     add_subdirectory(dynarmic)
-@@ -30,7 +30,9 @@ endif()
+-if (ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64)
++if ((ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64) AND NOT TARGET dynarmic)
+     if (ARCHITECTURE_arm64)
+        set(DYNARMIC_FRONTENDS "A32")
+     endif()
+@@ -29,7 +29,9 @@ endif()
  add_subdirectory(glad)
  
  # inih
@@ -131,7 +128,7 @@ index e80fd124eb3e..41edea0fe67a 100644
  
  # mbedtls
  add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
-@@ -78,7 +80,7 @@ add_subdirectory(enet)
+@@ -77,7 +79,7 @@ add_subdirectory(enet)
  target_include_directories(enet INTERFACE ./enet/include)
  
  # Cubeb
@@ -140,7 +137,7 @@ index e80fd124eb3e..41edea0fe67a 100644
      set(BUILD_TESTS OFF CACHE BOOL "")
      add_subdirectory(cubeb EXCLUDE_FROM_ALL)
  endif()
-@@ -92,7 +94,7 @@ endif()
+@@ -91,7 +93,7 @@ endif()
  # Sirit
  add_subdirectory(sirit)
  
@@ -173,7 +170,7 @@ index 66dd0dc154d4..3ced6d782d31 100644
  #include "common/fs/fs.h"
  #include "common/fs/path_util.h"
 
-From 2b0571628bff6be458a50d5e5ad57f361fdd54e6 Mon Sep 17 00:00:00 2001
+From dd9012606153bd01d354a5c48faffc4b02aa31e0 Mon Sep 17 00:00:00 2001
 From: Andrea Pappacoda <andrea@pappacoda.it>
 Date: Fri, 25 Mar 2022 23:22:58 +0100
 Subject: [PATCH 2/4] build: also look for cpp-httplib via pkg-config
@@ -187,7 +184,7 @@ Subject: [PATCH 2/4] build: also look for cpp-httplib via pkg-config
  create mode 100644 externals/find-modules/Findhttplib.cmake
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b1b36f9f3881..66ad8f7688c2 100644
+index 3d97b1e98f21..0a273e942d04 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -491,10 +491,8 @@ if (ARCHITECTURE_x86_64 AND NOT YUZU_USE_BUNDLED_DYNARMIC)
@@ -204,10 +201,10 @@ index b1b36f9f3881..66ad8f7688c2 100644
          set(YUZU_USE_BUNDLED_HTTPLIB ON)
      endif()
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 41edea0fe67a..a0ac12d54e63 100644
+index a0abe197a2b6..41557395034a 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -94,7 +94,7 @@ endif()
+@@ -93,7 +93,7 @@ endif()
  # Sirit
  add_subdirectory(sirit)
  
@@ -216,7 +213,7 @@ index 41edea0fe67a..a0ac12d54e63 100644
      find_package(OpenSSL 1.1)
      if (OPENSSL_FOUND)
          set(OPENSSL_LIBRARIES OpenSSL::SSL OpenSSL::Crypto)
-@@ -118,7 +118,7 @@ if (ENABLE_WEB_SERVICE AND NOT TARGET httplib)
+@@ -117,7 +117,7 @@ if (ENABLE_WEB_SERVICE AND NOT TARGET httplib)
      if (WIN32)
          target_link_libraries(httplib INTERFACE crypt32 cryptui ws2_32)
      endif()
@@ -264,7 +261,7 @@ index 3f75d97d178f..cbd4a814e87a 100644
 -target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib cpp-jwt)
 +target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib::httplib cpp-jwt)
 
-From 1443fe99f3a0c782e8b1ecd07b57f1a45b988733 Mon Sep 17 00:00:00 2001
+From 0bc6516c2e28229244f10bc096fa68835556b49b Mon Sep 17 00:00:00 2001
 From: Alexandre Bouvier <contact@amb.tf>
 Date: Mon, 28 Mar 2022 01:16:58 +0200
 Subject: [PATCH 3/4] cmake: Add option to unbundle every external
@@ -295,7 +292,7 @@ Subject: [PATCH 3/4] cmake: Add option to unbundle every external
  create mode 100644 externals/find-modules/Findinih.cmake
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 66ad8f7688c2..1af5eb717bba 100644
+index 0a273e942d04..f3137e3f2a58 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -28,16 +28,6 @@ option(YUZU_USE_BUNDLED_LIBUSB "Compile bundled libusb" OFF)
@@ -466,26 +463,25 @@ index 66ad8f7688c2..1af5eb717bba 100644
  # ======================================
  
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index a0ac12d54e63..a3479bb58c3b 100644
+index 41557395034a..0668d4ad8491 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -6,19 +6,21 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
+@@ -6,18 +6,20 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
  include(DownloadExternals)
  
  # xbyak
 -if ((ARCHITECTURE_x86 OR ARCHITECTURE_x86_64) AND NOT TARGET xbyak)
 +if ((ARCHITECTURE_x86 OR ARCHITECTURE_x86_64) AND NOT TARGET xbyak::xbyak)
-     add_library(xbyak INTERFACE)
-     file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
-     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
-     target_include_directories(xbyak SYSTEM INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
-     target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
+     add_subdirectory(xbyak)
 +    add_library(xbyak::xbyak ALIAS xbyak)
  endif()
  
  # Dynarmic
--if (ARCHITECTURE_x86_64 AND NOT TARGET dynarmic)
-+if (ARCHITECTURE_x86_64 AND NOT TARGET dynarmic::dynarmic)
+-if ((ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64) AND NOT TARGET dynarmic)
++if ((ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64) AND NOT TARGET dynarmic::dynarmic)
+     if (ARCHITECTURE_arm64)
+        set(DYNARMIC_FRONTENDS "A32")
+     endif()
      set(DYNARMIC_NO_BUNDLED_FMT ON)
      set(DYNARMIC_IGNORE_ASSERTS ON CACHE BOOL "" FORCE)
      add_subdirectory(dynarmic)
@@ -493,7 +489,7 @@ index a0ac12d54e63..a3479bb58c3b 100644
  endif()
  
  # getopt
-@@ -30,13 +32,14 @@ endif()
+@@ -29,13 +31,14 @@ endif()
  add_subdirectory(glad)
  
  # inih
@@ -510,7 +506,7 @@ index a0ac12d54e63..a3479bb58c3b 100644
  
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -76,24 +79,30 @@ if (YUZU_USE_EXTERNAL_SDL2)
+@@ -75,24 +78,30 @@ if (YUZU_USE_EXTERNAL_SDL2)
  endif()
  
  # ENet
@@ -546,7 +542,7 @@ index a0ac12d54e63..a3479bb58c3b 100644
  if (ENABLE_WEB_SERVICE AND NOT TARGET httplib::httplib)
      find_package(OpenSSL 1.1)
      if (OPENSSL_FOUND)
-@@ -118,18 +127,20 @@ if (ENABLE_WEB_SERVICE AND NOT TARGET httplib::httplib)
+@@ -117,18 +126,20 @@ if (ENABLE_WEB_SERVICE AND NOT TARGET httplib::httplib)
      if (WIN32)
          target_link_libraries(httplib INTERFACE crypt32 cryptui ws2_32)
      endif()
@@ -571,7 +567,7 @@ index a0ac12d54e63..a3479bb58c3b 100644
  endif()
  
  # FFMpeg
-@@ -140,3 +151,8 @@ if (YUZU_USE_BUNDLED_FFMPEG)
+@@ -139,3 +150,8 @@ if (YUZU_USE_BUNDLED_FFMPEG)
      set(FFmpeg_LIBRARIES "${FFmpeg_LIBRARIES}" PARENT_SCOPE)
      set(FFmpeg_INCLUDE_DIR "${FFmpeg_INCLUDE_DIR}" PARENT_SCOPE)
  endif()
@@ -813,13 +809,13 @@ index 827ac3bbcf31..ebb60a976e47 100644
  target_include_directories(inih INTERFACE inih/cpp)
 +add_library(inih::INIReader ALIAS inih)
 diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
-index 144f1bab2987..183adfedb6e2 100644
+index 8e3a8f5a8c0d..7a546cd7fea3 100644
 --- a/src/audio_core/CMakeLists.txt
 +++ b/src/audio_core/CMakeLists.txt
-@@ -227,11 +227,11 @@ endif()
+@@ -218,11 +218,11 @@ endif()
  
  target_link_libraries(audio_core PUBLIC common core)
- if (ARCHITECTURE_x86_64)
+ if (ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64)
 -    target_link_libraries(audio_core PRIVATE dynarmic)
 +    target_link_libraries(audio_core PRIVATE dynarmic::dynarmic)
  endif()
@@ -831,7 +827,7 @@ index 144f1bab2987..183adfedb6e2 100644
  endif()
  if(ENABLE_SDL2)
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index 46cf75fdebd6..1c0f7e273505 100644
+index c0555f840c67..8069539afe2d 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
 @@ -145,7 +145,7 @@ if(ARCHITECTURE_x86_64)
@@ -843,7 +839,7 @@ index 46cf75fdebd6..1c0f7e273505 100644
  endif()
  
  if (MSVC)
-@@ -169,14 +169,4 @@ endif()
+@@ -170,14 +170,4 @@ endif()
  create_target_directory_groups(common)
  
  target_link_libraries(common PUBLIC ${Boost_LIBRARIES} fmt::fmt microprofile Threads::Threads)
@@ -860,10 +856,10 @@ index 46cf75fdebd6..1c0f7e273505 100644
 -endif()
 +target_link_libraries(common PRIVATE lz4::lz4 zstd::zstd)
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index abeb5859b524..d415846a9960 100644
+index f67f1ce92438..f8638fbb5694 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -788,7 +788,7 @@ endif()
+@@ -791,7 +791,7 @@ endif()
  create_target_directory_groups(core)
  
  target_link_libraries(core PUBLIC common PRIVATE audio_core network video_core)
@@ -872,9 +868,9 @@ index abeb5859b524..d415846a9960 100644
  if (MINGW)
      target_link_libraries(core PRIVATE ${MSWSOCK_LIBRARY})
  endif()
-@@ -807,5 +807,5 @@ if (ARCHITECTURE_x86_64)
-         arm/dynarmic/arm_dynarmic_cp15.cpp
-         arm/dynarmic/arm_dynarmic_cp15.h
+@@ -814,5 +814,5 @@ if (ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64)
+         hle/service/jit/jit.cpp
+         hle/service/jit/jit.h
      )
 -    target_link_libraries(core PRIVATE dynarmic)
 +    target_link_libraries(core PRIVATE dynarmic::dynarmic)
@@ -906,19 +902,10 @@ index 6f8ca4b90cfb..9a940e1f512f 100644
      target_compile_definitions(network PRIVATE -DENABLE_WEB_SERVICE)
      target_link_libraries(network PRIVATE web_service)
 diff --git a/src/video_core/CMakeLists.txt b/src/video_core/CMakeLists.txt
-index 40e6d1ec4858..4fa64d3cb330 100644
+index d7f7d336c94a..a16d6be56980 100644
 --- a/src/video_core/CMakeLists.txt
 +++ b/src/video_core/CMakeLists.txt
-@@ -244,7 +244,7 @@ add_library(video_core STATIC
- create_target_directory_groups(video_core)
- 
- target_link_libraries(video_core PUBLIC common core)
--target_link_libraries(video_core PUBLIC glad shader_recompiler xbyak)
-+target_link_libraries(video_core PUBLIC glad shader_recompiler xbyak::xbyak)
- 
- if (YUZU_USE_BUNDLED_FFMPEG AND NOT WIN32)
-     add_dependencies(video_core ffmpeg-build)
-@@ -256,8 +256,7 @@ target_link_options(video_core PRIVATE ${FFmpeg_LDFLAGS})
+@@ -255,8 +255,7 @@ target_link_options(video_core PRIVATE ${FFmpeg_LDFLAGS})
  
  add_dependencies(video_core host_shaders)
  target_include_directories(video_core PRIVATE ${HOST_SHADERS_INCLUDE})
@@ -928,10 +915,15 @@ index 40e6d1ec4858..4fa64d3cb330 100644
  
  if (ENABLE_NSIGHT_AFTERMATH)
      if (NOT DEFINED ENV{NSIGHT_AFTERMATH_SDK})
-@@ -290,5 +289,5 @@ else()
+@@ -290,9 +289,9 @@ if (ARCHITECTURE_x86_64)
+         macro/macro_jit_x64.cpp
+         macro/macro_jit_x64.h
+     )
+-    target_link_libraries(video_core PUBLIC xbyak)
++    target_link_libraries(video_core PUBLIC xbyak::xbyak)
  endif()
  
- if (ARCHITECTURE_x86_64)
+ if (ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64)
 -    target_link_libraries(video_core PRIVATE dynarmic)
 +    target_link_libraries(video_core PRIVATE dynarmic::dynarmic)
  endif()
@@ -946,7 +938,7 @@ index cbd4a814e87a..b548fada6238 100644
 -target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib::httplib cpp-jwt)
 +target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib::httplib cpp-jwt::cpp-jwt)
 diff --git a/src/yuzu/CMakeLists.txt b/src/yuzu/CMakeLists.txt
-index 29d506c47281..3ba115a174c3 100644
+index 5cc1fbf32629..f2fa7d744b23 100644
 --- a/src/yuzu/CMakeLists.txt
 +++ b/src/yuzu/CMakeLists.txt
 @@ -311,7 +311,7 @@ target_link_libraries(yuzu PRIVATE common core input_common network video_core)
@@ -970,7 +962,7 @@ index 29d506c47281..3ba115a174c3 100644
 @@ -386,5 +386,5 @@ if (NOT APPLE)
  endif()
  
- if (ARCHITECTURE_x86_64)
+ if (ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64)
 -    target_link_libraries(yuzu PRIVATE dynarmic)
 +    target_link_libraries(yuzu PRIVATE dynarmic::dynarmic)
  endif()
@@ -997,7 +989,7 @@ index 7d8ca3d8a0b3..a967359f8b1c 100644
  if (YUZU_USE_EXTERNAL_SDL2)
      target_compile_definitions(yuzu-cmd PRIVATE -DYUZU_USE_EXTERNAL_SDL2)
 
-From 29379c97b9010e6ca9eed001a5bad311eccdf370 Mon Sep 17 00:00:00 2001
+From e322c9f68b3a77d22c49739413c9f0ad81610b46 Mon Sep 17 00:00:00 2001
 From: Alexandre Bouvier <contact@amb.tf>
 Date: Tue, 20 Sep 2022 21:46:46 +0200
 Subject: [PATCH 4/4] cmake: Remove options and fix versions
@@ -1017,7 +1009,7 @@ Subject: [PATCH 4/4] cmake: Remove options and fix versions
  delete mode 100644 externals/find-modules/FindVulkanHeaders.cmake
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1af5eb717bba..bc5d511641aa 100644
+index f3137e3f2a58..c3235a0df42d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -34,8 +34,6 @@ option(ENABLE_CUBEB "Enables the cubeb audio backend" ON)
@@ -1076,7 +1068,7 @@ index 1af5eb717bba..bc5d511641aa 100644
  
 -if (NOT YUZU_USE_BUNDLED_INIH)
 -    find_package(inih REQUIRED)
-+if (ARCHITECTURE_x86_64)
++if (ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64)
 +    find_package(dynarmic 6.2.3)
  endif()
  
@@ -1121,11 +1113,11 @@ index 1af5eb717bba..bc5d511641aa 100644
  
  if (YUZU_TESTS)
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index a3479bb58c3b..3bffacb8022e 100644
+index 0668d4ad8491..71fe6a5f8576 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -19,7 +19,7 @@ endif()
- if (ARCHITECTURE_x86_64 AND NOT TARGET dynarmic::dynarmic)
+@@ -18,7 +18,7 @@ if ((ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64) AND NOT TARGET dynarmic::dynarmi
+     endif()
      set(DYNARMIC_NO_BUNDLED_FMT ON)
      set(DYNARMIC_IGNORE_ASSERTS ON CACHE BOOL "" FORCE)
 -    add_subdirectory(dynarmic)
@@ -1133,7 +1125,7 @@ index a3479bb58c3b..3bffacb8022e 100644
      add_library(dynarmic::dynarmic ALIAS dynarmic)
  endif()
  
-@@ -38,8 +38,7 @@ endif()
+@@ -37,8 +37,7 @@ endif()
  
  # mbedtls
  add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
@@ -1143,7 +1135,7 @@ index a3479bb58c3b..3bffacb8022e 100644
  
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -80,7 +79,7 @@ endif()
+@@ -79,7 +78,7 @@ endif()
  
  # ENet
  if (NOT TARGET enet::enet)
@@ -1331,10 +1323,10 @@ index 62c93b73497a..1c29f3598464 100644
      )
  endif()
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index d415846a9960..68f88c5650e9 100644
+index f8638fbb5694..4ac020308d7c 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -788,7 +788,7 @@ endif()
+@@ -791,7 +791,7 @@ endif()
  create_target_directory_groups(core)
  
  target_link_libraries(core PUBLIC common PRIVATE audio_core network video_core)
