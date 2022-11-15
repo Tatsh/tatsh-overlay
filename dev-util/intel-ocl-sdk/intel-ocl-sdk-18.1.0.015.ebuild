@@ -11,21 +11,14 @@ SRC_URI="https://registrationcenter-download.intel.com/akdlm/irc_nas/vcp/15532/l
 
 LICENSE="Intel-SDP"
 SLOT="0"
-KEYWORDS="-* amd64"
+KEYWORDS="-* ~amd64"
 RESTRICT="bindist mirror"
 
-RDEPEND=">=virtual/opencl-3
-	sys-process/numactl"
-DEPEND=""
-PDEPEND="dev-libs/glib
-	media-libs/fontconfig
-	media-libs/freetype
-	x11-libs/libICE
-	x11-libs/libSM
-	x11-libs/libX11
-	x11-libs/libXext
-	x11-libs/libXrender
-	sys-libs/zlib"
+RDEPEND="dev-libs/libxml2
+	sys-libs/ncurses-compat
+	sys-libs/zlib
+	sys-process/numactl
+	>=virtual/opencl-3"
 
 S="${WORKDIR}/l_opencl_p_${PV}"
 
@@ -42,7 +35,7 @@ src_unpack() {
 }
 
 src_install() {
-	echo "${EPREFIX}${INTEL_INSTALL_PATH}/lib64/libintelocl.so" > intel64.icd
+	echo "${EPREFIX}${INTEL_INSTALL_PATH}/lib64/libintelocl.so" > intel64.icd || die
 	insinto /etc/OpenCL/vendors/
 	doins intel64.icd
 
@@ -54,7 +47,7 @@ src_install() {
 	doins "${WORKDIR}/${INTEL_CL}/compiler/lib/intel64_lin/"*
 
 	dodir "${INTEL_VENDOR_DIR}"
-	dosym "../../../../..${INTEL_INSTALL_PATH}/lib64/libOpenCL.so"     "${INTEL_VENDOR_DIR}/libOpenCL.so"
-	dosym "../../../../..${INTEL_INSTALL_PATH}/lib64/libOpenCL.so.1"   "${INTEL_VENDOR_DIR}/libOpenCL.so.1"
-	dosym "../../../../..${INTEL_INSTALL_PATH}/lib64/libOpenCL.so.2.0" "${INTEL_VENDOR_DIR}/libOpenCL.so.2.0"
+	dosym -r "${INTEL_INSTALL_PATH}/lib64/libOpenCL.so"     "${INTEL_VENDOR_DIR}/libOpenCL.so"
+	dosym -r "${INTEL_INSTALL_PATH}/lib64/libOpenCL.so.1"   "${INTEL_VENDOR_DIR}/libOpenCL.so.1"
+	dosym -r "${INTEL_INSTALL_PATH}/lib64/libOpenCL.so.2.0" "${INTEL_VENDOR_DIR}/libOpenCL.so.2.0"
 }
