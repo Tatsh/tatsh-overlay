@@ -64,6 +64,7 @@ BDEPEND="<dev-cpp/catch-3.0.0
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
+	"${FILESDIR}/${PN}-4949-high-dpi.patch"
 	"${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
 	"${FILESDIR}/${PN}-6833-unbundle-libs.patch"
 	"${FILESDIR}/${PN}-system-robin-map.patch"
