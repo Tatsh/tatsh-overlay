@@ -14,10 +14,7 @@ LICENSE="Apache-2.0 EPL-1.0 BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 
-RDEPEND="|| (
-		dev-java/openjdk:17
-		dev-java/openjdk-bin:17
-	)"
+RDEPEND="virtual/jre:17"
 DEPEND="${RDEPEND}"
 
 MY_PN="${PN%-bin*}"
@@ -42,6 +39,4 @@ src_install() {
 	doins -r ./*
 	fperms 0755 "/opt/${MY_PN}-ce/${MY_PN}"
 	make_wrapper "${MY_PN}" "/opt/${MY_PN}-ce/${MY_PN}" "/opt/${MY_PN}-ce"
-	sed -e "s:^exec /opt/${MY_PN}-ce/${MY_PN}:exec /opt/${MY_PN}-ce/${MY_PN} -vm ${EPREFIX}/opt/openjdk-bin-17/bin:" \
-		-i "${D}/usr/bin/${MY_PN}"
 }
