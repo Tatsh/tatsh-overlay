@@ -12,8 +12,7 @@ LICENSE="Charles Apache-2.0 MIT GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="|| ( dev-java/openjdk-bin:11
-	dev-java/openjdk:11 )"
+RDEPEND="virtual/jre:17"
 RESTRICT="strip"
 
 S="${WORKDIR}/charles"
