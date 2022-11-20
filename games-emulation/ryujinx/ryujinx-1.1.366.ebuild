@@ -3,6 +3,7 @@
 
 EAPI=8
 
+DOTNET_SLOT="6.0"
 inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
