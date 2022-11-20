@@ -6,7 +6,7 @@ inherit cmake
 
 DESCRIPTION="A re-implementation of the RenderWare Graphics engine."
 HOMEPAGE="https://github.com/aap/librw"
-SHA="f7e7841e1c9a92cc5df8c191979f92cb2a5c4d7e"
+SHA="0bc9c77c81d6fcf75211d27d4b42c7a73ed0eb32"
 SRC_URI="https://github.com/aap/librw/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
