@@ -9,7 +9,7 @@ HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 
 MY_PV="mainline-${PV/./-}"
 CPP_JWT_SHA="e12ef06218596b52d9b5d6e1639484866a8e7067"
-DYNARMIC_SHA="424fdb5c5026ec5bdd7553271190397f63fb503e"
+DYNARMIC_SHA="07c614f91b0af5335e1f9c0653c2d75e7b5f53bd"
 FMT_PV="9.1.0"
 HTTPLIB_SHA="305a7abcb9b4e9e349843c6d563212e6c1bbbf21"
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
