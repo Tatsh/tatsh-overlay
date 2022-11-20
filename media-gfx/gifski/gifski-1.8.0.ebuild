@@ -11,27 +11,29 @@ CRATES="
 	arrayvec-0.7.2
 	atty-0.2.14
 	autocfg-1.1.0
-	bindgen-0.59.2
+	bindgen-0.54.0
 	bitflags-1.3.2
-	bytemuck-1.12.1
-	cc-1.0.73
-	cexpr-0.6.0
+	bytemuck-1.12.3
+	cc-1.0.76
+	cexpr-0.4.0
+	cfg-if-0.1.10
 	cfg-if-1.0.0
-	clang-sys-1.3.3
-	clap-3.2.18
+	clang-sys-0.29.3
+	clap-3.2.23
 	clap_lex-0.2.4
 	color_quant-1.1.0
 	crc32fast-1.3.2
 	crossbeam-channel-0.5.6
 	crossbeam-deque-0.8.2
-	crossbeam-epoch-0.9.10
-	crossbeam-utils-0.8.11
-	dunce-1.0.2
+	crossbeam-epoch-0.9.11
+	crossbeam-utils-0.8.12
+	dunce-1.0.3
 	either-1.8.0
 	fallible_collections-0.4.5
 	ffmpeg-next-4.4.0
+	ffmpeg-sys-next-4.4.0
 	flate2-1.0.24
-	getrandom-0.2.7
+	getrandom-0.2.8
 	gif-0.11.4
 	gif-dispose-3.1.1
 	gifsicle-1.92.5
@@ -39,46 +41,45 @@ CRATES="
 	hashbrown-0.12.3
 	hermit-abi-0.1.19
 	imagequant-4.0.4
-	imgref-1.9.3
+	imgref-1.9.4
 	indexmap-1.9.1
 	lazy_static-1.4.0
 	lazycell-1.3.0
-	libc-0.2.132
-	libloading-0.7.3
-	lodepng-3.7.0
+	libc-0.2.137
+	libloading-0.5.2
+	lodepng-3.7.2
 	loop9-0.1.3
 	memchr-2.5.0
 	memoffset-0.6.5
-	minimal-lexical-0.2.1
-	miniz_oxide-0.5.3
+	miniz_oxide-0.5.4
 	natord-1.0.9
 	noisy_float-0.2.0
-	nom-7.1.1
+	nom-5.1.2
 	num-traits-0.2.15
-	num_cpus-1.13.1
-	once_cell-1.13.1
-	os_str_bytes-6.3.0
+	num_cpus-1.14.0
+	once_cell-1.16.0
+	os_str_bytes-6.4.0
 	pbr-1.0.4
 	peeking_take_while-0.1.2
-	pkg-config-0.3.25
-	proc-macro2-1.0.43
+	pkg-config-0.3.26
+	proc-macro2-1.0.47
 	quick-error-2.0.1
 	quote-1.0.21
 	rayon-1.5.3
 	rayon-core-1.9.3
-	regex-1.6.0
-	regex-syntax-0.6.27
+	regex-1.7.0
+	regex-syntax-0.6.28
 	resize-0.7.4
-	rgb-0.8.33
+	rgb-0.8.34
 	rustc-hash-1.1.0
 	scopeguard-1.1.0
-	shlex-1.1.0
+	shlex-0.1.1
 	strsim-0.10.0
 	termcolor-1.1.3
-	textwrap-0.15.0
+	textwrap-0.16.0
 	thread_local-1.1.4
 	time-0.1.44
-	unicode-ident-1.0.3
+	unicode-ident-1.0.5
 	vcpkg-0.2.15
 	version_check-0.9.4
 	wasi-0.10.0+wasi-snapshot-preview1
@@ -90,6 +91,7 @@ CRATES="
 	winapi-util-0.1.5
 	winapi-x86_64-pc-windows-gnu-0.4.0
 "
+
 inherit cargo
 
 DESCRIPTION="pngquant-based GIF maker for nice-looking animGIFs"
@@ -100,4 +102,4 @@ LICENSE="0BSD AGPL-3+ Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD CC0-1.0 GPL
 SLOT="0"
 KEYWORDS="~amd64"
 
-PATCHES=( "${FILESDIR}/${PN}-ffmpeg-sys-next-spec.patch" )
+RESTRICT="strip"
