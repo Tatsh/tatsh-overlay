@@ -12,9 +12,9 @@ UPPER_PN="${PN^^}"
 MY_PN="${UPPER_PN:0:1}${PN:1:1}${PN:2:1}${UPPER_PN:3:1}${PN:4}"
 MY_PV="${PV:6:4}"
 ALT_PV="${PV:6:6}"
-DATE="20220801"
-SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${PV:2:6}/${MY_PN}-alpha-${PV:0:8}HF2-Linux-amd64-date-${DATE}.tar.gz -> ${P}-amd64.tar.gz )
-	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${PV:2:6}/${MY_PN}-alpha-${PV:0:8}HF2-RPi64-arm64v8-date-${DATE}.tar.gz )"
+DATE="20221101"
+SRC_URI="amd64? ( https://github.com/TeamRizu/OutFox/releases/download/${PV}/${MY_PN}-${PV}.LTS-Linux-amd64-date-${DATE}.tar.gz -> ${P}-amd64.tar.gz )
+	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/${PV}/${MY_PN}-${PV}.LTS-Linux-ARM-64bit-arm64v8-aarch64-date-${DATE}.tar.gz )"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -43,9 +43,9 @@ S="${WORKDIR}"
 
 src_prepare() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-${PV:0:8}HF2-amd64-date-${DATE}" || die
+		cd "${MY_PN}-alpha-${PV}-amd64-date-${DATE}" || die
 	elif use arm64; then
-		cd "${MY_PN}-alpha-${PV:0:8}HF2-arm64-date-${DATE}" || die
+		cd "${MY_PN}-alpha-${PV}-arm64-date-${DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
@@ -65,9 +65,9 @@ src_prepare() {
 
 src_install() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-${PV:0:8}HF2-amd64-date-${DATE}" || die
+		cd "${MY_PN}-alpha-${PV}-amd64-date-${DATE}" || die
 	elif use arm64; then
-		cd "${MY_PN}-alpha-${PV:0:8}HF2-arm64-date-${DATE}" || die
+		cd "${MY_PN}-alpha-${PV}-arm64-date-${DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
