@@ -19,7 +19,7 @@ esac
 
 inherit multiprocessing
 
-BDEPEND=">=virtual/dotnet-sdk-6.0"
+BDEPEND="virtual/dotnet-sdk:${DOTNET_SLOT}"
 EXPORT_FUNCTIONS src_unpack src_prepare src_compile
 
 # @ECLASS_VARIABLE: DOTNET_CLI_TELEMETRY_OPTOUT
