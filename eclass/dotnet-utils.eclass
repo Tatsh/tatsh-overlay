@@ -141,8 +141,6 @@ dotnet-utils_src_prepare() {
 dotnet-utils_src_compile() {
 	debug-print-function ${FUNCNAME} "$@"
 
-	addpredict /opt/dotnet-sdk-bin-6.0/metadata
-
 	edotnet publish \
 		--nologo \
 		--no-restore \
