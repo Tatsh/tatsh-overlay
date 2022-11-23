@@ -142,6 +142,7 @@ dotnet-utils_src_compile() {
 	debug-print-function ${FUNCNAME} "$@"
 
 	edotnet publish \
+		-nowarn:IL2026,IL2104,IL2111,IL2055,IL2090,IL2091,IL2075,IL2070,IL2067 \
 		--nologo \
 		--no-restore \
 		--configuration Release \
