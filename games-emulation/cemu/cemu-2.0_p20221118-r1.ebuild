@@ -29,6 +29,7 @@ DEPEND="app-arch/zarchive
 	dev-libs/openssl
 	dev-libs/pugixml
 	dev-libs/rapidjson
+	dev-util/glslang
 	dev-util/vulkan-headers
 	media-libs/cubeb
 	media-libs/libsdl2[joystick,threads]
