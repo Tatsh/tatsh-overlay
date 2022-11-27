@@ -9,7 +9,7 @@ inherit cmake desktop distutils-r1
 
 DESCRIPTION="Software defined VHS decoder."
 HOMEPAGE="https://github.com/oyvindln/vhs-decode"
-SHA="6d42cf4d23cb81cc5e803ba7d4c1cc7c9d8ee460"
+SHA="dca7dd9b3ded479c8bb5f4e62899545556d15a41"
 SRC_URI="https://github.com/oyvindln/vhs-decode/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 IUSE="gtk"
 
