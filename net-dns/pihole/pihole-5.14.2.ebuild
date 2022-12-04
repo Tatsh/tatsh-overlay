@@ -15,7 +15,7 @@ IUSE="cron www"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
-FTL_VERSION="5.14.1"
+FTL_VERSION="5.14.2"
 RDEPEND="${DEPEND}
 	>=net-dns/${PN}-ftl-${FTL_VERSION}
 	app-admin/sudo

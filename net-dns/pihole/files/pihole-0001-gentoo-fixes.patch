@@ -1,4 +1,4 @@
-From a905aad86977972e75a08ce6c2e507d4ddef49e2 Mon Sep 17 00:00:00 2001
+From 54559e736c8b18b8df393f3e887253b3889395dc Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:11 -0500
 Subject: [PATCH] Gentoo fixes
@@ -46,21 +46,21 @@ index 677910f6..2f0954fd 100644
 -#                    WITHIN /etc/dnsmasq.d/yourname.conf                      #
 +#                    WITHIN @EPREFIX@/etc/pihole/dnsmasq.d/yourname.conf      #
  ###############################################################################
-
+ 
 -addn-hosts=/etc/pihole/local.list
 -addn-hosts=/etc/pihole/custom.list
 +addn-hosts=@EPREFIX@/var/lib/pihole/local.list
 +addn-hosts=@EPREFIX@/var/lib/pihole/custom.list
-
+ 
  domain-needed
-
+ 
 @@ -30,6 +30,6 @@ bogus-priv
  no-resolv
-
+ 
  log-queries
 -log-facility=/var/log/pihole/pihole.log
 +log-facility=@EPREFIX@/var/log/pihole.log
-
+ 
  log-async
 diff --git a/advanced/Scripts/chronometer.sh b/advanced/Scripts/chronometer.sh
 index d69a56d3..0d81886b 100755
@@ -77,7 +77,7 @@ index d69a56d3..0d81886b 100755
          # Open connection to FTL
 @@ -136,7 +136,7 @@ get_init_stats() {
      }
-
+ 
      # Set Color Codes
 -    coltable="/opt/pihole/COL_TABLE"
 +    coltable="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
@@ -95,7 +95,7 @@ index d69a56d3..0d81886b 100755
      fi
 @@ -212,8 +212,8 @@ get_init_stats() {
      fi
-
+ 
      # Test existence of setupVars config
 -    if [[ -f "/etc/pihole/setupVars.conf" ]]; then
 -        setupVars="/etc/pihole/setupVars.conf"
@@ -103,10 +103,10 @@ index d69a56d3..0d81886b 100755
 +        setupVars="@EPREFIX@/var/lib/pihole/setupVars.conf"
      fi
  }
-
+ 
 @@ -371,7 +371,7 @@ get_sys_stats() {
          ph_dhcp_range=$(seq -s "|" -f "${DHCP_START%.*}.%g" "${DHCP_START##*.}" "${DHCP_END##*.}")
-
+ 
          # Count dynamic leases from available range, and not static leases
 -        ph_dhcp_num=$(grep -cE "$ph_dhcp_range" "/etc/pihole/dhcp.leases")
 +        ph_dhcp_num=$(grep -cE "$ph_dhcp_range" "/var/lib/pihole/dhcp.leases")
@@ -120,10 +120,10 @@ index a7ba60a9..a43a6360 100755
 @@ -10,7 +10,7 @@
  # This file is copyright under the latest version of the EUPL.
  # Please see LICENSE file for your rights under this license.
-
+ 
 -readonly scriptPath="/etc/.pihole/advanced/Scripts/database_migration/gravity"
 +readonly scriptPath="@EPREFIX@/usr/@LIBDIR@/pihole/database_migration/gravity"
-
+ 
  upgrade_gravityDB(){
  	local database piholeDir auditFile version
 diff --git a/advanced/Scripts/list.sh b/advanced/Scripts/list.sh
@@ -132,7 +132,7 @@ index b76a7ef7..99efc8da 100755
 +++ b/advanced/Scripts/list.sh
 @@ -11,8 +11,8 @@
  # Please see LICENSE file for your rights under this license.
-
+ 
  # Globals
 -piholeDir="/etc/pihole"
 -GRAVITYDB="${piholeDir}/gravity.db"
@@ -144,11 +144,11 @@ index b76a7ef7..99efc8da 100755
 @@ -37,7 +37,7 @@ declare -i domaincount
  domaincount=0
  reload=false
-
+ 
 -colfile="/opt/pihole/COL_TABLE"
 +colfile="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
  source ${colfile}
-
+ 
  # IDs are hard-wired to domain interpretation in the gravity database scheme
 diff --git a/advanced/Scripts/pihole-reenable.sh b/advanced/Scripts/pihole-reenable.sh
 index 93ec3b95..99d8b87a 100755
@@ -157,10 +157,10 @@ index 93ec3b95..99d8b87a 100755
 @@ -17,7 +17,7 @@
  # This ensures that pihole ends up in the correct state after a sequence of
  # commands suchs as: `pihole disable 30s; pihole enable; pihole disable`
-
+ 
 -readonly PI_HOLE_BIN_DIR="/usr/local/bin"
 +readonly PI_HOLE_BIN_DIR="@EPREFIX@/usr/bin"
-
+ 
  sleep "${1}"
  "${PI_HOLE_BIN_DIR}"/pihole enable
 diff --git a/advanced/Scripts/piholeARPTable.sh b/advanced/Scripts/piholeARPTable.sh
@@ -170,7 +170,7 @@ index 5daa025d..14517d09 100755
 @@ -10,7 +10,7 @@
  # This file is copyright under the latest version of the EUPL.
  # Please see LICENSE file for your rights under this license.
-
+ 
 -coltable="/opt/pihole/COL_TABLE"
 +coltable="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
  if [[ -f ${coltable} ]]; then
@@ -190,8 +190,8 @@ index 5daa025d..14517d09 100755
 -    DBFILE="/etc/pihole/pihole-FTL.db"
 +    DBFILE="@EPREFIX@/var/lib/pihole/pihole-FTL.db"
  fi
-
-
+ 
+ 
 diff --git a/advanced/Scripts/piholeCheckout.sh b/advanced/Scripts/piholeCheckout.sh
 deleted file mode 100755
 index cf57800c..00000000
@@ -422,20 +422,20 @@ index 3cd782bf..a6c9b5a1 100755
 +if [ -f /etc/vhosts/webapp-config ]; then
 +    VHOST_SERVER=$(grep -F vhost_server= /etc/vhosts/webapp-config | head -n1 | cut '-d"' -f2)
 +fi
-
+ 
  # These provide the colors we need for making the log more readable
  if [[ -f ${PIHOLE_COLTABLE_FILE} ]]; then
 @@ -42,7 +46,7 @@ else
  fi
-
+ 
  # shellcheck disable=SC1091
 -. /etc/pihole/versions
 +. @EPREFIX@/var/lib/pihole/versions
-
+ 
  # FAQ URLs for use in showing the debug log
  FAQ_HARDWARE_REQUIREMENTS="${COL_CYAN}https://docs.pi-hole.net/main/prerequisites/${COL_NC}"
 @@ -56,18 +60,16 @@ FORUMS_URL="${COL_CYAN}https://discourse.pi-hole.net${COL_NC}"
-
+ 
  # Directories required by Pi-hole
  # https://discourse.pi-hole.net/t/what-files-does-pi-hole-use/1684
 -CORE_GIT_DIRECTORY="/etc/.pihole"
@@ -462,7 +462,7 @@ index 3cd782bf..a6c9b5a1 100755
 +WEB_GIT_DIRECTORY="${HTML_DIRECTORY}/pihole-admin"
  SHM_DIRECTORY="/dev/shm"
  ETC="/etc"
-
+ 
 @@ -83,7 +85,7 @@ PIHOLE_RAW_BLOCKLIST_FILES="${PIHOLE_DIRECTORY}/list.*"
  PIHOLE_LOCAL_HOSTS_FILE="${PIHOLE_DIRECTORY}/local.list"
  PIHOLE_LOGROTATE_FILE="${PIHOLE_DIRECTORY}/logrotate"
@@ -471,37 +471,37 @@ index 3cd782bf..a6c9b5a1 100755
 +PIHOLE_FTL_CONF_FILE="@EPREFIX@/etc/pihole/pihole-FTL.conf"
  PIHOLE_CUSTOM_HOSTS_FILE="${PIHOLE_DIRECTORY}/custom.list"
  PIHOLE_VERSIONS_FILE="${PIHOLE_DIRECTORY}/versions"
-
+ 
 @@ -134,7 +136,7 @@ RESOLVCONF="${ETC}/resolv.conf"
  DNSMASQ_CONF="${ETC}/dnsmasq.conf"
-
+ 
  # Store Pi-hole's processes in an array for easy use and parsing
 -PIHOLE_PROCESSES=( "lighttpd" "pihole-FTL" )
 +PIHOLE_PROCESSES=( "pihole-FTL" "$VHOST_SERVER" )
-
+ 
  # Store the required directories in an array so it can be parsed through
  REQUIRED_FILES=("${PIHOLE_CRON_FILE}"
 @@ -160,7 +162,9 @@ REQUIRED_FILES=("${PIHOLE_CRON_FILE}"
  "${PIHOLE_CUSTOM_HOSTS_FILE}"
  "${PIHOLE_VERSIONS_FILE}")
-
+ 
 -DISCLAIMER="This process collects information from your Pi-hole, and optionally uploads it to a unique and random directory on tricorder.pi-hole.net.
 +DISCLAIMER="tatsh-overlay message: The following output may differ significantly from a standard Pi-hole installation's. Any issues should be posted WITHOUT this log to https://github.com/Tatsh/tatsh-overlay/issues before sending an issue upstream. You will then be advised if upstream is relevant for the issue. If a log is necessary, it will be requested.
 +
 +This process collects information from your Pi-hole, and optionally uploads it to a unique and random directory on tricorder.pi-hole.net.
-
+ 
  The intent of this script is to allow users to self-diagnose their installations.  This is accomplished by running tests against our software and providing the user with links to FAQ articles when a problem is detected.  Since we are a small team and Pi-hole has been growing steadily, it is our hope that this will help us spend more time on development.
-
+ 
 @@ -318,7 +322,6 @@ check_ftl_version() {
      FTL_BRANCH=$(pihole-FTL branch)
      FTL_COMMIT=$(pihole-FTL --hash)
-
+ 
 -
      log_write "${TICK} Version: ${FTL_VERSION}"
-
+ 
      # If they use the master branch, they are on the stable codebase
 @@ -337,10 +340,6 @@ check_ftl_version() {
-
+ 
  # Checks the core version of the Pi-hole codebase
  check_component_versions() {
 -    # Check the Web version, branch, and commit
@@ -533,24 +533,24 @@ index 3cd782bf..a6c9b5a1 100755
 +    get_program_version "$VHOST_SERVER"
      get_program_version "php"
  }
-
+ 
 @@ -384,8 +387,8 @@ os_check() {
      local remote_os_domain valid_os valid_version detected_os detected_version cmdResult digReturnCode response
      remote_os_domain=${OS_CHECK_DOMAIN_NAME:-"versions.pi-hole.net"}
-
+ 
 -    detected_os=$(grep "\bID\b" /etc/os-release | cut -d '=' -f2 | tr -d '"')
 -    detected_version=$(grep VERSION_ID /etc/os-release | cut -d '=' -f2 | tr -d '"')
 +    detected_os=$(grep "\bID\b" @EPREFIX@/etc/os-release | cut -d '=' -f2 | tr -d '"')
 +    detected_version=$(grep VERSION_ID @EPREFIX@/etc/os-release | cut -d '=' -f2 | tr -d '"')
-
+ 
      cmdResult="$(dig +short -t txt "${remote_os_domain}" @ns1.pi-hole.net 2>&1; echo $?)"
      #Get the return code of the previous command (last line)
 @@ -393,6 +396,7 @@ os_check() {
-
+ 
      # Extract dig response
      response="${cmdResult%%$'\n'*}"
 +    response="${response} Gentoo=1"
-
+ 
      IFS=" " read -r -a supportedOS < <(echo "${response}" | tr -d '"')
      for distro_and_versions in "${supportedOS[@]}"
 @@ -405,7 +409,7 @@ os_check() {
@@ -564,7 +564,7 @@ index 3cd782bf..a6c9b5a1 100755
                  fi
 @@ -421,9 +425,9 @@ os_check() {
          log_write "${TICK} Distro:  ${COL_GREEN}${detected_os^}${COL_NC}"
-
+ 
          if [ "$valid_version" = true ]; then
 -            log_write "${TICK} Version: ${COL_GREEN}${detected_version}${COL_NC}"
 +            log_write "${TICK} Version: ${COL_GREEN}${detected_version:-1}${COL_NC}"
@@ -576,7 +576,7 @@ index 3cd782bf..a6c9b5a1 100755
      else
 @@ -442,7 +446,7 @@ diagnose_operating_system() {
      [ -n "${DOCKER_VERSION}" ] && log_write "${INFO} Pi-hole Docker Container: ${DOCKER_VERSION}"
-
+ 
      # If there is a /etc/*release file, it's probably a supported operating system, so we can
 -    if ls /etc/*release 1> /dev/null 2>&1; then
 +    if ls @EPREFIX@/etc/*release 1> /dev/null 2>&1; then
@@ -606,7 +606,7 @@ index 3cd782bf..a6c9b5a1 100755
      ports_in_use=()
 @@ -784,6 +788,12 @@ check_networking() {
  }
-
+ 
  check_x_headers() {
 +    if emerge --search www-apps/pihole-admin-lte | grep -F installed | grep -Fq 'Not Installed'; then
 +        return
@@ -646,17 +646,17 @@ index 3473fad5..ad669776 100755
 @@ -8,58 +8,58 @@
  # This file is copyright under the latest version of the EUPL.
  # Please see LICENSE file for your rights under this license.
-
+ 
 -colfile="/opt/pihole/COL_TABLE"
 +colfile="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
  source ${colfile}
-
+ 
  # In case we're running at the same time as a system logrotate, use a
  # separate logrotate state file to prevent stepping on each other's
  # toes.
 -STATEFILE="/var/lib/logrotate/pihole"
 +STATEFILE="@EPREFIX@/var/lib/pihole/logrotate.state"
-
+ 
  # Determine database location
  # Obtain DBFILE=... setting from pihole-FTL.db
  # Constructed to return nothing when
@@ -672,7 +672,7 @@ index 3473fad5..ad669776 100755
 -    DBFILE="/etc/pihole/pihole-FTL.db"
 +    DBFILE="@EPREFIX@/var/lib/pihole/pihole-FTL.db"
  fi
-
+ 
  if [[ "$@" != *"quiet"* ]]; then
 -    echo -ne "  ${INFO} Flushing /var/log/pihole/pihole.log ..."
 +    echo -ne "  ${INFO} Flushing @EPREFIX@/var/log/pihole.log ..."
@@ -721,7 +721,7 @@ index 3473fad5..ad669776 100755
      # Delete most recent 24 hours from FTL's database, leave even older data intact (don't wipe out all history)
 @@ -70,6 +70,6 @@ else
  fi
-
+ 
  if [[ "$@" != *"quiet"* ]]; then
 -    echo -e "${OVER}  ${TICK} Flushed /var/log/pihole/pihole.log"
 +    echo -e "${OVER}  ${TICK} Flushed @EPREFIX@/var/log/pihole.log"
@@ -733,7 +733,7 @@ index ae266ec0..dd4d43d2 100755
 +++ b/advanced/Scripts/query.sh
 @@ -11,8 +11,8 @@
  # Please see LICENSE file for your rights under this license.
-
+ 
  # Globals
 -piholeDir="/etc/pihole"
 -GRAVITYDB="${piholeDir}/gravity.db"
@@ -745,11 +745,11 @@ index ae266ec0..dd4d43d2 100755
 @@ -27,7 +27,7 @@ fi
  # have changed
  gravityDBfile="${GRAVITYDB}"
-
+ 
 -colfile="/opt/pihole/COL_TABLE"
 +colfile="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
  source "${colfile}"
-
+ 
  # Scan an array of files for matching strings
 diff --git a/advanced/Scripts/update.sh b/advanced/Scripts/update.sh
 deleted file mode 100755
@@ -991,7 +991,7 @@ index c41c9232..00000000
 -main
 diff --git a/advanced/Scripts/updatecheck.sh b/advanced/Scripts/updatecheck.sh
 deleted file mode 100755
-index 0ce9ad5d..00000000
+index 0cc65218..00000000
 --- a/advanced/Scripts/updatecheck.sh
 +++ /dev/null
 @@ -1,133 +0,0 @@
@@ -1019,7 +1019,7 @@ index 0ce9ad5d..00000000
 -
 -function get_local_hash() {
 -    cd "${1}" 2> /dev/null || return 1
--    git rev-parse --short HEAD || return 1
+-    git rev-parse --short=8 HEAD || return 1
 -}
 -
 -function get_remote_version() {
@@ -1133,16 +1133,16 @@ index 946c69fe..37bf397c 100755
 --- a/advanced/Scripts/version.sh
 +++ b/advanced/Scripts/version.sh
 @@ -10,16 +10,16 @@
-
+ 
  # Source the setupvars config file
  # shellcheck disable=SC1091
 -. /etc/pihole/setupVars.conf
 +. @EPREFIX@/var/lib/pihole/setupVars.conf
-
+ 
  # Source the versions file poupulated by updatechecker.sh
 -cachedVersions="/etc/pihole/versions"
 +cachedVersions="@EPREFIX@/var/lib/pihole/versions"
-
+ 
  if [ -f ${cachedVersions} ]; then
      # shellcheck disable=SC1090
      . "$cachedVersions"
@@ -1159,7 +1159,7 @@ index 5ccdf733..27cd3225 100755
 @@ -12,26 +12,65 @@
  # This file is copyright under the latest version of the EUPL.
  # Please see LICENSE file for your rights under this license.
-
+ 
 -readonly dnsmasqconfig="/etc/dnsmasq.d/01-pihole.conf"
 -readonly dhcpconfig="/etc/dnsmasq.d/02-pihole-dhcp.conf"
 -readonly FTLconf="/etc/pihole/pihole-FTL.conf"
@@ -1173,10 +1173,10 @@ index 5ccdf733..27cd3225 100755
 +readonly dhcpstaticconfig="@EPREFIX@/etc/pihole/dnsmasq.d/04-pihole-static-dhcp.conf"
 +readonly dnscustomfile="@EPREFIX@/var/lib/pihole/custom.list"
 +readonly dnscustomcnamefile="@EPREFIX@/etc/pihole/dnsmasq.d/05-pihole-custom-cname.conf"
-
+ 
 -readonly gravityDBfile="/etc/pihole/gravity.db"
 +readonly gravityDBfile="@EPREFIX@/var/lib/gravity.db"
-
+ 
 -# Source install script for ${setupVars}, ${PI_HOLE_BIN_DIR} and valid_ip()
 -readonly PI_HOLE_FILES_DIR="/etc/.pihole"
 -# shellcheck disable=SC2034  # used in basic-install to source the script without running it
@@ -1186,7 +1186,7 @@ index 5ccdf733..27cd3225 100755
 +readonly PI_HOLE_FILES_DIR="@EPREFIX@/var/lib/pihole/"
 +# shellcheck disable=SC2034  # used in basic-install
 +PH_TEST="true"
-
+ 
 -utilsfile="/opt/pihole/utils.sh"
 +utilsfile="@EPREFIX@/usr/@LIBDIR@/pihole/pihole/utils.sh"
  source "${utilsfile}"
@@ -1195,7 +1195,7 @@ index 5ccdf733..27cd3225 100755
 +    # Local, named variables
 +    local ip=${1}
 +    local stat=1
-
+ 
 -coltable="/opt/pihole/COL_TABLE"
 +    # Regex matching one IPv4 component, i.e. an integer from 0 to 255.
 +    # See https://tools.ietf.org/html/rfc1340
@@ -1251,12 +1251,12 @@ index 3bea731d..e7832e4e 100644
 +++ b/advanced/Templates/gravity_copy.sql
 @@ -1,6 +1,6 @@
  .timeout 30000
-
+ 
 -ATTACH DATABASE '/etc/pihole/gravity.db' AS OLD;
 +ATTACH DATABASE '@EPREFIX@/var/lib/pihole/gravity.db' AS OLD;
-
+ 
  BEGIN TRANSACTION;
-
+ 
 diff --git a/advanced/Templates/logrotate b/advanced/Templates/logrotate
 index 9a56b552..0a2e3fbd 100644
 --- a/advanced/Templates/logrotate
@@ -1273,7 +1273,7 @@ index 9a56b552..0a2e3fbd 100644
  	nomail
 +    missingok
  }
-
+ 
 -/var/log/pihole/FTL.log {
 +@EPREFIX@/var/log/pihole-FTL.log {
  	# su #
@@ -1316,7 +1316,7 @@ index bc1b1d20..2e8bd620 100644
 +    chown -f pihole:pihole @EPREFIX@/var/lib/pihole/pihole-FTL.db @EPREFIX@/var/lib/pihole/gravity.db @EPREFIX@/var/lib/pihole/macvendor.db
      # Chown database file permissions so that the pihole group (web interface) can edit the file. We ignore errors as the files may not (yet) exist
      chmod -f 0664 /etc/pihole/pihole-FTL.db
-
+ 
 @@ -60,7 +60,7 @@ start() {
        su -s /bin/sh -c "/usr/bin/pihole-FTL" pihole || exit $?
      else
@@ -1334,7 +1334,7 @@ index bc1b1d20..2e8bd620 100644
 +  rm -f @EPREFIX@/run/pihole/FTL.sock /dev/shm/FTL-*  "${FTL_PID_FILE}"
    echo
  }
-
+ 
 diff --git a/advanced/Templates/pihole.cron b/advanced/Templates/pihole.cron
 index c62d31ab..a1d47fa3 100644
 --- a/advanced/Templates/pihole.cron
@@ -1345,17 +1345,17 @@ index c62d31ab..a1d47fa3 100644
  #          standard crontab job error handling.
 -59 1    * * 7   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updateGravity >/var/log/pihole/pihole_updateGravity.log || cat /var/log/pihole/pihole_updateGravity.log
 +59 1    * * 7   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" @EPREFIX@/usr/bin/pihole updateGravity >/var/log/pihole/pihole_updateGravity.log || cat /var/log/pihole/pihole_updateGravity.log
-
+ 
  # Pi-hole: Flush the log daily at 00:00
  #          The flush script will use logrotate if available
  #          parameter "once": logrotate only once (default is twice)
  #          parameter "quiet": don't print messages
 -00 00   * * *   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole flush once quiet
 +00 00   * * *   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" @EPREFIX@/usr/bin/pihole flush once quiet
-
+ 
 -@reboot root /usr/sbin/logrotate --state /var/lib/logrotate/pihole /etc/pihole/logrotate
 +@reboot root @EPREFIX@/usr/bin/logrotate --state /var/lib/logrotate/pihole /etc/pihole/logrotate
-
+ 
  # Pi-hole: Grab remote and local version every 24 hours
 -59 17  * * *   root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker
 -@reboot root    PATH="$PATH:/usr/sbin:/usr/local/bin/" pihole updatechecker reboot
@@ -1381,9 +1381,9 @@ index 14732f31..96d36bd3 100755
 --- a/gravity.sh
 +++ b/gravity.sh
 @@ -13,15 +13,16 @@
-
+ 
  export LC_ALL=C
-
+ 
 -coltable="/opt/pihole/COL_TABLE"
 +basename="pihole"
 +coltable="@EPREFIX@/usr/@LIBDIR@/${basename}/COL_TABLE"
@@ -1391,23 +1391,23 @@ index 14732f31..96d36bd3 100755
  # shellcheck disable=SC1091
 -source "/etc/.pihole/advanced/Scripts/database_migration/gravity-db.sh"
 +source "@EPREFIX@/usr/@LIBDIR@/${basename}/database_migration/gravity-db.sh"
-
+ 
  basename="pihole"
 -PIHOLE_COMMAND="/usr/local/bin/${basename}"
 +PIHOLE_COMMAND="@EPREFIX@/usr/bin/${basename}"
-
+ 
 -piholeDir="/etc/${basename}"
 +piholeDir="@EPREFIX@/var/lib/${basename}"
-
+ 
  # Legacy (pre v5.0) list file locations
  whitelistFile="${piholeDir}/whitelist.txt"
 @@ -30,14 +31,14 @@ regexFile="${piholeDir}/regex.list"
  adListFile="${piholeDir}/adlists.list"
-
+ 
  localList="${piholeDir}/local.list"
 -VPNList="/etc/openvpn/ipp.txt"
 +VPNList="@EPREFIX@/etc/openvpn/ipp.txt"
-
+ 
 -piholeGitDir="/etc/.pihole"
 -gravityDBfile_default="${piholeDir}/gravity.db"
 +piholeGitDir="@EPREFIX@/usr/@LIBDIR@/pihole"
@@ -1418,12 +1418,12 @@ index 14732f31..96d36bd3 100755
 -gravityDBcopy="${piholeGitDir}/advanced/Templates/gravity_copy.sql"
 +gravityDBschema="${piholeGitDir}/Templates/gravity.db.sql"
 +gravityDBcopy="${piholeGitDir}/Templates/gravity_copy.sql"
-
+ 
  domainsExtension="domains"
  curl_connect_timeout=10
 @@ -53,7 +54,7 @@ else
  fi
-
+ 
  # Source pihole-FTL from install script
 -pihole_FTL="${piholeDir}/pihole-FTL.conf"
 +pihole_FTL="@EPREFIX@/etc/pihole-FTL.conf"
@@ -1433,38 +1433,38 @@ index 14732f31..96d36bd3 100755
 @@ -946,7 +947,7 @@ if [[ "${forceDelete:-}" == true ]]; then
    str="Deleting existing list cache"
    echo -ne "${INFO} ${str}..."
-
+ 
 -  rm /etc/pihole/list.* 2> /dev/null || true
 +  rm @EPREFIX@/var/lib/pihole/list.* 2> /dev/null || true
    echo -e "${OVER}  ${TICK} ${str}"
  fi
-
+ 
 diff --git a/pihole b/pihole
-index aad83451..ececf22d 100755
+index ca80bff8..34319824 100755
 --- a/pihole
 +++ b/pihole
 @@ -9,7 +9,7 @@
  # This file is copyright under the latest version of the EUPL.
  # Please see LICENSE file for your rights under this license.
-
+ 
 -readonly PI_HOLE_SCRIPT_DIR="/opt/pihole"
 +readonly PI_HOLE_SCRIPT_DIR="@EPREFIX@/usr/@LIBDIR@/pihole"
-
+ 
  # setupVars and PI_HOLE_BIN_DIR are not readonly here because in some functions (checkout),
  # they might get set again when the installer is sourced. This causes an
 @@ -17,7 +17,7 @@ readonly PI_HOLE_SCRIPT_DIR="/opt/pihole"
  setupVars="/etc/pihole/setupVars.conf"
  PI_HOLE_BIN_DIR="/usr/local/bin"
-
+ 
 -readonly colfile="${PI_HOLE_SCRIPT_DIR}/COL_TABLE"
 +readonly colfile="@EPREFIX@/usr/@LIBDIR@/pihole/COL_TABLE"
  source "${colfile}"
-
+ 
  utilsfile="${PI_HOLE_SCRIPT_DIR}/utils.sh"
 @@ -62,17 +62,6 @@ arpFunc() {
    exit 0
  }
-
+ 
 -updatePiholeFunc() {
 -  shift
 -  "${PI_HOLE_SCRIPT_DIR}"/update.sh "$@"
@@ -1482,7 +1482,7 @@ index aad83451..ececf22d 100755
 @@ -89,12 +78,6 @@ chronometerFunc() {
    exit 0
  }
-
+ 
 -
 -uninstallFunc() {
 -  "${PI_HOLE_SCRIPT_DIR}"/uninstall.sh
@@ -1512,7 +1512,7 @@ index aad83451..ececf22d 100755
    fi
 @@ -241,9 +233,9 @@ Example: 'pihole logging on'
  Specify whether the Pi-hole log should be used
-
+ 
  Options:
 -  on                  Enable the Pi-hole log at /var/log/pihole/pihole.log
 -  off                 Disable and flush the Pi-hole log at /var/log/pihole/pihole.log
@@ -1525,7 +1525,7 @@ index aad83451..ececf22d 100755
      # Disable logging
 @@ -334,13 +326,13 @@ statusFunc() {
      fi
-
+ 
    # Determine if Pi-hole's blocking is enabled
 -  if grep -q "BLOCKING_ENABLED=false" /etc/pihole/setupVars.conf; then
 +  if grep -q "BLOCKING_ENABLED=false" @EPREFIX@/var/lib/pihole/setupVars.conf; then
@@ -1540,7 +1540,7 @@ index aad83451..ececf22d 100755
      case "${1}" in
        "web") echo "$port";;
 @@ -360,7 +352,7 @@ exit 0
-
+ 
  tailFunc() {
    # Warn user if Pi-hole's logging is disabled
 -  local logging_enabled=$(grep -c "^log-queries" /etc/dnsmasq.d/01-pihole.conf)
@@ -1560,7 +1560,7 @@ index aad83451..ececf22d 100755
 @@ -380,29 +372,6 @@ tailFunc() {
    exit 0
  }
-
+ 
 -piholeCheckoutFunc() {
 -  if [[ "$2" == "-h" ]] || [[ "$2" == "--help" ]]; then
 -    echo "Usage: pihole checkout [repo] [branch]
@@ -1590,7 +1590,7 @@ index aad83451..ececf22d 100755
 @@ -424,11 +393,6 @@ tricorderFunc() {
    exit 0
  }
-
+ 
 -updateCheckFunc() {
 -  "${PI_HOLE_SCRIPT_DIR}"/updatecheck.sh "$@"
 -  exit 0
@@ -1640,6 +1640,6 @@ index aad83451..ececf22d 100755
    "enable"                      ) piholeEnable 1;;
    "disable"                     ) piholeEnable 0 "$2";;
    "restartdns"                  ) restartDNS "$2";;
---
+-- 
 2.38.1
 
