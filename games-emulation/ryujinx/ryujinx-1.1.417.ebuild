@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="cb22629ac1048960e4f318dedc43ba498debb9b3"
+SHA="3868a0020611491e30db19e5b27d33a7559c7071"
 MY_PN="R${PN:1}"
 NUGETS="atksharp-3.22.25.128
 	avalonia-0.10.15
@@ -44,6 +44,7 @@ NUGETS="atksharp-3.22.25.128
 	concentus-1.1.7
 	crc32.net-1.2.0
 	discordrichpresence-1.0.175
+	discordrichpresence-1.1.3.18
 	dynamicdata-7.12.8
 	dynamicdata-7.9.4
 	excss-4.1.4
@@ -51,6 +52,7 @@ NUGETS="atksharp-3.22.25.128
 	fizzler-1.2.1
 	fluentavaloniaui-1.4.1
 	fluentavaloniaui-1.4.4
+	fluentavaloniaui-1.4.5
 	gdksharp-3.22.25.128
 	giosharp-3.22.25.128
 	glibsharp-3.22.25.128
@@ -94,6 +96,7 @@ NUGETS="atksharp-3.22.25.128
 	microsoft.dotnet.internalabstractions-1.0.0
 	microsoft.dotnet.platformabstractions-3.1.6
 	microsoft.extensions.dependencymodel-3.1.1
+	microsoft.extensions.dependencymodel-6.0.0
 	microsoft.identitymodel.abstractions-6.25.0
 	microsoft.identitymodel.jsonwebtokens-6.25.0
 	microsoft.identitymodel.logging-6.25.0
@@ -123,16 +126,23 @@ NUGETS="atksharp-3.22.25.128
 	netstandard.library-2.0.0
 	netstandard.library-2.0.3
 	newtonsoft.json-12.0.2
+	newtonsoft.json-13.0.1
 	newtonsoft.json-9.0.1
 	nuget.frameworks-5.0.0
 	nunit-3.12.0
 	nunit3testadapter-3.17.0
 	opentk.core-4.7.2
+	opentk.core-4.7.5
 	opentk.graphics-4.7.2
+	opentk.graphics-4.7.5
 	opentk.mathematics-4.7.2
+	opentk.mathematics-4.7.5
 	opentk.openal-4.7.2
+	opentk.openal-4.7.5
 	opentk.redist.glfw-3.3.7.25
+	opentk.redist.glfw-3.3.8.30
 	opentk.windowing.graphicslibraryframework-4.7.2
+	opentk.windowing.graphicslibraryframework-4.7.5
 	pangosharp-3.22.25.128
 	runtime.any.system.collections-4.3.0
 	runtime.any.system.diagnostics.tools-4.3.0
@@ -194,9 +204,13 @@ NUGETS="atksharp-3.22.25.128
 	shimskiasharp-0.5.14
 	shimskiasharp-0.5.18
 	silk.net.core-2.10.1
+	silk.net.core-2.16.0
 	silk.net.vulkan-2.10.1
+	silk.net.vulkan-2.16.0
 	silk.net.vulkan.extensions.ext-2.10.1
+	silk.net.vulkan.extensions.ext-2.16.0
 	silk.net.vulkan.extensions.khr-2.10.1
+	silk.net.vulkan.extensions.khr-2.16.0
 	sixlabors.fonts-1.0.0-beta0013
 	sixlabors.imagesharp-1.0.4
 	sixlabors.imagesharp.drawing-1.0.0-beta11
@@ -230,6 +244,7 @@ NUGETS="atksharp-3.22.25.128
 	system.buffers-4.5.1
 	system.codedom-4.4.0
 	system.codedom-6.0.0
+	system.codedom-7.0.0
 	system.collections-4.0.11
 	system.collections-4.3.0
 	system.collections.concurrent-4.0.12
@@ -273,8 +288,10 @@ NUGETS="atksharp-3.22.25.128
 	system.linq.expressions-4.1.0
 	system.linq.expressions-4.3.0
 	system.management-6.0.0
+	system.management-7.0.0
 	system.memory-4.5.3
 	system.memory-4.5.4
+	system.memory-4.5.5
 	system.net.http-4.1.0
 	system.net.nameresolution-4.3.0
 	system.net.primitives-4.0.11
@@ -343,8 +360,10 @@ NUGETS="atksharp-3.22.25.128
 	system.text.encoding.codepages-6.0.0
 	system.text.encoding.extensions-4.0.11
 	system.text.encoding.extensions-4.3.0
+	system.text.encodings.web-6.0.0
 	system.text.json-4.7.0
 	system.text.json-4.7.2
+	system.text.json-6.0.0
 	system.text.regularexpressions-4.1.0
 	system.text.regularexpressions-4.3.0
 	system.threading-4.0.11
@@ -368,8 +387,7 @@ NUGETS="atksharp-3.22.25.128
 	system.xml.xpath.xmldocument-4.3.0
 	tmds.dbus-0.9.0
 	xamlnamereferencegenerator-1.3.4
-	xamlnamereferencegenerator-1.4.2
-"
+	xamlnamereferencegenerator-1.4.2"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	$(nuget_uris)"
 
@@ -401,3 +419,4 @@ src_install() {
 	make_desktop_entry "/usr/bin/${MY_PN}" "${MY_PN}" "${PN}"
 	einstalldocs
 }
+
