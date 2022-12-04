@@ -9,12 +9,12 @@ HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 
 MY_PV="mainline-${PV/./-}"
 CPP_JWT_SHA="e12ef06218596b52d9b5d6e1639484866a8e7067"
-DYNARMIC_SHA="07c614f91b0af5335e1f9c0653c2d75e7b5f53bd"
+DYNARMIC_SHA="a5b57bb9cd1500a6e0a3c800b35c1984211dff1d"
 FMT_PV="9.1.0"
 HTTPLIB_SHA="305a7abcb9b4e9e349843c6d563212e6c1bbbf21"
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
 SDL_SHA="b424665e0899769b200231ba943353a5fee1b6b6"
-SIRIT_SHA="aa292d56650bc28f2b2d75973fab2e61d0136f9c"
+SIRIT_SHA="d7ad93a88864bda94e282e95028f90b5784e4d20"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/arun11299/cpp-jwt/archive/${CPP_JWT_SHA}.tar.gz -> ${PN}-cpp-jwt-${CPP_JWT_SHA:0:7}.tar.gz
 	https://github.com/yuzu-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz

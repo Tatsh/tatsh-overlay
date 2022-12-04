@@ -1,38 +1,38 @@
-From 0cb1e8c26677eed2063ac07c80a207c7f82d4794 Mon Sep 17 00:00:00 2001
+From b087f9d0094dde917db74761f512e684ae4df4b2 Mon Sep 17 00:00:00 2001
 From: Alexandre Bouvier <contact@amb.tf>
 Date: Fri, 25 Nov 2022 19:35:46 +0100
 Subject: [PATCH] cmake: prefer system libraries
 
 ---
  CMakeLists.txt                              | 39 +++++++++++------
- externals/CMakeLists.txt                    | 46 ++++++++++++++-------
+ externals/CMakeLists.txt                    | 47 ++++++++++++++-------
  externals/find-modules/FindDiscordRPC.cmake | 27 ++++++++++++
  externals/find-modules/Findenet.cmake       | 17 ++++++++
  externals/find-modules/Findhttplib.cmake    | 22 ++++++++++
  externals/find-modules/Findinih.cmake       | 17 ++++++++
- externals/find-modules/Findlz4.cmake        | 37 +++++++++++------
- externals/find-modules/Findzstd.cmake       | 37 +++++++++++------
+ externals/find-modules/Findlz4.cmake        | 37 ++++++++++------
+ externals/find-modules/Findzstd.cmake       | 37 ++++++++++------
  externals/inih/CMakeLists.txt               |  3 +-
  src/audio_core/CMakeLists.txt               |  4 +-
- src/common/CMakeLists.txt                   | 14 +------
+ src/common/CMakeLists.txt                   | 14 +-----
  src/core/CMakeLists.txt                     |  2 +-
  src/network/CMakeLists.txt                  |  2 +-
- src/video_core/CMakeLists.txt               |  7 ++--
+ src/video_core/CMakeLists.txt               |  7 ++-
  src/web_service/CMakeLists.txt              |  2 +-
  src/yuzu/CMakeLists.txt                     |  6 +--
  src/yuzu_cmd/CMakeLists.txt                 |  4 +-
  src/yuzu_cmd/config.cpp                     |  2 +-
- 18 files changed, 206 insertions(+), 82 deletions(-)
+ 18 files changed, 206 insertions(+), 83 deletions(-)
  create mode 100644 externals/find-modules/FindDiscordRPC.cmake
  create mode 100644 externals/find-modules/Findenet.cmake
  create mode 100644 externals/find-modules/Findhttplib.cmake
  create mode 100644 externals/find-modules/Findinih.cmake
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1d13dc74e564..82f5fe6d7c53 100644
+index cdf63a03089c..20b3e3b64648 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -34,8 +34,6 @@ option(ENABLE_CUBEB "Enables the cubeb audio backend" ON)
+@@ -39,8 +39,6 @@ option(ENABLE_CUBEB "Enables the cubeb audio backend" ON)
  
  option(USE_DISCORD_PRESENCE "Enables Discord Rich Presence" OFF)
  
@@ -40,8 +40,8 @@ index 1d13dc74e564..82f5fe6d7c53 100644
 -
  option(YUZU_TESTS "Compile tests" ON)
  
- CMAKE_DEPENDENT_OPTION(YUZU_CRASH_DUMPS "Compile Windows crash dump (Minidump) support" OFF "WIN32" OFF)
-@@ -175,24 +173,39 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+ option(YUZU_USE_PRECOMPILED_HEADERS "Use precompiled headers" ON)
+@@ -196,24 +194,39 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
  # System imported libraries
  # =======================================================================
  
@@ -93,17 +93,17 @@ index 1d13dc74e564..82f5fe6d7c53 100644
  
  find_package(Boost 1.73.0 COMPONENTS context)
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index d807ef65f669..e78a21bb8c87 100644
+index 25ef0c058a31..a7b4afd4d641 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -6,18 +6,20 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
+@@ -6,18 +6,19 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/externals/find-modules")
  include(DownloadExternals)
  
  # xbyak
 -if (ARCHITECTURE_x86 OR ARCHITECTURE_x86_64)
+-    add_subdirectory(xbyak)
 +if ((ARCHITECTURE_x86 OR ARCHITECTURE_x86_64) AND NOT TARGET xbyak::xbyak)
-     add_subdirectory(xbyak)
-+    add_library(xbyak::xbyak ALIAS xbyak)
++    add_subdirectory(xbyak EXCLUDE_FROM_ALL)
  endif()
  
  # Dynarmic
@@ -120,7 +120,7 @@ index d807ef65f669..e78a21bb8c87 100644
  endif()
  
  # getopt
-@@ -29,7 +31,9 @@ endif()
+@@ -29,7 +30,9 @@ endif()
  add_subdirectory(glad)
  
  # inih
@@ -131,7 +131,7 @@ index d807ef65f669..e78a21bb8c87 100644
  
  # mbedtls
  add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
-@@ -73,25 +77,30 @@ if (YUZU_USE_EXTERNAL_SDL2)
+@@ -75,25 +78,30 @@ if (YUZU_USE_EXTERNAL_SDL2)
  endif()
  
  # ENet
@@ -168,7 +168,7 @@ index d807ef65f669..e78a21bb8c87 100644
      if (NOT WIN32)
          find_package(OpenSSL 1.1)
          if (OPENSSL_FOUND)
-@@ -119,18 +128,20 @@ if (ENABLE_WEB_SERVICE)
+@@ -121,18 +129,20 @@ if (ENABLE_WEB_SERVICE)
      if (WIN32)
          target_link_libraries(httplib INTERFACE crypt32 cryptui ws2_32)
      endif()
@@ -194,7 +194,7 @@ index d807ef65f669..e78a21bb8c87 100644
  endif()
  
  # FFMpeg
-@@ -141,3 +152,8 @@ if (YUZU_USE_BUNDLED_FFMPEG)
+@@ -143,3 +153,8 @@ if (YUZU_USE_BUNDLED_FFMPEG)
      set(FFmpeg_LIBRARIES "${FFmpeg_LIBRARIES}" PARENT_SCOPE)
      set(FFmpeg_INCLUDE_DIR "${FFmpeg_INCLUDE_DIR}" PARENT_SCOPE)
  endif()
@@ -418,10 +418,10 @@ index b686e3cf5808..ebb60a976e47 100644
 +target_include_directories(inih INTERFACE inih/cpp)
 +add_library(inih::INIReader ALIAS inih)
 diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
-index 8e3a8f5a8c0d..7a546cd7fea3 100644
+index 0a9d9ec298c2..f573a23e6ca8 100644
 --- a/src/audio_core/CMakeLists.txt
 +++ b/src/audio_core/CMakeLists.txt
-@@ -218,11 +218,11 @@ endif()
+@@ -219,11 +219,11 @@ endif()
  
  target_link_libraries(audio_core PUBLIC common core)
  if (ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64)
@@ -436,10 +436,10 @@ index 8e3a8f5a8c0d..7a546cd7fea3 100644
  endif()
  if(ENABLE_SDL2)
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index b7c15c191907..1627021fdb90 100644
+index a12edc584cd3..6bdffcb7a2fa 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
-@@ -147,7 +147,7 @@ if(ARCHITECTURE_x86_64)
+@@ -149,7 +149,7 @@ if(ARCHITECTURE_x86_64)
              x64/xbyak_abi.h
              x64/xbyak_util.h
      )
@@ -448,7 +448,7 @@ index b7c15c191907..1627021fdb90 100644
  endif()
  
  if (MSVC)
-@@ -172,14 +172,4 @@ endif()
+@@ -174,17 +174,7 @@ endif()
  create_target_directory_groups(common)
  
  target_link_libraries(common PUBLIC ${Boost_LIBRARIES} fmt::fmt microprofile Threads::Threads)
@@ -464,22 +464,27 @@ index b7c15c191907..1627021fdb90 100644
 -    $<IF:$<TARGET_EXISTS:zstd::libzstd_shared>,zstd::libzstd_shared,zstd::libzstd_static>)
 -endif()
 +target_link_libraries(common PRIVATE lz4::lz4 zstd::zstd)
+ 
+ if (YUZU_USE_PRECOMPILED_HEADERS)
+     target_precompile_headers(common PRIVATE precompiled_headers.h)
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index 5629980d995a..36b074b9d77f 100644
+index 6530d3c602b0..ad8b8ef95d82 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -823,5 +823,5 @@ if (ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64)
+@@ -824,7 +824,7 @@ if (ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64)
          hle/service/jit/jit.cpp
          hle/service/jit/jit.h
      )
 -    target_link_libraries(core PRIVATE dynarmic)
 +    target_link_libraries(core PRIVATE dynarmic::dynarmic)
  endif()
+ 
+ if (YUZU_USE_PRECOMPILED_HEADERS)
 diff --git a/src/network/CMakeLists.txt b/src/network/CMakeLists.txt
-index 6f8ca4b90cfb..9a940e1f512f 100644
+index c85c308de85f..1ab52da59837 100644
 --- a/src/network/CMakeLists.txt
 +++ b/src/network/CMakeLists.txt
-@@ -18,7 +18,7 @@ add_library(network STATIC
+@@ -19,7 +19,7 @@ add_library(network STATIC
  
  create_target_directory_groups(network)
  
@@ -489,10 +494,10 @@ index 6f8ca4b90cfb..9a940e1f512f 100644
      target_compile_definitions(network PRIVATE -DENABLE_WEB_SERVICE)
      target_link_libraries(network PRIVATE web_service)
 diff --git a/src/video_core/CMakeLists.txt b/src/video_core/CMakeLists.txt
-index b03a309921a7..7818daf101d7 100644
+index 6ecc8dbff56e..5148cab8f561 100644
 --- a/src/video_core/CMakeLists.txt
 +++ b/src/video_core/CMakeLists.txt
-@@ -259,8 +259,7 @@ target_link_options(video_core PRIVATE ${FFmpeg_LDFLAGS})
+@@ -264,8 +264,7 @@ target_link_options(video_core PRIVATE ${FFmpeg_LDFLAGS})
  
  add_dependencies(video_core host_shaders)
  target_include_directories(video_core PRIVATE ${HOST_SHADERS_INCLUDE})
@@ -502,7 +507,7 @@ index b03a309921a7..7818daf101d7 100644
  
  if (ENABLE_NSIGHT_AFTERMATH)
      if (NOT DEFINED ENV{NSIGHT_AFTERMATH_SDK})
-@@ -294,9 +293,9 @@ if (ARCHITECTURE_x86_64)
+@@ -299,11 +298,11 @@ if (ARCHITECTURE_x86_64)
          macro/macro_jit_x64.cpp
          macro/macro_jit_x64.h
      )
@@ -514,30 +519,35 @@ index b03a309921a7..7818daf101d7 100644
 -    target_link_libraries(video_core PRIVATE dynarmic)
 +    target_link_libraries(video_core PRIVATE dynarmic::dynarmic)
  endif()
+ 
+ if (YUZU_USE_PRECOMPILED_HEADERS)
 diff --git a/src/web_service/CMakeLists.txt b/src/web_service/CMakeLists.txt
-index 3f75d97d178f..b548fada6238 100644
+index 19534b9e423d..02582aa04126 100644
 --- a/src/web_service/CMakeLists.txt
 +++ b/src/web_service/CMakeLists.txt
-@@ -16,4 +16,4 @@ add_library(web_service STATIC
+@@ -17,7 +17,7 @@ add_library(web_service STATIC
  )
  
  create_target_directory_groups(web_service)
 -target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib cpp-jwt)
 +target_link_libraries(web_service PRIVATE common network nlohmann_json::nlohmann_json httplib::httplib cpp-jwt::cpp-jwt)
+ 
+ if (YUZU_USE_PRECOMPILED_HEADERS)
+     target_precompile_headers(web_service PRIVATE precompiled_headers.h)
 diff --git a/src/yuzu/CMakeLists.txt b/src/yuzu/CMakeLists.txt
-index adad362216a8..b3e506640ece 100644
+index 656dd79a986b..65c144921df7 100644
 --- a/src/yuzu/CMakeLists.txt
 +++ b/src/yuzu/CMakeLists.txt
-@@ -314,7 +314,7 @@ target_link_libraries(yuzu PRIVATE common core input_common network video_core)
- target_link_libraries(yuzu PRIVATE Boost::boost glad Qt::Widgets Qt::Multimedia)
+@@ -315,7 +315,7 @@ target_link_libraries(yuzu PRIVATE common core input_common network video_core)
+ target_link_libraries(yuzu PRIVATE Boost::boost glad Qt${QT_MAJOR_VERSION}::Widgets)
  target_link_libraries(yuzu PRIVATE ${PLATFORM_LIBRARIES} Threads::Threads)
  
 -target_include_directories(yuzu PRIVATE ../../externals/Vulkan-Headers/include)
 +target_link_libraries(yuzu PRIVATE Vulkan::Headers)
  if (NOT WIN32)
-     target_include_directories(yuzu PRIVATE ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
+     target_include_directories(yuzu PRIVATE ${Qt${QT_MAJOR_VERSION}Gui_PRIVATE_INCLUDE_DIRS})
  endif()
-@@ -350,7 +350,7 @@ if (USE_DISCORD_PRESENCE)
+@@ -351,7 +351,7 @@ if (USE_DISCORD_PRESENCE)
          discord_impl.cpp
          discord_impl.h
      )
@@ -546,18 +556,20 @@ index adad362216a8..b3e506640ece 100644
      target_compile_definitions(yuzu PRIVATE -DUSE_DISCORD_PRESENCE)
  endif()
  
-@@ -389,5 +389,5 @@ if (NOT APPLE)
+@@ -408,7 +408,7 @@ if (NOT APPLE)
  endif()
  
  if (ARCHITECTURE_x86_64 OR ARCHITECTURE_arm64)
 -    target_link_libraries(yuzu PRIVATE dynarmic)
 +    target_link_libraries(yuzu PRIVATE dynarmic::dynarmic)
  endif()
+ 
+ if (YUZU_USE_PRECOMPILED_HEADERS)
 diff --git a/src/yuzu_cmd/CMakeLists.txt b/src/yuzu_cmd/CMakeLists.txt
-index 7d8ca3d8a0b3..a967359f8b1c 100644
+index 13b6731861fc..05ebf338f7e2 100644
 --- a/src/yuzu_cmd/CMakeLists.txt
 +++ b/src/yuzu_cmd/CMakeLists.txt
-@@ -31,7 +31,7 @@ add_executable(yuzu-cmd
+@@ -34,7 +34,7 @@ add_executable(yuzu-cmd
  create_target_directory_groups(yuzu-cmd)
  
  target_link_libraries(yuzu-cmd PRIVATE common core input_common)
@@ -566,7 +578,7 @@ index 7d8ca3d8a0b3..a967359f8b1c 100644
  if (MSVC)
      target_link_libraries(yuzu-cmd PRIVATE getopt)
  endif()
-@@ -40,7 +40,7 @@ target_link_libraries(yuzu-cmd PRIVATE ${PLATFORM_LIBRARIES} SDL2 Threads::Threa
+@@ -43,7 +43,7 @@ target_link_libraries(yuzu-cmd PRIVATE ${PLATFORM_LIBRARIES} SDL2 Threads::Threa
  create_resource("../../dist/yuzu.bmp" "yuzu_cmd/yuzu_icon.h" "yuzu_icon")
  target_include_directories(yuzu-cmd PRIVATE ${RESOURCES_DIR})
  
@@ -576,7 +588,7 @@ index 7d8ca3d8a0b3..a967359f8b1c 100644
  if (YUZU_USE_EXTERNAL_SDL2)
      target_compile_definitions(yuzu-cmd PRIVATE -DYUZU_USE_EXTERNAL_SDL2)
 diff --git a/src/yuzu_cmd/config.cpp b/src/yuzu_cmd/config.cpp
-index 66dd0dc154d4..3ced6d782d31 100644
+index 59f9c8e09484..2c78e776c203 100644
 --- a/src/yuzu_cmd/config.cpp
 +++ b/src/yuzu_cmd/config.cpp
 @@ -15,7 +15,7 @@
