@@ -7,7 +7,7 @@ inherit desktop wxwidgets xdg
 
 DESCRIPTION="Clone of Guitar Hero and similar games."
 HOMEPAGE="https://clonehero.net/"
-SRC_URI="http://dl.clonehero.net/clonehero-v${PV:1}/clonehero-linux.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://pubdl.clonehero.net/clonehero-v${PV}-final/clonehero-linux.tar.xz -> ${P}.tar.xz"
 
 LICENSE="all-rights-reserved"
 SLOT="0"
@@ -27,7 +27,6 @@ src_install() {
 	find . -name '*.so*' -exec chmod 0755 {} \; || die
 	find . -name '*.dll' -exec chmod 0644 {} \; || die
 	einstalldocs
-	rm README.txt || die
 	mkdir -p "${D}/opt/clonehero" || die
 	cp -R ./* "${D}/opt/clonehero/" || die
 	keepdir /opt/clonehero/{Screenshots,Songs}
