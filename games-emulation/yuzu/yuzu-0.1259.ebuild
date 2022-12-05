@@ -42,6 +42,7 @@ DEPEND="app-arch/lz4
 	dev-qt/qtcore
 	dev-qt/qtdbus
 	dev-qt/qtgui
+	dev-qt/qtmultimedia
 	dev-qt/qtwebengine
 	dev-qt/qtwidgets
 	media-libs/opus
@@ -55,8 +56,7 @@ DEPEND="app-arch/lz4
 	dev-qt/qtmultimedia"
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
-BDEPEND="<dev-cpp/catch-3.0.0
-	dev-cpp/nlohmann_json
+BDEPEND="dev-cpp/nlohmann_json
 	dev-util/glslang
 	>=dev-util/vulkan-headers-1.3.216
 	dev-util/spirv-headers"
@@ -105,15 +105,10 @@ src_configure() {
 		-DGIT_REV="${PV}"
 		-DSIRIT_USE_SYSTEM_SPIRV_HEADERS=ON
 		-DUSE_DISCORD_PRESENCE=OFF
-		-DYUZU_USE_EXTERNAL_SDL2=ON
 		-DYUZU_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)
-		-DYUZU_USE_BUNDLED_CUBEB=OFF
-		-DYUZU_USE_BUNDLED_ENET=OFF
-		-DYUZU_USE_BUNDLED_HTTPLIB=ON
-		-DYUZU_USE_BUNDLED_INIH=OFF
-		-DYUZU_USE_BUNDLED_OPUS=OFF
-		-DYUZU_USE_BUNDLED_XBYAK=OFF
-		-DYUZU_USE_BUNDLED_VULKAN_HEADERS=OFF
+		-DYUZU_TESTS=OFF
+		-DYUZU_USE_EXTERNAL_SDL2=OFF
+		-DYUZU_USE_QT_MULTIMEDIA=ON
 		-DYUZU_USE_QT_WEB_ENGINE=ON
  		-Wno-dev
 	)
