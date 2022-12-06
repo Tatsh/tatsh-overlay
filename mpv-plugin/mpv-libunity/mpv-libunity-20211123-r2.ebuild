@@ -15,8 +15,8 @@ LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
 
-BDEPEND="dev-qt/qtcore
-	dev-qt/qtdbus"
+BDEPEND="dev-qt/qtcore:5
+	dev-qt/qtdbus:5"
 
 MY_PN="${PN#*-}"
 
