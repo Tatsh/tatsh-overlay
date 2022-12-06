@@ -13,10 +13,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
 
 DEPEND="sci-libs/libqalculate
-	dev-qt/qtcore:=
-	dev-qt/qtgui:=
-	dev-qt/qtnetwork:=
-	dev-qt/qtwidgets:="
+	dev-qt/qtcore:5
+	dev-qt/qtgui:5
+	dev-qt/qtnetwork:5
+	dev-qt/qtwidgets:5"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
