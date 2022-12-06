@@ -24,10 +24,10 @@ DEPEND="app-emulation/faudio
 	net-libs/libslirp
 	dev-libs/libevdev
 	dev-libs/wayland
-	dev-qt/qtcore:=
-	dev-qt/qtgui:=
-	dev-qt/qtnetwork:=
-	dev-qt/qtwidgets:=
+	dev-qt/qtcore:5
+	dev-qt/qtgui:5
+	dev-qt/qtnetwork:5
+	dev-qt/qtwidgets:5
 	x11-libs/libX11"
 RDEPEND="${DEPEND}"
 
