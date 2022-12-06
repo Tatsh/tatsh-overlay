@@ -33,11 +33,11 @@ DEPEND="app-arch/zstd
 	dev-libs/mp
 	dev-libs/teakra
 	>=dev-libs/xbyak-5.941
-	dev-qt/qtconcurrent:=
-	dev-qt/qtcore
-	dev-qt/qtgui
-	dev-qt/qtmultimedia
-	dev-qt/qtwidgets
+	dev-qt/qtconcurrent:5
+	dev-qt/qtcore:5
+	dev-qt/qtgui:5
+	dev-qt/qtmultimedia:5
+	dev-qt/qtwidgets:5
 	dev-util/nihstro
 	media-libs/libsdl2
 	media-video/ffmpeg
