@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 ExecReload=/bin/kill -HUP $MAINPID
-ExecStartPre+=/bin/mkdir /run/pihole
+ExecStartPre=+/bin/mkdir -p /run/pihole
 ExecStartPre=+/bin/touch \
                /run/pihole/FTL.pid \
                /run/pihole/FTL.port \
