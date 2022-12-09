@@ -3,6 +3,7 @@
 
 EAPI=8
 MPV_REQ_USE="lua"
+USE_MPV="rdepend"
 inherit mpv-plugin
 
 DESCRIPTION="mpv plugin for automatic reloading of slow/stuck video streams"
