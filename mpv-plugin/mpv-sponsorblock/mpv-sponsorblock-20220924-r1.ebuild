@@ -4,6 +4,7 @@
 EAPI=8
 MPV_REQ_USE="lua"
 PYTHON_COMPAT=( python3_{8,9,10} )
+USE_MPV="rdepend"
 inherit mpv-plugin python-single-r1
 
 DESCRIPTION="mpv script to skip sponsored segments of YouTube videos"
