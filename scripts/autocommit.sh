@@ -17,7 +17,6 @@ while read -r ebuild; do
     if [[ " ${test_install[*]} " =~ " ${cat}/${pn} " ]]; then
         phases+=( install )
     fi
-    ebuild ./*.ebuild "${phases[@]}" && git add . && pkgdev commit
+    ebuild ./*.ebuild "${phases[@]}" && git add . && pkgdev commit --signoff
     popd || exit 1
 done < <(git status | grep -E 'deleted:.*ebuild$' | awk '{ print $2 }')
-
