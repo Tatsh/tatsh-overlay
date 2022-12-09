@@ -3,7 +3,8 @@
 
 EAPI=8
 
-MPV_REQ_USE="cplugins,libmpv"
+MPV_REQ_USE="cplugins(+),libmpv"
+USE_MPV="rdepend"
 inherit mpv-plugin toolchain-funcs
 
 DESCRIPTION="Shows progress on a panel following libunity specification."
