@@ -3,6 +3,7 @@
 
 EAPI=8
 MPV_REQ_USE="lua"
+USE_MPV="rdepend"
 inherit mpv-plugin
 
 DESCRIPTION="Reads ~/.netrc and sets up authorisation for URIs."
