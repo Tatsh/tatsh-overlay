@@ -3,7 +3,7 @@
 
 EAPI=8
 
-MPV_REQ_USE="cplugins,libmpv"
+MPV_REQ_USE="cplugins(+),libmpv"
 inherit mpv-plugin toolchain-funcs
 
 DESCRIPTION="Set mpv to quiet when stdout/stdout is not a TTY."
