@@ -8,72 +8,46 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="3868a0020611491e30db19e5b27d33a7559c7071"
+SHA="c6f1908e0f07b6dd4b60cbe333a9b5f1adec276b"
 MY_PN="R${PN:1}"
 NUGETS="atksharp-3.22.25.128
-	avalonia-0.10.15
 	avalonia-0.10.18
 	avalonia.angle.windows.natives-2.1.0.2020091801
-	avalonia.controls.datagrid-0.10.15
 	avalonia.controls.datagrid-0.10.18
-	avalonia.desktop-0.10.15
 	avalonia.desktop-0.10.18
-	avalonia.diagnostics-0.10.15
 	avalonia.diagnostics-0.10.18
-	avalonia.freedesktop-0.10.15
 	avalonia.freedesktop-0.10.18
-	avalonia.markup.xaml.loader-0.10.15
 	avalonia.markup.xaml.loader-0.10.18
-	avalonia.native-0.10.15
 	avalonia.native-0.10.18
-	avalonia.remote.protocol-0.10.15
 	avalonia.remote.protocol-0.10.18
-	avalonia.skia-0.10.14
-	avalonia.skia-0.10.15
 	avalonia.skia-0.10.18
-	avalonia.svg-0.10.14
 	avalonia.svg-0.10.18
-	avalonia.svg.skia-0.10.14
 	avalonia.svg.skia-0.10.18
-	avalonia.win32-0.10.15
 	avalonia.win32-0.10.18
-	avalonia.x11-0.10.15
 	avalonia.x11-0.10.18
 	cairosharp-3.22.25.128
 	commandlineparser-2.8.0
+	commandlineparser-2.9.1
 	concentus-1.1.7
 	crc32.net-1.2.0
-	discordrichpresence-1.0.175
 	discordrichpresence-1.1.3.18
+	dynamicdata-7.12.11
 	dynamicdata-7.12.8
-	dynamicdata-7.9.4
 	excss-4.1.4
-	fizzler-1.2.0
 	fizzler-1.2.1
-	fluentavaloniaui-1.4.1
-	fluentavaloniaui-1.4.4
 	fluentavaloniaui-1.4.5
 	gdksharp-3.22.25.128
 	giosharp-3.22.25.128
 	glibsharp-3.22.25.128
 	gtksharp-3.22.25.128
 	gtksharp.dependencies-1.1.1
-	harfbuzzsharp-2.8.2
 	harfbuzzsharp-2.8.2.1-preview.108
-	harfbuzzsharp-2.8.2-preview.178
 	harfbuzzsharp.nativeassets.linux-2.8.2.1-preview.108
-	harfbuzzsharp.nativeassets.linux-2.8.2-preview.178
-	harfbuzzsharp.nativeassets.macos-2.8.2
 	harfbuzzsharp.nativeassets.macos-2.8.2.1-preview.108
-	harfbuzzsharp.nativeassets.macos-2.8.2-preview.178
 	harfbuzzsharp.nativeassets.webassembly-2.8.2.1-preview.108
-	harfbuzzsharp.nativeassets.webassembly-2.8.2-preview.178
-	harfbuzzsharp.nativeassets.win32-2.8.2
 	harfbuzzsharp.nativeassets.win32-2.8.2.1-preview.108
-	harfbuzzsharp.nativeassets.win32-2.8.2-preview.178
 	jetbrains.annotations-10.3.0
 	jp2masa.avalonia.flexbox-0.2.0
-	libhac-0.16.1
 	libhac-0.17.0
 	microcom.codegenerator.msbuild-0.10.4
 	microcom.runtime-0.10.4
@@ -84,23 +58,29 @@ NUGETS="atksharp-3.22.25.128
 	microsoft.codeanalysis.analyzers-3.3.3
 	microsoft.codeanalysis.common-3.4.0
 	microsoft.codeanalysis.common-4.2.0
+	microsoft.codeanalysis.common-4.4.0
 	microsoft.codeanalysis.csharp-3.4.0
 	microsoft.codeanalysis.csharp-4.2.0
+	microsoft.codeanalysis.csharp-4.4.0
 	microsoft.codeanalysis.csharp.scripting-3.4.0
 	microsoft.codeanalysis.scripting.common-3.4.0
 	microsoft.codecoverage-16.8.0
+	microsoft.codecoverage-17.4.0
 	microsoft.csharp-4.0.1
 	microsoft.csharp-4.3.0
 	microsoft.csharp-4.5.0
 	microsoft.csharp-4.7.0
 	microsoft.dotnet.internalabstractions-1.0.0
 	microsoft.dotnet.platformabstractions-3.1.6
-	microsoft.extensions.dependencymodel-3.1.1
 	microsoft.extensions.dependencymodel-6.0.0
 	microsoft.identitymodel.abstractions-6.25.0
+	microsoft.identitymodel.abstractions-6.25.1
 	microsoft.identitymodel.jsonwebtokens-6.25.0
+	microsoft.identitymodel.jsonwebtokens-6.25.1
 	microsoft.identitymodel.logging-6.25.0
+	microsoft.identitymodel.logging-6.25.1
 	microsoft.identitymodel.tokens-6.25.0
+	microsoft.identitymodel.tokens-6.25.1
 	microsoft.netcore.app.host.osx-x64-7.0.0
 	microsoft.netcore.app.host.win-x64-7.0.0
 	microsoft.netcore.app.runtime.linux-x64-7.0.0
@@ -113,35 +93,34 @@ NUGETS="atksharp-3.22.25.128
 	microsoft.netcore.targets-1.0.1
 	microsoft.netcore.targets-1.1.0
 	microsoft.net.test.sdk-16.8.0
+	microsoft.net.test.sdk-17.4.0
 	microsoft.testplatform.objectmodel-16.8.0
+	microsoft.testplatform.objectmodel-17.4.0
 	microsoft.testplatform.testhost-16.8.0
+	microsoft.testplatform.testhost-17.4.0
 	microsoft.win32.primitives-4.0.1
 	microsoft.win32.primitives-4.3.0
 	microsoft.win32.registry-4.3.0
 	microsoft.win32.registry-4.5.0
 	microsoft.win32.systemevents-4.5.0
 	microsoft.win32.systemevents-6.0.0
+	microsoft.win32.systemevents-7.0.0
 	msgpack.cli-1.0.1
 	netstandard.library-1.6.0
 	netstandard.library-2.0.0
 	netstandard.library-2.0.3
-	newtonsoft.json-12.0.2
 	newtonsoft.json-13.0.1
 	newtonsoft.json-9.0.1
 	nuget.frameworks-5.0.0
+	nuget.frameworks-5.11.0
 	nunit-3.12.0
+	nunit-3.13.3
 	nunit3testadapter-3.17.0
-	opentk.core-4.7.2
 	opentk.core-4.7.5
-	opentk.graphics-4.7.2
 	opentk.graphics-4.7.5
-	opentk.mathematics-4.7.2
 	opentk.mathematics-4.7.5
-	opentk.openal-4.7.2
 	opentk.openal-4.7.5
-	opentk.redist.glfw-3.3.7.25
 	opentk.redist.glfw-3.3.8.30
-	opentk.windowing.graphicslibraryframework-4.7.2
 	opentk.windowing.graphicslibraryframework-4.7.5
 	pangosharp-3.22.25.128
 	runtime.any.system.collections-4.3.0
@@ -194,62 +173,50 @@ NUGETS="atksharp-3.22.25.128
 	runtime.win.system.net.primitives-4.3.0
 	runtime.win.system.net.sockets-4.3.0
 	runtime.win.system.runtime.extensions-4.3.0
+	ryujinx.atksharp-3.24.24.59-ryujinx
 	ryujinx.audio.openal.dependencies-1.21.0.1
+	ryujinx.cairosharp-3.24.24.59-ryujinx
+	ryujinx.gdksharp-3.24.24.59-ryujinx
+	ryujinx.giosharp-3.24.24.59-ryujinx
+	ryujinx.glibsharp-3.24.24.59-ryujinx
 	ryujinx.graphics.nvdec.dependencies-5.0.1-build10
-	ryujinx.sdl2-cs-2.0.22-build20
+	ryujinx.graphics.nvdec.dependencies-5.0.1-build12
+	ryujinx.graphics.vulkan.dependencies.moltenvk-1.2.0
+	ryujinx.gtksharp-3.24.24.59-ryujinx
+	ryujinx.pangosharp-3.24.24.59-ryujinx
 	ryujinx.sdl2-cs-2.24.2-build21
 	shaderc.net-0.1.0
-	sharpziplib-1.3.3
 	sharpziplib-1.4.1
-	shimskiasharp-0.5.14
 	shimskiasharp-0.5.18
-	silk.net.core-2.10.1
 	silk.net.core-2.16.0
-	silk.net.vulkan-2.10.1
 	silk.net.vulkan-2.16.0
-	silk.net.vulkan.extensions.ext-2.10.1
 	silk.net.vulkan.extensions.ext-2.16.0
-	silk.net.vulkan.extensions.khr-2.10.1
 	silk.net.vulkan.extensions.khr-2.16.0
 	sixlabors.fonts-1.0.0-beta0013
 	sixlabors.imagesharp-1.0.4
 	sixlabors.imagesharp.drawing-1.0.0-beta11
-	skiasharp-2.88.0
-	skiasharp-2.88.1-preview.1
 	skiasharp-2.88.1-preview.108
-	skiasharp.harfbuzz-2.88.0
 	skiasharp.harfbuzz-2.88.1-preview.108
-	skiasharp.nativeassets.linux-2.88.0-preview.178
-	skiasharp.nativeassets.linux-2.88.1-preview.1
 	skiasharp.nativeassets.linux-2.88.1-preview.108
-	skiasharp.nativeassets.macos-2.88.0
-	skiasharp.nativeassets.macos-2.88.1-preview.1
 	skiasharp.nativeassets.macos-2.88.1-preview.108
-	skiasharp.nativeassets.webassembly-2.88.0-preview.178
-	skiasharp.nativeassets.webassembly-2.88.1-preview.1
 	skiasharp.nativeassets.webassembly-2.88.1-preview.108
-	skiasharp.nativeassets.win32-2.88.0
-	skiasharp.nativeassets.win32-2.88.1-preview.1
 	skiasharp.nativeassets.win32-2.88.1-preview.108
 	spb-0.0.4-build28
-	svg.custom-0.5.14
 	svg.custom-0.5.18
-	svg.model-0.5.14
 	svg.model-0.5.18
-	svg.skia-0.5.14
 	svg.skia-0.5.18
 	system.appcontext-4.1.0
 	system.buffers-4.0.0
 	system.buffers-4.3.0
 	system.buffers-4.5.1
 	system.codedom-4.4.0
-	system.codedom-6.0.0
 	system.codedom-7.0.0
 	system.collections-4.0.11
 	system.collections-4.3.0
 	system.collections.concurrent-4.0.12
 	system.collections.immutable-1.5.0
 	system.collections.immutable-5.0.0
+	system.collections.immutable-6.0.0
 	system.collections.nongeneric-4.3.0
 	system.collections.specialized-4.3.0
 	system.componentmodel-4.3.0
@@ -267,6 +234,7 @@ NUGETS="atksharp-3.22.25.128
 	system.diagnostics.tracing-4.3.0
 	system.drawing.common-4.5.0
 	system.drawing.common-6.0.0
+	system.drawing.common-7.0.0
 	system.dynamic.runtime-4.0.11
 	system.dynamic.runtime-4.3.0
 	system.globalization-4.0.11
@@ -275,6 +243,7 @@ NUGETS="atksharp-3.22.25.128
 	system.globalization.extensions-4.0.1
 	system.globalization.extensions-4.3.0
 	system.identitymodel.tokens.jwt-6.25.0
+	system.identitymodel.tokens.jwt-6.25.1
 	system.io-4.1.0
 	system.io-4.3.0
 	system.io.compression-4.1.0
@@ -287,7 +256,6 @@ NUGETS="atksharp-3.22.25.128
 	system.linq-4.3.0
 	system.linq.expressions-4.1.0
 	system.linq.expressions-4.3.0
-	system.management-6.0.0
 	system.management-7.0.0
 	system.memory-4.5.3
 	system.memory-4.5.4
@@ -361,7 +329,6 @@ NUGETS="atksharp-3.22.25.128
 	system.text.encoding.extensions-4.0.11
 	system.text.encoding.extensions-4.3.0
 	system.text.encodings.web-6.0.0
-	system.text.json-4.7.0
 	system.text.json-4.7.2
 	system.text.json-6.0.0
 	system.text.regularexpressions-4.1.0
@@ -386,8 +353,8 @@ NUGETS="atksharp-3.22.25.128
 	system.xml.xpath-4.3.0
 	system.xml.xpath.xmldocument-4.3.0
 	tmds.dbus-0.9.0
-	xamlnamereferencegenerator-1.3.4
-	xamlnamereferencegenerator-1.4.2"
+	xamlnamereferencegenerator-1.4.2
+	xamlnamereferencegenerator-1.5.1"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	$(nuget_uris)"
 
@@ -419,4 +386,3 @@ src_install() {
 	make_desktop_entry "/usr/bin/${MY_PN}" "${MY_PN}" "${PN}"
 	einstalldocs
 }
-
