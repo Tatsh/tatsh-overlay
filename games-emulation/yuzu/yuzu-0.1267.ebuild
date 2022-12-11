@@ -21,8 +21,7 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 	https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/ReinUsesLisp/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/yhirose/cpp-httplib/archive/${HTTPLIB_SHA}.tar.gz -> ${PN}-httplib-${HTTPLIB_SHA:0:7}.tar.gz
-	https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz
-	https://github.com/fmtlib/fmt/archive/refs/tags/${FMT_PV}.tar.gz -> ${PN}-fmt-${FMT_PV}.tar.gz"
+	https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz"
 
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
@@ -35,7 +34,7 @@ DEPEND="app-arch/lz4
 	dev-libs/boost:=[context]
 	cubeb? ( media-libs/cubeb )
 	dev-libs/inih
-	dev-libs/libfmt:0/8.1.1
+	dev-libs/libfmt
 	dev-libs/libzip
 	>=dev-libs/xbyak-6.03
 	dev-cpp/robin-map
@@ -81,14 +80,12 @@ src_prepare() {
 	mv "${WORKDIR}/cpp-jwt-${CPP_JWT_SHA}" "${S}/externals/cpp-jwt" || die
 	mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
-	mv "${WORKDIR}/fmt-${FMT_PV}" "${S}/fmt" || die
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' -i src/common/CMakeLists.txt || die
 	sed -e '/enable_testing.*/d' -e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' -i externals/sirit/CMakeLists.txt || die
 	sed -e '/-Werror=missing-declarations/d' -i src/CMakeLists.txt || die
 	cmake_src_prepare
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
 	mv -f "${T}/compatibility_list.json" "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
-	sed -e 's/find_package(fmt.*/add_subdirectory(fmt)/' -i CMakeLists.txt || die
 }
 
 src_configure() {
