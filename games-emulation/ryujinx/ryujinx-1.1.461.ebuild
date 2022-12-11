@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="c6f1908e0f07b6dd4b60cbe333a9b5f1adec276b"
+SHA="403e67d9835b7412022ff4d98685f83590641c88"
 MY_PN="R${PN:1}"
 NUGETS="atksharp-3.22.25.128
 	avalonia-0.10.18
