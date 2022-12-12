@@ -9,49 +9,47 @@ DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
 SHA="4491560b32aa4a4c1b56a53e1baee2da4841a684"
 MY_PN="Cemu"
-FMT_PV="9.1.0"
-GLSLANG_PV="11.8.0"
 IMGUI_PV="1.88"
 SRC_URI="https://github.com/cemu-project/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
-	https://github.com/fmtlib/fmt/archive/refs/tags/${FMT_PV}.tar.gz -> ${PN}-fmt-${FMT_PV}.tar.gz
-	https://github.com/KhronosGroup/glslang/archive/refs/tags/${GLSLANG_PV}.tar.gz -> ${PN}-glslang-${GLSLANG_PV}.tar.gz
 	https://github.com/ocornut/imgui/archive/refs/tags/v${IMGUI_PV}.tar.gz -> ${PN}-imgui-${IMGUI_PV}.tar.gz"
 
 LICENSE="MPL-2.0 ISC"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="lto"
+IUSE="+cubeb discord lto +sdl +wayland +vulkan"
 
 DEPEND="app-arch/zarchive
 	app-arch/zstd
 	dev-libs/boost
+	dev-libs/libfmt
 	dev-libs/libzip
 	dev-libs/openssl
 	dev-libs/pugixml
 	dev-libs/rapidjson
 	dev-util/glslang
-	dev-util/vulkan-headers
-	media-libs/cubeb
+	vulkan? ( dev-util/vulkan-headers )
+	cubeb? ( media-libs/cubeb )
+	media-libs/libglvnd
 	media-libs/libsdl2[joystick,threads]
 	net-misc/curl
 	sys-libs/zlib
+	wayland? ( x11-libs/gtk+:3[wayland] )
 	x11-libs/wxGTK:3.2-gtk3
-	x11-libs/libX11
-	media-libs/libglvnd"
+	x11-libs/libX11"
 RDEPEND="${DEPEND}"
 BDEPEND="media-libs/glm"
 
 S="${WORKDIR}/${MY_PN}-${SHA}"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-0002-remove-default-from-system-g.patch"
-	"${FILESDIR}/${PN}-0003-switch-to-submodules-for-som.patch"
-)
+PATCHES=( "${FILESDIR}/${PN}-0002-remove-default-from-system-g.patch" )
 
 src_prepare() {
+	if use wayland; then
+		sed -re \
+		's/^target_link_libraries\(CemuBin.*/target_link_libraries(CemuBin PRIVATE wayland-client/' \
+			-i src/CMakeLists.txt || die
+	fi
 	cmake_src_prepare
-	mv "${WORKDIR}/fmt-${FMT_PV}" fmt || die
-	mv "${WORKDIR}/glslang-${GLSLANG_PV}" glslang || die
 	rmdir dependencies/imgui || die
 	mv "${WORKDIR}/imgui-${IMGUI_PV}" dependencies/imgui || die
 }
@@ -60,11 +58,11 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
 		-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=$(usex lto)
-		-DENABLE_CUBEB=ON
-		-DENABLE_DISCORD_RPC=OFF
+		-DENABLE_CUBEB=$(usex cubeb)
+		-DENABLE_DISCORD_RPC=$(usex discord)
 		-DENABLE_OPENGL=ON
-		-DENABLE_SDL=ON
-		-DENABLE_VULKAN=ON
+		-DENABLE_SDL=$(usex sdl)
+		-DENABLE_VULKAN=$(usex vulkan)
 		-DENABLE_WXWIDGETS=ON
 		-DPORTABLE=OFF
 		-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3
@@ -75,9 +73,9 @@ src_configure() {
 
 src_install() {
 	newbin "bin/${MY_PN}_relwithdebinfo" "$MY_PN"
-	insinto /usr/share/${PN}/gameProfiles
+	insinto "/usr/share/${PN}/gameProfiles"
 	doins -r bin/gameProfiles/default/*
-	insinto /usr/share/${PN}
+	insinto "/usr/share/${PN}"
 	doins -r bin/resources bin/shaderCache
 	einstalldocs
 	newicon -s 128 src/resource/logo_icon.png "info.${PN}.${MY_PN}.png"
