@@ -1,8 +1,9 @@
-__mimeo_completion() {
+__mimeo_completion()
+{
     local cur prev opts
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    prev="${COMP_WORDS[COMP_CWORD - 1]}"
     dash_opts=$(mimeo -h | egrep -- '(^  -)' | tr , $'\n' | awk '{ print $1 }' | egrep '^-')
     if [[ ${cur} == -* ]]; then
         opts="$dash_opts"
