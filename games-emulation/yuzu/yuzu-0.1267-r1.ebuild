@@ -29,30 +29,31 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+compatibility-reporting +cubeb +web-service"
 REQUIRED_USE="compatibility-reporting? ( web-service )"
 
-DEPEND="app-arch/lz4
-	>=app-arch/zstd-1.5.0
-	dev-libs/boost:=[context]
+DEPEND=">=app-arch/zstd-1.5.0
+	>=dev-libs/xbyak-6.03
+	>=media-video/ffmpeg-4.3
+	app-arch/lz4
 	cubeb? ( media-libs/cubeb )
+	dev-cpp/robin-map
+	dev-libs/boost:=[context]
 	dev-libs/inih
 	dev-libs/libfmt
 	dev-libs/libzip
-	>=dev-libs/xbyak-6.03
-	dev-cpp/robin-map
+	dev-libs/openssl
 	dev-qt/qtcore
 	dev-qt/qtdbus
 	dev-qt/qtgui
 	dev-qt/qtmultimedia
+	dev-qt/qtmultimedia
 	dev-qt/qtwebengine
 	dev-qt/qtwidgets
+	media-libs/libsdl2
+	media-libs/libva
 	media-libs/opus
-	>=media-video/ffmpeg-4.3
 	net-libs/enet:=
 	sys-libs/libunwind
 	sys-libs/zlib
-	media-libs/libva
-	virtual/libusb:=
-	dev-libs/openssl
-	dev-qt/qtmultimedia"
+	virtual/libusb:="
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="dev-cpp/nlohmann_json
