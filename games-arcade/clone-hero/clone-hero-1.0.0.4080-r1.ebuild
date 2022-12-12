@@ -14,7 +14,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="strip"
 
-RDEPEND="sys-libs/zlib
+RDEPEND="media-libs/alsa-lib
+	sys-libs/zlib
 	x11-libs/wxGTK:3.0-gtk3
 	dev-libs/glib
 	x11-libs/gdk-pixbuf
