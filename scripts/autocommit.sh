@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd "$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/.."
+cd "$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)/.."
 test_install=(
     games-arcade/outfox
 )
@@ -13,9 +13,9 @@ while read -r ebuild; do
         continue
     fi
     old_ifs="$IFS"
-    phases=( clean manifest prepare )
+    phases=(clean manifest prepare)
     if [[ " ${test_install[*]} " =~ " ${cat}/${pn} " ]]; then
-        phases+=( install )
+        phases+=(install)
     fi
     ebuild ./*.ebuild "${phases[@]}" && git add . && pkgdev commit
     popd || exit 1
