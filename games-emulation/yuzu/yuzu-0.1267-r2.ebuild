@@ -10,7 +10,6 @@ HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 MY_PV="mainline-${PV/./-}"
 CPP_JWT_SHA="e12ef06218596b52d9b5d6e1639484866a8e7067"
 DYNARMIC_SHA="bd570e093ca1d1206961296b90df65cda7de8e87"
-FMT_PV="9.1.0"
 HTTPLIB_SHA="305a7abcb9b4e9e349843c6d563212e6c1bbbf21"
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
 SDL_SHA="f17058b562c8a1090c0c996b42982721ace90903"
@@ -37,6 +36,7 @@ DEPEND=">=app-arch/zstd-1.5.0
 	dev-cpp/robin-map
 	dev-libs/boost:=[context]
 	dev-libs/inih
+	>=dev-libs/libfmt-9.1.0:=
 	dev-libs/libfmt
 	dev-libs/libzip
 	dev-libs/openssl
