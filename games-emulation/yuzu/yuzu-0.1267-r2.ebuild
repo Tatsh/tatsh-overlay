@@ -37,7 +37,6 @@ DEPEND=">=app-arch/zstd-1.5.0
 	dev-libs/boost:=[context]
 	dev-libs/inih
 	>=dev-libs/libfmt-9.1.0:=
-	dev-libs/libfmt
 	dev-libs/libzip
 	dev-libs/openssl
 	dev-qt/qtcore
