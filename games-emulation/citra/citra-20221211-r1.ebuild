@@ -22,7 +22,7 @@ SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}.tar.gz
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="web-service"
+IUSE="lto web-service"
 
 # System xbyak is still used by Dynarmic, but not Citra itself
 DEPEND="app-arch/zstd
@@ -77,6 +77,7 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
+		-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=$(usex lto)
 		-DDISABLE_SUBMODULE_CHECK=ON
 		-DDYNARMIC_NO_BUNDLED_ROBIN_MAP=ON
 		-DENABLE_FFMPEG_AUDIO_DECODER=ON
