@@ -8,10 +8,9 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="403e67d9835b7412022ff4d98685f83590641c88"
+SHA="8c50943a2e0a303e8fdb2bf418283a376ad3ce6f"
 MY_PN="R${PN:1}"
-NUGETS="atksharp-3.22.25.128
-	avalonia-0.10.18
+NUGETS="avalonia-0.10.18
 	avalonia.angle.windows.natives-2.1.0.2020091801
 	avalonia.controls.datagrid-0.10.18
 	avalonia.desktop-0.10.18
@@ -25,21 +24,14 @@ NUGETS="atksharp-3.22.25.128
 	avalonia.svg.skia-0.10.18
 	avalonia.win32-0.10.18
 	avalonia.x11-0.10.18
-	cairosharp-3.22.25.128
-	commandlineparser-2.8.0
 	commandlineparser-2.9.1
 	concentus-1.1.7
 	crc32.net-1.2.0
 	discordrichpresence-1.1.3.18
 	dynamicdata-7.12.11
-	dynamicdata-7.12.8
 	excss-4.1.4
 	fizzler-1.2.1
 	fluentavaloniaui-1.4.5
-	gdksharp-3.22.25.128
-	giosharp-3.22.25.128
-	glibsharp-3.22.25.128
-	gtksharp-3.22.25.128
 	gtksharp.dependencies-1.1.1
 	harfbuzzsharp-2.8.2.1-preview.108
 	harfbuzzsharp.nativeassets.linux-2.8.2.1-preview.108
@@ -51,69 +43,53 @@ NUGETS="atksharp-3.22.25.128
 	libhac-0.17.0
 	microcom.codegenerator.msbuild-0.10.4
 	microcom.runtime-0.10.4
-	microsoft.aspnetcore.app.runtime.linux-x64-7.0.0
-	microsoft.aspnetcore.app.runtime.osx-x64-7.0.0
-	microsoft.aspnetcore.app.runtime.win-x64-7.0.0
+	microsoft.aspnetcore.app.runtime.linux-x64-7.0.1
+	microsoft.aspnetcore.app.runtime.osx-x64-7.0.1
+	microsoft.aspnetcore.app.runtime.win-x64-7.0.1
 	microsoft.codeanalysis.analyzers-2.9.6
 	microsoft.codeanalysis.analyzers-3.3.3
 	microsoft.codeanalysis.common-3.4.0
-	microsoft.codeanalysis.common-4.2.0
 	microsoft.codeanalysis.common-4.4.0
 	microsoft.codeanalysis.csharp-3.4.0
-	microsoft.codeanalysis.csharp-4.2.0
 	microsoft.codeanalysis.csharp-4.4.0
 	microsoft.codeanalysis.csharp.scripting-3.4.0
 	microsoft.codeanalysis.scripting.common-3.4.0
-	microsoft.codecoverage-16.8.0
-	microsoft.codecoverage-17.4.0
-	microsoft.csharp-4.0.1
+	microsoft.codecoverage-17.4.1
 	microsoft.csharp-4.3.0
 	microsoft.csharp-4.5.0
 	microsoft.csharp-4.7.0
 	microsoft.dotnet.internalabstractions-1.0.0
 	microsoft.dotnet.platformabstractions-3.1.6
 	microsoft.extensions.dependencymodel-6.0.0
-	microsoft.identitymodel.abstractions-6.25.0
 	microsoft.identitymodel.abstractions-6.25.1
-	microsoft.identitymodel.jsonwebtokens-6.25.0
 	microsoft.identitymodel.jsonwebtokens-6.25.1
-	microsoft.identitymodel.logging-6.25.0
 	microsoft.identitymodel.logging-6.25.1
-	microsoft.identitymodel.tokens-6.25.0
 	microsoft.identitymodel.tokens-6.25.1
-	microsoft.netcore.app.host.osx-x64-7.0.0
-	microsoft.netcore.app.host.win-x64-7.0.0
-	microsoft.netcore.app.runtime.linux-x64-7.0.0
-	microsoft.netcore.app.runtime.osx-x64-7.0.0
-	microsoft.netcore.app.runtime.win-x64-7.0.0
+	microsoft.netcore.app.host.osx-x64-7.0.1
+	microsoft.netcore.app.host.win-x64-7.0.1
+	microsoft.netcore.app.runtime.linux-x64-7.0.1
+	microsoft.netcore.app.runtime.osx-x64-7.0.1
+	microsoft.netcore.app.runtime.win-x64-7.0.1
 	microsoft.netcore.platforms-1.0.1
 	microsoft.netcore.platforms-1.1.0
 	microsoft.netcore.platforms-2.0.0
 	microsoft.netcore.platforms-2.1.2
 	microsoft.netcore.targets-1.0.1
 	microsoft.netcore.targets-1.1.0
-	microsoft.net.test.sdk-16.8.0
-	microsoft.net.test.sdk-17.4.0
-	microsoft.testplatform.objectmodel-16.8.0
-	microsoft.testplatform.objectmodel-17.4.0
-	microsoft.testplatform.testhost-16.8.0
-	microsoft.testplatform.testhost-17.4.0
+	microsoft.net.test.sdk-17.4.1
+	microsoft.testplatform.objectmodel-17.4.1
+	microsoft.testplatform.testhost-17.4.1
 	microsoft.win32.primitives-4.0.1
 	microsoft.win32.primitives-4.3.0
 	microsoft.win32.registry-4.3.0
 	microsoft.win32.registry-4.5.0
-	microsoft.win32.systemevents-4.5.0
-	microsoft.win32.systemevents-6.0.0
 	microsoft.win32.systemevents-7.0.0
 	msgpack.cli-1.0.1
 	netstandard.library-1.6.0
 	netstandard.library-2.0.0
 	netstandard.library-2.0.3
 	newtonsoft.json-13.0.1
-	newtonsoft.json-9.0.1
-	nuget.frameworks-5.0.0
 	nuget.frameworks-5.11.0
-	nunit-3.12.0
 	nunit-3.13.3
 	nunit3testadapter-3.17.0
 	opentk.core-4.7.5
@@ -122,7 +98,6 @@ NUGETS="atksharp-3.22.25.128
 	opentk.openal-4.7.5
 	opentk.redist.glfw-3.3.8.30
 	opentk.windowing.graphicslibraryframework-4.7.5
-	pangosharp-3.22.25.128
 	runtime.any.system.collections-4.3.0
 	runtime.any.system.diagnostics.tools-4.3.0
 	runtime.any.system.diagnostics.tracing-4.3.0
@@ -179,8 +154,7 @@ NUGETS="atksharp-3.22.25.128
 	ryujinx.gdksharp-3.24.24.59-ryujinx
 	ryujinx.giosharp-3.24.24.59-ryujinx
 	ryujinx.glibsharp-3.24.24.59-ryujinx
-	ryujinx.graphics.nvdec.dependencies-5.0.1-build10
-	ryujinx.graphics.nvdec.dependencies-5.0.1-build12
+	ryujinx.graphics.nvdec.dependencies-5.0.1-build13
 	ryujinx.graphics.vulkan.dependencies.moltenvk-1.2.0
 	ryujinx.gtksharp-3.24.24.59-ryujinx
 	ryujinx.pangosharp-3.24.24.59-ryujinx
@@ -215,7 +189,6 @@ NUGETS="atksharp-3.22.25.128
 	system.collections-4.3.0
 	system.collections.concurrent-4.0.12
 	system.collections.immutable-1.5.0
-	system.collections.immutable-5.0.0
 	system.collections.immutable-6.0.0
 	system.collections.nongeneric-4.3.0
 	system.collections.specialized-4.3.0
@@ -232,17 +205,13 @@ NUGETS="atksharp-3.22.25.128
 	system.diagnostics.tools-4.0.1
 	system.diagnostics.tracing-4.1.0
 	system.diagnostics.tracing-4.3.0
-	system.drawing.common-4.5.0
-	system.drawing.common-6.0.0
 	system.drawing.common-7.0.0
-	system.dynamic.runtime-4.0.11
 	system.dynamic.runtime-4.3.0
 	system.globalization-4.0.11
 	system.globalization-4.3.0
 	system.globalization.calendars-4.0.1
 	system.globalization.extensions-4.0.1
 	system.globalization.extensions-4.3.0
-	system.identitymodel.tokens.jwt-6.25.0
 	system.identitymodel.tokens.jwt-6.25.1
 	system.io-4.1.0
 	system.io-4.3.0
@@ -307,7 +276,6 @@ NUGETS="atksharp-3.22.25.128
 	system.runtime.interopservices.runtimeinformation-4.0.0
 	system.runtime.interopservices.runtimeinformation-4.3.0
 	system.runtime.numerics-4.0.1
-	system.runtime.serialization.primitives-4.1.1
 	system.security.accesscontrol-4.5.0
 	system.security.claims-4.3.0
 	system.security.cryptography.algorithms-4.2.0
@@ -353,7 +321,6 @@ NUGETS="atksharp-3.22.25.128
 	system.xml.xpath-4.3.0
 	system.xml.xpath.xmldocument-4.3.0
 	tmds.dbus-0.9.0
-	xamlnamereferencegenerator-1.4.2
 	xamlnamereferencegenerator-1.5.1"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	$(nuget_uris)"
