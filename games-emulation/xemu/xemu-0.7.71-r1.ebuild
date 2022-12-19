@@ -31,8 +31,7 @@ SRC_URI="https://github.com/mborgerson/xemu/archive/v${PV}.tar.gz -> ${P}.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-IUSE="xattr aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack +lto malloc-trim membarrier nls doc pulseaudio sdl test"
-REQUIRED_USE="debug? ( !lto  )"
+IUSE="xattr aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack malloc-trim membarrier nls doc pulseaudio sdl test"
 RESTRICT="!test? ( test )"
 
 DEPEND="dev-libs/glib
@@ -141,7 +140,6 @@ src_configure() {
 		$(use_enable cpu_flags_x86_avx512f avx512f) \
 		${debug_flag} \
 		$(use_enable io-uring linux-io-uring) \
-		$(use_enable lto) \
 		$(use_enable malloc-trim) \
 		$(use_enable membarrier) \
 		$(use_enable test tests) \
