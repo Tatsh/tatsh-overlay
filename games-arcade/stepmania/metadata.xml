@@ -11,7 +11,6 @@
 		<flag name="gpl">Enable GPL-compatible build</flag>
 		<flag name="bundled-courses">Install bundled courses.</flag>
 		<flag name="bundled-songs">Installed bundled songs.</flag>
-		<flag name="lto">Enable LTO build.</flag>
 		<flag name="minimaid">Enable support for Minimaid hardware.</flag>
 		<flag name="networking">Enable networking support.</flag>
 		<flag name="parallel-port">Enable parallel port-based input devices.</flag>

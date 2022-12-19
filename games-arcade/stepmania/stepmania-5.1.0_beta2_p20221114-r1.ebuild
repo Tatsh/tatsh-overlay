@@ -14,7 +14,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE="+alsa +crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +networking +ogg
-	+wav +xinerama +sdl +xrandr +X +bundled-songs +bundled-courses lto minimaid
+	+wav +xinerama +sdl +xrandr +X +bundled-songs +bundled-courses minimaid
 	parallel-port profiling pulseaudio jack"
 
 DEPEND="X? ( x11-libs/libX11 )
@@ -99,7 +99,6 @@ src_configure() {
 		-DWITH_SYSTEM_PCRE=yes
 		-DWITH_SYSTEM_OGG=yes
 		-DWITH_NETWORKING=$(usex networking)
-		-DWITH_LTO=$(usex lto)
 		-DWITH_XRANDR=$(usex xrandr)
 		-DWITH_JACK=$(usex jack)
 		-DWITH_X11=$(usex X)
