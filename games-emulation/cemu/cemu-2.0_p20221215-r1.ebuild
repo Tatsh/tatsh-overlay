@@ -16,7 +16,7 @@ SRC_URI="https://github.com/cemu-project/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.
 LICENSE="MPL-2.0 ISC"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+cubeb discord lto +sdl +vulkan"
+IUSE="+cubeb discord +sdl +vulkan"
 
 DEPEND="app-arch/zarchive
 	app-arch/zstd
@@ -57,7 +57,6 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
-		-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=$(usex lto)
 		-DENABLE_CUBEB=$(usex cubeb)
 		-DENABLE_DISCORD_RPC=$(usex discord)
 		-DENABLE_OPENGL=ON
