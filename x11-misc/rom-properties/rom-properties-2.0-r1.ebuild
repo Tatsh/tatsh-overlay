@@ -12,7 +12,7 @@ SRC_URI="https://github.com/GerbilSoft/${PN}/archive/refs/tags/v${PV}.tar.gz -> 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-IUSE="achievements +astc cli +crypt gtk kde nls lto +lz4 +lzo +pvr +unice68 +xbox-360 xfce +xml +zstd"
+IUSE="achievements +astc cli +crypt gtk kde nls +lz4 +lzo +pvr +unice68 +xbox-360 xfce +xml +zstd"
 REQUIRED_USE="pvr? ( astc )"
 
 DEPEND="
@@ -50,7 +50,6 @@ src_configure() {
 		-DENABLE_DECRYPTION=$(usex crypt)
 		-DENABLE_JPEG=ON
 		-DENABLE_LIBMSPACK=$(usex xbox-360)
-		-DENABLE_LTO=$(usex lto)
 		-DENABLE_LZ4=$(usex lz4)
 		-DENABLE_LZO=$(usex lzo)
 		-DENABLE_NLS=$(usex nls)
