@@ -5,8 +5,8 @@ EAPI=8
 
 inherit multiprocessing systemd yarn
 
-DESCRIPTION="Small server wrapper around Z-Wave JS to access it via a WebSocket."
-HOMEPAGE="https://github.com/zwave-js/zwave-js-server"
+DESCRIPTION="Full access to zwave-js driver through Websockets"
+HOMEPAGE="https://github.com/zwave-js/zwave-js-server#readme"
 YARN_PKGS=(
 	@alcalzone/jsonl-db-2.5.3
 	@alcalzone/pak-0.8.1
@@ -29,9 +29,7 @@ YARN_PKGS=(
 	@homebridge/ciao-1.1.4
 	@sentry/core-7.14.2
 	@sentry/hub-7.14.2
-	@sentry/integrations-7.13.0
 	@sentry/integrations-7.14.2
-	@sentry/node-7.13.0
 	@sentry/node-7.14.2
 	@sentry/types-7.14.2
 	@sentry/utils-7.14.2
@@ -57,7 +55,7 @@ YARN_PKGS=(
 	@zwave-js/host-10.3.0
 	@zwave-js/nvmedit-10.3.0
 	@zwave-js/serial-10.3.0
-	@zwave-js/server-${PV}
+	@zwave-js/server-1.24.1
 	@zwave-js/shared-10.3.0
 	@zwave-js/testing-10.3.0
 	agent-base-6.0.2
@@ -66,11 +64,8 @@ YARN_PKGS=(
 	ansi-regex-5.0.1
 	ansi-styles-4.3.0
 	async-3.2.4
-	asynckit-0.4.0
 	axios-0.26.1
-	axios-0.27.2
 	buffer-from-1.1.2
-	cacheable-lookup-7.0.0
 	cliui-8.0.1
 	color-3.2.1
 	color-convert-1.9.3
@@ -79,14 +74,12 @@ YARN_PKGS=(
 	color-name-1.1.4
 	color-string-1.9.1
 	colorspace-1.1.4
-	combined-stream-1.0.8
 	cookie-0.4.2
 	cross-spawn-7.0.3
 	dayjs-1.11.5
 	debug-4.3.4
 	decompress-response-6.0.0
 	defer-to-connect-2.0.1
-	delayed-stream-1.0.0
 	emoji-regex-8.0.0
 	enabled-2.0.0
 	escalade-3.1.1
@@ -97,7 +90,6 @@ YARN_PKGS=(
 	file-stream-rotator-0.6.1
 	fn.name-1.1.0
 	follow-redirects-1.15.2
-	form-data-4.0.0
 	fs-extra-10.1.0
 	get-caller-file-2.0.5
 	get-stream-6.0.1
@@ -120,15 +112,11 @@ YARN_PKGS=(
 	kuler-2.0.0
 	lie-3.1.1
 	localforage-1.10.0
-	logform-2.4.0
 	logform-2.4.2
 	lowercase-keys-3.0.0
 	lru-cache-6.0.0
-	lru-cache-7.8.1
 	lru_map-0.3.3
 	merge-stream-2.0.0
-	mime-db-1.52.0
-	mime-types-2.1.35
 	mimic-fn-2.1.0
 	mimic-response-3.1.0
 	minimist-1.2.6
@@ -179,7 +167,6 @@ YARN_PKGS=(
 	wrap-ansi-7.0.0
 	ws-8.6.0
 	xstate-4.29.0
-	xstate-4.32.0
 	y18n-5.0.8
 	yallist-4.0.0
 	yargs-17.6.0
@@ -189,18 +176,16 @@ YARN_PKGS=(
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
 
-LICENSE="Apache-2.0"
+LICENSE="0BSD Apache-2.0 BSD BSD-2-Clause BSD-3-Clause ISC MIT"
 KEYWORDS="~amd64"
-
-DOCS=( "${FILESDIR}/${PN}.keys.js.example" )
 
 S="${WORKDIR}"
 
 src_install() {
 	yarn_src_install
-	fperms 0755 /usr/$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/{client,server}.js
-	dosym ../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/client.js /usr/bin/zwave-client
-	dosym ../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/server.js /usr/bin/zwave-server
+	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/"{client,server}.js
+	dosym "../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/client.js" /usr/bin/zwave-client
+	dosym "../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/server.js" /usr/bin/zwave-server
 	insinto /etc
 	doins "${FILESDIR}/${PN}.config.js"
 	systemd_newunit "${FILESDIR}/${PN}.service" "${PN}@.service"
@@ -218,4 +203,3 @@ pkg_postinst() {
 	elog "  systemctl enable --now ${PN}@\$(systemd-escape --path /dev/ttyACM0)"
 	elog
 }
-
