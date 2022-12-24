@@ -13,3 +13,6 @@ semver
 vercmp
 xmatch
 deps
+eclass
+postinst
+glsl

@@ -1,6 +1,14 @@
 {
+  "[shellscript]": {
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": false
+  },
   "cSpell.enabled": true,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "editor.formatOnType": true
+  "editor.formatOnType": true,
+  "files.associations": {
+    "*.ebuild": "shellscript",
+    "*.eclass": "shellscript"
+  }
 }
