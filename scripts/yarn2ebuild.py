@@ -18,7 +18,6 @@ inherit yarn
 DESCRIPTION="{description}"
 HOMEPAGE="{homepage}"
 YARN_PKGS=(
-\t${{P}}
 {yarn_pkgs}
 )
 yarn_set_globals
@@ -32,8 +31,8 @@ S="${{WORKDIR}}"
 src_install() {{
 \tyarn_src_install
 \t# TODO Install symlink to main script here
-\tfperms 0755 "/usr/$(get_libdir)/${{PN}}/node_modules/${{PN}}/bin/${{PN}}.js"
-\tdosym "../$(get_libdir)/${{PN}}/node_modules/node-gyp/bin/${{PN}}.js" "/usr/bin/${{PN}}"
+\tfperms 0755 "/usr/$(get_libdir)/${{PN}}/node_modules/{package}/bin/${{PN}}.js"
+\tdosym "../$(get_libdir)/${{PN}}/node_modules/{package}/bin/${{PN}}.js" "/usr/bin/${{PN}}"
 }}'''
 # From parse-package-name
 # https://github.com/egoist/parse-package-name/blob/main/src/index.ts
@@ -58,12 +57,11 @@ def main() -> int:
             if not m:
                 continue
             name = m.groups()[0]
-            if name != package:
-                version = None
-                if m := re.match(r'^version "([^"]+)"', lines[i + 1].strip()):
-                    version = m.groups()[0]
-                assert version is not None
-                yarn_pkgs.add(f'\t{name}-{version}')
+            version = None
+            if m := re.match(r'^version "([^"]+)"', lines[i + 1].strip()):
+                version = m.groups()[0]
+            assert version is not None
+            yarn_pkgs.add(f'\t{name}-{version}')
         with open(path_join(root_dir, 'node_modules', package,
                             'package.json')) as j:
             data = json.load(j)
@@ -83,6 +81,7 @@ def main() -> int:
                 homepage=data.get('homepage',
                                   f'https://www.npmjs.com/package/{package}'),
                 yarn_pkgs='\n'.join(sorted(yarn_pkgs)),
+                package=package,
                 licenses=' '.join(sorted(licenses))))
     return 0
 
