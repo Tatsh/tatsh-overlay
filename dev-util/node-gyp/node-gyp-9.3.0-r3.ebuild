@@ -8,7 +8,8 @@ inherit python-r1 yarn
 
 DESCRIPTION="Node.js native addon build tool"
 HOMEPAGE="https://github.com/nodejs/node-gyp"
-YARN_PKGS="${P}
+YARN_PKGS=(
+	${P}
 	@babel/code-frame-7.12.11
 	@babel/helper-validator-identifier-7.14.5
 	@babel/highlight-7.14.5
@@ -193,8 +194,10 @@ YARN_PKGS="${P}
 	wide-align-1.1.5
 	word-wrap-1.2.3
 	wrappy-1.0.2
-	yallist-4.0.0"
-SRC_URI="$(yarn_uris)"
+	yallist-4.0.0
+)
+yarn_set_globals
+SRC_URI="${YARN_SRC_URI}"
 
 LICENSE="MIT"
 KEYWORDS="~amd64"
