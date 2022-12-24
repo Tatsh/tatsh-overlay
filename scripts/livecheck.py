@@ -118,39 +118,6 @@ def parse_npm_package_name(s: str) -> Tuple[str, Optional[str], Optional[str]]:
     return m[1], m[2], m[3]
 
 
-def make_npm_dist_tarball(package_spec: str) -> str:
-    log = logging.getLogger(LOG_NAME)
-    with TemporaryDirectory() as td:
-        log.debug('Temporary directory: %s', td)
-        td_path = Path(td)
-        npmrc_path = td_path / '.npmrc'
-        node_root = f'{td}/node'
-        with open(npmrc_path, 'w') as f:
-            f.write(f'prefix={node_root}\n')
-        log.debug('Wrote npmrc: %s', npmrc_path)
-        cmd = ('npm', 'install', '-g', package_spec)
-        log.debug('Running command: %s', ' '.join(cmd))
-        sp.run(cmd, env={**environ, **dict(HOME=td)}, check=True)
-        package_name, version, _ = parse_npm_package_name(package_spec)
-        log.debug('Package name: %s', package_name)
-        package_json = (td_path / 'node/lib/node_modules' / package_name /
-                        'package.json')
-        log.debug('package.json path: %s', package_json)
-        if not version:
-            with open(package_json) as f:
-                version = json.load(f)['version']
-        escaped_package_name = re.sub(r'^@', '',
-                                      package_name.replace('/', '-'))
-        pv = f'{escaped_package_name}-{version}'
-        outdir = td_path / pv
-        log.debug('Copying %s to %s', node_root, outdir)
-        copytree(node_root, outdir)
-        outfile = td_path / f'{pv}.tar.gz'
-        log.debug('Creating archive %s', outfile)
-        sp.run(('tar', 'zcf', outfile, pv), check=True, cwd=td)
-        return str(outfile)
-
-
 @lru_cache()
 def get_github_api_credentials() -> str:
     with open(expanduser('~/.config/gh/hosts.yml')) as f:
