@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{9,10} )
+PYTHON_COMPAT=( python3_{9,10,11} )
 inherit python-single-r1
 
 DESCRIPTION="Host-side script for the Open in mpv Chrome extension."
