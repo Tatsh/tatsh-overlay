@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8,9,10} )
+PYTHON_COMPAT=( python3_{8,9,10,11} )
 PYTHON_REQ_USE="ncurses,readline"
 
 inherit eutils flag-o-matic python-r1 xdg-utils
