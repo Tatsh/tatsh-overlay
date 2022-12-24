@@ -34,8 +34,12 @@ if [[ ! ${_MPV_SHADER_ECLASS} ]]; then
 		mpv_pkg_dep="media-video/mpv"
 		if [ ${MPV_REQ_USE} ]; then
 			mpv_pkg_dep+="[${MPV_REQ_USE}]"
+		else
+			mpv_pkg_dep+="[opengl]"
 		fi
+		# shellcheck disable=SC2034
 		SLOT="0"
+		# shellcheck disable=SC2034
 		RDEPEND="${mpv_pkg_dep}"
 	}
 	_mpv-shader_set_globals
