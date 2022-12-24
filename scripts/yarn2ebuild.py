@@ -18,6 +18,7 @@ inherit yarn
 DESCRIPTION="{description}"
 HOMEPAGE="{homepage}"
 YARN_PKGS=(
+\t${{P}}
 {yarn_pkgs}
 )
 yarn_set_globals
@@ -50,18 +51,19 @@ def main() -> int:
     package = args['package']
     licenses: Set[str] = set()
     with open(yarn_lock) as f:
-        yarn_pkgs = []
+        yarn_pkgs: Set[str] = set()
         lines = f.readlines()
         for i, line in enumerate(lines):
             m = re.match(RE_SCOPED, line) or re.match(RE_NON_SCOPED, line)
             if not m:
                 continue
-            name, _, __ = m.groups()
-            version = None
-            if m := re.match(r'^version "([^"]+)"', lines[i + 1].strip()):
-                version = m.groups()[0]
-            assert version is not None
-            yarn_pkgs.append(f'\t{name}-{version}')
+            name = m.groups()[0]
+            if name != package:
+                version = None
+                if m := re.match(r'^version "([^"]+)"', lines[i + 1].strip()):
+                    version = m.groups()[0]
+                assert version is not None
+                yarn_pkgs.add(f'\t{name}-{version}')
         with open(path_join(root_dir, 'node_modules', package,
                             'package.json')) as j:
             data = json.load(j)
@@ -75,11 +77,13 @@ def main() -> int:
                 if lic := dep_data.get('license'):
                     licenses.add(lic)
         print(
-            EBUILD_TEMPLATE.format(year=date.today().year,
-                                   description=data.get('description', ''),
-                                   homepage=data.get('homepage', ''),
-                                   yarn_pkgs='\n'.join(yarn_pkgs),
-                                   licenses=' '.join(sorted(licenses))))
+            EBUILD_TEMPLATE.format(
+                year=date.today().year,
+                description=data.get('description', 'FIXME'),
+                homepage=data.get('homepage',
+                                  f'https://www.npmjs.com/package/{package}'),
+                yarn_pkgs='\n'.join(sorted(yarn_pkgs)),
+                licenses=' '.join(sorted(licenses))))
     return 0
 
 
