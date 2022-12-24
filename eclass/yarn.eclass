@@ -73,7 +73,6 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 		_YARN_SET_GLOBALS_CALLED=1
 		readonly YARN_PKGS
 		readonly YARN_SRC_URI
-		readonly _YARN_PKGS_REVERSE_MAP
 	}
 
 	# @FUNCTION: yarn_src_unpack
