@@ -3,7 +3,7 @@
 
 EAPI=8
 DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python3_{8,9,10} )
+PYTHON_COMPAT=( python3_{8,9,10,11} )
 inherit distutils-r1
 
 DESCRIPTION="Python wrapper for hidapi."
