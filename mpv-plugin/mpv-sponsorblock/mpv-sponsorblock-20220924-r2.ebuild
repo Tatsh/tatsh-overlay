@@ -3,7 +3,7 @@
 
 EAPI=8
 MPV_REQ_USE="lua"
-PYTHON_COMPAT=( python3_{8,9,10} )
+PYTHON_COMPAT=( python3_{8,9,10,11} )
 USE_MPV="rdepend"
 inherit mpv-plugin python-single-r1
 
