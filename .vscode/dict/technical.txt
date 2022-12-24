@@ -31,3 +31,5 @@ insinto
 libdir
 doins
 einstalldocs
+fperms
+dosym
