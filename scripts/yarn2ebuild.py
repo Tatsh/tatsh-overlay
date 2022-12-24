@@ -38,7 +38,7 @@ src_install() {{
 # From parse-package-name
 # https://github.com/egoist/parse-package-name/blob/main/src/index.ts
 RE_SCOPED = r'^"(@[a-z][^\/]+\/[^@\/]+)(?:@([^\/]+))?(\/.*)?"\:$'
-RE_NON_SCOPED = r'^([a-z][^@\/]+)(?:@([^\/]+))?(\/.*)?$'
+RE_NON_SCOPED = r'^"?([a-z][^@\/]+)(?:@([^\/]+))?(\/.*)?"?\:$'
 
 
 def main() -> int:
