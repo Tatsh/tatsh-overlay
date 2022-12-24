@@ -26,7 +26,7 @@ import portage
 import requests
 import yaml
 
-PropTuple = Tuple[str, str, str, str, str, Optional[str], bool]
+PropTuple = Tuple[str, str, str, str, str, str | None, bool]
 Response = Union['TextDataResponse', requests.Response]
 T = TypeVar('T')
 
@@ -104,6 +104,11 @@ TAG_NAME_FUNCTIONS: Final[Mapping[str, Callable[[str], str]]] = {
 # https://github.com/egoist/parse-package-name/blob/main/src/index.ts
 RE_SCOPED = r'^(@[^\/]+\/[^@\/]+)(?:@([^\/]+))?(\/.*)?$'
 RE_NON_SCOPED = r'^([^@\/]+)(?:@([^\/]+))?(\/.*)?$'
+
+
+def make_github_grit_commit_re(version: str) -> str:
+    return (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' +
+            str(len(version)) + r'})[0-9a-f]*</id>')
 
 
 def parse_npm_package_name(s: str) -> Tuple[str, Optional[str], Optional[str]]:
@@ -222,6 +227,7 @@ class LivecheckSettings:
     custom_livechecks: Dict[str, Tuple[str, str, bool, str]]
     ignored_packages: Set[str]
     no_auto_update: Set[str]
+    sha_sources: Dict[str, str]
     transformations: Mapping[str, Callable[[str], str]]
 
 
@@ -304,8 +310,7 @@ def get_props(search_dir: str,
                           if catpkg in settings.branches else 'master')
                 yield (cat, pkg, ebuild_version, version,
                        f'{github_homepage}/commits/{branch}.atom',
-                       (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' +
-                        str(len(version)) + r'})[0-9a-f]*</id>'), False)
+                       make_github_grit_commit_re(version), False)
             elif ('/releases/download/' in parsed.path
                   or '/archive/' in parsed.path):
                 prefix = ''
@@ -367,6 +372,7 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
     ignored_packages = set()
     no_auto_update = set()
     transformations = {}
+    sha_sources = {}
     for path in glob.glob(f'{search_dir}/**/livecheck.json', recursive=True):
         log.debug('Opening %s', path)
         with open(path) as f:
@@ -396,8 +402,11 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
                         raise NameError('Unknown transformation '
                                         f'function: {tfs}') from e
                 transformations[catpkg] = tf
+            if ls.get('sha_source', None):
+                sha_sources[catpkg] = ls['sha_source']
     return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
-                             ignored_packages, no_auto_update, transformations)
+                             ignored_packages, no_auto_update, sha_sources,
+                             transformations)
 
 
 @dataclass
@@ -506,6 +515,22 @@ def main() -> int:
         log.debug('Excluding %s', ', '.join(args.exclude))
     search_dir = args.directory
     session = requests.Session()
+
+    def get_old_sha(ebuild: str) -> str:
+        with open(ebuild, 'r') as f:
+            for line in f.readlines():
+                if line.startswith('SHA="'):
+                    return line.split('"')[1]
+        raise ValueError('Expected SHA line to be present')
+
+    def get_new_sha(src: str) -> str:
+        if ('github.com' in src and src.endswith('.atom')):
+            m = re.search(make_github_grit_commit_re(40 * ' '),
+                          requests.get(src).content.decode())
+            assert m is not None
+            return m.groups()[0]
+        raise ValueError(f'Unsupported SHA source: {src}')
+
     settings = gather_settings(search_dir)
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
             search_dir, settings, names=args.package_names,
@@ -553,6 +578,9 @@ def main() -> int:
                         if use_vercmp else results)[0]
             log.debug('re.findall() -> "%s"', top_hash)
             cp = f'{cat}/{pkg}'
+            update_sha_too_source = settings.sha_sources.get(cp, None)
+            if update_sha_too_source:
+                log.debug('Package also needs a SHA update')
             if tf := settings.transformations.get(cp, None):
                 top_hash = tf(top_hash)
             if cp == 'games-emulation/play':
@@ -563,6 +591,7 @@ def main() -> int:
             if (re.match(r'[0-9]{4}-[0-9]{2}-[0-9]{2}$', top_hash)
                     and 'gist.github.com' in url):
                 top_hash = top_hash.replace('-', '')
+            log.debug('top_hash = %s', top_hash)
             log.debug(
                 'Comparing current ebuild version %s with live version %s',
                 version, top_hash)
@@ -578,6 +607,11 @@ def main() -> int:
                     if not is_sha(top_hash) and cp in TAG_NAME_FUNCTIONS:
                         ps_ref = TAG_NAME_FUNCTIONS[cp](top_hash)
                     content = process_submodules(cp, ps_ref, content, url)
+                    if update_sha_too_source:
+                        old_sha = get_old_sha(ebuild)
+                        new_sha = get_new_sha(update_sha_too_source)
+                        if old_sha != new_sha:
+                            content = content.replace(old_sha, new_sha)
                     dn = dirname(ebuild)
                     new_filename = f'{dn}/{pkg}-{top_hash}.ebuild'
                     if is_sha(top_hash):
@@ -610,10 +644,18 @@ def main() -> int:
                             new_date = (' (' + ebuild_version[:m.span()[0]] +
                                         updated_el.text.split('T')[0].replace(
                                             '-', '') + ')')
+                    sha_str = ''
+                    new_sha = ''
+                    if update_sha_too_source:
+                        ebuild = P.findname(P.match(cp)[-1])
+                        old_sha = get_old_sha(ebuild)
+                        sha_str = f' ({old_sha}) '
+                        log.debug('Fetching %s', update_sha_too_source)
+                        new_sha = f' ({get_new_sha(update_sha_too_source)})'
                     ebv_str = (f' ({ebuild_version}) '
-                               if ebuild_version != version else ' ')
-                    print(f'{cat}/{pkg}: {version}{ebv_str}-> '
-                          f'{top_hash}{new_date}')
+                               if ebuild_version != version else '')
+                    print(f'{cat}/{pkg}: {version}{ebv_str}{sha_str}-> '
+                          f'{top_hash}{new_date}{new_sha}')
         except (requests.exceptions.HTTPError,
                 requests.exceptions.SSLError) as e:
             log.warning('Caught error while checking %s/%s: %s', cat, pkg, e)
