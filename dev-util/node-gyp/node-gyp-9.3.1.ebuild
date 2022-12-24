@@ -7,126 +7,58 @@ PYTHON_COMPAT=( python3_{8..11} )
 inherit python-r1 yarn
 
 DESCRIPTION="Node.js native addon build tool"
-HOMEPAGE="https://github.com/nodejs/node-gyp"
+HOMEPAGE="https://www.npmjs.com/package/node-gyp"
 YARN_PKGS=(
 	${P}
-	@babel/code-frame-7.12.11
-	@babel/helper-validator-identifier-7.14.5
-	@babel/highlight-7.14.5
-	@eslint/eslintrc-0.4.2
 	@gar/promisify-1.1.3
 	@npmcli/fs-2.1.0
 	@npmcli/move-file-2.0.0
 	@tootallnate/once-2.0.0
 	abbrev-1.1.1
-	acorn-7.4.1
-	acorn-jsx-5.3.1
 	agent-base-6.0.2
 	agentkeepalive-4.2.1
 	aggregate-error-3.1.0
-	ajv-6.12.6
-	ajv-8.6.0
-	ansi-colors-4.1.1
-	ansi-regex-5.0.0
 	ansi-regex-5.0.1
-	ansi-styles-3.2.1
-	ansi-styles-4.3.0
 	aproba-2.0.0
 	are-we-there-yet-3.0.0
-	argparse-1.0.10
-	astral-regex-2.0.0
 	balanced-match-1.0.2
 	brace-expansion-1.1.11
 	cacache-16.0.4
-	callsites-3.1.0
-	chalk-2.4.2
-	chalk-4.1.1
 	chownr-2.0.0
 	clean-stack-2.2.0
-	color-convert-1.9.3
-	color-convert-2.0.1
-	color-name-1.1.3
-	color-name-1.1.4
 	color-support-1.1.3
 	concat-map-0.0.1
 	console-control-strings-1.1.0
-	cross-spawn-7.0.3
-	debug-4.3.1
 	debug-4.3.4
-	deep-is-0.1.3
 	delegates-1.0.0
 	depd-1.1.2
-	doctrine-3.0.0
 	emoji-regex-8.0.0
 	encoding-0.1.13
-	enquirer-2.3.6
 	env-paths-2.2.1
 	err-code-2.0.3
-	escape-string-regexp-1.0.5
-	escape-string-regexp-4.0.0
-	eslint-7.28.0
-	eslint-scope-5.1.1
-	eslint-utils-2.1.0
-	eslint-visitor-keys-1.3.0
-	eslint-visitor-keys-2.1.0
-	espree-7.3.1
-	esprima-4.0.1
-	esquery-1.4.0
-	esrecurse-4.3.0
-	estraverse-4.3.0
-	estraverse-5.2.0
-	esutils-2.0.3
-	fast-deep-equal-3.1.1
-	fast-deep-equal-3.1.3
-	fast-json-stable-stringify-2.1.0
-	fast-levenshtein-2.0.6
-	file-entry-cache-6.0.1
-	flat-cache-3.0.4
-	flatted-3.1.1
 	fs-minipass-2.1.0
 	fs.realpath-1.0.0
-	functional-red-black-tree-1.0.1
 	gauge-4.0.4
-	glob-7.1.6
 	glob-7.2.0
-	glob-parent-5.1.2
-	globals-13.9.0
 	graceful-fs-4.2.10
-	has-flag-3.0.0
-	has-flag-4.0.0
 	has-unicode-2.0.1
 	http-cache-semantics-4.1.0
 	http-proxy-agent-5.0.0
 	https-proxy-agent-5.0.0
 	humanize-ms-1.2.1
 	iconv-lite-0.6.3
-	ignore-4.0.6
-	import-fresh-3.3.0
 	imurmurhash-0.1.4
 	indent-string-4.0.0
 	infer-owner-1.0.4
 	inflight-1.0.6
 	inherits-2.0.4
 	ip-1.1.5
-	is-extglob-2.1.1
 	is-fullwidth-code-point-3.0.0
-	is-glob-4.0.1
 	is-lambda-1.0.1
 	isexe-2.0.0
-	js-tokens-4.0.0
-	js-yaml-3.14.1
-	json-schema-traverse-0.4.1
-	json-schema-traverse-1.0.0
-	json-stable-stringify-without-jsonify-1.0.1
-	levn-0.4.1
-	lodash.clonedeep-4.5.0
-	lodash.merge-4.6.2
-	lodash.truncate-4.4.2
-	lru-cache-6.0.0
 	lru-cache-7.8.1
 	make-fetch-happen-10.1.2
 	minimatch-3.1.2
-	minipass-3.1.3
 	minipass-3.1.6
 	minipass-collect-1.0.2
 	minipass-fetch-2.1.0
@@ -137,69 +69,42 @@ YARN_PKGS=(
 	mkdirp-1.0.4
 	ms-2.1.2
 	ms-2.1.3
-	natural-compare-1.4.0
 	negotiator-0.6.3
 	nopt-6.0.0
 	npmlog-6.0.1
 	once-1.4.0
-	optionator-0.9.1
 	p-map-4.0.0
-	parent-module-1.0.1
 	path-is-absolute-1.0.1
-	path-key-3.1.1
-	prelude-ls-1.2.1
-	progress-2.0.3
 	promise-inflight-1.0.1
 	promise-retry-2.0.1
-	punycode-2.1.1
 	readable-stream-3.6.0
-	regexpp-3.1.0
-	require-from-string-2.0.2
-	resolve-from-4.0.0
 	retry-0.12.0
 	rimraf-3.0.2
 	safe-buffer-5.2.1
 	safer-buffer-2.1.2
-	semver-7.3.5
 	semver-7.3.6
 	set-blocking-2.0.0
-	shebang-command-2.0.0
-	shebang-regex-3.0.0
 	signal-exit-3.0.7
-	slice-ansi-4.0.0
 	smart-buffer-4.2.0
 	socks-2.6.2
 	socks-proxy-agent-6.1.1
-	sprintf-js-1.0.3
 	ssri-9.0.0
-	string-width-4.2.2
 	string-width-4.2.3
 	string_decoder-1.3.0
-	strip-ansi-6.0.0
 	strip-ansi-6.0.1
-	strip-json-comments-3.1.1
-	supports-color-5.5.0
-	supports-color-7.2.0
-	table-6.7.1
 	tar-6.1.11
-	text-table-0.2.0
-	type-check-0.4.0
-	type-fest-0.20.2
 	unique-filename-1.1.1
 	unique-slug-2.0.2
-	uri-js-4.2.2
 	util-deprecate-1.0.2
-	v8-compile-cache-2.3.0
 	which-2.0.2
 	wide-align-1.1.5
-	word-wrap-1.2.3
 	wrappy-1.0.2
 	yallist-4.0.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
 
-LICENSE="MIT"
+LICENSE="BSD-2-Clause ISC MIT"
 KEYWORDS="~amd64"
 
 BDEPEND="sys-apps/yarn"
@@ -210,6 +115,7 @@ S="${WORKDIR}"
 
 src_install() {
 	yarn_src_install
-	fperms 0755 /usr/$(get_libdir)/${PN}/node_modules/node-gyp/bin/${PN}.js
-	dosym ../$(get_libdir)/${PN}/node_modules/node-gyp/bin/${PN}.js /usr/bin/${PN}
+	# TODO Install symlink to main script here
+	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/${PN}/bin/${PN}.js"
+	dosym "../$(get_libdir)/${PN}/node_modules/${PN}/bin/${PN}.js" "/usr/bin/${PN}"
 }
