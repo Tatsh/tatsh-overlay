@@ -10,15 +10,16 @@
 # @DESCRIPTION:
 
 case ${EAPI:-0} in
-8) ;;
-*) die "${ECLASS}: EAPI ${EAPI:-0} unsupported." ;;
+	8) ;;
+	*) die "${ECLASS}: EAPI ${EAPI:-0} unsupported." ;;
 esac
+
+inherit edo
 
 EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install
 
 if [[ -z ${_YARN_ECLASS} ]]; then
 	# @ECLASS_VARIABLE: YARN_PKGS
-	# @DEPRECATED: none
 	# @DESCRIPTION:
 	# Bash array of Yarn package specifications in format [@SCOPE/]NAME-VERSION.
 	# @CODE
@@ -28,14 +29,13 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	# @CODE
 
 	# @ECLASS_VARIABLE: _YARN_DISTFILES
-	# @DEPRECATED: none
+	# @_INTERNAL:
 	# @DESCRIPTION:
 	# Array of distfile basenames. The output path for a tarball may be
 	# different than the basename taken off the URI.
 	_YARN_DISTFILES=()
 
 	# @FUNCTION: yarn_set_globals
-	# @DEPRECATED: none
 	# @DESCRIPTION:
 	# This must be called after defining YARN_PKGS in global scope. This
 	# function sets up YARN_SRC_URI which must be added to SRC_URI. If you need
@@ -105,8 +105,8 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 
 	# @FUNCTION: yarn_src_configure
 	yarn_src_configure() {
-		yarn config set prefix "${HOME}/.node" || die
-		yarn config set yarn-offline-mirror "$(realpath "${WORKDIR}/packages")" || die
+		edo yarn config set prefix "${HOME}/.node"
+		edo yarn config set yarn-offline-mirror "$(realpath "${WORKDIR}/packages")"
 	}
 
 	# @FUNCTION: yarn_src_compile
@@ -114,29 +114,27 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 		cd lib || die
 		cp "${YARN_PACKAGE_JSON:-${FILESDIR}/${PN}-package.json}" package.json || die
 		cp "${YARN_LOCK:-${FILESDIR}/${PN}-yarn.lock}" yarn.lock || die
-		env \
+		edo env \
 			"npm_config_jobs=$(makeopts_jobs)" \
 			npm_config_verbose=true \
 			npm_config_release=true \
 			"npm_config_nodedir=${EPREFIX}/usr/include/node" \
 			yarn install --production --offline --verbose --no-progress \
-				--non-interactive --build-from-source || die
+				--non-interactive --build-from-source
+		# Delete known pre-built binaries
 		rm -fR \
 			node_modules/@serialport/bindings-cpp/prebuilds/{darwin,android,win32,linux-arm}* \
 			node_modules/@serialport/bindings-cpp/prebuilds/linux-x64/*musl.node \
 			package.json || die
 		find . -type d -empty -delete || die
-		find . -type f '(' \
-			-name '*.ts*' -o \
-			-name '*.map' -o \
-			-iname '*.md' -o \
-			-iname '*.jsx' ')' \
-			-delete || die
-		find . -type f -iname 'license*' -exec bzip2 {} \; || die
+		# Delete files that need compilation and related unused files at
+		# runtime as we only want distributed .js files
+		find . -type f -iregex '.*\.\(tsx?\|jsx\|map\)' -delete || die
 	}
 
 	# @FUNCTION: yarn_src_install
 	yarn_src_install() {
+		find . -type f -iregex '.*/license\(\.\(md\|rtf\|txt\)\)?' -delete || die
 		insinto "/usr/$(get_libdir)/${PN}/node_modules"
 		doins -r lib/node_modules/*
 		einstalldocs
