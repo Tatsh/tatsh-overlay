@@ -51,12 +51,16 @@ def main() -> int:
     licenses: Set[str] = set()
     with open(yarn_lock) as f:
         yarn_pkgs = []
-        for line in f.readlines():
+        lines = f.readlines()
+        for i, line in enumerate(lines):
             m = re.match(RE_SCOPED, line) or re.match(RE_NON_SCOPED, line)
             if not m:
                 continue
-            name, version, _ = m.groups()
-            version = ''.join(x for x in version if re.match(r'[\d\.]', x))
+            name, _, __ = m.groups()
+            version = None
+            if m := re.match(r'^version "([^"]+)"', lines[i + 1].strip()):
+                version = m.groups()[0]
+            assert version is not None
             yarn_pkgs.append(f'\t{name}-{version}')
         with open(path_join(root_dir, 'node_modules', package,
                             'package.json')) as j:
