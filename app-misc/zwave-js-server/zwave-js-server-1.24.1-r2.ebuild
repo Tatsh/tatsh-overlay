@@ -7,7 +7,8 @@ inherit multiprocessing systemd yarn
 
 DESCRIPTION="Small server wrapper around Z-Wave JS to access it via a WebSocket."
 HOMEPAGE="https://github.com/zwave-js/zwave-js-server"
-YARN_PKGS="@alcalzone/jsonl-db-2.5.3
+YARN_PKGS=(
+	@alcalzone/jsonl-db-2.5.3
 	@alcalzone/pak-0.8.1
 	@alcalzone/proper-lockfile-4.1.3-0
 	@colors/colors-1.5.0
@@ -183,17 +184,15 @@ YARN_PKGS="@alcalzone/jsonl-db-2.5.3
 	yallist-4.0.0
 	yargs-17.6.0
 	yargs-parser-21.1.1
-	zwave-js-10.3.0"
-SRC_URI="$(yarn_uris)"
+	zwave-js-10.3.0
+)
+yarn_set_globals
+SRC_URI="${YARN_SRC_URI}"
 
 LICENSE="Apache-2.0"
 KEYWORDS="~amd64"
 
 DOCS=( "${FILESDIR}/${PN}.keys.js.example" )
-
-BDEPEND="sys-apps/yarn
-	dev-util/node-gyp"
-RDEPEND="net-libs/nodejs:="
 
 S="${WORKDIR}"
 
