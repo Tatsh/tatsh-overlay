@@ -7,7 +7,7 @@ inherit desktop qmake-utils
 
 DESCRIPTION="Software for the 40Mhz USB-3.0 RF sampler (harrypm fork)."
 HOMEPAGE="https://github.com/harrypm/DomesdayDuplicator"
-SHA="82be17444426836d2bd7ff22c0d12266b661a8f2"
+SHA="7b838de669bfd6bcfeb362cb23ead34a006d86ea"
 MY_PN="DomesdayDuplicator"
 SRC_URI="https://github.com/harrypm/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
