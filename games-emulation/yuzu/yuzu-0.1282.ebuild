@@ -57,7 +57,7 @@ RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="dev-cpp/nlohmann_json
 	dev-util/glslang
-	>=dev-util/vulkan-headers-1.3.216
+	>=dev-util/vulkan-headers-1.3.238
 	dev-util/spirv-headers"
 
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
@@ -83,6 +83,7 @@ src_prepare() {
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' -i src/common/CMakeLists.txt || die
 	sed -e '/enable_testing.*/d' -e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' -i externals/sirit/CMakeLists.txt || die
 	sed -e '/-Werror=missing-declarations/d' -i src/CMakeLists.txt || die
+	sed -re 's/(find_package\(Vulkan).*/\1)/' -i CMakeLists.txt || die
 	cmake_src_prepare
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
 	mv -f "${T}/compatibility_list.json" "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
