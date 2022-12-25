@@ -35,7 +35,6 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-gentoo.patch"
-	"${FILESDIR}/${PN}-0002-ppc64.patch"
 )
 DOCS=( README.md NEWS.md )
 
