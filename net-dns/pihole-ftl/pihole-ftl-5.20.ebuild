@@ -15,19 +15,16 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 DEPEND="dev-libs/gmp
 	dev-libs/nettle
 	net-dns/libidn
-	sys-libs/readline"
+	sys-libs/readline
+	sys-libs/libtermcap-compat"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/FTL-${PV}"
 
+PATCHES=( "${FILESDIR}/${PN}-0001-fixes.patch" )
+
 src_prepare() {
-	sed -r -e 's/-Werror //g' \
-		-e 's/lib(hogweed|gmp|nettle|idn|readline|history).*/\1)/g' \
-		-e '/find_library\(LIBTERMCAP.*/d' \
-		-e 's/\$\{LIBTERMCAP\}//g' \
-		-e 's/ AND LIBTERMCAP//g' \
-		-i src/CMakeLists.txt || die
-	sed -r -e 's/ AND LIBTERMCAP//g' -i src/lua/CMakeLists.txt || die
+	sed -re 's/-Werror //g' -i src/CMakeLists.txt || die
 	cp "${FILESDIR}/pihole-FTL.conf" . || die
 	sed -r -e "s/@EPREFIX@/${EPREFIX}/g" -i pihole-FTL.conf || die
 	cmake_src_prepare

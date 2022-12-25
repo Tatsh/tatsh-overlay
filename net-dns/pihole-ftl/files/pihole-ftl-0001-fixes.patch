@@ -1,0 +1,37 @@
+From e3e5ff41b30ed063ef789d9e792af3d05cd856f6 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 25 Dec 2022 12:53:44 -0500
+Subject: [PATCH] fixes
+
+---
+ src/CMakeLists.txt             | 2 +-
+ src/lua/scripts/CMakeLists.txt | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index e7138179..ea7f352d 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -208,7 +208,7 @@ endif()
+ 
+ find_library(LIBREADLINE NAMES libreadline${CMAKE_STATIC_LIBRARY_SUFFIX} readline)
+ find_library(LIBHISTORY NAMES libhistory${CMAKE_STATIC_LIBRARY_SUFFIX} history)
+-find_library(LIBTERMCAP NAMES libtermcap${CMAKE_STATIC_LIBRARY_SUFFIX} termcap)
++find_library(LIBTERMCAP NAMES libtermcap.so.2)
+ if(LIBREADLINE AND LIBHISTORY AND LIBTERMCAP)
+     message(STATUS "Building FTL with readline support: YES")
+     target_compile_definitions(FTL PRIVATE LUA_USE_READLINE)
+diff --git a/src/lua/scripts/CMakeLists.txt b/src/lua/scripts/CMakeLists.txt
+index 1278f8f9..419b3b5b 100644
+--- a/src/lua/scripts/CMakeLists.txt
++++ b/src/lua/scripts/CMakeLists.txt
+@@ -31,5 +31,6 @@ endforeach()
+ add_dependencies(lua lua_scripts)
+ 
+ add_library(lua_scripts OBJECT ${sources})
++set_target_properties(lua_scripts PROPERTIES LINKER_LANGUAGE C)
+ target_compile_options(lua_scripts PRIVATE ${EXTRAWARN})
+ target_include_directories(lua_scripts PRIVATE ${PROJECT_SOURCE_DIR}/src)
+-- 
+2.39.0
+
