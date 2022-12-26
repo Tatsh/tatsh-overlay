@@ -57,7 +57,7 @@ RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="dev-cpp/nlohmann_json
 	dev-util/glslang
-	>=dev-util/vulkan-headers-1.3.238
+	>=dev-util/vulkan-headers-1.3.236
 	dev-util/spirv-headers"
 
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
