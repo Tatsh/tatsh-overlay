@@ -24,39 +24,3 @@ DEPEND="dev-libs/qcustomplot
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
 S="${WORKDIR}/${MY_PN}-${SHA}/Linux-Application"
-
-# PROJECTS=( dddconv dddutil "${MY_PN}" )
-
-#src_configure() {
-#	local proj
-#	for proj in "${PROJECTS[@]}"; do
-#		pushd "$proj" || die
-#		eqmake5
-#		popd || die
-#	done
-#}
-
-#src_compile() {
-#	local proj
-#	for proj in "${PROJECTS[@]}"; do
-#		pushd "$proj" || die
-#		emake
-#		popd || die
-#	done
-#}
-
-#src_install() {
-#	local proj size icon
-#	for proj in "${PROJECTS[@]}"; do
-#		dobin "${proj}/${proj}"
-#	done
-#	for icon in "${MY_PN}/Graphics/ApplicationIcon/"*.png; do
-#		[[ "$icon" = *300x300.png ]] && continue
-#		size="${icon#*_}"
-#		size="${size#*x}"
-#		size="${size%.*}"
-#		newicon -s "$size" "$icon" "${MY_PN}.png"
-#	done
-#	make_desktop_entry "${MY_PN}" "Domesday Duplicator" "${MY_PN}"
-#	einstalldocs
-#}
