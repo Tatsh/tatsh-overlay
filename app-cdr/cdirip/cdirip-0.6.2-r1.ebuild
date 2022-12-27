@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit eutils
+inherit eutils toolchain-funcs
 
 DESCRIPTION="Converts DiscJuggler CDI files to various disc image formats."
 HOMEPAGE="https://web.archive.org/web/20091027063725/http://es.geocities.com/dextstuff/cdirip/down_cdi.html"
@@ -21,7 +21,7 @@ src_prepare() {
 }
 
 src_compile() {
-	emake -f Makefile.linux CFLAGS="${CFLAGS}"
+	emake -f Makefile.linux CC="$(tc-getCC)" CFLAGS="${CFLAGS} -lm"
 }
 
 src_install() {
