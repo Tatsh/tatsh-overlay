@@ -3,6 +3,8 @@
 
 EAPI=8
 
+inherit desktop edo toolchain-funcs wrapper
+
 DESCRIPTION="Fork of sm64-port with additional features (alpha branch)."
 HOMEPAGE="https://github.com/Render96/Render96ex/tree/alpha"
 SHA="8e2eea106dd94e5c05b5f08ad989ace01efe701e"
@@ -35,15 +37,17 @@ DEPEND="media-libs/glew:= media-libs/libsdl2 virtual/opengl media-libs/libglvnd"
 RDEPEND="${DEPEND}"
 BDEPEND="app-arch/p7zip"
 
+PATCHES=( "${FILESDIR}/${PN}-0001-custom-flags.patch" )
+
 S="${WORKDIR}/${MY_PN}-${SHA}"
 
 pkg_nofetch() {
 	if use us; then
-		einfo "Please place a copy of your North American version ROM of Super Mario 64 in your ISTDIR directory and name it sm64.us.z64"
+		einfo "Please place a copy of your North American version ROM of Super Mario 64 in your DISTDIR directory and name it sm64.us.z64"
 	elif use jp; then
-		einfo "Please place a copy of your Japanese version ROM of Super Mario 64 in your DISTDIR irectory and name it sm64.jp.z64"
+		einfo "Please place a copy of your Japanese version ROM of Super Mario 64 in your DISTDIR directory and name it sm64.jp.z64"
 	elif use eu; then
-		einfo "Please place a copy of your European version ROM of Super Mario 64 in your DISTDIR nd name it sm64.eu.z64"
+		einfo "Please place a copy of your European version ROM of Super Mario 64 in your DISTDIR and name it sm64.eu.z64"
 	fi
 	einfo "The ROM must be in Z64 format. If the checksums do not match, it is possibly a V64 ROM that must be byteswapped. Use the tool here to convert: https://hack64.net/tools/swapper.php"
 }
@@ -68,10 +72,10 @@ src_unpack() {
 src_prepare() {
 	local i
 	for i in "${DISTDIR}/sm64."*.z64; do
-		cp "${i}" "$(basename ${i/sm64/baserom})" || die
+		cp "${i}" "$(basename "${i/sm64/baserom}")" || die
 	done
-	sed -r -e 's/^GIT_HASH=.*/GIT_HASH?=/' -i Makefile || die
-	./extract_assets.py $(get_version) || die
+	sed -re 's/^GIT_HASH=.*/GIT_HASH?=/' -i Makefile || die
+	edo ./extract_assets.py "$(get_version)"
 	if use models; then
 		cp -fR "${WORKDIR}/ModelPack-${MODELS_SHA}/Render96/actors/"* actors/ || die
 	fi
@@ -88,7 +92,7 @@ get_version() {
 }
 
 get_basedir() {
-	echo "${EPREFIX}/usr/$(get_libdir)/${PN}"
+	echo "${EPREFIX}/usr/share/${PN}"
 }
 
 src_compile() {
@@ -96,21 +100,33 @@ src_compile() {
 	use eu && version=eu
 	use jp && version=jp
 	emake \
-		"BASEDIR=$(get_basedir)" \
-		DEBUG=$(usex debug 1 0) \
-		DISCORDRPC=$(usex discord 1 0) \
-		GIT_HASH=${SHA} \
-		NOEXTRACT=1 \
-		TEXTURE_FIX=$(usex texture-fix 1 0) \
-		VERSION=$(get_version)
+		"CC=$(tc-getCC)" \
+		"CUSTOM_CFLAGS=${CFLAGS}" \
+		"CUSTOM_LDFLAGS=${LDFLAGS}" \
+		"CXX=$(tc-getCXX)" \
+		"DEBUG=$(usex debug 1 0)" \
+		"DISCORDRPC=$(usex discord 1 0)" \
+		"GIT_HASH=${SHA}" \
+		"TEXTURE_FIX=$(usex texture-fix 1 0)" \
+		"VERSION=$(get_version)" \
+		NOEXTRACT=1
 }
 
 src_install() {
-	newbin build/*_pc/sm64.$(get_version).f3dex2e ${PN}-sm64
-	insinto /usr/$(get_libdir)/${PN}
-	doins -r "build/$(get_version)_pc/$(get_basedir)/"*
+	local -r exe=sm64.us.f3dex2e
+	find build '(' -iname '*.o' -o -iname '*.d' -o -iname '*.c' ')' -delete || die
+	find build -type d -empty -delete || die
+	rm -fR "build/$(get_version)_pc/"{basepack.lst,endian-and-bitwidth,include,assets}
+	mv "build/$(get_version)_pc/${exe}" . || die
+	insinto "/usr/share/${PN}"
+	doins -r "build/$(get_version)_pc/"*
+	exeinto "/usr/share/${PN}"
+	doexe "${exe}"
 	if use textures; then
+		insinto "/usr/share/${PN}/res"
 		doins -r "${WORKDIR}/RENDER96-HD-TEXTURE-PACK-${TEXTURES_SHA}/gfx"
 	fi
+	make_wrapper "${PN}" "./${exe}" "/usr/share/${PN}"
+	make_desktop_entry "${PN}" "${MY_PN}"
 	einstalldocs
 }

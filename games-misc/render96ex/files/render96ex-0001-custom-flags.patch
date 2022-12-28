@@ -1,0 +1,26 @@
+From 357ffd90637b45e1b935040001810873549ec051 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 27 Dec 2022 21:31:39 -0500
+Subject: [PATCH] Custom flags
+
+---
+ Makefile | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index 6ff86b06..5074cac1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -621,6 +621,9 @@ endif # End of LDFLAGS
+ # Prevent a crash with -sopt
+ export LANG := C
+ 
++CFLAGS += $(CUSTOM_CFLAGS)
++LDFLAGS += $(CUSTOM_LDFLAGS)
++
+ ####################### Other Tools #########################
+ 
+ # N64 conversion tools
+-- 
+2.39.0
+
