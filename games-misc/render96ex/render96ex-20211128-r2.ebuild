@@ -91,10 +91,6 @@ get_version() {
 	use jp && echo jp
 }
 
-get_basedir() {
-	echo "${EPREFIX}/usr/share/${PN}"
-}
-
 src_compile() {
 	local version=us
 	use eu && version=eu
