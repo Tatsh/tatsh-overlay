@@ -621,7 +621,7 @@ def main() -> int:
                         new_sha = f' ({get_new_sha(update_sha_too_source)})'
                     ebv_str = (f' ({ebuild_version}) '
                                if ebuild_version != version else '')
-                    print(f'{cat}/{pkg}: {version}{ebv_str}{sha_str}-> '
+                    print(f'{cat}/{pkg}: {version}{ebv_str}{sha_str} -> '
                           f'{top_hash}{new_date}{new_sha}')
         except (requests.exceptions.HTTPError,
                 requests.exceptions.SSLError) as e:
