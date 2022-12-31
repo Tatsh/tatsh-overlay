@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake desktop
+inherit cmake desktop wrapper
 
 DESCRIPTION="Experimental PlayStation Vita emulator."
 HOMEPAGE="https://vita3k.org https://github.com/Vita3K/Vita3K"
@@ -113,8 +113,13 @@ src_configure() {
 }
 
 src_install() {
-	dobin "${BUILD_DIR}/bin/Vita3K"
-	newicon "${FILESDIR}/${PN}-icon.png" Vita3K.png
-	make_desktop_entry Vita3K
+	local -r common_root="/usr/$(get_libdir)/${PN}"
+	exeinto "$common_root"
+	doexe "${BUILD_DIR}/bin/Vita3K"
+	insinto "$common_root"
+	doins -r "${BUILD_DIR}/bin/"{data,lang,shaders-builtin}
+	newicon -s 128 "${BUILD_DIR}/bin/data/image/icon.png" "${PN}.png"
+	make_wrapper Vita3K "${common_root}/Vita3K" "$common_root"
+	make_desktop_entry Vita3K Vita3K
 	einstalldocs
 }
