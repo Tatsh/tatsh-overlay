@@ -1,0 +1,13 @@
+diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
+index c6eb3a8..10fe0b8 100644
+--- a/external/psvpfsparser/cmake/CMakeLists.txt
++++ b/external/psvpfsparser/cmake/CMakeLists.txt
+@@ -111,7 +111,7 @@ namespace psvpfs = ${FILESYSTEM_NAMESPACE}::filesystem;
+ ")
+ 
+ add_library(${PROJECT} ${HEADER_FILES} ${SOURCE_FILES} ${F00D_FILES} ${CRYPTO_FILES})
+-target_link_libraries(${PROJECT} PUBLIC libzRIF libb64 zlib libtomcrypt)
++target_link_libraries(${PROJECT} PUBLIC libzRIF libb64 z PkgConfig::PC_TOMCRYPT)
+ target_include_directories(${PROJECT} PUBLIC .. ${CMAKE_CURRENT_BINARY_DIR} ${ZLIB_INCLUDE_DIR} ${LIBTOMCRYPT_INCLUDE_DIR} ${LIBB64_INCLUDE_DIR} ${LIBZRIF_INCLUDE_DIR})
+ 
+ if(NOT ${HAS_CXX17})

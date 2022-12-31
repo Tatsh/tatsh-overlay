@@ -1,3 +1,215 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1d53c8db..64d482cf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.10)
+ project(Vita3K)
+ 
++add_compile_options(-fpermissive)
++
+ # Detects the amount of processors of the host machine and forwards the result to CPU_COUNT
+ include(ProcessorCount)
+ ProcessorCount(CPU_COUNT)
+@@ -93,8 +95,6 @@ set(BOOST_MODULES_TO_FIND filesystem system program_options)
+ # If build process isn't set to forcefully use system Boost
+ if(NOT VITA3K_FORCE_SYSTEM_BOOST)
+     # find_package(Boost ...) setting
+-    set(Boost_USE_STATIC_LIBS ON)
+-
+     # First, try to find Boost without any hints (system Boost)
+     if(NOT VITA3K_FORCE_CUSTOM_BOOST)
+         find_package(Boost COMPONENTS ${BOOST_MODULES_TO_FIND} QUIET)
+@@ -103,7 +103,7 @@ if(NOT VITA3K_FORCE_SYSTEM_BOOST)
+     # If system Boost hasn't been found, then enable hints to find custom Boost
+     if (NOT Boost_FOUND)
+         message(STATUS "A Boost distribution that meets the requirements needed for the project hasn't been found in your system. Falling back to custom Boost distribution...")
+-    
++
+         # Set path hints for Boost search inside the repository folder and assist in compilation if needed
+         set(BOOST_SOURCEDIR "${CMAKE_SOURCE_DIR}/external/boost")       # For internal use
+         set(BOOST_INSTALLDIR "${CMAKE_BINARY_DIR}/external/boost")      # For internal use
+@@ -153,15 +153,12 @@ if(NOT VITA3K_FORCE_SYSTEM_BOOST)
+             # Compile b2 if it isn't found
+             if(b2 STREQUAL "b2-NOTFOUND")
+                 message(STATUS "The b2 buildsystem executable hasn't been found in your system. Compiling b2...")
+-                b2_build()
+-
+                 # Find b2 again after compilation
+                 find_program(b2 NAME ${b2_EXECUTABLE_NAME} PATHS ${BOOST_SOURCEDIR} NO_CACHE)
+             endif()
+ 
+             # Compile Boost
+             message(STATUS "Compiling Boost...")
+-            boost_compile()
+ 
+             # Find Boost again
+             find_package(Boost COMPONENTS ${BOOST_MODULES_TO_FIND} QUIET)
+@@ -171,7 +168,6 @@ if(NOT VITA3K_FORCE_SYSTEM_BOOST)
+     endif()
+ else()
+     # Try to find Boost on the system and CMake's default paths
+-    set(Boost_USE_STATIC_LIBS ON)
+     find_package(Boost COMPONENTS ${BOOST_MODULES_TO_FIND} QUIET)
+ endif()
+ 
+diff --git a/cmake/FindFFmpeg.cmake b/cmake/FindFFmpeg.cmake
+new file mode 100644
+index 00000000..ce5c3b9f
+--- /dev/null
++++ b/cmake/FindFFmpeg.cmake
+@@ -0,0 +1,151 @@
++# vim: ts=2 sw=2
++# - Try to find the required ffmpeg components(default: AVFORMAT, AVUTIL, AVCODEC)
++#
++# Once done this will define
++#  FFMPEG_FOUND         - System has the all required components.
++#  FFMPEG_INCLUDE_DIRS  - Include directory necessary for using the required components headers.
++#  FFMPEG_LIBRARIES     - Link these to use the required ffmpeg components.
++#  FFMPEG_DEFINITIONS   - Compiler switches required for using the required ffmpeg components.
++#
++# For each of the components it will additionally set.
++#   - AVCODEC
++#   - AVDEVICE
++#   - AVFORMAT
++#   - AVFILTER
++#   - AVUTIL
++#   - POSTPROC
++#   - SWSCALE
++# the following variables will be defined
++#  <component>_FOUND        - System has <component>
++#  <component>_INCLUDE_DIRS - Include directory necessary for using the <component> headers
++#  <component>_LIBRARIES    - Link these to use <component>
++#  <component>_DEFINITIONS  - Compiler switches required for using <component>
++#  <component>_VERSION      - The components version
++#
++# Copyright (c) 2006, Matthias Kretz, <kretz@kde.org>
++# Copyright (c) 2008, Alexander Neundorf, <neundorf@kde.org>
++# Copyright (c) 2011, Michael Jansen, <kde@michael-jansen.biz>
++#
++# Redistribution and use is allowed according to the terms of the BSD license.
++# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
++
++include(FindPackageHandleStandardArgs)
++
++# The default components were taken from a survey over other FindFFMPEG.cmake files
++if (NOT FFmpeg_FIND_COMPONENTS)
++  set(FFmpeg_FIND_COMPONENTS AVCODEC AVFORMAT AVUTIL)
++endif ()
++
++#
++### Macro: set_component_found
++#
++# Marks the given component as found if both *_LIBRARIES AND *_INCLUDE_DIRS is present.
++#
++macro(set_component_found _component )
++  if (${_component}_LIBRARIES AND ${_component}_INCLUDE_DIRS)
++    # message(STATUS "  - ${_component} found.")
++    set(${_component}_FOUND TRUE)
++  else ()
++    # message(STATUS "  - ${_component} not found.")
++  endif ()
++endmacro()
++
++#
++### Macro: find_component
++#
++# Checks for the given component by invoking pkgconfig and then looking up the libraries and
++# include directories.
++#
++macro(find_component _component _pkgconfig _library _header)
++
++  if (NOT WIN32)
++     # use pkg-config to get the directories and then use these values
++     # in the FIND_PATH() and FIND_LIBRARY() calls
++     find_package(PkgConfig)
++     if (PKG_CONFIG_FOUND)
++       pkg_check_modules(PC_${_component} ${_pkgconfig})
++     endif ()
++  endif (NOT WIN32)
++
++  find_path(${_component}_INCLUDE_DIRS ${_header}
++    HINTS
++      ${PC_${_component}_INCLUDEDIR}
++      ${PC_${_component}_INCLUDE_DIRS}
++    PATH_SUFFIXES
++      ffmpeg
++  )
++
++  find_library(${_component}_LIBRARIES NAMES ${_library}
++      HINTS
++      ${PC_${_component}_LIBDIR}
++      ${PC_${_component}_LIBRARY_DIRS}
++  )
++
++  set(${_component}_DEFINITIONS  ${PC_${_component}_CFLAGS_OTHER} CACHE STRING "The ${_component} CFLAGS.")
++  set(${_component}_VERSION      ${PC_${_component}_VERSION}      CACHE STRING "The ${_component} version number.")
++
++  set_component_found(${_component})
++
++  mark_as_advanced(
++    ${_component}_INCLUDE_DIRS
++    ${_component}_LIBRARIES
++    ${_component}_DEFINITIONS
++    ${_component}_VERSION)
++
++endmacro()
++
++
++# Check for cached results. If there are skip the costly part.
++if (NOT FFMPEG_LIBRARIES)
++
++  # Check for all possible component.
++  find_component(AVCODEC    libavcodec    avcodec  libavcodec/avcodec.h)
++  find_component(AVFORMAT   libavformat   avformat libavformat/avformat.h)
++  find_component(AVDEVICE   libavdevice   avdevice libavdevice/avdevice.h)
++  find_component(AVUTIL     libavutil     avutil   libavutil/avutil.h)
++  find_component(AVFILTER   libavfilter   avfilter libavfilter/avfilter.h)
++  find_component(SWSCALE    libswscale    swscale  libswscale/swscale.h)
++  find_component(POSTPROC   libpostproc   postproc libpostproc/postprocess.h)
++  find_component(SWRESAMPLE libswresample swresample libswresample/swresample.h)
++
++  # Check if the required components were found and add their stuff to the FFMPEG_* vars.
++  foreach (_component ${FFmpeg_FIND_COMPONENTS})
++    if (${_component}_FOUND)
++      # message(STATUS "Required component ${_component} present.")
++      set(FFMPEG_LIBRARIES   ${FFMPEG_LIBRARIES}   ${${_component}_LIBRARIES})
++      set(FFMPEG_DEFINITIONS ${FFMPEG_DEFINITIONS} ${${_component}_DEFINITIONS})
++      list(APPEND FFMPEG_INCLUDE_DIRS ${${_component}_INCLUDE_DIRS})
++    else ()
++      # message(STATUS "Required component ${_component} missing.")
++    endif ()
++  endforeach ()
++
++  # Build the include path with duplicates removed.
++  if (FFMPEG_INCLUDE_DIRS)
++    list(REMOVE_DUPLICATES FFMPEG_INCLUDE_DIRS)
++  endif ()
++
++  # cache the vars.
++  set(FFMPEG_INCLUDE_DIRS ${FFMPEG_INCLUDE_DIRS} CACHE STRING "The FFmpeg include directories." FORCE)
++  set(FFMPEG_LIBRARIES    ${FFMPEG_LIBRARIES}    CACHE STRING "The FFmpeg libraries." FORCE)
++  set(FFMPEG_DEFINITIONS  ${FFMPEG_DEFINITIONS}  CACHE STRING "The FFmpeg cflags." FORCE)
++
++  mark_as_advanced(FFMPEG_INCLUDE_DIRS
++                   FFMPEG_LIBRARIES
++                   FFMPEG_DEFINITIONS)
++
++endif ()
++
++# Now set the noncached _FOUND vars for the components.
++foreach (_component AVCODEC AVDEVICE AVFORMAT AVUTIL POSTPROCESS SWSCALE)
++  set_component_found(${_component})
++endforeach ()
++
++# Compile the list of required vars
++set(_FFmpeg_REQUIRED_VARS FFMPEG_LIBRARIES FFMPEG_INCLUDE_DIRS)
++foreach (_component ${FFmpeg_FIND_COMPONENTS})
++  list(APPEND _FFmpeg_REQUIRED_VARS ${_component}_LIBRARIES ${_component}_INCLUDE_DIRS)
++endforeach ()
++
++# Give a nice error message if some of the required vars are missing.
++find_package_handle_standard_args(FFmpeg DEFAULT_MSG ${_FFmpeg_REQUIRED_VARS})
 diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
 index a5ba32c4..82eb84db 100644
 --- a/external/CMakeLists.txt
@@ -552,3 +764,17 @@ index 4cda2f8a..29bd7b09 100644
  
  #if (defined(_MSC_VER) && !defined(__clang__) && (!defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL))
  #define __ARGS_WITH_COMMA(...) , ##__VA_ARGS__
+diff --git a/vita3k/util/src/util.cpp b/vita3k/util/src/util.cpp
+index f857ae42..603871a6 100644
+--- a/vita3k/util/src/util.cpp
++++ b/vita3k/util/src/util.cpp
+@@ -56,9 +56,6 @@ ExitCode init(const Root &root_paths, bool use_stdout) {
+     if (use_stdout)
+         sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
+ 
+-    if (add_sink(root_paths.get_base_path() / LOG_FILE_NAME) != Success)
+-        return InitConfigFailed;
+-
+     spdlog::set_error_handler([](const std::string &msg) {
+         std::cerr << "spdlog error: " << msg << std::endl;
+         assert(0);
