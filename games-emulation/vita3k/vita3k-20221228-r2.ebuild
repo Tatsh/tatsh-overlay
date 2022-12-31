@@ -58,6 +58,7 @@ DEPEND="dev-cpp/cli11
 	dev-cpp/yaml-cpp
 	dev-libs/boost
 	dev-libs/capstone
+	dev-libs/libtomcrypt
 	dev-libs/nativefiledialog-extended
 	dev-libs/openssl
 	dev-libs/pugixml
