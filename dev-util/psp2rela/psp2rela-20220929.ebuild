@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="The module relocation config optimization tool."
 HOMEPAGE="https://github.com/Princess-of-Sleeping/psp2rela"
-SHA="9e0f4913866431aef48967cfb7667b085e79428b"
+SHA="09361094cbf598444a1767d09357f57f54cc646c"
 SRC_URI="https://github.com/Princess-of-Sleeping/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
