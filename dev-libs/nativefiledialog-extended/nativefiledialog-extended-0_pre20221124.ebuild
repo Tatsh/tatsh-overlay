@@ -3,7 +3,7 @@
 
 EAPI=8
 
-COMMIT="322d1bc2a98c7b8236195d458643ac8e76391011"
+COMMIT="6efc824070c79afd42a3a9e08da8f867d0ca2a97"
 
 inherit cmake
 
@@ -21,7 +21,6 @@ DEPEND="${RDEPEND}"
 IUSE="test"
 
 RESTRICT="!test? ( test )"
-PATCHES=( "${FILESDIR}/${P}-no-static.patch" )
 
 src_prepare() {
 	eapply_user
