@@ -55,6 +55,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="dev-cpp/cli11
+	dev-cpp/tracy
 	dev-cpp/yaml-cpp
 	dev-libs/boost
 	dev-libs/capstone
