@@ -16,7 +16,7 @@ LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-BDEPEND="dev-python/numpy[${PYTHON_USEDEP}]"
+BDEPEND="<dev-python/numpy-1.24.0[${PYTHON_USEDEP}]"
 DEPEND="tbb? ( <dev-cpp/tbb-2021.5.0-r1 )"
 RDEPEND="dev-python/llvmlite[${PYTHON_USEDEP}]
 	dev-python/setuptools:0[${PYTHON_USEDEP}]
