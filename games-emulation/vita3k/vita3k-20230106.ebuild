@@ -75,6 +75,7 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/Vita3K-${SHA}"
 
 PATCHES=(
+	"${FILESDIR}/${PN}-fix-assertion.patch"
 	"${FILESDIR}/${PN}-gentoo.patch"
 	"${FILESDIR}/${PN}-psvpfsparser-link.patch"
 )
