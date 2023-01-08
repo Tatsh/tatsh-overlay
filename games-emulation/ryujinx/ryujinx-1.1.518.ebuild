@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="b6614c6ad5d7d19594b80f4917df27bf476e8f03"
+SHA="3ffceab1fb220c13f5982de599d788f2e3e7cc47"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.18
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -58,7 +58,6 @@ NUGETS="avalonia-0.10.18
 	microsoft.csharp-4.3.0
 	microsoft.csharp-4.5.0
 	microsoft.csharp-4.7.0
-	microsoft.dotnet.internalabstractions-1.0.0
 	microsoft.dotnet.platformabstractions-3.1.6
 	microsoft.extensions.dependencymodel-6.0.0
 	microsoft.identitymodel.abstractions-6.25.1
@@ -81,7 +80,6 @@ NUGETS="avalonia-0.10.18
 	microsoft.testplatform.testhost-17.4.1
 	microsoft.win32.primitives-4.0.1
 	microsoft.win32.primitives-4.3.0
-	microsoft.win32.registry-4.3.0
 	microsoft.win32.registry-4.5.0
 	microsoft.win32.systemevents-7.0.0
 	msgpack.cli-1.0.1
@@ -91,7 +89,7 @@ NUGETS="avalonia-0.10.18
 	newtonsoft.json-13.0.1
 	nuget.frameworks-5.11.0
 	nunit-3.13.3
-	nunit3testadapter-4.3.1
+	nunit3testadapter-4.1.0
 	opentk.core-4.7.5
 	opentk.graphics-4.7.5
 	opentk.mathematics-4.7.5
@@ -158,7 +156,7 @@ NUGETS="avalonia-0.10.18
 	ryujinx.graphics.vulkan.dependencies.moltenvk-1.2.0
 	ryujinx.gtksharp-3.24.24.59-ryujinx
 	ryujinx.pangosharp-3.24.24.59-ryujinx
-	ryujinx.sdl2-cs-2.24.2-build21
+	ryujinx.sdl2-cs-2.26.1-build23
 	shaderc.net-0.1.0
 	sharpziplib-1.4.1
 	shimskiasharp-0.5.18
@@ -190,18 +188,11 @@ NUGETS="avalonia-0.10.18
 	system.collections.concurrent-4.0.12
 	system.collections.immutable-1.5.0
 	system.collections.immutable-6.0.0
-	system.collections.nongeneric-4.3.0
-	system.collections.specialized-4.3.0
-	system.componentmodel-4.3.0
 	system.componentmodel.annotations-4.5.0
-	system.componentmodel.eventbasedasync-4.3.0
-	system.componentmodel.primitives-4.3.0
-	system.componentmodel.typeconverter-4.3.0
 	system.console-4.0.0
 	system.diagnostics.debug-4.0.11
 	system.diagnostics.debug-4.3.0
 	system.diagnostics.diagnosticsource-4.0.0
-	system.diagnostics.process-4.3.0
 	system.diagnostics.tools-4.0.1
 	system.diagnostics.tracing-4.1.0
 	system.diagnostics.tracing-4.3.0
@@ -211,14 +202,12 @@ NUGETS="avalonia-0.10.18
 	system.globalization-4.3.0
 	system.globalization.calendars-4.0.1
 	system.globalization.extensions-4.0.1
-	system.globalization.extensions-4.3.0
 	system.identitymodel.tokens.jwt-6.25.1
 	system.io-4.1.0
 	system.io-4.3.0
 	system.io.compression-4.1.0
 	system.io.compression.zipfile-4.0.1
 	system.io.filesystem-4.0.1
-	system.io.filesystem-4.3.0
 	system.io.filesystem.primitives-4.0.1
 	system.io.filesystem.primitives-4.3.0
 	system.linq-4.1.0
@@ -274,7 +263,6 @@ NUGETS="avalonia-0.10.18
 	system.runtime.interopservices-4.1.0
 	system.runtime.interopservices-4.3.0
 	system.runtime.interopservices.runtimeinformation-4.0.0
-	system.runtime.interopservices.runtimeinformation-4.3.0
 	system.runtime.numerics-4.0.1
 	system.security.accesscontrol-4.5.0
 	system.security.claims-4.3.0
@@ -295,31 +283,23 @@ NUGETS="avalonia-0.10.18
 	system.text.encoding.codepages-4.5.1
 	system.text.encoding.codepages-6.0.0
 	system.text.encoding.extensions-4.0.11
-	system.text.encoding.extensions-4.3.0
 	system.text.encodings.web-6.0.0
 	system.text.json-4.7.2
 	system.text.json-6.0.0
 	system.text.regularexpressions-4.1.0
-	system.text.regularexpressions-4.3.0
 	system.threading-4.0.11
 	system.threading-4.3.0
 	system.threading.overlapped-4.3.0
 	system.threading.tasks-4.0.11
 	system.threading.tasks-4.3.0
 	system.threading.tasks.extensions-4.0.0
-	system.threading.tasks.extensions-4.3.0
 	system.threading.tasks.extensions-4.5.3
 	system.threading.tasks.extensions-4.5.4
-	system.threading.thread-4.3.0
 	system.threading.threadpool-4.3.0
 	system.threading.timer-4.0.1
 	system.valuetuple-4.5.0
 	system.xml.readerwriter-4.0.11
-	system.xml.readerwriter-4.3.0
 	system.xml.xdocument-4.0.11
-	system.xml.xmldocument-4.3.0
-	system.xml.xpath-4.3.0
-	system.xml.xpath.xmldocument-4.3.0
 	tmds.dbus-0.9.0
 	xamlnamereferencegenerator-1.5.1"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
