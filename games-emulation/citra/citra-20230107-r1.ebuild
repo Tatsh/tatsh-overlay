@@ -8,7 +8,6 @@ DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/ https://github.com/citra-emu/citra"
 SHA="e60a816d896332e3a3f7e47efae144a9d5db860c"
 DYNARMIC_SHA="9af4b970d302389829448a30608c7cb4fce9b662"
-FMT_SHA="a33701196adfad74917046096bf5a2aa0ab0bb50"
 LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
 XBYAK_SHA="a1ac3750f9a639b5a6c6d6c7da4259b8d6790989"
@@ -16,7 +15,6 @@ SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
-	https://github.com/fmtlib/fmt/archive/${FMT_SHA}.tar.gz -> ${PN}-fmt-${FMT_SHA:0:7}.tar.gz
 	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz -> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz"
 
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
@@ -30,6 +28,7 @@ DEPEND="app-arch/zstd
 	dev-libs/crypto++:=
 	media-libs/cubeb
 	dev-libs/inih
+	dev-libs/libfmt
 	dev-libs/mp
 	dev-libs/teakra
 	>=dev-libs/xbyak-5.941
@@ -44,12 +43,11 @@ DEPEND="app-arch/zstd
 	net-libs/enet:=
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
-BDEPEND="<dev-cpp/catch-3.0.0
-	dev-cpp/robin-map"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libraries.patch"
 	"${FILESDIR}/${PN}-0002-inih-fix.patch"
+	"${FILESDIR}/${PN}-0003-disable-tests.patch"
 )
 
 S="${WORKDIR}/${PN}-${SHA}"
@@ -64,13 +62,11 @@ src_prepare() {
 	mv "${WORKDIR}/ext-soundtouch-${SOUNDTOUCH_SHA}" "${S}/externals/soundtouch" || die
 	mv "${WORKDIR}/lodepng-${LODEPNG_SHA}" "${S}/externals/lodepng/lodepng" || die
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
-	mv "${WORKDIR}/fmt-${FMT_SHA}" "${S}/externals/fmt" || die
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
 	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
 	mv -f "${T}/compatibility_list.json" "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
 	sed -e 's|${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak|/usr/include/xbyak|' \
 		-i externals/dynarmic/externals/CMakeLists.txt || die
-	sed -re 's|^add_subdirectory\(tests\)$||' -i src/CMakeLists.txt || die
 	cmake_src_prepare
 }
 
@@ -78,7 +74,6 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
 		-DDISABLE_SUBMODULE_CHECK=ON
-		-DDYNARMIC_NO_BUNDLED_ROBIN_MAP=ON
 		-DENABLE_FFMPEG_AUDIO_DECODER=ON
 		-DENABLE_FFMPEG_VIDEO_DUMPER=ON
 		-DENABLE_WEB_SERVICE=$(usex web-service)
@@ -86,6 +81,7 @@ src_configure() {
 		-DUSE_SYSTEM_CRYPTOPP=ON
 		-DUSE_SYSTEM_CUBEB=ON
 		-DUSE_SYSTEM_ENET=ON
+		-DUSE_SYSTEM_FMT=ON
 		-DUSE_SYSTEM_INIH=ON
 		-DUSE_SYSTEM_SDL2=ON
 		-DUSE_SYSTEM_TEAKRA=ON
@@ -93,4 +89,9 @@ src_configure() {
 		-DUSE_SYSTEM_ZSTD=ON
 	)
 	cmake_src_configure
+}
+
+src_install() {
+	cmake_src_install
+	rm -fR "${D}/usr/include" "${D}/usr/$(get_libdir)" || die
 }

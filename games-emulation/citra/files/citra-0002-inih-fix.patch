@@ -1,7 +1,7 @@
-From ce9ece2eab2c44cd38d6799fb45cba8ee2f62054 Mon Sep 17 00:00:00 2001
+From 5665361e6c1fbefa90aca21e9819ed65659a5b32 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:47 -0400
-Subject: [PATCH 2/2] inih fix
+Subject: [PATCH 2/3] inih fix
 
 ---
  src/citra/config.cpp | 2 +-

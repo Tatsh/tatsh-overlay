@@ -1,0 +1,24 @@
+From e05da5179b8fb9a0efe5c61f397f781a65d0903f Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Jan 2023 14:34:44 -0500
+Subject: [PATCH 3/3] Disable tests
+
+---
+ src/CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index f59607d66..a4df2ab54 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -148,7 +148,6 @@ add_subdirectory(video_core)
+ add_subdirectory(audio_core)
+ add_subdirectory(network)
+ add_subdirectory(input_common)
+-add_subdirectory(tests)
+ 
+ if (ENABLE_SDL2)
+     add_subdirectory(citra)
+-- 
+2.39.0
+
