@@ -48,7 +48,7 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-		-DUSE_CLANG_TIDY=ON
+		-DUSE_CLANG_TIDY=OFF
 		-DUSE_SYSTEM_ABSEIL=ON
 	)
 	cmake_src_configure
