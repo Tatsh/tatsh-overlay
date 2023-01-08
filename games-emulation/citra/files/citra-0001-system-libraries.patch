@@ -1,20 +1,20 @@
-From 18cbd986fa4484c90aaee368382655eef951038c Mon Sep 17 00:00:00 2001
+From a03d564ad65e636645a771dcbcd8f00cefbf0ffd Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/2] System libraries
 
 ---
- CMakeLists.txt            | 12 +++++-
- externals/CMakeLists.txt  | 83 ++++++++++++++++++++++++++++-----------
+ CMakeLists.txt            | 12 ++++++-
+ externals/CMakeLists.txt  | 76 ++++++++++++++++++++++++++++-----------
  src/citra/CMakeLists.txt  |  7 +++-
- src/common/CMakeLists.txt |  6 ++-
- 4 files changed, 81 insertions(+), 27 deletions(-)
+ src/common/CMakeLists.txt |  6 +++-
+ 4 files changed, 77 insertions(+), 24 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 46675583a..5a91536c2 100644
+index c98cc3a09..b76e44ed1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -48,6 +48,14 @@ CMAKE_DEPENDENT_OPTION(ENABLE_MF "Use Media Foundation decoder (preferred over F
+@@ -49,6 +49,14 @@ CMAKE_DEPENDENT_OPTION(ENABLE_MF "Use Media Foundation decoder (preferred over F
  CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ON "MINGW" OFF)
  
  option(USE_SYSTEM_BOOST "Use the system Boost libs (instead of the bundled ones)" OFF)
@@ -29,7 +29,7 @@ index 46675583a..5a91536c2 100644
  
  CMAKE_DEPENDENT_OPTION(ENABLE_FDK "Use FDK AAC decoder" OFF "NOT ENABLE_FFMPEG_AUDIO_DECODER;NOT ENABLE_MF" OFF)
  
-@@ -95,7 +103,9 @@ function(check_submodules_present)
+@@ -113,7 +121,9 @@ function(check_submodules_present)
          endif()
      endforeach()
  endfunction()
@@ -41,10 +41,10 @@ index 46675583a..5a91536c2 100644
  configure_file(${PROJECT_SOURCE_DIR}/dist/compatibility_list/compatibility_list.qrc
                 ${PROJECT_BINARY_DIR}/dist/compatibility_list/compatibility_list.qrc
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index c2385c48e..1b9d10874 100644
+index dba0f3cfc..6e4be4601 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -10,38 +10,53 @@ include(DownloadExternals)
+@@ -10,35 +10,49 @@ include(DownloadExternals)
  include(ExternalProject)
  
  # Boost
@@ -87,34 +87,27 @@ index c2385c48e..1b9d10874 100644
  
  # fmt and Xbyak need to be added before dynarmic
  # libfmt
+-option(FMT_INSTALL "" ON)
 -add_subdirectory(fmt)
 +if (NOT USE_SYSTEM_FMT)
++    option(FMT_INSTALL "" ON)
 +    add_subdirectory(fmt)
-+    add_library(fmt::fmt ALIAS fmt)
 +else()
 +    find_package(fmt REQUIRED)
 +endif()
  
  # Xbyak
- if (ARCHITECTURE_x86_64)
--    add_library(xbyak INTERFACE)
--    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
--    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
--    target_include_directories(xbyak SYSTEM INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
--    target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
+ if ("x86_64" IN_LIST ARCHITECTURE)
+-    add_subdirectory(xbyak)
 +    if (NOT USE_SYSTEM_XBYAK)
-+        add_library(xbyak INTERFACE)
-+        file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
-+        file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
-+        target_include_directories(xbyak SYSTEM INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/xbyak/include)
-+        target_compile_definitions(xbyak INTERFACE XBYAK_NO_OP_NAMES)
++        add_subdirectory(xbyak)
 +    else()
 +        find_path(XBYAK_INCLUDE xbyak.h PATH_SUFFIXES xbyak REQUIRED)
 +    endif()
  endif()
  
  # Dynarmic
-@@ -61,7 +76,11 @@ endif()
+@@ -57,7 +71,11 @@ endif()
  add_subdirectory(glad)
  
  # inih
@@ -127,7 +120,7 @@ index c2385c48e..1b9d10874 100644
  
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -80,7 +99,11 @@ add_subdirectory(soundtouch)
+@@ -76,7 +94,11 @@ add_subdirectory(soundtouch)
  target_include_directories(SoundTouch INTERFACE ./soundtouch/include)
  
  # Teakra
@@ -140,7 +133,7 @@ index c2385c48e..1b9d10874 100644
  
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-@@ -91,17 +114,29 @@ endif()
+@@ -87,17 +109,29 @@ endif()
  set(ZSTD_LEGACY_SUPPORT OFF)
  set(ZSTD_BUILD_PROGRAMS OFF)
  set(ZSTD_BUILD_SHARED OFF)
@@ -177,10 +170,10 @@ index c2385c48e..1b9d10874 100644
  
  # DiscordRPC
 diff --git a/src/citra/CMakeLists.txt b/src/citra/CMakeLists.txt
-index f5ef660ca..7ac1e74ea 100644
+index affbec3f8..ca58f4997 100644
 --- a/src/citra/CMakeLists.txt
 +++ b/src/citra/CMakeLists.txt
-@@ -16,7 +16,12 @@ add_executable(citra
+@@ -17,7 +17,12 @@ add_executable(citra
  create_target_directory_groups(citra)
  
  target_link_libraries(citra PRIVATE common core input_common network)
@@ -195,10 +188,10 @@ index f5ef660ca..7ac1e74ea 100644
      target_link_libraries(citra PRIVATE getopt)
  endif()
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index 62e47e65a..8e3976930 100644
+index 43b1e1bad..2ee1ac997 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
-@@ -139,7 +139,11 @@ endif()
+@@ -137,7 +137,11 @@ add_library(common STATIC
  create_target_directory_groups(common)
  
  target_link_libraries(common PUBLIC fmt::fmt microprofile Boost::boost Boost::serialization)
@@ -210,7 +203,7 @@ index 62e47e65a..8e3976930 100644
 +endif()
  set_target_properties(common PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
  
- if (ARCHITECTURE_x86_64)
+ if ("x86_64" IN_LIST ARCHITECTURE)
 -- 
-2.38.1
+2.39.0
 

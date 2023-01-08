@@ -6,12 +6,12 @@ inherit cmake xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/ https://github.com/citra-emu/citra"
-SHA="f18437e59fc2e8bc8388e88b4848c871be24faf0"
-DYNARMIC_SHA="7a926d689bcc1cc39dd26d5bba379dffcc6815a3"
+SHA="e60a816d896332e3a3f7e47efae144a9d5db860c"
+DYNARMIC_SHA="9af4b970d302389829448a30608c7cb4fce9b662"
 FMT_SHA="a33701196adfad74917046096bf5a2aa0ab0bb50"
 LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
-XBYAK_SHA="48457bfa0ded67bb4ae2d4c141c36b35469257ee"
+XBYAK_SHA="a1ac3750f9a639b5a6c6d6c7da4259b8d6790989"
 SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
