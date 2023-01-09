@@ -11,7 +11,7 @@ DESCRIPTION="Provides service endpoint configuration per service on profile."
 HOMEPAGE="https://pypi.org/project/awscli-plugin-endpoint/"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
-LICENSE="Apache-2"
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
@@ -22,7 +22,7 @@ pkg_postinst() {
 	einfo "To enable this plugin, you must run:"
 	einfo
 	einfo "    aws configure set plugins.endpoint awscli_plugin_endpoint"
-    einfo
+	einfo
 	einfo "If you are using awscli-bin (awscli 2), you must add this line to"
 	einfo "your configuration file under the [plugins] section:"
 	einfo
