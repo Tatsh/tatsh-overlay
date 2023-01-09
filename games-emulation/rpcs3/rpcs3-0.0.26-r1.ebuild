@@ -37,7 +37,7 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	dev-qt/qtcore:5
 	dev-qt/qtdbus
 	dev-qt/qtgui
-	dev-qt/qtmultimedia
+	dev-qt/qtmultimedia:5[widgets]
 	dev-qt/qtnetwork:5
 	dev-qt/qtsvg
 	dev-qt/qtwidgets:5

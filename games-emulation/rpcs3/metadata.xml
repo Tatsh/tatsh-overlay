@@ -5,6 +5,9 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+	<upstream>
+		<remote-id type="github">RPCS3/rpcs3</remote-id>
+	</upstream>
 	<use>
 		<flag name="faudio">Enable audio rendering with app-emulation/faudio</flag>
 		<flag name="joystick">Enable support for input devices with evdev</flag>
