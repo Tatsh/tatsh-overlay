@@ -23,7 +23,7 @@ src_unpack() {
 src_install() {
 	cat > "${EXT_ID}.json" <<EOF
 {
-  "external_update_url": "https://raw.githubusercontent.com/iamadamdev/${PN}-chrome/master/src/updates/updates.xml"
+	"external_update_url": "https://raw.githubusercontent.com/iamadamdev/${PN}-chrome/master/src/updates/updates.xml"
 }
 EOF
 	if use chrome; then
