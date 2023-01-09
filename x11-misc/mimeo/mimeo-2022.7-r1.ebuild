@@ -3,7 +3,7 @@
 
 EAPI=8
 PYTHON_COMPAT=( python3_{8..11} )
-DISTUTILS_USE_SETUPTOOLS=no
+DISTUTILS_USE_PEP517=setuptools
 inherit bash-completion-r1 distutils-r1
 
 DESCRIPTION="Open files by MIME-type or file name using regular expressions."
