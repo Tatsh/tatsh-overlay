@@ -8,6 +8,7 @@
 # Andrew Udvare <audvare@gmail.com>
 # @BLURB: install mpv shaders
 # @DESCRIPTION:
+# Install MPV shaders to /usr/share/mpv/shaders.
 
 case ${EAPI:-0} in
 	8) ;;
@@ -63,6 +64,7 @@ if [[ ! ${_MPV_SHADER_ECLASS} ]]; then
 	# @FUNCTION: mpv-shader_pkg_postinst
 	# @USAGE:
 	# @DESCRIPTION:
+	# Display a message about how to use the shaders.
 	mpv-shader_pkg_postinst() {
 		elog
 		elog "To use the shader, specify --glsl-shader=<PATH> or use the option"
