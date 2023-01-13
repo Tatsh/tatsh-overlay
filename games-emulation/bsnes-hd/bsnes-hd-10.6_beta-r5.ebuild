@@ -20,8 +20,7 @@ IUSE="ao +alsa libretro openal opengl oss pulseaudio +sdl udev xv"
 REQUIRED_USE="|| ( ao openal alsa pulseaudio oss )
 	|| ( xv opengl sdl )"
 
-DEPEND="dev-libs/atk
-	dev-libs/glib
+DEPEND="dev-libs/glib
 	media-libs/fontconfig
 	media-libs/freetype
 	media-libs/harfbuzz
