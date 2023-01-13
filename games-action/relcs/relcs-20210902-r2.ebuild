@@ -24,6 +24,7 @@ DEPEND="media-libs/libsndfile
 	opus? ( media-libs/opus media-libs/opusfile )
 	sndfile? ( media-libs/libsndfile )"
 RDEPEND="${DEPEND}"
+BDEPEND="app-arch/unzip"
 
 PATCHES=( "${FILESDIR}/${PN}-link-x11.patch" )
 
