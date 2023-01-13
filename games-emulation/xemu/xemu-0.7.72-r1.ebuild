@@ -6,7 +6,7 @@ EAPI=7
 PYTHON_COMPAT=( python3_{8,9,10,11} )
 PYTHON_REQ_USE="ncurses,readline"
 
-inherit eutils flag-o-matic python-r1 xdg-utils
+inherit flag-o-matic pax-utils python-r1 toolchain-funcs xdg-utils
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/mborgerson/xemu"
@@ -19,12 +19,12 @@ SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
 TESTFLOAT_SHA="5a59dcec19327396a011a17fd924aed4fec416b3"
 TOMLPLUSPLUS_SHA="27816dbbd168a84a0a7a252d7d75b0ca4dc1e073"
 SRC_URI="https://github.com/mborgerson/xemu/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	https://gitlab.com/qemu-project/keycodemapdb/-/archive/${KEYCODEMAPDB_SHA}/keycodemapdb-${KEYCODEMAPDB_SHA}.tar.gz -> ${PN}-keycodemapdb-${KEYCODEMAPDB_SHA:0:7}.tar.gz
+	https://gitlab.com/qemu-project/keycodemapdb/-/archive/${KEYCODEMAPDB_SHA}/keycodemapdb-${KEYCODEMAPDB_SHA}.tar.bz2 -> ${PN}-keycodemapdb-${KEYCODEMAPDB_SHA:0:7}.tar.bz2
 	https://github.com/abaire/nv2a_vsh_cpu/archive/${NV2A_VSH_CPU_SHA}.tar.gz -> ${PN}-nv2a_vsh_cpu-${NV2A_VSH_CPU_SHA:0:7}.tar.gz
 	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> ${PN}-imgui-${IMGUI_SHA:0:7}.tar.gz
 	https://github.com/epezent/implot/archive/${IMPLOT_SHA}.tar.gz -> ${PN}-implot-${IMPLOT_SHA:0:7}.tar.gz
-	https://gitlab.com/qemu-project/berkeley-softfloat-3/-/archive/${SOFTFLOAT_SHA}/berkeley-softfloat-3-${SOFTFLOAT_SHA}.tar.gz -> ${PN}-softfloat-${SOFTFLOAT_SHA:0:7}.tar.gz
-	https://gitlab.com/qemu-project/berkeley-testfloat-3/-/archive/${TESTFLOAT_SHA}/berkeley-testfloat-3-${TESTFLOAT_SHA}.tar.gz -> ${PN}-testfloat-${TESTFLOAT_SHA:0:7}.tar.gz
+	https://gitlab.com/qemu-project/berkeley-softfloat-3/-/archive/${SOFTFLOAT_SHA}/berkeley-softfloat-3-${SOFTFLOAT_SHA}.tar.bz2 -> ${PN}-softfloat-${SOFTFLOAT_SHA:0:7}.tar.bz2
+	https://gitlab.com/qemu-project/berkeley-testfloat-3/-/archive/${TESTFLOAT_SHA}/berkeley-testfloat-3-${TESTFLOAT_SHA}.tar.bz2 -> ${PN}-testfloat-${TESTFLOAT_SHA:0:7}.tar.bz2
 	https://github.com/mborgerson/genconfig/archive/${GENCONFIG_SHA}.tar.gz -> ${PN}-genconfig-${GENCONFIG_SHA:0:7}.tar.gz
 	https://github.com/marzer/tomlplusplus/archive/${TOMLPLUSPLUS_SHA}.tar.gz -> ${PN}-tomlplusplus-${TOMLPLUSPLUS_SHA:0:7}.tar.gz"
 
@@ -32,6 +32,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="xattr aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack malloc-trim membarrier nls doc pulseaudio sdl test"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RESTRICT="!test? ( test )"
 
 DEPEND="dev-libs/glib
@@ -53,7 +54,7 @@ DEPEND="dev-libs/glib
 	jack? ( virtual/jack )
 	pulseaudio? ( media-libs/libpulse )
 	xattr? ( sys-apps/attr )"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND} ${PYTHON_DEPS}"
 BDEPEND="dev-lang/perl
 	dev-util/meson
 	dev-util/ninja

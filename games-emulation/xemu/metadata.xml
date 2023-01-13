@@ -5,6 +5,10 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+  <upstream>
+    <remote-id type="github">mborgerson/xemu</remote-id>
+    <remote-id type="gitlab">qemu-project/keycodemapdb</remote-id>
+  </upstream>
 	<use>
 		<flag name="aio">Add support for AIO</flag>
 		<flag name="io-uring">Enable efficient I/O via sys-libs/liburing</flag>
