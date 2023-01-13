@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake desktop wrapper xdg
+inherit cmake desktop xdg
 
 DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
