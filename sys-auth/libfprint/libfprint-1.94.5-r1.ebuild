@@ -31,7 +31,7 @@ BDEPEND="
 	introspection? ( dev-libs/gobject-introspection )
 "
 
-PATCHES=( ${FILESDIR}/${PN}-0.8.2-fix-implicit-declaration.patch )
+PATCHES=( "${FILESDIR}/${PN}-0.8.2-fix-implicit-declaration.patch" )
 
 src_configure() {
 		local emesonargs=(
