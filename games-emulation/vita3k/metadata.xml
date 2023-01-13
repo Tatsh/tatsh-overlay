@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<maintainer type="person">
-		<email>audvare@gmail.com</email>
-		<name>Andrew Udvare</name>
-	</maintainer>
-	<use>
-		<flag name="cubeb">Build with cubeb audio backend</flag>
-		<flag name="compatibility-reporting">Enable compatibility reporting</flag>
-		<flag name="web-service">Enable web-services</flag>
-	</use>
+  <maintainer type="person">
+    <email>audvare@gmail.com</email>
+    <name>Andrew Udvare</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="github">Vita3K/Vita3K</remote-id>
+  </upstream>
 </pkgmetadata>
