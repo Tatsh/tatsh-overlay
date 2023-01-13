@@ -10,6 +10,7 @@ HOMEPAGE="https://gist.github.com/agyild/bbb4e58298b2f86aa24da3032a0d2ee6"
 GIST_ID="bbb4e58298b2f86aa24da3032a0d2ee6"
 SHA="10e4ca1b6ef173b64391ce2c81b9a95fcd095931"
 SRC_URI="https://gist.github.com/agyild/${GIST_ID}/archive/${SHA}.zip -> ${P}.zip"
+BDEPEND="app-arch/unzip"
 
 LICENSE="MIT"
 KEYWORDS="~amd64"
