@@ -13,6 +13,8 @@ LICENSE="public-domain"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 
+BDEPEND="app-arch/unzip"
+
 S="${WORKDIR}/source"
 
 src_compile() {
