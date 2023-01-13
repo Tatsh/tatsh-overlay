@@ -8,6 +8,7 @@ inherit python-single-r1
 DESCRIPTION="Host-side script for the Open in mpv Chrome extension."
 HOMEPAGE="https://github.com/Tatsh/open-in-mpv"
 SRC_URI="https://github.com/Tatsh/open-in-mpv/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 LICENSE="MIT"
 SLOT="0"
