@@ -17,6 +17,6 @@ KEYWORDS="~amd64"
 DEPEND="media-video/vapoursynth
 	dev-libs/boost
 	virtual/opencl"
-RDEPEND="|| ( dev-libs/opencl-icd-loader dev-libs/ocl-icd )"
+RDEPEND="dev-libs/opencl-icd-loader"
 
 S="${WORKDIR}/VapourSynth-EEDI3-${SHA}"
