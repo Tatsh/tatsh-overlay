@@ -15,6 +15,7 @@ IUSE="debug cpu_flags_x86_aes sniffer"
 
 DEPEND="sniffer? ( net-libs/libpcap )"
 RDEPEND="${DEPEND}"
+BDEPEND="app-arch/unzip"
 
 src_prepare() {
 	eautoreconf
