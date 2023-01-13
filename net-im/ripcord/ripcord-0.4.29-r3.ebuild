@@ -54,7 +54,7 @@ src_install() {
 	make_wrapper "${PN}" "env RIPCORD_ALLOW_UPDATES=0 /opt/${PN}/R${PN:1}" "/opt/${PN}"
 	make_desktop_entry "${PN}" "R${PN:1}" "$PN" "Network;InstantMessaging;"
 	einstalldocs
-	cat > ${ED}/opt/${PN}/qt.conf <<EOF
+	cat > "${ED}/opt/${PN}/qt.conf" <<EOF
 [Paths]
 Prefix = ./
 
