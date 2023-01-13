@@ -11,7 +11,7 @@ DESCRIPTION="A pure Python trie data structure implementation."
 HOMEPAGE="https://pypi.org/project/pygtrie/ https://github.com/mina86/pygtrie"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
-LICENSE="Apache-2"
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
