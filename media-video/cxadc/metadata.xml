@@ -4,4 +4,7 @@
 	<maintainer type="person">
 		<email>audvare@gmail.com</email>
 	</maintainer>
+  <upstream>
+    <remote-id type="github">happycube/cxadc-linux3</remote-id>
+  </upstream>
 </pkgmetadata>
