@@ -15,6 +15,9 @@ SRC_URI="https://github.com/po5/${PN/-/_}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
+RDEPEND="${PYTHON_DEPS}"
 
 S="${WORKDIR}/${PN/-/_}-${SHA}"
 
