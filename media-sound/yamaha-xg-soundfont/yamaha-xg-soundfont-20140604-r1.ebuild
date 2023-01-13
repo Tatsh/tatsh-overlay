@@ -9,7 +9,7 @@ SRC_URI="http://www.ronimusic.com/sf2/Yamaha_XG_Sound_Set.sf2"
 
 LICENSE="Roni-Music"
 SLOT="0"
-KEYWORDS="amd64 arm arm64 ~ppc64 x86"
+KEYWORDS="amd64 arm arm64 ppc64 x86"
 
 S="$WORKDIR"
 
