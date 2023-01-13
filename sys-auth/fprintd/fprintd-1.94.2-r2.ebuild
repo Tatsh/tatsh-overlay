@@ -4,12 +4,12 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{8..11} )
-inherit meson pam python-single-r1 systemd
+inherit meson python-single-r1 systemd
 
 DESCRIPTION="D-Bus service to access fingerprint readers"
 HOMEPAGE="https://cgit.freedesktop.org/libfprint/fprintd/"
 SHA="0d2e2a6742cbec847aa756da25afd4b73d9ec53f"
-SRC_URI="https://gitlab.freedesktop.org/libfprint/fprintd/-/archive/v${PV}/${P}.tar.gz"
+SRC_URI="https://gitlab.freedesktop.org/libfprint/fprintd/-/archive/v${PV}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -26,6 +26,7 @@ RDEPEND="dev-libs/dbus-glib
 	systemd? ( sys-apps/systemd )
 	pam? ( sys-libs/pam )"
 DEPEND="${RDEPEND}
+${PYTHON_DEPS}
 	dev-util/intltool
 	gtk-doc? (
 		dev-util/gtk-doc
