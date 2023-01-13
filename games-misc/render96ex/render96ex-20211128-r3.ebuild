@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit desktop edo toolchain-funcs wrapper
+inherit desktop edo linux-info toolchain-funcs wrapper
 
 DESCRIPTION="Fork of sm64-port with additional features (alpha branch)."
 HOMEPAGE="https://github.com/Render96/Render96ex/tree/alpha"
