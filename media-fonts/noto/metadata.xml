@@ -13,6 +13,13 @@
 		<email>pacho@gentoo.org</email>
 		<name>Pacho Ramos</name>
 	</maintainer>
+  <maintainer type="person">
+    <email>audvare@gmail.com</email>
+    <name>Andrew Udvare</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="github">googlei18n/noto-fonts</remote-id>
+  </upstream>
 	<use>
 		<flag name="brahmi">Install font for Brahmi script</flag>
 		<flag name="music">Install font for music notation</flag>
