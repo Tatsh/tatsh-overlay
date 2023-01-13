@@ -5,6 +5,9 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+  <upstream>
+    <remote-id type="github">cvzi/mpv-youtube-upnext</remote-id>
+  </upstream>
 	<use>
 		<flag name="autoload">Auto-load the plugin</flag>
 	</use>
