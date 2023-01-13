@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake desktop
+inherit cmake
 
 DESCRIPTION="Software for the 40Mhz USB-3.0 RF sampler (harrypm fork)."
 HOMEPAGE="https://github.com/simoninns/DomesdayDuplicator"
