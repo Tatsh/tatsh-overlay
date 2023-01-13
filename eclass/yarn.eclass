@@ -76,6 +76,8 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	}
 
 	# @FUNCTION: yarn_src_unpack
+	# @DESCRIPTION:
+	# Unpacks normal packages but ignores those ending in .tgz.
 	yarn_src_unpack() {
 		local archive
 		for archive in ${A}; do
@@ -90,6 +92,8 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	}
 
 	# @FUNCTION: yarn_src_prepare
+	# @DESCRIPTION:
+	# Prepares up the offline Yarn package files.
 	yarn_src_prepare() {
 		if [[ ! ${_YARN_SET_GLOBALS_CALLED} ]]; then
 			die "yarn_set_globals must be called in global scope"
@@ -104,12 +108,17 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	}
 
 	# @FUNCTION: yarn_src_configure
+	# @DESCRIPTION:
+	# Sets up the offline Yarn environment.
 	yarn_src_configure() {
 		edo yarn config set prefix "${HOME}/.node"
 		edo yarn config set yarn-offline-mirror "$(realpath "${WORKDIR}/packages")"
 	}
 
 	# @FUNCTION: yarn_src_compile
+	# @DESCRIPTION:
+	# Using Yarn's offline mode, this function installs the package as it would normally and
+	# compiles anything that needs to be.
 	yarn_src_compile() {
 		cd lib || die
 		cp "${YARN_PACKAGE_JSON:-${FILESDIR}/${PN}-package.json}" package.json || die
@@ -133,6 +142,8 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	}
 
 	# @FUNCTION: yarn_src_install
+	# @DESCRIPTION:
+	# Installs the package into /usr/$(get_libdir)/${PN}/node_modules and installs docs.
 	yarn_src_install() {
 		find . -type f -iregex '.*/license\(\.\(md\|rtf\|txt\)\)?' -delete || die
 		insinto "/usr/$(get_libdir)/${PN}/node_modules"
