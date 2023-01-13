@@ -5,9 +5,9 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
-  <upstream>
-    <remote-id type="github">jpd002/Play-</remote-id>
-  </upstream>
+	<upstream>
+		<remote-id type="github">jpd002/Play-</remote-id>
+	</upstream>
 	<use>
 		<flag name="libretro">Build libretro core</flag>
 		<flag name="vulkan">Enable Vulkan graphics library support</flag>

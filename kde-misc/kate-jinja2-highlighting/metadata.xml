@@ -5,7 +5,7 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
-  <upstream>
-    <remote-id type="github">Pitmairen/kate-jinja2-highlighting</remote-id>
-  </upstream>
+	<upstream>
+		<remote-id type="github">Pitmairen/kate-jinja2-highlighting</remote-id>
+	</upstream>
 </pkgmetadata>

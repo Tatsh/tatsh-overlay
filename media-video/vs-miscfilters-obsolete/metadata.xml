@@ -5,7 +5,7 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
-  <upstream>
-    <remote-id type="github">vapoursynth/vs-miscfilters-obsolete</remote-id>
-  </upstream>
+	<upstream>
+		<remote-id type="github">vapoursynth/vs-miscfilters-obsolete</remote-id>
+	</upstream>
 </pkgmetadata>

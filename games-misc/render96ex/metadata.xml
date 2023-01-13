@@ -5,9 +5,9 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
-  <upstream>
-    <remote-id type="github">Render96/Render96ex</remote-id>
-  </upstream>
+	<upstream>
+		<remote-id type="github">Render96/Render96ex</remote-id>
+	</upstream>
 	<use>
 		<flag name="discord">Enable Discord presence</flag>
 		<flag name="eu">Use the EU ROM</flag>

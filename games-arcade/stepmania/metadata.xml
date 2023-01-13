@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM 'http://www.gentoo.org/dtd/metadata.dtd'>
 <pkgmetadata>
-  <maintainer type="person">
-    <email>audvare@gmail.com</email>
-    <name>Andrew Udvare</name>
-  </maintainer>
-  <upstream>
-    <remote-id type="github">stepmania/stepmania</remote-id>
-  </upstream>
-  <use>
-    <flag name="crash-handler">Enable crash handler</flag>
-    <flag name="gles2">Enable GLES2 support</flag>
-    <flag name="gpl">Enable GPL-compatible build</flag>
-    <flag name="bundled-courses">Install bundled courses.</flag>
-    <flag name="bundled-songs">Installed bundled songs.</flag>
-    <flag name="minimaid">Enable support for Minimaid hardware.</flag>
-    <flag name="networking">Enable networking support.</flag>
-    <flag name="parallel-port">Enable parallel port-based input devices.</flag>
-    <flag name="profiling">Enable profiling.</flag>
-    <flag name="wav">Enable WAV file support.</flag>
-    <flag name="xrandr">Enable XRandR support.</flag>
-  </use>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">stepmania/stepmania</remote-id>
+	</upstream>
+	<use>
+		<flag name="crash-handler">Enable crash handler</flag>
+		<flag name="gles2">Enable GLES2 support</flag>
+		<flag name="gpl">Enable GPL-compatible build</flag>
+		<flag name="bundled-courses">Install bundled courses.</flag>
+		<flag name="bundled-songs">Installed bundled songs.</flag>
+		<flag name="minimaid">Enable support for Minimaid hardware.</flag>
+		<flag name="networking">Enable networking support.</flag>
+		<flag name="parallel-port">Enable parallel port-based input devices.</flag>
+		<flag name="profiling">Enable profiling.</flag>
+		<flag name="wav">Enable WAV file support.</flag>
+		<flag name="xrandr">Enable XRandR support.</flag>
+	</use>
 </pkgmetadata>

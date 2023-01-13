@@ -5,9 +5,9 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
-  <upstream>
-    <remote-id type="github">zenyd/mpv-scripts</remote-id>
-  </upstream>
+	<upstream>
+		<remote-id type="github">zenyd/mpv-scripts</remote-id>
+	</upstream>
 	<use>
 		<flag name="autoload">Auto-load the plugin</flag>
 	</use>

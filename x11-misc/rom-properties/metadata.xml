@@ -6,7 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		 <remote-id type="github">GerbilSoft/rom-properties</remote-id>
+		<remote-id type="github">GerbilSoft/rom-properties</remote-id>
 	</upstream>
 	<use>
 		<flag name="achievements">Enable achievement pop-ups.</flag>

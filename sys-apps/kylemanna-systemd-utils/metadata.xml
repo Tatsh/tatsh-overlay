@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer type="person">
-    <email>audvare@gmail.com</email>
-    <name>Andrew Udvare</name>
-  </maintainer>
-  <upstream>
-    <remote-id type="github">kylemanna/systemd-utils</remote-id>
-  </upstream>
-  <use>
-    <flag name="amazon">Install Amazon Cloud Drive service</flag>
-    <flag name="btrfs">Install units for btrfs</flag>
-    <flag name="cmsis-dap">Unknown</flag>
-    <flag name="crashplan">Install timer for Crashplan</flag>
-    <flag name="kodi">Install service to start Kodi</flag>
-    <flag name="papertrail">Install Papertrail service</flag>
-    <flag name="rssh">Install rssh service</flag>
-    <flag name="storj">Install storj-dataserv-client.service</flag>
-    <flag name="tahoe">Install Tahoe-related services</flag>
-    <flag name="youtube">Install YouTube TV service</flag>
-  </use>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">kylemanna/systemd-utils</remote-id>
+	</upstream>
+	<use>
+		<flag name="amazon">Install Amazon Cloud Drive service</flag>
+		<flag name="btrfs">Install units for btrfs</flag>
+		<flag name="cmsis-dap">Unknown</flag>
+		<flag name="crashplan">Install timer for Crashplan</flag>
+		<flag name="kodi">Install service to start Kodi</flag>
+		<flag name="papertrail">Install Papertrail service</flag>
+		<flag name="rssh">Install rssh service</flag>
+		<flag name="storj">Install storj-dataserv-client.service</flag>
+		<flag name="tahoe">Install Tahoe-related services</flag>
+		<flag name="youtube">Install YouTube TV service</flag>
+	</use>
 </pkgmetadata>
