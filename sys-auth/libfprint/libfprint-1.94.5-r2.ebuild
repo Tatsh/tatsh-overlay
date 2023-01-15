@@ -12,7 +12,7 @@ SRC_URI="https://github.com/freedesktop/libfprint/archive/refs/tags/v${PV}.tar.g
 LICENSE="LGPL-2.1+"
 SLOT="2"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="examples gtk-doc +introspection"
+IUSE="examples gtk-doc +introspection test"
 
 RDEPEND="virtual/libusb:1=
 	x11-libs/gtk+:3
@@ -23,13 +23,14 @@ DEPEND="${RDEPEND}
 	dev-libs/libgusb
 	dev-libs/libgudev
 	dev-libs/nss
-	x11-libs/pixman"
+	x11-libs/pixman
+	test? ( x11-libs/cairo )"
 
-BDEPEND="
-	virtual/pkgconfig
+RESTRICT="!test? ( test )"
+
+BDEPEND="virtual/pkgconfig
 	gtk-doc? ( dev-util/gtk-doc )
-	introspection? ( dev-libs/gobject-introspection )
-"
+	introspection? ( dev-libs/gobject-introspection )"
 
 PATCHES=( "${FILESDIR}/${PN}-0.8.2-fix-implicit-declaration.patch" )
 
