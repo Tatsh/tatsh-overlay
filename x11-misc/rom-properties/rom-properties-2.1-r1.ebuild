@@ -12,7 +12,7 @@ SRC_URI="https://github.com/GerbilSoft/${PN}/archive/refs/tags/v${PV}.tar.gz -> 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="achievements +astc cli +crypt gtk kde nls +lz4 +lzo +pvr +unice68 +xbox-360 xfce +xml +zstd"
+IUSE="achievements +astc cli +crypt gtk kde nls +lz4 +lzo +pvr test +unice68 +xbox-360 xfce +xml +zstd"
 REQUIRED_USE="pvr? ( astc )"
 
 DEPEND="
@@ -33,6 +33,8 @@ DEPEND="
 REQUIRED_USE="|| ( cli gtk kde xfce )"
 RDEPEND="${DEPEND}"
 
+RESTRICT="!test? ( test )"
+
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-gentoo.patch"
 )
@@ -43,6 +45,7 @@ src_configure() {
 		-DBUILD_CLI=$(usex cli)
 		-DBUILD_GTK3=$(usex gtk)
 		-DBUILD_KF5=$(usex kde)
+		-DBUILD_TESTING=$(usex test)
 		-DBUILD_XFCE=$(usex xfce)
 		-DENABLE_ACHIEVEMENTS=$(usex achievements)
 		-DENABLE_ASTC=$(usex astc)
