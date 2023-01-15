@@ -903,3 +903,7 @@ src_install() {
 	dobin ${PN}
 	einstalldocs
 }
+
+src_test() {
+	go test -v ./...
+}
