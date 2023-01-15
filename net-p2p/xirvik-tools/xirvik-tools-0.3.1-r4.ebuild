@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{8,9,10,11} )
+PYTHON_COMPAT=( python3_{9,10,11} )
 DISTUTILS_USE_SETUPTOOLS=rdepend
 inherit distutils-r1
 
@@ -13,6 +13,7 @@ SRC_URI="https://github.com/Tatsh/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
+IUSE="test"
 
 RDEPEND="dev-python/argcomplete
 	dev-python/cached-property
@@ -24,4 +25,12 @@ RDEPEND="dev-python/argcomplete
 	dev-python/humanize
 	dev-python/importlib_metadata
 	>=dev-python/typing-extensions-3.7.4.1
-	dev-python/benc"
+	dev-python/benc
+	test? (
+		dev-python/pytest
+		dev-python/requests-mock
+	)"
+
+src_test() {
+	pytest
+}
