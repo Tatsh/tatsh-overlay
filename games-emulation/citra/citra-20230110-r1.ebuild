@@ -43,6 +43,7 @@ DEPEND="app-arch/zstd
 	net-libs/enet:=
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
+BDEPEND="dev-cpp/catch:0"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libraries.patch"
