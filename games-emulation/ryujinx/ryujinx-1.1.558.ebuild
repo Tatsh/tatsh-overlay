@@ -43,9 +43,9 @@ NUGETS="avalonia-0.10.18
 	libhac-0.17.0
 	microcom.codegenerator.msbuild-0.10.4
 	microcom.runtime-0.10.4
-	microsoft.aspnetcore.app.runtime.linux-x64-7.0.1
-	microsoft.aspnetcore.app.runtime.osx-x64-7.0.1
-	microsoft.aspnetcore.app.runtime.win-x64-7.0.1
+	microsoft.aspnetcore.app.runtime.linux-x64-7.0.2
+	microsoft.aspnetcore.app.runtime.osx-x64-7.0.2
+	microsoft.aspnetcore.app.runtime.win-x64-7.0.2
 	microsoft.codeanalysis.analyzers-2.9.6
 	microsoft.codeanalysis.analyzers-3.3.3
 	microsoft.codeanalysis.common-3.4.0
@@ -64,11 +64,11 @@ NUGETS="avalonia-0.10.18
 	microsoft.identitymodel.jsonwebtokens-6.25.1
 	microsoft.identitymodel.logging-6.25.1
 	microsoft.identitymodel.tokens-6.25.1
-	microsoft.netcore.app.host.osx-x64-7.0.1
-	microsoft.netcore.app.host.win-x64-7.0.1
-	microsoft.netcore.app.runtime.linux-x64-7.0.1
-	microsoft.netcore.app.runtime.osx-x64-7.0.1
-	microsoft.netcore.app.runtime.win-x64-7.0.1
+	microsoft.netcore.app.host.osx-x64-7.0.2
+	microsoft.netcore.app.host.win-x64-7.0.2
+	microsoft.netcore.app.runtime.linux-x64-7.0.2
+	microsoft.netcore.app.runtime.osx-x64-7.0.2
+	microsoft.netcore.app.runtime.win-x64-7.0.2
 	microsoft.netcore.platforms-1.0.1
 	microsoft.netcore.platforms-1.1.0
 	microsoft.netcore.platforms-2.0.0
@@ -333,3 +333,4 @@ src_install() {
 	make_desktop_entry "/usr/bin/${MY_PN}" "${MY_PN}" "${PN}"
 	einstalldocs
 }
+
