@@ -13,10 +13,10 @@ index 8e56a89e10c..193f1820544 100644
 +++ b/src/video_core/vulkan_common/vulkan_device.cpp
 @@ -1161,7 +1161,8 @@ void Device::CollectPhysicalMemoryInfo() {
  }
- 
+
  void Device::CollectToolingInfo() {
--    if (!ext_tooling_info) {
-+    if (!ext_tooling_info || true) {
+-    if (!extensions.tooling_info) {
++    if (true) {
 +        // Disabled to work around https://github.com/yuzu-emu/yuzu/issues/6835
          return;
      }
