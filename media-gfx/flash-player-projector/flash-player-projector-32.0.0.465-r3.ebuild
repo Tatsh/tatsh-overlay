@@ -20,7 +20,7 @@ RDEPEND="dev-libs/glib
 	dev-libs/nss
 	media-libs/fontconfig
 	media-libs/freetype
-	media-libs/libglvnd
+	media-libs/libglvnd[X]
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:2
 	x11-libs/libX11
