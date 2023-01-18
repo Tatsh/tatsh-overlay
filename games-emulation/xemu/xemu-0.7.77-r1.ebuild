@@ -40,12 +40,12 @@ DEPEND="dev-libs/glib
 	dev-libs/openssl
 	dev-libs/xxhash
 	media-libs/libepoxy
+	media-libs/libglvnd[X]
 	media-libs/libsamplerate
 	media-libs/libsdl2
 	net-libs/libpcap
 	net-libs/libslirp
 	sys-libs/zlib
-	virtual/opengl
 	x11-libs/gtk+:3
 	x11-libs/pixman
 	aio? ( dev-libs/libaio )
