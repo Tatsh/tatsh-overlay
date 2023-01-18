@@ -24,7 +24,6 @@ DEPEND="dev-libs/glib
 	media-libs/fontconfig
 	media-libs/freetype
 	media-libs/harfbuzz
-	media-libs/libglvnd
 	media-libs/libsdl2
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
@@ -38,7 +37,7 @@ DEPEND="dev-libs/glib
 	openal? ( media-libs/openal )
 	alsa? ( media-libs/alsa-lib )
 	xv? ( x11-libs/libXv )
-	opengl? ( virtual/opengl )
+	opengl? ( media-libs/libglvnd[X] )
 	pulseaudio? ( media-libs/libpulse )
 	sdl? ( media-libs/libsdl[X,joystick,video] )
 	udev? ( virtual/udev )"
