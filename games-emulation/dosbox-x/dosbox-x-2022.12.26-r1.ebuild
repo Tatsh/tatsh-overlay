@@ -23,7 +23,6 @@ DEPEND="debug? ( sys-libs/ncurses:0= )
 		media-sound/fluidsynth
 	)
 	mt-32? ( media-libs/munt-mt32emu )
-	opengl? ( virtual/opengl )
 	screenshots? ( media-libs/libpng:0= )
 	X? (
 		x11-libs/libX11
@@ -32,7 +31,7 @@ DEPEND="debug? ( sys-libs/ncurses:0= )
 		x11-libs/libxkbfile
 	)
 	media-libs/alsa-lib
-	media-libs/libglvnd
+	opengl? ( media-libs/libglvnd[X?] )
 	media-libs/libsdl2[X?]
 	media-libs/sdl2-net
 	net-libs/libpcap
