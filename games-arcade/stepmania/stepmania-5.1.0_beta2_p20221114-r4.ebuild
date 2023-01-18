@@ -32,7 +32,7 @@ DEPEND="X? ( x11-libs/libX11 )
 	dev-libs/libtommath
 	media-libs/glew
 	media-libs/glu
-	media-libs/libglvnd[X]
+	media-libs/libglvnd[X?]
 	media-libs/libjpeg-turbo
 	media-libs/libpng
 	media-video/ffmpeg
