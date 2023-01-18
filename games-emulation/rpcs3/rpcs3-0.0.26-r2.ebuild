@@ -42,7 +42,7 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	dev-qt/qtsvg
 	dev-qt/qtwidgets:5
 	media-libs/glew:0
-	media-libs/libglvnd
+	media-libs/libglvnd[X]
 	media-libs/libpng:*
 	media-libs/openal
 	media-video/ffmpeg
@@ -51,7 +51,6 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	sys-libs/zlib
 	media-libs/libjpeg-turbo
 	virtual/libusb:1
-	virtual/opengl
 	virtual/udev
 	x11-libs/libX11
 	faudio? ( app-emulation/faudio )
