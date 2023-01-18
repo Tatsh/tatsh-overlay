@@ -21,7 +21,6 @@ RDEPEND="dev-libs/glib
 	media-libs/fontconfig
 	media-libs/freetype
 	media-libs/libglvnd
-	virtual/opengl
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:2
 	x11-libs/libX11
