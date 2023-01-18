@@ -24,7 +24,7 @@ RDEPEND="app-arch/bzip2
 	app-arch/lz4
 	media-libs/alsa-lib
 	media-libs/flac
-	media-libs/libglvnd
+	media-libs/libglvnd[X]
 	media-libs/libogg
 	media-libs/libsndfile
 	media-libs/libsdl2
@@ -33,7 +33,6 @@ RDEPEND="app-arch/bzip2
 	media-libs/libpulse
 	virtual/glu
 	virtual/jack
-	virtual/opengl
 	virtual/udev
 	media-video/ffmpeg
 	virtual/libusb"
