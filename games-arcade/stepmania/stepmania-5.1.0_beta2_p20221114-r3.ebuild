@@ -32,12 +32,11 @@ DEPEND="X? ( x11-libs/libX11 )
 	dev-libs/libtommath
 	media-libs/glew
 	media-libs/glu
-	media-libs/libglvnd
+	media-libs/libglvnd[X]
 	media-libs/libjpeg-turbo
 	media-libs/libpng
 	media-video/ffmpeg
 	sys-libs/zlib
-	virtual/opengl
 	virtual/udev
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:2
