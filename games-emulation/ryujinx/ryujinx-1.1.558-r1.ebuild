@@ -310,12 +310,12 @@ DEPEND="sys-libs/zlib"
 RDEPEND="${DEPEND}
 	dev-libs/icu
 	dev-libs/openssl
+	media-libs/libglvnd[X]
 	media-libs/libsdl2
 	media-libs/libsoundio
 	media-libs/openal
 	media-video/ffmpeg
-	x11-libs/gtk+:3
-	virtual/opengl"
+	x11-libs/gtk+:3"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
