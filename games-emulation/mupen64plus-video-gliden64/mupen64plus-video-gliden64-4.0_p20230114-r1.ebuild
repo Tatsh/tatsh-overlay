@@ -13,9 +13,8 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-DEPEND="virtual/opengl
-	media-libs/freetype
-	media-libs/libglvnd
+DEPEND="media-libs/freetype
+	media-libs/libglvnd[X]
 	media-libs/libpng
 	sys-libs/zlib"
 RDEPEND="${DEPEND}"
