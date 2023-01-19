@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake desktop
 
 DESCRIPTION="Software for the 40Mhz USB-3.0 RF sampler (harrypm fork)."
 HOMEPAGE="https://github.com/simoninns/DomesdayDuplicator"
@@ -24,3 +24,13 @@ DEPEND="dev-libs/qcustomplot
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
 S="${WORKDIR}/${MY_PN}-${SHA}/Linux-Application"
+
+src_install() {
+	cmake_src_install
+	einstalldocs
+	local size
+	for size in 128 16 24 256 32 48 64; do
+		newicon -s "$size" "${MY_PN}/Graphics/ApplicationIcon/${MY_PN}_${size}x${size}.png" "${PN}.png"
+	done
+	make_desktop_entry "$MY_PN" "$PN"
+}
