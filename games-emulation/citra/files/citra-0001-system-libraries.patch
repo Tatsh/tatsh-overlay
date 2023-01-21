@@ -1,15 +1,15 @@
-From ce7db24554a37d8bfe357a6265f51f21c4c45a59 Mon Sep 17 00:00:00 2001
+From 7b94d58c77978e5488afe94145ccb818f2e0748c Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/3] System libraries
 
 ---
- CMakeLists.txt            | 12 ++++++-
- externals/CMakeLists.txt  | 76 ++++++++++++++++++++++++++++-----------
+ CMakeLists.txt            | 12 +++++-
+ externals/CMakeLists.txt  | 83 +++++++++++++++++++++++++++------------
  src/citra/CMakeLists.txt  |  7 +++-
- src/common/CMakeLists.txt |  8 +++--
+ src/common/CMakeLists.txt |  8 +++-
  src/core/CMakeLists.txt   |  2 +-
- 5 files changed, 79 insertions(+), 26 deletions(-)
+ 5 files changed, 82 insertions(+), 30 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index c98cc3a09..b76e44ed1 100644
@@ -42,10 +42,10 @@ index c98cc3a09..b76e44ed1 100644
  configure_file(${PROJECT_SOURCE_DIR}/dist/compatibility_list/compatibility_list.qrc
                 ${PROJECT_BINARY_DIR}/dist/compatibility_list/compatibility_list.qrc
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index dba0f3cfc..6e4be4601 100644
+index 12831f343..45f5b2c1f 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -10,35 +10,49 @@ include(DownloadExternals)
+@@ -10,30 +10,35 @@ include(DownloadExternals)
  include(ExternalProject)
  
  # Boost
@@ -79,12 +79,23 @@ index dba0f3cfc..6e4be4601 100644
 +find_package(Catch2 REQUIRED)
  
  # Crypto++
--add_subdirectory(cryptopp)
+-set(CRYPTOPP_BUILD_DOCUMENTATION OFF)
+-set(CRYPTOPP_BUILD_TESTING OFF)
+-set(CRYPTOPP_INSTALL OFF)
+-add_subdirectory(cryptopp-cmake)
+-
 +if (NOT USE_SYSTEM_CRYPTOPP)
-+    add_subdirectory(cryptopp)
++    set(CRYPTOPP_BUILD_DOCUMENTATION OFF)
++    set(CRYPTOPP_BUILD_TESTING OFF)
++    set(CRYPTOPP_INSTALL OFF)
++    add_subdirectory(cryptopp-cmake)
 +else()
 +    find_library(CRYPTOPP_LIBS cryptopp REQUIRED)
 +endif()
+ # HACK: The logic to set up the base include directory for CryptoPP does not work with Android SDK CMake 3.22.1.
+ # Until there is a fixed version available, this code will detect and add in the proper include if it does not exist.
+ if(ANDROID)
+@@ -50,12 +55,20 @@ endif()
  
  # fmt and Xbyak need to be added before dynarmic
  # libfmt
@@ -108,7 +119,7 @@ index dba0f3cfc..6e4be4601 100644
  endif()
  
  # Dynarmic
-@@ -57,7 +71,11 @@ endif()
+@@ -74,7 +87,11 @@ endif()
  add_subdirectory(glad)
  
  # inih
@@ -121,7 +132,7 @@ index dba0f3cfc..6e4be4601 100644
  
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -76,7 +94,11 @@ add_subdirectory(soundtouch)
+@@ -93,7 +110,11 @@ add_subdirectory(soundtouch)
  target_include_directories(SoundTouch INTERFACE ./soundtouch/include)
  
  # Teakra
@@ -134,7 +145,7 @@ index dba0f3cfc..6e4be4601 100644
  
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-@@ -87,17 +109,29 @@ endif()
+@@ -104,17 +125,29 @@ endif()
  set(ZSTD_LEGACY_SUPPORT OFF)
  set(ZSTD_BUILD_PROGRAMS OFF)
  set(ZSTD_BUILD_SHARED OFF)
@@ -221,5 +232,5 @@ index 0f473f6fc..82b471ad4 100644
  
  if (ENABLE_WEB_SERVICE)
 -- 
-2.39.0
+2.39.1
 

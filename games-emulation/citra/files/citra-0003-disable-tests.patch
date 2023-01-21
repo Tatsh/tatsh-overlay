@@ -1,4 +1,4 @@
-From e05da5179b8fb9a0efe5c61f397f781a65d0903f Mon Sep 17 00:00:00 2001
+From 2c101015d8106d0b2feb98f342812a59c25a8e34 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 8 Jan 2023 14:34:44 -0500
 Subject: [PATCH 3/3] Disable tests
@@ -20,5 +20,5 @@ index f59607d66..a4df2ab54 100644
  if (ENABLE_SDL2)
      add_subdirectory(citra)
 -- 
-2.39.0
+2.39.1
 

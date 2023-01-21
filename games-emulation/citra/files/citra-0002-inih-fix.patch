@@ -1,4 +1,4 @@
-From 5665361e6c1fbefa90aca21e9819ed65659a5b32 Mon Sep 17 00:00:00 2001
+From 9d54fdf25bfb4dbed5982a95b574ce3f3e0858dd Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:47 -0400
 Subject: [PATCH 2/3] inih fix
@@ -21,5 +21,5 @@ index 64d33a930..c32d52dcb 100644
  #include "citra/default_ini.h"
  #include "common/file_util.h"
 -- 
-2.39.0
+2.39.1
 
