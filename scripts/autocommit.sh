@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-cd "$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)/.."
+contains-element() {
+    local e match="$1"
+    shift
+    for e; do [[ $e == "$match" ]] && return 0; done
+    return 1
+}
+cd "$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)/.." || exit 1
 test_install=(
     games-arcade/outfox
 )
@@ -12,9 +18,8 @@ while read -r ebuild; do
         popd || exit 1
         continue
     fi
-    old_ifs="$IFS"
     phases=(clean manifest prepare)
-    if [[ " ${test_install[*]} " =~ " ${cat}/${pn} " ]]; then
+    if contains-element "${cat}/${pn}" "${test_install[@]}"; then
         phases+=(install)
     fi
     ebuild ./*.ebuild "${phases[@]}" && git add . && pkgdev commit
