@@ -1,12 +1,8 @@
 #!/usr/bin/env python
 from dataclasses import dataclass
 from functools import cmp_to_key, lru_cache
-from os import environ
 from os.path import basename, dirname, join as path_join, realpath, splitext
 from os.path import expanduser
-from pathlib import Path
-from shutil import copytree
-from tempfile import TemporaryDirectory
 from typing import (Any, Callable, Dict, Final, Iterator, Mapping, Optional,
                     Sequence, Set, Tuple, TypeVar, Union, cast)
 from urllib.parse import urlparse
@@ -224,6 +220,7 @@ def get_props(search_dir: str,
             log.debug('Ignoring %s', catpkg)
             continue
         src_uri = get_first_src_uri(match)
+        parsed_uri = urlparse(src_uri)
         if cat.startswith('acct-') or catpkg in settings.ignored_packages:
             continue
         elif catpkg in settings.custom_livechecks:
@@ -299,8 +296,8 @@ def get_props(search_dir: str,
                         str(len(version)) + r'})[0-9a-f]*</id>'), False)
             else:
                 raise ValueError(f'Unhandled GitHub package: {catpkg}')
-        elif (src_uri.startswith('https://gist.github.com')
-              or src_uri.startswith('https://gist.githubusercontent.com')):
+        elif (parsed_uri.hostname == 'gist.github.com'
+              or parsed_uri.hostname == 'gist.githubusercontent.com'):
             home = P.aux_get(match, ['HOMEPAGE'])[0]
             yield (cat, pkg, ebuild_version, ebuild_version,
                    f'{home}/revisions',
@@ -315,7 +312,7 @@ def get_props(search_dir: str,
                    P.aux_get(match, ['HOMEPAGE'])[0],
                    (r'\b' + pkg.replace('-', r'[-_]') + r'-([^"]+)\.tar\.gz'),
                    True)
-        elif 'download.jetbrains.com' in src_uri:
+        elif parsed_uri.hostname == 'download.jetbrains.com':
             yield (cat, pkg, ebuild_version, ebuild_version,
                    'https://www.jetbrains.com/updates/updates.xml', None, True)
         elif src_uri.startswith(
@@ -491,7 +488,8 @@ def main() -> int:
         raise ValueError('Expected SHA line to be present')
 
     def get_new_sha(src: str) -> str:
-        if ('github.com' in src and src.endswith('.atom')):
+        parsed_src = urlparse(src)
+        if (parsed_src.hostname == 'github.com' and src.endswith('.atom')):
             m = re.search(make_github_grit_commit_re(40 * ' '),
                           requests.get(src).content.decode())
             assert m is not None
@@ -504,7 +502,8 @@ def main() -> int:
             exclude=args.exclude):
         log.debug('Fetching %s', url)
         headers = {}
-        if 'api.github.com' in url:
+        parsed_uri = urlparse(url)
+        if parsed_uri.hostname == 'api.github.com':
             log.debug('Adding authorization header')
             headers['Authorization'] = f'token {get_github_api_credentials()}'
         try:
@@ -556,7 +555,7 @@ def main() -> int:
                 assert top_hash in prefixes
                 top_hash = f'{prefixes[top_hash]}{top_hash}'
             if (re.match(r'[0-9]{4}-[0-9]{2}-[0-9]{2}$', top_hash)
-                    and 'gist.github.com' in url):
+                    and parsed_uri.hostname == 'gist.github.com'):
                 top_hash = top_hash.replace('-', '')
             log.debug('top_hash = %s', top_hash)
             log.debug(
