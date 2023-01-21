@@ -435,8 +435,8 @@ EGO_SUM=(
 	"golang.org/x/text v0.3.3/go.mod"
 	"golang.org/x/text v0.3.4/go.mod"
 	"golang.org/x/text v0.3.6/go.mod"
-	"golang.org/x/text v0.3.7"
-	"golang.org/x/text v0.3.7/go.mod"
+	"golang.org/x/text v0.6.0"
+	"golang.org/x/text v0.6.0/go.mod"
 	"golang.org/x/time v0.0.0-20181108054448-85acf8d2951c/go.mod"
 	"golang.org/x/time v0.0.0-20190308202827-9d24e82272b4/go.mod"
 	"golang.org/x/time v0.0.0-20191024005414-555d28b269f0/go.mod"
@@ -616,7 +616,6 @@ EGO_SUM=(
 	"rsc.io/quote/v3 v3.1.0/go.mod"
 	"rsc.io/sampler v1.3.0/go.mod"
 )
-
 go-module_set_globals
 
 MY_PN=$(ver_cut 1 ${PN})
