@@ -15,7 +15,7 @@ IUSE="cron www"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
-FTL_VERSION="5.14.2"
+FTL_VERSION="5.15"
 RDEPEND="${DEPEND}
 	>=net-dns/${PN}-ftl-${FTL_VERSION}
 	app-admin/sudo
@@ -35,9 +35,9 @@ src_prepare() {
 		-i gravity.sh \
 			"$PN" \
 			advanced/Scripts/*.sh \
-			advanced/Scripts/database_migration/gravity-db.sh \
+			advanced/Templates/*.sh \
+			advanced/Scripts/database_migration/*.sh \
 			advanced/Templates/${PN}.cron \
-			advanced/index.php \
 			advanced/01-${PN}.conf \
 			advanced/06-rfc6761.conf \
 			advanced/Templates/gravity_copy.sql \
