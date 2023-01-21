@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="41bba5310a5324f54fa5c0200aff2bf697ced000"
+SHA="2747f125918951673b298964889276ded5de935d"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.18
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -60,10 +60,10 @@ NUGETS="avalonia-0.10.18
 	microsoft.csharp-4.7.0
 	microsoft.dotnet.platformabstractions-3.1.6
 	microsoft.extensions.dependencymodel-6.0.0
-	microsoft.identitymodel.abstractions-6.25.1
-	microsoft.identitymodel.jsonwebtokens-6.25.1
-	microsoft.identitymodel.logging-6.25.1
-	microsoft.identitymodel.tokens-6.25.1
+	microsoft.identitymodel.abstractions-6.26.0
+	microsoft.identitymodel.jsonwebtokens-6.26.0
+	microsoft.identitymodel.logging-6.26.0
+	microsoft.identitymodel.tokens-6.26.0
 	microsoft.netcore.app.host.osx-x64-7.0.2
 	microsoft.netcore.app.host.win-x64-7.0.2
 	microsoft.netcore.app.runtime.linux-x64-7.0.2
@@ -202,7 +202,7 @@ NUGETS="avalonia-0.10.18
 	system.globalization-4.3.0
 	system.globalization.calendars-4.0.1
 	system.globalization.extensions-4.0.1
-	system.identitymodel.tokens.jwt-6.25.1
+	system.identitymodel.tokens.jwt-6.26.0
 	system.io-4.1.0
 	system.io-4.3.0
 	system.io.compression-4.1.0
@@ -283,6 +283,7 @@ NUGETS="avalonia-0.10.18
 	system.text.encoding.codepages-4.5.1
 	system.text.encoding.codepages-6.0.0
 	system.text.encoding.extensions-4.0.11
+	system.text.encodings.web-4.7.2
 	system.text.encodings.web-6.0.0
 	system.text.json-4.7.2
 	system.text.json-6.0.0
@@ -333,4 +334,3 @@ src_install() {
 	make_desktop_entry "/usr/bin/${MY_PN}" "${MY_PN}" "${PN}"
 	einstalldocs
 }
-
