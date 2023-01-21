@@ -1,26 +1,28 @@
-From 4a9a745f17dc7e6f5da8f1f87d6affcdb1f7fc27 Mon Sep 17 00:00:00 2001
+From 4a94ccf0662453cfc9bdaa7ed2397b5cdab1db4d Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 1 Jan 2023 15:10:05 -0500
 Subject: [PATCH] more path fixes
 
 ---
- padd.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ padd.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/padd.sh b/padd.sh
-index 9a1db47..61bbab9 100755
+index bbae894..ebcdff8 100755
 --- a/padd.sh
 +++ b/padd.sh
-@@ -249,7 +249,7 @@ GetSystemInformation() {
+@@ -245,8 +245,8 @@ GetSystemInformation() {
    elif [ -f /tmp/sysinfo/model ]; then
      sys_model=$(tr -d '\0' < /tmp/sysinfo/model)
    elif [ -n "${DOCKER_VERSION}" ]; then
 -    # Docker image. DOCKER_VERSION is read from /etc/pihole/versions
+-    sys_model="Container"
 +    # Docker image. DOCKER_VERSION is read from /var/lib/pihole/localversions
-     sys_model="Docker tag ${DOCKER_VERSION}"
++    sys_model="Docker tag ${DOCKER_VERSION}"
    fi
  
-@@ -433,7 +433,7 @@ fi
+   # Cleaning device model from useless OEM information
+@@ -429,7 +429,7 @@ fi
  
  GetVersionInformation() {
    # Check if version status has been saved
@@ -29,7 +31,7 @@ index 9a1db47..61bbab9 100755
  
    out_of_date_flag=false
  
-@@ -1148,7 +1148,7 @@ OutputJSON() {
+@@ -1197,7 +1197,7 @@ OutputJSON() {
  
  StartupRoutine(){
    # Get config variables
@@ -38,7 +40,7 @@ index 9a1db47..61bbab9 100755
  
    # Clear the screen and move cursor to (0,0).
    # This mimics the 'clear' command.
-@@ -1161,7 +1161,7 @@ StartupRoutine(){
+@@ -1210,7 +1210,7 @@ StartupRoutine(){
    moveYOffset
  
    # Get versions information
@@ -47,7 +49,7 @@ index 9a1db47..61bbab9 100755
  
    if [ "$1" = "pico" ] || [ "$1" = "nano" ] || [ "$1" = "micro" ]; then
      moveXOffset; PrintLogo "$1"
-@@ -1275,7 +1275,7 @@ NormalPADD() {
+@@ -1331,7 +1331,7 @@ NormalPADD() {
  
      # Get uptime, CPU load, temp, etc. every 5 seconds
      if [ $((now - LastCheckSystemInformation)) -ge 5 ]; then
@@ -56,7 +58,7 @@ index 9a1db47..61bbab9 100755
        GetSystemInformation
        LastCheckSystemInformation="${now}"
      fi
-@@ -1300,7 +1300,7 @@ NormalPADD() {
+@@ -1356,7 +1356,7 @@ NormalPADD() {
  
      # Get Pi-hole components version information every 30 seconds
      if [ $((now - LastCheckVersionInformation)) -ge 30 ]; then
@@ -65,7 +67,7 @@ index 9a1db47..61bbab9 100755
        GetVersionInformation
        LastCheckVersionInformation="${now}"
      fi
-@@ -1375,7 +1375,7 @@ main(){
+@@ -1431,7 +1431,7 @@ main(){
  
      # If setupVars.conf is not present, then PADD is not running on a Pi-hole
      # and we are not able to start as StartupRoutine() will fail below
@@ -75,5 +77,5 @@ index 9a1db47..61bbab9 100755
        exit 1
      fi
 -- 
-2.39.0
+2.39.1
 
