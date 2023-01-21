@@ -7,7 +7,7 @@ inherit cmake desktop wrapper
 
 DESCRIPTION="Experimental PlayStation Vita emulator."
 HOMEPAGE="https://vita3k.org https://github.com/Vita3K/Vita3K"
-SHA="3a9892fe4ddeeee8c2b264be5d4359cc0f343f9d"
+SHA="81eb58b24028463eb818dc93c76d7af1f914622e"
 BETTER_ENUMS_SHA="1e8f499ddff8eec43129ac974eebdfb745920643"
 CRYPTO_ALGORITHMS_SHA="cb9ea3fada60f9b01e9133d7db4d3e08171d0565"
 DLMALLOC_SHA="e98f4ee160380d7c39dc1f04e7488bcf0770d391"
@@ -75,7 +75,6 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/Vita3K-${SHA}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-fix-assertion.patch"
 	"${FILESDIR}/${PN}-gentoo.patch"
 	"${FILESDIR}/${PN}-psvpfsparser-link.patch"
 )
