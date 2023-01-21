@@ -1,7 +1,7 @@
-From 01e472ee3b1cfdae1b23c53a5b97be84ac4c970b Mon Sep 17 00:00:00 2001
+From f70cda7133f984090c4d95bc0ac024b5433ddaba Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:13 -0500
-Subject: [PATCH 2/4] settings: disable power off and restart system buttons
+Subject: [PATCH 2/3] settings: disable power off and restart system buttons
 
 Update paths
 ---
@@ -9,7 +9,7 @@ Update paths
  1 file changed, 24 insertions(+), 11 deletions(-)
 
 diff --git a/settings.php b/settings.php
-index 7ff980f6..045e6d0a 100644
+index f024b894..4fe6fe13 100644
 --- a/settings.php
 +++ b/settings.php
 @@ -14,7 +14,7 @@ require_once 'scripts/pi-hole/php/FTL.php';
@@ -72,5 +72,5 @@ index 7ff980f6..045e6d0a 100644
      while (!feof($dhcpleases) && $leasesfile) {
          $line = explode(' ', trim(fgets($dhcpleases)));
 -- 
-2.38.0
+2.39.1
 

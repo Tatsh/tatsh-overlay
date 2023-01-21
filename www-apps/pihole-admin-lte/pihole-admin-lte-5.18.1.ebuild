@@ -28,7 +28,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0001-path-changes.patch"
 	"${FILESDIR}/${PN}-0002-settings-disable-power-off-a.patch"
 	"${FILESDIR}/${PN}-0003-footer-remove-update-message.patch"
-	"${FILESDIR}/${PN}-0004-header-add-hwmon_name.patch"
 )
 
 pkg_setup() {

@@ -1,14 +1,14 @@
-From 34cbb1cef9a3622791abaa985c9d0482ae746398 Mon Sep 17 00:00:00 2001
+From 48edc81b486117c4970c84c8c0c4adb2fc3ffa91 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:24 -0500
-Subject: [PATCH 3/4] footer: remove update message
+Subject: [PATCH 3/3] footer: remove update message
 
 ---
  scripts/pi-hole/php/footer.php | 9 +--------
  1 file changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/scripts/pi-hole/php/footer.php b/scripts/pi-hole/php/footer.php
-index c4ca7a1d..7c0bca1e 100644
+index e96cf20a..34e889a6 100644
 --- a/scripts/pi-hole/php/footer.php
 +++ b/scripts/pi-hole/php/footer.php
 @@ -88,14 +88,7 @@ if (isset($core_commit) || isset($web_commit) || isset($FTL_commit)) {
@@ -28,5 +28,5 @@ index c4ca7a1d..7c0bca1e 100644
          </div>
      </footer>
 -- 
-2.38.0
+2.39.1
 
