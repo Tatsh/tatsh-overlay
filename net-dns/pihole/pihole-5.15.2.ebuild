@@ -11,7 +11,7 @@ SRC_URI="https://github.com/pi-hole/pi-hole/archive/v${PV}.tar.gz -> ${P}.tar.gz
 LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-IUSE="cron www"
+IUSE="cron"
 
 DEPEND="acct-user/${PN}
 	acct-group/${PN}"
@@ -74,11 +74,6 @@ src_install() {
 	if use cron; then
 		insinto /etc/cron.d
 		newins advanced/Templates/${PN}.cron ${PN}
-	fi
-
-	if use www; then
-		insinto /usr/share/webapps/${PN}-blocking-page
-		doins advanced/index.php
 	fi
 
 	doman manpages/${PN}*

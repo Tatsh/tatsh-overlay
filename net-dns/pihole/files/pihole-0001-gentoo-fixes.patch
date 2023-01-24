@@ -1,4 +1,4 @@
-From 3024decde538b60f36e08cb8d505b2e9c3177f5e Mon Sep 17 00:00:00 2001
+From 79acf2350102543eca63f231559cfcd3b4933894 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:11 -0500
 Subject: [PATCH] Gentoo fixes
@@ -1336,7 +1336,7 @@ index ff4abf3a..26047528 100755
      chown -h pihole:pihole /var/log/pihole-FTL.log
  fi
 diff --git a/advanced/Templates/pihole-FTL.service b/advanced/Templates/pihole-FTL.service
-index 15096972..55c2c2cd 100644
+index 460339ae..f2cd6f4d 100644
 --- a/advanced/Templates/pihole-FTL.service
 +++ b/advanced/Templates/pihole-FTL.service
 @@ -10,7 +10,7 @@
@@ -1348,15 +1348,15 @@ index 15096972..55c2c2cd 100644
  utilsfile="${PI_HOLE_SCRIPT_DIR}/utils.sh"
  # shellcheck disable=SC1090
  . "${utilsfile}"
-@@ -36,7 +36,7 @@ start() {
-       su -s /bin/sh -c "/usr/bin/pihole-FTL" pihole || exit $?
+@@ -41,7 +41,7 @@ start() {
+       su -s /bin/sh -c "/usr/bin/pihole-FTL" pihole
      else
        echo "Warning: Starting pihole-FTL as root because setting capabilities is not supported on this system"
--      /usr/bin/pihole-FTL || exit $?
+-      /usr/bin/pihole-FTL
 +      @EPREFIX@/usr/bin/pihole-FTL
      fi
-     echo
-   fi
+     rc=$?
+     # Cleanup if startup failed
 diff --git a/advanced/Templates/pihole.cron b/advanced/Templates/pihole.cron
 index c62d31ab..a1d47fa3 100644
 --- a/advanced/Templates/pihole.cron
@@ -1399,7 +1399,7 @@ index 708309be..00000000
 -# Please see LICENSE file for your rights under this license.
 -#
 diff --git a/gravity.sh b/gravity.sh
-index a5c944ce..2efd3700 100755
+index c2795442..7b088357 100755
 --- a/gravity.sh
 +++ b/gravity.sh
 @@ -13,15 +13,16 @@
@@ -1452,7 +1452,7 @@ index a5c944ce..2efd3700 100755
  if [[ -f "${pihole_FTL}" ]]; then
    source "${pihole_FTL}"
  fi
-@@ -952,7 +953,7 @@ if [[ "${forceDelete:-}" == true ]]; then
+@@ -981,7 +982,7 @@ if [[ "${forceDelete:-}" == true ]]; then
    str="Deleting existing list cache"
    echo -ne "${INFO} ${str}..."
  
