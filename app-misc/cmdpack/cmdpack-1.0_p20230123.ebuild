@@ -3,7 +3,7 @@
 
 EAPI=7
 
-SHA="480428199a1c92e0ad0d8b1a5f5ddbaaad5d7b64"
+SHA="6674a1068d890279fad613ae37e7a170475f8970"
 SRC_URI="https://github.com/cmdpack/cmdpack/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}-${SHA}"
 KEYWORDS="~amd64 ~ppc64 ~x86"
