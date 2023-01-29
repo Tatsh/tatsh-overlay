@@ -1,9 +1,9 @@
-# Copyright 2022 Gentoo Authors
+# Copyright 2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-inherit multiprocessing systemd yarn
+inherit systemd yarn
 
 DESCRIPTION="Full access to zwave-js driver through Websockets"
 HOMEPAGE="https://github.com/zwave-js/zwave-js-server#readme"
@@ -16,7 +16,7 @@ YARN_PKGS=(
 	@esm2cjs/cacheable-lookup-7.0.0
 	@esm2cjs/cacheable-request-10.2.1
 	@esm2cjs/form-data-encoder-2.1.3
-	@esm2cjs/got-12.5.1
+	@esm2cjs/got-12.5.3
 	@esm2cjs/http-timer-5.0.1
 	@esm2cjs/is-5.3.0
 	@esm2cjs/lowercase-keys-3.0.0
@@ -49,15 +49,15 @@ YARN_PKGS=(
 	@serialport/parser-spacepacket-10.3.0
 	@serialport/stream-10.3.0
 	@types/http-cache-semantics-4.0.1
-	@zwave-js/cc-10.3.0
-	@zwave-js/config-10.3.0
-	@zwave-js/core-10.3.0
-	@zwave-js/host-10.3.0
-	@zwave-js/nvmedit-10.3.0
-	@zwave-js/serial-10.3.0
-	@zwave-js/server-1.24.1
-	@zwave-js/shared-10.3.0
-	@zwave-js/testing-10.3.0
+	@zwave-js/cc-10.5.2
+	@zwave-js/config-10.5.2
+	@zwave-js/core-10.5.0
+	@zwave-js/host-10.5.2
+	@zwave-js/nvmedit-10.5.0
+	@zwave-js/serial-10.5.2
+	@zwave-js/server-1.25.0
+	@zwave-js/shared-10.4.0
+	@zwave-js/testing-10.5.2
 	agent-base-6.0.2
 	alcalzone-shared-4.0.8
 	ansi-colors-4.1.3
@@ -106,7 +106,7 @@ YARN_PKGS=(
 	isexe-2.0.0
 	json-buffer-3.0.1
 	json-logic-js-2.0.2
-	json5-2.2.1
+	json5-2.2.3
 	jsonfile-6.1.0
 	keyv-4.5.0
 	kuler-2.0.0
@@ -171,7 +171,7 @@ YARN_PKGS=(
 	yallist-4.0.0
 	yargs-17.6.0
 	yargs-parser-21.1.1
-	zwave-js-10.3.0
+	zwave-js-10.5.4
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
@@ -182,7 +182,6 @@ KEYWORDS="~amd64"
 S="${WORKDIR}"
 
 src_install() {
-	yarn_src_install
 	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/"{client,server}.js
 	dosym "../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/client.js" /usr/bin/zwave-client
 	dosym "../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/server.js" /usr/bin/zwave-server
