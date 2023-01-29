@@ -8,7 +8,7 @@ inherit mpv-plugin
 
 DESCRIPTION="API to allow scripts to create interactive scrollable lists in mpv player."
 HOMEPAGE="https://github.com/CogentRedTester/mpv-dvd-browser"
-SHA="502258c429dad6a0d9aca93b37e7c31340cfd109"
+SHA="1e89d712fc1c02df4c304600fb7bc51bb57d42fb"
 SRC_URI="https://github.com/CogentRedTester/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
