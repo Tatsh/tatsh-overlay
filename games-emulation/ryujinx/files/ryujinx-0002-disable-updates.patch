@@ -1,4 +1,4 @@
-From 1d2a209d53c0032f822fec8bf5de449893920cf1 Mon Sep 17 00:00:00 2001
+From 8c747df2e1fd56438c8a1bba5fd9938572747ae5 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 22 Nov 2022 07:35:22 -0500
 Subject: [PATCH 2/3] Disable updates
@@ -10,10 +10,10 @@ Subject: [PATCH 2/3] Disable updates
  3 files changed, 1 insertion(+), 32 deletions(-)
 
 diff --git a/Ryujinx/Modules/Updater/Updater.cs b/Ryujinx/Modules/Updater/Updater.cs
-index ded12620..39afa189 100644
+index 2a25e78f..1954807c 100644
 --- a/Ryujinx/Modules/Updater/Updater.cs
 +++ b/Ryujinx/Modules/Updater/Updater.cs
-@@ -532,6 +532,7 @@ namespace Ryujinx.Modules
+@@ -535,6 +535,7 @@ namespace Ryujinx.Modules
  
          public static bool CanUpdate(bool showWarnings)
          {
@@ -22,27 +22,27 @@ index ded12620..39afa189 100644
              if (RuntimeInformation.OSArchitecture != Architecture.X64)
              {
 diff --git a/Ryujinx/Ui/MainWindow.glade b/Ryujinx/Ui/MainWindow.glade
-index 405bc43f..c59c73bd 100644
+index 8ffbb97e..d282dada 100644
 --- a/Ryujinx/Ui/MainWindow.glade
 +++ b/Ryujinx/Ui/MainWindow.glade
-@@ -444,22 +444,6 @@
+@@ -474,22 +474,6 @@
                    <object class="GtkMenu">
                      <property name="visible">True</property>
-                     <property name="can_focus">False</property>
+                     <property name="can-focus">False</property>
 -                    <child>
 -                      <object class="GtkMenuItem" id="UpdateMenuItem">
 -                        <property name="visible">True</property>
--                        <property name="can_focus">False</property>
--                        <property name="tooltip_text" translatable="yes">Check for updates to Ryujinx</property>
+-                        <property name="can-focus">False</property>
+-                        <property name="tooltip-text" translatable="yes">Check for updates to Ryujinx</property>
 -                        <property name="label" translatable="yes">Check for Updates</property>
--                        <property name="use_underline">True</property>
+-                        <property name="use-underline">True</property>
 -                        <signal name="activate" handler="Update_Pressed" swapped="no"/>
 -                      </object>
 -                    </child>
 -                    <child>
 -                      <object class="GtkSeparatorMenuItem">
 -                        <property name="visible">True</property>
--                        <property name="can_focus">False</property>
+-                        <property name="can-focus">False</property>
 -                      </object>
 -                    </child>
                      <child>
@@ -76,5 +76,5 @@ index e39be81a..114b8550 100644
                                    <object class="GtkCheckButton" id="_showConfirmExitToggle">
                                      <property name="label" translatable="yes">Show "Confirm Exit" Dialog</property>
 -- 
-2.38.1
+2.39.1
 
