@@ -1,26 +1,17 @@
-From f70cda7133f984090c4d95bc0ac024b5433ddaba Mon Sep 17 00:00:00 2001
+From 9cb52a46ea67a10e8670a7d0e7ce0559fb780e4c Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:13 -0500
 Subject: [PATCH 2/3] settings: disable power off and restart system buttons
 
 Update paths
 ---
- settings.php | 35 ++++++++++++++++++++++++-----------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ settings.php | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/settings.php b/settings.php
-index f024b894..4fe6fe13 100644
+index af8c5f7d..6e4bbfa4 100644
 --- a/settings.php
 +++ b/settings.php
-@@ -14,7 +14,7 @@ require_once 'scripts/pi-hole/php/FTL.php';
- 
- // Reread ini file as things might have been changed
- // DEFAULT_FTLCONFFILE is set in "scripts/pi-hole/php/FTL.php";
--$setupVars = parse_ini_file('/etc/pihole/setupVars.conf');
-+$setupVars = parse_ini_file("/var/lib/pihole/setupVars.conf");
- $piholeFTLConf = piholeFTLConfig(DEFAULT_FTLCONFFILE, true);
- 
- // Handling of PHP internal errors
 @@ -338,11 +338,11 @@ if ($FTLpid !== 0) {
                                          </div>
                                          <p class="hidden-md hidden-lg"></p>
@@ -35,42 +26,6 @@ index f024b894..4fe6fe13 100644
                                          </div>
                                      </div>
  
-@@ -562,14 +562,27 @@ if (!$DHCP) { ?> disabled<?php } ?>
-                         <!-- DHCP Leases Box -->
-                         <div class="row">
-                             <?php
--$dhcp_leases = array();
--if ($DHCP) {
--    // Read leases file
--    $leasesfile = true;
--    $dhcpleases = @fopen('/etc/pihole/dhcp.leases', 'r');
--    if (!is_resource($dhcpleases)) {
--        $leasesfile = false;
--    }
-+                            $dhcp_leases = array();
-+                            if ($DHCP) {
-+                                // Read leases file
-+                                $leasesfile = true;
-+                                $dhcpleases = @fopen('/var/lib/pihole/dhcp.leases', 'r');
-+                                if (!is_resource($dhcpleases))
-+                                    $leasesfile = false;
-+
-+                                function convertseconds($argument)
-+                                {
-+                                    $seconds = round($argument);
-+                                    if ($seconds < 60) {
-+                                        return sprintf('%ds', $seconds);
-+                                    } elseif ($seconds < 3600) {
-+                                        return sprintf('%dm %ds', ($seconds / 60), ($seconds % 60));
-+                                    } elseif ($seconds < 86400) {
-+                                        return sprintf('%dh %dm %ds', ($seconds / 3600 % 24), ($seconds / 60 % 60), ($seconds % 60));
-+                                    } else {
-+                                        return sprintf('%dd %dh %dm %ds', ($seconds / 86400), ($seconds / 3600 % 24), ($seconds / 60 % 60), ($seconds % 60));
-+                                    }
-+                                }
- 
-     while (!feof($dhcpleases) && $leasesfile) {
-         $line = explode(' ', trim(fgets($dhcpleases)));
 -- 
 2.39.1
 
