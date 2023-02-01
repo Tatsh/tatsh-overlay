@@ -141,7 +141,6 @@ mpv-plugin/mpv-youtube-upnext:autoload - Auto-load the plugin
 mpv-plugin/reload:autoload - Auto-load the plugin
 mpv-plugin/shutup:autoload - Auto-load the plugin
 net-dns/pihole:cron - Installs cron job
-net-dns/pihole:www - Install www files (requires PHP hosting)
 sys-apps/kylemanna-systemd-utils:amazon - Install Amazon Cloud Drive service
 sys-apps/kylemanna-systemd-utils:btrfs - Install units for btrfs
 sys-apps/kylemanna-systemd-utils:cmsis-dap - Unknown
