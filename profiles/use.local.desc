@@ -1,0 +1,163 @@
+# This file is deprecated as per GLEP 56 in favor of metadata.xml. Please add
+# your descriptions to your package's metadata.xml ONLY.
+# * generated automatically using egencache *
+
+app-office/glabels:barcode - Enable barcode support with app-text/barcode
+app-office/glabels:qrcode - Enables QR code support with media-gfx/qrencode
+dev-libs/bincookie:tools - Install extra tools
+dev-libs/wolfssl:debug - Debug support
+dev-libs/wolfssl:sniffer - Enable sniffer via libpcap
+dev-python/numba:tbb - Build with TBB support
+games-action/re3:sanitizer - Build with address sanitiser for better crash logs
+games-action/relcs:sanitizer - Build with address sanitiser for better crash logs
+games-action/revc:sanitizer - Build with address sanitiser for better crash logs
+games-arcade/outfox:bundled-courses - Install bundled courses.
+games-arcade/outfox:bundled-songs - Installed bundled songs.
+games-arcade/stepmania:bundled-courses - Install bundled courses.
+games-arcade/stepmania:bundled-songs - Installed bundled songs.
+games-arcade/stepmania:crash-handler - Enable crash handler
+games-arcade/stepmania:gles2 - Enable GLES2 support
+games-arcade/stepmania:gpl - Enable GPL-compatible build
+games-arcade/stepmania:minimaid - Enable support for Minimaid hardware.
+games-arcade/stepmania:networking - Enable networking support.
+games-arcade/stepmania:parallel-port - Enable parallel port-based input devices.
+games-arcade/stepmania:profiling - Enable profiling.
+games-arcade/stepmania:wav - Enable WAV file support.
+games-arcade/stepmania:xrandr - Enable XRandR support.
+games-emulation/86box:dynrec - Enable dynamic recompiler
+games-emulation/86box:fluidsynth - Use media-sound/fluidsynth for MIDI emulation
+games-emulation/86box:mt-32 - Use media-libs/munt-mt32emu for MT-32 emulation
+games-emulation/86box:new-dynrec - Use the PCem v15 ("new") dynamic recompiler
+games-emulation/bsnes-hd:libretro - Build libretro core
+games-emulation/cemu:cubeb - Enable cubeb audio support
+games-emulation/cemu:discord - Enable rich Discord presence
+games-emulation/cemu:vulkan - Enable Vulkan graphics support
+games-emulation/citra:web-service - Enable web services (telemetry, etc.)
+games-emulation/dosbox-x:core-inline - Enable memory-increasing inlines for better performance but requiring more build time
+games-emulation/dosbox-x:dynrec - Use recompiling cpu core instead of dynamic x86/x64 specific cpu core
+games-emulation/dosbox-x:fluidsynth - Use media-sound/fluidsynth for MIDI emulation
+games-emulation/dosbox-x:fpu - Enable FPU emulation
+games-emulation/dosbox-x:freetype - Enable FreeType support
+games-emulation/dosbox-x:midi - Enable MIDI support (with ALSA)
+games-emulation/dosbox-x:mt-32 - Use media-libs/munt-mt32emu for MT-32 emulation
+games-emulation/dosbox-x:printer - Enable printer emulation
+games-emulation/dosbox-x:screenshots - Screenshots and movie recording
+games-emulation/dosbox-x:slirp - Enable libslirp support
+games-emulation/dosbox-x:unaligned - Enable unaligned memory access
+games-emulation/dosbox-x:xbrz - Enable support for xBRZ pixel scaler
+games-emulation/play:libretro - Build libretro core
+games-emulation/play:vulkan - Enable Vulkan graphics library support
+games-emulation/rpcs3:faudio - Enable audio rendering with app-emulation/faudio
+games-emulation/rpcs3:joystick - Enable support for input devices with evdev
+games-emulation/rpcs3:llvm - LLVM recompiler support
+games-emulation/rpcs3:vulkan - Enable Vulkan graphics library support
+games-emulation/xemu:aio - Add support for AIO
+games-emulation/xemu:io-uring - Enable efficient I/O via sys-libs/liburing
+games-emulation/xemu:malloc-trim - Enable malloc_trim() support
+games-emulation/xemu:membarrier - Enable membarrier syscall support
+games-emulation/yuzu:compatibility-reporting - Enable compatibility reporting
+games-emulation/yuzu:cubeb - Build with cubeb audio backend
+games-emulation/yuzu:web-service - Enable web-services
+games-misc/render96ex:discord - Enable Discord presence
+games-misc/render96ex:eu - Use the EU ROM
+games-misc/render96ex:goddard - Enable enhancements to Mario's face
+games-misc/render96ex:jp - Use the Japanese ROM
+games-misc/render96ex:models - Enable higher quality models
+games-misc/render96ex:texture-fix - Enable texture bug fixes
+games-misc/render96ex:textures - Install high quality texture replacements
+games-misc/render96ex:us - Use the North American ROM
+games-util/raphnet-tech-adapter-manager:firmware - Install firmware
+media-fonts/noto:ancient - Install fonts for historical scripts
+media-fonts/noto:brahmi - Install font for Brahmi script
+media-fonts/noto:coptic - Install Coptic font
+media-fonts/noto:cuneiform - Install Cuneiform font
+media-fonts/noto:cypriot - Install Cypriot font
+media-fonts/noto:deseret - Install Deseret font
+media-fonts/noto:display - Install Display variant fonts
+media-fonts/noto:duployan - Install Duployan font
+media-fonts/noto:extra - Keep extra fonts
+media-fonts/noto:hieroglyphs - Install fonts for hieroglyphs
+media-fonts/noto:l10n_ban - Install fonts for Balinese script
+media-fonts/noto:l10n_bax - Install fonts for Bamum syllabary
+media-fonts/noto:l10n_ber - Install fonts for Berber script
+media-fonts/noto:l10n_bho - Install fonts for Kaithi script
+media-fonts/noto:l10n_bku - Install fonts for Buhid
+media-fonts/noto:l10n_blt - Install fonts for Tai Viet
+media-fonts/noto:l10n_bsq - Install fonts for Bassa alphabet (Vah)
+media-fonts/noto:l10n_bug - Install fonts for Buginese
+media-fonts/noto:l10n_bya - Install fonts for Tagbanwa alphabet
+media-fonts/noto:l10n_ccp - Install fonts for Chakma
+media-fonts/noto:l10n_cja - Install fonts for Cham
+media-fonts/noto:l10n_cmr - Install fonts for Mro
+media-fonts/noto:l10n_dv - Install fonts for Thaana
+media-fonts/noto:l10n_eky - Instal fonts for Kayah Li
+media-fonts/noto:l10n_hnn - Install fonts for Hanunó'o
+media-fonts/noto:l10n_hoc - Install fonts for Warang Citi
+media-fonts/noto:l10n_ii - Install fonts for Yi syllabary
+media-fonts/noto:l10n_iu - Install fonts for Canadian Aboriginal script
+media-fonts/noto:l10n_jv - Install fonts for Javanese script
+media-fonts/noto:l10n_khb - Install fonts for Tai Tham alphabet
+media-fonts/noto:l10n_kv - Install fonts for Old Permic script
+media-fonts/noto:l10n_lep - Install fonts for Lepcha
+media-fonts/noto:l10n_lif - Install fonts for Limbu
+media-fonts/noto:l10n_lis - Install fonts for Lisu (Fraser alphabet)
+media-fonts/noto:l10n_men - Install fonts for Mende Kikakui script
+media-fonts/noto:l10n_mjl - Install fonts for Takri script
+media-fonts/noto:l10n_mww - Install fonts for Pahawh Hmong and Miao
+media-fonts/noto:l10n_new - Install fonts for Newar
+media-fonts/noto:l10n_nod - Install fonts for Thai Tham alphabet
+media-fonts/noto:l10n_nqo - Install fonts for N'Ko alphabet
+media-fonts/noto:l10n_osa - Install fonts for Osage
+media-fonts/noto:l10n_rej - Install fonts for Rejang
+media-fonts/noto:l10n_saz - Install fonts for Saurashtra script
+media-fonts/noto:l10n_skr - Install fonts for Saraiki
+media-fonts/noto:l10n_srb - Install fonts for Sora Sompeng
+media-fonts/noto:l10n_su - Install fonts for Sundanese
+media-fonts/noto:l10n_syl - Install fonts for Sylheti
+media-fonts/noto:l10n_tbw - Install fonts for Tagbanwa alphabet
+media-fonts/noto:l10n_tmh - Install fonts for Tifinagh alphabet
+media-fonts/noto:l10n_vai - Install fonts for Vai syllabary
+media-fonts/noto:linear - Install Linear (Minoan) fonts
+media-fonts/noto:mono - Install monospace fonts
+media-fonts/noto:music - Install font for music notation
+media-fonts/noto:old-arabian - Install fonts for Old North and Old South Arabian
+media-fonts/noto:pau-cin-hau - Install font for Pau Cin Hau script
+media-fonts/noto:phagspa - Install for 'Phags-pa script
+media-fonts/noto:runic - Install Runic font
+media-fonts/noto:symbols - Install Symbols fonts
+media-plugins/nvidia-vaapi-driver:av1 - Enable experimental AV1 support
+media-video/magewell-pro-capture:weave - Do not enable deinterlacing. Warning: this stops "mwcap-control --video-output-deinterlace ..." from working.
+media-video/vapoursynth:guard-pattern - Adds 32 bytes on the left and the right sides of each frame, fills them with a certain value, and checks their integrity after each filter. It can be used to detect buggy filters that write a little outside the frame.
+media-video/vapoursynth:vspipe - Build vspipe command.
+media-video/vapoursynth:vsscript - Enable VSScript.
+media-video/vapoursynth:x86-asm - Enable assembler code for x86 CPUs (requires dev-lang/yasm).
+mpv-plugin/delete-file:autoload - Auto-load the plugin
+mpv-plugin/mpv-copytime:autoload - Auto-load the plugin
+mpv-plugin/mpv-dvd-browser:autoload - Auto-load the plugin
+mpv-plugin/mpv-libunity:autoload - Auto-load the plugin
+mpv-plugin/mpv-netrc:autoload - Auto-load the plugin
+mpv-plugin/mpv-sponsorblock:autoload - Auto-load the plugin
+mpv-plugin/mpv-youtube-upnext:autoload - Auto-load the plugin
+mpv-plugin/reload:autoload - Auto-load the plugin
+mpv-plugin/shutup:autoload - Auto-load the plugin
+net-dns/pihole:cron - Installs cron job
+net-dns/pihole:www - Install www files (requires PHP hosting)
+sys-apps/kylemanna-systemd-utils:amazon - Install Amazon Cloud Drive service
+sys-apps/kylemanna-systemd-utils:btrfs - Install units for btrfs
+sys-apps/kylemanna-systemd-utils:cmsis-dap - Unknown
+sys-apps/kylemanna-systemd-utils:crashplan - Install timer for Crashplan
+sys-apps/kylemanna-systemd-utils:kodi - Install service to start Kodi
+sys-apps/kylemanna-systemd-utils:papertrail - Install Papertrail service
+sys-apps/kylemanna-systemd-utils:rssh - Install rssh service
+sys-apps/kylemanna-systemd-utils:storj - Install storj-dataserv-client.service
+sys-apps/kylemanna-systemd-utils:tahoe - Install Tahoe-related services
+sys-apps/kylemanna-systemd-utils:youtube - Install YouTube TV service
+www-plugins/bypass-paywalls:chrome - Install file for Chrome and Chrome Beta
+www-plugins/bypass-paywalls:chromium - Install file for Chromium-based browsers
+x11-misc/rom-properties:achievements - Enable achievement pop-ups.
+x11-misc/rom-properties:astc - Enable ASTC texture support
+x11-misc/rom-properties:cli - Build rpcli command.
+x11-misc/rom-properties:pvr - Enable the PowerVR Native SDK subset for PVRTC decompression.
+x11-misc/rom-properties:unice68 - Enable UnICE68 for Atari ST SNDH files (GPLv3).
+x11-misc/rom-properties:xbox-360 - Enable support for reading from Xbox 360 binaries
+x11-misc/rom-properties:xfce - Enable support for XFCE widget.
