@@ -9,7 +9,7 @@ inherit mpv-plugin python-single-r1
 
 DESCRIPTION="mpv script to skip sponsored segments of YouTube videos"
 HOMEPAGE="https://github.com/po5/mpv_sponsorblock"
-SHA="248d108c1280e05de551c42867aebb72cf0c83b9"
+SHA="7785c1477103f2fafabfd65fdcf28ef26e6d7f0d"
 SRC_URI="https://github.com/po5/${PN/-/_}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
