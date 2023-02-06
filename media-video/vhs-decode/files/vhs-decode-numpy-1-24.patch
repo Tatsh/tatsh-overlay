@@ -1,7 +1,16 @@
 diff --git a/lddecode/core.py b/lddecode/core.py
-index 4b3f9310..9479db0d 100644
+index 4b3f9310..2a3c4e8c 100644
 --- a/lddecode/core.py
 +++ b/lddecode/core.py
+@@ -462,7 +462,7 @@ class RFDecode:
+ 
+         """Compute filter coefficients for the given FFTFilter."""
+         # Anything above the highest frequency is left as zero.
+-        coeffs = np.zeros(self.blocklen, dtype=np.complex)
++        coeffs = np.zeros(self.blocklen, dtype=complex)
+ 
+         # Generate the frequency-domain coefficients by cubic interpolation between the equaliser values.
+         a_interp = spi.interp1d(freqs, amp, kind="cubic")
 @@ -1396,8 +1396,8 @@ def _downscale_audio_to_output(
      failed = False
  
@@ -42,3 +51,16 @@ index 4b3f9310..9479db0d 100644
  
          vp["fieldHeight"] = f.outlinecount
  
+diff --git a/lddecode/efm_pll.py b/lddecode/efm_pll.py
+index 054f86fd..5d21e5c4 100644
+--- a/lddecode/efm_pll.py
++++ b/lddecode/efm_pll.py
+@@ -58,7 +58,7 @@ def computeefmfilter(freq_hz=40000000, blocklen=65536):
+ 
+     """Compute filter coefficients for the given FFTFilter."""
+     # Anything above the highest frequency is left as zero.
+-    coeffs = np.zeros(blocklen, dtype=np.complex)
++    coeffs = np.zeros(blocklen, dtype=complex)
+ 
+     # Generate the frequency-domain coefficients by cubic interpolation between the equaliser values.
+     a_interp = spi.interp1d(freqs, amp, kind="cubic")
