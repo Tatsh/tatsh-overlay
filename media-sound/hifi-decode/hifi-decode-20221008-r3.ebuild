@@ -35,7 +35,10 @@ BDEPEND="dev-python/cython:0[${PYTHON_USEDEP}]
 	dev-python/wheel[${PYTHON_USEDEP}]
 	dev-python/setuptools_scm[${PYTHON_USEDEP}]"
 
-PATCHES=( "${FILESDIR}/${PN}-0001-no-conflicts.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-0001-no-conflicts.patch"
+	"${FILESDIR}/${PN}-0002-numpy-1.24-support.patch"
+)
 
 S="${WORKDIR}/ld-decode-${SHA}"
 

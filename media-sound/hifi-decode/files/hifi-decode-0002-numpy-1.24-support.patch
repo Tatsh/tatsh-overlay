@@ -1,0 +1,81 @@
+From 118d87682eb505617fb638f74d88c07dd5d52fe2 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 6 Feb 2023 02:40:46 -0500
+Subject: [PATCH 2/2] Numpy 1.24 support
+
+---
+ lddecode/core.py              | 16 ++++++++--------
+ vhsdecode/addons/chromaAFC.py |  2 +-
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/lddecode/core.py b/lddecode/core.py
+index b9f18341..5314d13a 100644
+--- a/lddecode/core.py
++++ b/lddecode/core.py
+@@ -1262,8 +1262,8 @@ def downscale_audio(audio, lineinfo, rf, linecount, timeoffset=0, freq=44100):
+         timeoffset, frametime + (soundgap / 2), soundgap, dtype=np.double
+     )
+ 
+-    locs = np.zeros(len(arange), dtype=np.float)
+-    swow = np.zeros(len(arange), dtype=np.float)
++    locs = np.zeros(len(arange), dtype=float)
++    swow = np.zeros(len(arange), dtype=float)
+ 
+     for i, t in enumerate(arange):
+         linenum = ((t * 1000000) / rf.SysParams["line_period"]) + 1
+@@ -1298,8 +1298,8 @@ def downscale_audio(audio, lineinfo, rf, linecount, timeoffset=0, freq=44100):
+     output16 = np.zeros((2 * (len(arange) - 1)), dtype=np.int16)
+ 
+     for i in range(len(arange) - 1):
+-        start = np.int(locs[i])
+-        end = np.int(locs[i + 1])
++        start = int(locs[i])
++        end = int(locs[i + 1])
+         if end > start and end < len(audio["audio_left"]):
+             output_left = nb_mean(audio["audio_left"][start:end])
+             output_right = nb_mean(audio["audio_right"][start:end])
+@@ -1783,7 +1783,7 @@ class Field:
+             eqgap = self.rf.SysParams["firstFieldH"][isfirstfield]
+             line0 = firstloc - ((eqgap + distfroml1) * self.inlinelen)
+ 
+-            return np.int(line0), isfirstfield, firstblank, conf
++            return int(line0), isfirstfield, firstblank, conf
+ 
+         """
+         If there are no valid sections, check line 0 and the first eq pulse, and the last eq
+@@ -2397,7 +2397,7 @@ class Field:
+         """
+ 
+         # Convert raw RF to floating point to help the scaler
+-        fdata = self.data["input"].astype(np.float)
++        fdata = self.data["input"].astype(float)
+ 
+         if linelocs is None:
+             linelocs = self.linelocs
+@@ -3992,8 +3992,8 @@ class LDdecode:
+         vp["fieldWidth"] = f.rf.SysParams["outlinelen"]
+         vp["sampleRate"] = f.rf.SysParams["outfreq"] * 1000000
+ 
+-        vp["black16bIre"] = np.float(f.hz_to_output(f.rf.iretohz(self.blackIRE)))
+-        vp["white16bIre"] = np.float(f.hz_to_output(f.rf.iretohz(100)))
++        vp["black16bIre"] = float(f.hz_to_output(f.rf.iretohz(self.blackIRE)))
++        vp["white16bIre"] = float(f.hz_to_output(f.rf.iretohz(100)))
+ 
+         vp["fieldHeight"] = f.outlinecount
+ 
+diff --git a/vhsdecode/addons/chromaAFC.py b/vhsdecode/addons/chromaAFC.py
+index 9d8d8c95..97c0b551 100644
+--- a/vhsdecode/addons/chromaAFC.py
++++ b/vhsdecode/addons/chromaAFC.py
+@@ -92,7 +92,7 @@ class ChromaAFC:
+     # returns the measurement simulation to fit the correction equation
+     def tableset(self, sample_size, points=256):
+         ldd.logger.info("Linearizing chroma AFC, please wait ...")
+-        means = np.empty([2, 2], dtype=np.float)
++        means = np.empty([2, 2], dtype=float)
+         min_f, max_f = self.get_band_tolerance()
+         for ix, freq in enumerate(
+             np.linspace(self.color_under * min_f, self.color_under * max_f, num=points)
+-- 
+2.39.1
+
