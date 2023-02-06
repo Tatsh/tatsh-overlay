@@ -1,0 +1,875 @@
+From 5501db37567dea43e2c6c455444ebdf8dfd5c6d5 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 5 Feb 2023 23:18:13 -0500
+Subject: [PATCH] System libs
+
+---
+ CMakeLists.txt                             |  10 +-
+ cmake/FindFFmpeg.cmake                     | 151 +++++++++++++++++++++
+ external/CMakeLists.txt                    | 118 ++++++----------
+ vita3k/CMakeLists.txt                      |   4 +-
+ vita3k/app/src/app_init.cpp                |   2 +-
+ vita3k/audio/CMakeLists.txt                |   6 +-
+ vita3k/audio/src/audio.cpp                 |   2 +-
+ vita3k/audio/src/impl/cubeb_audio.cpp      |   2 +-
+ vita3k/codec/CMakeLists.txt                |   2 +-
+ vita3k/config/CMakeLists.txt               |   4 +-
+ vita3k/config/src/config.cpp               |  16 +--
+ vita3k/cpu/CMakeLists.txt                  |   2 +-
+ vita3k/ctrl/CMakeLists.txt                 |   4 +-
+ vita3k/gui/CMakeLists.txt                  |   4 +-
+ vita3k/kernel/CMakeLists.txt               |   8 +-
+ vita3k/kernel/src/kernel.cpp               |   2 +-
+ vita3k/main.cpp                            |   4 +-
+ vita3k/mem/CMakeLists.txt                  |   9 --
+ vita3k/module/CMakeLists.txt               |  11 +-
+ vita3k/module/include/module/bridge.h      |   2 +-
+ vita3k/modules/CMakeLists.txt              |   2 +-
+ vita3k/ngs/CMakeLists.txt                  |   2 +-
+ vita3k/renderer/CMakeLists.txt             |   6 +-
+ vita3k/renderer/include/renderer/profile.h |   2 +-
+ vita3k/shader/CMakeLists.txt               |  11 +-
+ vita3k/shader/include/shader/profile.h     |   2 +-
+ vita3k/touch/CMakeLists.txt                |   2 +-
+ vita3k/util/include/util/tracy.h           |   2 +-
+ vita3k/util/src/util.cpp                   |   3 -
+ 29 files changed, 238 insertions(+), 157 deletions(-)
+ create mode 100644 cmake/FindFFmpeg.cmake
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1d53c8db..64d482cf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,6 +1,8 @@
+ cmake_minimum_required(VERSION 3.10)
+ project(Vita3K)
+ 
++add_compile_options(-fpermissive)
++
+ # Detects the amount of processors of the host machine and forwards the result to CPU_COUNT
+ include(ProcessorCount)
+ ProcessorCount(CPU_COUNT)
+@@ -93,8 +95,6 @@ set(BOOST_MODULES_TO_FIND filesystem system program_options)
+ # If build process isn't set to forcefully use system Boost
+ if(NOT VITA3K_FORCE_SYSTEM_BOOST)
+     # find_package(Boost ...) setting
+-    set(Boost_USE_STATIC_LIBS ON)
+-
+     # First, try to find Boost without any hints (system Boost)
+     if(NOT VITA3K_FORCE_CUSTOM_BOOST)
+         find_package(Boost COMPONENTS ${BOOST_MODULES_TO_FIND} QUIET)
+@@ -103,7 +103,7 @@ if(NOT VITA3K_FORCE_SYSTEM_BOOST)
+     # If system Boost hasn't been found, then enable hints to find custom Boost
+     if (NOT Boost_FOUND)
+         message(STATUS "A Boost distribution that meets the requirements needed for the project hasn't been found in your system. Falling back to custom Boost distribution...")
+-    
++
+         # Set path hints for Boost search inside the repository folder and assist in compilation if needed
+         set(BOOST_SOURCEDIR "${CMAKE_SOURCE_DIR}/external/boost")       # For internal use
+         set(BOOST_INSTALLDIR "${CMAKE_BINARY_DIR}/external/boost")      # For internal use
+@@ -153,15 +153,12 @@ if(NOT VITA3K_FORCE_SYSTEM_BOOST)
+             # Compile b2 if it isn't found
+             if(b2 STREQUAL "b2-NOTFOUND")
+                 message(STATUS "The b2 buildsystem executable hasn't been found in your system. Compiling b2...")
+-                b2_build()
+-
+                 # Find b2 again after compilation
+                 find_program(b2 NAME ${b2_EXECUTABLE_NAME} PATHS ${BOOST_SOURCEDIR} NO_CACHE)
+             endif()
+ 
+             # Compile Boost
+             message(STATUS "Compiling Boost...")
+-            boost_compile()
+ 
+             # Find Boost again
+             find_package(Boost COMPONENTS ${BOOST_MODULES_TO_FIND} QUIET)
+@@ -171,7 +168,6 @@ if(NOT VITA3K_FORCE_SYSTEM_BOOST)
+     endif()
+ else()
+     # Try to find Boost on the system and CMake's default paths
+-    set(Boost_USE_STATIC_LIBS ON)
+     find_package(Boost COMPONENTS ${BOOST_MODULES_TO_FIND} QUIET)
+ endif()
+ 
+diff --git a/cmake/FindFFmpeg.cmake b/cmake/FindFFmpeg.cmake
+new file mode 100644
+index 00000000..ce5c3b9f
+--- /dev/null
++++ b/cmake/FindFFmpeg.cmake
+@@ -0,0 +1,151 @@
++# vim: ts=2 sw=2
++# - Try to find the required ffmpeg components(default: AVFORMAT, AVUTIL, AVCODEC)
++#
++# Once done this will define
++#  FFMPEG_FOUND         - System has the all required components.
++#  FFMPEG_INCLUDE_DIRS  - Include directory necessary for using the required components headers.
++#  FFMPEG_LIBRARIES     - Link these to use the required ffmpeg components.
++#  FFMPEG_DEFINITIONS   - Compiler switches required for using the required ffmpeg components.
++#
++# For each of the components it will additionally set.
++#   - AVCODEC
++#   - AVDEVICE
++#   - AVFORMAT
++#   - AVFILTER
++#   - AVUTIL
++#   - POSTPROC
++#   - SWSCALE
++# the following variables will be defined
++#  <component>_FOUND        - System has <component>
++#  <component>_INCLUDE_DIRS - Include directory necessary for using the <component> headers
++#  <component>_LIBRARIES    - Link these to use <component>
++#  <component>_DEFINITIONS  - Compiler switches required for using <component>
++#  <component>_VERSION      - The components version
++#
++# Copyright (c) 2006, Matthias Kretz, <kretz@kde.org>
++# Copyright (c) 2008, Alexander Neundorf, <neundorf@kde.org>
++# Copyright (c) 2011, Michael Jansen, <kde@michael-jansen.biz>
++#
++# Redistribution and use is allowed according to the terms of the BSD license.
++# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
++
++include(FindPackageHandleStandardArgs)
++
++# The default components were taken from a survey over other FindFFMPEG.cmake files
++if (NOT FFmpeg_FIND_COMPONENTS)
++  set(FFmpeg_FIND_COMPONENTS AVCODEC AVFORMAT AVUTIL)
++endif ()
++
++#
++### Macro: set_component_found
++#
++# Marks the given component as found if both *_LIBRARIES AND *_INCLUDE_DIRS is present.
++#
++macro(set_component_found _component )
++  if (${_component}_LIBRARIES AND ${_component}_INCLUDE_DIRS)
++    # message(STATUS "  - ${_component} found.")
++    set(${_component}_FOUND TRUE)
++  else ()
++    # message(STATUS "  - ${_component} not found.")
++  endif ()
++endmacro()
++
++#
++### Macro: find_component
++#
++# Checks for the given component by invoking pkgconfig and then looking up the libraries and
++# include directories.
++#
++macro(find_component _component _pkgconfig _library _header)
++
++  if (NOT WIN32)
++     # use pkg-config to get the directories and then use these values
++     # in the FIND_PATH() and FIND_LIBRARY() calls
++     find_package(PkgConfig)
++     if (PKG_CONFIG_FOUND)
++       pkg_check_modules(PC_${_component} ${_pkgconfig})
++     endif ()
++  endif (NOT WIN32)
++
++  find_path(${_component}_INCLUDE_DIRS ${_header}
++    HINTS
++      ${PC_${_component}_INCLUDEDIR}
++      ${PC_${_component}_INCLUDE_DIRS}
++    PATH_SUFFIXES
++      ffmpeg
++  )
++
++  find_library(${_component}_LIBRARIES NAMES ${_library}
++      HINTS
++      ${PC_${_component}_LIBDIR}
++      ${PC_${_component}_LIBRARY_DIRS}
++  )
++
++  set(${_component}_DEFINITIONS  ${PC_${_component}_CFLAGS_OTHER} CACHE STRING "The ${_component} CFLAGS.")
++  set(${_component}_VERSION      ${PC_${_component}_VERSION}      CACHE STRING "The ${_component} version number.")
++
++  set_component_found(${_component})
++
++  mark_as_advanced(
++    ${_component}_INCLUDE_DIRS
++    ${_component}_LIBRARIES
++    ${_component}_DEFINITIONS
++    ${_component}_VERSION)
++
++endmacro()
++
++
++# Check for cached results. If there are skip the costly part.
++if (NOT FFMPEG_LIBRARIES)
++
++  # Check for all possible component.
++  find_component(AVCODEC    libavcodec    avcodec  libavcodec/avcodec.h)
++  find_component(AVFORMAT   libavformat   avformat libavformat/avformat.h)
++  find_component(AVDEVICE   libavdevice   avdevice libavdevice/avdevice.h)
++  find_component(AVUTIL     libavutil     avutil   libavutil/avutil.h)
++  find_component(AVFILTER   libavfilter   avfilter libavfilter/avfilter.h)
++  find_component(SWSCALE    libswscale    swscale  libswscale/swscale.h)
++  find_component(POSTPROC   libpostproc   postproc libpostproc/postprocess.h)
++  find_component(SWRESAMPLE libswresample swresample libswresample/swresample.h)
++
++  # Check if the required components were found and add their stuff to the FFMPEG_* vars.
++  foreach (_component ${FFmpeg_FIND_COMPONENTS})
++    if (${_component}_FOUND)
++      # message(STATUS "Required component ${_component} present.")
++      set(FFMPEG_LIBRARIES   ${FFMPEG_LIBRARIES}   ${${_component}_LIBRARIES})
++      set(FFMPEG_DEFINITIONS ${FFMPEG_DEFINITIONS} ${${_component}_DEFINITIONS})
++      list(APPEND FFMPEG_INCLUDE_DIRS ${${_component}_INCLUDE_DIRS})
++    else ()
++      # message(STATUS "Required component ${_component} missing.")
++    endif ()
++  endforeach ()
++
++  # Build the include path with duplicates removed.
++  if (FFMPEG_INCLUDE_DIRS)
++    list(REMOVE_DUPLICATES FFMPEG_INCLUDE_DIRS)
++  endif ()
++
++  # cache the vars.
++  set(FFMPEG_INCLUDE_DIRS ${FFMPEG_INCLUDE_DIRS} CACHE STRING "The FFmpeg include directories." FORCE)
++  set(FFMPEG_LIBRARIES    ${FFMPEG_LIBRARIES}    CACHE STRING "The FFmpeg libraries." FORCE)
++  set(FFMPEG_DEFINITIONS  ${FFMPEG_DEFINITIONS}  CACHE STRING "The FFmpeg cflags." FORCE)
++
++  mark_as_advanced(FFMPEG_INCLUDE_DIRS
++                   FFMPEG_LIBRARIES
++                   FFMPEG_DEFINITIONS)
++
++endif ()
++
++# Now set the noncached _FOUND vars for the components.
++foreach (_component AVCODEC AVDEVICE AVFORMAT AVUTIL POSTPROCESS SWSCALE)
++  set_component_found(${_component})
++endforeach ()
++
++# Compile the list of required vars
++set(_FFmpeg_REQUIRED_VARS FFMPEG_LIBRARIES FFMPEG_INCLUDE_DIRS)
++foreach (_component ${FFmpeg_FIND_COMPONENTS})
++  list(APPEND _FFmpeg_REQUIRED_VARS ${_component}_LIBRARIES ${_component}_INCLUDE_DIRS)
++endforeach ()
++
++# Give a nice error message if some of the required vars are missing.
++find_package_handle_standard_args(FFmpeg DEFAULT_MSG ${_FFmpeg_REQUIRED_VARS})
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index e37d8e04..3b14f8c4 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -1,4 +1,5 @@
+ include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
++include(FindPkgConfig)
+ 
+ # Make option() in all external projects do nothing when a normal variable of the
+ # same name exists. The normal variable is not removed. The cache entry is not
+@@ -26,8 +27,6 @@ function(check_submodules_present)
+ 	endforeach()
+ endfunction()
+ 
+-check_submodules_present()
+-
+ # Fix a glslang hack
+ # See https://github.com/KhronosGroup/glslang/issues/1015 and https://github.com/Vita3K/Vita3K/pull/369 for details
+ if(NOT CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+@@ -38,14 +37,7 @@ if(NOT CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+ 	endif()
+ endif()
+ 
+-option(CAPSTONE_BUILD_SHARED "Build shared library" OFF)
+-option(CAPSTONE_BUILD_TESTS "Build tests" OFF)
+-option(CAPSTONE_BUILD_CSTOOL "Build cstool" OFF)
+-option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" OFF)
+-option(CAPSTONE_ARM_SUPPORT "ARM support" ON)
+-add_subdirectory(capstone EXCLUDE_FROM_ALL)
+-set_property(TARGET capstone-static PROPERTY FOLDER externals)
+-set(capstone_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/capstone/include" PARENT_SCOPE)
++find_package(capstone REQUIRED)
+ 
+ add_library(crypto-algorithms STATIC crypto-algorithms/sha256.c crypto-algorithms/sha256.h)
+ target_include_directories(crypto-algorithms PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/crypto-algorithms")
+@@ -83,12 +75,6 @@ add_library(better-enums INTERFACE)
+ target_include_directories(better-enums INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/better-enums")
+ target_compile_definitions(better-enums INTERFACE BETTER_ENUMS_STRICT_CONVERSION=1)
+ 
+-add_library(googletest STATIC googletest/googletest/src/gtest_main.cc googletest/googletest/src/gtest-all.cc)
+-target_include_directories(googletest PUBLIC googletest/googletest/include)
+-target_include_directories(googletest PRIVATE googletest/googletest)
+-target_compile_definitions(googletest PUBLIC GTEST_HAS_PTHREAD=0)
+-set_property(TARGET googletest PROPERTY FOLDER externals)
+-
+ add_subdirectory(libfat16)
+ set_property(TARGET FAT16 PROPERTY FOLDER externals)
+ 
+@@ -96,7 +82,7 @@ set_property(TARGET FAT16 PROPERTY FOLDER externals)
+ add_library(imgui STATIC imgui/imgui.cpp imgui/imgui_draw.cpp imgui/imgui_tables.cpp imgui/imgui_widgets.cpp imgui/misc/cpp/imgui_stdlib.cpp)
+ target_compile_definitions(imgui PRIVATE IMGUI_DISABLE_DEMO_WINDOWS)
+ target_include_directories(imgui PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/imgui"
+-	"${CMAKE_CURRENT_SOURCE_DIR}/imgui_club/imgui_memory_editor/")
++	"${CMAKE_CURRENT_SOURCE_DIR}/imgui_club/imgui_memory_editor/" /usr/include/SDL2)
+ set_property(TARGET imgui PROPERTY FOLDER externals)
+ 
+ add_library(miniz STATIC miniz/miniz.c miniz/miniz.h)
+@@ -118,28 +104,8 @@ target_include_directories(sdl2 INTERFACE "${SDL2_INCLUDE_DIR}")
+ target_link_libraries(sdl2 INTERFACE "${SDL2_LIBRARY}")
+ 
+ # Cubeb setup, from https://github.com/RPCS3/rpcs3/blob/master/3rdparty/cubeb/CMakeLists.txt
+-set(BUILD_SHARED_LIBS FALSE CACHE BOOL "Don't build shared libs")
+-set(BUILD_TESTS FALSE CACHE BOOL "Don't build tests")
+-set(BUILD_RUST_LIBS FALSE CACHE BOOL "Don't build rust libs")
+-set(BUILD_TOOLS FALSE CACHE BOOL "Don't build tools")
+-set(BUNDLE_SPEEX TRUE CACHE BOOL "Bundle the speex library")
+-set(LAZY_LOAD_LIBS TRUE CACHE BOOL "Lazily load shared libraries")
+-set(USE_SANITIZERS FALSE CACHE BOOL "Dont't use sanitizers")
+-
+-add_subdirectory(cubeb EXCLUDE_FROM_ALL)
+-set_property(TARGET cubeb PROPERTY FOLDER externals)
+-set_property(TARGET speex PROPERTY FOLDER externals)
+-
+-if (CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm|ARM|aarch64|AArch64|Aarch64)")
+-	target_compile_definitions(speex PUBLIC
+-		#_USE_NEON
+-	)
+-elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "^(x86|X86|amd64|AMD64|em64t|EM64T)")
+-	target_compile_definitions(speex PUBLIC
+-		_USE_SSE
+-		_USE_SSE2
+-	)
+-endif ()
++find_package(cubeb REQUIRED)
++pkg_check_modules(PC_SPEEX speex REQUIRED)
+ 
+ if(WIN32)
+ 	add_library(winsock INTERFACE)
+@@ -201,12 +167,7 @@ endif()
+ add_library(vita-toolchain INTERFACE)
+ target_include_directories(vita-toolchain INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/vita-toolchain/src")
+ 
+-option(BUILD_TESTING "Build the testing tree." OFF)
+-option(YAML_CPP_BUILD_TOOLS "Enable parse tools" OFF)
+-option(YAML_CPP_BUILD_CONTRIB "Enable contrib stuff in library" OFF)
+-option(YAML_CPP_INSTALL "Enable generation of install target" OFF)
+-add_subdirectory(yaml-cpp EXCLUDE_FROM_ALL)
+-set_property(TARGET yaml-cpp PROPERTY FOLDER externals)
++find_package(yaml-cpp REQUIRED)
+ 
+ if(USE_DISCORD_RICH_PRESENCE)
+ 	if(NOT EXISTS "${CMAKE_BINARY_DIR}/external/discord_game_sdk.zip")
+@@ -281,31 +242,34 @@ target_compile_definitions(dlmalloc PUBLIC ONLY_MSPACES=1)
+ target_compile_definitions(dlmalloc PUBLIC USE_LOCK=0)
+ set_property(TARGET dlmalloc PROPERTY FOLDER externals)
+ 
+-add_subdirectory(pugixml)
+-set_property(TARGET pugixml-static PROPERTY FOLDER externals)
+-
+-add_library(CLI11 INTERFACE)
++find_package(pugixml REQUIRED)
++set_target_properties(pugixml::pugixml PROPERTIES IMPORTED_GLOBAL TRUE)
++find_package(CLI11 REQUIRED)
+ 
+ # See "Note: Special instructions for GCC 8" on https://github.com/CLIUtils/CLI11
+ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 8 AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9)
+ 	target_compile_definitions(CLI11 INTERFACE CLI11_HAS_FILESYSTEM=0)
+ endif()
+ 
+-target_include_directories(CLI11 INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/cli11")
+-
+-add_library(vulkan INTERFACE)
+-target_include_directories(vulkan INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/Vulkan-Headers/include")
++find_package(VulkanHeaders REQUIRED)
+ 
+ add_library(vma INTERFACE)
+ target_include_directories(vma INTERFACE
+ 	"${CMAKE_CURRENT_SOURCE_DIR}/VulkanMemoryAllocator-Hpp/include"
+ 	"${CMAKE_CURRENT_SOURCE_DIR}/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include")
+ 
+-add_subdirectory(ffmpeg)
+-add_subdirectory(psvpfstools)
+-set_property(TARGET psvpfsparser PROPERTY FOLDER externals)
++list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
++include(FindFFmpeg)
++find_package(FFmpeg REQUIRED)
++
++find_package(ZLIB REQUIRED)
++pkg_check_modules(PC_TOMCRYPT libtomcrypt REQUIRED IMPORTED_TARGET GLOBAL)
++set(LIBB64_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libb64/include")
++add_subdirectory(libb64)
++add_subdirectory(libzrif)
+ set_property(TARGET libzRIF PROPERTY FOLDER externals)
+-set_property(TARGET libb64 PROPERTY FOLDER externals)
++add_subdirectory(psvpfsparser/cmake)
++set_property(TARGET psvpfsparser PROPERTY FOLDER externals)
+ 
+ if(APPLE)
+ 	set(OPENSSL_ROOT_DIR "/usr/local/opt/openssl")
+@@ -360,31 +324,30 @@ endif()
+ target_include_directories(libatrac9 PUBLIC LibAtrac9/C/src)
+ set_property(TARGET libatrac9 PROPERTY FOLDER externals)
+ 
+-option(BUILD_SHARED_LIBS "Build shared library" OFF)
+-option(XXHASH_BUILD_XXHSUM "Build the xxhsum binary" OFF)
+-add_subdirectory(xxHash/cmake_unofficial EXCLUDE_FROM_ALL)
+-set_property(TARGET xxhash PROPERTY FOLDER externals)
++pkg_check_modules(PC_XXHASH libxxhash REQUIRED IMPORTED_TARGET GLOBAL)
++add_library(xxHash::xxhash ALIAS PkgConfig::PC_XXHASH)
+ 
+ # Tracy
+-option(TRACY_ENABLE_ON_CORE_COMPONENTS
+-	"Enable and require Tracy to compile core components such as the renderer, shader recompiler and
+-		HLE modules"
+-	ON)
+-add_library(tracy STATIC tracy/public/TracyClient.cpp)
+-set_property(TARGET tracy PROPERTY FOLDER externals)
+-target_include_directories(tracy PUBLIC tracy)
+-
+-if(UNIX)
+-	target_link_libraries(tracy PUBLIC pthread dl)
+-endif()
++find_package(Tracy REQUIRED)
++#option(TRACY_ENABLE_ON_CORE_COMPONENTS
++#	"Enable and require Tracy to compile core components such as the renderer, shader recompiler and
++#		HLE modules"
++#	ON)
++#add_library(tracy STATIC tracy/public/TracyClient.cpp)
++#set_property(TARGET tracy PROPERTY FOLDER externals)
++#target_include_directories(tracy PUBLIC tracy)
++
++#if(UNIX)
++#	target_link_libraries(tracy PUBLIC pthread dl)
++#endif()
+ 
+ # Enable Tracy on-demand profiling mode to avoid unnecesary memory usage when the developer
+ # isn't profiling by only enabling profiling after a connection has been established with
+ # a Tracy server
+-target_compile_definitions(tracy PUBLIC $<$<CONFIG:Debug,RelWithDebInfo>:TRACY_ON_DEMAND>)
++#target_compile_definitions(tracy PUBLIC $<$<CONFIG:Debug,RelWithDebInfo>:TRACY_ON_DEMAND>)
+ 
+ # Disable Tracy automated data collection in order to prevent Tracy-related code from being profiled
+-target_compile_definitions(tracy PUBLIC TRACY_NO_SYSTEM_TRACING)
++#target_compile_definitions(tracy PUBLIC TRACY_NO_SYSTEM_TRACING)
+ 
+ # Defining TRACY_ENABLE for both compiling Tracy and compiling the project that links
+ # against it is needed for Tracy to work
+@@ -398,7 +361,7 @@ target_compile_definitions(tracy PUBLIC TRACY_NO_SYSTEM_TRACING)
+ # in order for the condition to work properly on both single-config and multi-config
+ # CMake project generators. More info here:
+ # https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#build-configurations
+-target_compile_definitions(tracy PUBLIC $<$<CONFIG:Debug,RelWithDebInfo>:TRACY_ENABLE>)
++#target_compile_definitions(tracy PUBLIC $<$<CONFIG:Debug,RelWithDebInfo>:TRACY_ENABLE>)
+ 
+ #
+ # ----------------------------------------------------------------------------------------
+@@ -412,8 +375,9 @@ target_compile_definitions(tracy PUBLIC $<$<CONFIG:Debug,RelWithDebInfo>:TRACY_E
+ set(NFD_PORTAL ON)
+ 
+ # nativefiledialog-extended
+-add_subdirectory(nativefiledialog-extended)
++add_library(nfd SHARED IMPORTED GLOBAL)
++find_library(NFD nfd REQUIRED)
++set_property(TARGET nfd PROPERTY IMPORTED_LOCATION "${NFD}")
+ 
+ # Create alias to prevent the need of multiple changes in case the target name changes
+ add_library(NFDe::NFDe ALIAS nfd)
+-set_property(TARGET nfd PROPERTY FOLDER externals)
+diff --git a/vita3k/CMakeLists.txt b/vita3k/CMakeLists.txt
+index ecdc9040..84440aa2 100644
+--- a/vita3k/CMakeLists.txt
++++ b/vita3k/CMakeLists.txt
+@@ -144,7 +144,7 @@ add_subdirectory(vkutil)
+ 
+ add_executable(vita3k MACOSX_BUNDLE main.cpp interface.cpp interface.h performance.cpp)
+ 
+-target_link_libraries(vita3k PRIVATE app config ctrl display gdbstub gui gxm io miniz modules packages renderer shader touch)
++target_link_libraries(vita3k PRIVATE app config ctrl display gdbstub gui gxm io miniz modules packages renderer shader touch SDL2 libb64 swresample swscale)
+ if(USE_DISCORD_RICH_PRESENCE)
+ 	target_link_libraries(vita3k PRIVATE discord-rpc)
+ endif()
+@@ -266,4 +266,4 @@ elseif(WIN32)
+ endif()
+ 
+ # Enable Tracy profiling on the main compilation target
+-target_link_libraries(vita3k PRIVATE tracy)
++target_link_libraries(vita3k PRIVATE TracyClient)
+diff --git a/vita3k/app/src/app_init.cpp b/vita3k/app/src/app_init.cpp
+index 902dd455..5b9350c4 100644
+--- a/vita3k/app/src/app_init.cpp
++++ b/vita3k/app/src/app_init.cpp
+@@ -106,7 +106,7 @@ bool init(EmuEnvState &state, Config &cfg, const Root &root_paths) {
+ 
+     state.cfg = std::move(cfg);
+ 
+-    state.base_path = root_paths.get_base_path_string();
++    state.base_path = root_paths.get_pref_path_string();
+     state.default_path = root_paths.get_pref_path_string();
+ 
+     // If configuration does not provide a preference path, use SDL's default
+diff --git a/vita3k/audio/CMakeLists.txt b/vita3k/audio/CMakeLists.txt
+index 8f6947ae..e5c7c664 100644
+--- a/vita3k/audio/CMakeLists.txt
++++ b/vita3k/audio/CMakeLists.txt
+@@ -5,6 +5,6 @@ add_library(
+     src/impl/sdl_audio.cpp
+     src/impl/cubeb_audio.cpp)
+ 
+-target_include_directories(audio PUBLIC include)
+-target_link_libraries(audio PUBLIC sdl2)
+-target_link_libraries(audio PRIVATE tracy util cubeb kernel)
++target_include_directories(audio PUBLIC include /usr/include/SDL2)
++target_link_libraries(audio PUBLIC ${SDL2_LIBRARIES})
++target_link_libraries(audio PRIVATE TracyClient util cubeb kernel)
+diff --git a/vita3k/audio/src/audio.cpp b/vita3k/audio/src/audio.cpp
+index 5f32e302..5d0dcea5 100644
+--- a/vita3k/audio/src/audio.cpp
++++ b/vita3k/audio/src/audio.cpp
+@@ -17,7 +17,7 @@
+ 
+ #include <audio/state.h>
+ 
+-#include "public/tracy/Tracy.hpp"
++#include <tracy/Tracy.hpp>
+ 
+ #include <audio/impl/cubeb_audio.h>
+ #include <audio/impl/sdl_audio.h>
+diff --git a/vita3k/audio/src/impl/cubeb_audio.cpp b/vita3k/audio/src/impl/cubeb_audio.cpp
+index c8fad8a3..db1a95aa 100644
+--- a/vita3k/audio/src/impl/cubeb_audio.cpp
++++ b/vita3k/audio/src/impl/cubeb_audio.cpp
+@@ -17,7 +17,7 @@
+ 
+ #include "audio/impl/cubeb_audio.h"
+ 
+-#include "public/tracy/Tracy.hpp"
++#include <tracy/Tracy.hpp>
+ 
+ #include "kernel/thread/thread_state.h"
+ 
+diff --git a/vita3k/codec/CMakeLists.txt b/vita3k/codec/CMakeLists.txt
+index ce92b7ac..411839de 100644
+--- a/vita3k/codec/CMakeLists.txt
++++ b/vita3k/codec/CMakeLists.txt
+@@ -13,4 +13,4 @@ add_library(
+ )
+ 
+ target_include_directories(codec PUBLIC include)
+-target_link_libraries(codec PRIVATE ffmpeg libatrac9 util) 
++target_link_libraries(codec PRIVATE ${FFMPEG_LIBRARIES} libatrac9 util)
+diff --git a/vita3k/config/CMakeLists.txt b/vita3k/config/CMakeLists.txt
+index f85ae83c..b1070277 100644
+--- a/vita3k/config/CMakeLists.txt
++++ b/vita3k/config/CMakeLists.txt
+@@ -14,5 +14,5 @@ configure_file(src/version.cpp.in version.cpp)
+ 
+ target_include_directories(config PUBLIC include)
+ target_link_libraries(config PUBLIC np util yaml-cpp)
+-target_link_libraries(config PRIVATE CLI11)
+-target_link_libraries(config PRIVATE tracy)
++# target_link_libraries(config PRIVATE CLI11)
++target_link_libraries(config PRIVATE TracyClient)
+diff --git a/vita3k/config/src/config.cpp b/vita3k/config/src/config.cpp
+index ca4e650c..f63e3688 100644
+--- a/vita3k/config/src/config.cpp
++++ b/vita3k/config/src/config.cpp
+@@ -23,7 +23,7 @@
+ #include <util/log.h>
+ #include <util/string_utils.h>
+ 
+-#include <CLI11.hpp>
++#include <CLI/CLI.hpp>
+ #include <vector>
+ 
+ #include <algorithm>
+@@ -118,12 +118,12 @@ ExitCode serialize_config(Config &cfg, const fs::path &output_path) {
+ ExitCode init_config(Config &cfg, int argc, char **argv, const Root &root_paths) {
+     // Always generate the default configuration file
+     Config command_line{};
+-    serialize_config(command_line, root_paths.get_base_path() / "data/config/default.yml");
++    serialize_config(command_line, root_paths.get_pref_path() / "data/config/default.yml");
+     // Load base path configuration by default; otherwise, move the default to the base path
+-    if (fs::exists(check_path(root_paths.get_base_path())))
+-        parse(cfg, root_paths.get_base_path(), root_paths.get_base_path());
++    if (fs::exists(check_path(root_paths.get_pref_path())))
++        parse(cfg, root_paths.get_pref_path(), root_paths.get_pref_path());
+     else
+-        fs::copy(root_paths.get_base_path() / "data/config/default.yml", root_paths.get_base_path() / "config.yml");
++        fs::copy(root_paths.get_pref_path() / "data/config/default.yml", root_paths.get_pref_path() / "config.yml");
+ 
+     // Declare all options
+     CLI::App app{ "Vita3K Command Line Interface" }; // "--help,-h" is automatically generated
+@@ -224,11 +224,11 @@ ExitCode init_config(Config &cfg, int argc, char **argv, const Root &root_paths)
+         cfg.pkg_zrif = std::move(command_line.pkg_zrif);
+         return QuitRequested;
+     }
+-    if (command_line.load_config || command_line.config_path != root_paths.get_base_path()) {
++    if (command_line.load_config || command_line.config_path != root_paths.get_pref_path()) {
+         if (command_line.config_path.empty()) {
+-            command_line.config_path = root_paths.get_base_path();
++            command_line.config_path = root_paths.get_pref_path();
+         } else {
+-            if (parse(command_line, command_line.config_path, root_paths.get_base_path()) != Success)
++            if (parse(command_line, command_line.config_path, root_paths.get_pref_path()) != Success)
+                 return InitConfigFailed;
+         }
+     }
+diff --git a/vita3k/cpu/CMakeLists.txt b/vita3k/cpu/CMakeLists.txt
+index 23fbd1f7..74f2f0d2 100644
+--- a/vita3k/cpu/CMakeLists.txt
++++ b/vita3k/cpu/CMakeLists.txt
+@@ -25,4 +25,4 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_LIST})
+ target_include_directories(cpu PUBLIC include)
+ target_link_libraries(cpu PUBLIC mem util)
+ target_include_directories(cpu PRIVATE ${capstone_INCLUDE_DIRS})
+-target_link_libraries(cpu PRIVATE dynarmic unicorn capstone-static)
++target_link_libraries(cpu PRIVATE dynarmic unicorn capstone)
+diff --git a/vita3k/ctrl/CMakeLists.txt b/vita3k/ctrl/CMakeLists.txt
+index 9faee2f0..427e807b 100644
+--- a/vita3k/ctrl/CMakeLists.txt
++++ b/vita3k/ctrl/CMakeLists.txt
+@@ -7,7 +7,7 @@ add_library(
+ 	src/ctrl.cpp
+ )
+ 
+-target_include_directories(ctrl PUBLIC include)
+-target_link_libraries(ctrl PUBLIC emuenv sdl2 util)
++target_include_directories(ctrl PUBLIC include /usr/include/SDL2)
++target_link_libraries(ctrl PUBLIC emuenv ${SDL2_LIBRARIES} util)
+ target_link_libraries(ctrl PRIVATE config dialog)
+ 
+diff --git a/vita3k/gui/CMakeLists.txt b/vita3k/gui/CMakeLists.txt
+index a1a3fe01..14322f0d 100644
+--- a/vita3k/gui/CMakeLists.txt
++++ b/vita3k/gui/CMakeLists.txt
+@@ -51,5 +51,5 @@ add_library(
+ 
+ target_include_directories(gui PUBLIC include ${CMAKE_SOURCE_DIR}/vita3k)
+ target_link_libraries(gui PUBLIC app compat config dialog emuenv ime imgui glutil lang np)
+-target_link_libraries(gui PRIVATE audio ctrl kernel miniz psvpfsparser pugixml::pugixml stb renderer packages sdl2 vkutil host::dialog)
+-target_link_libraries(gui PUBLIC tracy)
++target_link_libraries(gui PRIVATE audio ctrl kernel miniz psvpfsparser pugixml::pugixml stb renderer packages ${SDL2_LIBRARIES} vkutil host::dialog)
++target_link_libraries(gui PUBLIC TracyClient)
+diff --git a/vita3k/kernel/CMakeLists.txt b/vita3k/kernel/CMakeLists.txt
+index 2898e3f9..8a6a1e14 100644
+--- a/vita3k/kernel/CMakeLists.txt
++++ b/vita3k/kernel/CMakeLists.txt
+@@ -26,10 +26,10 @@ add_library(
+ 	${SOURCE_LIST}
+ )
+ 
+-target_include_directories(kernel PUBLIC include)
++target_include_directories(kernel PUBLIC include /usr/include/SDL2)
+ target_link_libraries(kernel PUBLIC rtc cpu mem util nids)
+-target_link_libraries(kernel PRIVATE sdl2 miniz vita-toolchain)
++target_link_libraries(kernel PRIVATE ${SDL2_LIBRARIES} miniz vita-toolchain)
+ if(TRACY_ENABLE_ON_CORE_COMPONENTS)
+-	target_link_libraries(kernel PRIVATE tracy)
++	target_link_libraries(kernel PRIVATE TracyClient)
+ endif()
+-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_LIST})
+\ No newline at end of file
++source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_LIST})
+diff --git a/vita3k/kernel/src/kernel.cpp b/vita3k/kernel/src/kernel.cpp
+index cf84ccbb..fe82ec96 100644
+--- a/vita3k/kernel/src/kernel.cpp
++++ b/vita3k/kernel/src/kernel.cpp
+@@ -16,7 +16,7 @@
+ // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ 
+ #ifdef TRACY_ENABLE
+-#include "public/tracy/Tracy.hpp"
++#include <tracy/Tracy.hpp>
+ #endif
+ 
+ #include <kernel/state.h>
+diff --git a/vita3k/main.cpp b/vita3k/main.cpp
+index 67c79eba..e849a6cb 100644
+--- a/vita3k/main.cpp
++++ b/vita3k/main.cpp
+@@ -46,7 +46,7 @@
+ #include <process.h>
+ #endif
+ 
+-#include "public/tracy/Tracy.hpp"
++#include <tracy/Tracy.hpp>
+ #include <SDL.h>
+ #include <chrono>
+ #include <cstdlib>
+@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
+                 fs::remove_all(fs::path(root_paths.get_pref_path()) / "ux0/app" / *cfg.delete_title_id);
+                 fs::remove_all(fs::path(root_paths.get_pref_path()) / "ux0/addcont" / *cfg.delete_title_id);
+                 fs::remove_all(fs::path(root_paths.get_pref_path()) / "ux0/user/00/savedata" / *cfg.delete_title_id);
+-                fs::remove_all(fs::path(root_paths.get_base_path()) / "cache/shaders" / *cfg.delete_title_id);
++                fs::remove_all(fs::path(root_paths.get_pref_path()) / "cache/shaders" / *cfg.delete_title_id);
+             }
+             if (cfg.pkg_path.has_value() && cfg.pkg_zrif.has_value()) {
+                 LOG_INFO("Installing pkg from {} ", *cfg.pkg_path);
+diff --git a/vita3k/mem/CMakeLists.txt b/vita3k/mem/CMakeLists.txt
+index f0869c41..7cef6220 100644
+--- a/vita3k/mem/CMakeLists.txt
++++ b/vita3k/mem/CMakeLists.txt
+@@ -15,12 +15,3 @@ add_library(
+ 
+ target_include_directories(mem PUBLIC include)
+ target_link_libraries(mem PUBLIC util)
+-
+-add_executable(
+-	mem-tests
+-	tests/allocator_tests.cpp
+-)
+-
+-target_include_directories(mem-tests PRIVATE include)
+-target_link_libraries(mem-tests PRIVATE mem googletest util)
+-add_test(NAME mem COMMAND mem-tests)
+diff --git a/vita3k/module/CMakeLists.txt b/vita3k/module/CMakeLists.txt
+index 6aac1b51..ced57966 100644
+--- a/vita3k/module/CMakeLists.txt
++++ b/vita3k/module/CMakeLists.txt
+@@ -18,14 +18,5 @@ add_library(
+ target_include_directories(module PUBLIC include)
+ target_link_libraries(module PUBLIC config cpu emuenv dlmalloc kernel printf util)
+ if(TRACY_ENABLE_ON_CORE_COMPONENTS)
+-	target_link_libraries(module PUBLIC tracy)
++	target_link_libraries(module PUBLIC TracyClient)
+ endif()
+-
+-add_executable(
+-	module-tests
+-	tests/arg_layout_tests.cpp
+-)
+-
+-target_include_directories(module-tests PRIVATE include)
+-target_link_libraries(module-tests PRIVATE googletest util)
+-add_test(NAME module COMMAND module-tests)
+diff --git a/vita3k/module/include/module/bridge.h b/vita3k/module/include/module/bridge.h
+index 8040b4ab..cd44fd1a 100644
+--- a/vita3k/module/include/module/bridge.h
++++ b/vita3k/module/include/module/bridge.h
+@@ -18,7 +18,7 @@
+ #pragma once
+ 
+ #ifdef TRACY_ENABLE
+-#include "public/tracy/Tracy.hpp"
++#include <tracy/Tracy.hpp>
+ #endif
+ 
+ #include "lay_out_args.h"
+diff --git a/vita3k/modules/CMakeLists.txt b/vita3k/modules/CMakeLists.txt
+index 6d898d1e..9a7088b5 100644
+--- a/vita3k/modules/CMakeLists.txt
++++ b/vita3k/modules/CMakeLists.txt
+@@ -210,6 +210,6 @@ set(SOURCE_LIST
+ 
+ add_library(modules STATIC ${SOURCE_LIST})
+ target_include_directories(modules PUBLIC include)
+-target_link_libraries(modules PRIVATE audio codec ctrl dialog display gui gxm kernel mem net ngs np ssl packages renderer rtc sdl2 touch xxHash::xxhash)
++target_link_libraries(modules PRIVATE audio codec ctrl dialog display gui gxm kernel mem net ngs np ssl packages renderer rtc ${SDL2_LIBRARIES} touch xxHash::xxhash)
+ target_link_libraries(modules PUBLIC module)
+ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_LIST})
+diff --git a/vita3k/ngs/CMakeLists.txt b/vita3k/ngs/CMakeLists.txt
+index 8500f456..324621c5 100644
+--- a/vita3k/ngs/CMakeLists.txt
++++ b/vita3k/ngs/CMakeLists.txt
+@@ -37,4 +37,4 @@ add_library(
+ 
+ target_include_directories(ngs PUBLIC include)
+ target_link_libraries(ngs PUBLIC codec)
+-target_link_libraries(ngs PRIVATE util mem kernel cpu ffmpeg)
++target_link_libraries(ngs PRIVATE util mem kernel cpu ${FFMPEG_LIBRARIES} ${SWRESAMPLE_LIBRARIES})
+diff --git a/vita3k/renderer/CMakeLists.txt b/vita3k/renderer/CMakeLists.txt
+index 8b84d951..bb3ee589 100644
+--- a/vita3k/renderer/CMakeLists.txt
++++ b/vita3k/renderer/CMakeLists.txt
+@@ -41,11 +41,11 @@ add_library(
+ 	src/texture_yuv.cpp
+ )
+ 
+-target_include_directories(renderer PUBLIC include)
++target_include_directories(renderer PUBLIC include ${SDL2_INCLUDE_DIRS} /usr/include/SDL2)
+ target_link_libraries(renderer PUBLIC crypto display dlmalloc mem stb shader glutil threads config util vkutil)
+-target_link_libraries(renderer PRIVATE sdl2 stb ffmpeg xxHash::xxhash)
++target_link_libraries(renderer PRIVATE ${SDL2_LIBRARIES} stb ${FFMPEG_LIBRARIES} xxHash::xxhash)
+ 
+ # Marshmallow Tracy linking
+ if(TRACY_ENABLE_ON_CORE_COMPONENTS)
+-	target_link_libraries(renderer PRIVATE tracy)
++	target_link_libraries(renderer PRIVATE TracyClient)
+ endif()
+diff --git a/vita3k/renderer/include/renderer/profile.h b/vita3k/renderer/include/renderer/profile.h
+index 2d725cd0..f1dcb764 100644
+--- a/vita3k/renderer/include/renderer/profile.h
++++ b/vita3k/renderer/include/renderer/profile.h
+@@ -19,7 +19,7 @@
+ 
+ #ifdef TRACY_ENABLE
+ 
+-#include "public/tracy/Tracy.hpp"
++#include <tracy/Tracy.hpp>
+ #define R_PROFILE(name) ZoneNamedNC(___tracy_scoped_zone, name, 0x0055FF, false);
+ 
+ #else
+diff --git a/vita3k/shader/CMakeLists.txt b/vita3k/shader/CMakeLists.txt
+index fc459150..60d7e641 100644
+--- a/vita3k/shader/CMakeLists.txt
++++ b/vita3k/shader/CMakeLists.txt
+@@ -39,14 +39,5 @@ target_link_libraries(shader PRIVATE SPIRV spirv-cross-glsl)
+ 
+ # Marshmallow Tracy linking
+ if(TRACY_ENABLE_ON_CORE_COMPONENTS)
+-	target_link_libraries(shader PRIVATE tracy)
++	target_link_libraries(shader PRIVATE TracyClient)
+ endif()
+-
+-add_executable(
+-	shader-tests
+-	tests/usse_program_analyzer_test.cpp
+-)
+-
+-target_include_directories(shader-tests PRIVATE include)
+-target_link_libraries(shader-tests PRIVATE googletest shader util)
+-add_test(NAME shader COMMAND shader-tests)
+diff --git a/vita3k/shader/include/shader/profile.h b/vita3k/shader/include/shader/profile.h
+index 07e33542..e2f1c8d8 100644
+--- a/vita3k/shader/include/shader/profile.h
++++ b/vita3k/shader/include/shader/profile.h
+@@ -19,7 +19,7 @@
+ 
+ #ifdef TRACY_ENABLE
+ 
+-#include "public/tracy/Tracy.hpp"
++#include <tracy/Tracy.hpp>
+ #define SHADER_PROFILE(name) ZoneNamedNC(___tracy_scoped_zone, name, 0x000035, false);
+ 
+ #else
+diff --git a/vita3k/touch/CMakeLists.txt b/vita3k/touch/CMakeLists.txt
+index b4e81c82..275d31fd 100644
+--- a/vita3k/touch/CMakeLists.txt
++++ b/vita3k/touch/CMakeLists.txt
+@@ -9,4 +9,4 @@ add_library(
+ 
+ target_include_directories(touch PUBLIC include)
+ target_link_libraries(touch PUBLIC emuenv)
+-target_link_libraries(touch PRIVATE display sdl2)
++target_link_libraries(touch PRIVATE display ${SDL2_LIBRARIES})
+diff --git a/vita3k/util/include/util/tracy.h b/vita3k/util/include/util/tracy.h
+index 86021703..c8dce763 100644
+--- a/vita3k/util/include/util/tracy.h
++++ b/vita3k/util/include/util/tracy.h
+@@ -78,7 +78,7 @@ inline std::string to_debug_str(const MemState &mem) {
+ #ifdef TRACY_ENABLE
+ 
+ #include "public/client/TracyScoped.hpp"
+-#include "public/tracy/Tracy.hpp"
++#include <tracy/Tracy.hpp>
+ 
+ #if (defined(_MSC_VER) && !defined(__clang__) && (!defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL))
+ #define __ARGS_WITH_COMMA(...) , ##__VA_ARGS__
+diff --git a/vita3k/util/src/util.cpp b/vita3k/util/src/util.cpp
+index 1e92701d..9e97f3d6 100644
+--- a/vita3k/util/src/util.cpp
++++ b/vita3k/util/src/util.cpp
+@@ -56,9 +56,6 @@ ExitCode init(const Root &root_paths, bool use_stdout) {
+     if (use_stdout)
+         sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
+ 
+-    if (add_sink(root_paths.get_base_path() / LOG_FILE_NAME) != Success)
+-        return InitConfigFailed;
+-
+     spdlog::set_error_handler([](const std::string &msg) {
+         std::cerr << "spdlog error: " << msg << std::endl;
+         assert(0);
+-- 
+2.39.1
+
