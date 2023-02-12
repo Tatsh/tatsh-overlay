@@ -1,4 +1,4 @@
-From 79acf2350102543eca63f231559cfcd3b4933894 Mon Sep 17 00:00:00 2001
+From e99304d4c774174e946c3673a286f34c9c890c40 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:11 -0500
 Subject: [PATCH] Gentoo fixes
@@ -11,7 +11,7 @@ Subject: [PATCH] Gentoo fixes
  advanced/Scripts/pihole-reenable.sh           |   2 +-
  advanced/Scripts/piholeARPTable.sh            |   6 +-
  advanced/Scripts/piholeCheckout.sh            | 208 ----------------
- advanced/Scripts/piholeDebug.sh               |  80 +++---
+ advanced/Scripts/piholeDebug.sh               |  84 ++++---
  advanced/Scripts/piholeLogFlush.sh            |  36 +--
  advanced/Scripts/query.sh                     |   6 +-
  advanced/Scripts/update.sh                    | 232 ------------------
@@ -27,7 +27,7 @@ Subject: [PATCH] Gentoo fixes
  advanced/Templates/pihole.sudo                |   9 -
  gravity.sh                                    |  23 +-
  pihole                                        | 100 ++------
- 23 files changed, 201 insertions(+), 792 deletions(-)
+ 23 files changed, 203 insertions(+), 794 deletions(-)
  delete mode 100755 advanced/Scripts/piholeCheckout.sh
  delete mode 100755 advanced/Scripts/update.sh
  delete mode 100755 advanced/Scripts/updatecheck.sh
@@ -409,7 +409,7 @@ index cf57800c..00000000
 -    fi
 -}
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index c0264d1a..f11dc812 100755
+index ad25e866..bcd01f44 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,8 +22,12 @@ set -o pipefail
@@ -436,7 +436,7 @@ index c0264d1a..f11dc812 100755
  
  # FAQ URLs for use in showing the debug log
  FAQ_HARDWARE_REQUIREMENTS="${COL_CYAN}https://docs.pi-hole.net/main/prerequisites/${COL_NC}"
-@@ -56,18 +60,16 @@ FORUMS_URL="${COL_CYAN}https://discourse.pi-hole.net${COL_NC}"
+@@ -56,20 +60,20 @@ FORUMS_URL="${COL_CYAN}https://discourse.pi-hole.net${COL_NC}"
  
  # Directories required by Pi-hole
  # https://discourse.pi-hole.net/t/what-files-does-pi-hole-use/1684
@@ -450,22 +450,26 @@ index c0264d1a..f11dc812 100755
 -LOG_DIRECTORY="/var/log/pihole"
 -WEB_SERVER_LOG_DIRECTORY="/var/log/lighttpd"
 -WEB_SERVER_CONFIG_DIRECTORY="/etc/lighttpd"
--HTML_DIRECTORY="/var/www/html"
--WEB_GIT_DIRECTORY="${HTML_DIRECTORY}/admin"
++CORE_GIT_DIRECTORY="@EPREFIX@/var/lib/pihole-git"
 +CRON_D_DIRECTORY="@EPREFIX@/etc/cron.d"
 +DNSMASQ_D_DIRECTORY="@EPREFIX@/etc/pihole/dnsmasq.d"
 +PIHOLE_DIRECTORY="@EPREFIX@/var/lib/pihole"
++PIHOLE_SCRIPTS_DIRECTORY="@EPREFIX@/usr/@LIBDIR@/pihole"
 +BIN_DIRECTORY="@EPREFIX@/usr/bin"
 +RUN_DIRECTORY="@EPREFIX@/run"
 +LOG_DIRECTORY="@EPREFIX@/var/log"
 +WEB_SERVER_LOG_DIRECTORY="${LOG_DIRECTORY}/${VHOST_SERVER}"
 +WEB_SERVER_CONFIG_DIRECTORY="@EPREFIX@/etc/lighttpd"
+ WEB_SERVER_CONFIG_DIRECTORY_FEDORA="${WEB_SERVER_CONFIG_DIRECTORY}/conf.d"
+ WEB_SERVER_CONFIG_DIRECTORY_DEBIAN="${WEB_SERVER_CONFIG_DIRECTORY}/conf-enabled"
+-HTML_DIRECTORY="/var/www/html"
+-WEB_GIT_DIRECTORY="${HTML_DIRECTORY}/admin"
 +HTML_DIRECTORY="@EPREFIX@/var/www/localhost/htdocs"
 +WEB_GIT_DIRECTORY="${HTML_DIRECTORY}/pihole-admin"
  SHM_DIRECTORY="/dev/shm"
  ETC="/etc"
  
-@@ -83,7 +85,7 @@ PIHOLE_RAW_BLOCKLIST_FILES="${PIHOLE_DIRECTORY}/list.*"
+@@ -87,7 +91,7 @@ PIHOLE_RAW_BLOCKLIST_FILES="${PIHOLE_DIRECTORY}/list.*"
  PIHOLE_LOCAL_HOSTS_FILE="${PIHOLE_DIRECTORY}/local.list"
  PIHOLE_LOGROTATE_FILE="${PIHOLE_DIRECTORY}/logrotate"
  PIHOLE_SETUP_VARS_FILE="${PIHOLE_DIRECTORY}/setupVars.conf"
@@ -474,7 +478,7 @@ index c0264d1a..f11dc812 100755
  PIHOLE_CUSTOM_HOSTS_FILE="${PIHOLE_DIRECTORY}/custom.list"
  PIHOLE_VERSIONS_FILE="${PIHOLE_DIRECTORY}/versions"
  
-@@ -134,7 +136,7 @@ RESOLVCONF="${ETC}/resolv.conf"
+@@ -138,7 +142,7 @@ RESOLVCONF="${ETC}/resolv.conf"
  DNSMASQ_CONF="${ETC}/dnsmasq.conf"
  
  # Store Pi-hole's processes in an array for easy use and parsing
@@ -483,7 +487,7 @@ index c0264d1a..f11dc812 100755
  
  # Store the required directories in an array so it can be parsed through
  REQUIRED_FILES=("${PIHOLE_CRON_FILE}"
-@@ -160,7 +162,9 @@ REQUIRED_FILES=("${PIHOLE_CRON_FILE}"
+@@ -166,7 +170,9 @@ REQUIRED_FILES=("${PIHOLE_CRON_FILE}"
  "${PIHOLE_CUSTOM_HOSTS_FILE}"
  "${PIHOLE_VERSIONS_FILE}")
  
@@ -494,7 +498,7 @@ index c0264d1a..f11dc812 100755
  
  The intent of this script is to allow users to self-diagnose their installations.  This is accomplished by running tests against our software and providing the user with links to FAQ articles when a problem is detected.  Since we are a small team and Pi-hole has been growing steadily, it is our hope that this will help us spend more time on development.
  
-@@ -318,7 +322,6 @@ check_ftl_version() {
+@@ -324,7 +330,6 @@ check_ftl_version() {
      FTL_BRANCH=$(pihole-FTL branch)
      FTL_COMMIT=$(pihole-FTL --hash)
  
@@ -502,7 +506,7 @@ index c0264d1a..f11dc812 100755
      log_write "${TICK} Version: ${FTL_VERSION}"
  
      # If they use the master branch, they are on the stable codebase
-@@ -337,10 +340,6 @@ check_ftl_version() {
+@@ -343,10 +348,6 @@ check_ftl_version() {
  
  # Checks the core version of the Pi-hole codebase
  check_component_versions() {
@@ -513,7 +517,7 @@ index c0264d1a..f11dc812 100755
      # Check the FTL version
      check_ftl_version
  }
-@@ -357,8 +356,12 @@ get_program_version() {
+@@ -363,8 +364,12 @@ get_program_version() {
                      ;;
          "php") program_version="$(${program_name} -v 2> /dev/null | head -n1 | cut -d '-' -f1 | cut -d ' ' -f2)"
                  ;;
@@ -527,7 +531,7 @@ index c0264d1a..f11dc812 100755
      esac
      # If the program does not have a version (the variable is empty)
      if [[ -z "${program_version}" ]]; then
-@@ -374,7 +377,7 @@ get_program_version() {
+@@ -380,7 +385,7 @@ get_program_version() {
  # and their versions, using the functions above.
  check_critical_program_versions() {
      # Use the function created earlier and bundle them into one function that checks all the version numbers
@@ -536,7 +540,7 @@ index c0264d1a..f11dc812 100755
      get_program_version "php"
  }
  
-@@ -384,8 +387,8 @@ os_check() {
+@@ -390,8 +395,8 @@ os_check() {
      local remote_os_domain valid_os valid_version detected_os detected_version cmdResult digReturnCode response
      remote_os_domain=${OS_CHECK_DOMAIN_NAME:-"versions.pi-hole.net"}
  
@@ -547,7 +551,7 @@ index c0264d1a..f11dc812 100755
  
      cmdResult="$(dig +short -t txt "${remote_os_domain}" @ns1.pi-hole.net 2>&1; echo $?)"
      #Get the return code of the previous command (last line)
-@@ -393,6 +396,7 @@ os_check() {
+@@ -399,6 +404,7 @@ os_check() {
  
      # Extract dig response
      response="${cmdResult%%$'\n'*}"
@@ -555,7 +559,7 @@ index c0264d1a..f11dc812 100755
  
      if [ "${digReturnCode}" -ne 0 ]; then
          log_write "${INFO} Distro: ${detected_os^}"
-@@ -454,7 +458,7 @@ diagnose_operating_system() {
+@@ -460,7 +466,7 @@ diagnose_operating_system() {
      [ -n "${DOCKER_VERSION}" ] && log_write "${INFO} Pi-hole Docker Container: ${DOCKER_VERSION}"
  
      # If there is a /etc/*release file, it's probably a supported operating system, so we can
@@ -564,7 +568,7 @@ index c0264d1a..f11dc812 100755
          # display the attributes to the user from the function made earlier
          os_check
      else
-@@ -467,9 +471,9 @@ check_selinux() {
+@@ -473,9 +479,9 @@ check_selinux() {
      # SELinux is not supported by the Pi-hole
      echo_current_diagnostic "SELinux"
      # Check if a SELinux configuration file exists
@@ -576,7 +580,7 @@ index c0264d1a..f11dc812 100755
          case "${DEFAULT_SELINUX,,}" in
              enforcing)
                  log_write "${CROSS} ${COL_RED}Default SELinux: $DEFAULT_SELINUX${COL_NC}"
-@@ -734,7 +738,7 @@ check_required_ports() {
+@@ -740,7 +746,7 @@ check_required_ports() {
      # Since Pi-hole needs 53, 80, and 4711, check what they are being used by
      # so we can detect any issues
      local resolver="pihole-FTL"
@@ -585,7 +589,7 @@ index c0264d1a..f11dc812 100755
      local ftl="pihole-FTL"
      # Create an array for these ports in use
      ports_in_use=()
-@@ -796,6 +800,12 @@ check_networking() {
+@@ -802,6 +808,12 @@ check_networking() {
  }
  
  check_x_headers() {
@@ -598,7 +602,7 @@ index c0264d1a..f11dc812 100755
      # The X-Headers allow us to determine from the command line if the Web
      # lighttpd.conf has a directive to show "X-Pi-hole: A black hole for Internet advertisements."
      # in the header of any Pi-holed domain
-@@ -806,7 +816,7 @@ check_x_headers() {
+@@ -812,7 +824,7 @@ check_x_headers() {
      # Use curl -I to get the header and parse out just the X-Pi-hole one
      local full_curl_output_dashboard
      local dashboard
@@ -607,11 +611,13 @@ index c0264d1a..f11dc812 100755
      dashboard=$(echo "${full_curl_output_dashboard}" | awk '/X-Pi-hole/' | tr -d '\r')
      # Store what the X-Header should be in variables for comparison later
      local dashboard_working
-@@ -1141,9 +1151,9 @@ show_content_of_pihole_files() {
+@@ -1175,11 +1187,9 @@ show_content_of_pihole_files() {
      # Show the content of the files in each of Pi-hole's folders
      show_content_of_files_in_dir "${PIHOLE_DIRECTORY}"
      show_content_of_files_in_dir "${DNSMASQ_D_DIRECTORY}"
 -    show_content_of_files_in_dir "${WEB_SERVER_CONFIG_DIRECTORY}"
+-    show_content_of_files_in_dir "${WEB_SERVER_CONFIG_DIRECTORY_FEDORA}"
+-    show_content_of_files_in_dir "${WEB_SERVER_CONFIG_DIRECTORY_DEBIAN}"
 -    show_content_of_files_in_dir "${CRON_D_DIRECTORY}"
 -    show_content_of_files_in_dir "${WEB_SERVER_LOG_DIRECTORY}"
 +    [ -d "${WEB_SERVER_CONFIG_DIRECTORY}" ] && show_content_of_files_in_dir "${WEB_SERVER_CONFIG_DIRECTORY}"
@@ -1462,7 +1468,7 @@ index c2795442..7b088357 100755
  fi
  
 diff --git a/pihole b/pihole
-index a99a37e7..0fbe8b8c 100755
+index 1d9ad82c..0cfc0ec3 100755
 --- a/pihole
 +++ b/pihole
 @@ -9,7 +9,7 @@
@@ -1483,7 +1489,7 @@ index a99a37e7..0fbe8b8c 100755
  source "${colfile}"
  
  utilsfile="${PI_HOLE_SCRIPT_DIR}/utils.sh"
-@@ -65,25 +65,6 @@ arpFunc() {
+@@ -70,25 +70,6 @@ arpFunc() {
    exit 0
  }
  
@@ -1509,7 +1515,7 @@ index a99a37e7..0fbe8b8c 100755
  updateGravityFunc() {
    exec "${PI_HOLE_SCRIPT_DIR}"/gravity.sh "$@"
  }
-@@ -100,16 +81,6 @@ chronometerFunc() {
+@@ -105,16 +86,6 @@ chronometerFunc() {
    exit 0
  }
  
@@ -1526,7 +1532,7 @@ index a99a37e7..0fbe8b8c 100755
  versionFunc() {
    shift
    exec "${PI_HOLE_SCRIPT_DIR}"/version.sh "$@"
-@@ -154,7 +125,16 @@ restartDNS() {
+@@ -159,7 +130,16 @@ restartDNS() {
      fi
    else
      # A full restart has been requested
@@ -1544,7 +1550,7 @@ index a99a37e7..0fbe8b8c 100755
      str="Restarting DNS server"
      icon="${TICK}"
    fi
-@@ -256,9 +236,9 @@ Example: 'pihole logging on'
+@@ -261,9 +241,9 @@ Example: 'pihole logging on'
  Specify whether the Pi-hole log should be used
  
  Options:
@@ -1557,7 +1563,7 @@ index a99a37e7..0fbe8b8c 100755
      exit 0
    elif [[ "${1}" == "off" ]]; then
      # Disable logging
-@@ -349,13 +329,13 @@ statusFunc() {
+@@ -354,13 +334,13 @@ statusFunc() {
      fi
  
    # Determine if Pi-hole's blocking is enabled
@@ -1573,7 +1579,7 @@ index a99a37e7..0fbe8b8c 100755
      # Configs are set
      case "${1}" in
        "web") echo "$port";;
-@@ -375,7 +355,7 @@ exit 0
+@@ -380,7 +360,7 @@ exit 0
  
  tailFunc() {
    # Warn user if Pi-hole's logging is disabled
@@ -1582,7 +1588,7 @@ index a99a37e7..0fbe8b8c 100755
    if [[ "${logging_enabled}" == "0" ]]; then
      # No "log-queries" lines are found.
      # Commented out lines (such as "#log-queries") are ignored
-@@ -387,7 +367,7 @@ tailFunc() {
+@@ -392,7 +372,7 @@ tailFunc() {
    # Color blocklist/blacklist/wildcard entries as red
    # Color A/AAAA/DHCP strings as white
    # Color everything else as gray
@@ -1591,7 +1597,7 @@ index a99a37e7..0fbe8b8c 100755
      -e "s,($(date +'%b %d ')| dnsmasq\[[0-9]*\]),,g" \
      -e "s,(.*(blacklisted |gravity blocked ).*),${COL_RED}&${COL_NC}," \
      -e "s,.*(query\\[A|DHCP).*,${COL_NC}&${COL_NC}," \
-@@ -395,29 +375,6 @@ tailFunc() {
+@@ -400,29 +380,6 @@ tailFunc() {
    exit 0
  }
  
@@ -1621,7 +1627,7 @@ index a99a37e7..0fbe8b8c 100755
  tricorderFunc() {
    local tricorder_token
    if [[ ! -p "/dev/stdin" ]]; then
-@@ -439,16 +396,6 @@ tricorderFunc() {
+@@ -444,16 +401,6 @@ tricorderFunc() {
    exit 0
  }
  
@@ -1638,7 +1644,7 @@ index a99a37e7..0fbe8b8c 100755
  helpFunc() {
    echo "Usage: pihole [options]
  Example: 'pihole -w -h'
-@@ -468,7 +415,6 @@ Debugging Options:
+@@ -473,7 +420,6 @@ Debugging Options:
                          Add '-c' or '--check-database' to include a Pi-hole database integrity check
                          Add '-a' to automatically upload the log to tricorder.pi-hole.net
    -f, flush           Flush the Pi-hole log
@@ -1646,7 +1652,7 @@ index a99a37e7..0fbe8b8c 100755
    -t, tail [arg]      View the live output of the Pi-hole log.
                        Add an optional argument to filter the log
                        (regular expressions are supported)
-@@ -485,11 +431,8 @@ Options:
+@@ -490,11 +436,8 @@ Options:
                          Add '-h' for more info on logging usage
    -q, query           Query the adlists for a specified domain
                          Add '-h' for more info on query usage
@@ -1658,7 +1664,7 @@ index a99a37e7..0fbe8b8c 100755
    status              Display the running status of Pi-hole subsystems
    enable              Enable Pi-hole subsystems
    disable             Disable Pi-hole subsystems
-@@ -497,8 +440,6 @@ Options:
+@@ -502,8 +445,6 @@ Options:
    restartdns          Full restart Pi-hole subsystems
                          Add 'reload' to update the lists and flush the cache without restarting the DNS server
                          Add 'reload-lists' to only update the lists WITHOUT flushing the cache or restarting the DNS server
@@ -1667,7 +1673,7 @@ index a99a37e7..0fbe8b8c 100755
    arpflush            Flush information stored in Pi-hole's network tables";
    exit 0
  }
-@@ -563,11 +504,8 @@ case "${1}" in
+@@ -568,11 +509,8 @@ case "${1}" in
    "--white-wild" | "white-wild"   ) listFunc "$@";;
    "-d" | "debug"                ) debugFunc "$@";;
    "-f" | "flush"                ) flushFunc "$@";;
