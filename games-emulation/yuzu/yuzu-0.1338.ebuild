@@ -9,7 +9,7 @@ HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 
 MY_PV="mainline-${PV/./-}"
 CPP_JWT_SHA="e12ef06218596b52d9b5d6e1639484866a8e7067"
-DYNARMIC_SHA="befe547d5631024a70d81d2ccee808bbfcb3854e"
+DYNARMIC_SHA="165621a872ffb802c7a26ef5900e1e62681f1a88"
 HTTPLIB_SHA="305a7abcb9b4e9e349843c6d563212e6c1bbbf21"
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
 SDL_SHA="f17058b562c8a1090c0c996b42982721ace90903"
@@ -63,9 +63,7 @@ BDEPEND="dev-cpp/nlohmann_json
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-4949-high-dpi.patch"
 	"${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
-	"${FILESDIR}/${PN}-remove-unknown-constants.patch"
 )
 
 pkg_setup() {
