@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="780627e7b0bc6137e72674d146e121a6def0fe13"
+SHA="e4f68592c3a6e51414e5f78eef096f21bf735eb1"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.18
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -32,6 +32,7 @@ NUGETS="avalonia-0.10.18
 	excss-4.1.4
 	fizzler-1.2.1
 	fluentavaloniaui-1.4.5
+	fsharp.core-7.0.0
 	gtksharp.dependencies-1.1.1
 	harfbuzzsharp-2.8.2.1-preview.108
 	harfbuzzsharp.nativeassets.linux-2.8.2.1-preview.108
@@ -60,10 +61,10 @@ NUGETS="avalonia-0.10.18
 	microsoft.csharp-4.7.0
 	microsoft.dotnet.platformabstractions-3.1.6
 	microsoft.extensions.dependencymodel-6.0.0
-	microsoft.identitymodel.abstractions-6.26.0
-	microsoft.identitymodel.jsonwebtokens-6.26.0
-	microsoft.identitymodel.logging-6.26.0
-	microsoft.identitymodel.tokens-6.26.0
+	microsoft.identitymodel.abstractions-6.26.1
+	microsoft.identitymodel.jsonwebtokens-6.26.1
+	microsoft.identitymodel.logging-6.26.1
+	microsoft.identitymodel.tokens-6.26.1
 	microsoft.netcore.app.host.osx-x64-7.0.2
 	microsoft.netcore.app.host.win-x64-7.0.2
 	microsoft.netcore.app.runtime.linux-x64-7.0.2
@@ -202,7 +203,7 @@ NUGETS="avalonia-0.10.18
 	system.globalization-4.3.0
 	system.globalization.calendars-4.0.1
 	system.globalization.extensions-4.0.1
-	system.identitymodel.tokens.jwt-6.26.0
+	system.identitymodel.tokens.jwt-6.26.1
 	system.io-4.1.0
 	system.io-4.3.0
 	system.io.compression-4.1.0
@@ -302,6 +303,7 @@ NUGETS="avalonia-0.10.18
 	system.xml.readerwriter-4.0.11
 	system.xml.xdocument-4.0.11
 	tmds.dbus-0.9.0
+	unicornengine.unicorn-2.0.2-rc1-9c9356d
 	xamlnamereferencegenerator-1.5.1"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	$(nuget_uris)"
