@@ -1,4 +1,4 @@
-From 5501db37567dea43e2c6c455444ebdf8dfd5c6d5 Mon Sep 17 00:00:00 2001
+From 5ec79d3527afa9b86f9f5be1489f37edddab0dbb Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Feb 2023 23:18:13 -0500
 Subject: [PATCH] System libs
@@ -6,7 +6,7 @@ Subject: [PATCH] System libs
 ---
  CMakeLists.txt                             |  10 +-
  cmake/FindFFmpeg.cmake                     | 151 +++++++++++++++++++++
- external/CMakeLists.txt                    | 118 ++++++----------
+ external/CMakeLists.txt                    | 116 ++++++----------
  vita3k/CMakeLists.txt                      |   4 +-
  vita3k/app/src/app_init.cpp                |   2 +-
  vita3k/audio/CMakeLists.txt                |   6 +-
@@ -15,7 +15,7 @@ Subject: [PATCH] System libs
  vita3k/codec/CMakeLists.txt                |   2 +-
  vita3k/config/CMakeLists.txt               |   4 +-
  vita3k/config/src/config.cpp               |  16 +--
- vita3k/cpu/CMakeLists.txt                  |   2 +-
+ vita3k/cpu/CMakeLists.txt                  |   1 +
  vita3k/ctrl/CMakeLists.txt                 |   4 +-
  vita3k/gui/CMakeLists.txt                  |   4 +-
  vita3k/kernel/CMakeLists.txt               |   8 +-
@@ -33,7 +33,7 @@ Subject: [PATCH] System libs
  vita3k/touch/CMakeLists.txt                |   2 +-
  vita3k/util/include/util/tracy.h           |   2 +-
  vita3k/util/src/util.cpp                   |   3 -
- 29 files changed, 238 insertions(+), 157 deletions(-)
+ 29 files changed, 238 insertions(+), 154 deletions(-)
  create mode 100644 cmake/FindFFmpeg.cmake
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
@@ -249,7 +249,7 @@ index 00000000..ce5c3b9f
 +# Give a nice error message if some of the required vars are missing.
 +find_package_handle_standard_args(FFmpeg DEFAULT_MSG ${_FFmpeg_REQUIRED_VARS})
 diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
-index e37d8e04..3b14f8c4 100644
+index e9f7a07c..e5aee443 100644
 --- a/external/CMakeLists.txt
 +++ b/external/CMakeLists.txt
 @@ -1,4 +1,5 @@
@@ -267,7 +267,7 @@ index e37d8e04..3b14f8c4 100644
  # Fix a glslang hack
  # See https://github.com/KhronosGroup/glslang/issues/1015 and https://github.com/Vita3K/Vita3K/pull/369 for details
  if(NOT CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-@@ -38,14 +37,7 @@ if(NOT CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+@@ -38,12 +37,7 @@ if(NOT CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
  	endif()
  endif()
  
@@ -277,13 +277,11 @@ index e37d8e04..3b14f8c4 100644
 -option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" OFF)
 -option(CAPSTONE_ARM_SUPPORT "ARM support" ON)
 -add_subdirectory(capstone EXCLUDE_FROM_ALL)
--set_property(TARGET capstone-static PROPERTY FOLDER externals)
--set(capstone_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/capstone/include" PARENT_SCOPE)
 +find_package(capstone REQUIRED)
  
  add_library(crypto-algorithms STATIC crypto-algorithms/sha256.c crypto-algorithms/sha256.h)
  target_include_directories(crypto-algorithms PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/crypto-algorithms")
-@@ -83,12 +75,6 @@ add_library(better-enums INTERFACE)
+@@ -81,12 +75,6 @@ add_library(better-enums INTERFACE)
  target_include_directories(better-enums INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/better-enums")
  target_compile_definitions(better-enums INTERFACE BETTER_ENUMS_STRICT_CONVERSION=1)
  
@@ -296,7 +294,7 @@ index e37d8e04..3b14f8c4 100644
  add_subdirectory(libfat16)
  set_property(TARGET FAT16 PROPERTY FOLDER externals)
  
-@@ -96,7 +82,7 @@ set_property(TARGET FAT16 PROPERTY FOLDER externals)
+@@ -94,7 +82,7 @@ set_property(TARGET FAT16 PROPERTY FOLDER externals)
  add_library(imgui STATIC imgui/imgui.cpp imgui/imgui_draw.cpp imgui/imgui_tables.cpp imgui/imgui_widgets.cpp imgui/misc/cpp/imgui_stdlib.cpp)
  target_compile_definitions(imgui PRIVATE IMGUI_DISABLE_DEMO_WINDOWS)
  target_include_directories(imgui PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/imgui"
@@ -305,7 +303,7 @@ index e37d8e04..3b14f8c4 100644
  set_property(TARGET imgui PROPERTY FOLDER externals)
  
  add_library(miniz STATIC miniz/miniz.c miniz/miniz.h)
-@@ -118,28 +104,8 @@ target_include_directories(sdl2 INTERFACE "${SDL2_INCLUDE_DIR}")
+@@ -116,28 +104,8 @@ target_include_directories(sdl2 INTERFACE "${SDL2_INCLUDE_DIR}")
  target_link_libraries(sdl2 INTERFACE "${SDL2_LIBRARY}")
  
  # Cubeb setup, from https://github.com/RPCS3/rpcs3/blob/master/3rdparty/cubeb/CMakeLists.txt
@@ -336,7 +334,7 @@ index e37d8e04..3b14f8c4 100644
  
  if(WIN32)
  	add_library(winsock INTERFACE)
-@@ -201,12 +167,7 @@ endif()
+@@ -199,12 +167,7 @@ endif()
  add_library(vita-toolchain INTERFACE)
  target_include_directories(vita-toolchain INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/vita-toolchain/src")
  
@@ -350,7 +348,7 @@ index e37d8e04..3b14f8c4 100644
  
  if(USE_DISCORD_RICH_PRESENCE)
  	if(NOT EXISTS "${CMAKE_BINARY_DIR}/external/discord_game_sdk.zip")
-@@ -281,31 +242,34 @@ target_compile_definitions(dlmalloc PUBLIC ONLY_MSPACES=1)
+@@ -278,31 +241,34 @@ target_compile_definitions(dlmalloc PUBLIC ONLY_MSPACES=1)
  target_compile_definitions(dlmalloc PUBLIC USE_LOCK=0)
  set_property(TARGET dlmalloc PROPERTY FOLDER externals)
  
@@ -397,7 +395,7 @@ index e37d8e04..3b14f8c4 100644
  
  if(APPLE)
  	set(OPENSSL_ROOT_DIR "/usr/local/opt/openssl")
-@@ -360,31 +324,30 @@ endif()
+@@ -348,31 +314,30 @@ add_library(libatrac9 STATIC ${LIBATRAC9_SOURCES})
  target_include_directories(libatrac9 PUBLIC LibAtrac9/C/src)
  set_property(TARGET libatrac9 PROPERTY FOLDER externals)
  
@@ -445,7 +443,7 @@ index e37d8e04..3b14f8c4 100644
  
  # Defining TRACY_ENABLE for both compiling Tracy and compiling the project that links
  # against it is needed for Tracy to work
-@@ -398,7 +361,7 @@ target_compile_definitions(tracy PUBLIC TRACY_NO_SYSTEM_TRACING)
+@@ -386,7 +351,7 @@ target_compile_definitions(tracy PUBLIC TRACY_NO_SYSTEM_TRACING)
  # in order for the condition to work properly on both single-config and multi-config
  # CMake project generators. More info here:
  # https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#build-configurations
@@ -454,7 +452,7 @@ index e37d8e04..3b14f8c4 100644
  
  #
  # ----------------------------------------------------------------------------------------
-@@ -412,8 +375,9 @@ target_compile_definitions(tracy PUBLIC $<$<CONFIG:Debug,RelWithDebInfo>:TRACY_E
+@@ -400,8 +365,9 @@ target_compile_definitions(tracy PUBLIC $<$<CONFIG:Debug,RelWithDebInfo>:TRACY_E
  set(NFD_PORTAL ON)
  
  # nativefiledialog-extended
@@ -606,15 +604,15 @@ index ca4e650c..f63e3688 100644
          }
      }
 diff --git a/vita3k/cpu/CMakeLists.txt b/vita3k/cpu/CMakeLists.txt
-index 23fbd1f7..74f2f0d2 100644
+index bb669c82..74f2f0d2 100644
 --- a/vita3k/cpu/CMakeLists.txt
 +++ b/vita3k/cpu/CMakeLists.txt
-@@ -25,4 +25,4 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_LIST})
+@@ -24,4 +24,5 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_LIST})
+ 
  target_include_directories(cpu PUBLIC include)
  target_link_libraries(cpu PUBLIC mem util)
- target_include_directories(cpu PRIVATE ${capstone_INCLUDE_DIRS})
--target_link_libraries(cpu PRIVATE dynarmic unicorn capstone-static)
-+target_link_libraries(cpu PRIVATE dynarmic unicorn capstone)
++target_include_directories(cpu PRIVATE ${capstone_INCLUDE_DIRS})
+ target_link_libraries(cpu PRIVATE dynarmic unicorn capstone)
 diff --git a/vita3k/ctrl/CMakeLists.txt b/vita3k/ctrl/CMakeLists.txt
 index 9faee2f0..427e807b 100644
 --- a/vita3k/ctrl/CMakeLists.txt
@@ -675,7 +673,7 @@ index cf84ccbb..fe82ec96 100644
  
  #include <kernel/state.h>
 diff --git a/vita3k/main.cpp b/vita3k/main.cpp
-index 67c79eba..e849a6cb 100644
+index 27440b90..284b59b5 100644
 --- a/vita3k/main.cpp
 +++ b/vita3k/main.cpp
 @@ -46,7 +46,7 @@

@@ -7,7 +7,7 @@ inherit cmake desktop wrapper
 
 DESCRIPTION="Experimental PlayStation Vita emulator."
 HOMEPAGE="https://vita3k.org https://github.com/Vita3K/Vita3K"
-SHA="97f8bb0da581d5a63b23246a69e003de090c3dbe"
+SHA="0e1e257394244520870112745b291d97d5a1e17b"
 BETTER_ENUMS_SHA="1e8f499ddff8eec43129ac974eebdfb745920643"
 CRYPTO_ALGORITHMS_SHA="cb9ea3fada60f9b01e9133d7db4d3e08171d0565"
 DLMALLOC_SHA="e98f4ee160380d7c39dc1f04e7488bcf0770d391"
