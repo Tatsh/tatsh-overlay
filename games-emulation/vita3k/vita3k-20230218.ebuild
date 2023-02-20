@@ -7,26 +7,26 @@ inherit cmake desktop wrapper
 
 DESCRIPTION="Experimental PlayStation Vita emulator."
 HOMEPAGE="https://vita3k.org https://github.com/Vita3K/Vita3K"
-SHA="0e1e257394244520870112745b291d97d5a1e17b"
-BETTER_ENUMS_SHA="1e8f499ddff8eec43129ac974eebdfb745920643"
+SHA="cd96effca7fc840698e0bfba27a246bd8f732ec5"
+BETTER_ENUMS_SHA="c35576bed0295689540b39873126129adfa0b4c8"
 CRYPTO_ALGORITHMS_SHA="cb9ea3fada60f9b01e9133d7db4d3e08171d0565"
 DLMALLOC_SHA="e98f4ee160380d7c39dc1f04e7488bcf0770d391"
-DYNARMIC_SHA="e97550ada305cd40de0452408ca758ea16742d41"
-FMT_SHA="b6f4ceaed0a0a24ccf575fab6c56dd50ccf6f1a9"
-GLSLANG_SHA="740ae9f60b009196662bad811924788cee56133a"
-IMGUI_SHA="e57871bb95faec757e51214bc0e1ae29b13258ab"
+DYNARMIC_SHA="65068fcaedd802cc7864f2a5f018dbeb2123ae57"
+FMT_SHA="a33701196adfad74917046096bf5a2aa0ab0bb50"
+GLSLANG_SHA="ca8d07d0bc1c6390b83915700439fa7719de6a2a"
+IMGUI_SHA="9aae45eb4a05a5a1f96be1ef37eb503a12ceb889"
 IMGUI_CLUB_SHA="d4cd9896e15a03e92702a578586c3f91bbde01e8"
-LIBATRAC9_SHA="6a9e00f6c7abd74d037fd210b6670d3cdb313049"
+LIBATRAC9_SHA="82767fe38823c32536726ea798f392b0b49e66b9"
 LIBB64_SHA="3896b7a74c70baed0e2f6039a1dbd723e5d5cc8f"
 LIBFAT16_SHA="14ec3073358544c70b77702ff6394f09ce349c59"
 LIBZRIF_SHA="7d1e69bee7d2f08ea5754eff4463c041aacd49af"
 PRINTF_SHA="99f2ec5426cf7113a4879048cd772657c84865e3"
 PSVPFSPARSER_SHA="a5e7cbbd4ba21d1a7d4018866fd5a605644731a4"
-SPDLOG_SHA="eb3220622e73a4889eee355ffa37972b3cac3df5"
-SPIRV_CROSS_SHA="e9cc6403341baf0edd430a4027b074d0a06b782f"
-STB_SHA="8b5f1f37b5b75829fc72d38e7b5d4bcbf8a26d55"
-UNICORN_SHA="66ab1e0ff2de668eaebba33f88ac54d363c866bf"
-VITA_TOOLCHAIN_SHA="c938f0ffd94a8d10887a222849287a59ff1e1da9"
+SPDLOG_SHA="da14258533cb951ce85087ceb45556e0b8253660"
+SPIRV_CROSS_SHA="4e2fdb25671c742a9fbe93a6034eb1542244c7e1"
+STB_SHA="af1a5bc352164740c1cc1354942b1c6b72eacb8a"
+UNICORN_SHA="4b52942ba9d13437c1a858f3ace279db88d7089a"
+VITA_TOOLCHAIN_SHA="1ce9a316eedb0360d55b3d9a6483e5329c781583"
 VULKANMEMORYALLOCATOR_HPP_SHA="dad10c8ff7a9a18836d00026824b85745a02f1c2"
 SRC_URI="https://github.com/Vita3K/Vita3K/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/KhronosGroup/SPIRV-Cross/archive/${SPIRV_CROSS_SHA}.tar.gz -> SPIRV-Cross-${SPIRV_CROSS_SHA:0:7}.tar.gz
@@ -34,7 +34,7 @@ SRC_URI="https://github.com/Vita3K/Vita3K/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/KorewaWatchful/crypto-algorithms/archive/${CRYPTO_ALGORITHMS_SHA}.tar.gz -> crypto-algorithms-${CRYPTO_ALGORITHMS_SHA:0:7}.tar.gz
 	https://github.com/KorewaWatchful/libzRIF/archive/${LIBZRIF_SHA}.tar.gz -> libzrif-${LIBZRIF_SHA:0:7}.tar.gz
 	https://github.com/Macdu/VulkanMemoryAllocator-Hpp/archive/${VULKANMEMORYALLOCATOR_HPP_SHA}.tar.gz -> VulkanMemoryAllocator-Hpp-${VULKANMEMORYALLOCATOR_HPP_SHA:0:7}.tar.gz
-	https://github.com/Thealexbarney/LibAtrac9/archive/${LIBATRAC9_SHA}.tar.gz -> libatrac9-${LIBATRAC9_SHA:0:7}.tar.gz
+	https://github.com/Vita3k/LibAtrac9/archive/${LIBATRAC9_SHA}.tar.gz -> ${PN}-libatrac9-${LIBATRAC9_SHA:0:7}.tar.gz
 	https://github.com/Vita3K/dlmalloc/archive/${DLMALLOC_SHA}.tar.gz -> ${PN}-dlmalloc-${DLMALLOC_SHA:0:7}.tar.gz
 	https://github.com/Vita3K/libfat16/archive/${LIBFAT16_SHA}.tar.gz -> ${PN}-libfat16-${LIBFAT16_SHA:0:7}.tar.gz
 	https://github.com/Vita3K/printf/archive/${PRINTF_SHA}.tar.gz -> vita3k-printf-${PRINTF_SHA:0:7}.tar.gz
