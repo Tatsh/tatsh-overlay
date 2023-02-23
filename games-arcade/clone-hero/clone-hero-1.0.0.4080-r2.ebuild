@@ -14,10 +14,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="strip"
 
-RDEPEND="media-libs/alsa-lib
+RDEPEND="dev-libs/glib
+	media-libs/alsa-lib
+	media-libs/libglvnd
 	sys-libs/zlib
-	x11-libs/wxGTK:3.0-gtk3
-	dev-libs/glib
+	virtual/udev
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}"
