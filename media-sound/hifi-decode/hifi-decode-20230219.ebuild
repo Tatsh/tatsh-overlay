@@ -9,7 +9,7 @@ inherit distutils-r1
 
 DESCRIPTION="Software defined VHS HiFi decoder."
 HOMEPAGE="https://github.com/VideoMem/ld-decode/tree/hifi-decode"
-SHA="237681edd896f0fd29ce84375d78641789125ab7"
+SHA="99d6695144f580170e1273d0c41759764f14a19b"
 SRC_URI="https://github.com/VideoMem/ld-decode/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
