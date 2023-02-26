@@ -7,7 +7,7 @@ inherit cmake desktop xdg
 
 DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
-SHA="cbb79fd34ce99155a48d6e6ad9cd538b03045d03"
+SHA="b87465fd8add0e216bc444cda59141478619df64"
 MY_PN="Cemu"
 IMGUI_PV="1.88"
 SRC_URI="https://github.com/cemu-project/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
@@ -66,6 +66,7 @@ src_configure() {
 		-DPORTABLE=OFF
 		-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3
 		-Wno-dev
+		--debug-find-pkg=wxWidgets
 	)
 	cmake_src_configure
 }
