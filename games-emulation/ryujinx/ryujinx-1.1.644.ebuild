@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="6bf460e1041b969a453dc40ee6fb83164739bf9c"
+SHA="5d85468302dd21a93ac141abfb7b8749b938dc9a"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.18
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -32,7 +32,7 @@ NUGETS="avalonia-0.10.18
 	excss-4.1.4
 	fizzler-1.2.1
 	fluentavaloniaui-1.4.5
-	fsharp.core-7.0.0
+	fsharp.core-7.0.200
 	gtksharp.dependencies-1.1.1
 	harfbuzzsharp-2.8.2.1-preview.108
 	harfbuzzsharp.nativeassets.linux-2.8.2.1-preview.108
@@ -55,7 +55,7 @@ NUGETS="avalonia-0.10.18
 	microsoft.codeanalysis.csharp-4.4.0
 	microsoft.codeanalysis.csharp.scripting-3.4.0
 	microsoft.codeanalysis.scripting.common-3.4.0
-	microsoft.codecoverage-17.4.1
+	microsoft.codecoverage-17.5.0
 	microsoft.csharp-4.3.0
 	microsoft.csharp-4.5.0
 	microsoft.csharp-4.7.0
@@ -76,9 +76,9 @@ NUGETS="avalonia-0.10.18
 	microsoft.netcore.platforms-2.1.2
 	microsoft.netcore.targets-1.0.1
 	microsoft.netcore.targets-1.1.0
-	microsoft.net.test.sdk-17.4.1
-	microsoft.testplatform.objectmodel-17.4.1
-	microsoft.testplatform.testhost-17.4.1
+	microsoft.net.test.sdk-17.5.0
+	microsoft.testplatform.objectmodel-17.5.0
+	microsoft.testplatform.testhost-17.5.0
 	microsoft.win32.primitives-4.0.1
 	microsoft.win32.primitives-4.3.0
 	microsoft.win32.registry-4.5.0
@@ -91,12 +91,12 @@ NUGETS="avalonia-0.10.18
 	nuget.frameworks-5.11.0
 	nunit-3.13.3
 	nunit3testadapter-4.1.0
-	opentk.core-4.7.5
-	opentk.graphics-4.7.5
-	opentk.mathematics-4.7.5
-	opentk.openal-4.7.5
+	opentk.core-4.7.7
+	opentk.graphics-4.7.7
+	opentk.mathematics-4.7.7
+	opentk.openal-4.7.7
 	opentk.redist.glfw-3.3.8.30
-	opentk.windowing.graphicslibraryframework-4.7.5
+	opentk.windowing.graphicslibraryframework-4.7.7
 	runtime.any.system.collections-4.3.0
 	runtime.any.system.diagnostics.tools-4.3.0
 	runtime.any.system.diagnostics.tracing-4.3.0
@@ -303,7 +303,7 @@ NUGETS="avalonia-0.10.18
 	system.xml.readerwriter-4.0.11
 	system.xml.xdocument-4.0.11
 	tmds.dbus-0.9.0
-	unicornengine.unicorn-2.0.2-rc1-9c9356d
+	unicornengine.unicorn-2.0.2-rc1-a913199
 	xamlnamereferencegenerator-1.5.1"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	$(nuget_uris)"
