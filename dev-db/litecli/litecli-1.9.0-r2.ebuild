@@ -16,8 +16,8 @@ KEYWORDS="~amd64 ~x86"
 
 RDEPEND=">=dev-python/click-4.1
 	>=dev-python/pygments-2.0
-	>=dev-python/prompt_toolkit-3.0.3
-	<dev-python/prompt_toolkit-4.0.0
+	>=dev-python/prompt-toolkit-3.0.3
+	<dev-python/prompt-toolkit-4.0.0
 	dev-python/sqlparse
 	>=dev-python/configobj-5.0.6
 	>=dev-python/cli_helpers-1.0.1"
