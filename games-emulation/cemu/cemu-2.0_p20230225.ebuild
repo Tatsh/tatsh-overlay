@@ -43,7 +43,10 @@ BDEPEND="media-libs/glm"
 
 S="${WORKDIR}/${MY_PN}-${SHA}"
 
-PATCHES=( "${FILESDIR}/${PN}-0002-remove-default-from-system-g.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-0002-remove-default-from-system-g.patch"
+	"${FILESDIR}/${PN}-0003-fix-no-discord-rpc.patch"
+)
 
 src_prepare() {
 	sed -re \
