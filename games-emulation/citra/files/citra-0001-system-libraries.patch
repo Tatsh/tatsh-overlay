@@ -1,18 +1,18 @@
-From d3152ac683e27a02143277566f4eee4aeafa0fd8 Mon Sep 17 00:00:00 2001
+From 4801d102f226d23c6c9fae868169b94bd9e2935e Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/3] System libraries
 
 ---
- CMakeLists.txt            | 12 +++++-
- externals/CMakeLists.txt  | 84 +++++++++++++++++++++++++++------------
- src/citra/CMakeLists.txt  |  7 +++-
+ CMakeLists.txt            | 12 ++++-
+ externals/CMakeLists.txt  | 97 ++++++++++++++++++++++++++-------------
+ src/citra/CMakeLists.txt  |  7 ++-
  src/common/CMakeLists.txt |  8 +++-
  src/core/CMakeLists.txt   |  2 +-
- 5 files changed, 82 insertions(+), 31 deletions(-)
+ 5 files changed, 89 insertions(+), 37 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c98cc3a09..b76e44ed1 100644
+index 6e575323b..f9cafccb8 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -49,6 +49,14 @@ CMAKE_DEPENDENT_OPTION(ENABLE_MF "Use Media Foundation decoder (preferred over F
@@ -42,10 +42,10 @@ index c98cc3a09..b76e44ed1 100644
  configure_file(${PROJECT_SOURCE_DIR}/dist/compatibility_list/compatibility_list.qrc
                 ${PROJECT_BINARY_DIR}/dist/compatibility_list/compatibility_list.qrc
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 3c290347a..45f5b2c1f 100644
+index 48bd2ac34..7e8160f1a 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -10,31 +10,35 @@ include(DownloadExternals)
+@@ -10,37 +10,42 @@ include(DownloadExternals)
  include(ExternalProject)
  
  # Boost
@@ -85,18 +85,31 @@ index 3c290347a..45f5b2c1f 100644
 -set(CRYPTOPP_SOURCES "${CMAKE_SOURCE_DIR}/externals/cryptopp")
 -add_subdirectory(cryptopp-cmake)
 -
+-# HACK: Mismatch between compilation of CryptoPP and headers used in Citra can cause runtime issues.
+-# Pull out the compile definitions from CryptoPP and apply them to Citra as well to fix this.
+-# See: https://github.com/weidai11/cryptopp/issues/1191
+-get_source_file_property(CRYPTOPP_COMPILE_DEFINITIONS ${CRYPTOPP_SOURCES}/cryptlib.cpp TARGET_DIRECTORY cryptopp COMPILE_DEFINITIONS)
+-set(CRYPTOPP_COMPILE_DEFINITIONS ${CRYPTOPP_COMPILE_DEFINITIONS} PARENT_SCOPE)
+-
 +if (NOT USE_SYSTEM_CRYPTOPP)
 +    set(CRYPTOPP_BUILD_DOCUMENTATION OFF)
 +    set(CRYPTOPP_BUILD_TESTING OFF)
 +    set(CRYPTOPP_INSTALL OFF)
++    set(CRYPTOPP_SOURCES "${CMAKE_SOURCE_DIR}/externals/cryptopp")
 +    add_subdirectory(cryptopp-cmake)
++
++    # HACK: Mismatch between compilation of CryptoPP and headers used in Citra can cause runtime issues.
++    # Pull out the compile definitions from CryptoPP and apply them to Citra as well to fix this.
++    # See: https://github.com/weidai11/cryptopp/issues/1191
++    get_source_file_property(CRYPTOPP_COMPILE_DEFINITIONS ${CRYPTOPP_SOURCES}/cryptlib.cpp TARGET_DIRECTORY cryptopp COMPILE_DEFINITIONS)
++    set(CRYPTOPP_COMPILE_DEFINITIONS ${CRYPTOPP_COMPILE_DEFINITIONS} PARENT_SCOPE)
 +else()
 +    find_library(CRYPTOPP_LIBS cryptopp REQUIRED)
 +endif()
  # HACK: The logic to set up the base include directory for CryptoPP does not work with Android SDK CMake 3.22.1.
  # Until there is a fixed version available, this code will detect and add in the proper include if it does not exist.
  if(ANDROID)
-@@ -51,12 +55,20 @@ endif()
+@@ -57,12 +62,20 @@ endif()
  
  # fmt and Xbyak need to be added before dynarmic
  # libfmt
@@ -120,7 +133,7 @@ index 3c290347a..45f5b2c1f 100644
  endif()
  
  # Dynarmic
-@@ -75,7 +87,11 @@ endif()
+@@ -81,7 +94,11 @@ endif()
  add_subdirectory(glad)
  
  # inih
@@ -133,7 +146,7 @@ index 3c290347a..45f5b2c1f 100644
  
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -94,7 +110,11 @@ add_subdirectory(soundtouch)
+@@ -100,7 +117,11 @@ add_subdirectory(soundtouch)
  target_include_directories(SoundTouch INTERFACE ./soundtouch/include)
  
  # Teakra
@@ -146,7 +159,7 @@ index 3c290347a..45f5b2c1f 100644
  
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-@@ -105,17 +125,29 @@ endif()
+@@ -111,17 +132,29 @@ endif()
  set(ZSTD_LEGACY_SUPPORT OFF)
  set(ZSTD_BUILD_PROGRAMS OFF)
  set(ZSTD_BUILD_SHARED OFF)
@@ -233,5 +246,5 @@ index 0f473f6fc..82b471ad4 100644
  
  if (ENABLE_WEB_SERVICE)
 -- 
-2.39.1
+2.39.2
 
