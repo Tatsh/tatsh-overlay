@@ -69,7 +69,6 @@ src_configure() {
 		-DPORTABLE=OFF
 		-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3
 		-Wno-dev
-		--debug-find-pkg=wxWidgets
 	)
 	cmake_src_configure
 }
