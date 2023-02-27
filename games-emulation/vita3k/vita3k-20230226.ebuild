@@ -76,6 +76,7 @@ S="${WORKDIR}/Vita3K-${SHA}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"
+	"${FILESDIR}/${PN}-0002-fix-linking-of-libhttps.patch"
 	"${FILESDIR}/${PN}-psvpfsparser-link.patch"
 )
 

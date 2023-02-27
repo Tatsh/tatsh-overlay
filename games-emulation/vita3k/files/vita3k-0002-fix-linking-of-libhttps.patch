@@ -1,0 +1,22 @@
+From d166a55bb0e5a25908a0ee82ff51c3eeaf2ad041 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 26 Feb 2023 22:35:39 -0500
+Subject: [PATCH 2/2] Fix linking of libhttps
+
+---
+ vita3k/https/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/vita3k/https/CMakeLists.txt b/vita3k/https/CMakeLists.txt
+index f64456bd..bd3b63fc 100644
+--- a/vita3k/https/CMakeLists.txt
++++ b/vita3k/https/CMakeLists.txt
+@@ -7,4 +7,4 @@ add_library(
+ 
+ target_include_directories(https PUBLIC include)
+ target_include_directories(https PRIVATE ${OPENSSL_INCLUDE_DIR})
+-target_link_libraries(https PUBLIC util)
++target_link_libraries(https PUBLIC util PRIVATE ssl crypto)
+-- 
+2.39.2
+
