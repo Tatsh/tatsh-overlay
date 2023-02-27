@@ -48,6 +48,7 @@ src_prepare() {
 	rm pyproject.toml || die
 	distutils-r1_src_prepare
 	eapply "${FILESDIR}/${PN}-numpy-1-24.patch"
+	eapply "${FILESDIR}/${PN}-numpy-1-24-2.patch"
 }
 
 src_configure() {

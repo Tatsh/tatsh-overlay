@@ -1,0 +1,25 @@
+From ea949b336ce6eba8c809f7084902388add584817 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 6 Feb 2023 02:40:46 -0500
+Subject: [PATCH 2/2] Numpy 1.24 support
+
+---
+ vhsdecode/addons/chromaAFC.py |  2 +-
+ 3 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/vhsdecode/addons/chromaAFC.py b/vhsdecode/addons/chromaAFC.py
+index 9d8d8c95..97c0b551 100644
+--- a/vhsdecode/addons/chromaAFC.py
++++ b/vhsdecode/addons/chromaAFC.py
+@@ -92,7 +92,7 @@ class ChromaAFC:
+     # returns the measurement simulation to fit the correction equation
+     def tableset(self, sample_size, points=256):
+         ldd.logger.info("Linearizing chroma AFC, please wait ...")
+-        means = np.empty([2, 2], dtype=np.float)
++        means = np.empty([2, 2], dtype=float)
+         min_f, max_f = self.get_band_tolerance()
+         for ix, freq in enumerate(
+             np.linspace(self.color_under * min_f, self.color_under * max_f, num=points)
+--
+2.39.1
+
