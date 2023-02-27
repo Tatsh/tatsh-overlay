@@ -37,7 +37,7 @@ DEPEND="app-arch/zarchive
 	vulkan? ( dev-util/vulkan-headers )
 	x11-libs/gtk+:3[wayland]
 	x11-libs/libX11
-	x11-libs/wxGTK:3.2-gtk3"
+	x11-libs/wxGTK:3.2-gtk3[opengl]"
 RDEPEND="${DEPEND}"
 BDEPEND="media-libs/glm"
 
