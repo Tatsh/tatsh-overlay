@@ -36,7 +36,10 @@ RDEPEND="${DEPEND}
 	dev-python/scipy[${PYTHON_USEDEP}]
 	gtk? ( dev-python/gooey[${PYTHON_USEDEP}] )
 	dev-python/numba[${PYTHON_USEDEP}]
-	dev-python/samplerate[${PYTHON_USEDEP}]"
+	dev-python/samplerate[${PYTHON_USEDEP}]
+	dev-python/pyzmq[${PYTHON_USEDEP}]
+	dev-python/pyhht[${PYTHON_USEDEP}]
+	<dev-python/soundfile-0.11.0[${PYTHON_USEDEP}]"
 BDEPEND="dev-python/cython:0[${PYTHON_USEDEP}]
 	dev-python/wheel[${PYTHON_USEDEP}]
 	dev-python/setuptools_scm[${PYTHON_USEDEP}]"
