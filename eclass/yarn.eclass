@@ -14,7 +14,7 @@ case ${EAPI:-0} in
 	*) die "${ECLASS}: EAPI ${EAPI:-0} unsupported." ;;
 esac
 
-inherit edo
+inherit edo multiprocessing
 
 EXPORT_FUNCTIONS src_unpack src_prepare src_configure src_compile src_install
 
