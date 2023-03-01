@@ -24,10 +24,6 @@ S="${WORKDIR}/${PN}-${SHA}"
 
 src_install() {
 	mpv-plugin_src_install
-	insinto /usr/$(get_libdir)/mpv
+	insinto /etc/mpv/script-opts
 	doins dvd_browser.conf
-	if use autoload; then
-		keepdir /etc/mpv/script-opts
-		dosym ../../../usr/$(get_libdir)/mpv/dvd_browser.conf /etc/mpv/script-opts/dvd_browser.conf
-	fi
 }
