@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from dataclasses import dataclass
+from datetime import datetime
 from functools import cmp_to_key, lru_cache
 from os.path import basename, dirname, join as path_join, realpath, splitext
 from os.path import expanduser
@@ -281,11 +282,10 @@ def get_props(search_dir: str,
                     f'Not handled: {catpkg} (checksum), homepage: {home}, '
                     f'SRC_URI: {src_uri}')
         elif src_uri.startswith('https://github.com/'):
-            parsed = urlparse(src_uri)
-            log.debug('Parsed path: %s', parsed.path)
+            log.debug('Parsed path: %s', parsed_uri.path)
             github_homepage = ('https://github.com' +
-                               '/'.join(parsed.path.split('/')[0:3]))
-            filename = basename(parsed.path)
+                               '/'.join(parsed_uri.path.split('/')[0:3]))
+            filename = basename(parsed_uri.path)
             version = re.split(r'\.(?:tar\.(?:gz|bz2)|zip)$', filename, 2)[0]
             if (re.match(r'^[0-9a-f]{7,}$', version)
                     and not re.match('^[0-9a-f]{8}$', version)):
@@ -294,18 +294,18 @@ def get_props(search_dir: str,
                 yield (cat, pkg, ebuild_version, version,
                        f'{github_homepage}/commits/{branch}.atom',
                        make_github_grit_commit_re(version), False)
-            elif ('/releases/download/' in parsed.path
-                  or '/archive/' in parsed.path):
+            elif ('/releases/download/' in parsed_uri.path
+                  or '/archive/' in parsed_uri.path):
                 prefix = ''
                 if (m := re.match(PREFIX_RE, filename)
-                        if '/archive/' in parsed.path else re.match(
-                            PREFIX_RE, basename(dirname(parsed.path)))):
+                        if '/archive/' in parsed_uri.path else re.match(
+                            PREFIX_RE, basename(dirname(parsed_uri.path)))):
                     prefix = m.group(1)
                 url = f'{github_homepage}/tags'
                 regex = f'archive/refs/tags/{prefix}' + r'([^"]+)\.tar\.gz'
                 yield (cat, pkg, ebuild_version, ebuild_version, url, regex,
                        True)
-            elif m := re.search(r'/raw/([0-9a-f]+)/', parsed.path):
+            elif m := re.search(r'/raw/([0-9a-f]+)/', parsed_uri.path):
                 version = m.group(1)
                 branch = (settings.branches[catpkg]
                           if catpkg in settings.branches else 'master')
@@ -315,6 +315,13 @@ def get_props(search_dir: str,
                         str(len(version)) + r'})[0-9a-f]*</id>'), False)
             else:
                 raise ValueError(f'Unhandled GitHub package: {catpkg}')
+        elif parsed_uri.hostname == 'git.sr.ht':
+            user_repo = '/'.join(parsed_uri.path.split('/')[1:3])
+            branch = (settings.branches[catpkg]
+                      if catpkg in settings.branches else 'master')
+            yield (cat, pkg, ebuild_version, ebuild_version,
+                   f'https://git.sr.ht/{user_repo}/log/{branch}/rss.xml',
+                   r'<pubDate>([^<]+)</pubDate>', False)
         elif (parsed_uri.hostname == 'gist.github.com'
               or parsed_uri.hostname == 'gist.githubusercontent.com'):
             home = P.aux_get(match, ['HOMEPAGE'])[0]
@@ -513,6 +520,13 @@ def main() -> int:
                           requests.get(src).content.decode())
             assert m is not None
             return m.groups()[0]
+        if parsed_src.hostname == 'git.sr.ht' and src.endswith('xml'):
+            user_repo = '/'.join(parsed_src.path.split('/')[1:3])
+            m = re.search(
+                rf'<guid>https://git\.sr\.ht/{user_repo}/commit/([a-f0-9]+)</guid>',
+                requests.get(src).content.decode())
+            assert m is not None
+            return m.groups()[0]
         raise ValueError(f'Unsupported SHA source: {src}')
 
     settings = gather_settings(search_dir)
@@ -576,6 +590,15 @@ def main() -> int:
             if (re.match(r'[0-9]{4}-[0-9]{2}-[0-9]{2}$', top_hash)
                     and parsed_uri.hostname == 'gist.github.com'):
                 top_hash = top_hash.replace('-', '')
+            else:
+                try:
+                    top_hash = datetime.strptime(
+                            ' '.join(top_hash.split(' ')[0:-2]),
+                                '%a, %d %b %Y').strftime(
+                                    '%Y%m%d')
+                    log.debug('Succeeded converting top_hash to datetime')
+                except ValueError:
+                    log.debug('Attempted to fix top_hash date but it failed. Ignoring this error.')
             log.debug('top_hash = %s', top_hash)
             log.debug(
                 'Comparing current ebuild version %s with live version %s',
@@ -621,11 +644,12 @@ def main() -> int:
                 else:
                     new_date = ''
                     if is_sha(top_hash):
-                        updated_el = etree.fromstring(r.text).find(
-                            'entry/updated', RSS_NS)
+                        doc = etree.fromstring(r.text)
+                        pub_date = False
+                        updated_el = doc.find('entry/updated', RSS_NS)
                         assert updated_el is not None
                         assert updated_el.text is not None
-                        if m := re.search(r'(2[0-9]{7})', ebuild_version):
+                        if m := re.search(r'^(2[0-9]{7})', ebuild_version):
                             new_date = (' (' + ebuild_version[:m.span()[0]] +
                                         updated_el.text.split('T')[0].replace(
                                             '-', '') + ')')
