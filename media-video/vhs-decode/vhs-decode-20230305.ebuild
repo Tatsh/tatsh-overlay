@@ -9,7 +9,7 @@ inherit cmake desktop distutils-r1
 
 DESCRIPTION="Software defined VHS decoder."
 HOMEPAGE="https://github.com/oyvindln/vhs-decode"
-SHA="3346290d9046a462685ebc22d65ed6a29112df9e"
+SHA="46ef464462299245a415d17617bd721bed90dd01"
 LD_DECODE_TESTDATA_SHA="eeddec3e9040f2110a3fcad5cadb45a3b733dee9"
 SRC_URI="https://github.com/oyvindln/vhs-decode/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	test? ( https://github.com/happycube/ld-decode-testdata/archive/${LD_DECODE_TESTDATA_SHA}.tar.gz -> ld-decode-testdata-${LD_DECODE_TESTDATA_SHA:0:7}.tar.gz )"
@@ -51,7 +51,6 @@ src_prepare() {
 	rm pyproject.toml || die
 	distutils-r1_src_prepare
 	eapply "${FILESDIR}/${PN}-numpy-1-24.patch"
-	eapply "${FILESDIR}/${PN}-numpy-1-24-2.patch"
 }
 
 src_configure() {
