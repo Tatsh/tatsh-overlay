@@ -16,8 +16,7 @@ KEYWORDS="~amd64"
 BDEPEND="dev-libs/libfmt"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-add-bd-re-wh16ns60-1.02.patch"
-	"${FILESDIR}/${PN}-0002-system-fmt.patch"
+	"${FILESDIR}/${PN}-0001-system-fmt.patch"
 )
 
 S="${WORKDIR}/${PN}-build_${PV}"
