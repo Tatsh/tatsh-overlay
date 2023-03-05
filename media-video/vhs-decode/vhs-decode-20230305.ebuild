@@ -42,7 +42,7 @@ RDEPEND="${DEPEND}
 	<dev-python/soundfile-0.11.0[${PYTHON_USEDEP}]"
 BDEPEND="dev-python/cython:0[${PYTHON_USEDEP}]
 	dev-python/wheel[${PYTHON_USEDEP}]
-	dev-python/setuptools_scm[${PYTHON_USEDEP}]"
+	dev-python/setuptools-scm[${PYTHON_USEDEP}]"
 
 S="${WORKDIR}/${PN}-${SHA}"
 
