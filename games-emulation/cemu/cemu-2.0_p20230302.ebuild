@@ -7,7 +7,7 @@ inherit cmake desktop xdg
 
 DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
-SHA="b87465fd8add0e216bc444cda59141478619df64"
+SHA="43c9a4eccdc70d5a0f76d07900a9ef77f697e2ae"
 MY_PN="Cemu"
 IMGUI_PV="1.88"
 SRC_URI="https://github.com/cemu-project/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
@@ -45,7 +45,6 @@ S="${WORKDIR}/${MY_PN}-${SHA}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0002-remove-default-from-system-g.patch"
-	"${FILESDIR}/${PN}-0003-fix-no-discord-rpc.patch"
 )
 
 src_prepare() {
