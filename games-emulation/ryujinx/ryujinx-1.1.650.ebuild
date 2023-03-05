@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="5d85468302dd21a93ac141abfb7b8749b938dc9a"
+SHA="b8556530f2b160db70ff571adf25ae26d4b8f58f"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.18
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -41,7 +41,7 @@ NUGETS="avalonia-0.10.18
 	harfbuzzsharp.nativeassets.win32-2.8.2.1-preview.108
 	jetbrains.annotations-10.3.0
 	jp2masa.avalonia.flexbox-0.2.0
-	libhac-0.17.0
+	libhac-0.18.0
 	microcom.codegenerator.msbuild-0.10.4
 	microcom.runtime-0.10.4
 	microsoft.aspnetcore.app.runtime.linux-x64-7.0.3
@@ -50,9 +50,9 @@ NUGETS="avalonia-0.10.18
 	microsoft.codeanalysis.analyzers-2.9.6
 	microsoft.codeanalysis.analyzers-3.3.4
 	microsoft.codeanalysis.common-3.4.0
-	microsoft.codeanalysis.common-4.4.0
+	microsoft.codeanalysis.common-4.5.0
 	microsoft.codeanalysis.csharp-3.4.0
-	microsoft.codeanalysis.csharp-4.4.0
+	microsoft.codeanalysis.csharp-4.5.0
 	microsoft.codeanalysis.csharp.scripting-3.4.0
 	microsoft.codeanalysis.scripting.common-3.4.0
 	microsoft.codecoverage-17.5.0
@@ -243,7 +243,7 @@ NUGETS="avalonia-0.10.18
 	system.reflection.extensions-4.0.1
 	system.reflection.extensions-4.3.0
 	system.reflection.metadata-1.6.0
-	system.reflection.metadata-5.0.0
+	system.reflection.metadata-6.0.1
 	system.reflection.primitives-4.0.1
 	system.reflection.primitives-4.3.0
 	system.reflection.typeextensions-4.1.0
@@ -303,7 +303,7 @@ NUGETS="avalonia-0.10.18
 	system.xml.readerwriter-4.0.11
 	system.xml.xdocument-4.0.11
 	tmds.dbus-0.9.0
-	unicornengine.unicorn-2.0.2-rc1-a913199
+	unicornengine.unicorn-2.0.2-rc1-f7c841d
 	xamlnamereferencegenerator-1.5.1"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	$(nuget_uris)"
