@@ -7,7 +7,7 @@ inherit cmake flag-o-matic xdg
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
 ASMJIT_SHA="06d0badec53710a4f572cf5642881ce570c5d274"
-HIDAPI_SHA="a3ce1299312ee48c2c0db58ffc059c1438436ad8"
+HIDAPI_SHA="ecf1b62882c1b6ca1da445fa94ee8dae42cf5961"
 ITTAPI_VERSION="3.18.12"
 LLVM_SHA="9b52b6c39ae9f0759fbce7dd0db4b3290d6ebc56"
 SOUNDTOUCH_SHA="83cfba67b6af80bb9bfafc0b324718c4841f2991"
