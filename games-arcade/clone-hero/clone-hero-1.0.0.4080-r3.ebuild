@@ -31,21 +31,12 @@ src_install() {
 	einstalldocs
 	mkdir -p "${D}/opt/clonehero" || die
 	cp -R ./* "${D}/opt/clonehero/" || die
-	keepdir /opt/clonehero/{Screenshots,Songs}
-	insinto /opt/clonehero
-	doins "${FILESDIR}/settings.ini"
+	fperms 0755 /opt/clonehero/clonehero
 	doenvd "${FILESDIR}/99${PN}"
 	exeinto /opt/bin
 	doexe "${FILESDIR}/clonehero"
-	fperms 0755 /opt/clonehero/clonehero
-	fperms 0777 /opt/clonehero/{Custom,Screenshots,Songs}
 	for size in 128 64 48 32 16; do
 		newicon -s "${size}" "${FILESDIR}/${PN}-icon-${size}.png" "${PN}.png"
 	done
 	make_desktop_entry clonehero 'Clone Hero' "${PN}"
-}
-
-pkg_postinst() {
-	elog "You may need to give settings.ini world-writable permissions:"
-	elog "chmod 0666 /opt/clonehero/settings.ini"
 }
