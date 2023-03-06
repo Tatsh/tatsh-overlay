@@ -46,6 +46,7 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	media-libs/libpng:*
 	media-libs/openal
 	media-video/ffmpeg
+	net-libs/miniupnpc
 	net-misc/curl
 	sys-libs/ncurses
 	sys-libs/zlib
@@ -64,12 +65,14 @@ BDEPEND=">=sys-devel/gcc-9
 	dev-util/spirv-headers"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0003-add-missing-include-fix-branch-names.patch"
-	"${FILESDIR}/${PN}-0004-add-use_wayland.patch"
-	"${FILESDIR}/${PN}-0006-vk.patch"
-	"${FILESDIR}/${PN}-0007-allow-use-of-system-spirv-and-glslang.patch"
-	"${FILESDIR}/${PN}-0008-system-cubeb.patch"
-	"${FILESDIR}/${PN}-0009-ittapi-remove-git-co.patch"
+	"${FILESDIR}/${PN}-0001-versioning.patch"
+	"${FILESDIR}/${PN}-0002-vk-use-system-glslangtospv.h.patch"
+	"${FILESDIR}/${PN}-0003-add-use_wayland.patch"
+	"${FILESDIR}/${PN}-0004-allow-use-of-system-spirv-an.patch"
+	"${FILESDIR}/${PN}-0005-allow-system-cubeb.patch"
+	"${FILESDIR}/${PN}-0006-support-for-system-miniupnpc.patch"
+	"${FILESDIR}/${PN}-0007-remove-extra.patch"
+	"${FILESDIR}/${PN}-9999-ittapi-remove-git-co.patch"
 )
 
 src_prepare() {
@@ -88,11 +91,10 @@ src_prepare() {
 	sed -re 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
 		-i "${S}/llvm/CMakeLists.txt" || die
 	sed -e '/find_program(CCACHE_FOUND/d' -i CMakeLists.txt || die
-	sed -e 's|FAudio.h|FAudio/FAudio.h|' -i rpcs3/Emu/Audio/FAudio/FAudioBackend.h rpcs3/Emu/Audio/FAudio/faudio_enumerator.h || die
 	sed -re '/\s+add_compile_options\(-Werror=missing-noreturn\).*/d' \
 		-e '/\s+add_compile_options\(-Werror=old-style-cast\).*/d' \
 		-i buildfiles/cmake/ConfigureCompiler.cmake || die
-	mv "${WORKDIR}/ittapi-${ITTAPI_VERSION}" "${WORKDIR}/ittapi"
+	mv "${WORKDIR}/ittapi-${ITTAPI_VERSION}" "${WORKDIR}/ittapi" || die
 	rmdir "${S}/3rdparty/SoundTouch/soundtouch" || die
 	mv "${WORKDIR}/soundtouch-${SOUNDTOUCH_SHA}" "${S}/3rdparty/SoundTouch/soundtouch" || die
 	cmake_src_prepare
@@ -104,6 +106,7 @@ src_configure() {
 	mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
 		-DBUILD_LLVM_SUBMODULE=ON
+		-DBUILD_TESTING=OFF
 		"-DITTAPI_SOURCE_DIR=${WORKDIR}"
 		-DLLVM_COMPILE_DEFINITIONS=NDEBUG
 		-DUSE_PRECOMPILED_HEADERS=OFF
@@ -119,6 +122,7 @@ src_configure() {
 		-DUSE_SYSTEM_GLSLANG=ON
 		-DUSE_SYSTEM_LIBPNG=ON
 		-DUSE_SYSTEM_LIBUSB=ON
+		-DUSE_SYSTEM_MINIUPNP=ON
 		-DUSE_SYSTEM_PUGIXML=ON
 		-DUSE_SYSTEM_SPIRV_HEADERS_TOOLS=ON
 		-DUSE_SYSTEM_WOLFSSL=ON

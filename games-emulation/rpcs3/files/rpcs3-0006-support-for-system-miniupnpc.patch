@@ -1,0 +1,65 @@
+From d1820e3511ddb3bffd8c07bb4a5cf7d9822360dd Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 5 Mar 2023 20:38:09 -0500
+Subject: [PATCH 6/7] Support for system miniupnpc
+
+---
+ 3rdparty/CMakeLists.txt       | 8 ++++++--
+ rpcs3/Emu/NP/upnp_handler.cpp | 4 ++--
+ rpcs3/Emu/NP/upnp_handler.h   | 2 +-
+ 3 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
+index 02c2e505f..9ec12d9b9 100644
+--- a/3rdparty/CMakeLists.txt
++++ b/3rdparty/CMakeLists.txt
+@@ -370,7 +370,11 @@ if(USE_SDL)
+ endif()
+ 
+ # MINIUPNP
+-add_subdirectory(miniupnp EXCLUDE_FROM_ALL)
++if (NOT USE_SYSTEM_MINIUPNP)
++	add_subdirectory(miniupnp EXCLUDE_FROM_ALL)
++else()
++	pkg_check_modules(PC_MINIUNPNPC REQUIRED IMPORTED_TARGET GLOBAL miniupnpc)
++endif()
+ 
+ # add nice ALIAS targets for ease of use
+ if(USE_SYSTEM_LIBUSB)
+@@ -399,4 +403,4 @@ add_library(3rdparty::wolfssl ALIAS wolfssl)
+ add_library(3rdparty::libcurl ALIAS libcurl)
+ add_library(3rdparty::soundtouch ALIAS soundtouch)
+ add_library(3rdparty::sdl2 ALIAS ${SDL2_TARGET})
+-add_library(3rdparty::miniupnpc ALIAS libminiupnpc-static)
++add_library(3rdparty::miniupnpc ALIAS PkgConfig::PC_MINIUNPNPC)
+diff --git a/rpcs3/Emu/NP/upnp_handler.cpp b/rpcs3/Emu/NP/upnp_handler.cpp
+index dca00de98..b30bb2e81 100644
+--- a/rpcs3/Emu/NP/upnp_handler.cpp
++++ b/rpcs3/Emu/NP/upnp_handler.cpp
+@@ -2,8 +2,8 @@
+ #include "upnp_handler.h"
+ #include "util/logs.hpp"
+ 
+-#include <miniwget.h>
+-#include <upnpcommands.h>
++#include <miniupnpc/miniwget.h>
++#include <miniupnpc/upnpcommands.h>
+ 
+ LOG_CHANNEL(upnp_log, "UPNP");
+ 
+diff --git a/rpcs3/Emu/NP/upnp_handler.h b/rpcs3/Emu/NP/upnp_handler.h
+index 40892f744..bb99b88ae 100644
+--- a/rpcs3/Emu/NP/upnp_handler.h
++++ b/rpcs3/Emu/NP/upnp_handler.h
+@@ -2,7 +2,7 @@
+ 
+ #include <unordered_map>
+ 
+-#include <miniupnpc.h>
++#include <miniupnpc/miniupnpc.h>
+ 
+ #include "upnp_config.h"
+ #include "Utilities/mutex.h"
+-- 
+2.39.2
+

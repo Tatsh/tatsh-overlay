@@ -1,3 +1,12 @@
+From 7b641a57dce8108aa20f9d23d63f5b2b570ef5a6 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 8 Oct 2021 09:09:09 -0400
+Subject: [PATCH 2/7] vk: use system GlslangToSpv.h
+
+---
+ rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
 index f10ad0c6b..525603ddd 100644
 --- a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
@@ -11,6 +20,6 @@ index f10ad0c6b..525603ddd 100644
  #include "spirv-tools/optimizer.hpp"
  #ifdef _MSC_VER
  #pragma warning(pop)
---
-2.30.1
+-- 
+2.39.2
 

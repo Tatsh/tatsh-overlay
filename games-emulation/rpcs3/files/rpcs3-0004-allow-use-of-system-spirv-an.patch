@@ -1,17 +1,17 @@
-From fd334c4f35df77e454e7ea808ed50e3ccfac3f2b Mon Sep 17 00:00:00 2001
+From 9e8e01a38b8cfbafba48c2e75ae01478c4722547 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 11:37:19 -0400
-Subject: [PATCH] Allow use of system SPIRV and glslang
+Subject: [PATCH 4/7] Allow use of system SPIRV and glslang
 
 ---
  3rdparty/CMakeLists.txt | 11 +++++++++--
  1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index 925af7391..1ab71c53e 100644
+index dcc5d7637..fb4bd1e06 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
-@@ -72,8 +72,15 @@ add_subdirectory(hidapi)
+@@ -77,8 +77,15 @@ add_subdirectory(hidapi)
  
  
  # Vulkan
@@ -30,5 +30,5 @@ index 925af7391..1ab71c53e 100644
  
  # yaml-cpp
 -- 
-2.33.0
+2.39.2
 
