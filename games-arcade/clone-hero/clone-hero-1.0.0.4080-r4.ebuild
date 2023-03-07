@@ -3,7 +3,7 @@
 
 EAPI=8
 WX_GTK_VER="3.0-gtk3"
-inherit desktop wxwidgets xdg
+inherit desktop wrapper wxwidgets xdg
 
 DESCRIPTION="Clone of Guitar Hero and similar games."
 HOMEPAGE="https://clonehero.net/"
@@ -32,11 +32,9 @@ src_install() {
 	mkdir -p "${D}/opt/clonehero" || die
 	cp -R ./* "${D}/opt/clonehero/" || die
 	fperms 0755 /opt/clonehero/clonehero
-	doenvd "${FILESDIR}/99${PN}"
-	exeinto /opt/bin
-	doexe "${FILESDIR}/clonehero"
 	for size in 128 64 48 32 16; do
 		newicon -s "${size}" "${FILESDIR}/${PN}-icon-${size}.png" "${PN}.png"
 	done
+	make_wrapper clonehero ./clonehero /opt/clonehero
 	make_desktop_entry clonehero 'Clone Hero' "${PN}"
 }
