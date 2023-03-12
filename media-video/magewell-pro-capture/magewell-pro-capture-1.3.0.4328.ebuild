@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit linux-info linux-mod
+inherit linux-info linux-mod udev
 
 DESCRIPTION="Magewell Pro Capture driver."
 HOMEPAGE="https://www.magewell.com/downloads/pro-capture#/driver/linux-x86"
@@ -15,8 +15,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc weave"
 
 RDEPENDS="media-libs/alsa-lib"
-
-PATCHES=( "${FILESDIR}/${PN}-dma-api.patch" )
 
 S="${WORKDIR}/ProCaptureForLinux_${SUFFIX}"
 
@@ -62,4 +60,12 @@ src_install() {
 	else
 		einstalldocs
 	fi
+}
+
+pkg_postinst() {
+	udev_reload
+}
+
+pkg_postrm() {
+	udev_reload
 }
