@@ -9,7 +9,7 @@ inherit cmake desktop distutils-r1
 
 DESCRIPTION="Software defined VHS decoder."
 HOMEPAGE="https://github.com/oyvindln/vhs-decode"
-SHA="46ef464462299245a415d17617bd721bed90dd01"
+SHA="d5c9d3c7b3dc4b448e9c574206e6f060e1d2b98a"
 LD_DECODE_TESTDATA_SHA="eeddec3e9040f2110a3fcad5cadb45a3b733dee9"
 SRC_URI="https://github.com/oyvindln/vhs-decode/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	test? ( https://github.com/happycube/ld-decode-testdata/archive/${LD_DECODE_TESTDATA_SHA}.tar.gz -> ld-decode-testdata-${LD_DECODE_TESTDATA_SHA:0:7}.tar.gz )"
@@ -50,7 +50,6 @@ src_prepare() {
 	cmake_src_prepare
 	rm pyproject.toml || die
 	distutils-r1_src_prepare
-	eapply "${FILESDIR}/${PN}-numpy-1-24.patch"
 }
 
 src_configure() {
@@ -77,7 +76,7 @@ src_install() {
 	for size in 256 128 64; do
 		newicon -s "${size}" "tools/ld-analyse/Graphics/${size}-analyse.png" ld-analyse.png
 	done
-	make_desktop_entry ld-analyse ld-analyse ld-analyse Video
+	make_desktop_entry ld-analyse ld-analyse ld-analyse 'AudioVideo;Video'
 }
 
 src_test() {
