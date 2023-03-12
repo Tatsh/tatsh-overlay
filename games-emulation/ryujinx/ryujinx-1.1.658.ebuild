@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="b8556530f2b160db70ff571adf25ae26d4b8f58f"
+SHA="d56d335c0bcd37672debd30896d47694fb29f905"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.18
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -26,7 +26,6 @@ NUGETS="avalonia-0.10.18
 	avalonia.x11-0.10.18
 	commandlineparser-2.9.1
 	concentus-1.1.7
-	crc32.net-1.2.0
 	discordrichpresence-1.1.3.18
 	dynamicdata-7.12.11
 	excss-4.1.4
@@ -80,7 +79,6 @@ NUGETS="avalonia-0.10.18
 	microsoft.testplatform.objectmodel-17.5.0
 	microsoft.testplatform.testhost-17.5.0
 	microsoft.win32.primitives-4.0.1
-	microsoft.win32.primitives-4.3.0
 	microsoft.win32.registry-4.5.0
 	microsoft.win32.systemevents-7.0.0
 	msgpack.cli-1.0.1
@@ -196,7 +194,6 @@ NUGETS="avalonia-0.10.18
 	system.diagnostics.diagnosticsource-4.0.0
 	system.diagnostics.tools-4.0.1
 	system.diagnostics.tracing-4.1.0
-	system.diagnostics.tracing-4.3.0
 	system.drawing.common-7.0.0
 	system.dynamic.runtime-4.3.0
 	system.globalization-4.0.11
@@ -210,7 +207,7 @@ NUGETS="avalonia-0.10.18
 	system.io.compression.zipfile-4.0.1
 	system.io.filesystem-4.0.1
 	system.io.filesystem.primitives-4.0.1
-	system.io.filesystem.primitives-4.3.0
+	system.io.hashing-7.0.0
 	system.linq-4.1.0
 	system.linq-4.3.0
 	system.linq.expressions-4.1.0
@@ -222,7 +219,6 @@ NUGETS="avalonia-0.10.18
 	system.net.http-4.1.0
 	system.net.nameresolution-4.3.0
 	system.net.primitives-4.0.11
-	system.net.primitives-4.3.0
 	system.net.sockets-4.1.0
 	system.numerics.vectors-4.3.0
 	system.numerics.vectors-4.4.0
