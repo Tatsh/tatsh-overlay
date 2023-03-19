@@ -9,7 +9,7 @@ inherit distutils-r1
 
 DESCRIPTION="A lightweight LLVM python binding for writing JIT compilers"
 HOMEPAGE="https://pypi.org/project/llvmlite/"
-SHA="e6901e0ef318d93390b07e38775694ad03b23f0d"
+SHA="6cf968b0ccb5ad9504391252a01ab2432a4689ca"
 SRC_URI="https://github.com/numba/llvmlite/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD-2"
