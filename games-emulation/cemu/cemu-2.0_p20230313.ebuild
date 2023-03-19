@@ -63,6 +63,7 @@ src_configure() {
 		-DENABLE_DISCORD_RPC=$(usex discord)
 		-DENABLE_OPENGL=ON
 		-DENABLE_SDL=$(usex sdl)
+		-DENABLE_VCPKG=OFF
 		-DENABLE_VULKAN=$(usex vulkan)
 		-DENABLE_WXWIDGETS=ON
 		-DPORTABLE=OFF
