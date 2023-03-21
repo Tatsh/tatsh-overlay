@@ -4,14 +4,15 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{10,11} )
+DISTUTILS_USE_PEP517=setuptools
 DISTUTILS_IN_SOURCE_BUILD=-1
-inherit cmake distutils-r1
+inherit cmake distutils-r1 pypi
 
 DESCRIPTION="Editorial interchange format and API (for use with Kdenlive)."
 HOMEPAGE="https://pypi.org/project/OpenTimelineIO/ https://github.com/AcademySoftwareFoundation/OpenTimelineIO"
 MY_PN="OpenTimelineIO"
 MY_P="${MY_PN}-${PV}"
-SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_P}.tar.gz"
+SRC_URI="$(pypi_sdist_url --no-normalize OpenTimelineIO)"
 
 LICENSE="Apache-2.0"
 SLOT="0"
