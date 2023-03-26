@@ -8,7 +8,7 @@ inherit distutils-r1
 
 DESCRIPTION="mawen1250's VapourSynth functions"
 HOMEPAGE="https://github.com/HomeOfVapourSynthEvolution/mvsfunc"
-SHA="f3167b8a2789ea1527e5249b02906420c95f2c7b"
+SHA="865c7486ca860d323754ec4774bc4cca540a7076"
 SRC_URI="https://github.com/HomeOfVapourSynthEvolution/mvsfunc/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
