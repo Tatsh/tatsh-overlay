@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="b2623dc27d14e9c672429a3819d20958954cb170"
+SHA="a34fb0e9392c59e5bd7a764b83f3460bf65b861b"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.18
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -156,7 +156,7 @@ NUGETS="avalonia-0.10.18
 	ryujinx.graphics.vulkan.dependencies.moltenvk-1.2.0
 	ryujinx.gtksharp-3.24.24.59-ryujinx
 	ryujinx.pangosharp-3.24.24.59-ryujinx
-	ryujinx.sdl2-cs-2.26.1-build23
+	ryujinx.sdl2-cs-2.26.3-build25
 	shaderc.net-0.1.0
 	sharpziplib-1.4.2
 	shimskiasharp-0.5.18
