@@ -333,6 +333,11 @@ def get_props(search_dir: str,
             yield (cat, pkg, ebuild_version, ebuild_version,
                    f'https://pypi.org/pypi/{dist_name}/json',
                    r'"version":"([^"]+)"[,\}]', True)
+        elif parsed_uri.hostname == 'files.pythonhosted.org':
+            dist_name = src_uri.split('/')[-2]
+            yield (cat, pkg, ebuild_version, ebuild_version,
+                   f'https://pypi.org/pypi/{dist_name}/json',
+                   r'"version":"([^"]+)"[,\}]', True)
         elif src_uri.startswith('https://www.raphnet-tech.com/downloads/'):
             yield (cat, pkg, ebuild_version, ebuild_version,
                    P.aux_get(match, ['HOMEPAGE'])[0],
@@ -351,7 +356,7 @@ def get_props(search_dir: str,
             home = P.aux_get(match, ['HOMEPAGE'])[0]
             raise RuntimeError(
                 f'Not handled: {catpkg} (non-GitHub/PyPI), homepage: {home}, '
-                f'SRC_URI: {src_uri}')
+                f'SRC_URI: {src_uri}, parsed_uri: {parsed_uri}')
 
 
 def gather_settings(search_dir: str) -> LivecheckSettings:
