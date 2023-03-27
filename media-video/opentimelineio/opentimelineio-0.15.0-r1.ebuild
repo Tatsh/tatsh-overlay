@@ -5,7 +5,6 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{10,11} )
 DISTUTILS_USE_PEP517=setuptools
-DISTUTILS_IN_SOURCE_BUILD=-1
 inherit cmake distutils-r1 pypi
 
 DESCRIPTION="Editorial interchange format and API (for use with Kdenlive)."
@@ -29,11 +28,8 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 
 python_prepare_all() {
 	sed -re '/.*: OTIO_build_ext,/d' -i setup.py
-	distutils-r1_python_prepare_all
-}
-
-python_prepare() {
 	cmake_src_prepare
+	distutils-r1_python_prepare_all
 }
 
 python_configure() {
@@ -61,3 +57,5 @@ python_install() {
 	cmake_src_install
 	distutils-r1_python_install
 }
+
+distutils_enable_tests unittest
