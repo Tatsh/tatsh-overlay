@@ -642,7 +642,6 @@ src_compile() {
 		-asmflags "-trimpath=${S}"
 		-gcflags "-trimpath=${S}"
 	)
-
 	go build "${mygoargs[@]}" -o ${MY_PN} || die
 }
 
