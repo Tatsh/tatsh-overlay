@@ -8,26 +8,27 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="a34fb0e9392c59e5bd7a764b83f3460bf65b861b"
+SHA="1b41b285ac7f551c3495ced436ce3930ad7223b4"
 MY_PN="R${PN:1}"
-NUGETS="avalonia-0.10.18
+NUGETS="avalonia-0.10.19
 	avalonia.angle.windows.natives-2.1.0.2020091801
-	avalonia.controls.datagrid-0.10.18
-	avalonia.desktop-0.10.18
-	avalonia.diagnostics-0.10.18
-	avalonia.freedesktop-0.10.18
-	avalonia.markup.xaml.loader-0.10.18
-	avalonia.native-0.10.18
-	avalonia.remote.protocol-0.10.18
+	avalonia.controls.datagrid-0.10.19
+	avalonia.desktop-0.10.19
+	avalonia.diagnostics-0.10.19
+	avalonia.freedesktop-0.10.19
+	avalonia.markup.xaml.loader-0.10.19
+	avalonia.native-0.10.19
+	avalonia.remote.protocol-0.10.19
 	avalonia.skia-0.10.18
+	avalonia.skia-0.10.19
 	avalonia.svg-0.10.18
 	avalonia.svg.skia-0.10.18
-	avalonia.win32-0.10.18
-	avalonia.x11-0.10.18
+	avalonia.win32-0.10.19
+	avalonia.x11-0.10.19
 	commandlineparser-2.9.1
 	concentus-1.1.7
 	discordrichpresence-1.1.3.18
-	dynamicdata-7.12.11
+	dynamicdata-7.13.1
 	excss-4.1.4
 	fizzler-1.2.1
 	fluentavaloniaui-1.4.5
@@ -301,7 +302,7 @@ NUGETS="avalonia-0.10.18
 	system.xml.xdocument-4.0.11
 	tmds.dbus-0.9.0
 	unicornengine.unicorn-2.0.2-rc1-fb78016
-	xamlnamereferencegenerator-1.5.1"
+	xamlnamereferencegenerator-1.6.1"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	$(nuget_uris)"
 
