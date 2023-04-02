@@ -7,7 +7,7 @@ inherit cmake desktop wrapper
 
 DESCRIPTION="Experimental PlayStation Vita emulator."
 HOMEPAGE="https://vita3k.org https://github.com/Vita3K/Vita3K"
-SHA="a46fd1463fe2866c984190491ffdbeb22f8b5ebc"
+SHA="e39562481130e8911221d0cc00f4a1363400586c"
 BETTER_ENUMS_SHA="c35576bed0295689540b39873126129adfa0b4c8"
 CRYPTO_ALGORITHMS_SHA="cb9ea3fada60f9b01e9133d7db4d3e08171d0565"
 DLMALLOC_SHA="e98f4ee160380d7c39dc1f04e7488bcf0770d391"
@@ -28,7 +28,7 @@ STB_SHA="af1a5bc352164740c1cc1354942b1c6b72eacb8a"
 UNICORN_SHA="4b52942ba9d13437c1a858f3ace279db88d7089a"
 VITA_TOOLCHAIN_SHA="1ce9a316eedb0360d55b3d9a6483e5329c781583"
 VULKANMEMORYALLOCATOR_HPP_SHA="dad10c8ff7a9a18836d00026824b85745a02f1c2"
-SRC_URI="https://github.com/Vita3K/Vita3K/archive/${SHA}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/Vita3K/Vita3K/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz
 	https://github.com/KhronosGroup/SPIRV-Cross/archive/${SPIRV_CROSS_SHA}.tar.gz -> SPIRV-Cross-${SPIRV_CROSS_SHA:0:7}.tar.gz
 	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> glslang-${GLSLANG_SHA:0:7}.tar.gz
 	https://github.com/KorewaWatchful/crypto-algorithms/archive/${CRYPTO_ALGORITHMS_SHA}.tar.gz -> crypto-algorithms-${CRYPTO_ALGORITHMS_SHA:0:7}.tar.gz
