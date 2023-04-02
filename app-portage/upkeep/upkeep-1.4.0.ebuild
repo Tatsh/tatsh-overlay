@@ -3,7 +3,7 @@
 
 EAPI=8
 PYTHON_COMPAT=( python3_{9,10,11} )
-
+DISTUTILS_USE_PEP517=poetry
 inherit distutils-r1
 
 DESCRIPTION="Helper commands to automate updating with Portage."
@@ -14,10 +14,16 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+		dev-python/pytest[${PYTHON_USEDEP}]
+		dev-python/pytest-mock[${PYTHON_USEDEP}]
+		dev-python/Levenshtein[${PYTHON_USEDEP}]
+	)"
 RDEPEND="${DEPEND}
 	app-portage/eix
 	app-portage/gentoolkit
+	dev-python/click
+	dev-python/loguru
 	sys-kernel/dracut"
 
 pkg_postinst() {
@@ -25,3 +31,5 @@ pkg_postinst() {
 	einfo 'If you want GRUB support, you must have sys-boot/grub:2 installed.'
 	einfo
 }
+
+distutils_enable_tests pytest
