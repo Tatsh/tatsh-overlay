@@ -1,4 +1,4 @@
-From 779dbd3802dd3cb00ff7426fa12a90ba69340dd7 Mon Sep 17 00:00:00 2001
+From bbfbb55d2db1522f2fc7325014488b0416def51c Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/3] System libraries
@@ -42,7 +42,7 @@ index 1511b9778..91cc97192 100644
  configure_file(${PROJECT_SOURCE_DIR}/dist/compatibility_list/compatibility_list.qrc
                 ${PROJECT_BINARY_DIR}/dist/compatibility_list/compatibility_list.qrc
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 35f3fe364..26e0ae5ff 100644
+index a0fcd9a46..23df27b6d 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -10,46 +10,51 @@ include(DownloadExternals)
@@ -130,19 +130,19 @@ index 35f3fe364..26e0ae5ff 100644
  # fmt and Xbyak need to be added before dynarmic
  # libfmt
 -option(FMT_INSTALL "" ON)
--add_subdirectory(fmt)
+-add_subdirectory(fmt EXCLUDE_FROM_ALL)
 +if (NOT USE_SYSTEM_FMT)
 +    option(FMT_INSTALL "" ON)
-+    add_subdirectory(fmt)
++    add_subdirectory(fmt EXCLUDE_FROM_ALL)
 +else()
 +    find_package(fmt REQUIRED)
 +endif()
  
  # Xbyak
  if ("x86_64" IN_LIST ARCHITECTURE)
--    add_subdirectory(xbyak)
+-    add_subdirectory(xbyak EXCLUDE_FROM_ALL)
 +    if (NOT USE_SYSTEM_XBYAK)
-+        add_subdirectory(xbyak)
++        add_subdirectory(xbyak EXCLUDE_FROM_ALL)
 +    else()
 +        find_path(XBYAK_INCLUDE xbyak.h PATH_SUFFIXES xbyak REQUIRED)
 +    endif()
@@ -212,10 +212,10 @@ index 35f3fe364..26e0ae5ff 100644
  
  # DiscordRPC
 diff --git a/src/citra/CMakeLists.txt b/src/citra/CMakeLists.txt
-index affbec3f8..ca58f4997 100644
+index 55494d376..a9fd6d3b8 100644
 --- a/src/citra/CMakeLists.txt
 +++ b/src/citra/CMakeLists.txt
-@@ -17,7 +17,12 @@ add_executable(citra
+@@ -21,7 +21,12 @@ add_executable(citra
  create_target_directory_groups(citra)
  
  target_link_libraries(citra PRIVATE common core input_common network)
@@ -230,10 +230,10 @@ index affbec3f8..ca58f4997 100644
      target_link_libraries(citra PRIVATE getopt)
  endif()
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index d0c8f9f63..6b78d6968 100644
+index b3635a747..b5130c095 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
-@@ -139,8 +139,12 @@ add_library(common STATIC
+@@ -128,8 +128,12 @@ add_library(common STATIC
  
  create_target_directory_groups(common)
  
@@ -249,10 +249,10 @@ index d0c8f9f63..6b78d6968 100644
  
  if ("x86_64" IN_LIST ARCHITECTURE)
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index 9b3d40a07..635d04859 100644
+index 0a2d7f307..fdcd20065 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -477,7 +477,7 @@ endif()
+@@ -479,7 +479,7 @@ endif()
  create_target_directory_groups(core)
  
  target_link_libraries(core PUBLIC common PRIVATE audio_core network video_core)
