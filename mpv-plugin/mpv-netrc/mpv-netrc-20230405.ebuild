@@ -8,7 +8,7 @@ inherit mpv-plugin
 
 DESCRIPTION="Reads ~/.netrc and sets up authorisation for URIs."
 HOMEPAGE="https://github.com/Tatsh/mpv-netrc"
-SHA="baab7f4a70439b9d8f2a007a12abe6113a3cbc89"
+SHA="f2f83dd83aa1b409ca1584973eec304fae6a2836"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
