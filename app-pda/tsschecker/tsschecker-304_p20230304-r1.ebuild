@@ -21,7 +21,9 @@ DEPEND=">=dev-libs/libfragmentzip-48
 	>=app-pda/libplist-2.2.0
 	net-misc/curl
 	dev-libs/openssl:0
-	>=app-pda/libirecovery-1.0.0"
+	>=app-pda/libirecovery-1.0.0
+	dev-libs/tihmstar-libgeneral
+	sys-libs/zlib"
 RDEPEND="${DEPEND}"
 BDEPEND="sys-devel/clang"
 
