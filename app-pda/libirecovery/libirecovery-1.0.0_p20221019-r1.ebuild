@@ -15,6 +15,7 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="udev"
 
 DEPEND="app-pda/libimobiledevice-glue
+	app-pda/libplist
 	sys-libs/readline
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
