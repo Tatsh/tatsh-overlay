@@ -17,7 +17,7 @@ SLOT="0/${PV}"
 KEYWORDS="~amd64"
 
 RDEPEND="x11-libs/gtk+:3"
-DEPEND="${RDEPEND}"
+DEPEND="dev-libs/glib ${RDEPEND}"
 IUSE="test"
 
 RESTRICT="!test? ( test )"
