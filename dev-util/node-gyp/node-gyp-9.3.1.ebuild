@@ -115,7 +115,6 @@ S="${WORKDIR}"
 
 src_install() {
 	yarn_src_install
-	# TODO Install symlink to main script here
 	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/${PN}/bin/${PN}.js"
 	dosym "../$(get_libdir)/${PN}/node_modules/${PN}/bin/${PN}.js" "/usr/bin/${PN}"
 }
