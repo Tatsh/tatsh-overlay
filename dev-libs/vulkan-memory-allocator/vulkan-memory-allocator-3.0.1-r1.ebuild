@@ -13,9 +13,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND=""
+DEPEND="media-libs/vulkan-loader"
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 S="${WORKDIR}/VulkanMemoryAllocator-${PV}"
 
