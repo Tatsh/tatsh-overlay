@@ -63,7 +63,7 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
         ebuild = P.findname(P.match(package_name)[-1])
         with open(ebuild) as f:
             lines_s = f.read()
-            if lib_package not in lines_s:
+            if lib_package not in lines_s and lib_package != 'sys-libs/glibc':
                 yield lib_package
 
 
