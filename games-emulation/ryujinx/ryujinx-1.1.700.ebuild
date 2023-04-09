@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="1b41b285ac7f551c3495ced436ce3930ad7223b4"
+SHA="a1efd87c45027a347e91fd22d42f33c3eed89030"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.19
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -61,10 +61,10 @@ NUGETS="avalonia-0.10.19
 	microsoft.csharp-4.7.0
 	microsoft.dotnet.platformabstractions-3.1.6
 	microsoft.extensions.dependencymodel-6.0.0
-	microsoft.identitymodel.abstractions-6.27.0
-	microsoft.identitymodel.jsonwebtokens-6.27.0
-	microsoft.identitymodel.logging-6.27.0
-	microsoft.identitymodel.tokens-6.27.0
+	microsoft.identitymodel.abstractions-6.28.1
+	microsoft.identitymodel.jsonwebtokens-6.28.1
+	microsoft.identitymodel.logging-6.28.1
+	microsoft.identitymodel.tokens-6.28.1
 	microsoft.io.recyclablememorystream-2.3.2
 	microsoft.netcore.app.host.osx-x64-7.0.3
 	microsoft.netcore.app.host.win-x64-7.0.3
@@ -202,7 +202,7 @@ NUGETS="avalonia-0.10.19
 	system.globalization-4.3.0
 	system.globalization.calendars-4.0.1
 	system.globalization.extensions-4.0.1
-	system.identitymodel.tokens.jwt-6.27.0
+	system.identitymodel.tokens.jwt-6.28.1
 	system.io-4.1.0
 	system.io-4.3.0
 	system.io.compression-4.1.0
