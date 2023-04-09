@@ -23,7 +23,7 @@ DEPEND="
 	sys-libs/libseccomp
 	sys-libs/zlib
 	gtk? ( x11-libs/gtk+:3 )
-	kde? ( dev-qt/qtcore dev-qt/qtgui dev-qt/qtwidgets )
+	kde? ( dev-qt/qtcore dev-qt/qtdbus dev-qt/qtgui dev-qt/qtwidgets )
 	lz4? ( app-arch/lz4 )
 	lzo? ( dev-libs/lzo )
 	nls? ( sys-devel/gettext )
