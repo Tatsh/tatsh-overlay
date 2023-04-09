@@ -307,7 +307,6 @@ SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	$(nuget_uris)"
 
 DEPEND="sys-libs/zlib"
-# FIXME Make SoundIO and OpenAL optional
 RDEPEND="${DEPEND}
 	dev-libs/icu
 	dev-libs/openssl
