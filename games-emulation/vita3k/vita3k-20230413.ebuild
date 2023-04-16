@@ -7,7 +7,7 @@ inherit cmake desktop wrapper
 
 DESCRIPTION="Experimental PlayStation Vita emulator."
 HOMEPAGE="https://vita3k.org https://github.com/Vita3K/Vita3K"
-SHA="b28657ac9721c80c087d87f44595fa3284c7472c"
+SHA="8623b51653f85f34766fe51499a9f622bc2cf26b"
 BETTER_ENUMS_SHA="c35576bed0295689540b39873126129adfa0b4c8"
 CRYPTO_ALGORITHMS_SHA="cb9ea3fada60f9b01e9133d7db4d3e08171d0565"
 DLMALLOC_SHA="e98f4ee160380d7c39dc1f04e7488bcf0770d391"
@@ -17,9 +17,7 @@ GLSLANG_SHA="ca8d07d0bc1c6390b83915700439fa7719de6a2a"
 IMGUI_SHA="9aae45eb4a05a5a1f96be1ef37eb503a12ceb889"
 IMGUI_CLUB_SHA="d4cd9896e15a03e92702a578586c3f91bbde01e8"
 LIBATRAC9_SHA="82767fe38823c32536726ea798f392b0b49e66b9"
-LIBB64_SHA="3896b7a74c70baed0e2f6039a1dbd723e5d5cc8f"
 LIBFAT16_SHA="14ec3073358544c70b77702ff6394f09ce349c59"
-LIBZRIF_SHA="7d1e69bee7d2f08ea5754eff4463c041aacd49af"
 PRINTF_SHA="99f2ec5426cf7113a4879048cd772657c84865e3"
 PSVPFSPARSER_SHA="a5e7cbbd4ba21d1a7d4018866fd5a605644731a4"
 SPDLOG_SHA="da14258533cb951ce85087ceb45556e0b8253660"
@@ -32,7 +30,6 @@ SRC_URI="https://github.com/Vita3K/Vita3K/archive/${SHA}.tar.gz -> ${P}-${SHA:0:
 	https://github.com/KhronosGroup/SPIRV-Cross/archive/${SPIRV_CROSS_SHA}.tar.gz -> SPIRV-Cross-${SPIRV_CROSS_SHA:0:7}.tar.gz
 	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> glslang-${GLSLANG_SHA:0:7}.tar.gz
 	https://github.com/KorewaWatchful/crypto-algorithms/archive/${CRYPTO_ALGORITHMS_SHA}.tar.gz -> crypto-algorithms-${CRYPTO_ALGORITHMS_SHA:0:7}.tar.gz
-	https://github.com/KorewaWatchful/libzRIF/archive/${LIBZRIF_SHA}.tar.gz -> libzrif-${LIBZRIF_SHA:0:7}.tar.gz
 	https://github.com/Macdu/VulkanMemoryAllocator-Hpp/archive/${VULKANMEMORYALLOCATOR_HPP_SHA}.tar.gz -> VulkanMemoryAllocator-Hpp-${VULKANMEMORYALLOCATOR_HPP_SHA:0:7}.tar.gz
 	https://github.com/Vita3k/LibAtrac9/archive/${LIBATRAC9_SHA}.tar.gz -> ${PN}-libatrac9-${LIBATRAC9_SHA:0:7}.tar.gz
 	https://github.com/Vita3K/dlmalloc/archive/${DLMALLOC_SHA}.tar.gz -> ${PN}-dlmalloc-${DLMALLOC_SHA:0:7}.tar.gz
@@ -47,7 +44,6 @@ SRC_URI="https://github.com/Vita3K/Vita3K/archive/${SHA}.tar.gz -> ${P}-${SHA:0:
 	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> imgui-${IMGUI_SHA:0:7}.tar.gz
 	https://github.com/ocornut/imgui_club/archive/${IMGUI_CLUB_SHA}.tar.gz -> imgui-club-${IMGUI_CLUB_SHA:0:7}.tar.gz
 	https://github.com/Vita3K/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
-	https://github.com/KorewaWatchful/libb64/archive/${LIBB64_SHA}.tar.gz -> libb64-${LIBB64_SHA:0:7}.tar.gz
 	https://github.com/vitasdk/vita-toolchain/archive/${VITA_TOOLCHAIN_SHA}.tar.gz -> vita-toolchain-${VITA_TOOLCHAIN_SHA:0:7}.tar.gz"
 
 LICENSE="GPL-2"
@@ -93,9 +89,7 @@ src_prepare() {
 	mv "${WORKDIR}/glslang-${GLSLANG_SHA}" external/glslang || die
 	mv "${WORKDIR}/imgui-${IMGUI_SHA}" external/imgui || die
 	mv "${WORKDIR}/imgui_club-${IMGUI_CLUB_SHA}" external/imgui_club || die
-	mv "${WORKDIR}/libb64-${LIBB64_SHA}" external/libb64 || die
 	mv "${WORKDIR}/libfat16-${LIBFAT16_SHA}" external/libfat16 || die
-	mv "${WORKDIR}/libzRIF-${LIBZRIF_SHA}" external/libzrif || die
 	mv "${WORKDIR}/printf-${PRINTF_SHA}" external/printf || die
 	mv "${WORKDIR}/psvpfsparser-${PSVPFSPARSER_SHA}" external/psvpfsparser || die
 	mv "${WORKDIR}/spdlog-${SPDLOG_SHA}" external/spdlog || die

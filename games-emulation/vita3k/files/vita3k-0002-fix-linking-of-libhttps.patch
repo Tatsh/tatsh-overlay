@@ -1,6 +1,6 @@
-From d166a55bb0e5a25908a0ee82ff51c3eeaf2ad041 Mon Sep 17 00:00:00 2001
+From 599af8c5235a1aca0c21f88fb625f04f55a9f9c7 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
-Date: Sun, 26 Feb 2023 22:35:39 -0500
+Date: Sun, 16 Apr 2023 14:34:30 -0400
 Subject: [PATCH 2/2] Fix linking of libhttps
 
 ---
@@ -18,5 +18,5 @@ index f64456bd..bd3b63fc 100644
 -target_link_libraries(https PUBLIC util)
 +target_link_libraries(https PUBLIC util PRIVATE ssl crypto)
 -- 
-2.39.2
+2.40.0
 
