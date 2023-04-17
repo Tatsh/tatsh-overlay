@@ -1,4 +1,4 @@
-From 74db7c3e018f9c0d34ff8764076e920e9b945ce1 Mon Sep 17 00:00:00 2001
+From 15d7c2f0927fcc0656d100414e6a231269ff8acc Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Feb 2023 23:18:13 -0500
 Subject: [PATCH 1/2] System libs
@@ -6,7 +6,7 @@ Subject: [PATCH 1/2] System libs
 ---
  CMakeLists.txt                             |  10 +-
  cmake/FindFFmpeg.cmake                     | 151 +++++++++++++++++++++
- external/CMakeLists.txt                    | 108 +++++----------
+ external/CMakeLists.txt                    | 119 ++++++----------
  vita3k/CMakeLists.txt                      |   4 +-
  vita3k/app/src/app_init.cpp                |   2 +-
  vita3k/audio/CMakeLists.txt                |   6 +-
@@ -33,7 +33,7 @@ Subject: [PATCH 1/2] System libs
  vita3k/touch/CMakeLists.txt                |   2 +-
  vita3k/util/include/util/tracy.h           |   2 +-
  vita3k/util/src/util.cpp                   |   3 -
- 29 files changed, 230 insertions(+), 154 deletions(-)
+ 29 files changed, 238 insertions(+), 157 deletions(-)
  create mode 100644 cmake/FindFFmpeg.cmake
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
@@ -249,7 +249,7 @@ index 00000000..ce5c3b9f
 +# Give a nice error message if some of the required vars are missing.
 +find_package_handle_standard_args(FFmpeg DEFAULT_MSG ${_FFmpeg_REQUIRED_VARS})
 diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
-index 030d8291..8fd3c363 100644
+index 51e40ddb..7dbb4a41 100644
 --- a/external/CMakeLists.txt
 +++ b/external/CMakeLists.txt
 @@ -1,4 +1,5 @@
@@ -351,7 +351,7 @@ index 030d8291..8fd3c363 100644
  
  if(USE_DISCORD_RICH_PRESENCE)
  	if(NOT EXISTS "${CMAKE_BINARY_DIR}/external/discord_game_sdk.zip")
-@@ -287,27 +247,25 @@ target_compile_definitions(dlmalloc PUBLIC ONLY_MSPACES=1)
+@@ -287,31 +247,34 @@ target_compile_definitions(dlmalloc PUBLIC ONLY_MSPACES=1)
  target_compile_definitions(dlmalloc PUBLIC USE_LOCK=0)
  set_property(TARGET dlmalloc PROPERTY FOLDER externals)
  
@@ -380,13 +380,25 @@ index 030d8291..8fd3c363 100644
  	"${CMAKE_CURRENT_SOURCE_DIR}/VulkanMemoryAllocator-Hpp/VulkanMemoryAllocator/include")
  
 -add_subdirectory(ffmpeg)
+-add_subdirectory(psvpfstools)
+-set_property(TARGET psvpfsparser PROPERTY FOLDER externals)
 +list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
 +include(FindFFmpeg)
 +find_package(FFmpeg REQUIRED)
++
++find_package(ZLIB REQUIRED)
++pkg_check_modules(PC_TOMCRYPT libtomcrypt REQUIRED IMPORTED_TARGET GLOBAL)
++set(LIBB64_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libb64/include")
++add_subdirectory(libb64)
++add_subdirectory(libzrif)
+ set_property(TARGET libzRIF PROPERTY FOLDER externals)
+-set_property(TARGET libb64 PROPERTY FOLDER externals)
++add_subdirectory(psvpfsparser/cmake)
++set_property(TARGET psvpfsparser PROPERTY FOLDER externals)
  
- add_subdirectory(psvpfstools)
- set_property(TARGET psvpfsparser PROPERTY FOLDER externals)
-@@ -367,31 +325,30 @@ add_library(libatrac9 STATIC ${LIBATRAC9_SOURCES})
+ if(APPLE)
+  	execute_process(
+@@ -366,31 +329,30 @@ add_library(libatrac9 STATIC ${LIBATRAC9_SOURCES})
  target_include_directories(libatrac9 PUBLIC LibAtrac9/C/src)
  set_property(TARGET libatrac9 PROPERTY FOLDER externals)
  
@@ -434,7 +446,7 @@ index 030d8291..8fd3c363 100644
  
  # Defining TRACY_ENABLE for both compiling Tracy and compiling the project that links
  # against it is needed for Tracy to work
-@@ -405,7 +362,7 @@ target_compile_definitions(tracy PUBLIC TRACY_NO_SYSTEM_TRACING)
+@@ -404,7 +366,7 @@ target_compile_definitions(tracy PUBLIC TRACY_NO_SYSTEM_TRACING)
  # in order for the condition to work properly on both single-config and multi-config
  # CMake project generators. More info here:
  # https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#build-configurations
@@ -443,7 +455,7 @@ index 030d8291..8fd3c363 100644
  
  #
  # ----------------------------------------------------------------------------------------
-@@ -419,8 +376,9 @@ target_compile_definitions(tracy PUBLIC $<$<CONFIG:Debug,RelWithDebInfo>:TRACY_E
+@@ -418,8 +380,9 @@ target_compile_definitions(tracy PUBLIC $<$<CONFIG:Debug,RelWithDebInfo>:TRACY_E
  set(NFD_PORTAL ON)
  
  # nativefiledialog-extended
@@ -456,7 +468,7 @@ index 030d8291..8fd3c363 100644
  add_library(NFDe::NFDe ALIAS nfd)
 -set_property(TARGET nfd PROPERTY FOLDER externals)
 diff --git a/vita3k/CMakeLists.txt b/vita3k/CMakeLists.txt
-index 998aebc9..82db5b67 100644
+index 101749c8..a25acfc6 100644
 --- a/vita3k/CMakeLists.txt
 +++ b/vita3k/CMakeLists.txt
 @@ -145,7 +145,7 @@ add_subdirectory(vkutil)
@@ -475,7 +487,7 @@ index 998aebc9..82db5b67 100644
 -target_link_libraries(vita3k PRIVATE tracy)
 +target_link_libraries(vita3k PRIVATE TracyClient)
 diff --git a/vita3k/app/src/app_init.cpp b/vita3k/app/src/app_init.cpp
-index b23f4aae..772f6231 100644
+index 902dd455..5b9350c4 100644
 --- a/vita3k/app/src/app_init.cpp
 +++ b/vita3k/app/src/app_init.cpp
 @@ -106,7 +106,7 @@ bool init(EmuEnvState &state, Config &cfg, const Root &root_paths) {
@@ -502,7 +514,7 @@ index 8f6947ae..e5c7c664 100644
 +target_link_libraries(audio PUBLIC ${SDL2_LIBRARIES})
 +target_link_libraries(audio PRIVATE TracyClient util cubeb kernel)
 diff --git a/vita3k/audio/src/audio.cpp b/vita3k/audio/src/audio.cpp
-index 609d3175..c54ee842 100644
+index 5f32e302..5d0dcea5 100644
 --- a/vita3k/audio/src/audio.cpp
 +++ b/vita3k/audio/src/audio.cpp
 @@ -17,7 +17,7 @@
@@ -550,7 +562,7 @@ index f85ae83c..b1070277 100644
 +# target_link_libraries(config PRIVATE CLI11)
 +target_link_libraries(config PRIVATE TracyClient)
 diff --git a/vita3k/config/src/config.cpp b/vita3k/config/src/config.cpp
-index 8a2cf88e..15927054 100644
+index ca4e650c..f63e3688 100644
 --- a/vita3k/config/src/config.cpp
 +++ b/vita3k/config/src/config.cpp
 @@ -23,7 +23,7 @@
@@ -579,7 +591,7 @@ index 8a2cf88e..15927054 100644
  
      // Declare all options
      CLI::App app{ "Vita3K Command Line Interface" }; // "--help,-h" is automatically generated
-@@ -222,11 +222,11 @@ ExitCode init_config(Config &cfg, int argc, char **argv, const Root &root_paths)
+@@ -224,11 +224,11 @@ ExitCode init_config(Config &cfg, int argc, char **argv, const Root &root_paths)
          cfg.pkg_zrif = std::move(command_line.pkg_zrif);
          return QuitRequested;
      }
@@ -846,10 +858,10 @@ index 86021703..c8dce763 100644
  #if (defined(_MSC_VER) && !defined(__clang__) && (!defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL))
  #define __ARGS_WITH_COMMA(...) , ##__VA_ARGS__
 diff --git a/vita3k/util/src/util.cpp b/vita3k/util/src/util.cpp
-index 2867b80d..acb7f605 100644
+index 5e161780..300feb08 100644
 --- a/vita3k/util/src/util.cpp
 +++ b/vita3k/util/src/util.cpp
-@@ -71,9 +71,6 @@ ExitCode init(const Root &root_paths, bool use_stdout) {
+@@ -56,9 +56,6 @@ ExitCode init(const Root &root_paths, bool use_stdout) {
      if (use_stdout)
          sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
  
@@ -860,5 +872,5 @@ index 2867b80d..acb7f605 100644
          std::cerr << "spdlog error: " << msg << std::endl;
          assert(0);
 -- 
-2.40.0
+2.39.2
 
