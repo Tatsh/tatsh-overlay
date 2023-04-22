@@ -346,11 +346,15 @@ def get_props(search_dir: str,
         elif parsed_uri.hostname == 'download.jetbrains.com':
             yield (cat, pkg, ebuild_version, ebuild_version,
                    'https://www.jetbrains.com/updates/updates.xml', None, True)
-        elif src_uri.startswith(
-                'https://gitlab.com/') and '-/archive/' in src_uri:
+        elif (src_uri.startswith('https://gitlab.com/')
+              or src_uri.startswith('https://gitlab.freedesktop.org')
+              and '-/archive/' in src_uri):
             author, proj = src_uri.split('/')[3:5]
+            m = re.match('^https://([^/]+)', src_uri)
+            assert m is not None
+            domain = m.group(1)
             yield (cat, pkg, ebuild_version, ebuild_version,
-                   f'https://gitlab.com/{author}/{proj}/-/tags?format=atom',
+                   f'https://{domain}/{author}/{proj}/-/tags?format=atom',
                    r'<title>v?([0-9][^>]+)</title', True)
         else:
             home = P.aux_get(match, ['HOMEPAGE'])[0]
@@ -598,12 +602,13 @@ def main() -> int:
             else:
                 try:
                     top_hash = datetime.strptime(
-                            ' '.join(top_hash.split(' ')[0:-2]),
-                                '%a, %d %b %Y').strftime(
-                                    '%Y%m%d')
+                        ' '.join(top_hash.split(' ')[0:-2]),
+                        '%a, %d %b %Y').strftime('%Y%m%d')
                     log.debug('Succeeded converting top_hash to datetime')
                 except ValueError:
-                    log.debug('Attempted to fix top_hash date but it failed. Ignoring this error.')
+                    log.debug(
+                        'Attempted to fix top_hash date but it failed. Ignoring this error.'
+                    )
             log.debug('top_hash = %s', top_hash)
             log.debug(
                 'Comparing current ebuild version %s with live version %s',
