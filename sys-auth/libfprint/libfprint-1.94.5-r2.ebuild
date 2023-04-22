@@ -6,8 +6,8 @@ EAPI=8
 inherit meson udev
 
 DESCRIPTION="Library to add support for consumer fingerprint readers"
-HOMEPAGE="https://cgit.freedesktop.org/libfprint/libfprint/ https://github.com/freedesktop/libfprint https://gitlab.freedesktop.org/libfprint/libfprint"
-SRC_URI="https://github.com/freedesktop/libfprint/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://gitlab.freedesktop.org/libfprint/libfprint"
+SRC_URI="https://gitlab.freedesktop.org/${PN}/${PN}/-/archive/v${PV}/${PN}-v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1+"
 SLOT="2"
@@ -31,6 +31,8 @@ RESTRICT="!test? ( test )"
 BDEPEND="virtual/pkgconfig
 	gtk-doc? ( dev-util/gtk-doc )
 	introspection? ( dev-libs/gobject-introspection )"
+
+S="${WORKDIR}/${PN}-v${PV}"
 
 PATCHES=( "${FILESDIR}/${PN}-0.8.2-fix-implicit-declaration.patch" )
 
