@@ -12,7 +12,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
 
-DEPEND=">=sci-libs/libqalculate-4.6.0
+DEPEND=">=sci-libs/libqalculate-4.6.1
 	dev-qt/qtcore:5
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
