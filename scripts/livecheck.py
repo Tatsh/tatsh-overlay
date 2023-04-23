@@ -356,6 +356,12 @@ def get_props(search_dir: str,
             yield (cat, pkg, ebuild_version, ebuild_version,
                    f'https://{domain}/{author}/{proj}/-/tags?format=atom',
                    r'<title>v?([0-9][^>]+)</title', True)
+        elif src_uri.startswith('https://cgit.libimobiledevice.org'):
+            proj = src_uri.split('/')[3]
+            yield (cat, pkg, ebuild_version, ebuild_version,
+                   f'https://cgit.libimobiledevice.org/{proj}/',
+                   r"href='/" + re.escape(proj) + r"/tag/\?h=([0-9][^']+)",
+                   True)
         else:
             home = P.aux_get(match, ['HOMEPAGE'])[0]
             raise RuntimeError(
@@ -582,6 +588,7 @@ def main() -> int:
             else:
                 log.debug('Using RE: "%s"', regex)
                 results = re.findall(regex, r.text)
+            log.debug('Result count: %d', len(results))
             top_hash = (list(reversed(sorted(results, key=cmp_to_key(vc))))
                         if use_vercmp else results)[0]
             log.debug('re.findall() -> "%s"', top_hash)
