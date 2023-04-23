@@ -6,7 +6,7 @@ inherit autotools
 
 DESCRIPTION="Library and utility to talk to iBoot/iBSS via USB."
 HOMEPAGE="https://github.com/libimobiledevice/libirecovery"
-SHA="8a69c570d1a47c9b169b90bf20d05e320e4a76e3"
+SHA="462e238de4553532ade7eb88ef86905c04fc7bb7"
 SRC_URI="https://github.com/libimobiledevice/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
@@ -14,8 +14,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="udev"
 
-DEPEND="app-pda/libimobiledevice-glue
-	app-pda/libplist
+DEPEND=">=app-pda/libimobiledevice-glue-1.0.0:=
+	>=app-pda/libplist-2.3.0:=
 	sys-libs/readline
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
