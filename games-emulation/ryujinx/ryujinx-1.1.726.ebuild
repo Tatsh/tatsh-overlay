@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="138d5dc64adf8e19a2d5b3d5bc6de3ee2099388c"
+SHA="8d9d508dc78eb5225c99cb425fa484999f3c4305"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.19
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -60,11 +60,11 @@ NUGETS="avalonia-0.10.19
 	microsoft.csharp-4.5.0
 	microsoft.csharp-4.7.0
 	microsoft.dotnet.platformabstractions-3.1.6
-	microsoft.extensions.dependencymodel-7.0.0
-	microsoft.identitymodel.abstractions-6.28.1
-	microsoft.identitymodel.jsonwebtokens-6.28.1
-	microsoft.identitymodel.logging-6.28.1
-	microsoft.identitymodel.tokens-6.28.1
+	microsoft.extensions.dependencymodel-6.0.0
+	microsoft.identitymodel.abstractions-6.29.0
+	microsoft.identitymodel.jsonwebtokens-6.29.0
+	microsoft.identitymodel.logging-6.29.0
+	microsoft.identitymodel.tokens-6.29.0
 	microsoft.io.recyclablememorystream-2.3.2
 	microsoft.netcore.app.host.osx-x64-7.0.3
 	microsoft.netcore.app.host.win-x64-7.0.3
@@ -161,10 +161,10 @@ NUGETS="avalonia-0.10.19
 	shaderc.net-0.1.0
 	sharpziplib-1.4.2
 	shimskiasharp-0.5.18
-	silk.net.core-2.17.1
-	silk.net.vulkan-2.17.1
-	silk.net.vulkan.extensions.ext-2.17.1
-	silk.net.vulkan.extensions.khr-2.17.1
+	silk.net.core-2.16.0
+	silk.net.vulkan-2.16.0
+	silk.net.vulkan.extensions.ext-2.16.0
+	silk.net.vulkan.extensions.khr-2.16.0
 	sixlabors.fonts-1.0.0-beta0013
 	sixlabors.imagesharp-1.0.4
 	sixlabors.imagesharp.drawing-1.0.0-beta11
@@ -202,7 +202,7 @@ NUGETS="avalonia-0.10.19
 	system.globalization-4.3.0
 	system.globalization.calendars-4.0.1
 	system.globalization.extensions-4.0.1
-	system.identitymodel.tokens.jwt-6.28.1
+	system.identitymodel.tokens.jwt-6.29.0
 	system.io-4.1.0
 	system.io-4.3.0
 	system.io.compression-4.1.0
@@ -214,7 +214,7 @@ NUGETS="avalonia-0.10.19
 	system.linq-4.3.0
 	system.linq.expressions-4.1.0
 	system.linq.expressions-4.3.0
-	system.management-7.0.0
+	system.management-7.0.1
 	system.memory-4.5.3
 	system.memory-4.5.4
 	system.memory-4.5.5
@@ -283,9 +283,9 @@ NUGETS="avalonia-0.10.19
 	system.text.encoding.codepages-6.0.0
 	system.text.encoding.extensions-4.0.11
 	system.text.encodings.web-4.7.2
-	system.text.encodings.web-7.0.0
+	system.text.encodings.web-6.0.0
 	system.text.json-4.7.2
-	system.text.json-7.0.0
+	system.text.json-6.0.0
 	system.text.regularexpressions-4.1.0
 	system.threading-4.0.11
 	system.threading-4.3.0
