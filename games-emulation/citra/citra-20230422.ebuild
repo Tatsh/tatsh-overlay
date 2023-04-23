@@ -6,7 +6,7 @@ inherit cmake xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/ https://github.com/citra-emu/citra"
-SHA="89db2e323adb8e577fcdeef6e4a0ac40f03f187f"
+SHA="9ba6a901936bb40e1b724dc3792c1bd2da80ec4c"
 DYNARMIC_SHA="c08c5a9362bb224dc343c2f616c24df027dfdf13"
 LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
 SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
