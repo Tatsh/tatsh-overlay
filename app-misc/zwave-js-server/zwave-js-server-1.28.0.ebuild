@@ -49,15 +49,15 @@ YARN_PKGS=(
 	@serialport/parser-spacepacket-10.3.0
 	@serialport/stream-10.3.0
 	@types/http-cache-semantics-4.0.1
-	@zwave-js/cc-10.12.0
-	@zwave-js/config-10.12.0
-	@zwave-js/core-10.12.0
-	@zwave-js/host-10.12.0
-	@zwave-js/nvmedit-10.12.0
-	@zwave-js/serial-10.12.0
-	@zwave-js/server-1.27.0
-	@zwave-js/shared-10.11.1
-	@zwave-js/testing-10.12.0
+	@zwave-js/cc-10.15.0
+	@zwave-js/config-10.15.0
+	@zwave-js/core-10.15.0
+	@zwave-js/host-10.15.0
+	@zwave-js/nvmedit-10.15.0
+	@zwave-js/serial-10.15.0
+	@zwave-js/server-1.28.0
+	@zwave-js/shared-10.13.0
+	@zwave-js/testing-10.15.0
 	agent-base-6.0.2
 	alcalzone-shared-4.0.8
 	ansi-colors-4.1.3
@@ -171,11 +171,10 @@ YARN_PKGS=(
 	yallist-4.0.0
 	yargs-17.6.0
 	yargs-parser-21.1.1
-	zwave-js-10.12.0
+	zwave-js-10.15.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
-
 LICENSE="0BSD Apache-2.0 BSD BSD-2-Clause BSD-3-Clause ISC MIT"
 KEYWORDS="~amd64"
 
