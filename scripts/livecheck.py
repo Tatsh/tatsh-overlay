@@ -432,27 +432,6 @@ def handle_glabels(s: str) -> str:
                 'entry/updated', RSS_NS)).text).split('T')[0].replace('-', ''))
 
 
-def handle_stepmania_outfox(s: str) -> str:
-    log = logging.getLogger(LOG_NAME)
-    log.debug('handle_stepmania_outfox() <- "%s"', s)
-    r = requests.get(
-        'https://api.github.com/repos/teamrizu/outfox/tags',
-        headers=dict(Authorization=f'token {get_github_api_credentials()}'))
-    r.raise_for_status()
-    tags = r.json()
-    version = tags[0]['name'].replace('OF', '0.')
-    commit_url = tags[0]['commit']['url']
-    r = requests.get(
-        commit_url,
-        headers=dict(Authorization=f'token {get_github_api_credentials()}'))
-    r.raise_for_status()
-    date = r.json()['commit']['committer']['date'].split('T')[0].replace(
-        '-', '')
-    ret = f'{version}_p{date}'
-    log.debug('handle_stepmania_outfox() -> "%s"', ret)
-    return ret
-
-
 def handle_re(s: str) -> str:
     return re.sub(r'^re(3|VC|LCS)_v?', '', s)
 
