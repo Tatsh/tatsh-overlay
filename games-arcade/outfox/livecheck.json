@@ -1,6 +1,5 @@
 {
-    "regex": "tag/OF([^\"]+)",
-    "transformation_function": "handle_stepmania_outfox",
+    "regex": "href=\".*/releases/(\\d[^\"]+)\">",
     "type": "regex",
-    "url": "https://github.com/teamrizu/outfox/tags"
+    "url": "https://projectoutfox.com/downloads"
 }
