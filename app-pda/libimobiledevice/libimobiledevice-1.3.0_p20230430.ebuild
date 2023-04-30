@@ -9,7 +9,7 @@ inherit autotools python-r1
 
 DESCRIPTION="Support library to communicate with Apple iPhone/iPod Touch devices"
 HOMEPAGE="https://www.libimobiledevice.org/"
-SHA="eda2c5ea71829f11d69342e6858d09aa53943938"
+SHA="860ffb707af3af94467d2ece4ad258dda957c6cd"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 # While COPYING* doesn't mention 'or any later version', all the headers do, hence use +
