@@ -3,7 +3,7 @@
 
 EAPI=8
 
-COMMIT="ae6718b68629f6e999459f057b2bd9739a77b0dc"
+COMMIT="06a5c1f0ad98637a45acb3faa4a331600dd2cdc3"
 
 inherit cmake
 
