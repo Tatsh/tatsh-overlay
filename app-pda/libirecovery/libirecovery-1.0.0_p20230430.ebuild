@@ -6,7 +6,7 @@ inherit autotools
 
 DESCRIPTION="Library and utility to talk to iBoot/iBSS via USB."
 HOMEPAGE="https://github.com/libimobiledevice/libirecovery"
-SHA="462e238de4553532ade7eb88ef86905c04fc7bb7"
+SHA="1d20bed9ab853507b013e0ab0fdfa11be393d1e0"
 SRC_URI="https://github.com/libimobiledevice/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
