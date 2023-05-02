@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="8d9d508dc78eb5225c99cb425fa484999f3c4305"
+SHA="dd574146fb5f05c1c0a469a4ad4a20c46bb37d74"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.19
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -61,10 +61,10 @@ NUGETS="avalonia-0.10.19
 	microsoft.csharp-4.7.0
 	microsoft.dotnet.platformabstractions-3.1.6
 	microsoft.extensions.dependencymodel-6.0.0
-	microsoft.identitymodel.abstractions-6.29.0
-	microsoft.identitymodel.jsonwebtokens-6.29.0
-	microsoft.identitymodel.logging-6.29.0
-	microsoft.identitymodel.tokens-6.29.0
+	microsoft.identitymodel.abstractions-6.30.0
+	microsoft.identitymodel.jsonwebtokens-6.30.0
+	microsoft.identitymodel.logging-6.30.0
+	microsoft.identitymodel.tokens-6.30.0
 	microsoft.io.recyclablememorystream-2.3.2
 	microsoft.netcore.app.host.osx-x64-7.0.3
 	microsoft.netcore.app.host.win-x64-7.0.3
@@ -202,7 +202,7 @@ NUGETS="avalonia-0.10.19
 	system.globalization-4.3.0
 	system.globalization.calendars-4.0.1
 	system.globalization.extensions-4.0.1
-	system.identitymodel.tokens.jwt-6.29.0
+	system.identitymodel.tokens.jwt-6.30.0
 	system.io-4.1.0
 	system.io-4.3.0
 	system.io.compression-4.1.0
@@ -327,9 +327,11 @@ PATCHES=(
 S="${WORKDIR}/${MY_PN}-${SHA}"
 
 src_install() {
-	cd "${MY_PN}/bin/Release/net${DOTNET_SLOT}/linux-x64/publish" || die
-	dobin "${MY_PN}"
-	newicon -s 32 "${FILESDIR}/${PN}-logo.png" "${PN}.png"
-	make_desktop_entry "/usr/bin/${MY_PN}" "${MY_PN}" "${PN}"
+	newicon distribution/misc/Logo.svg "${MY_PN}.svg"
+	insinto /usr/share/mime/packages
+	doins "distribution/linux/mime/${MY_PN}.xml"
+	insinto /usr/share/applications
+	doins "distribution/linux/${MY_PN}.desktop"
+	dobin "src/${MY_PN}/bin/Release/net${DOTNET_SLOT}/linux-x64/publish/${MY_PN}"
 	einstalldocs
 }

@@ -1,19 +1,19 @@
-From 8c747df2e1fd56438c8a1bba5fd9938572747ae5 Mon Sep 17 00:00:00 2001
+From 17f12f0192d99c87ebeca31a2c4645284f7cf4be Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 22 Nov 2022 07:35:22 -0500
 Subject: [PATCH 2/3] Disable updates
 
 ---
- Ryujinx/Modules/Updater/Updater.cs      |  1 +
- Ryujinx/Ui/MainWindow.glade             | 16 ----------------
- Ryujinx/Ui/Windows/SettingsWindow.glade | 16 ----------------
+ src/Ryujinx/Modules/Updater/Updater.cs      |  1 +
+ src/Ryujinx/Ui/MainWindow.glade             | 16 ----------------
+ src/Ryujinx/Ui/Windows/SettingsWindow.glade | 16 ----------------
  3 files changed, 1 insertion(+), 32 deletions(-)
 
-diff --git a/Ryujinx/Modules/Updater/Updater.cs b/Ryujinx/Modules/Updater/Updater.cs
-index 2a25e78f..1954807c 100644
---- a/Ryujinx/Modules/Updater/Updater.cs
-+++ b/Ryujinx/Modules/Updater/Updater.cs
-@@ -535,6 +535,7 @@ namespace Ryujinx.Modules
+diff --git a/src/Ryujinx/Modules/Updater/Updater.cs b/src/Ryujinx/Modules/Updater/Updater.cs
+index 3e0dc99b..3ffc2761 100644
+--- a/src/Ryujinx/Modules/Updater/Updater.cs
++++ b/src/Ryujinx/Modules/Updater/Updater.cs
+@@ -511,6 +511,7 @@ namespace Ryujinx.Modules
  
          public static bool CanUpdate(bool showWarnings)
          {
@@ -21,11 +21,11 @@ index 2a25e78f..1954807c 100644
  #if !DISABLE_UPDATER
              if (RuntimeInformation.OSArchitecture != Architecture.X64)
              {
-diff --git a/Ryujinx/Ui/MainWindow.glade b/Ryujinx/Ui/MainWindow.glade
-index 8ffbb97e..d282dada 100644
---- a/Ryujinx/Ui/MainWindow.glade
-+++ b/Ryujinx/Ui/MainWindow.glade
-@@ -474,22 +474,6 @@
+diff --git a/src/Ryujinx/Ui/MainWindow.glade b/src/Ryujinx/Ui/MainWindow.glade
+index 58d5d955..5e161d4e 100644
+--- a/src/Ryujinx/Ui/MainWindow.glade
++++ b/src/Ryujinx/Ui/MainWindow.glade
+@@ -543,22 +543,6 @@
                    <object class="GtkMenu">
                      <property name="visible">True</property>
                      <property name="can-focus">False</property>
@@ -48,11 +48,11 @@ index 8ffbb97e..d282dada 100644
                      <child>
                        <object class="GtkMenuItem" id="About">
                          <property name="visible">True</property>
-diff --git a/Ryujinx/Ui/Windows/SettingsWindow.glade b/Ryujinx/Ui/Windows/SettingsWindow.glade
-index e39be81a..114b8550 100644
---- a/Ryujinx/Ui/Windows/SettingsWindow.glade
-+++ b/Ryujinx/Ui/Windows/SettingsWindow.glade
-@@ -121,22 +121,6 @@
+diff --git a/src/Ryujinx/Ui/Windows/SettingsWindow.glade b/src/Ryujinx/Ui/Windows/SettingsWindow.glade
+index 0caa477b..7f2d7a47 100644
+--- a/src/Ryujinx/Ui/Windows/SettingsWindow.glade
++++ b/src/Ryujinx/Ui/Windows/SettingsWindow.glade
+@@ -127,22 +127,6 @@
                                      <property name="position">0</property>
                                    </packing>
                                  </child>
@@ -76,5 +76,5 @@ index e39be81a..114b8550 100644
                                    <object class="GtkCheckButton" id="_showConfirmExitToggle">
                                      <property name="label" translatable="yes">Show "Confirm Exit" Dialog</property>
 -- 
-2.39.1
+2.40.1
 
