@@ -22,11 +22,6 @@ RDEPEND="dev-python/llvmlite[${PYTHON_USEDEP}]
 	dev-python/setuptools:0[${PYTHON_USEDEP}]
 	${BDEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-8691.patch"
-	"${FILESDIR}/${PN}-version-check.patch"
-)
-
 src_configure() {
 	append-ldflags $(no-as-needed)
 	distutils-r1_src_configure
