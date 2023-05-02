@@ -6,16 +6,16 @@ inherit cmake xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/ https://github.com/citra-emu/citra"
-SHA="9ba6a901936bb40e1b724dc3792c1bd2da80ec4c"
+SHA="41f13456c0a2b341229e61a31f3bf3144404cfa4"
 DYNARMIC_SHA="c08c5a9362bb224dc343c2f616c24df027dfdf13"
 LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
-SOUNDTOUCH_SHA="060181eaf273180d3a7e87349895bd0cb6ccbf4a"
+SOUNDTOUCH_SHA="dd2252e9af3f2d6b749378173a4ae89551e06faf"
 XBYAK_SHA="a1ac3750f9a639b5a6c6d6c7da4259b8d6790989"
 SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
-	https://github.com/citra-emu/ext-soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
-	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz -> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz"
+	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz -> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz
+	https://codeberg.org/soundtouch/soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz"
 
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
@@ -24,6 +24,7 @@ IUSE="web-service"
 
 # System xbyak is still used by Dynarmic, but not Citra itself
 DEPEND="app-arch/zstd
+	dev-cpp/robin-map
 	dev-libs/boost:0
 	dev-libs/crypto++:=
 	media-libs/cubeb
@@ -60,7 +61,7 @@ pkg_setup() {
 src_prepare() {
 	rmdir "${S}/externals/lodepng/lodepng" \
 		"${S}/externals/"{soundtouch,dynarmic,fmt,xbyak} || die
-	mv "${WORKDIR}/ext-soundtouch-${SOUNDTOUCH_SHA}" "${S}/externals/soundtouch" || die
+	mv "${WORKDIR}/soundtouch" "${S}/externals/soundtouch" || die
 	mv "${WORKDIR}/lodepng-${LODEPNG_SHA}" "${S}/externals/lodepng/lodepng" || die
 	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die

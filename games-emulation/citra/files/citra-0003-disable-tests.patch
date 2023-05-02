@@ -1,4 +1,4 @@
-From 731c80ba47bf40674b7ceb77a657afbeb9bdb349 Mon Sep 17 00:00:00 2001
+From 7888dd90c0f5e315a0da43c63716534dfe17c42e Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 8 Jan 2023 14:34:44 -0500
 Subject: [PATCH 3/3] Disable tests
@@ -8,10 +8,10 @@ Subject: [PATCH 3/3] Disable tests
  1 file changed, 1 deletion(-)
 
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index f59607d66..a4df2ab54 100644
+index 9f976eedf..119e4de57 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
-@@ -148,7 +148,6 @@ add_subdirectory(video_core)
+@@ -143,7 +143,6 @@ add_subdirectory(video_core)
  add_subdirectory(audio_core)
  add_subdirectory(network)
  add_subdirectory(input_common)
@@ -20,5 +20,5 @@ index f59607d66..a4df2ab54 100644
  if (ENABLE_SDL2)
      add_subdirectory(citra)
 -- 
-2.40.0
+2.40.1
 
