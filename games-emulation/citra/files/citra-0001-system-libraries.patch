@@ -1,15 +1,16 @@
-From 947f301fbe1dbade204f17988384c0b3d51c9f0f Mon Sep 17 00:00:00 2001
+From 8fb5fad3104e4e097268cd6e073a79f65826d8c5 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/3] System libraries
 
 ---
- CMakeLists.txt            |  12 ++++-
- externals/CMakeLists.txt  | 111 ++++++++++++++++++++++++--------------
- src/citra/CMakeLists.txt  |   7 ++-
- src/common/CMakeLists.txt |  11 ++--
- src/core/CMakeLists.txt   |   2 +-
- 5 files changed, 97 insertions(+), 46 deletions(-)
+ CMakeLists.txt                |  12 ++-
+ externals/CMakeLists.txt      | 133 ++++++++++++++++++++++------------
+ src/audio_core/CMakeLists.txt |   8 +-
+ src/citra/CMakeLists.txt      |   7 +-
+ src/common/CMakeLists.txt     |   9 ++-
+ src/core/CMakeLists.txt       |   2 +-
+ 6 files changed, 115 insertions(+), 56 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 60224f62c..42e3c2616 100644
@@ -42,7 +43,7 @@ index 60224f62c..42e3c2616 100644
  configure_file(${PROJECT_SOURCE_DIR}/dist/compatibility_list/compatibility_list.qrc
                 ${PROJECT_BINARY_DIR}/dist/compatibility_list/compatibility_list.qrc
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 3255780cd..10a7d69b5 100644
+index 3255780cd..0804518f4 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -10,46 +10,51 @@ include(DownloadExternals)
@@ -211,6 +212,53 @@ index 3255780cd..10a7d69b5 100644
  endif()
  
  # DiscordRPC
+@@ -195,13 +228,17 @@ endif()
+ 
+ # OpenAL Soft
+ if (ENABLE_OPENAL)
+-    set(ALSOFT_EMBED_HRTF_DATA OFF CACHE BOOL "")
+-    set(ALSOFT_EXAMPLES OFF CACHE BOOL "")
+-    set(ALSOFT_INSTALL OFF CACHE BOOL "")
+-    set(ALSOFT_INSTALL_CONFIG OFF CACHE BOOL "")
+-    set(ALSOFT_INSTALL_HRTF_DATA OFF CACHE BOOL "")
+-    set(ALSOFT_INSTALL_AMBDEC_PRESETS OFF CACHE BOOL "")
+-    set(ALSOFT_UTILS OFF CACHE BOOL "")
+-    set(LIBTYPE "STATIC" CACHE STRING "")
+-    add_subdirectory(openal-soft EXCLUDE_FROM_ALL)
++    if (USE_SYSTEM_OPENAL)
++        find_package(OpenAL REQUIRED)
++    else()
++        set(ALSOFT_EMBED_HRTF_DATA OFF CACHE BOOL "")
++        set(ALSOFT_EXAMPLES OFF CACHE BOOL "")
++        set(ALSOFT_INSTALL OFF CACHE BOOL "")
++        set(ALSOFT_INSTALL_CONFIG OFF CACHE BOOL "")
++        set(ALSOFT_INSTALL_HRTF_DATA OFF CACHE BOOL "")
++        set(ALSOFT_INSTALL_AMBDEC_PRESETS OFF CACHE BOOL "")
++        set(ALSOFT_UTILS OFF CACHE BOOL "")
++        set(LIBTYPE "STATIC" CACHE STRING "")
++        add_subdirectory(openal-soft EXCLUDE_FROM_ALL)
++    endif()
+ endif()
+diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
+index 76c930496..4a804a01e 100644
+--- a/src/audio_core/CMakeLists.txt
++++ b/src/audio_core/CMakeLists.txt
+@@ -100,9 +100,13 @@ if(ENABLE_CUBEB)
+ endif()
+ 
+ if(ENABLE_OPENAL)
+-    target_link_libraries(audio_core PRIVATE OpenAL)
+     target_compile_definitions(audio_core PUBLIC HAVE_OPENAL)
+-    add_definitions(-DAL_LIBTYPE_STATIC)
++    if (USE_SYSTEM_OPENAL)
++        target_link_libraries(audio_core PRIVATE ${OPENAL_LIBRARY})
++    else()
++        target_link_libraries(audio_core PRIVATE OpenAL)
++        add_definitions(-DAL_LIBTYPE_STATIC)
++    endif()
+ endif()
+ 
+ if (CITRA_USE_PRECOMPILED_HEADERS)
 diff --git a/src/citra/CMakeLists.txt b/src/citra/CMakeLists.txt
 index 8b1b59bb9..a26157a68 100644
 --- a/src/citra/CMakeLists.txt
@@ -230,10 +278,10 @@ index 8b1b59bb9..a26157a68 100644
      target_link_libraries(citra PRIVATE getopt)
  endif()
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index 4784d60db..8deb0f13f 100644
+index 4784d60db..adb5b9942 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
-@@ -149,12 +149,15 @@ else()
+@@ -149,11 +149,14 @@ else()
      $<$<CXX_COMPILER_ID:Clang>:-fsized-deallocation>
    )
  endif()
@@ -242,17 +290,15 @@ index 4784d60db..8deb0f13f 100644
  
 -target_link_libraries(citra_common PUBLIC fmt::fmt microprofile Boost::boost Boost::serialization Boost::iostreams)
 -target_link_libraries(citra_common PRIVATE libzstd_static)
--set_target_properties(citra_common PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
-+target_link_libraries(common PUBLIC fmt microprofile Boost::boost Boost::serialization Boost::iostreams)
++target_link_libraries(citra_common PUBLIC fmt microprofile Boost::boost Boost::serialization Boost::iostreams)
 +if (NOT USE_SYSTEM_ZSTD)
-+    target_link_libraries(common PRIVATE libzstd_static)
++    target_link_libraries(citra_common PRIVATE libzstd_static)
 +else()
-+    target_link_libraries(common PUBLIC zstd)
++    target_link_libraries(citra_common PUBLIC zstd)
 +endif()
-+set_target_properties(common PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
+ set_target_properties(citra_common PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
  
  if ("x86_64" IN_LIST ARCHITECTURE)
-     target_link_libraries(citra_common PRIVATE xbyak)
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
 index 7863e8ba7..c58aef534 100644
 --- a/src/core/CMakeLists.txt
