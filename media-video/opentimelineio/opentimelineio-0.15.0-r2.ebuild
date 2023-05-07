@@ -28,6 +28,7 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 
 python_prepare_all() {
 	sed -re '/.*: OTIO_build_ext,/d' -i setup.py
+	eapply "${FILESDIR}/${PN}-fix-include.patch"
 	cmake_src_prepare
 	distutils-r1_python_prepare_all
 }
@@ -41,9 +42,9 @@ python_configure() {
 		-DOTIO_INSTALL_CONTRIB=OFF
 		-DOTIO_INSTALL_PYTHON_MODULES=OFF
 		-DOTIO_PYTHON_INSTALL=ON
+		-DOTIO_PYTHON_INSTALL_DIR=$(python_get_sitedir)
 		-DOTIO_SHARED_LIBS=OFF
 		-DPython_EXECUTABLE=${PYTHON}
-		-DOTIO_PYTHON_INSTALL_DIR=$(python_get_sitedir)
 	)
 	cmake_src_configure
 }
