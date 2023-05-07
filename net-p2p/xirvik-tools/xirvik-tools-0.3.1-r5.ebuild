@@ -23,7 +23,7 @@ RDEPEND="dev-python/argcomplete
 	dev-python/requests-futures
 	dev-python/unidecode
 	dev-python/humanize
-	dev-python/importlib_metadata
+	dev-python/importlib-metadata
 	>=dev-python/typing-extensions-3.7.4.1
 	dev-python/benc
 	test? (
