@@ -11,7 +11,6 @@ SRC_URI="https://github.com/libimobiledevice/${PN}/archive/${SHA}.tar.gz -> ${P}
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="udev"
 
 DEPEND=">=app-pda/libimobiledevice-glue-1.0.0:=
