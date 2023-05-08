@@ -25,7 +25,7 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+compatibility-reporting +cubeb +web-service"
+IUSE="+compatibility-reporting +cubeb +web-service +webengine"
 REQUIRED_USE="compatibility-reporting? ( web-service )"
 
 DEPEND=">=app-arch/zstd-1.5.0
@@ -44,7 +44,6 @@ DEPEND=">=app-arch/zstd-1.5.0
 	dev-qt/qtgui
 	dev-qt/qtmultimedia
 	dev-qt/qtmultimedia
-	dev-qt/qtwebengine
 	dev-qt/qtwidgets
 	media-libs/libsdl2
 	media-libs/libva
@@ -52,7 +51,8 @@ DEPEND=">=app-arch/zstd-1.5.0
 	net-libs/enet:=
 	sys-libs/libunwind
 	sys-libs/zlib
-	virtual/libusb:="
+	virtual/libusb:=
+	webengine? ( dev-qt/qtwebengine )"
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="dev-cpp/nlohmann_json
@@ -106,7 +106,7 @@ src_configure() {
 		-DYUZU_USE_EXTERNAL_SDL2=ON
 		-DYUZU_USE_EXTERNAL_VULKAN_HEADERS=OFF
 		-DYUZU_USE_QT_MULTIMEDIA=ON
-		-DYUZU_USE_QT_WEB_ENGINE=ON
+		-DYUZU_USE_QT_WEB_ENGINE=$(usex webengine)
  		-Wno-dev
 	)
 	cmake_src_configure
