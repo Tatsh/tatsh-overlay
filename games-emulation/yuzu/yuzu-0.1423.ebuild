@@ -43,7 +43,6 @@ DEPEND=">=app-arch/zstd-1.5.0
 	dev-qt/qtdbus
 	dev-qt/qtgui
 	dev-qt/qtmultimedia
-	dev-qt/qtmultimedia
 	dev-qt/qtwidgets
 	media-libs/libsdl2
 	media-libs/libva
@@ -107,7 +106,7 @@ src_configure() {
 		-DYUZU_USE_EXTERNAL_VULKAN_HEADERS=OFF
 		-DYUZU_USE_QT_MULTIMEDIA=ON
 		-DYUZU_USE_QT_WEB_ENGINE=$(usex webengine)
- 		-Wno-dev
+		-Wno-dev
 	)
 	cmake_src_configure
 }
