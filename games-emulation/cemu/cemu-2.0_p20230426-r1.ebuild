@@ -31,7 +31,7 @@ DEPEND="app-arch/zarchive
 	dev-libs/wayland
 	dev-util/glslang
 	media-libs/libglvnd
-	media-libs/libsdl2[joystick,threads]
+	media-libs/libsdl2[haptic,joystick,threads]
 	net-misc/curl
 	sys-libs/zlib
 	vulkan? ( dev-util/vulkan-headers )
