@@ -6,8 +6,8 @@ WX_GTK_VER="3.0-gtk3"
 inherit udev wxwidgets
 
 DESCRIPTION="Graphical user interface and command-line tools to manage raphnet adapters."
-HOMEPAGE="https://www.raphnet-tech.com/products/adapter_manager/index.php"
-SRC_URI="https://www.raphnet-tech.com/downloads/raphnet-tech_adapter_manager-${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/raphnet/gcn64tools"
+SRC_URI="https://github.com/raphnet/gcn64tools/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
