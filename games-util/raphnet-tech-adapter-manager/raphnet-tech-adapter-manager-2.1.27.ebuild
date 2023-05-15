@@ -26,7 +26,7 @@ DEPEND="dev-libs/glib
 	x11-libs/wxGTK:3.0-gtk3"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/raphnet-tech_adapter_manager-${PV}"
+S="${WORKDIR}/gcn64tools-${PV}"
 
 src_prepare() {
 	sed -e 's/, TAG+=".*/, GROUP="plugdev", MODE="0660"/g' \
