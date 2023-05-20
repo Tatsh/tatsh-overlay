@@ -14,7 +14,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="dev-libs/ncnn"
+DEPEND="dev-libs/ncnn media-libs/vulkan-loader"
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-system-deps.patch" )
