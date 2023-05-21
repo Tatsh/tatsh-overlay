@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="22202be3946b5cb65511059e717af449168812f3"
+SHA="ac66643346df76561ff85be741e2998290d43646"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.19
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -28,7 +28,7 @@ NUGETS="avalonia-0.10.19
 	commandlineparser-2.9.1
 	concentus-1.1.7
 	discordrichpresence-1.1.3.18
-	dynamicdata-7.13.5
+	dynamicdata-7.13.8
 	excss-4.1.4
 	fizzler-1.2.1
 	fluentavaloniaui-1.4.5
