@@ -63,7 +63,6 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-6858-disable-collecttoolinginfo.patch"
-	"${FILESDIR}/${PN}-remove-unknown-constants.patch"
 )
 
 pkg_setup() {
