@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="A set of command line tools to maniuplate files of various Nintendo titles."
 HOMEPAGE="https://github.com/Wiimm/wiimms-szs-tools"
-SHA="f978a965248a5a082d6801ef394bdebb55c78e4f"
+SHA="74ac39c1af5c8e85bf10711aed2ffc9dfee2e277"
 SRC_URI="https://github.com/Wiimm/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
