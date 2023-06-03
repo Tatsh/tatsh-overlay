@@ -440,6 +440,13 @@ def handle_cython_post_suffix(s: str) -> str:
     return s.replace('.post', '.')
 
 
+def handle_outfox(s: str) -> str:
+    x = re.split(r'-pre(?:0+)?', s)
+    if len(x) == 2:
+        return f'{x[0]}_p{x[1]}'
+    return x
+
+
 def assert_not_none(x: Optional[T]) -> T:
     assert x is not None
     return x
