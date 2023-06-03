@@ -10,17 +10,15 @@ HOMEPAGE="https://projectoutfox.com/"
 
 UPPER_PN="${PN^^}"
 MY_PN="${UPPER_PN:0:1}${PN:1:1}${PN:2:1}${UPPER_PN:3:1}${PN:4}"
-MY_PV="${PV:6:4}"
-ALT_PV="${PV:6:6}"
-DATE="20230415"
-SRC_URI="
-amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${PV:2}.0/${MY_PN}-${PV}-LTS-Linux-amd64-.20.04+.-modern-date-${DATE}.tar.gz -> ${P}-amd64.tar.gz )
-	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${PV:2}.0/${MY_PN}-${PV}-LTS-Linux-Rpi64bit-arm64v8-modern-date-${DATE}.tar.gz )"
+DATE="20230501"
+MAJOR="${PV:0:5}"
+PRE="${PV:7}"
+SRC_URI="https://github.com/TeamRizu/${MY_PN}/releases/download/OF${MAJOR}-0${PRE}/OutFox-AlphaV-0.${MAJOR}-pre0${PRE}-Linux-amd64-modern-date-${DATE}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+bundled-songs +bundled-courses doc"
-BDEPEND="!arm? ( dev-util/patchelf )"
+BDEPEND="dev-util/patchelf"
 RDEPEND="app-arch/bzip2
 	app-arch/lz4
 	media-libs/alsa-lib
@@ -43,9 +41,7 @@ S="${WORKDIR}"
 
 src_prepare() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-${PV}-amd64-modern-date-${DATE}" || die
-	elif use arm64; then
-		cd "${MY_PN}-alpha-${PV}-arm64-modern-date-${DATE}" || die
+		cd "${MY_PN}-alpha-0.${MAJOR:0:3}-pre0${PRE}-amd64-modern-date-${DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
@@ -65,23 +61,19 @@ src_prepare() {
 
 src_install() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-${PV}-amd64-modern-date-${DATE}" || die
-	elif use arm64; then
-		cd "${MY_PN}-alpha-${PV}-arm64-modern-date-${DATE}" || die
+		cd "${MY_PN}-alpha-0.${MAJOR:0:3}-pre0${PRE}-amd64-modern-date-${DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
 	local inst="${EPREFIX}/opt/${PN}"
-	if ! use arm; then
-		patchelf --set-rpath "\$ORIGIN:${EPREFIX}/lib64:${EPREIFX}/usr/lib64" \
-			OutFox || die 'Failed to patch ELFs'
-		patchelf --replace-needed libbz2.so.1.0 libbz2.so.1 \
-			libav{codec,format}.so.* || die "Failed to patch ELFs"
-	fi
+	patchelf --set-rpath "\$ORIGIN:${EPREFIX}/lib64:${EPREIFX}/usr/lib64" \
+		OutFox || die 'Failed to patch ELFs'
+	patchelf --replace-needed libbz2.so.1.0 libbz2.so.1 \
+		libav{codec,format}.so.* || die "Failed to patch ELFs"
 	make_wrapper "$PN" "${inst}/OutFox" "${inst}" "${inst}" /usr/bin
 	insinto "$inst"
 	doins -r Announcers Appearance BackgroundEffects BackgroundTransitions \
-		BGAnimations Characters Courses Data Scripts Songs
+		BGAnimations Characters Courses DanceStages Data Modules Scripts Songs
 	! use bundled-songs && keepdir "${inst}/Songs"
 	! use bundled-courses && keepdir "${inst}/Courses"
 	exeinto "${inst}"
