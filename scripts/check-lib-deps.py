@@ -15,7 +15,7 @@ IGNORE = {
         'media-video/pipewire',  # ignored because virtual/jack is listed
         'virtual/libusb',
     },
-    'games-arcade/stepmania': { 'media-video/pipewire' }
+    'games-arcade/stepmania': {'media-video/pipewire'}
 }
 
 
@@ -45,16 +45,17 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
             lines = qfile(x).splitlines()
             try:
                 lib_package = [
-                    y for y in lines
-                    if '-libs/' in y or y.startswith('dev-qt/') or re.match(
-                        r'^(?:app-pda/lib(?:irecovery|plist)|net-misc/curl|'
-                        r'media-sound/(?:pulseaudio|mpg123)|'
-                        r'media-video/(ffmpeg|pipewire)|'
-                        r'app-arch/(?:zstd|libarchive|lz4)|'
-                        r'app-emulation/faudio|'
-                        r'dev-util/glslang|net-wireless/bluez|sys-apps/dbus|'
-                        r'app-accessibility/at-spi2-atk|net-print/cups|'
-                        r'sys-apps/util-linux|app-crypt/mit-krb5)', y)
+                    y for y in lines if
+                    ('-libs/' in y or y.startswith('dev-qt/')
+                     or y.startswith('dev-cpp/') or re.match(
+                         r'^(?:app-pda/lib(?:irecovery|plist)|net-misc/curl|'
+                         r'media-sound/(?:pulseaudio|mpg123)|'
+                         r'media-video/(ffmpeg|pipewire)|'
+                         r'app-arch/(?:zstd|libarchive|lz4)|'
+                         r'app-emulation/faudio|'
+                         r'dev-util/glslang|net-wireless/bluez|sys-apps/dbus|'
+                         r'app-accessibility/at-spi2-atk|net-print/cups|'
+                         r'sys-apps/util-linux|app-crypt/mit-krb5)', y))
                 ][0].split(':')[0]
             except IndexError:
                 continue
