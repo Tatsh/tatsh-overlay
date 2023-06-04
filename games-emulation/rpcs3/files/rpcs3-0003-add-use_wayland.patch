@@ -1,19 +1,19 @@
-From 50a03273a2454ade0adb985f5a48e4aac9556ee1 Mon Sep 17 00:00:00 2001
+From 3737b64e5ebe0949743b15de9e7f180d8b7a4386 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 09:09:18 -0400
-Subject: [PATCH 3/7] Add USE_WAYLAND
+Subject: [PATCH 3/8] Add USE_WAYLAND
 
 ---
  3rdparty/CMakeLists.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index 60e006e81..dcc5d7637 100644
+index 6d9383d4a..23c35b69d 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
 @@ -191,7 +191,7 @@ if(USE_VULKAN)
  		target_compile_definitions(3rdparty_vulkan INTERFACE -DHAVE_VULKAN)
- 		target_link_libraries(3rdparty_vulkan INTERFACE SPIRV SPIRV-Tools-opt Vulkan::Vulkan)
+ 		target_link_libraries(3rdparty_vulkan INTERFACE SPIRV Vulkan::Vulkan)
  
 -		if(UNIX AND NOT APPLE)
 +		if(UNIX AND NOT APPLE AND USE_WAYLAND)
@@ -21,5 +21,5 @@ index 60e006e81..dcc5d7637 100644
  			if (WAYLAND_FOUND)
  				target_include_directories(3rdparty_vulkan
 -- 
-2.39.2
+2.40.1
 

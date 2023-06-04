@@ -1,11 +1,11 @@
 diff --git a/lib/ExecutionEngine/IntelJITEvents/CMakeLists.txt b/lib/ExecutionEngine/IntelJITEvents/CMakeLists.txt
 index 0c5017c359d..f89c7fd0156 100644
---- a/llvm/lib/ExecutionEngine/IntelJITEvents/CMakeLists.txt
-+++ b/llvm/lib/ExecutionEngine/IntelJITEvents/CMakeLists.txt
+--- a/3rdparty/llvm/llvm/llvm/lib/ExecutionEngine/IntelJITEvents/CMakeLists.txt
++++ b/3rdparty/llvm/llvm/llvm/lib/ExecutionEngine/IntelJITEvents/CMakeLists.txt
 @@ -21,13 +21,6 @@ if(NOT EXISTS ${ITTAPI_SOURCE_DIR}/ittapi)
      endif()
  endif()
- 
+
 -execute_process(COMMAND ${GIT_EXECUTABLE} checkout ${ITTAPI_GIT_TAG}
 -                WORKING_DIRECTORY ${ITTAPI_SOURCE_DIR}/ittapi
 -                RESULT_VARIABLE GIT_CHECKOUT_RESULT)
@@ -14,5 +14,5 @@ index 0c5017c359d..f89c7fd0156 100644
 -endif()
 -
  include_directories( ${ITTAPI_SOURCE_DIR}/ittapi/include/ )
- 
+
  if( HAVE_LIBDL )

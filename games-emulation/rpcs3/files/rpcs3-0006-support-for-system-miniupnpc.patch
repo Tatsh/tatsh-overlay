@@ -1,7 +1,7 @@
-From d1820e3511ddb3bffd8c07bb4a5cf7d9822360dd Mon Sep 17 00:00:00 2001
+From e878a7be3960789ddfd0c33884fd07c2453d8b33 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 20:38:09 -0500
-Subject: [PATCH 6/7] Support for system miniupnpc
+Subject: [PATCH 6/8] Support for system miniupnpc
 
 ---
  3rdparty/CMakeLists.txt       | 8 ++++++--
@@ -10,10 +10,10 @@ Subject: [PATCH 6/7] Support for system miniupnpc
  3 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index 02c2e505f..9ec12d9b9 100644
+index d2bda51db..00aba6021 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
-@@ -370,7 +370,11 @@ if(USE_SDL)
+@@ -367,7 +367,11 @@ if(USE_SDL)
  endif()
  
  # MINIUPNP
@@ -24,14 +24,15 @@ index 02c2e505f..9ec12d9b9 100644
 +	pkg_check_modules(PC_MINIUNPNPC REQUIRED IMPORTED_TARGET GLOBAL miniupnpc)
 +endif()
  
- # add nice ALIAS targets for ease of use
- if(USE_SYSTEM_LIBUSB)
-@@ -399,4 +403,4 @@ add_library(3rdparty::wolfssl ALIAS wolfssl)
+ # RTMIDI
+ add_subdirectory(rtmidi EXCLUDE_FROM_ALL)
+@@ -399,5 +403,5 @@ add_library(3rdparty::wolfssl ALIAS wolfssl)
  add_library(3rdparty::libcurl ALIAS libcurl)
  add_library(3rdparty::soundtouch ALIAS soundtouch)
  add_library(3rdparty::sdl2 ALIAS ${SDL2_TARGET})
 -add_library(3rdparty::miniupnpc ALIAS libminiupnpc-static)
 +add_library(3rdparty::miniupnpc ALIAS PkgConfig::PC_MINIUNPNPC)
+ add_library(3rdparty::rtmidi ALIAS rtmidi)
 diff --git a/rpcs3/Emu/NP/upnp_handler.cpp b/rpcs3/Emu/NP/upnp_handler.cpp
 index dca00de98..b30bb2e81 100644
 --- a/rpcs3/Emu/NP/upnp_handler.cpp
@@ -61,5 +62,5 @@ index 40892f744..bb99b88ae 100644
  #include "upnp_config.h"
  #include "Utilities/mutex.h"
 -- 
-2.39.2
+2.40.1
 

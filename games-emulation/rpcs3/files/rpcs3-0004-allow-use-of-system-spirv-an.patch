@@ -1,34 +1,27 @@
-From 9e8e01a38b8cfbafba48c2e75ae01478c4722547 Mon Sep 17 00:00:00 2001
+From 6802759710635903e52d82a6e896f519d14e37f8 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 11:37:19 -0400
-Subject: [PATCH 4/7] Allow use of system SPIRV and glslang
+Subject: [PATCH 4/8] Allow use of system SPIRV and glslang
 
 ---
- 3rdparty/CMakeLists.txt | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ 3rdparty/CMakeLists.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index dcc5d7637..fb4bd1e06 100644
+index 23c35b69d..5743b9bd2 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
-@@ -77,8 +77,15 @@ add_subdirectory(hidapi)
+@@ -77,7 +77,9 @@ add_subdirectory(hidapi)
  
  
  # Vulkan
 -add_subdirectory(glslang EXCLUDE_FROM_ALL)
--add_subdirectory(SPIRV EXCLUDE_FROM_ALL)
 +if(NOT USE_SYSTEM_GLSLANG)
 +  add_subdirectory(glslang EXCLUDE_FROM_ALL)
 +endif()
-+if(USE_SYSTEM_SPIRV_HEADERS_TOOLS)
-+  find_package(SPIRV-Headers REQUIRED)
-+  find_package(SPIRV-Tools REQUIRED)
-+else()
-+  add_subdirectory(SPIRV EXCLUDE_FROM_ALL)
-+endif()
+ #add_subdirectory(SPIRV EXCLUDE_FROM_ALL)
  
  
- # yaml-cpp
 -- 
-2.39.2
+2.40.1
 

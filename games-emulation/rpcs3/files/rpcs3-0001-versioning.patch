@@ -1,14 +1,14 @@
-From 893e8b704374701c3e6798bdae3df636f48caa3b Mon Sep 17 00:00:00 2001
+From c5e010e3043d30d0dd6dfb6b5fe48371edd8ae26 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 09:08:30 -0400
-Subject: [PATCH 1/7] versioning
+Subject: [PATCH 1/8] versioning
 
 ---
  rpcs3/rpcs3_version.cpp | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/rpcs3/rpcs3_version.cpp b/rpcs3/rpcs3_version.cpp
-index bb2e6b158..642e075e5 100644
+index ed709d1f1..02453eed0 100644
 --- a/rpcs3/rpcs3_version.cpp
 +++ b/rpcs3/rpcs3_version.cpp
 @@ -7,12 +7,12 @@ namespace rpcs3
@@ -27,5 +27,5 @@ index bb2e6b158..642e075e5 100644
  
  	std::pair<std::string, std::string> get_commit_and_hash()
 -- 
-2.39.2
+2.40.1
 

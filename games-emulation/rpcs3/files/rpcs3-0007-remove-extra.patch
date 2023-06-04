@@ -1,7 +1,7 @@
-From 9c0a28c8f2fca193d165782313e9f6dfc3ef14f6 Mon Sep 17 00:00:00 2001
+From 90c4be5bbe215f656fcc68e7af74dd94f2afa388 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 21:46:38 -0500
-Subject: [PATCH 7/7] Remove extra
+Subject: [PATCH 7/8] Remove extra
 
 ---
  rpcs3/CMakeLists.txt | 4 ----
@@ -21,5 +21,5 @@ index e372c6650..e0fe3856b 100644
 -        DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
  endif()
 -- 
-2.39.2
+2.40.1
 

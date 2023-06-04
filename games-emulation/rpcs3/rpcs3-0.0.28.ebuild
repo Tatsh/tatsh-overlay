@@ -6,14 +6,14 @@ inherit cmake flag-o-matic xdg
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
-ASMJIT_SHA="06d0badec53710a4f572cf5642881ce570c5d274"
-HIDAPI_SHA="ecf1b62882c1b6ca1da445fa94ee8dae42cf5961"
+ASMJIT_SHA="c59847629d3a19da4d10f0be4ac33b43fc4a100f"
+HIDAPI_SHA="8b43a97a9330f8b0035439ce9e255e4be202deca"
 ITTAPI_VERSION="3.18.12"
-LLVM_SHA="9b52b6c39ae9f0759fbce7dd0db4b3290d6ebc56"
+LLVM_SHA="cd89023f797900e4492da58b7bed36f702120011"
 SOUNDTOUCH_SHA="83cfba67b6af80bb9bfafc0b324718c4841f2991"
 YAML_CPP_SHA="0b67821f307e8c6bf0eba9b6d3250e3cf1441450"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/RPCS3/llvm-mirror/archive/${LLVM_SHA}.tar.gz -> ${PN}-llvm-${LLVM_SHA:0:7}.tar.gz
+	https://github.com/llvm/llvm-project/archive/${LLVM_SHA}.tar.gz -> ${PN}-llvm-${LLVM_SHA:0:7}.tar.gz
 	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${PN}-asmjit-${ASMJIT_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${PN}-hidapi-${HIDAPI_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${PN}-yaml-cpp-${YAML_CPP_SHA:0:7}.tar.gz
@@ -45,6 +45,7 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	media-libs/libglvnd[X]
 	media-libs/libpng:*
 	media-libs/openal
+	media-libs/rtmidi
 	media-video/ffmpeg
 	net-libs/miniupnpc
 	net-misc/curl
@@ -72,12 +73,13 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0005-allow-system-cubeb.patch"
 	"${FILESDIR}/${PN}-0006-support-for-system-miniupnpc.patch"
 	"${FILESDIR}/${PN}-0007-remove-extra.patch"
+	"${FILESDIR}/${PN}-0008-allow-system-rtmidi.patch"
 	"${FILESDIR}/${PN}-9999-ittapi-remove-git-co.patch"
 )
 
 src_prepare() {
-	rmdir "${S}/llvm" || die
-	mv "${WORKDIR}/llvm-mirror-${LLVM_SHA}" "${S}/llvm" || die
+	rmdir "${S}/3rdparty/llvm/llvm" || die
+	mv "${WORKDIR}/llvm-project-${LLVM_SHA}" "${S}/3rdparty/llvm/llvm" || die
 	rmdir "${S}/3rdparty/hidapi/hidapi" || die
 	mv "${WORKDIR}/hidapi-${HIDAPI_SHA}" "${S}/3rdparty/hidapi/hidapi" || die
 	rmdir "${S}/3rdparty/yaml-cpp/yaml-cpp" || die
@@ -89,7 +91,7 @@ src_prepare() {
 	echo '#define RPCS3_GIT_FULL_BRANCH "RPCS3/rpcs3/master"' >> rpcs3/git-version.h
 	echo '#define RPCS3_GIT_VERSION_NO_UPDATE 1' >> rpcs3/git-version.h
 	sed -re 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
-		-i "${S}/llvm/CMakeLists.txt" || die
+		-i "${S}/3rdparty/llvm/llvm/llvm/CMakeLists.txt" || die
 	sed -e '/find_program(CCACHE_FOUND/d' -i CMakeLists.txt || die
 	sed -re '/\s+add_compile_options\(-Werror=missing-noreturn\).*/d' \
 		-e '/\s+add_compile_options\(-Werror=old-style-cast\).*/d' \
@@ -105,10 +107,7 @@ src_configure() {
 	append-cxxflags -DNDEBUG
 	mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
-		-DBUILD_LLVM_SUBMODULE=ON
 		-DBUILD_TESTING=OFF
-		"-DITTAPI_SOURCE_DIR=${WORKDIR}"
-		-DLLVM_COMPILE_DEFINITIONS=NDEBUG
 		-DUSE_PRECOMPILED_HEADERS=OFF
 		-DUSE_DISCORD_RPC=OFF
 		-DUSE_FAUDIO=$(usex faudio)
@@ -124,7 +123,7 @@ src_configure() {
 		-DUSE_SYSTEM_LIBUSB=ON
 		-DUSE_SYSTEM_MINIUPNP=ON
 		-DUSE_SYSTEM_PUGIXML=ON
-		-DUSE_SYSTEM_SPIRV_HEADERS_TOOLS=ON
+		-DUSE_SYSTEM_RTMIDI=ON
 		-DUSE_SYSTEM_WOLFSSL=ON
 		-DUSE_SYSTEM_XXHASH=ON
 		-DUSE_SYSTEM_ZLIB=ON
