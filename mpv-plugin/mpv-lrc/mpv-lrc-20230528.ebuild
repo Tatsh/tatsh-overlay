@@ -8,7 +8,7 @@ inherit mpv-plugin
 
 DESCRIPTION="Synchronize lyrics with mpv"
 HOMEPAGE="https://git.sr.ht/~guidocella/mpv-lrc"
-SHA="ba588a1aeda786bd363414d3e0ab7c76a07e57cc"
+SHA="be28d9293bfa6eac46bf790ca011dadffa382c3d"
 SRC_URI="https://git.sr.ht/~guidocella/mpv-lrc/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 
 LICENSE="GPL-3"
