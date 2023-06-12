@@ -32,7 +32,7 @@ src_prepare() {
 {
   "name": "sh.tat.open_in_mpv",
   "description": "Opens a URL in mpv (for use with extension).",
-  "path": "/home/tatsh/dev/open-in-mpv/host/open-in-mpv",
+  "path": "${EPREFIX}/usr/bin/open-in-mpv",
   "type": "stdio",
   "allowed_origins": [
     "chrome-extension://ggijpepdpiehgbiknmfpfbhcalffjlbj/"
