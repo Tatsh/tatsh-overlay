@@ -3,6 +3,7 @@
 
 EAPI=8
 DISTUTILS_USE_PEP517=setuptools
+DISTUTILS_EXT=1
 PYTHON_COMPAT=( python3_{10,11} )
 
 inherit cmake desktop distutils-r1
@@ -55,6 +56,7 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_TESTING=$(usex test)
+		-DUSE_QT_VERSION=5
 	)
 	cmake_src_configure
 	distutils-r1_src_configure
