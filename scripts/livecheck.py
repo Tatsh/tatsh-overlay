@@ -45,6 +45,8 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
         'externals/dynarmic',
         'externals/fmt',
         'externals/lodepng/lodepng',
+        'externals/sirit',
+        'externals/sirit/externals/SPIR-V',
         'externals/soundtouch',
         'externals/xbyak',
     },
@@ -445,6 +447,10 @@ def handle_outfox(s: str) -> str:
     if len(x) == 2:
         return f'{x[0]}_p{x[1]}'
     return x
+
+
+def handle_outfox_serenity(s: str) -> str:
+    return s.replace('s', '.')
 
 
 def assert_not_none(x: Optional[T]) -> T:
