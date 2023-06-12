@@ -1,4 +1,0 @@
-{
-	"comment": "Disabled until Qt 6 is in main tree. See https://bugs.gentoo.org/838970",
-	"type": "none"
-}

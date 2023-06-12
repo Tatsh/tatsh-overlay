@@ -6,9 +6,11 @@ inherit cmake xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/ https://github.com/citra-emu/citra"
-SHA="70335a7f4d50c092fb04749ac8d45ebeff1814a3"
+SHA="238a574645e428dcff17b74ea8e80ada77987aa2"
 DDS_KTX_SHA="42dd8aa6ded90b1ec06091522774feff51e83fc5"
 LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
+SIRIT_SHA="4ab79a8c023aa63caaa93848b09b9fe8b183b1a9"
+SIRIT_SPIRV_HEADERS_SHA="c214f6f2d1a7253bb0e9f195c2dc5b0659dc99ef"
 SOUNDTOUCH_SHA="dd2252e9af3f2d6b749378173a4ae89551e06faf"
 SUB_DYNARMIC_SHA="c08c5a9362bb224dc343c2f616c24df027dfdf13"
 XBYAK_SHA="a1ac3750f9a639b5a6c6d6c7da4259b8d6790989"
@@ -17,7 +19,9 @@ SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/citra-emu/dynarmic/archive/${SUB_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${SUB_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz -> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz
 	https://codeberg.org/soundtouch/soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-soundtouch-${SOUNDTOUCH_SHA:0:7}.tar.gz
-	https://github.com/septag/dds-ktx/archive/${DDS_KTX_SHA}.tar.gz -> ${PN}-dds-ktx-${DDS_KTX_SHA:0:7}.tar.gz"
+	https://github.com/septag/dds-ktx/archive/${DDS_KTX_SHA}.tar.gz -> ${PN}-dds-ktx-${DDS_KTX_SHA:0:7}.tar.gz
+	https://github.com/yuzu-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-yuzu-emu-sirit-${SIRIT_SHA:0:7}.tar.gz
+	https://github.com/KhronosGroup/SPIRV-Headers/archive/${SIRIT_SPIRV_HEADERS_SHA}.tar.gz -> ${PN}-yuzu-emu-sirit-spirv-headers-${SIRIT_SPIRV_HEADERS_SHA:0:7}.tar.gz"
 
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
@@ -35,11 +39,8 @@ DEPEND="app-arch/zstd
 	dev-libs/mp
 	dev-libs/teakra
 	>=dev-libs/xbyak-5.941
-	dev-qt/qtconcurrent:5
-	dev-qt/qtcore:5
-	dev-qt/qtgui:5
-	dev-qt/qtmultimedia:5
-	dev-qt/qtwidgets:5
+	dev-qt/qtbase:6
+	dev-qt/qtmultimedia:6
 	dev-util/nihstro
 	media-libs/libsdl2
 	media-video/ffmpeg
@@ -52,7 +53,6 @@ BDEPEND="dev-cpp/catch:0"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libraries.patch"
 	"${FILESDIR}/${PN}-0002-inih-fix.patch"
-	"${FILESDIR}/${PN}-0003-disable-tests.patch"
 )
 
 S="${WORKDIR}/${PN}-${SHA}"
@@ -63,11 +63,14 @@ pkg_setup() {
 
 src_prepare() {
 	rmdir "${S}/externals/lodepng/lodepng" \
-		"${S}/externals/"{soundtouch,dynarmic,fmt,xbyak,dds-ktx} || die
+		"${S}/externals/"{soundtouch,dynarmic,fmt,xbyak,dds-ktx,sirit} || die
 	mv "${WORKDIR}/soundtouch" "${S}/externals/soundtouch" || die
 	mv "${WORKDIR}/dds-ktx-${DDS_KTX_SHA}" "${S}/externals/dds-ktx" || die
 	mv "${WORKDIR}/dynarmic-${SUB_DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/lodepng-${LODEPNG_SHA}" "${S}/externals/lodepng/lodepng" || die
+	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
+	rmdir "${S}/externals/sirit/externals/SPIRV-Headers" || die
+	mv "${WORKDIR}/SPIRV-Headers-${SIRIT_SPIRV_HEADERS_SHA}" "${S}/externals/sirit/externals/SPIRV-Headers"
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
 	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
 	mv -f "${T}/compatibility_list.json" "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
@@ -83,6 +86,7 @@ src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
 		-DDISABLE_SUBMODULE_CHECK=ON
+		-DENABLE_TESTS=OFF
 		-DENABLE_FFMPEG_AUDIO_DECODER=ON
 		-DENABLE_FFMPEG_VIDEO_DUMPER=ON
 		-DENABLE_OPENAL=$(usex openal)
@@ -92,6 +96,7 @@ src_configure() {
 		-DUSE_SYSTEM_CUBEB=ON
 		-DUSE_SYSTEM_ENET=ON
 		-DUSE_SYSTEM_FMT=ON
+		-DUSE_SYSTEM_GLSLANG=ON
 		-DUSE_SYSTEM_INIH=ON
 		-DUSE_SYSTEM_OPENAL=ON
 		-DUSE_SYSTEM_SDL2=ON
