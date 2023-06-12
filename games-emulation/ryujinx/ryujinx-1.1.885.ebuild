@@ -8,7 +8,7 @@ inherit desktop dotnet-utils xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="d511c845b70a8771de7d64369e24ab3f1ed1c325"
+SHA="9a1b74799d350f9b4ba365bf8b118bddf517711f"
 MY_PN="R${PN:1}"
 NUGETS="avalonia-0.10.21
 	avalonia.angle.windows.natives-2.1.0.2020091801
@@ -56,16 +56,16 @@ NUGETS="avalonia-0.10.21
 	microsoft.codeanalysis.csharp-4.5.0
 	microsoft.codeanalysis.csharp.scripting-3.4.0
 	microsoft.codeanalysis.scripting.common-3.4.0
-	microsoft.codecoverage-17.6.1
+	microsoft.codecoverage-17.6.2
 	microsoft.csharp-4.3.0
 	microsoft.csharp-4.5.0
 	microsoft.csharp-4.7.0
 	microsoft.dotnet.platformabstractions-3.1.6
 	microsoft.extensions.dependencymodel-6.0.0
-	microsoft.identitymodel.abstractions-6.30.1
-	microsoft.identitymodel.jsonwebtokens-6.30.1
-	microsoft.identitymodel.logging-6.30.1
-	microsoft.identitymodel.tokens-6.30.1
+	microsoft.identitymodel.abstractions-6.31.0
+	microsoft.identitymodel.jsonwebtokens-6.31.0
+	microsoft.identitymodel.logging-6.31.0
+	microsoft.identitymodel.tokens-6.31.0
 	microsoft.io.recyclablememorystream-2.3.2
 	microsoft.netcore.app.host.osx-x64-7.0.3
 	microsoft.netcore.app.host.win-x64-7.0.3
@@ -78,9 +78,9 @@ NUGETS="avalonia-0.10.21
 	microsoft.netcore.platforms-2.1.2
 	microsoft.netcore.targets-1.0.1
 	microsoft.netcore.targets-1.1.0
-	microsoft.net.test.sdk-17.6.1
-	microsoft.testplatform.objectmodel-17.6.1
-	microsoft.testplatform.testhost-17.6.1
+	microsoft.net.test.sdk-17.6.2
+	microsoft.testplatform.objectmodel-17.6.2
+	microsoft.testplatform.testhost-17.6.2
 	microsoft.win32.primitives-4.0.1
 	microsoft.win32.registry-4.5.0
 	microsoft.win32.systemevents-7.0.0
@@ -89,7 +89,7 @@ NUGETS="avalonia-0.10.21
 	netstandard.library-2.0.0
 	netstandard.library-2.0.3
 	newtonsoft.json-13.0.1
-	nuget.frameworks-6.6.0
+	nuget.frameworks-6.5.0
 	nunit-3.13.3
 	nunit3testadapter-4.1.0
 	opentk.core-4.7.7
@@ -203,7 +203,7 @@ NUGETS="avalonia-0.10.21
 	system.globalization-4.3.0
 	system.globalization.calendars-4.0.1
 	system.globalization.extensions-4.0.1
-	system.identitymodel.tokens.jwt-6.30.1
+	system.identitymodel.tokens.jwt-6.31.0
 	system.io-4.1.0
 	system.io-4.3.0
 	system.io.compression-4.1.0
