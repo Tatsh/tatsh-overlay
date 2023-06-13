@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{9,10,11} )
+PYTHON_COMPAT=( python3_{10,11} )
 DISTUTILS_USE_PEP517=hatchling
 
 inherit distutils-r1
@@ -19,15 +19,16 @@ KEYWORDS="~amd64 ~x86"
 
 RDEPEND=">=media-video/ffms2-2.23.1
 	>=media-video/fmtconv-20
-	>=media-video/mvsfunc-8
+	>=media-video/mvsfunc-8[${PYTHON_USEDEP}]
 	>=media-video/scenechange-0.2.0-r2
 	>=media-video/vapoursynth-37[vspipe]
 	>=media-video/vapoursynth-mvtools-17
 	>=media-video/vapoursynth-nnedi3-11
-	dev-python/vsutil
+	dev-python/vsutil[${PYTHON_USEDEP}]
+	media-libs/vs-denoise[${PYTHON_USEDEP}]
 	media-video/vapoursynth-eedi3
-	media-video/vs-miscfilters-obsolete
 	media-video/vapoursynth-fft3dfilter
+	media-video/vs-miscfilters-obsolete
 	media-video/znedi3"
 
 S="${WORKDIR}/${PN}-${SHA}"
