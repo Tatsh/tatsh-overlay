@@ -14,8 +14,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 BDEPEND="sys-devel/clang:16"
-DEPEND="<sys-libs/libcxx-17
-	<sys-libs/libcxxabi-17"
+DEPEND="<sys-libs/libcxx-17[static-libs]
+	<sys-libs/libcxxabi-17[static-libs]"
 
 S="${WORKDIR}/${PN}-build_${PV}"
 # Necessary to avoid expansion in mycmakeargs below, even with single quotes
@@ -23,6 +23,7 @@ QUOTED_DOLLAR_SCAN_DEPS='${CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS}'
 
 src_configure() {
 	filter-flags -O*
+	append-cxxflags -Wno-unknown-warning-option -fexperimental-library
 	export CXX=clang++-16
 	local mycmakeargs=(
 		"-DCMAKE_EXPERIMENTAL_CXX_SCANDEP_SOURCE=${QUOTED_DOLLAR_SCAN_DEPS} -format=p1689 -- <CMAKE_CXX_COMPILER> <DEFINES> <INCLUDES> <FLAGS> -x c++ <SOURCE> -c -o <OBJECT> -MT <DYNDEP_FILE> > <DYNDEP_FILE>"
