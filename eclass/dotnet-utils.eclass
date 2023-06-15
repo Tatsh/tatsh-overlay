@@ -78,6 +78,11 @@ RESTRICT+=" strip"
 # SRC_URI="$(nuget_uris)"
 # @CODE
 
+# @ECLASS_VARIABLE: DOTNET_PROJECTS
+# @DESCRIPTION:
+# Projects or solution files (.sln) to build.
+DOTNET_PROJECTS=()
+
 # @FUNCTION: nuget_uris
 # @USAGE: <nuget...>
 # @DESCRIPTION:
@@ -168,7 +173,15 @@ dotnet-utils_src_unpack() {
 dotnet-utils_src_prepare() {
 	debug-print-function ${FUNCNAME} "${@}"
 
-	edotnet restore --source "${DISTDIR}" || die "'dotnet restore' failed"
+	local project
+
+	if [[ "${#DOTNET_PROJECTS[@]}" -gt 0 ]]; then
+		for project in "${DOTNET_PROJECTS[@]}"; do
+			edotnet restore "${project}" --source "${DISTDIR}" || die "'dotnet restore' failed"
+		done
+	else
+		edotnet restore --source "${DISTDIR}" || die "'dotnet restore' failed"
+	fi
 	default_src_prepare
 }
 
@@ -178,6 +191,7 @@ dotnet-utils_src_prepare() {
 dotnet-utils_src_compile() {
 	debug-print-function ${FUNCNAME} "${@}"
 
+	local project
 	local publish_args=(
 		--no-restore
 		--configuration Release
@@ -186,7 +200,14 @@ dotnet-utils_src_compile() {
 		--self-contained
 	)
 
-	edotnet publish "${publish_args[@]}" || die "'dotnet publish' failed"
+	if [[ "${#DOTNET_PROJECTS[@]}" -gt 0 ]]; then
+		for project in "${DOTNET_PROJECTS[@]}"; do
+			edotnet publish "${project}" "${publish_args[@]}" || die "'dotnet publish' failed"
+		done
+	else
+		edotnet publish "${publish_args[@]}" || die "'dotnet publish' failed"
+	fi
+
 }
 
 fi
