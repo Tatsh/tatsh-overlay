@@ -83,6 +83,11 @@ RESTRICT+=" strip"
 # Projects or solution files (.sln) to build.
 DOTNET_PROJECTS=()
 
+# @ECLASS_VARIABLE: DOTNET_PV
+# @DESCRIPTION:
+# Package version override in case PV is not acceptable.
+DOTNET_PV=""
+
 # @FUNCTION: nuget_uris
 # @USAGE: <nuget...>
 # @DESCRIPTION:
@@ -195,7 +200,7 @@ dotnet-utils_src_compile() {
 	local publish_args=(
 		--no-restore
 		--configuration Release
-		-p:Version=${PV}
+		"-p:Version=${DOTNET_PV:-${PV}}"
 		-p:DebugType=embedded
 		--self-contained
 	)
