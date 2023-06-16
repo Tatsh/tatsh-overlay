@@ -25,7 +25,7 @@ RDEPEND="${DEPEND}"
 PATCHES=( "${FILESDIR}/${PN}-0001-fix-implicit.patch" )
 S="${WORKDIR}/macemu-${SHA}/SheepShaver/src/Unix"
 MAKEOPTS+=" -j1"
-FILECAPS=( cap_sys_rawio bin/SheepShaver )
+FILECAPS=( cap_sys_rawio /usr/bin/SheepShaver )
 
 src_unpack() {
 	local archive
