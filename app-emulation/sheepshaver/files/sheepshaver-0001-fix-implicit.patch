@@ -1,0 +1,12 @@
+diff --git a/SheepShaver/src/Unix/configure.ac b/SheepShaver/src/Unix/configure.ac
+index 5edebf54..ae979537 100755
+--- a/configure.ac
++++ b/configure.ac
+@@ -807,6 +807,7 @@ AC_CACHE_CHECK([whether TUN/TAP is supported],
+     #include <net/if.h>
+     #include <net/if_tun.h>
+     #endif
++    #include <string.h>
+   ], [
+     struct ifreq ifr;
+     memset(&ifr, 0, sizeof(ifr));
