@@ -18,7 +18,7 @@ IUSE="+jit"
 
 DEPEND="dev-libs/glib
 	media-libs/libsdl2
-	x11-libs/gtk+
+	x11-libs/gtk+:2
 	x11-libs/libX11"
 RDEPEND="${DEPEND}"
 
