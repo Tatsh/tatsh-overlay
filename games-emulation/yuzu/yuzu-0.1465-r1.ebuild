@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit cmake xdg
+inherit cmake flag-o-matic xdg
 
 DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
-
 MY_PV="mainline-${PV/./-}"
 CPP_JWT_SHA="e12ef06218596b52d9b5d6e1639484866a8e7067"
 DYNARMIC_SHA="7da378033a7764f955516f75194856d87bbcd7a5"
@@ -86,6 +85,7 @@ src_prepare() {
 }
 
 src_configure() {
+	filter-lto
 	local mycmakeargs=(
 		-DBUILD_FULLNAME="${MY_PV}"
 		-DBUILD_SHARED_LIBS=OFF
