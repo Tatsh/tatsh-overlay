@@ -1,6 +1,6 @@
-diff -Nur /home/ignaz/Downloads/sources/cdi2nero/buffer.c ./buffer.c
---- /home/ignaz/Downloads/sources/cdi2nero/buffer.c	2001-03-15 12:45:26.000000000 +0100
-+++ ./buffer.c	2008-04-07 22:58:03.000000000 +0200
+diff -Nur a/buffer.c b/buffer.c
+--- a/buffer.c	2001-03-15 12:45:26.000000000 +0100
++++ b/buffer.c	2008-04-07 22:58:03.000000000 +0200
 @@ -1,5 +1,6 @@
  #include <stdio.h>
  #include <stdlib.h>
@@ -8,9 +8,9 @@ diff -Nur /home/ignaz/Downloads/sources/cdi2nero/buffer.c ./buffer.c
  #include "buffer.h"
  
  
-diff -Nur /home/ignaz/Downloads/sources/cdi2nero/cdi2nero.c ./cdi2nero.c
---- /home/ignaz/Downloads/sources/cdi2nero/cdi2nero.c	2002-06-08 01:31:36.000000000 +0200
-+++ ./cdi2nero.c	2008-04-19 16:46:05.000000000 +0200
+diff -Nur a/cdi2nero.c b/cdi2nero.c
+--- a/cdi2nero.c	2002-06-08 01:31:36.000000000 +0200
++++ b/cdi2nero.c	2008-04-19 16:46:05.000000000 +0200
 @@ -10,6 +10,12 @@
  #include "buffer.h"
  #include "cdi.h"
@@ -70,9 +70,9 @@ diff -Nur /home/ignaz/Downloads/sources/cdi2nero/cdi2nero.c ./cdi2nero.c
        for (i=0; i < size; i++)
            buffer[*index+i] = src[i];
  #else
-diff -Nur /home/ignaz/Downloads/sources/cdi2nero/common.c ./common.c
---- /home/ignaz/Downloads/sources/cdi2nero/common.c	2002-04-09 02:44:12.000000000 +0200
-+++ ./common.c	2008-04-19 16:42:19.000000000 +0200
+diff -Nur a/common.c b/common.c
+--- a/common.c	2002-04-09 02:44:12.000000000 +0200
++++ b/common.c	2008-04-19 16:42:19.000000000 +0200
 @@ -15,7 +15,7 @@
  
       tmp = buf;
@@ -119,9 +119,9 @@ diff -Nur /home/ignaz/Downloads/sources/cdi2nero/common.c ./common.c
      exit(EXIT_FAILURE);
  #endif
  
-diff -Nur /home/ignaz/Downloads/sources/cdi2nero/common.h ./common.h
---- /home/ignaz/Downloads/sources/cdi2nero/common.h	2002-04-09 02:44:12.000000000 +0200
-+++ ./common.h	2008-04-13 20:39:34.000000000 +0200
+diff -Nur a/common.h b/common.h
+--- a/common.h	2002-04-09 02:44:12.000000000 +0200
++++ b/common.h	2008-04-13 20:39:34.000000000 +0200
 @@ -9,11 +9,23 @@
  #define ERR_READIMAGE 0x03
  #define ERR_SAVEIMAGE 0x04
@@ -148,21 +148,21 @@ diff -Nur /home/ignaz/Downloads/sources/cdi2nero/common.h ./common.h
  
  
  
-diff -Nur /home/ignaz/Downloads/sources/cdi2nero/Makefile ./Makefile
---- /home/ignaz/Downloads/sources/cdi2nero/Makefile	1970-01-01 01:00:00.000000000 +0100
-+++ ./Makefile	2008-04-13 18:02:24.000000000 +0200
+diff -Nur a/Makefile b/Makefile
+--- a/Makefile	1970-01-01 01:00:00.000000000 +0100
++++ b/Makefile	2008-04-13 18:02:24.000000000 +0200
 @@ -0,0 +1,33 @@
 +# Project: CDI2nero
 +# Makefile originally created by Dev-C++ 4.9.3.0
 +
 +CC   = gcc
 +WINDRES =
-+RES  = 
++RES  =
 +OBJ  = cdi2nero.o buffer.o cdi.o common.o $(RES)
-+LIBS = 
++LIBS =
 +INCS =
 +BIN  = cdi2nero
-+CFLAGS = $(INCS) 
++CFLAGS = $(INCS)
 +
 +.PHONY: clean
 +
@@ -174,32 +174,32 @@ diff -Nur /home/ignaz/Downloads/sources/cdi2nero/Makefile ./Makefile
 +$(BIN): $(OBJ)
 +	$(CC) $(OBJ) -o $(BIN) $(RES) $(LIBS) $(CFLAGS)
 +
-+cdi2nero.o: cdi2nero.c 
++cdi2nero.o: cdi2nero.c
 +	$(CC) -c cdi2nero.c -o cdi2nero.o $(CFLAGS)
 +
-+buffer.o: buffer.c 
++buffer.o: buffer.c
 +	$(CC) -c buffer.c -o buffer.o $(CFLAGS)
 +
-+cdi.o: cdi.c 
++cdi.o: cdi.c
 +	$(CC) -c cdi.c -o cdi.o $(CFLAGS)
 +
-+common.o: common.c 
++common.o: common.c
 +	$(CC) -c common.c -o common.o $(CFLAGS)
-diff -Nur /home/ignaz/Downloads/sources/cdi2nero/Makefile.cdi2nero.posix ./Makefile.cdi2nero.posix
---- /home/ignaz/Downloads/sources/cdi2nero/Makefile.cdi2nero.posix	1970-01-01 01:00:00.000000000 +0100
-+++ ./Makefile.cdi2nero.posix	2008-04-13 18:02:24.000000000 +0200
+diff -Nur a/Makefile.cdi2nero.posix b/Makefile.cdi2nero.posix
+--- a/Makefile.cdi2nero.posix	1970-01-01 01:00:00.000000000 +0100
++++ b/Makefile.cdi2nero.posix	2008-04-13 18:02:24.000000000 +0200
 @@ -0,0 +1,33 @@
 +# Project: CDI2nero
 +# Makefile originally created by Dev-C++ 4.9.3.0
 +
 +CC   = gcc
 +WINDRES =
-+RES  = 
++RES  =
 +OBJ  = cdi2nero.o buffer.o cdi.o common.o $(RES)
-+LIBS = 
++LIBS =
 +INCS =
 +BIN  = cdi2nero
-+CFLAGS = $(INCS) 
++CFLAGS ?= $(INCS)
 +
 +.PHONY: clean
 +
@@ -211,14 +211,14 @@ diff -Nur /home/ignaz/Downloads/sources/cdi2nero/Makefile.cdi2nero.posix ./Makef
 +$(BIN): $(OBJ)
 +	$(CC) $(OBJ) -o $(BIN) $(RES) $(LIBS) $(CFLAGS)
 +
-+cdi2nero.o: cdi2nero.c 
++cdi2nero.o: cdi2nero.c
 +	$(CC) -c cdi2nero.c -o cdi2nero.o $(CFLAGS)
 +
-+buffer.o: buffer.c 
++buffer.o: buffer.c
 +	$(CC) -c buffer.c -o buffer.o $(CFLAGS)
 +
-+cdi.o: cdi.c 
++cdi.o: cdi.c
 +	$(CC) -c cdi.c -o cdi.o $(CFLAGS)
 +
-+common.o: common.c 
++common.o: common.c
 +	$(CC) -c common.c -o common.o $(CFLAGS)
