@@ -14,7 +14,6 @@ SRC_URI="https://github.com/HomeOfVapourSynthEvolution/mvsfunc/archive/${SHA}.ta
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
 
 RDEPEND=">=media-video/vapoursynth-37
 	media-video/fmtconv
