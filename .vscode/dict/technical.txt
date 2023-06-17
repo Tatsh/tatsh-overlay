@@ -1,5 +1,6 @@
 bdepend
 bsnes
+cflags
 crossdev
 dbapi
 deps
@@ -10,9 +11,13 @@ dotize
 eclass
 eerror
 einstalldocs
+emake
 eprefix
 eselect
+filesdir
+fomit
 fperms
+funcs
 glabels
 glsl
 iname
@@ -34,5 +39,6 @@ rdepend
 semver
 serialport
 vercmp
+workdir
 xmatch
 yarnpkg
