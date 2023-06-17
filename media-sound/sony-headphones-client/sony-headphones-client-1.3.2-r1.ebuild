@@ -24,6 +24,8 @@ DEPEND="media-libs/glew
 	virtual/opengl"
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${PN}-98.patch" )
+
 S="${WORKDIR}/${MY_PN}-${PV}/Client"
 BUILD_DIR="${S}/build"
 

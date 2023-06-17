@@ -1,0 +1,39 @@
+From 4da8a12b22f8a45e79aa53d4cae88ca99b51d41f Mon Sep 17 00:00:00 2001
+From: --local <98368716+professionalmoment@users.noreply.github.com>
+Date: Wed, 7 Jun 2023 08:49:01 +0800
+Subject: [PATCH] include cstdint to fix gcc compiling
+
+---
+ Client/ByteMagic.cpp      | 3 ++-
+ Client/linux/DBusHelper.h | 3 +++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/ByteMagic.cpp b/ByteMagic.cpp
+index 25228dd..773666a 100644
+--- a/ByteMagic.cpp
++++ b/ByteMagic.cpp
+@@ -1,5 +1,6 @@
+ #include "ByteMagic.h"
+ #include <climits>
++#include <cstdint>
+
+ unsigned int byteOrderSwap(unsigned int num)
+ {
+diff --git a/linux/DBusHelper.h b/linux/DBusHelper.h
+index 196ca79..91af421 100644
+--- a/linux/DBusHelper.h
++++ b/linux/DBusHelper.h
+@@ -3,6 +3,8 @@
+ #include <dbus/dbus.h>
+ #include <vector>
+ #include <string>
++#include <cstdint>
++
+ DBusConnection *dbus_open_system_bus();
+ dbus_bool_t open_dict_read(DBusMessageIter *const iter, DBusMessageIter *const iter_dict);
+ dbus_bool_t read_next_object_path_entry(DBusMessageIter *const iter_object_paths, char **const object_path, DBusMessageIter *const iter_interfaces);
+@@ -11,3 +13,4 @@ std::vector<std::string> dbus_list_adapters(DBusConnection *const connection);
+ std::string dbus_get_property(DBusConnection *const connection, const char *device_path, const char *property);
+
+ uint8_t sdp_getServiceChannel(const char *dev_addr, uint8_t *uuid128);
++
