@@ -105,6 +105,7 @@ src_prepare() {
 src_configure() {
 	append-cflags -DNDEBUG
 	append-cxxflags -DNDEBUG
+	filter-lto
 	mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
 		-DBUILD_TESTING=OFF
