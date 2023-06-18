@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="RealESRGAN super resolution plugin for VapourSynth"
 HOMEPAGE="https://github.com/Tatsh/VapourSynth-Real-ESRGAN-ncnn-vulkan"
-SHA="7e2460bf4b27fb6e61dee13ccddd16fad1fab728"
+SHA="4acd85af5d071e5c652282d30d5b7d59ac71f9c1"
 SRC_URI="https://github.com/Tatsh/VapourSynth-Real-ESRGAN-ncnn-vulkan/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz
 	https://dev.gentoo.org/~slashbeast/distfiles/realesrgan-ncnn-vulkan/realesrgan-ncnn-vulkan-models.tar.xz"
 
