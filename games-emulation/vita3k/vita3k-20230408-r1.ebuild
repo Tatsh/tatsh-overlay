@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake desktop wrapper
+inherit cmake desktop flag-o-matic wrapper
 
 DESCRIPTION="Experimental PlayStation Vita emulator."
 HOMEPAGE="https://vita3k.org https://github.com/Vita3K/Vita3K"
@@ -78,6 +78,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"
 	"${FILESDIR}/${PN}-0002-fix-linking-of-libhttps.patch"
 	"${FILESDIR}/${PN}-psvpfsparser-link.patch"
+	"${FILESDIR}/${PN}-gcc-13.patch"
 )
 
 src_prepare() {
