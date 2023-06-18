@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit autotools desktop fcaps
+inherit autotools desktop fcaps flag-o-matic
 
 DESCRIPTION="Macintosh emulator (updated fork)."
 HOMEPAGE="https://github.com/kanjitalk755/macemu"
@@ -47,6 +47,7 @@ src_prepare() {
 }
 
 src_configure() {
+	filter-lto
 	econf \
 		$(use_enable jit) \
 		--disable-sdl-static \
