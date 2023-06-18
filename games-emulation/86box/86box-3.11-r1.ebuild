@@ -34,11 +34,6 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/86Box-${PV}"
 
-src_prepare() {
-	sed -e 's|FAudio.h|FAudio/FAudio.h|' -i src/sound/xaudio2.c || die
-	cmake_src_prepare
-}
-
 src_configure() {
 	local mycmakeargs=(
 		-DDEV_BRANCH=ON
