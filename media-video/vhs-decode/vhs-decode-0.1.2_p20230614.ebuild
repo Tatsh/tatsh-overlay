@@ -20,7 +20,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="x11-libs/qwt:6
+DEPEND="x11-libs/qwt:5
 	dev-qt/qtcore:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtprintsupport:5
@@ -49,6 +49,7 @@ S="${WORKDIR}/${PN}-${SHA}"
 
 src_prepare() {
 	cmake_src_prepare
+	sed -re 's/Qt\$\{QT_VERSION_MAJOR\}Qwt6/qwt6-qt5/g' -i CMakeLists.txt || die
 	rm pyproject.toml || die
 	distutils-r1_src_prepare
 }
