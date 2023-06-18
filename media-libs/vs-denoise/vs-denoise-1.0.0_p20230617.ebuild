@@ -8,7 +8,7 @@ inherit distutils-r1
 
 DESCRIPTION="VapourSynth denoising, regression, and motion compensation functions"
 HOMEPAGE="https://github.com/Irrational-Encoding-Wizardry/vs-denoise"
-SHA="a0f394a55cc8d9dc2565a9bb05612a183901d421"
+SHA="944107c4be0baab555447d39fb265618a6f27b88"
 SRC_URI="https://github.com/Irrational-Encoding-Wizardry/vs-denoise/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
