@@ -7,13 +7,14 @@ inherit cmake xdg
 DESCRIPTION="PlayStation 2 emulator."
 HOMEPAGE="http://purei.org/ https://github.com/jpd002/Play-"
 MY_PV="${PV:0:4}"
-CODEGEN_SHA="2bc5a61188a2d6f0c9243d5c48d29e917080919c"
+CODEGEN_SHA="7c3c4c112d528162ec0342b4dcb940486a92d86a"
 DEPS_SHA="7d8bfd36fa609355e4087f7d661fc512bf77754c"
 GHC_FILESYSTEM="2a8b380f8d4e77b389c42a194ab9c70d8e3a0f1e"
-FRAMEWORK_SHA="dc46230471f9522602775c07f1c63e2a7a78ceda"
-LIBCHDR_SHA="571507743c7ae3d61063e9ed1fbb9edb52092226"
+FRAMEWORK_SHA="64bddd377a74292965ab7cad99966efd72cdd892"
+LIBCHDR_SHA="fec8ab94212cc65d9d9a62cb3da924f5830c04b0"
 NUANCEUR_SHA="8e2f8649b38322e1f97b05b87e2876c6de53462e"
 ZSTD_SHA="1e09cffd9b15b39379810a39ffae182b4a7e7b78"
+XXHASH_SHA="2de0fd6d9b3fd8bbb35ebd52152ecd11fc1ebbfc"
 SRC_URI="https://github.com/jpd002/Play-/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/jpd002/Play--CodeGen/archive/${CODEGEN_SHA}.tar.gz -> ${PN}-codegen-${CODEGEN_SHA:0:7}.tar.gz
 	https://github.com/jpd002/Play-Dependencies/archive/${DEPS_SHA}.tar.gz -> ${PN}-deps-${DEPS_SHA:0:7}.tar.gz
@@ -21,7 +22,8 @@ SRC_URI="https://github.com/jpd002/Play-/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/jpd002/Nuanceur/archive/${NUANCEUR_SHA}.tar.gz -> ${PN}-nuanceur-${NUANCEUR_SHA:0:7}.tar.gz
 	https://github.com/gulrak/filesystem/archive/${GHC_FILESYSTEM}.tar.gz -> ${PN}-filesystem-${GHC_FILESYSTEM:0:7}.tar.gz
 	https://github.com/jpd002/libchdr/archive/${LIBCHDR_SHA}.tar.gz -> ${PN}-libchdr-${LIBCHDR_SHA:0:7}.tar.gz
-	https://github.com/facebook/zstd/archive/${ZSTD_SHA}.tar.gz -> ${PN}-zstd-${ZSTD_SHA:0:7}.tar.gz"
+	https://github.com/facebook/zstd/archive/${ZSTD_SHA}.tar.gz -> ${PN}-zstd-${ZSTD_SHA:0:7}.tar.gz
+	https://github.com/Cyan4973/xxHash/archive/${XXHASH_SHA}.tar.gz -> ${PN}-xxhash-${XXHASH_SHA:0:7}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -63,6 +65,7 @@ src_prepare() {
 	mv "${WORKDIR}/filesystem-${GHC_FILESYSTEM}" deps/Dependencies/ghc_filesystem || die
 	mv "${WORKDIR}/${MY_PN}-Framework-${FRAMEWORK_SHA}" deps/Framework || die
 	mv "${WORKDIR}/Nuanceur-${NUANCEUR_SHA}" deps/Nuanceur || die
+	mv "${WORKDIR}/xxHash-${XXHASH_SHA}" deps/Dependencies/xxHash || die
 	mv "${WORKDIR}/zstd-${ZSTD_SHA}" deps/Dependencies/zstd || die
 	rmdir deps/libchdr || die
 	mv "${WORKDIR}/libchdr-${LIBCHDR_SHA}" deps/libchdr || die
