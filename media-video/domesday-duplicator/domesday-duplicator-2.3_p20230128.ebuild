@@ -17,7 +17,6 @@ KEYWORDS="~amd64"
 
 DEPEND="dev-libs/qcustomplot
 	dev-qt/qtbase:6
-	dev-qt/qtgui:6
 	dev-qt/qtserialport:6
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
