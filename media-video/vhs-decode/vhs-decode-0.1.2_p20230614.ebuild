@@ -20,7 +20,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="x11-libs/qwt:5
+DEPEND="x11-libs/qwt:6
 	dev-qt/qtcore:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtprintsupport:5
