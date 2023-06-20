@@ -1,8 +1,10 @@
+app-emulation/basiliskii: jit-debug - Enable JIT debugger
 app-office/glabels: barcode - Enable barcode support with app-text/barcode
 app-office/glabels: qrcode - Enables QR code support with media-gfx/qrencode
 dev-libs/bincookie: tools - Install extra tools
 dev-libs/wolfssl: debug - Debug support
 dev-libs/wolfssl: sniffer - Enable sniffer via libpcap
+dev-libs/wolfssl: writedup - Enable write duplication of WOLFSSL objects
 dev-python/numba: tbb - Build with TBB support
 games-action/re3: sanitizer - Build with address sanitiser for better crash logs
 games-action/relcs: sanitizer - Build with address sanitiser for better crash logs
@@ -53,6 +55,7 @@ games-emulation/xemu: malloc-trim - Enable malloc_trim() support
 games-emulation/xemu: membarrier - Enable membarrier syscall support
 games-emulation/yuzu: compatibility-reporting - Enable compatibility reporting
 games-emulation/yuzu: cubeb - Build with cubeb audio backend
+games-emulation/yuzu: webengine - Use  for embedded web browser
 games-emulation/yuzu: web-service - Enable web-services
 games-misc/render96ex: discord - Enable Discord presence
 games-misc/render96ex: eu - Use the EU ROM
