@@ -75,7 +75,7 @@ src_compile() {
 	export CXXFLAGS="${CXXFLAGS} -O3"
 	emake -C "${BIN_PN}" "compiler=$(tc-getCXX)"
 	mkdir saved || die
-	cp ${BIN_PN}/out/${BIN_PN} saved/ || die
+	cp "${BIN_PN}/out/${BIN_PN}" saved/ || die
 	if use libretro; then
 		emake -C "${BIN_PN}" clean
 		emake -C "${BIN_PN}" \
@@ -87,12 +87,12 @@ src_compile() {
 
 src_install() {
 	if use libretro; then
-		insinto /usr/$(get_libdir)/libretro
-		doins ${BIN_PN}/out/${PN/-/_}_beta_libretro.so
+		insinto "/usr/$(get_libdir)/libretro"
+		doins "${BIN_PN}/out/${PN/-/_}_beta_libretro.so"
 	fi
-	newbin saved/${BIN_PN} ${PN}
+	newbin "saved/${BIN_PN} ${PN}"
 	make_desktop_entry "${PN}" "${PN}"
-	newicon -s 256 ${BIN_PN}/target-${BIN_PN}/resource/${BIN_PN}.png ${PN}.png
-	newicon ${BIN_PN}/target-${BIN_PN}/resource/${BIN_PN}.svg ${PN}.svg
+	newicon -s 256 "${BIN_PN}/target-${BIN_PN}/resource/${BIN_PN}.png" "${PN}.png"
+	newicon "${BIN_PN}/target-${BIN_PN}/resource/${BIN_PN}.svg" "${PN}.svg"
 	einstalldocs
 }
