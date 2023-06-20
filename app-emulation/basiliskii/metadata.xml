@@ -8,4 +8,7 @@
 	<upstream>
 		<remote-id type="github">kanjitalk755/macemu</remote-id>
 	</upstream>
+	<use>
+		<flag name="jit-debug">Enable JIT debugger</flag>
+	</use>
 </pkgmetadata>

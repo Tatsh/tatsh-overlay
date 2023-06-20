@@ -47,8 +47,8 @@ src_prepare() {
 
 src_configure() {
 	econf \
-		$(use_enable jit jit-compiler) \
-		$(use_enable jit-debug) \
+		"$(use_enable jit jit-compiler)" \
+		"$(use_enable jit-debug)" \
 		--disable-vosf \
 		--enable-fpe=ieee \
 		--enable-sdl-audio \
