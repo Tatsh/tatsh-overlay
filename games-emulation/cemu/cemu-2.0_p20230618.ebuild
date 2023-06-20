@@ -59,15 +59,15 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
-		-DENABLE_CUBEB=$(usex cubeb)
-		-DENABLE_DISCORD_RPC=$(usex discord)
+		"-DENABLE_CUBEB=$(usex cubeb)"
+		"-DENABLE_DISCORD_RPC=$(usex discord)"
 		-DENABLE_OPENGL=ON
-		-DENABLE_SDL=$(usex sdl)
+		"-DENABLE_SDL=$(usex sdl)"
 		-DENABLE_VCPKG=OFF
-		-DENABLE_VULKAN=$(usex vulkan)
+		"-DENABLE_VULKAN=$(usex vulkan)"
 		-DENABLE_WXWIDGETS=ON
 		-DPORTABLE=OFF
-		-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3
+		"-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3"
 		-Wno-dev
 	)
 	cmake_src_configure
