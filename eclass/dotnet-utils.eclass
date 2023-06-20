@@ -103,6 +103,7 @@ nuget_uris() {
 		nugets="${NUGETS}"
 	else
 		eerror "NUGETS variable is not defined and nothing passed as argument"
+		# shellcheck disable=SC2128
 		die "${FUNCNAME}: Can't generate SRC_URI from empty input"
 	fi
 
@@ -144,6 +145,7 @@ dotnet-utils_pkg_setup() {
 # @DESCRIPTION:
 # Call dotnet, passing the supplied arguments.
 edotnet() {
+	# shellcheck disable=SC2128
 	debug-print-function "${FUNCNAME}" "${@}"
 
 	local dotnet_args=(
@@ -158,6 +160,7 @@ edotnet() {
 # @DESCRIPTION:
 # Unpacks the package
 dotnet-utils_src_unpack() {
+	# shellcheck disable=SC2128
 	debug-print-function "${FUNCNAME}" "${@}"
 
 	local archive
@@ -176,6 +179,7 @@ dotnet-utils_src_unpack() {
 # @DESCRIPTION:
 # Restore the packages using 'dotnet restore'
 dotnet-utils_src_prepare() {
+	# shellcheck disable=SC2128
 	debug-print-function "${FUNCNAME}" "${@}"
 
 	local project
@@ -194,6 +198,7 @@ dotnet-utils_src_prepare() {
 # @DESCRIPTION:
 # Build the package using dotnet publish
 dotnet-utils_src_compile() {
+	# shellcheck disable=SC2128
 	debug-print-function "${FUNCNAME}" "${@}"
 
 	local project
