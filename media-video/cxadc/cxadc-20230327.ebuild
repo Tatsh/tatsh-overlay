@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit linux-info linux-mod udev
+inherit linux-mod-r1 udev
 
 DESCRIPTION="CX2388x direct ADC capture driver."
 HOMEPAGE="https://github.com/happycube/cxadc-linux3"
@@ -15,21 +15,23 @@ KEYWORDS="~amd64"
 
 S="${WORKDIR}/${PN}-linux3-${SHA}"
 
-MODULE_NAMES="${PN}()"
-BUILD_TARGETS="clean default leveladj"
-BUILD_PARAMS="KDIR=${KERNEL_DIR}"
-
 src_prepare() {
 	echo 'leveladj:' >> Makefile
+	# shellcheck disable=SC2016
 	echo -e '\tcc $(CFLAGS) -o cxleveladj leveladj.c' >> Makefile
 	default
 }
 
+src_compile() {
+	local modlist=( "${PN}" )
+	local modargs=( KDIR="${KERNEL_DIR}" clean default leveladj )
+	linux-mod-r1_src_compile
+}
+
 src_install() {
-	linux-mod_src_install
+	linux-mod-r1_src_install
 	udev_dorules "${PN}.rules"
 	insinto /lib/modprobe.d
 	doins "${PN}.conf"
 	dobin utils/c* cxleveladj
-	einstalldocs
 }
