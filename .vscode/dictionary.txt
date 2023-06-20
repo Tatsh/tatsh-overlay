@@ -71,6 +71,7 @@ barbieri
 basenames
 basepack
 baserom
+basiliskii
 bassa
 bassavah
 batak
@@ -138,6 +139,7 @@ chakma
 charmbracelet
 checkpath
 cheshirekow
+chksums
 chownr
 chriskiehl
 chrono
@@ -502,6 +504,7 @@ guidocella
 gurmukhi
 gvim
 gzipped
+hactool
 hanunoo
 hanunó'o
 happycube
@@ -563,6 +566,7 @@ itoa
 ittapi
 iuse
 jackc
+jakcron
 jbenet
 jessevdk
 jetbrains
@@ -666,6 +670,7 @@ libnnedi
 libogg
 libpcap
 libpcre
+libpietendo
 libpulse
 libqalculate
 librealcugannv
@@ -795,7 +800,9 @@ mkdirp
 mknod
 mkorenkov
 mlabbe
+modargs
 modernc
+modlist
 modpost
 moduleinto
 moltenvk
@@ -872,6 +879,7 @@ npapi
 npmcli
 npmlog
 nspr
+nstool
 ntlmssp
 nuanceur
 nugets
@@ -1107,6 +1115,7 @@ saurashtra
 scandep
 scenechange
 scipy
+scires
 screamf
 scrn
 sdist
@@ -1165,6 +1174,7 @@ spaolacci
 spdlog
 spir
 spirv
+splitdebug
 sqlparse
 squashfs
 srmd
