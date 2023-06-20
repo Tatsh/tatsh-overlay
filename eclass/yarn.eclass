@@ -8,6 +8,7 @@
 # Andrew Udvare <audvare@gmail.com>
 # @BLURB: Install a Node-based package offline with Yarn.
 # @DESCRIPTION:
+# Install a Node-based package offline with Yarn.
 
 case ${EAPI:-0} in
 	8) ;;
@@ -29,7 +30,7 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	# @CODE
 
 	# @ECLASS_VARIABLE: _YARN_DISTFILES
-	# @_INTERNAL:
+	# @INTERNAL
 	# @DESCRIPTION:
 	# Array of distfile basenames. The output path for a tarball may be
 	# different than the basename taken off the URI.
