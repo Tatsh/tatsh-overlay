@@ -332,8 +332,7 @@ src_install() {
 	newicon distribution/misc/Logo.svg "${MY_PN}.svg"
 	insinto /usr/share/mime/packages
 	doins "distribution/linux/mime/${MY_PN}.xml"
-	insinto /usr/share/applications
-	doins "distribution/linux/${MY_PN}.desktop"
+	domenu "distribution/linux/${MY_PN}.desktop"
 	dobin "src/${MY_PN}/bin/Release/net${DOTNET_SLOT}/linux-x64/publish/${MY_PN}"
 	einstalldocs
 }
