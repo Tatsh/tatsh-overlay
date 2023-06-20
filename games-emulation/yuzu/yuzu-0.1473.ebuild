@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit cmake flag-o-matic xdg
+inherit cmake xdg
 
 DESCRIPTION="Nintendo Switch emulator"
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 MY_PV="mainline-${PV/./-}"
 CPP_JWT_SHA="e12ef06218596b52d9b5d6e1639484866a8e7067"
-DYNARMIC_SHA="7da378033a7764f955516f75194856d87bbcd7a5"
+_DYNARMIC_SHA="7da378033a7764f955516f75194856d87bbcd7a5"
 NX_TZDB_VERSION="220816"
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
 SDL_SHA="f17058b562c8a1090c0c996b42982721ace90903"
@@ -16,7 +16,7 @@ SIRIT_SHA="ab75463999f4f3291976b079d42d52ee91eebf3f"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/arun11299/cpp-jwt/archive/${CPP_JWT_SHA}.tar.gz -> ${PN}-cpp-jwt-${CPP_JWT_SHA:0:7}.tar.gz
 	https://github.com/yuzu-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
-	https://github.com/MerryMage/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
+	https://github.com/MerryMage/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/yuzu-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/lat9nq/tzdb_to_nx/releases/download/${NX_TZDB_VERSION}/${NX_TZDB_VERSION}.zip -> ${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip
 	https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz"
@@ -54,7 +54,8 @@ DEPEND=">=app-arch/zstd-1.5.0
 	webengine? ( dev-qt/qtwebengine )"
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
-BDEPEND="dev-cpp/nlohmann_json
+BDEPEND="app-arch/unzip
+	dev-cpp/nlohmann_json
 	dev-util/glslang
 	>=dev-util/vulkan-headers-1.3.246
 	dev-util/spirv-headers"
@@ -72,7 +73,7 @@ pkg_setup() {
 src_prepare() {
 	rm .gitmodules || die
 	rmdir "${S}/externals/"{dynarmic,mbedtls,sirit,cpp-jwt,SDL} || die
-	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
+	mv "${WORKDIR}/dynarmic-${_DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
 	mv "${WORKDIR}/cpp-jwt-${CPP_JWT_SHA}" "${S}/externals/cpp-jwt" || die
 	mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
@@ -94,20 +95,20 @@ src_configure() {
 		-DBUILD_FULLNAME="${MY_PV}"
 		-DBUILD_SHARED_LIBS=OFF
 		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=OFF
-		-DENABLE_CUBEB=$(usex cubeb)
-		-DENABLE_WEB_SERVICE=$(usex web-service)
+		"-DENABLE_CUBEB=$(usex cubeb)"
+		"-DENABLE_WEB_SERVICE=$(usex web-service)"
 		-DGIT_BRANCH="${PN}"
 		-DGIT_DESC="${PV}"
 		-DGIT_REV="${PV}"
 		-DSIRIT_USE_SYSTEM_SPIRV_HEADERS=ON
 		-DUSE_DISCORD_PRESENCE=OFF
 		-DYUZU_DOWNLOAD_TIME_ZONE_DATA=OFF
-		-DYUZU_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)
+		"-DYUZU_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)"
 		-DYUZU_TESTS=OFF
 		-DYUZU_USE_EXTERNAL_SDL2=ON
 		-DYUZU_USE_EXTERNAL_VULKAN_HEADERS=OFF
 		-DYUZU_USE_QT_MULTIMEDIA=ON
-		-DYUZU_USE_QT_WEB_ENGINE=$(usex webengine)
+		"-DYUZU_USE_QT_WEB_ENGINE=$(usex webengine)"
 		-DYUZU_USE_FASTER_LD=OFF
 		-Wno-dev
 	)
