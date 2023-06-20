@@ -27,7 +27,7 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --libdir=/usr/$(get_libdir)/vapoursynth
+	econf "--libdir=/usr/$(get_libdir)/vapoursynth"
 }
 
 src_compile() {
