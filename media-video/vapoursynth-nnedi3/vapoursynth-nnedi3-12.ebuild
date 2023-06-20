@@ -25,6 +25,6 @@ src_prepare () {
 
 src_install () {
 	default
-	dosym /usr/lib/libnnedi3.so /usr/lib/vapoursynth/libnnedi3.so
+	dosym -r /usr/lib/libnnedi3.so /usr/lib/vapoursynth/libnnedi3.so
 	einstalldocs
 }
