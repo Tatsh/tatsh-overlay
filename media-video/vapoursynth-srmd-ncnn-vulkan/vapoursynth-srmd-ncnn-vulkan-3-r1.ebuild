@@ -30,7 +30,7 @@ src_unpack() {
 			7z -bb0 -y -bd x "${DISTDIR}/${archive}"
 			;;
 			*)
-			unpack ${archive}
+			unpack "${archive}"
 			;;
 		esac
 	done
