@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{9,10,11} )
+PYTHON_COMPAT=( python3_{10..12} )
 PYTHON_REQ_USE="ncurses,readline"
 
 inherit flag-o-matic pax-utils python-r1 toolchain-funcs xdg-utils
@@ -55,6 +55,7 @@ DEPEND="dev-libs/glib
 	pulseaudio? ( media-libs/libpulse )
 	xattr? ( sys-apps/attr )"
 RDEPEND="${DEPEND} ${PYTHON_DEPS}"
+# shellcheck disable=SC2016
 BDEPEND="dev-lang/perl
 	dev-util/meson
 	dev-util/ninja
@@ -64,7 +65,7 @@ BDEPEND="dev-lang/perl
 	$(python_gen_any_dep 'dev-python/pyyaml[${PYTHON_USEDEP}]')
 	doc? (
 			dev-python/sphinx
-			dev-python/sphinx_rtd_theme
+			dev-python/sphinx-rtd-theme
 	)
 	test? (
 			dev-libs/glib[utils]
@@ -111,20 +112,20 @@ src_configure() {
 	use pulseaudio && audio_drv_list+=( pa )
 	use sdl && audio_drv_list+=( sdl )
 	local other_opts=(
-		$(use_enable debug debug-info)
-		$(use_enable debug debug-tcg)
-		$(use_enable doc docs)
-		$(use_enable nls gettext)
-		$(use_enable xattr attr)
+		"$(use_enable debug debug-info)"
+		"$(use_enable debug debug-tcg)"
+		"$(use_enable doc docs)"
+		"$(use_enable nls gettext)"
+		"$(use_enable xattr attr)"
 		--cc="$(tc-getCC)"
 		--cxx="$(tc-getCXX)"
 		--disable-bsd-user
 		--disable-containers # bug #732972
 		--disable-guest-agent
 		--disable-tcg-interpreter
-		--docdir=/usr/share/doc/${PF}/html
+		"--docdir=/usr/share/doc/${PF}/html"
 		--host-cc="$(tc-getBUILD_CC)"
-		--libdir=/usr/$(get_libdir)
+		"--libdir=/usr/$(get_libdir)"
 		# From qemu ebuild
 		# We support gnutls/nettle for crypto operations.  It is possible
 		# to use gcrypt when gnutls/nettle are disabled (but not when they
@@ -136,21 +137,21 @@ src_configure() {
 		--enable-libxml2
 	)
 	econf \
-		$(use_enable aio linux-aio) \
-		$(use_enable cpu_flags_x86_avx2 avx2) \
-		$(use_enable cpu_flags_x86_avx512f avx512f) \
+		"$(use_enable aio linux-aio)" \
+		"$(use_enable cpu_flags_x86_avx2 avx2)" \
+		"$(use_enable cpu_flags_x86_avx512f avx512f)" \
 		${debug_flag} \
-		$(use_enable io-uring linux-io-uring) \
-		$(use_enable malloc-trim) \
-		$(use_enable membarrier) \
-		$(use_enable test tests) \
+		"$(use_enable io-uring linux-io-uring)" \
+		"$(use_enable malloc-trim)" \
+		"$(use_enable membarrier)" \
+		"$(use_enable test tests)" \
 		"--audio-drv-list=${audio_drv_list[*]}" \
 		--disable-blobs \
 		--disable-qom-cast-debug \
 		--disable-strip \
 		--disable-werror \
 		--enable-slirp=system \
-		"--extra-cflags=-DXBOX=1 ${build_cflags[@]} -Wno-error=redundant-decls ${CFLAGS}" \
+		"--extra-cflags=-DXBOX=1 ${build_cflags[*]} -Wno-error=redundant-decls ${CFLAGS}" \
 		--target-list=xemu \
 		--with-git-submodules=ignore \
 		--with-xxhash=system \
@@ -163,7 +164,7 @@ src_compile() {
 }
 
 src_test() {
-	cd "${S}/build"
+	cd "${S}/build" || die
 	pax-mark m "${PN}"* #515550
 	emake check
 }
