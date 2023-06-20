@@ -68,7 +68,7 @@ _mpv-plugin_set_globals() {
 			die "Invalid USE_MPV=${USE_MPV}"
 			;;
 	esac
-	if [ ${MPV_REQ_USE} ]; then
+	if [ "${MPV_REQ_USE}" ]; then
 		MPV_PKG_DEP+="[${MPV_REQ_USE}]"
 	fi
 
@@ -106,7 +106,8 @@ mpv-plugin_src_install() {
 		die "${ECLASS}: no files specified in MPV_PLUGIN_FILES, cannot install"
 	fi
 
-	local MPV_INSTALL_DIR="/usr/$(get_libdir)/mpv"
+	local MPV_INSTALL_DIR
+	MPV_INSTALL_DIR="/usr/$(get_libdir)/mpv"
 	if _mpv-plugin_has_main; then
 		MPV_INSTALL_DIR+="/${PN}"
 	fi
