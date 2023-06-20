@@ -37,55 +37,55 @@ src_prepare() {
 			advanced/Scripts/*.sh \
 			advanced/Templates/*.sh \
 			advanced/Scripts/database_migration/*.sh \
-			advanced/Templates/${PN}.cron \
-			advanced/01-${PN}.conf \
+			"advanced/Templates/${PN}.cron" \
+			"advanced/01-${PN}.conf" \
 			advanced/06-rfc6761.conf \
 			advanced/Templates/gravity_copy.sql \
-			advanced/Templates/${PN}-FTL.service \
+			"advanced/Templates/${PN}-FTL.service" \
 			advanced/Templates/logrotate || die
 }
 
 src_install() {
 	insinto /etc/logrotate.d
-	newins advanced/Templates/logrotate ${PN}
+	newins advanced/Templates/logrotate "${PN}"
 	rm advanced/Templates/logrotate
 
-	exeinto /usr/$(get_libdir)/${PN}
+	exeinto "/usr/$(get_libdir)/${PN}"
 	doexe gravity.sh
 	doexe advanced/Scripts/*.sh
-	exeinto /usr/$(get_libdir)/${PN}/database_migration
+	exeinto "/usr/$(get_libdir)/${PN}/database_migration"
 	doexe advanced/Scripts/database_migration/*.sh
-	insinto /usr/$(get_libdir)/${PN}
+	insinto "/usr/$(get_libdir)/${PN}"
 	doins advanced/Scripts/COL_TABLE
-	insinto /usr/$(get_libdir)/${PN}/database_migration/gravity
+	insinto "/usr/$(get_libdir)/${PN}/database_migration/gravity"
 	doins advanced/Scripts/database_migration/gravity/*
 
-	insinto /usr/$(get_libdir)/${PN}/Templates
+	insinto "/usr/$(get_libdir)/${PN}/Templates"
 	doins -r advanced/Templates/*
 
 	insinto /etc
 	echo "conf-dir=${EPREFIX}/etc/pihole/dnsmasq.d" > dnsmasq.conf
 	doins dnsmasq.conf
-	insinto /etc/${PN}/dnsmasq.d
-	doins advanced/01-${PN}.conf advanced/06-rfc6761.conf
+	insinto "/etc/${PN}/dnsmasq.d"
+	doins "advanced/01-${PN}.conf" advanced/06-rfc6761.conf
 
-	dobashcomp advanced/bash-completion/${PN}
+	dobashcomp "advanced/bash-completion/${PN}"
 
 	if use cron; then
 		insinto /etc/cron.d
-		newins advanced/Templates/${PN}.cron ${PN}
+		newins "advanced/Templates/${PN}.cron" "${PN}"
 	fi
 
-	doman manpages/${PN}*
+	doman "manpages/${PN}"*
 	einstalldocs
 
-	dobin ${PN}
+	dobin "${PN}"
 
 	# make sure the working directory exists
 	diropts -m0755
-	keepdir /var/lib/${PN}
+	keepdir "/var/lib/${PN}"
 
-	insinto /var/lib/${PN}
+	insinto "/var/lib/${PN}"
 	doins "${FILESDIR}/setupVars.conf"
 
 	echo "CONFIG_PROTECT=\"${EPREFIX}/var/lib/${PN}\"" > "${T}/90${PN}"
