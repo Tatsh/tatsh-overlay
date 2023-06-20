@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake desktop flag-o-matic wrapper
+inherit cmake desktop wrapper
 
 DESCRIPTION="Experimental PlayStation Vita emulator."
 HOMEPAGE="https://vita3k.org https://github.com/Vita3K/Vita3K"
@@ -11,7 +11,7 @@ SHA="b28657ac9721c80c087d87f44595fa3284c7472c"
 BETTER_ENUMS_SHA="c35576bed0295689540b39873126129adfa0b4c8"
 CRYPTO_ALGORITHMS_SHA="cb9ea3fada60f9b01e9133d7db4d3e08171d0565"
 DLMALLOC_SHA="e98f4ee160380d7c39dc1f04e7488bcf0770d391"
-DYNARMIC_SHA="83adf70ded4ea5642fb35da1e2cdc73e898316e7"
+_DYNARMIC_SHA="83adf70ded4ea5642fb35da1e2cdc73e898316e7"
 FMT_SHA="a33701196adfad74917046096bf5a2aa0ab0bb50"
 GLSLANG_SHA="ca8d07d0bc1c6390b83915700439fa7719de6a2a"
 IMGUI_SHA="9aae45eb4a05a5a1f96be1ef37eb503a12ceb889"
@@ -46,7 +46,7 @@ SRC_URI="https://github.com/Vita3K/Vita3K/archive/${SHA}.tar.gz -> ${P}-${SHA:0:
 	https://github.com/nothings/stb/archive/${STB_SHA}.tar.gz -> stb-${SHA:0:7}.tar.gz
 	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> imgui-${IMGUI_SHA:0:7}.tar.gz
 	https://github.com/ocornut/imgui_club/archive/${IMGUI_CLUB_SHA}.tar.gz -> imgui-club-${IMGUI_CLUB_SHA:0:7}.tar.gz
-	https://github.com/Vita3K/dynarmic/archive/${DYNARMIC_SHA}.tar.gz -> dynarmic-${DYNARMIC_SHA:0:7}.tar.gz
+	https://github.com/Vita3K/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/KorewaWatchful/libb64/archive/${LIBB64_SHA}.tar.gz -> libb64-${LIBB64_SHA:0:7}.tar.gz
 	https://github.com/vitasdk/vita-toolchain/archive/${VITA_TOOLCHAIN_SHA}.tar.gz -> vita-toolchain-${VITA_TOOLCHAIN_SHA:0:7}.tar.gz"
 
@@ -89,7 +89,7 @@ src_prepare() {
 	mv "${WORKDIR}/better-enums-${BETTER_ENUMS_SHA}" external/better-enums || die
 	mv "${WORKDIR}/crypto-algorithms-${CRYPTO_ALGORITHMS_SHA}" external/crypto-algorithms || die
 	mv "${WORKDIR}/dlmalloc-${DLMALLOC_SHA}" external/dlmalloc || die
-	mv "${WORKDIR}/dynarmic-${DYNARMIC_SHA}" external/dynarmic || die
+	mv "${WORKDIR}/dynarmic-${_DYNARMIC_SHA}" external/dynarmic || die
 	mv "${WORKDIR}/fmt-${FMT_SHA}" external/fmt || die
 	mv "${WORKDIR}/glslang-${GLSLANG_SHA}" external/glslang || die
 	mv "${WORKDIR}/imgui-${IMGUI_SHA}" external/imgui || die
