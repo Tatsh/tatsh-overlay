@@ -32,9 +32,12 @@ PATCHES=(
 
 pkg_setup() {
 	webapp_pkg_setup
-	local -r ph_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/pi-hole/releases/latest' || die; } | jq -r .tag_name)
-	local -r web_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/AdminLTE/releases/latest' || die; } | jq -r .tag_name)
-	local -r ftl_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/FTL/releases/latest' || die; } | jq -r .tag_name)
+	local -r ph_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/pi-hole/releases/latest' || die; } |
+		jq -r .tag_name)
+	local -r web_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/AdminLTE/releases/latest' || die; } |
+		jq -r .tag_name)
+	local -r ftl_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/FTL/releases/latest' || die; } |
+		jq -r .tag_name)
 	{ echo "${ph_ver} ${web_ver} ${ftl_ver}" > "${T}/GitHubVersions"; } || die
 }
 
