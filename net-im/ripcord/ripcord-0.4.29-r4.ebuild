@@ -43,9 +43,9 @@ src_unpack() {
 src_install() {
 	cd "${WORKDIR}/squashfs-root" || die "Failed to cd"
 	sed -r -e 's/libsodium\.so\.18/libsodium.so.23/g' -i Ripcord || die "Failed to patch"
-	exeinto /opt/${PN}
+	exeinto "/opt/${PN}"
 	doexe "R${PN:1}"
-	insinto /opt/${PN}
+	insinto "/opt/${PN}"
 	doins twemoji.ripdb
 	insinto /usr/share/qt5/translations/
 	doins translations/"${PN}_en.qm"
