@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{10..12} )
 inherit python-single-r1
 
 DESCRIPTION="Firmware update utility for the RetroTINK family of retro gaming devices."
@@ -16,9 +16,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-RDEPEND="${PYTHON_DEPS}
-	$(python_gen_cond_dep 'dev-python/pyserial[${PYTHON_USEDEP}]')"
-DEPEND="${RDPEND}"
+# shellcheck disable=SC2016
+RDEPEND="${PYTHON_DEPS} $(python_gen_cond_dep 'dev-python/pyserial[${PYTHON_USEDEP}]')"
+DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${PN}-${SHA}"
 
