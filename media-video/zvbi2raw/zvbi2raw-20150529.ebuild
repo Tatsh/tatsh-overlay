@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="A quick-and-dirty tool for capturing vertical blanking interval data using libzvbi."
+DESCRIPTION="A quick-and-dirty tool for capturing VBI data using libzvbi."
 HOMEPAGE="https://github.com/codeman38/zvbi2raw"
 SHA="765156d3c54cafd26d696f81cfa78fc12023a7bf"
 SRC_URI="https://github.com/codeman38/zvbi2raw/archive/${SHA}.tar.gz -> ${P}.tar.gz"
