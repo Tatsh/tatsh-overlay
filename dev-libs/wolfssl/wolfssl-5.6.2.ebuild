@@ -11,7 +11,7 @@ SRC_URI="https://www.wolfssl.com/${P}.zip"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-IUSE="debug cpu_flags_x86_aes sniffer"
+IUSE="debug cpu_flags_x86_aes sniffer +writedup"
 
 DEPEND="sniffer? ( net-libs/libpcap )"
 RDEPEND="${DEPEND}"
@@ -24,9 +24,9 @@ src_prepare() {
 
 src_configure() {
 	econf \
-		$(use_enable cpu_flags_x86_aes aesni) \
-		$(use_enable sniffer) \
-		$(use_enable debug) \
+		"$(use_enable cpu_flags_x86_aes aesni)" \
+		"$(use_enable sniffer)" \
+		"$(use_enable debug)" \
 		--enable-distro \
-		--enable-writedup # Needed for RPCS3
+		"$(use_enable writedup)"
 }

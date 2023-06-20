@@ -11,5 +11,6 @@
 	<use>
 		<flag name="debug">Debug support</flag>
 		<flag name="sniffer">Enable sniffer via libpcap</flag>
+		<flag name="writedup">Enable write duplication of WOLFSSL objects</flag>
 	</use>
 </pkgmetadata>
