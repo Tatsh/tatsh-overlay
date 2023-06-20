@@ -896,11 +896,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 src_compile() {
-	go build ./cmd/${PN}
+	go build "./cmd/${PN}"
 }
 
 src_install() {
-	dobin ${PN}
+	dobin "${PN}"
 	einstalldocs
 }
 
