@@ -30,7 +30,7 @@ src_unpack() {
 			7z -bb0 -y -bd x "${DISTDIR}/${archive}"
 			;;
 			*)
-			unpack ${archive}
+			unpack "${archive}"
 			;;
 		esac
 	done
@@ -45,6 +45,6 @@ src_configure() {
 
 src_install() {
 	cmake_src_install
-	insinto /usr/$(get_libdir)/vapoursynth
+	insinto "/usr/$(get_libdir)/vapoursynth"
 	doins -r "${WORKDIR}/models"-{DF2K,DF2K_JPEG}
 }
