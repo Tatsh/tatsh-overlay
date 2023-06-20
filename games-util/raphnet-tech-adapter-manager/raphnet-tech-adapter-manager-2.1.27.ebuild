@@ -35,7 +35,7 @@ src_prepare() {
 }
 
 src_compile() {
-	cd src
+	cd src || die
 	emake PLATFORM_CFLAGS="${CFLAGS}"
 }
 
@@ -47,7 +47,7 @@ src_install() {
 	udev_dorules scripts/*.rules
 	einstalldocs
 	if use firmware; then
-		insinto /usr/share/${PN}
+		insinto "/usr/share/${PN}"
 		doins -r firmwares
 	fi
 }

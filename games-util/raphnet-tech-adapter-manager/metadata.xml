@@ -5,6 +5,9 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+	<upstream>
+		<remote-id type="github">raphnet/gcn64tools</remote-id>
+	</upstream>
 	<use>
 		<flag name="firmware">Install firmware</flag>
 	</use>
