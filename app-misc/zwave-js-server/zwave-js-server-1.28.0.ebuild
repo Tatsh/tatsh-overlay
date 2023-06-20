@@ -175,7 +175,7 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
-LICENSE="0BSD Apache-2.0 BSD BSD-2-Clause BSD-3-Clause ISC MIT"
+LICENSE="0BSD Apache-2.0 BSD BSD-2 ISC MIT"
 KEYWORDS="~amd64"
 
 S="${WORKDIR}"
