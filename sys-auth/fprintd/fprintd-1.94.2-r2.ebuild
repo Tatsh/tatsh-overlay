@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{10..12} )
 inherit meson python-single-r1 systemd
 
 DESCRIPTION="D-Bus service to access fingerprint readers"
@@ -19,14 +19,14 @@ REQUIRED_USE="systemd? ( pam )
 	test? ( ${PYTHON_REQUIRED_USE} )"
 RESTRICT="!test? ( test )"
 
-RDEPEND="dev-libs/dbus-glib
+RDEPEND="${PYTHON_DEPS}
+	dev-libs/dbus-glib
 	dev-libs/glib:2
 	>=sys-auth/libfprint-${PV}
 	sys-auth/polkit
 	systemd? ( sys-apps/systemd )
 	pam? ( sys-libs/pam )"
 DEPEND="${RDEPEND}
-${PYTHON_DEPS}
 	dev-util/intltool
 	gtk-doc? (
 		dev-util/gtk-doc
@@ -56,9 +56,9 @@ src_prepare() {
 
 src_configure() {
 	local emesonargs=(
-		-Dsystemd_system_unit_dir=$(systemd_get_systemunitdir)
+		"-Dsystemd_system_unit_dir=$(systemd_get_systemunitdir)"
 		-Dman=true
-		-Dgtk_doc=$(usex gtk-doc true false)
+		"-Dgtk_doc=$(usex gtk-doc true false)"
 	)
 	meson_src_configure
 }
@@ -69,9 +69,9 @@ src_install() {
 	find "${D}" -name "*.la" -delete || die
 	einstalldocs
 	if use gtk-doc; then
-		insinto /usr/share/doc/${PF}/html
+		insinto "/usr/share/doc/${PF}/html"
 		doins doc/{fprintd-docs,version}.xml
-		insinto /usr/share/doc/${PF}/html/dbus
+		insinto "/usr/share/doc/${PF}/html/dbus"
 		doins doc/dbus/net.reactivated.Fprint.{Device,Manager}.ref.xml
 	fi
 }
