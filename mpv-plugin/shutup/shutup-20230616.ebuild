@@ -22,5 +22,9 @@ MPV_PLUGIN_FILES=( "${PN}.so" )
 S="${WORKDIR}/dotfiles-${SHA}/.config/mpv/scripts"
 
 src_compile() {
-	"$(tc-getCC)" -o "${PN}.so" "${PN}.c" ${CFLAGS} $(pkg-config --cflags mpv) -shared -fPIC $LDFLAGS || die
+	read -ra cflags <<< "${CFLAGS-}"
+	read -ra ldflags <<< "${LDFLAGS-}"
+	mapfile -t mpv_cflags < <(pkg-config --cflags mpv)
+	"$(tc-getCC)" -o "${PN}.so" "${PN}.c" "${cflags[@]}" "${mpv_cflags[@]}" -shared -fPIC \
+		"${ldflags[@]}" || die
 }
