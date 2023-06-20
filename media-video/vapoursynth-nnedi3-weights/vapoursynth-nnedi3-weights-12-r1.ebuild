@@ -14,7 +14,7 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 S="${WORKDIR}/${P/-weights}"
 
 src_install () {
-	dodoc gpl2.txt readme.rst
-	insinto /usr/share/${PN}
+	dodoc readme.rst
+	insinto "/usr/share/${PN}"
 	doins src/nnedi3_weights.bin
 }
