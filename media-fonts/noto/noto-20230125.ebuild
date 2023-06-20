@@ -44,13 +44,13 @@ FONT_CONF=(
 )
 
 src_prepare() {
-	! use mono && find -iname '*mono*.ttf' -delete
-	! use hieroglyphs && find -iname '*hieroglyphs*.ttf' -delete
+	! use mono && find . -iname '*mono*.ttf' -delete
+	! use hieroglyphs && find . -iname '*hieroglyphs*.ttf' -delete
 	! use l10n_pa && find . -iname '*mahajani*.ttf' -delete
 	! use l10n_mr && find . -iname '*modi*.ttf' -delete
 	! use l10n_skr && find . -iname '*multani*.ttf' -delete
-	! use old-arabian && find -iname '*old*arabian*.ttf' -delete
-	! use pau-cin-hau && find -iname '*paucinhau*.ttf' -delete
+	! use old-arabian && find . -iname '*old*arabian*.ttf' -delete
+	! use pau-cin-hau && find . -iname '*paucinhau*.ttf' -delete
 	! use phagspa && find . -iname '*phagspa*.ttf' -delete
 	! use runic && find . -iname '*runic*.ttf' -delete
 	! use symbols && find . -iname '*symbols*.ttf' -delete
