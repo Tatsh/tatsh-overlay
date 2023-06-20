@@ -22,10 +22,10 @@ src_compile() {
 }
 
 src_install() {
-	insinto /usr/share/${PN}
+	insinto "/usr/share/${PN}"
 	doins radar-base.sh
-	exeinto /usr/share/${PN}
-	doexe ${PN} prompt.zsh prompt.bash fetch.sh
-	dosym "${EPREFIX}/usr/share/${PN}/${PN}" /usr/bin/${PN}
+	exeinto "/usr/share/${PN}"
+	doexe "${PN}" prompt.zsh prompt.bash fetch.sh
+	dosym -r "${EPREFIX}/usr/share/${PN}/${PN}" "/usr/bin/${PN}"
 	einstalldocs
 }
