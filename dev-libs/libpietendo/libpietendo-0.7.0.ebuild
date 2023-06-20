@@ -23,6 +23,6 @@ src_install() {
 	doins include/pietendo.h
 	insinto /usr/include/pietendo
 	doins -r include/pietendo/*
-	dolib.a bin/${PN}.a
+	dolib.a "bin/${PN}.a"
 	einstalldocs
 }
