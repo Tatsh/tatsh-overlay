@@ -16,6 +16,7 @@ KEYWORDS="~amd64"
 
 DEPEND="dev-libs/ncnn media-libs/vulkan-loader"
 RDEPEND="${DEPEND}"
+BDEPEND="app-arch/unzip"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-system-deps.patch" )
 
