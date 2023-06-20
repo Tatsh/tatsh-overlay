@@ -16,6 +16,6 @@ S="${WORKDIR}/${PN}-${SHA}"
 
 src_install() {
 	insinto /usr/share/org.kde.syntax-highlighting/syntax
-	doins *.xml
+	doins ./*.xml
 	einstalldocs
 }
