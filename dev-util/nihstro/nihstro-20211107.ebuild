@@ -21,8 +21,8 @@ S="${WORKDIR}/${PN}-${SHA}"
 DOCS=( Readme.md docs/instruction_set.md docs/nihcode_spec.md )
 
 src_install() {
-	insinto /usr/include/${PN}
-	doins -r include/${PN}/*
+	insinto "/usr/include/${PN}"
+	doins -r "include/${PN}/"*
 	einstalldocs
 	cmake_src_install
 }
