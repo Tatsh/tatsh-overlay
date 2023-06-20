@@ -41,18 +41,20 @@ src_prepare() {
 	# Other interesting variables:
 	# - FINAL (which would enable USE_MY_DOCUMENTS)
 	# - PC_PARTICLE
-	echo '#define BIND_VEHICLE_FIREWEAPON' >> src/core/config.h
-	echo '#define NEW_WALK_AROUND_ALGORITHM' >> src/core/config.h
-	echo '#define PEDS_REPORT_CRIMES_ON_PHONE' >> src/core/config.h
-	echo '#define SIMPLIER_MISSIONS' >> src/core/config.h
-	echo '#define VC_PED_PORTS' >> src/core/config.h
+	cat << "EOF" >> src/core/config.h
+#define BIND_VEHICLE_FIREWEAPON
+#define NEW_WALK_AROUND_ALGORITHM
+#define PEDS_REPORT_CRIMES_ON_PHONE
+#define SIMPLIER_MISSIONS
+#define VC_PED_PORTS
+EOF
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-DRELCS_WITH_ASAN=$(usex sanitizer)
-		-DRELCS_WITH_LIBSNDFILE=$(usex sndfile)
-		-DRELCS_WITH_OPUS=$(usex opus)
+		"-DRELCS_WITH_ASAN=$(usex sanitizer)"
+		"-DRELCS_WITH_LIBSNDFILE=$(usex sndfile)"
+		"-DRELCS_WITH_OPUS=$(usex opus)"
 		-DLIBRW_PLATFORM=GL3
 		-DBUILD_SHARED_LIBS=OFF
 		-DLIBRW_TOOLS=OFF
@@ -66,6 +68,6 @@ src_configure() {
 
 src_install() {
 	cmake_src_install
-	dosym ../share/${PN}/reLCS /usr/bin/reLCS
+	dosym "../share/${PN}/reLCS" /usr/bin/reLCS
 	einstalldocs
 }
