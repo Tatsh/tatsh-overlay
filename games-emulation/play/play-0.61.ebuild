@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit cmake xdg
+inherit cmake flag-o-matic xdg
 
 DESCRIPTION="PlayStation 2 emulator."
 HOMEPAGE="http://purei.org/ https://github.com/jpd002/Play-"
@@ -77,9 +77,9 @@ src_configure() {
 	# -DENABLE_AMAZON_S3=$(usex s3) currently broken, must be left ON
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
-		-DBUILD_LIBRETRO_CORE=$(usex libretro)
-		-DUSE_GSH_VULKAN=$(usex vulkan)
-		-DPROJECT_Version=${PV}
+		"-DBUILD_LIBRETRO_CORE=$(usex libretro)"
+		"-DUSE_GSH_VULKAN=$(usex vulkan)"
+		"-DPROJECT_Version=${PV}"
 		-Wno-dev
 	)
 	# https://github.com/jpd002/Play-/issues/911
@@ -90,7 +90,7 @@ src_configure() {
 src_install() {
 	cmake_src_install
 	if use libretro; then
-		insinto /usr/$(get_libdir)/libretro
+		insinto "/usr/$(get_libdir)/libretro"
 		doins "${BUILD_DIR}/Source/ui_libretro/play_libretro.so"
 	fi
 }
