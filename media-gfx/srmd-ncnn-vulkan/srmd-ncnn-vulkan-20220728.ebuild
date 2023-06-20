@@ -33,14 +33,14 @@ src_configure() {
 		-DUSE_SYSTEM_NCNN=ON
 		-DUSE_SYSTEM_WEBP=ON
 		"-DGLSLANG_TARGET_DIR=${EPREFIX}/usr/lib64/cmake"
-		$(cmake_use_find_package openmp OpenMP)
+		"$(cmake_use_find_package openmp OpenMP)"
 	)
 	cmake_src_configure
 }
 
 src_install() {
 	dobin "${BUILD_DIR}/${PN}"
-	insinto /usr/share/${PN}
+	insinto "/usr/share/${PN}"
 	doins -r models/models-*
 	einstalldocs
 }
