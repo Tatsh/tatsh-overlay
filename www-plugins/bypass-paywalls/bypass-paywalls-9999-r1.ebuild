@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Bypass Paywalls browser extension."
 HOMEPAGE="https://github.com/iamadamdev/bypass-paywalls-chrome"
-IUSE="chrome chromium"
+IUSE="+chrome chromium"
 
 LICENSE="all-rights-reserved"
 SLOT="0"
