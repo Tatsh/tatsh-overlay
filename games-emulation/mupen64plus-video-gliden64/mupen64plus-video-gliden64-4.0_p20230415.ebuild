@@ -41,7 +41,7 @@ src_configure() {
 }
 
 src_install() {
-	insinto /usr/$(get_libdir)/mupen64plus
+	insinto "/usr/$(get_libdir)/mupen64plus"
 	doins "${BUILD_DIR}/plugin/Release/mupen64plus-video-GLideN64.so"
 	einstalldocs
 }
