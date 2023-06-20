@@ -21,7 +21,7 @@ BDEPEND="dev-qt/qtcore:5
 
 MY_PN="${PN#*-}"
 
-MPV_PLUGIN_FILES=( ${MY_PN}.so )
+MPV_PLUGIN_FILES=( "${MY_PN}.so" )
 
 S="${WORKDIR}/${PN}-${SHA}"
 
