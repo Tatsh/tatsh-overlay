@@ -3,13 +3,13 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..11} )
+PYTHON_COMPAT=( python3_{10..12} )
 inherit python-r1 yarn
 
 DESCRIPTION="Node.js native addon build tool"
 HOMEPAGE="https://www.npmjs.com/package/node-gyp"
 YARN_PKGS=(
-	${P}
+	"${P}"
 	@gar/promisify-1.1.3
 	@npmcli/fs-2.1.0
 	@npmcli/move-file-2.0.0
@@ -103,8 +103,9 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-LICENSE="BSD-2-Clause ISC MIT"
+LICENSE="BSD-2 ISC MIT"
 KEYWORDS="~amd64"
 
 BDEPEND="sys-apps/yarn"
