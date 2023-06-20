@@ -26,14 +26,20 @@ EXPORT_FUNCTIONS src_install pkg_postinst
 #
 # Example:
 # @CODE@
+#
 # MPV_REQ_USE="opengl,vulkan"
+#
 # @CODE@
 
-if [[ ! ${_MPV_SHADER_ECLASS} ]]; then
+if [[ -z ${_MPV_SHADER_ECLASS} ]]; then
+	# @FUNCTION: _mpv-shader_set_globals
+	# @INTERNAL
+	# @DESCRIPTION:
+	# Sets globals for an mpv shader ebuild.
 	_mpv-shader_set_globals() {
 		local mpv_pkg_dep
 		mpv_pkg_dep="media-video/mpv"
-		if [ ${MPV_REQ_USE} ]; then
+		if [ "${MPV_REQ_USE}" ]; then
 			mpv_pkg_dep+="[${MPV_REQ_USE}]"
 		else
 			mpv_pkg_dep+="[opengl]"
