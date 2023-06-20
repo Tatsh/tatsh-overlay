@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~ppc64"
 RDEPEND="media-video/lsdvd mpv-plugin/mpv-scroll-list"
 
 MPV_PLUGIN_FILES=(
-	${PN:4}.lua
+	"${PN:4}.lua"
 )
 
 S="${WORKDIR}/${PN}-${SHA}"
