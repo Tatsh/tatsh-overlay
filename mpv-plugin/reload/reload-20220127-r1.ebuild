@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
 
 MPV_PLUGIN_FILES=(
-	${PN}.lua
+	"${PN}.lua"
 )
 
 S="${WORKDIR}/mpv-${PN}-${SHA}"
