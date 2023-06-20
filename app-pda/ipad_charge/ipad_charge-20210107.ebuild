@@ -19,12 +19,13 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${PN}-${SHA}"
 
 src_prepare() {
+	# shellcheck disable=SC2016
 	sed -r -e 's/gcc -Wall/$(CC) -Wall $(CFLAGS)/' -i Makefile
 	default
 }
 
 src_install() {
 	dobin ipad_charge
-	udev_dorules 95-${PN}.rules
+	udev_dorules "95-${PN}.rules"
 	einstalldocs
 }
