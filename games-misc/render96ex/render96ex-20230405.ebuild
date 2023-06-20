@@ -30,7 +30,7 @@ IUSE="+goddard
 	discord
 	eu
 	jp
-	us"
+	+us"
 REQUIRED_USE="|| ( eu jp us )"
 
 DEPEND="media-libs/glew:= media-libs/libsdl2 media-libs/libglvnd[X]"
