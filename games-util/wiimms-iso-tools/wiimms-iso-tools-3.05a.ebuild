@@ -22,6 +22,7 @@ DOCS=( ../README.md )
 S="${WORKDIR}/${PN}-${SHA}/project"
 
 src_prepare() {
+	# shellcheck disable=SC2016
 	sed -re 's/@\$\(CC\)/$(CC)/g' -e 's/-O3\b//g' -i Makefile
 	default
 }
