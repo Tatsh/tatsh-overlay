@@ -21,7 +21,7 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs=(
-		-DWITH_EXAMPLES=$(usex tools)
+		"-DWITH_EXAMPLES=$(usex tools)"
 	)
 	cmake_src_configure
 }
