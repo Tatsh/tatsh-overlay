@@ -30,7 +30,7 @@ src_unpack() {
 			7z -bb0 -y -bd x "${DISTDIR}/${archive}"
 			;;
 			*)
-			unpack ${archive}
+			unpack "${archive}"
 			;;
 		esac
 	done
@@ -38,6 +38,6 @@ src_unpack() {
 
 src_install() {
 	cmake_src_install
-	insinto /usr/$(get_libdir)/vapoursynth
+	insinto "/usr/$(get_libdir)/vapoursynth"
 	doins -r "${WORKDIR}/models"-{cunet,upconv_7_anime_style_art_rgb,upconv_7_photo}
 }
