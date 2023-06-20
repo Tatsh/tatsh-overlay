@@ -23,14 +23,14 @@ src_prepare() {
 }
 
 src_compile() {
-	emake CCMD=$(tc-getCC) \
+	emake CCMD="$(tc-getCC)" \
 		OUTPUT_PATH="$(pwd -P)/" \
 		CXXFLAGS="$CXXFLAGS" \
 		LDFLAGS="$LDFLAGS"
 }
 
 src_install() {
-	dobin ${PN}
+	dobin "${PN}"
 	einstalldocs
 	if use udev; then
 		insinto /lib/udev/rules.d
