@@ -44,24 +44,26 @@ src_prepare() {
 	# Other interesting variables:
 	# - FINAL (which would enable USE_MY_DOCUMENTS)
 	# - PC_PARTICLE
-	echo '#define BIND_VEHICLE_FIREWEAPON' >> src/core/config.h
-	echo '#define NEW_WALK_AROUND_ALGORITHM' >> src/core/config.h
-	echo '#define PEDS_REPORT_CRIMES_ON_PHONE' >> src/core/config.h
-	echo '#define SIMPLIER_MISSIONS' >> src/core/config.h
-	echo '#define VC_PED_PORTS' >> src/core/config.h
-	echo '#define XDG_ROOT' >> src/core/config.h
+	cat << "EOF" >> src/core/config.h
+#define BIND_VEHICLE_FIREWEAPON
+#define NEW_WALK_AROUND_ALGORITHM
+#define PEDS_REPORT_CRIMES_ON_PHONE
+#define SIMPLIER_MISSIONS
+#define VC_PED_PORTS
+#define XDG_ROOT
+EOF
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-DRE3_WITH_ASAN=$(usex sanitizer)
-		-DRE3_WITH_OPUS=$(usex opus)
+		"-DREVC_WITH_ASAN=$(usex sanitizer)"
+		"-DREVC_WITH_LIBSNDFILE=$(usex sndfile)"
+		"-DREVC_WITH_OPUS=$(usex opus)"
 		-DLIBRW_PLATFORM=GL3
 		-DBUILD_SHARED_LIBS=OFF
 		-DLIBRW_TOOLS=OFF
 		-DRE3_AUDIO=OAL
 		-DRE3_VENDORED_LIBRW=ON
-		-DRE3_WITH_LIBSNDFILE=$(usex sndfile)
 		-DRE3_INSTALL=ON
 		"-DCMAKE_INSTALL_PREFIX=${EPREFIX}/usr/share/${PN}"
 	)
@@ -71,7 +73,7 @@ src_configure() {
 src_install() {
 	cmake_src_install
 	einstalldocs
-	dosym ../share/${PN}/${PN} /usr/bin/re3
+	dosym ."./share/${PN}/${PN}" /usr/bin/re3
 }
 
 pkg_postinst() {
@@ -79,6 +81,7 @@ pkg_postinst() {
 	einfo "Store your GTA III game files from an installation in the"
 	einfo "following directory (create if necessary):"
 	einfo
+	# shellcheck disable=SC2088
 	einfo "~/.local/share/re3"
 	einfo
 }
