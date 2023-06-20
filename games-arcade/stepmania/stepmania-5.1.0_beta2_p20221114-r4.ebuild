@@ -46,7 +46,6 @@ DEPEND="X? ( x11-libs/libX11 )
 PATCHES=( "${FILESDIR}/${PN}-add-ppc64-detection.patch" )
 
 S="${WORKDIR}/${PN}-${SHA}"
-CMAKE_MAKEFILE_GENERATOR=ninja
 
 src_prepare() {
 	einfo 'Removing useless instructions.txt files ...'
@@ -74,20 +73,20 @@ src_configure() {
 		-DWITH_SYSTEM_FFMPEG=yes
 		-DWITH_FULL_RELEASE=yes
 		-DWITH_PORTABLE_TOMCRYPT=no
-		-DWITH_ALSA=$(usex alsa)
-		-DWITH_PULSEAUDIO=$(usex pulseaudio)
-		-DWITH_CRASH_HANDLER=$(usex crash-handler)
-		-DWITH_GLES2=$(usex gles2)
-		-DWITH_GPL_LIBS=$(usex gpl)
-		-DWITH_JPEG=$(usex jpeg)
-		-DWITH_MP3=$(usex mp3)
-		-DWITH_OGG=$(usex ogg)
-		-DWITH_WAV=$(usex wav)
-		-DWITH_XINERAMA=$(usex xinerama)
-		-DWITH_MINIMAID=$(usex minimaid)
-		-DWITH_PARALLEL_PORT=$(usex parallel-port)
-		-DWITH_PROFILING=$(usex profiling)
-		-DWITH_SDL=$(usex sdl)
+		"-DWITH_ALSA=$(usex alsa)"
+		"-DWITH_PULSEAUDIO=$(usex pulseaudio)"
+		"-DWITH_CRASH_HANDLER=$(usex crash-handler)"
+		"-DWITH_GLES2=$(usex gles2)"
+		"-DWITH_GPL_LIBS=$(usex gpl)"
+		"-DWITH_JPEG=$(usex jpeg)"
+		"-DWITH_MP3=$(usex mp3)"
+		"-DWITH_OGG=$(usex ogg)"
+		"-DWITH_WAV=$(usex wav)"
+		"-DWITH_XINERAMA=$(usex xinerama)"
+		"-DWITH_MINIMAID=$(usex minimaid)"
+		"-DWITH_PARALLEL_PORT=$(usex parallel-port)"
+		"-DWITH_PROFILING=$(usex profiling)"
+		"-DWITH_SDL=$(usex sdl)"
 		-DWITH_SYSTEM_GLEW=yes
 		-DWITH_SYSTEM_TOMMATH=yes
 		-DWITH_SYSTEM_MAD=yes
@@ -97,30 +96,30 @@ src_configure() {
 		-DWITH_SYSTEM_JPEG=yes
 		-DWITH_SYSTEM_PCRE=yes
 		-DWITH_SYSTEM_OGG=yes
-		-DWITH_NETWORKING=$(usex networking)
-		-DWITH_XRANDR=$(usex xrandr)
-		-DWITH_JACK=$(usex jack)
-		-DWITH_X11=$(usex X)
+		"-DWITH_NETWORKING=$(usex networking)"
+		"-DWITH_XRANDR=$(usex xrandr)"
+		"-DWITH_JACK=$(usex jack)"
+		"-DWITH_X11=$(usex X)"
 	)
 	cmake_src_configure
 }
 
 src_install() {
-	make_wrapper stepmania /usr/$(get_libdir)/${PN}/${PN} /usr/$(get_libdir)/${PN}
-	exeinto /usr/$(get_libdir)/${PN}
+	make_wrapper stepmania "/usr/$(get_libdir)/${PN}/${PN}" "/usr/$(get_libdir)/${PN}"
+	exeinto "/usr/$(get_libdir)/${PN}"
 	doexe "${PN}" || die "dobin failed"
 	doexe GtkModule.so || die "doexe GtkModule.so failed"
-	insinto /usr/$(get_libdir)/${PN}
+	insinto "/usr/$(get_libdir)/${PN}"
 	! [ -d Announcers ] && mkdir Announcers
 	doins -r Announcers BackgroundEffects BackgroundTransitions \
 		BGAnimations Characters Courses Data NoteSkins Songs Themes || die "doins failed"
 	if ! use bundled-songs; then
-		keepdir /usr/$(get_libdir)/${PN}/Songs
+		keepdir "/usr/$(get_libdir)/${PN}/Songs"
 	fi
 	if ! use bundled-courses; then
-		keepdir /usr/$(get_libdir)/${PN}/Courses
+		keepdir "/usr/$(get_libdir)/${PN}/Courses"
 	fi
 	dodoc -r Docs/* || die "dodoc failed"
-	newicon "Themes/default/Graphics/Common window icon.png" ${PN}.png
-	make_desktop_entry ${PN} StepMania
+	newicon "Themes/default/Graphics/Common window icon.png" "${PN}.png"
+	make_desktop_entry "${PN}" StepMania
 }
