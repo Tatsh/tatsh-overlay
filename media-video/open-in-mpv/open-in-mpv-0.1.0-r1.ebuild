@@ -28,7 +28,7 @@ RDEPEND="${PYTHON_DEPS}
 
 src_prepare() {
 	sed -re '/open-in-mpv-(un)?install/d' -i pyproject.toml || die
-	cat > sh.tat.open_in_mpv.json <<EOF
+	cat << EOF > sh.tat.open_in_mpv.json
 {
   "name": "sh.tat.open_in_mpv",
   "description": "Opens a URL in mpv (for use with extension).",
