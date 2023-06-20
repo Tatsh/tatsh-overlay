@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit linux-info linux-mod udev
+inherit linux-mod-r1 udev
 
 DESCRIPTION="Magewell Pro Capture driver."
 HOMEPAGE="https://www.magewell.com/downloads/pro-capture#/driver/linux-x86"
@@ -18,9 +18,6 @@ RDEPENDS="media-libs/alsa-lib"
 
 S="${WORKDIR}/ProCaptureForLinux_${SUFFIX}"
 
-BUILD_TARGETS="all" # no clean because a file has to be hacked in src_prepare() that would otherwise get deleted; the archive is clean anyway
-BUILD_PARAMS="KERNELDIR=${KERNEL_DIR}"
-MODULE_NAMES="ProCapture(video:src:src)"
 DOCS=(quick_start.txt docs/Readme.txt docs/ProCaptureSeriesCardUserGuideforLinux.{eng,chs}.pdf)
 
 src_prepare() {
@@ -33,8 +30,14 @@ src_prepare() {
 	default
 }
 
+src_compile() {
+	local modlist=( ProCapture=video:src:src )
+	local modargs=( KERNELDIR="${KERNEL_DIR}" all )
+	linux-mod-r1_src_compile
+}
+
 src_install() {
-	linux-mod_src_install
+	linux-mod-r1_src_install
 
 	local suffix
 	suffix=32
@@ -55,10 +58,8 @@ src_install() {
 	doins scripts/ProCapture.conf
 
 	if use doc; then
-		insinto /usr/share/doc/${P}
+		insinto "/usr/share/doc/${P}"
 		doins -r docs/*
-	else
-		einstalldocs
 	fi
 }
 
