@@ -3,12 +3,12 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..11} )
-inherit distutils-r1
+PYTHON_COMPAT=( python3_{10..12} )
+DISTUTILS_USE_PEP517=setuptools
+inherit distutils-r1 pypi
 
 DESCRIPTION="Bencoder in 100 lines of modern Python"
-HOMEPAGE="https://github.com/notpeter/benc"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+HOMEPAGE="https://pypi.org/project/benc/"
 
 LICENSE="MIT"
 SLOT="0"
