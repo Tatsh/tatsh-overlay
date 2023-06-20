@@ -312,10 +312,11 @@ src_compile() {
 
 src_install() {
 	dobin "${PN}"
-	insinto /etc/${PN}
+	insinto /etc/"${PN}"
 	newins config.default.yml config.yml
 }
 
 src_test() {
-	env CGO_ENABLED=0 go test $(go list ./... | grep -v 'github.com/muety/wakapi/scripts') -run ./...
+	env CGO_ENABLED=0 go test "$(go list ./... | grep -v 'github.com/muety/wakapi/scripts')" \
+		-run ./...
 }
