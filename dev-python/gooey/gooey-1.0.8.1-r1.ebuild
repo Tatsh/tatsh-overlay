@@ -4,13 +4,12 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{10,11} )
-inherit distutils-r1
+PYTHON_COMPAT=( python3_{10..12} )
+inherit distutils-r1 pypi
 
-DESCRIPTION="Turn (almost) any command line program into a full GUI application with one line."
+DESCRIPTION="Turn any command line program into a full GUI application with one line."
 HOMEPAGE="https://pypi.org/project/gooey/"
 MY_PN="G${PN:1}"
-SRC_URI="https://github.com/chriskiehl/${MY_PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
