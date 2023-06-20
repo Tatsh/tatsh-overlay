@@ -27,12 +27,12 @@ src_prepare () {
 }
 
 src_configure() {
-	econf $(use_enable debug)
+	econf "$(use_enable debug)"
 }
 
 src_install () {
 	default
-	keepdir /usr/$(get_libdir)/vapoursynth/
-	dosym /usr/$(get_libdir)/libffms2.so /usr/$(get_libdir)/vapoursynth/libffms2.so
+	keepdir "/usr/$(get_libdir)/vapoursynth/"
+	dosym -r "/usr/$(get_libdir)/libffms2.so" "/usr/$(get_libdir)/vapoursynth/libffms2.so"
 	einstalldocs
 }
