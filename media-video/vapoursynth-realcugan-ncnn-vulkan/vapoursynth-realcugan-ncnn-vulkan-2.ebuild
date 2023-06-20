@@ -29,9 +29,9 @@ src_configure() {
 }
 
 src_install() {
-	exeinto /usr/$(get_libdir)/vapoursynth
+	exeinto "/usr/$(get_libdir)/vapoursynth"
 	doexe "${BUILD_DIR}/librealcugannv.so"
-	insinto /usr/$(get_libdir)/vapoursynth
+	insinto "/usr/$(get_libdir)/vapoursynth"
 	doins -r "${WORKDIR}/models-"{nose,pro,se}
 	einstalldocs
 }
