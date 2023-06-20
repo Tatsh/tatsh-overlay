@@ -69,6 +69,7 @@ inherit cargo
 
 DESCRIPTION="Lets you mount semi-structured data (like JSON) as a filesystem"
 HOMEPAGE="https://github.com/mgree/ffs"
+# shellcheck disable=SC2086
 SRC_URI="https://github.com/mgree/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	$(cargo_crate_uris ${CRATES})"
 
@@ -78,7 +79,7 @@ KEYWORDS="~amd64 ~arm64 ~ppc64"
 RESTRICT="mirror"
 
 src_prepare() {
-	mv man/${PN}.1 . || die
+	mv "man/${PN}.1" . || die
 	rm -fR man
 	default
 }
@@ -86,5 +87,5 @@ src_prepare() {
 src_install() {
 	einstalldocs
 	cargo_src_install
-	doman ${PN}.1
+	doman "${PN}.1"
 }
