@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{8,9,10,11} )
-DISTUTILS_USE_SETUPTOOLS=rdepend
+PYTHON_COMPAT=( python3_{10..12} )
+DISTUTILS_USE_PEP517=setuptools
 inherit distutils-r1
 
-DESCRIPTION="Tools for Xirvik servers."
+DESCRIPTION="CLI to track a USPS shipment by SMS."
 HOMEPAGE="https://github.com/Tatsh/usps-track"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
