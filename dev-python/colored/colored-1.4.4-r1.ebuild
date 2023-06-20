@@ -3,14 +3,15 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8..11} pypy3 )
+PYTHON_COMPAT=( python3_{10..12} pypy3 )
+DISTUTILS_USE_PEP517=flit
 inherit distutils-r1
 
 EGIT_REPO_URI="https://gitlab.com/dslackw/${PN}"
 
 DESCRIPTION="Very simple Python library for color and formatting in terminal"
 HOMEPAGE="https://gitlab.com/dslackw/colored"
-SRC_URI="https://gitlab.com/dslackw/${PN}/-/archive/${PV}/${P}.tar.gz"
+SRC_URI="https://gitlab.com/dslackw/${PN}/-/archive/${PV}/${P}.tar.bz2"
 
 LICENSE="MIT"
 KEYWORDS="~amd64 ~x86"
