@@ -3,7 +3,8 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{8,9,10,11} )
+PYTHON_COMPAT=( python3_{10..12} )
+DISTUTILS_USE_PEP517=setuptools
 DISTUTILS_SINGLE_IMPL=true
 inherit distutils-r1
 
@@ -16,6 +17,6 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~ppc64 ~x86"
 
-RDEPEND="
-	$(python_gen_cond_dep 'dev-python/pyudev[${PYTHON_USEDEP}]')
+# shellcheck disable=SC2016
+RDEPEND="$(python_gen_cond_dep 'dev-python/pyudev[${PYTHON_USEDEP}]')
 	X? ( $(python_gen_cond_dep 'dev-python/python-xlib[${PYTHON_USEDEP}]') )"
