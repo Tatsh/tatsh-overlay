@@ -18,6 +18,7 @@ KEYWORDS="~amd64"
 IUSE="nls"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+# shellcheck disable=SC2016
 RDEPEND="${PYTHON_DEPS}
 	$(python_gen_cond_dep '
 		dev-python/colorama[${PYTHON_USEDEP}]
@@ -45,26 +46,26 @@ src_prepare() {
 		-i src/*.py src/wrappers/*.py || die
 	sed -r \
 		-e "s|^LOCALE_DIRECTORY =.*|LOCALE_DIRECTORY = '${EPREFIX}/usr/share/locale'|" \
-		-i src/${PN}.py || die
+		-i "src/${PN}.py" || die
 	sed -r \
 		-e "s|self.${PN}_icon_path =.*|self.${PN}_icon_path = '${EPREFIX}/usr/share/pixmaps/${PN}.png'|" \
 		-e "s|uic\.loadUi\(str\(resource_path\(\"video2x_gui.ui\"\)\),|uic.loadUi('${EPREFIX}/usr/share/${PN}/${PN}_gui.ui',|" \
-		-i src/${PN}_gui.py || die
+		-i "src/${PN}_gui.py" || die
 	cp "${WORKDIR}/avalon-framework-${AVALON_SHA}/__init__.py" src/avalon_framework.py || die
 	default
 	sed -r -e "s|@EPREFIX@|${EPREFIX}|g" -i src/*.py src/wrappers/*.py || die
 }
 
 src_install() {
-	python_moduleinto ${PN}_lib
+	python_moduleinto "${PN}_lib"
 	touch src/wrappers/__init__.py src/__init__.py || die
 	python_domodule src/wrappers src/{__init__,avalon_framework,bilogger,exceptions,image_cleaner,progress_monitor,upscaler}.py
-	python_doscript src/${PN}.py src/${PN}_gui.py
+	python_doscript "src/${PN}.py" "src/${PN}_gui.py"
 	use nls && domo src/locale/zh_CN/LC_MESSAGES/zh_CN.mo
-	doicon src/images/${PN}.png
-	insinto /usr/share/${PN}
-	make_desktop_entry ${PN}_gui.py Video2X ${PN}
+	doicon "src/images/${PN}.png"
+	insinto "/usr/share/${PN}"
+	make_desktop_entry "${PN}_gui.py" Video2X "${PN}"
 	doins src/*.ui
-	newins src/${PN}.yaml ${PN}.default.yaml
+	newins "src/${PN}.yaml" "${PN}.default.yaml"
 	einstalldocs
 }
