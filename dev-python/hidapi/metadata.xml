@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">trezor/cython-hidapi</remote-id>
+		<remote-id type="pypi">hidapi</remote-id>
 	</upstream>
 </pkgmetadata>

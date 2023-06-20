@@ -2,14 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-DISTUTILS_USE_SETUPTOOLS=rdepend
-PYTHON_COMPAT=( python3_{8,9,10,11} )
-inherit distutils-r1
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{10..12} )
+inherit distutils-r1 pypi
 
 DESCRIPTION="Python wrapper for hidapi."
 HOMEPAGE="https://github.com/trezor/cython-hidapi"
-MY_PV=$(ver_rs 3 .post)
-SRC_URI="https://github.com/trezor/cython-hidapi/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="|| ( BSD GPL-3 )"
 SLOT="0"
@@ -22,7 +20,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/cython-${PN}-${MY_PV}"
+S="${WORKDIR}/cython-${P}"
 
 distutils_enable_tests pytest
 
