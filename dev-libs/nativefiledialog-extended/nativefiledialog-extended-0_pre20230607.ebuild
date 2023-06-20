@@ -30,7 +30,7 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-		-DNFD_BUILD_TESTS=$(usex test)
+		"-DNFD_BUILD_TESTS=$(usex test)"
 	)
 	cmake_src_configure
 }
