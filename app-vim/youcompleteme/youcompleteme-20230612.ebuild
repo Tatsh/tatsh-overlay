@@ -18,12 +18,13 @@ SRC_URI="https://github.com/ycm-core/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 DEPEND="|| ( >=app-editors/vim-7.3[python] >=app-editors/gvim-7.3[python] )"
+# shellcheck disable=SC2016
 RDEPEND="${DEPEND}
-${PYTHON_DEPS}
+	${PYTHON_DEPS}
 	sys-devel/clang:=
-	$(python_gen_cond_dep 'dev-python/requests-futures[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
-	$(python_gen_cond_dep 'dev-python/requests[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
-	$(python_gen_cond_dep 'dev-util/ycmd[${PYTHON_SINGLE_USEDEP}]' ${PYTHON_COMPAT[*]})"
+	$(python_gen_cond_dep 'dev-python/requests-futures[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
+	$(python_gen_cond_dep 'dev-python/requests[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
+	$(python_gen_cond_dep 'dev-util/ycmd[${PYTHON_SINGLE_USEDEP}]' "${PYTHON_COMPAT[@]}")"
 
 S="${WORKDIR}/${MY_PN}-${SHA}"
 
@@ -39,7 +40,7 @@ src_install() {
 	python_domodule python/ycm
 	insinto /usr/share/vim/vimfiles
 	doins -r autoload plugin
-	dodoc doc/${PN}.txt
+	dodoc doc/"${PN}".txt
 }
 
 pkg_postinst() {
