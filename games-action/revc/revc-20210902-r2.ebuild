@@ -41,31 +41,33 @@ src_prepare() {
 	# Other interesting variables:
 	# - FINAL (which would enable USE_MY_DOCUMENTS)
 	# - PC_PARTICLE
-	echo '#define BIND_VEHICLE_FIREWEAPON' >> src/core/config.h
-	echo '#define NEW_WALK_AROUND_ALGORITHM' >> src/core/config.h
-	echo '#define PEDS_REPORT_CRIMES_ON_PHONE' >> src/core/config.h
-	echo '#define SIMPLIER_MISSIONS' >> src/core/config.h
-	echo '#define VC_PED_PORTS' >> src/core/config.h
+	cat << "EOF" >> src/core/config.h
+#define BIND_VEHICLE_FIREWEAPON
+#define NEW_WALK_AROUND_ALGORITHM
+#define PEDS_REPORT_CRIMES_ON_PHONE
+#define SIMPLIER_MISSIONS
+#define VC_PED_PORTS
+EOF
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-DREVC_WITH_ASAN=$(usex sanitizer)
-		-DREVC_WITH_LIBSNDFILE=$(usex sndfile)
-		-DREVC_WITH_OPUS=$(usex opus)
-		-DLIBRW_PLATFORM=GL3
+		"-DCMAKE_INSTALL_PREFIX=${EPREFIX}/usr/share/${PN}"
+		"-DREVC_WITH_ASAN=$(usex sanitizer)"
+		"-DREVC_WITH_LIBSNDFILE=$(usex sndfile)"
+		"-DREVC_WITH_OPUS=$(usex opus)"
 		-DBUILD_SHARED_LIBS=OFF
+		-DLIBRW_PLATFORM=GL3
 		-DLIBRW_TOOLS=OFF
 		-DREVC_AUDIO=OAL
 		-DREVC_INSTALL=ON
 		-DREVC_VENDORED_LIBRW=ON
-		"-DCMAKE_INSTALL_PREFIX=${EPREFIX}/usr/share/${PN}"
 	)
 	cmake_src_configure
 }
 
 src_install() {
 	cmake_src_install
-	dosym ../share/${PN}/reVC /usr/bin/reVC
+	dosym "../share/${PN}/reVC" /usr/bin/reVC
 	einstalldocs
 }
