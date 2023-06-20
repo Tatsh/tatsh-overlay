@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 S="${WORKDIR}/${PN}-${SHA}"
 
 src_install() {
-	insinto /usr/share/${PN}
+	insinto "/usr/share/${PN}"
 	doins kwin-rules/*
 	doins schema/*.kateschema
 	insinto /usr/share/org.kde.syntax-highlighting/syntax
