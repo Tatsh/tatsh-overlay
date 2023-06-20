@@ -49,7 +49,7 @@ src_prepare() {
 src_configure() {
 	filter-lto
 	econf \
-		$(use_enable jit) \
+		"$(use_enable jit)" \
 		--disable-sdl-static \
 		--enable-sdl-audio \
 		--enable-sdl-video \
