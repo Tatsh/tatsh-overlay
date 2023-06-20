@@ -2,3 +2,4 @@
 .directory
 /metadata/*
 !/metadata/layout.conf
+!/metadata/pkgcheck.conf

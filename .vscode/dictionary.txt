@@ -967,6 +967,7 @@ pixbuf
 pixman
 pixmaps
 pjbgf
+pkgcheck
 pkgconfig
 pkgdev
 pkgmetadata
