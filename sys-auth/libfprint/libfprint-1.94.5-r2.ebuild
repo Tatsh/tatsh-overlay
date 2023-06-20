@@ -38,13 +38,13 @@ PATCHES=( "${FILESDIR}/${PN}-0.8.2-fix-implicit-declaration.patch" )
 
 src_configure() {
 		local emesonargs=(
-			$(meson_use examples gtk-examples)
-			$(meson_use introspection)
-			$(meson_use gtk-doc doc)
+			"$(meson_use examples gtk-examples)"
+			"$(meson_use introspection)"
+			"$(meson_use gtk-doc doc)"
 			-Ddrivers=all
 			-Dudev_rules=enabled
-			-Dudev_rules_dir=$(get_udevdir)/rules.d
-			--libdir=/usr/$(get_libdir)
+			"-Dudev_rules_dir=$(get_udevdir)/rules.d"
+			"--libdir=/usr/$(get_libdir)"
 		)
 		meson_src_configure
 }
