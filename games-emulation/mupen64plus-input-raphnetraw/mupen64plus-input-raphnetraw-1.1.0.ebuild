@@ -21,12 +21,12 @@ src_prepare() {
 }
 
 src_compile() {
-	cd projects/unix
+	cd projects/unix || die
 	emake OPTFLAGS="${CFLAGS}" WARNFLAGS= all
 }
 
 src_install() {
-	insinto /usr/$(get_libdir)/mupen64plus
-	doins projects/unix/${PN}.so
+	insinto "/usr/$(get_libdir)/mupen64plus"
+	doins "projects/unix/${PN}.so"
 	einstalldocs
 }
