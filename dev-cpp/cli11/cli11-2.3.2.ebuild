@@ -29,7 +29,7 @@ DOCS=( README.md CHANGELOG.md )
 src_configure() {
 	local mycmakeargs=(
 		-DCLI11_BUILD_DOCS=OFF  # handled by docs.eclass
-		-DCLI11_BUILD_TESTS=$(usex test)
+		"-DCLI11_BUILD_TESTS=$(usex test)"
 	)
 
 	cmake_src_configure
