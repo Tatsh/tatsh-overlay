@@ -17,14 +17,15 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 DEPEND="dev-cpp/abseil-cpp"
+# shellcheck disable=SC2016
 RDEPEND="
 	${DEPEND}
 	${PYTHON_DEPS}
-	$(python_gen_cond_dep 'dev-python/bottle[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
-	$(python_gen_cond_dep 'dev-python/jedi[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
-	$(python_gen_cond_dep 'dev-python/regex[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
-	$(python_gen_cond_dep 'dev-python/waitress[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
-	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' ${PYTHON_COMPAT[*]})
+	$(python_gen_cond_dep 'dev-python/bottle[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
+	$(python_gen_cond_dep 'dev-python/jedi[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
+	$(python_gen_cond_dep 'dev-python/regex[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
+	$(python_gen_cond_dep 'dev-python/waitress[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
+	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	sys-devel/clang:=[static-analyzer]"
 
 S="${WORKDIR}/${PN}-${SHA}/cpp"
