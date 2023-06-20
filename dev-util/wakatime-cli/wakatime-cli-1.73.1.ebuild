@@ -621,7 +621,7 @@ EGO_SUM=(
 )
 go-module_set_globals
 
-MY_PN=$(ver_cut 1 ${PN})
+MY_PN=$(ver_cut 1 "${PN}")
 
 DESCRIPTION="Command line interface to WakaTime used by all WakaTime plugins"
 HOMEPAGE="https://wakatime.com"
@@ -642,7 +642,7 @@ src_compile() {
 		-asmflags "-trimpath=${S}"
 		-gcflags "-trimpath=${S}"
 	)
-	go build "${mygoargs[@]}" -o ${MY_PN} || die
+	go build "${mygoargs[@]}" -o "${MY_PN}" || die
 }
 
 src_test() {
@@ -650,5 +650,5 @@ src_test() {
 }
 
 src_install() {
-	dobin ${MY_PN}
+	dobin "${MY_PN}"
 }
