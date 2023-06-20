@@ -25,7 +25,7 @@ SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}.tar.gz
 
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE="openal web-service"
 
 # System xbyak is still used by Dynarmic, but not Citra itself
@@ -74,6 +74,7 @@ src_prepare() {
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
 	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
 	mv -f "${T}/compatibility_list.json" "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
+	# shellcheck disable=SC2016
 	sed -e 's|${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak|/usr/include/xbyak|' \
 		-i externals/dynarmic/externals/CMakeLists.txt || die
 	cmake_src_prepare
@@ -89,8 +90,8 @@ src_configure() {
 		-DENABLE_TESTS=OFF
 		-DENABLE_FFMPEG_AUDIO_DECODER=ON
 		-DENABLE_FFMPEG_VIDEO_DUMPER=ON
-		-DENABLE_OPENAL=$(usex openal)
-		-DENABLE_WEB_SERVICE=$(usex web-service)
+		"-DENABLE_OPENAL=$(usex openal)"
+		"-DENABLE_WEB_SERVICE=$(usex web-service)"
 		-DUSE_SYSTEM_BOOST=ON
 		-DUSE_SYSTEM_CRYPTOPP=ON
 		-DUSE_SYSTEM_CUBEB=ON
@@ -109,5 +110,7 @@ src_configure() {
 
 src_install() {
 	cmake_src_install
-	rm -fR "${D}/usr/include" "${D}/usr/$(get_libdir)" || die
+	local libdir
+	libdir=$(get_libdir)
+	rm -fR "${D}/usr/include" "${D}/usr/${libdir:?}" || die
 }
