@@ -11,6 +11,8 @@ LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
 
+BDEPEND="app-arch/unzip"
+
 S="${WORKDIR}"
 
 src_install() {
