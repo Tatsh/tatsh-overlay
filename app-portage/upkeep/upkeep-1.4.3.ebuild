@@ -19,11 +19,10 @@ BDEPEND="test? (
 		dev-python/pytest-mock[${PYTHON_USEDEP}]
 		dev-python/Levenshtein[${PYTHON_USEDEP}]
 	)"
-RDEPEND="${DEPEND}
-	app-portage/eix
+RDEPEND="app-portage/eix
 	app-portage/gentoolkit
-	dev-python/click
-	dev-python/loguru
+	dev-python/click[${PYTHON_USEDEP}]
+	dev-python/loguru[${PYTHON_USEDEP}]
 	sys-kernel/dracut"
 
 pkg_postinst() {
