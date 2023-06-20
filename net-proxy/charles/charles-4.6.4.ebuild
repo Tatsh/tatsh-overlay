@@ -22,14 +22,14 @@ src_prepare() {
 	# Collides with Wireshark
 	find . -name application-vnd.tcpdump.pcap.png -delete
 	rm -R lib/jdk || die
-	sed -e "s/^Icon=.*/Icon=${PN}-proxy/" -i etc/${PN}-proxy.desktop || die
+	sed -e "s/^Icon=.*/Icon=${PN}-proxy/" -i "etc/${PN}-proxy.desktop" || die
 	default
-	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i bin/${PN}
+	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i "bin/${PN}"
 }
 
 src_install() {
-	dobin bin/${PN} bin/add-to-java-cacerts.sh
-	insinto /usr/share/java/${PN}
+	dobin "bin/${PN}" bin/add-to-java-cacerts.sh
+	insinto "/usr/share/java/${PN}"
 	doins lib/*.jar
 	insinto /usr/share/icons/hicolor
 	doins -r icon/*
