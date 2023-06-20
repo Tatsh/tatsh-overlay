@@ -5,11 +5,10 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{10,11} )
-inherit distutils-r1 flag-o-matic
+inherit distutils-r1 flag-o-matic pypi
 
 DESCRIPTION="NumPy aware dynamic Python compiler using LLVM"
 HOMEPAGE="https://pypi.org/project/numba/"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 IUSE="tbb"
 
 LICENSE="BSD-2"
@@ -23,7 +22,7 @@ RDEPEND="dev-python/llvmlite[${PYTHON_USEDEP}]
 	${BDEPEND}"
 
 src_configure() {
-	append-ldflags $(no-as-needed)
+	append-ldflags "$(no-as-needed)"
 	distutils-r1_src_configure
 }
 
