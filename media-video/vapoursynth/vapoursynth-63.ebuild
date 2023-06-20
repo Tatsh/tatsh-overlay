@@ -4,6 +4,7 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{9,10,11} )
+DISTUTILS_USE_PEP517=setuptools
 inherit autotools distutils-r1
 
 DESCRIPTION="A video processing framework with simplicity in mind."
@@ -34,14 +35,14 @@ src_prepare () {
 src_configure () {
 	x86_asm=
 	if use amd64 || use x86; then
-		x86_asm=$(use_enable x86-asm )
+		x86_asm=$(use_enable x86-asm)
 	fi
 	econf \
 		"$x86_asm" \
 		--disable-python-module \
-		$(use_enable guard-pattern ) \
-		$(use_enable vspipe ) \
-		$(use_enable vsscript )
+		"$(use_enable guard-pattern)" \
+		"$(use_enable vspipe)" \
+		"$(use_enable vsscript)"
 	distutils-r1_src_configure
 }
 
