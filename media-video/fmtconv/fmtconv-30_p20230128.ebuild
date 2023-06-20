@@ -22,10 +22,10 @@ src_prepare () {
 }
 
 src_install () {
-	cd ../..
+	cd ../.. || die
 	einstalldocs
-	cd "${S}"
+	cd "${S}" || die
 	default
-	keepdir /usr/$(get_libdir)/vapoursynth/
-	dosym /usr/$(get_libdir)/libfmtconv.so /usr/$(get_libdir)/vapoursynth/libfmtconv.so
+	keepdir "/usr/$(get_libdir)/vapoursynth/"
+	dosym -r "/usr/$(get_libdir)/libfmtconv.so" "/usr/$(get_libdir)/vapoursynth/libfmtconv.so"
 }
