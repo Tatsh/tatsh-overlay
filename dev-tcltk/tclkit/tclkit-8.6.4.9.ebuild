@@ -17,7 +17,6 @@ LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="${DEPEND}"
 BDEPEND="x11-base/xorg-proto
 	x11-libs/libX11
 	dev-libs/ucl"
