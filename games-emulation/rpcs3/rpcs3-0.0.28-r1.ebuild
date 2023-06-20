@@ -29,7 +29,7 @@ REQUIRED_USE="wayland? ( vulkan )"
 
 DEPEND=">=dev-libs/flatbuffers-2.0.6
 	dev-libs/pugixml
-	>=dev-libs/wolfssl-4.7.0
+	>=dev-libs/wolfssl-4.7.0[writedup]
 	media-libs/cubeb
 	dev-libs/xxhash
 	dev-util/spirv-tools
@@ -86,10 +86,10 @@ src_prepare() {
 	mv "${WORKDIR}/yaml-cpp-${YAML_CPP_SHA}" "${S}/3rdparty/yaml-cpp/yaml-cpp" || die
 	rmdir "${S}/3rdparty/asmjit/asmjit" || die
 	mv "${WORKDIR}/asmjit-${ASMJIT_SHA}" "${S}/3rdparty/asmjit/asmjit" || die
-	echo "#define RPCS3_GIT_VERSION \"0000-v${PV}\"" > rpcs3/git-version.h
-	echo '#define RPCS3_GIT_BRANCH "master"' >> rpcs3/git-version.h
-	echo '#define RPCS3_GIT_FULL_BRANCH "RPCS3/rpcs3/master"' >> rpcs3/git-version.h
-	echo '#define RPCS3_GIT_VERSION_NO_UPDATE 1' >> rpcs3/git-version.h
+	{ echo "#define RPCS3_GIT_VERSION \"0000-v${PV}\""
+		echo '#define RPCS3_GIT_BRANCH "master"'
+		echo '#define RPCS3_GIT_FULL_BRANCH "RPCS3/rpcs3/master"'
+		echo '#define RPCS3_GIT_VERSION_NO_UPDATE 1'; } > rpcs3/git-version.h
 	sed -re 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
 		-i "${S}/3rdparty/llvm/llvm/llvm/CMakeLists.txt" || die
 	sed -e '/find_program(CCACHE_FOUND/d' -i CMakeLists.txt || die
@@ -111,9 +111,9 @@ src_configure() {
 		-DBUILD_TESTING=OFF
 		-DUSE_PRECOMPILED_HEADERS=OFF
 		-DUSE_DISCORD_RPC=OFF
-		-DUSE_FAUDIO=$(usex faudio)
-		-DUSE_SYSTEM_FAUDIO=$(usex faudio)
-		-DUSE_LIBEVDEV=$(usex joystick)
+		"-DUSE_FAUDIO=$(usex faudio)"
+		"-DUSE_SYSTEM_FAUDIO=$(usex faudio)"
+		"-DUSE_LIBEVDEV=$(usex joystick)"
 		-DUSE_NATIVE_INSTRUCTIONS=OFF
 		-DUSE_SYSTEM_CUBEB=ON
 		-DUSE_SYSTEM_CURL=ON
@@ -128,9 +128,9 @@ src_configure() {
 		-DUSE_SYSTEM_WOLFSSL=ON
 		-DUSE_SYSTEM_XXHASH=ON
 		-DUSE_SYSTEM_ZLIB=ON
-		-DUSE_VULKAN=$(usex vulkan)
-		-DUSE_WAYLAND=$(usex wayland)
-		-DWITH_LLVM=$(usex llvm)
+		"-DUSE_VULKAN=$(usex vulkan)"
+		"-DUSE_WAYLAND=$(usex wayland)"
+		"-DWITH_LLVM=$(usex llvm)"
 		-Wno-dev
 	)
 	cmake_src_configure
