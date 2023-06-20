@@ -37,12 +37,12 @@ S="${WORKDIR}/86Box-${PV}"
 src_configure() {
 	local mycmakeargs=(
 		-DDEV_BRANCH=ON
-		-DDYNAREC=$(usex dynrec)
-		-DFLUIDSYNTH=$(usex fluidsynth)
+		"-DDYNAREC=$(usex dynrec)"
+		"-DFLUIDSYNTH=$(usex fluidsynth)"
 		-DMINITRACE=OFF
-		-DMUNT=$(usex mt-32)
-		-DNEW_DYNAREC=$(usex new-dynrec)
-		-DOPENAL=$(usex openal)
+		"-DMUNT=$(usex mt-32)"
+		"-DNEW_DYNAREC=$(usex new-dynrec)"
+		"-DOPENAL=$(usex openal)"
 		-DRELEASE=ON
 		-DSLIRP_EXTERNAL=ON
 		# Does not work on non-Windows. Attempts to link with ws2_32
