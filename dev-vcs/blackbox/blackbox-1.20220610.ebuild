@@ -58,7 +58,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
 src_compile() {
-	env GO111MODULE=on GOOS=linux go build -o ${PN} \
+	env GO111MODULE=on GOOS=linux go build -o "${PN}" \
 		-ldflags "-s -w -X main.SHA=d45564d -X main.BuildTime=$(date +%s)" \
 		github.com/StackExchange/blackbox/v2/cmd/blackbox
 }
