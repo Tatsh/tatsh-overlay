@@ -62,24 +62,24 @@ src_configure() {
 	fi
 	ac_cv_lib_X11_main=$(usex X yes no) \
 	econf \
-		$(use_enable !hardened dynamic-core) \
-		$(use_enable !hardened dynamic-x86) \
-		$(use_enable X x11) \
-		$(use_enable core-inline) \
-		$(use_enable debug ${debug_arg}) \
-		$(use_enable dynrec) \
-		$(use_enable ffmpeg avcodec) \
-		$(use_enable fluidsynth libfluidsynth) \
-		$(use_enable fpu) ${fpu_arg} \
-		$(use_enable freetype) \
-		$(use_enable midi alsa-midi) \
-		$(use_enable mt-32 mt32) \
-		$(use_enable opengl) \
-		$(use_enable printer) \
-		$(use_enable screenshots) \
-		$(use_enable slirp libslirp) \
-		$(use_enable unaligned unaligned-memory) \
-		$(use_enable xbrz) \
+		"$(use_enable !hardened dynamic-core)" \
+		"$(use_enable !hardened dynamic-x86)" \
+		"$(use_enable X x11)" \
+		"$(use_enable core-inline)" \
+		"$(use_enable debug)" \
+		"$(use_enable dynrec)" \
+		"$(use_enable ffmpeg avcodec)" \
+		"$(use_enable fluidsynth libfluidsynth)" \
+		"$(use_enable fpu "${fpu_arg}")" \
+		"$(use_enable freetype)" \
+		"$(use_enable midi alsa-midi)" \
+		"$(use_enable mt-32 mt32)" \
+		"$(use_enable opengl)" \
+		"$(use_enable printer)" \
+		"$(use_enable screenshots)" \
+		"$(use_enable slirp libslirp)" \
+		"$(use_enable unaligned unaligned-memory)" \
+		"$(use_enable xbrz)" \
 		--disable-optimize \
 		--enable-sdl2
 }
