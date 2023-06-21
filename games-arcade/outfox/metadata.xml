@@ -9,4 +9,8 @@
 		<flag name="bundled-courses">Install bundled courses.</flag>
 		<flag name="bundled-songs">Installed bundled songs.</flag>
 	</use>
+	<upstream>
+		<remote-id type="github">TeamRizu/OutFox</remote-id>
+		<bugs-to>https://github.com/TeamRizu/OutFox</bugs-to>
+	</upstream>
 </pkgmetadata>
