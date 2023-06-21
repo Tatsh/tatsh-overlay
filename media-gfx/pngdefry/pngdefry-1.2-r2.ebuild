@@ -21,7 +21,7 @@ src_compile() {
 	read -ra cflags <<< "${CFLAGS-}"
 	read -ra ldflags <<< "${LDFLAGS-}"
 	echo "$(tc-getCC)" -o "$PN" "${cflags[@]}" "${ldflags[@]}" "${PN}.c"
-	$(tc-getCC) -o "$PN" "${CFLAGS}" "${LDFLAGS}" "${PN}.c" || die
+	$(tc-getCC) -o "$PN" "${cflags[@]}" "${ldflags[@]}" "${PN}.c" || die
 }
 
 src_install() {
