@@ -612,6 +612,7 @@ khudawadi
 kikakui
 kisielk
 kitgen
+kiyamou
 klauspost
 knownhosts
 kodi
@@ -863,6 +864,7 @@ nihcode
 nihstro
 nihui
 nlohmann
+nlzy
 nnedi
 noaccess
 nodedir
