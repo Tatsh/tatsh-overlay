@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=poetry
-PYTHON_COMPAT=( python3_{10,11} )
+PYTHON_COMPAT=( python3_{10..11} )
 inherit distutils-r1
 
 DESCRIPTION="Host-side script for the Open in mpv Chrome extension."
@@ -14,7 +14,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc64 ~x86"
+KEYWORDS="~amd64"
 RESTRICT="test"
 
 RDEPEND="${PYTHON_DEPS}
