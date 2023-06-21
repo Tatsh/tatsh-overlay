@@ -2,6 +2,7 @@
 from glob import glob
 from os.path import dirname, join as path_join, realpath
 from typing import Dict
+from urllib.parse import urlparse
 import subprocess as sp
 import sys
 
@@ -12,7 +13,7 @@ TEMPLATE = '''<?xml version="1.0" encoding="UTF-8"?>
 \t<maintainer type="person">
 \t\t<email>audvare@gmail.com</email>
 \t\t<name>Andrew Udvare</name>
-\t</maintainer>{USE}</pkgmetadata>
+\t</maintainer>{UPSTREAM}{USE}</pkgmetadata>
 '''
 
 
@@ -41,7 +42,8 @@ def main() -> int:
             words = []
             with open(glob(f'{pkg}/*.ebuild')[-1]) as eb:
                 in_iuse = False
-                for line in eb.readlines():
+                lines = eb.readlines()
+                for line in lines:
                     if line.startswith('IUSE="'):
                         in_iuse = True
                         words += line.split('="')[1].strip().replace(
@@ -53,13 +55,35 @@ def main() -> int:
                             '"', '').split(' ')
                         if line.strip().endswith('"'):
                             break
+                homepage = None
+                upstream = ''
+                for line in lines:
+                    if line.startswith('HOMEPAGE='):
+                        homepage = line.split('="')[1].strip().replace(
+                            '"', '').split(' ')[0]
+                        break
+                if homepage:
+                    parsed = urlparse(homepage)
+                    id_type = None
+                    value = None
+                    if parsed.hostname == 'github.com':
+                        id_type = 'github'
+                        value = "/".join(parsed.path.split("/")[-2:])
+                    elif parsed.hostname == 'pypi.org':
+                        id_type = 'pypi'
+                        value = parsed.path.strip('/').split("/")[-1]
+                    if id_type and value:
+                        upstream += ('\n\t<upstream>\n' +
+                                     f'\t\t<remote-id type="{id_type}">' +
+                                     value + '</remote-id>' +
+                                     '\n\t</upstream>')
                 words = sorted(x for x in words if x and not is_global_flag(x))
             with open(metadata_xml, 'w+') as m:
                 use = (('\n\t<use>\n' +
                         '\n'.join(f'\t\t<flag name="{name}"></flag>'
                                   for name in words) +
                         '\n\t</use>\n') if words else '\n')
-                m.write(TEMPLATE.format(USE=use))
+                m.write(TEMPLATE.format(USE=use, UPSTREAM=upstream))
     return 0
 
 
