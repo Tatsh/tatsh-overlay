@@ -29,7 +29,6 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
 IUSE="libretro vulkan"
-REQUIRED_USE="arm64? ( !vulkan )"
 
 DEPEND="app-arch/bzip2
 	dev-db/sqlite
