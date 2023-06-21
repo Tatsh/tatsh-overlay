@@ -15,7 +15,7 @@ RESTRICT="mirror"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 
 RDEPEND=">=media-video/ffms2-2.23.1
 	>=media-video/fmtconv-20
