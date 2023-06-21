@@ -20,4 +20,4 @@ while read -r ebuild; do
 		git add .
 		pkgdev commit || pkgdev commit -m "${cat}/${pn}: lint" || exit 1
     popd || exit 1
-done < <(git status | grep -E 'modified:.*ebuild$' | awk '{ print $2 }')
+done < <(git status | grep -E 'modified:.*(ebuild|metadata\.xml)$' | awk '{ print $2 }')
