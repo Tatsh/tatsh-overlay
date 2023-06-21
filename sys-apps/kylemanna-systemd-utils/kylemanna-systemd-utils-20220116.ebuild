@@ -20,8 +20,7 @@ RDEPEND="btrfs? ( sys-fs/btrfs-progs )
 		cmsis-dap? ( dev-embedded/openocd[cmsis-dap] )
 	)
 	kodi? ( media-tv/kodi )
-	systemd? ( sys-apps/systemd )
-	youtube? ( www-client/chromium )"
+	systemd? ( sys-apps/systemd )"
 REQUIRED_USE="cmsis-dap? ( multilib )"
 
 S="${WORKDIR}/${MY_PN}-${SHA}"
@@ -59,4 +58,10 @@ src_install() {
 	dosbin failure-monitor/failure-monitor.py onfailure/onfailure.sh
 	dobin scripts/systemd-email
 	einstalldocs
+}
+
+pkg_postinst() {
+	einfo
+	einfo "youtube-tv.service requires Google Chrome or Chromium to be installed."
+	einfo
 }
