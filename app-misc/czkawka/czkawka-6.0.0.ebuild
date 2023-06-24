@@ -377,8 +377,8 @@ inherit cargo desktop flag-o-matic
 
 DESCRIPTION="App to find duplicates, empty folders, similar images etc."
 HOMEPAGE="https://github.com/qarmin/czkawka"
-SRC_URI="$(cargo_crate_uris)
-	https://github.com/qarmin/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/qarmin/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
+	$(cargo_crate_uris)"
 IUSE="heif"
 
 LICENSE="0BSD Apache-2.0 BSD BSD-2 Boost-1.0 CC0-1.0 LGPL-2.1 LGPL-3 MIT MPL-2.0 Unicode-DFS-2016 Unlicense ZLIB"
