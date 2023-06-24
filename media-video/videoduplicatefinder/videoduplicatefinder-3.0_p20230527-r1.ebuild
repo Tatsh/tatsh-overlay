@@ -72,11 +72,12 @@ NUGETS="avalonia-11.0.0-preview4
 SRC_URI="https://github.com/0x90d/videoduplicatefinder/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	$(nuget_uris)"
 
-DEPEND="sys-libs/zlib"
+DEPEND="media-libs/fontconfig
+	sys-libs/zlib"
 RDEPEND="${DEPEND}
-	dev-libs/icu
-	dev-libs/openssl
-	x11-libs/gtk+:3"
+	media-libs/harfbuzz
+	media-video/ffmpeg
+	sys-apps/dbus[X]"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
