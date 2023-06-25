@@ -46,7 +46,6 @@ SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
         'externals/fmt',
         'externals/lodepng/lodepng',
         'externals/sirit',
-        'externals/sirit/externals/SPIR-V',
         'externals/soundtouch',
         'externals/xbyak',
     },
