@@ -1,22 +1,22 @@
-From a00c7f69f063d8b0def770fecc78a5fbfa5e8b37 Mon Sep 17 00:00:00 2001
+From f7211dc8dbe9343cae04cb6792ee1b88c74102d1 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/2] System libraries
 
 ---
- CMakeLists.txt                |  12 ++-
+ CMakeLists.txt                |   8 ++
  externals/CMakeLists.txt      | 149 ++++++++++++++++++++++------------
  src/audio_core/CMakeLists.txt |   8 +-
  src/citra/CMakeLists.txt      |   7 +-
  src/common/CMakeLists.txt     |   9 +-
  src/core/CMakeLists.txt       |   2 +-
- 6 files changed, 125 insertions(+), 62 deletions(-)
+ 6 files changed, 122 insertions(+), 61 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 12eae712f..a0fed9319 100644
+index ccbe6cdd7..7bd915c25 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -67,6 +67,14 @@ CMAKE_DEPENDENT_OPTION(ENABLE_AUDIOTOOLBOX "Use AudioToolbox decoder (preferred
+@@ -55,6 +55,14 @@ CMAKE_DEPENDENT_OPTION(ENABLE_AUDIOTOOLBOX "Use AudioToolbox decoder (preferred
  CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ON "MINGW" OFF)
  
  option(USE_SYSTEM_BOOST "Use the system Boost libs (instead of the bundled ones)" OFF)
@@ -29,24 +29,13 @@ index 12eae712f..a0fed9319 100644
 +option(USE_SYSTEM_ZSTD "Use system zstd libs" OFF)
 +option(DISABLE_SUBMODULE_CHECK "Disable check for submodules" OFF)
  
- CMAKE_DEPENDENT_OPTION(ENABLE_FDK "Use FDK AAC decoder" OFF "NOT ENABLE_FFMPEG_AUDIO_DECODER;NOT ENABLE_MF" OFF)
  
-@@ -137,7 +145,9 @@ function(check_submodules_present)
-         endif()
-     endforeach()
- endfunction()
--check_submodules_present()
-+if (NOT DISABLE_SUBMODULE_CHECK)
-+    check_submodules_present()
-+endif()
- 
- configure_file(${PROJECT_SOURCE_DIR}/dist/compatibility_list/compatibility_list.qrc
-                ${PROJECT_BINARY_DIR}/dist/compatibility_list/compatibility_list.qrc
+ CMAKE_DEPENDENT_OPTION(CITRA_USE_BUNDLED_MOLTENVK "Download the bundled MoltenVK" ON "APPLE" OFF)
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index e744dac8c..d058706a0 100644
+index bc23530f3..c9a029706 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -10,46 +10,51 @@ include(DownloadExternals)
+@@ -12,46 +12,51 @@ include(DownloadExternals)
  include(ExternalProject)
  
  # Boost
@@ -126,7 +115,7 @@ index e744dac8c..d058706a0 100644
  # HACK: The logic to set up the base include directory for CryptoPP does not work with Android SDK CMake 3.22.1.
  # Until there is a fixed version available, this code will detect and add in the proper include if it does not exist.
  if(ANDROID)
-@@ -70,12 +75,20 @@ target_include_directories(dds-ktx INTERFACE ./dds-ktx)
+@@ -72,12 +77,20 @@ target_include_directories(dds-ktx INTERFACE ./dds-ktx)
  
  # fmt and Xbyak need to be added before dynarmic
  # libfmt
@@ -150,7 +139,7 @@ index e744dac8c..d058706a0 100644
  endif()
  
  # Dynarmic
-@@ -94,14 +107,22 @@ endif()
+@@ -96,14 +109,22 @@ endif()
  add_subdirectory(glad)
  
  # glslang
@@ -179,7 +168,7 @@ index e744dac8c..d058706a0 100644
  
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -127,7 +148,11 @@ add_subdirectory(soundtouch EXCLUDE_FROM_ALL)
+@@ -134,7 +155,11 @@ add_subdirectory(soundtouch EXCLUDE_FROM_ALL)
  add_subdirectory(sirit EXCLUDE_FROM_ALL)
  
  # Teakra
@@ -192,7 +181,7 @@ index e744dac8c..d058706a0 100644
  
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-@@ -138,18 +163,30 @@ endif()
+@@ -145,18 +170,30 @@ endif()
  set(ZSTD_LEGACY_SUPPORT OFF)
  set(ZSTD_BUILD_PROGRAMS OFF)
  set(ZSTD_BUILD_SHARED OFF)
@@ -230,7 +219,7 @@ index e744dac8c..d058706a0 100644
  endif()
  
  # DiscordRPC
-@@ -206,15 +243,19 @@ endif()
+@@ -218,15 +255,19 @@ endif()
  
  # OpenAL Soft
  if (ENABLE_OPENAL)
@@ -260,10 +249,10 @@ index e744dac8c..d058706a0 100644
  
  # VMA
 diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
-index 32fb85a13..222ce173a 100644
+index 4385cdf5f..4e31196f8 100644
 --- a/src/audio_core/CMakeLists.txt
 +++ b/src/audio_core/CMakeLists.txt
-@@ -108,9 +108,13 @@ if(ENABLE_CUBEB)
+@@ -92,9 +92,13 @@ if(ENABLE_CUBEB)
  endif()
  
  if(ENABLE_OPENAL)
@@ -298,19 +287,19 @@ index 5793505a2..e25ca7196 100644
      target_link_libraries(citra PRIVATE getopt)
  endif()
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index 9efb1eac1..d868066d6 100644
+index 14a21b867..8e0992091 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
-@@ -150,11 +150,14 @@ else()
+@@ -158,11 +158,14 @@ else()
      $<$<CXX_COMPILER_ID:Clang>:-fsized-deallocation>
    )
  endif()
 -
  create_target_directory_groups(citra_common)
  
--target_link_libraries(citra_common PUBLIC fmt::fmt microprofile Boost::boost Boost::serialization Boost::iostreams)
+-target_link_libraries(citra_common PUBLIC fmt::fmt library-headers microprofile Boost::boost Boost::serialization Boost::iostreams)
 -target_link_libraries(citra_common PRIVATE libzstd_static)
-+target_link_libraries(citra_common PUBLIC fmt microprofile Boost::boost Boost::serialization Boost::iostreams)
++target_link_libraries(citra_common PUBLIC fmt library-headers microprofile Boost::boost Boost::serialization Boost::iostreams)
 +if (NOT USE_SYSTEM_ZSTD)
 +    target_link_libraries(citra_common PRIVATE libzstd_static)
 +else()
@@ -320,10 +309,10 @@ index 9efb1eac1..d868066d6 100644
  
  if ("x86_64" IN_LIST ARCHITECTURE)
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index 1ee217a6b..493fef61e 100644
+index b8a9d778e..a5d768270 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -479,7 +479,7 @@ create_target_directory_groups(citra_core)
+@@ -474,7 +474,7 @@ create_target_directory_groups(citra_core)
  
  target_link_libraries(citra_core PUBLIC citra_common PRIVATE audio_core network video_core)
  target_link_libraries(citra_core PRIVATE Boost::boost Boost::serialization Boost::iostreams)
