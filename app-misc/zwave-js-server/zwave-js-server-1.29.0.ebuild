@@ -8,8 +8,9 @@ inherit systemd yarn
 DESCRIPTION="Full access to zwave-js driver through Websockets"
 HOMEPAGE="https://github.com/zwave-js/zwave-js-server#readme"
 YARN_PKGS=(
+	@zwave-js/server-${PV}
 	@alcalzone/jsonl-db-3.1.0
-	@alcalzone/pak-0.8.1
+	@alcalzone/pak-0.9.0
 	@alcalzone/proper-lockfile-4.1.3-0
 	@colors/colors-1.5.0
 	@dabh/diagnostics-2.0.3
@@ -27,6 +28,7 @@ YARN_PKGS=(
 	@esm2cjs/p-timeout-5.1.0
 	@esm2cjs/responselike-3.0.0
 	@homebridge/ciao-1.1.4
+	@leichtgewicht/ip-codec-2.0.4
 	@sentry/core-7.14.2
 	@sentry/hub-7.14.2
 	@sentry/integrations-7.14.2
@@ -49,22 +51,23 @@ YARN_PKGS=(
 	@serialport/parser-spacepacket-10.3.0
 	@serialport/stream-10.3.0
 	@types/http-cache-semantics-4.0.1
-	@zwave-js/cc-10.15.0
-	@zwave-js/config-10.15.0
-	@zwave-js/core-10.15.0
-	@zwave-js/host-10.15.0
-	@zwave-js/nvmedit-10.15.0
-	@zwave-js/serial-10.15.0
-	@zwave-js/server-1.28.0
-	@zwave-js/shared-10.13.0
-	@zwave-js/testing-10.15.0
+	@types/triple-beam-1.3.2
+	@zwave-js/cc-11.0.0
+	@zwave-js/config-11.0.0
+	@zwave-js/core-11.0.0
+	@zwave-js/host-11.0.0
+	@zwave-js/nvmedit-11.0.0
+	@zwave-js/serial-11.0.0
+	@zwave-js/shared-11.0.0
+	@zwave-js/testing-11.0.0
 	agent-base-6.0.2
 	alcalzone-shared-4.0.8
 	ansi-colors-4.1.3
 	ansi-regex-5.0.1
 	ansi-styles-4.3.0
 	async-3.2.4
-	axios-0.26.1
+	asynckit-0.4.0
+	axios-0.27.2
 	buffer-from-1.1.2
 	cliui-8.0.1
 	color-3.2.1
@@ -74,25 +77,32 @@ YARN_PKGS=(
 	color-name-1.1.4
 	color-string-1.9.1
 	colorspace-1.1.4
+	combined-stream-1.0.8
 	cookie-0.4.2
 	cross-spawn-7.0.3
-	dayjs-1.11.5
+	dayjs-1.11.8
 	debug-4.3.4
 	decompress-response-6.0.0
 	defer-to-connect-2.0.1
+	delayed-stream-1.0.0
+	dns-packet-5.6.0
 	emoji-regex-8.0.0
 	enabled-2.0.0
 	escalade-3.1.1
 	eventemitter3-4.0.7
+	execa-5.0.1
 	execa-5.1.1
 	fast-deep-equal-3.1.3
 	fecha-4.2.3
 	file-stream-rotator-0.6.1
 	fn.name-1.1.0
 	follow-redirects-1.15.2
+	form-data-4.0.0
 	fs-extra-10.1.0
 	get-caller-file-2.0.5
 	get-stream-6.0.1
+	globalyzer-0.1.0
+	globrex-0.1.2
 	graceful-fs-4.2.10
 	http-cache-semantics-4.1.0
 	http2-wrapper-2.1.11
@@ -113,10 +123,14 @@ YARN_PKGS=(
 	lie-3.1.1
 	localforage-1.10.0
 	logform-2.4.2
+	logform-2.5.1
 	lowercase-keys-3.0.0
 	lru-cache-6.0.0
 	lru_map-0.3.3
+	mdns-server-1.0.11
 	merge-stream-2.0.0
+	mime-db-1.52.0
+	mime-types-2.1.35
 	mimic-fn-2.1.0
 	mimic-response-3.1.0
 	minimist-1.2.6
@@ -142,6 +156,7 @@ YARN_PKGS=(
 	safe-buffer-5.2.1
 	safe-stable-stringify-2.4.0
 	semver-7.3.8
+	semver-7.5.3
 	serialport-10.4.0
 	shebang-command-2.0.0
 	shebang-regex-3.0.0
@@ -155,6 +170,7 @@ YARN_PKGS=(
 	strip-ansi-6.0.1
 	strip-final-newline-2.0.0
 	text-hex-1.0.0
+	tiny-glob-0.2.9
 	triple-beam-1.3.0
 	tslib-1.14.1
 	tslib-2.4.0
@@ -169,9 +185,9 @@ YARN_PKGS=(
 	xstate-4.29.0
 	y18n-5.0.8
 	yallist-4.0.0
-	yargs-17.6.0
+	yargs-17.7.2
 	yargs-parser-21.1.1
-	zwave-js-10.15.0
+	zwave-js-11.0.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
