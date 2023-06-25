@@ -8,7 +8,7 @@ inherit python-single-r1
 
 DESCRIPTION="Completely rewritten adbsync with proper --exclude."
 HOMEPAGE="https://github.com/jb2170/better-adb-sync"
-SHA="30dcd280c6f006899fdfac01624fcb684ea41061"
+SHA="f812608e0e0fc9dfa92ce02a76db83d7e973da21"
 SRC_URI="https://github.com/jb2170/better-adb-sync/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
