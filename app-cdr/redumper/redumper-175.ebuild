@@ -27,7 +27,7 @@ src_configure() {
 	append-cxxflags -Wno-unknown-warning-option -fexperimental-library
 	export CXX=clang++-16
 	local mycmakeargs=(
-		"-DCMAKE_EXPERIMENTAL_CXX_SCANDEP_SOURCE=${QUOTED_DOLLAR_SCAN_DEPS} -format=p1709 -- <CMAKE_CXX_COMPILER> <DEFINES> <INCLUDES> <FLAGS> -x c++ <SOURCE> -c -o <OBJECT> -MT <DYNDEP_FILE> > <DYNDEP_FILE>"
+		"-DCMAKE_EXPERIMENTAL_CXX_SCANDEP_SOURCE=${QUOTED_DOLLAR_SCAN_DEPS} -format=p1759 -- <CMAKE_CXX_COMPILER> <DEFINES> <INCLUDES> <FLAGS> -x c++ <SOURCE> -c -o <OBJECT> -MT <DYNDEP_FILE> > <DYNDEP_FILE>"
 	)
 	cmake_src_configure
 }
