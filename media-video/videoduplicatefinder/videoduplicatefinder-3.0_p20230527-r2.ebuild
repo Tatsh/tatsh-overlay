@@ -82,6 +82,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
+PATCHES=( "${FILESDIR}/${PN}-adjust-paths.patch" )
+
 S="${WORKDIR}/${PN}-${SHA}"
 
 DOTNET_PROJECTS=( "${MY_PN}.sln" )

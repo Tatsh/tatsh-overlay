@@ -1,0 +1,249 @@
+diff --git a/VDF.Core/FFTools/FFToolsUtils.cs b/VDF.Core/FFTools/FFToolsUtils.cs
+index 3df8a6a..72a5e10 100644
+--- a/VDF.Core/FFTools/FFToolsUtils.cs
++++ b/VDF.Core/FFTools/FFToolsUtils.cs
+@@ -35,10 +35,10 @@ namespace VDF.Core.FFTools {
+ 		}
+ 		public static string? GetPath(FFTool tool) {
+ 
+-			if (File.Exists($"{CoreUtils.CurrentFolder}\\bin\\{(tool == FFTool.FFmpeg ? ffMpegPlatformName : ffProbePlatformName)}"))
+-				return $"{CoreUtils.CurrentFolder}\\bin\\{(tool == FFTool.FFmpeg ? ffMpegPlatformName : ffProbePlatformName)}";
+-			if (File.Exists(Path.Combine(CoreUtils.CurrentFolder, tool == FFTool.FFmpeg ? ffMpegPlatformName : ffProbePlatformName)))
+-				return Path.Combine(CoreUtils.CurrentFolder, tool == FFTool.FFmpeg ? ffMpegPlatformName : ffProbePlatformName);
++			if (File.Exists($"{CoreUtils.DataFolder}\\bin\\{(tool == FFTool.FFmpeg ? ffMpegPlatformName : ffProbePlatformName)}"))
++				return $"{CoreUtils.DataFolder}\\bin\\{(tool == FFTool.FFmpeg ? ffMpegPlatformName : ffProbePlatformName)}";
++			if (File.Exists(Path.Combine(CoreUtils.DataFolder, tool == FFTool.FFmpeg ? ffMpegPlatformName : ffProbePlatformName)))
++				return Path.Combine(CoreUtils.DataFolder, tool == FFTool.FFmpeg ? ffMpegPlatformName : ffProbePlatformName);
+ 
+ 			var environmentVariables = Environment.GetEnvironmentVariable("PATH")?.Split(Path.PathSeparator);
+ 			if (environmentVariables == null) return null;
+diff --git a/VDF.Core/FFTools/FFmpegNative/FFmpegHelper.cs b/VDF.Core/FFTools/FFmpegNative/FFmpegHelper.cs
+index e212e1a..507f8cb 100644
+--- a/VDF.Core/FFTools/FFmpegNative/FFmpegHelper.cs
++++ b/VDF.Core/FFTools/FFmpegNative/FFmpegHelper.cs
+@@ -56,12 +56,12 @@ namespace VDF.Core.FFTools.FFmpegNative {
+ 				}
+ 				else if (path == null) {
+ 					//Case where ffmpeg(.exe) does not exist but libraries files could exist
+-					path = Path.Combine(Utils.CoreUtils.CurrentFolder, "bin");
++					path = Path.Combine(Utils.CoreUtils.DataFolder, "bin");
+ 					if (CheckForFfmpegLibraryFilesInFolder(path))
+ 						return true;
+ 				}
+ 
+-				path = Utils.CoreUtils.CurrentFolder;
++				path = Utils.CoreUtils.DataFolder;
+ 				if (CheckForFfmpegLibraryFilesInFolder(path))
+ 					return true;
+ 
+diff --git a/VDF.Core/Utils/CoreUtils.cs b/VDF.Core/Utils/CoreUtils.cs
+index d5bb74c..cb2cc1b 100644
+--- a/VDF.Core/Utils/CoreUtils.cs
++++ b/VDF.Core/Utils/CoreUtils.cs
+@@ -20,9 +20,16 @@ namespace VDF.Core.Utils {
+ 	public static class CoreUtils {
+ 		public static bool IsWindows;
+ 		public static string CurrentFolder;
++		public static string SettingsFolder;
++		public static string DataFolder;
++		public static string StateFolder;
+ 		static CoreUtils() {
+ 			IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+ 			CurrentFolder = Path.GetDirectoryName(typeof(CoreUtils).Assembly.Location)!;
++			string Home = (Environment.GetEnvironmentVariable("HOME") ?? "/tmp");
++			SettingsFolder = Home + "/.config/videoduplicatefinder";
++			DataFolder = Home + "/.local/share/videoduplicatefinder";
++			StateFolder = Home + "/.local/state/videoduplicatefinder";
+ 		}
+ 	}
+ }
+diff --git a/VDF.Core/Utils/DatabaseUtils.cs b/VDF.Core/Utils/DatabaseUtils.cs
+index 764985e..351345b 100644
+--- a/VDF.Core/Utils/DatabaseUtils.cs
++++ b/VDF.Core/Utils/DatabaseUtils.cs
+@@ -26,12 +26,12 @@ namespace VDF.Core.Utils {
+ 		static string CurrentDatabasePath => Directory.Exists(CustomDatabaseFolder)
+ 					? FileUtils.SafePathCombine(CustomDatabaseFolder,
+ 					"ScannedFiles.db")
+-					: FileUtils.SafePathCombine(CoreUtils.CurrentFolder,
++					: FileUtils.SafePathCombine(CoreUtils.StateFolder,
+ 					"ScannedFiles.db");
+ 		static string TempDatabasePath => Directory.Exists(CustomDatabaseFolder)
+ 					? FileUtils.SafePathCombine(CustomDatabaseFolder,
+ 					"ScannedFiles_new.db")
+-					: FileUtils.SafePathCombine(CoreUtils.CurrentFolder,
++					: FileUtils.SafePathCombine(CoreUtils.StateFolder,
+ 					"ScannedFiles_new.db");
+ 
+ 		internal static bool LoadDatabase() {
+diff --git a/VDF.Core/Utils/Logger.cs b/VDF.Core/Utils/Logger.cs
+index 1107693..69d0601 100644
+--- a/VDF.Core/Utils/Logger.cs
++++ b/VDF.Core/Utils/Logger.cs
+@@ -28,7 +28,7 @@ namespace VDF.Core.Utils {
+ 		public void Info(string text) {
+ 			LogItemAdded?.Invoke($"{DateTime.Now:HH:mm:ss} => {text}");
+ 			lock (lockObject) {
+-				File.AppendAllText(Path.Combine(CoreUtils.CurrentFolder, "log.txt"), $"{DateTime.Now:HH:mm:ss} => {text}{Environment.NewLine}");
++				File.AppendAllText(Path.Combine(CoreUtils.StateFolder, "log.txt"), $"{DateTime.Now:HH:mm:ss} => {text}{Environment.NewLine}");
+ 			}
+ 		}
+ 		public void InsertSeparator(char separatorChar) {
+diff --git a/VDF.GUI/Data/SettingsFile.cs b/VDF.GUI/Data/SettingsFile.cs
+index 365fda0..f32390c 100644
+--- a/VDF.GUI/Data/SettingsFile.cs
++++ b/VDF.GUI/Data/SettingsFile.cs
+@@ -188,7 +188,7 @@ namespace VDF.GUI.Data {
+ 		}
+ 
+ 		public static void SaveSettings(string? path = null) {
+-			path ??= FileUtils.SafePathCombine(CoreUtils.CurrentFolder, "Settings.json");
++			path ??= FileUtils.SafePathCombine(CoreUtils.SettingsFolder, "Settings.json");
+ 			File.WriteAllText(path, JsonSerializer.Serialize(instance));
+ 		}
+ 
+@@ -287,13 +287,13 @@ namespace VDF.GUI.Data {
+ 			if ((path == null || path.EndsWith(".xml")) && LoadOldSettings(path))
+ 				return;
+ 
+-			path ??= FileUtils.SafePathCombine(CoreUtils.CurrentFolder, "Settings.json");
++			path ??= FileUtils.SafePathCombine(CoreUtils.SettingsFolder, "Settings.json");
+ 			if (!File.Exists(path)) return;
+ 			instance = JsonSerializer.Deserialize<SettingsFile>(File.ReadAllBytes(path));
+ 		}
+ 
+ 		static bool LoadOldSettings(string? path) {
+-			path ??= FileUtils.SafePathCombine(CoreUtils.CurrentFolder, "Settings.xml");
++			path ??= FileUtils.SafePathCombine(CoreUtils.SettingsFolder, "Settings.xml");
+ 			if (!File.Exists(path)) return false;
+ 			var xDoc = XDocument.Load(path);
+ 			foreach (var n in xDoc.Descendants("Include"))
+diff --git a/VDF.GUI/ViewModels/CustomSelectionVM.cs b/VDF.GUI/ViewModels/CustomSelectionVM.cs
+index 334f237..36b2d38 100644
+--- a/VDF.GUI/ViewModels/CustomSelectionVM.cs
++++ b/VDF.GUI/ViewModels/CustomSelectionVM.cs
+@@ -83,7 +83,7 @@ namespace VDF.GUI.ViewModels {
+ 		[JsonIgnore]
+ 		public ReactiveCommand<Unit, Unit> SaveCommand => ReactiveCommand.CreateFromTask(async () => {
+ 			var result = await Utils.PickerDialogUtils.SaveFilePicker(new FilePickerSaveOptions() {
+-				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = new BclStorageFolder(CoreUtils.DataFolder),
+ 				DefaultExtension = ".vdfselection",
+ 				FileTypeChoices = new FilePickerFileType[] {
+ 					 new FilePickerFileType("Selection File") { Patterns = new string[] { "*.vdfselection" }}}
+@@ -100,7 +100,7 @@ namespace VDF.GUI.ViewModels {
+ 		[JsonIgnore]
+ 		public ReactiveCommand<Unit, Unit> LoadCommand => ReactiveCommand.CreateFromTask(async () => {
+ 			var result = await Utils.PickerDialogUtils.OpenFilePicker(new FilePickerOpenOptions() {
+-				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = new BclStorageFolder(CoreUtils.DataFolder),
+ 				FileTypeFilter = new FilePickerFileType[] {
+ 					 new FilePickerFileType("Selection File") { Patterns = new string[] { "*.vdfselection" }}}
+ 			});
+diff --git a/VDF.GUI/ViewModels/MainWindowVM.cs b/VDF.GUI/ViewModels/MainWindowVM.cs
+index d1e7488..48ec078 100644
+--- a/VDF.GUI/ViewModels/MainWindowVM.cs
++++ b/VDF.GUI/ViewModels/MainWindowVM.cs
+@@ -45,7 +45,7 @@ namespace VDF.GUI.ViewModels {
+ 		public string BackupScanResultsFile =>
+ 			Directory.Exists(SettingsFile.Instance.CustomDatabaseFolder) ?
+ 			Path.Combine(SettingsFile.Instance.CustomDatabaseFolder, "backup.scanresults") :
+-			Path.Combine(CoreUtils.CurrentFolder, "backup.scanresults");
++			Path.Combine(CoreUtils.StateFolder, "backup.scanresults");
+ 
+ 		public ObservableCollection<DuplicateItemVM> Duplicates { get; } = new();
+ 
+@@ -150,7 +150,7 @@ namespace VDF.GUI.ViewModels {
+ 
+ 
+ 		public MainWindowVM() {
+-			FileInfo groupBlacklistFile = new(FileUtils.SafePathCombine(CoreUtils.CurrentFolder, "BlacklistedGroups.json"));
++			FileInfo groupBlacklistFile = new(FileUtils.SafePathCombine(CoreUtils.SettingsFolder, "BlacklistedGroups.json"));
+ 			if (groupBlacklistFile.Exists && groupBlacklistFile.Length > 0) {
+ 				using var stream = new FileStream(groupBlacklistFile.FullName, FileMode.Open);
+ 				GroupBlacklist = JsonSerializer.Deserialize<List<HashSet<string>>>(stream)!;
+@@ -166,7 +166,7 @@ namespace VDF.GUI.ViewModels {
+ 			Scanner.NoThumbnailImage = SixLabors.ImageSharp.Image.Load(assets!.Open(new Uri("avares://VDF.GUI/Assets/icon.png")));
+ 
+ 			try {
+-				File.Delete(Path.Combine(CoreUtils.CurrentFolder, "log.txt"));
++				File.Delete(Path.Combine(CoreUtils.StateFolder, "log.txt"));
+ 			}
+ 			catch { }
+ 			Logger.Instance.LogItemAdded += Instance_LogItemAdded;
+@@ -365,7 +365,7 @@ namespace VDF.GUI.ViewModels {
+ 		});
+ 		public static ReactiveCommand<Unit, Unit> OpenOwnFolderCommand => ReactiveCommand.Create(() => {
+ 			Process.Start(new ProcessStartInfo {
+-				FileName = CoreUtils.CurrentFolder,
++				FileName = CoreUtils.DataFolder,
+ 				UseShellExecute = true,
+ 			});
+ 		});
+@@ -388,7 +388,7 @@ namespace VDF.GUI.ViewModels {
+ 		});
+ 		public static ReactiveCommand<Unit, Unit> ImportDataBaseFromJsonCommand => ReactiveCommand.CreateFromTask(async () => {
+ 			var result = await Utils.PickerDialogUtils.OpenFilePicker(new FilePickerOpenOptions() {
+-				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = new BclStorageFolder(CoreUtils.SettingsFolder),
+ 				FileTypeFilter = new FilePickerFileType[] {
+ 					 new FilePickerFileType("Json File") { Patterns = new string[] { "*.json" }}}
+ 			});
+@@ -460,7 +460,7 @@ namespace VDF.GUI.ViewModels {
+ 		});
+ 		async Task ExportScanResultsIncludingThumbnails(string? path = null) {
+ 			path ??= await Utils.PickerDialogUtils.SaveFilePicker(new FilePickerSaveOptions() {
+-				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = new BclStorageFolder(CoreUtils.DataFolder),
+ 				DefaultExtension = ".json",
+ 				FileTypeChoices = new FilePickerFileType[] {
+ 					 new FilePickerFileType("Scan Results") { Patterns = new string[] { "*.scanresults" }}}
+@@ -490,7 +490,7 @@ namespace VDF.GUI.ViewModels {
+ 		}
+ 		public ReactiveCommand<Unit, Unit> ImportScanResultsFromFileCommand => ReactiveCommand.CreateFromTask(async () => {
+ 			var result = await Utils.PickerDialogUtils.OpenFilePicker(new FilePickerOpenOptions {
+-				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = new BclStorageFolder(CoreUtils.DataFolder),
+ 				FileTypeFilter = new FilePickerFileType[] {
+ 					 new FilePickerFileType("Scan Results") { Patterns = new string[] { "*.scanresults" }}}
+ 			});
+@@ -505,7 +505,7 @@ namespace VDF.GUI.ViewModels {
+ 
+ 			if (path == null) {
+ 				path = await Utils.PickerDialogUtils.OpenFilePicker(new FilePickerOpenOptions() {
+-					SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
++					SuggestedStartLocation = new BclStorageFolder(CoreUtils.DataFolder),
+ 					FileTypeFilter = new FilePickerFileType[] {
+ 					 new FilePickerFileType("Scan Results") { Patterns = new string[] { "*.scanresults" }}}
+ 				});
+@@ -825,7 +825,7 @@ namespace VDF.GUI.ViewModels {
+ 					blacklist.Add(duplicateItem.ItemInfo.Path);
+ 				GroupBlacklist.Add(blacklist);
+ 				try {
+-					using var stream = new FileStream(FileUtils.SafePathCombine(CoreUtils.CurrentFolder,
++					using var stream = new FileStream(FileUtils.SafePathCombine(CoreUtils.SettingsFolder,
+ 					"BlacklistedGroups.json"), FileMode.Create);
+ 					await JsonSerializer.SerializeAsync(stream, GroupBlacklist);
+ 				}
+diff --git a/VDF.GUI/ViewModels/MainWindowVM_Settings.cs b/VDF.GUI/ViewModels/MainWindowVM_Settings.cs
+index 6481019..1a11e0d 100644
+--- a/VDF.GUI/ViewModels/MainWindowVM_Settings.cs
++++ b/VDF.GUI/ViewModels/MainWindowVM_Settings.cs
+@@ -146,7 +146,7 @@ namespace VDF.GUI.ViewModels {
+ 		});
+ 		public ReactiveCommand<Unit, Unit> SaveSettingsProfileCommand => ReactiveCommand.CreateFromTask(async () => {
+ 			var result = await Utils.PickerDialogUtils.SaveFilePicker(new FilePickerSaveOptions() {
+-				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = new BclStorageFolder(CoreUtils.DataFolder),
+ 				DefaultExtension = ".json",
+ 				FileTypeChoices = new FilePickerFileType[] {
+ 					 new FilePickerFileType("Setting File") { Patterns = new string[] { "*.json" }}}
+@@ -162,7 +162,7 @@ namespace VDF.GUI.ViewModels {
+ 		});
+ 		public ReactiveCommand<Unit, Unit> LoadSettingsProfileCommand => ReactiveCommand.CreateFromTask(async () => {
+ 			var result = await Utils.PickerDialogUtils.OpenFilePicker(new FilePickerOpenOptions() {
+-				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = new BclStorageFolder(CoreUtils.DataFolder),
+ 				FileTypeFilter = new FilePickerFileType[] {
+ 					 new FilePickerFileType("Setting File") { Patterns = new string[] { "*.json", "*.xml" }}}
+ 			});
