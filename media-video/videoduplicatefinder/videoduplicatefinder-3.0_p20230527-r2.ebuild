@@ -82,7 +82,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-PATCHES=( "${FILESDIR}/${PN}-adjust-paths.patch" )
+PATCHES=( "${FILESDIR}/${PN}-0001-adjust-paths.patch" )
 
 S="${WORKDIR}/${PN}-${SHA}"
 
