@@ -37,10 +37,10 @@ index e212e1a..507f8cb 100644
  					return true;
  
 diff --git a/VDF.Core/Utils/CoreUtils.cs b/VDF.Core/Utils/CoreUtils.cs
-index d5bb74c..cb2cc1b 100644
+index d5bb74c..50bc23f 100644
 --- a/VDF.Core/Utils/CoreUtils.cs
 +++ b/VDF.Core/Utils/CoreUtils.cs
-@@ -20,9 +20,16 @@ namespace VDF.Core.Utils {
+@@ -20,9 +20,28 @@ namespace VDF.Core.Utils {
  	public static class CoreUtils {
  		public static bool IsWindows;
  		public static string CurrentFolder;
@@ -54,6 +54,18 @@ index d5bb74c..cb2cc1b 100644
 +			SettingsFolder = Home + "/.config/videoduplicatefinder";
 +			DataFolder = Home + "/.local/share/videoduplicatefinder";
 +			StateFolder = Home + "/.local/state/videoduplicatefinder";
++			if (!Directory.Exists(SettingsFolder))
++			{
++				Directory.CreateDirectory(SettingsFolder);
++			}
++			if (!Directory.Exists(DataFolder))
++			{
++				Directory.CreateDirectory(DataFolder);
++			}
++			if (!Directory.Exists(StateFolder))
++			{
++				Directory.CreateDirectory(StateFolder);
++			}
  		}
  	}
  }
