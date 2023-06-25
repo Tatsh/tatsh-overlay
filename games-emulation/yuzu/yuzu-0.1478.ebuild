@@ -11,7 +11,7 @@ CPP_JWT_SHA="e12ef06218596b52d9b5d6e1639484866a8e7067"
 _DYNARMIC_SHA="7da378033a7764f955516f75194856d87bbcd7a5"
 NX_TZDB_VERSION="220816"
 MBEDTLS_SHA="8c88150ca139e06aa2aae8349df8292a88148ea1"
-SDL_SHA="f17058b562c8a1090c0c996b42982721ace90903"
+SDL_SHA="c27f3ead7c37bcbef608f385baa9fce7232efc6d"
 SIRIT_SHA="ab75463999f4f3291976b079d42d52ee91eebf3f"
 SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/arun11299/cpp-jwt/archive/${CPP_JWT_SHA}.tar.gz -> ${PN}-cpp-jwt-${CPP_JWT_SHA:0:7}.tar.gz
