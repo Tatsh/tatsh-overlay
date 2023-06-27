@@ -3,6 +3,7 @@
 
 EAPI=8
 
+WANT_GYP=1
 inherit systemd yarn
 
 DESCRIPTION="Full access to zwave-js driver through Websockets"
