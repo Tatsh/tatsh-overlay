@@ -71,9 +71,12 @@ def main() -> int:
                                root_dir=root_dir,
                                recursive=True):
             with open(path_join(root_dir, item)) as j:
-                dep_data = json.load(j)
-                if lic := dep_data.get('license'):
-                    licenses.add(lic)
+                try:
+                    dep_data = json.load(j)
+                    if lic := dep_data.get('license'):
+                        licenses.add(lic)
+                except json.decoder.JSONDecodeError:
+                    pass
         print(
             EBUILD_TEMPLATE.format(
                 year=date.today().year,
