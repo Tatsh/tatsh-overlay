@@ -36,6 +36,8 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	# different than the basename taken off the URI.
 	_YARN_DISTFILES=()
 
+	WANT_GYP=${WANT_GYP:-0}
+
 	# @FUNCTION: yarn_set_globals
 	# @DESCRIPTION:
 	# This must be called after defining YARN_PKGS in global scope. This
@@ -44,7 +46,10 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	# after calling this.
 	yarn_set_globals() {
 		# shellcheck disable=SC2034
-		BDEPEND="sys-apps/yarn dev-util/node-gyp"
+		BDEPEND="sys-apps/yarn"
+		if [ "${WANT_GYP}" -ne 0 ]; then
+			BDEPEND+=" dev-util/node-gyp"
+		fi
 		# shellcheck disable=SC2034
 		RDEPEND="net-libs/nodejs:="
 		# shellcheck disable=SC2034
