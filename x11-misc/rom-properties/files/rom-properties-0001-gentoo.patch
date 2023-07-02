@@ -1,84 +1,17 @@
-From 37dd991eec4f20449f5ce50ab615b7bcbfd28afb Mon Sep 17 00:00:00 2001
+From 55251f1529c01ced110df999de8d63123420a2dc Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 29 May 2022 20:06:15 -0400
 Subject: [PATCH] Gentoo
 
 ---
- CMakeLists.txt                   | 10 ----------
- src/kde/kf5/CMakeLists.txt       | 10 +++++-----
- src/librpbase/RomData.cpp        |  1 -
- src/libunixcommon/CMakeLists.txt |  8 ++++----
- 4 files changed, 9 insertions(+), 20 deletions(-)
+ src/librpbase/RomData.cpp | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index bc95e342c..5c44ecee7 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -149,7 +149,6 @@ ENDIF(ENABLE_NLS)
- # Project subdirectories.
- ADD_SUBDIRECTORY(extlib)
- ADD_SUBDIRECTORY(src)
--ADD_SUBDIRECTORY(doc)
- ADD_SUBDIRECTORY(xdg)
- 
- ### Build summary ###
-@@ -327,15 +326,6 @@ SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
- SET(CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
- #SET(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_SOURCE_DIR}/doc/WELCOME.txt")
- 
--# Additional document files for the root directory.
--# TODO: Convert from Unix line endings to Windows when
--# compiling for Windows?
--INCLUDE(DirInstallPaths)
--INSTALL(FILES NETWORK.md
--	DESTINATION "${DIR_INSTALL_DOC_ROOT}"
--	COMPONENT "doc"
--	)
--
- # CPack: Source package settings.
- # NOTE: Double-escape is required because the unescaped
- # string # is written to CPackSourceConfig.cmake, which
-diff --git a/src/kde/kf5/CMakeLists.txt b/src/kde/kf5/CMakeLists.txt
-index d304de263..ba97855a1 100644
---- a/src/kde/kf5/CMakeLists.txt
-+++ b/src/kde/kf5/CMakeLists.txt
-@@ -32,7 +32,7 @@ IF(ECM_MODULE_PATH AND ECM_KDE_MODULE_DIR)
- 	FIND_PACKAGE(Qt5 ${REQUIRE_KF5} COMPONENTS Core Gui Widgets DBus)
- 	IF(Qt5Core_FOUND AND Qt5Gui_FOUND AND Qt5Widgets_FOUND)
- 		# NOTE: QT_PLUGIN_INSTALL_DIR is missing the 'qt5' directory.
--		# Use `qtpaths` instead to get the actual path.
-+		# Use `qtpaths5` instead to get the actual path.
- 		#
- 		# Ubuntu:
- 		# - Expected: lib/${DEB_HOST_MULTIARCH}/qt5/plugins
-@@ -47,10 +47,10 @@ IF(ECM_MODULE_PATH AND ECM_KDE_MODULE_DIR)
- 		# - Actual:   (FIXME)
- 		#
- 
--		# Find the qtpaths executable.
--		FIND_PROGRAM(QTPATHS qtpaths)
-+		# Find the qtpaths5 executable.
-+		FIND_PROGRAM(QTPATHS qtpaths5)
- 		IF(NOT QTPATHS)
--			MESSAGE(FATAL_ERROR "qtpaths not found. Install one of these packages:
-+			MESSAGE(FATAL_ERROR "qtpaths5 not found. Install one of these packages:
-   - Debian/Ubuntu: qttools5-dev-tools
-   - Red Hat/Fedora: qt5-qttools")
- 		ENDIF(NOT QTPATHS)
-@@ -59,7 +59,7 @@ IF(ECM_MODULE_PATH AND ECM_KDE_MODULE_DIR)
- 		# Prefix will be removed from the plugin directory if necessary.
- 		EXEC_PROGRAM(${QTPATHS} ARGS --plugin-dir OUTPUT_VARIABLE KF5_PLUGIN_INSTALL_DIR)
- 		IF(NOT KF5_PLUGIN_INSTALL_DIR)
--			MESSAGE(FATAL_ERROR "`qtpaths` isn't working correctly.")
-+			MESSAGE(FATAL_ERROR "`qtpaths5` isn't working correctly.")
- 		ENDIF(NOT KF5_PLUGIN_INSTALL_DIR)
- 		# FIXME: Mageia has the Qt path set to "/usr/lib64/qt5" instead of "/usr".
- 		# Reference: https://github.com/GerbilSoft/rom-properties/issues/69
 diff --git a/src/librpbase/RomData.cpp b/src/librpbase/RomData.cpp
-index 2d43f0164..122b24524 100644
+index 755d37f8f..a15a4ad2a 100644
 --- a/src/librpbase/RomData.cpp
 +++ b/src/librpbase/RomData.cpp
-@@ -833,7 +833,6 @@ const rp_image *RomData::image(ImageType imageType) const
+@@ -831,7 +831,6 @@ const rp_image *RomData::image(ImageType imageType) const
  
  #ifdef _DEBUG // Must be guarded with this in case neither `_DEBUG` nor `NDEBUG` are defined
  	// SANITY CHECK: `img` must not be -1LL.
@@ -86,40 +19,6 @@ index 2d43f0164..122b24524 100644
  #endif
  
  	return (ret == 0 ? img : nullptr);
-diff --git a/src/libunixcommon/CMakeLists.txt b/src/libunixcommon/CMakeLists.txt
-index 7a5fbe551..26967ee2b 100644
---- a/src/libunixcommon/CMakeLists.txt
-+++ b/src/libunixcommon/CMakeLists.txt
-@@ -34,9 +34,9 @@ IF(BUILD_KF5)
- 	# Find the qtpaths executable for Qt5.
- 	SET(QT_SELECT_OLD "$ENV{QT_SELECT}")
- 	SET(ENV{QT_SELECT} qt5)
--	FIND_PROGRAM(QTPATHS qtpaths)
-+	FIND_PROGRAM(QTPATHS qtpaths5)
- 	IF(NOT QTPATHS)
--		MESSAGE(FATAL_ERROR "qtpaths not found. Install one of these packages:
-+		MESSAGE(FATAL_ERROR "qtpaths5 not found. Install one of these packages:
-   - Debian/Ubuntu: qttools5-dev-tools
-   - Red Hat/Fedora: qt5-qttools")
- 	ENDIF(NOT QTPATHS)
-@@ -45,7 +45,7 @@ IF(BUILD_KF5)
- 	# Prefix will be removed from the plugin directory if necessary.
- 	EXEC_PROGRAM(${QTPATHS} ARGS --plugin-dir OUTPUT_VARIABLE KF5_PLUGIN_INSTALL_DIR)
- 	IF(NOT KF5_PLUGIN_INSTALL_DIR)
--		MESSAGE(FATAL_ERROR "`qtpaths` isn't working correctly.")
-+		MESSAGE(FATAL_ERROR "`qtpaths5` isn't working correctly.")
- 	ENDIF(NOT KF5_PLUGIN_INSTALL_DIR)
- 	EXEC_PROGRAM(${QTPATHS} ARGS --install-prefix OUTPUT_VARIABLE QT5_INSTALL_PREFIX)
- 	INCLUDE(ReplaceHardcodedPrefix)
-@@ -104,7 +104,7 @@ IF(BUILD_GTK3 OR BUILD_GTK4)
- 	ELSEIF(LibNautilusExtension_FOUND)
- 		# Found v3 but not v4. Use defaults for v4.
- 		SET(LibNautilusExtension3_EXTENSION_DIR "${LibNautilusExtension_EXTENSION_DIR}")
--		STRING(REPLACE "extensions-3.0" "extensions-4" LibNautilusExtension4_EXTENSION_DIR "${LibNautilusExtension_EXTENSION_DIR}") 
-+		STRING(REPLACE "extensions-3.0" "extensions-4" LibNautilusExtension4_EXTENSION_DIR "${LibNautilusExtension_EXTENSION_DIR}")
- 	ELSEIF(LibNautilusExtension4_FOUND)
- 		# Found v4 but not v3. Use defaults for v3.
- 		STRING(REPLACE "extensions-4" "extensions-3.0" LibNautilusExtension3_EXTENSION_DIR "${LibNautilusExtension4_EXTENSION_DIR}")
 -- 
-2.39.0
+2.41.0
 
