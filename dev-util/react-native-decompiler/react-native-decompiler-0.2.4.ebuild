@@ -6,8 +6,9 @@ EAPI=8
 inherit yarn
 
 DESCRIPTION="React Native decompiler."
-HOMEPAGE="https://github.com/nomi9995/react-native-decompiler#readme"
+HOMEPAGE="https://github.com/nomi9995/react-native-decompiler"
 YARN_PKGS=(
+	"${P}"
 	@babel/code-frame-7.22.5
 	@babel/generator-7.12.11
 	@babel/generator-7.22.5
@@ -179,7 +180,6 @@ YARN_PKGS=(
 	prop-types-15.8.1
 	punycode-2.3.0
 	react-is-16.13.1
-	react-native-decompiler-0.2.4
 	regexp.prototype.flags-1.5.0
 	regexpp-3.2.0
 	require-from-string-2.0.2
