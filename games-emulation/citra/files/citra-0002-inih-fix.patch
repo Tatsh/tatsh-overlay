@@ -1,11 +1,12 @@
-From 0cdf2050f5e863f9e9cd99fe7d9c270086b279a8 Mon Sep 17 00:00:00 2001
+From 34fc83713084e0d5a80319e2ddc0353c794adc05 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:47 -0400
 Subject: [PATCH 2/2] inih fix
 
 ---
- src/citra/config.cpp | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ src/citra/config.cpp                              | 2 +-
+ src/video_core/renderer_vulkan/vk_shader_util.cpp | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/citra/config.cpp b/src/citra/config.cpp
 index 09fda6ca5..09d25ba2a 100644
@@ -20,6 +21,19 @@ index 09fda6ca5..09d25ba2a 100644
  #include "citra/config.h"
  #include "citra/default_ini.h"
  #include "common/file_util.h"
+diff --git a/src/video_core/renderer_vulkan/vk_shader_util.cpp b/src/video_core/renderer_vulkan/vk_shader_util.cpp
+index 2d84a76b9..4d0f9606e 100644
+--- a/src/video_core/renderer_vulkan/vk_shader_util.cpp
++++ b/src/video_core/renderer_vulkan/vk_shader_util.cpp
+@@ -2,7 +2,7 @@
+ // Licensed under GPLv2 or any later version
+ // Refer to the license.txt file included.
+ 
+-#include <SPIRV/GlslangToSpv.h>
++#include <glslang/SPIRV/GlslangToSpv.h>
+ #include <glslang/Include/ResourceLimits.h>
+ #include <glslang/Public/ShaderLang.h>
+ #include "common/assert.h"
 -- 
 2.41.0
 

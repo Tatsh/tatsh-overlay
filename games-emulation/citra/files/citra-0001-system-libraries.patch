@@ -1,25 +1,27 @@
-From f7211dc8dbe9343cae04cb6792ee1b88c74102d1 Mon Sep 17 00:00:00 2001
+From e4591048b9b0c3f7d8c341960125141a5eaee5a7 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/2] System libraries
 
 ---
- CMakeLists.txt                |   8 ++
- externals/CMakeLists.txt      | 149 ++++++++++++++++++++++------------
+ CMakeLists.txt                |  16 ++++
+ externals/CMakeLists.txt      | 151 +++++++++++++++++++++-------------
  src/audio_core/CMakeLists.txt |   8 +-
  src/citra/CMakeLists.txt      |   7 +-
  src/common/CMakeLists.txt     |   9 +-
  src/core/CMakeLists.txt       |   2 +-
- 6 files changed, 122 insertions(+), 61 deletions(-)
+ 6 files changed, 131 insertions(+), 62 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ccbe6cdd7..7bd915c25 100644
+index 19d59f685..2cd235955 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -55,6 +55,14 @@ CMAKE_DEPENDENT_OPTION(ENABLE_AUDIOTOOLBOX "Use AudioToolbox decoder (preferred
- CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ON "MINGW" OFF)
- 
- option(USE_SYSTEM_BOOST "Use the system Boost libs (instead of the bundled ones)" OFF)
+@@ -54,6 +54,22 @@ CMAKE_DEPENDENT_OPTION(ENABLE_AUDIOTOOLBOX "Use AudioToolbox decoder (preferred
+ CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ${IS_DEBUG_BUILD} "MINGW" OFF)
+ option(ENABLE_LTO "Enable link time optimization" OFF)
+ option(CITRA_USE_PRECOMPILED_HEADERS "Use precompiled headers" ON)
++
++option(USE_SYSTEM_BOOST "Use the system Boost libs (instead of the bundled ones)" OFF)
 +option(USE_SYSTEM_CUBEB "Use system cubeb libs" OFF)
 +option(USE_SYSTEM_ENET "Use system enet libs" OFF)
 +option(USE_SYSTEM_FMT "Use system fmt libs" OFF)
@@ -28,11 +30,17 @@ index ccbe6cdd7..7bd915c25 100644
 +option(USE_SYSTEM_XBYAK "Use system xbyak" OFF)
 +option(USE_SYSTEM_ZSTD "Use system zstd libs" OFF)
 +option(DISABLE_SUBMODULE_CHECK "Disable check for submodules" OFF)
++
++
++CMAKE_DEPENDENT_OPTION(CITRA_USE_BUNDLED_MOLTENVK "Download the bundled MoltenVK" ON "APPLE" OFF)
++
++CMAKE_DEPENDENT_OPTION(CITRA_BUNDLE_LIBRARIES "Bundle dependent libraries with the output executables" ON "APPLE" OFF)
++
+ option(CITRA_WARNINGS_AS_ERRORS "Enable warnings as errors" ON)
  
- 
- CMAKE_DEPENDENT_OPTION(CITRA_USE_BUNDLED_MOLTENVK "Download the bundled MoltenVK" ON "APPLE" OFF)
+ # System library options
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index bc23530f3..c9a029706 100644
+index 79c7d57e4..56235eeb4 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -12,46 +12,51 @@ include(DownloadExternals)
@@ -181,7 +189,7 @@ index bc23530f3..c9a029706 100644
  
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-@@ -145,18 +170,30 @@ endif()
+@@ -145,19 +170,31 @@ endif()
  set(ZSTD_LEGACY_SUPPORT OFF)
  set(ZSTD_BUILD_PROGRAMS OFF)
  set(ZSTD_BUILD_SHARED OFF)
@@ -208,10 +216,12 @@ index bc23530f3..c9a029706 100644
  if (ENABLE_CUBEB)
 -    set(BUILD_TESTS OFF CACHE BOOL "")
 -    set(BUILD_TOOLS OFF CACHE BOOL "")
+-    set(BUNDLE_SPEEX ON CACHE BOOL "")
 -    add_subdirectory(cubeb EXCLUDE_FROM_ALL)
 +    if (NOT USE_SYSTEM_CUBEB)
 +        set(BUILD_TESTS OFF CACHE BOOL "")
 +        set(BUILD_TOOLS OFF CACHE BOOL "")
++        set(BUNDLE_SPEEX ON CACHE BOOL "")
 +        add_subdirectory(cubeb EXCLUDE_FROM_ALL)
 +    else()
 +        find_package(cubeb REQUIRED)
@@ -219,7 +229,7 @@ index bc23530f3..c9a029706 100644
  endif()
  
  # DiscordRPC
-@@ -218,15 +255,19 @@ endif()
+@@ -223,15 +260,19 @@ endif()
  
  # OpenAL Soft
  if (ENABLE_OPENAL)
@@ -269,7 +279,7 @@ index 4385cdf5f..4e31196f8 100644
  
  if (CITRA_USE_PRECOMPILED_HEADERS)
 diff --git a/src/citra/CMakeLists.txt b/src/citra/CMakeLists.txt
-index 5793505a2..e25ca7196 100644
+index 682dbbaa6..f1633949e 100644
 --- a/src/citra/CMakeLists.txt
 +++ b/src/citra/CMakeLists.txt
 @@ -19,7 +19,12 @@ add_executable(citra
@@ -309,10 +319,10 @@ index 14a21b867..8e0992091 100644
  
  if ("x86_64" IN_LIST ARCHITECTURE)
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index b8a9d778e..a5d768270 100644
+index 0e628cb55..bb4f4ced8 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -474,7 +474,7 @@ create_target_directory_groups(citra_core)
+@@ -480,7 +480,7 @@ create_target_directory_groups(citra_core)
  
  target_link_libraries(citra_core PUBLIC citra_common PRIVATE audio_core network video_core)
  target_link_libraries(citra_core PRIVATE Boost::boost Boost::serialization Boost::iostreams)
