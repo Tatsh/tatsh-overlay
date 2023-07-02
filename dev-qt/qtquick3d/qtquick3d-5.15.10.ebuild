@@ -6,6 +6,7 @@ EAPI=8
 inherit qt5-build
 
 DESCRIPTION="Qt module and API for defining 3D content in Qt QuickTools"
+SLOT="5/${QT5_PV}"
 
 KEYWORDS="~amd64"
 DEPEND="=dev-qt/qtcore-${QT5_PV}*:5=
