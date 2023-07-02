@@ -10,7 +10,7 @@ DESCRIPTION="Video duplicate finder."
 HOMEPAGE="https://github.com/0x90d/videoduplicatefinder"
 MY_PN="VideoDuplicateFinder"
 MY_PV="3.0.0-preview-${PV:5}"
-SHA="c7908e7cdf7a6c04ba7172304f35e2f774235b77"
+SHA="2ddca14a7d385a1b17f60fa2ac8d18b2a4820acb"
 NUGETS="avalonia-11.0.0-preview4
 	avalonia.angle.windows.natives-2.1.0.2020091801
 	avalonia.controls.datagrid-11.0.0-preview4
