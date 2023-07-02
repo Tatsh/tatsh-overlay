@@ -4,8 +4,8 @@ from datetime import datetime
 from functools import cmp_to_key, lru_cache
 from os.path import basename, dirname, join as path_join, realpath, splitext
 from os.path import expanduser
-from typing import (Any, Callable, Dict, Final, Iterator, Mapping, Optional,
-                    Sequence, Set, Tuple, TypeVar, Union, cast)
+from typing import (Any, Callable, Final, Iterator, Mapping, Sequence, TypeVar,
+                    Union, cast)
 from urllib.parse import urlparse
 import argparse
 import glob
@@ -23,7 +23,7 @@ import portage
 import requests
 import yaml
 
-PropTuple = Tuple[str, str, str, str, str, str | None, bool]
+PropTuple = tuple[str, str, str, str, str, str | None, bool]
 Response = Union['TextDataResponse', requests.Response]
 T = TypeVar('T')
 
@@ -38,7 +38,7 @@ SEMVER_RE: Final[str] = (r'^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.'
                          r'(?P<buildmetadata>[0-9a-zA-Z-]+'
                          r'(?:\.[0-9a-zA-Z-]+)*))?$')
 
-SUBMODULES: Final[Mapping[str, Set[Union[str, Tuple[str, str]]]]] = {
+SUBMODULES: Final[Mapping[str, set[str | tuple[str, str]]]] = {
     'app-misc/tasksh': {'src/libshared'},
     'app-pda/tsschecker': {'external/jssy'},
     'games-emulation/citra': {
@@ -128,7 +128,7 @@ def make_github_grit_commit_re(version: str) -> str:
             str(len(version)) + r'})[0-9a-f]*</id>')
 
 
-def parse_npm_package_name(s: str) -> Tuple[str, Optional[str], Optional[str]]:
+def parse_npm_package_name(s: str) -> tuple[str, str | None, str | None]:
     m = re.match(RE_SCOPED, s) or re.match(RE_NON_SCOPED, s)
     if not m:
         raise Exception(f'Invalid package name: {s}')
@@ -177,14 +177,14 @@ def get_highest_matches(search_dir: str) -> Iterator[str]:
     for path in glob.glob(f'{search_dir}/**/*.ebuild', recursive=True):
         dn = dirname(path)
         name = f'{basename(dirname(dn))}/{basename(dn)}'
-        if matches := P.xmatch('match-visible',
-                               name):
+        if matches := P.xmatch('match-visible', name):
             for m in matches:
                 if P.findname2(m)[1] == search_dir:
                     yield m
 
 
-def get_highest_matches2(names: Sequence[str], search_dir: str) -> Iterator[str]:
+def get_highest_matches2(names: Sequence[str],
+                         search_dir: str) -> Iterator[str]:
     for name in names:
         if matches := P.xmatch('match-visible', name):
             for m in matches:
@@ -192,7 +192,15 @@ def get_highest_matches2(names: Sequence[str], search_dir: str) -> Iterator[str]
                     yield m
 
 
-def catpkg_catpkgsplit(s: str) -> Tuple[str, str, str, str]:
+def find_highest_match_ebuild_path(cp: str, search_dir: str) -> str:
+    return sorted(
+        [(s := P.findname2(x)) for x in P.match(cp) if s[1] == search_dir],
+        key=cmp_to_key(
+            lambda a, b: vercmp(catpkgsplit(a)[2],
+                                catpkgsplit(b)[2])))[-1][0]
+
+
+def catpkg_catpkgsplit(s: str) -> tuple[str, str, str, str]:
     result = catpkgsplit(s)
     if result:
         cat, pkg, ebuild_version = result[0:3]
@@ -211,12 +219,12 @@ def get_first_src_uri(match: str, search_dir: str) -> str:
 
 @dataclass
 class LivecheckSettings:
-    branches: Dict[str, str]
-    checksum_livechecks: Set[str]
-    custom_livechecks: Dict[str, Tuple[str, str, bool, str]]
-    ignored_packages: Set[str]
-    no_auto_update: Set[str]
-    sha_sources: Dict[str, str]
+    branches: dict[str, str]
+    checksum_livechecks: set[str]
+    custom_livechecks: dict[str, tuple[str, str, bool, str]]
+    ignored_packages: set[str]
+    no_auto_update: set[str]
+    sha_sources: dict[str, str]
     transformations: Mapping[str, Callable[[str], str]]
 
 
@@ -232,8 +240,8 @@ def dotize(s: str) -> str:
 
 def get_props(search_dir: str,
               settings: LivecheckSettings,
-              names: Optional[Sequence[str]] = None,
-              exclude: Optional[Sequence[str]] = None) -> Iterator[PropTuple]:
+              names: Sequence[str] | None = None,
+              exclude: Sequence[str] | None = None) -> Iterator[PropTuple]:
     log = logging.getLogger(LOG_NAME)
     log.debug('get_props(): search_dir=%s', search_dir)
     exclude = exclude or []
@@ -277,13 +285,13 @@ def get_props(search_dir: str,
                     r.raise_for_status()
                     yield (cat, pkg, ebuild_version,
                            dict(
-                               cast(Sequence[Tuple[str, str]],
+                               cast(Sequence[tuple[str, str]],
                                     chunks(fields_s.split(' '), 2)))['SHA512'],
                            f'data:{hashlib.sha512(r.content).hexdigest()}',
                            r'^[0-9a-f]+$', False)
                     break
             if not found:
-                home = P.aux_get(match, ['HOMEPAGE'], mytree=[search_dir])[0]
+                home = P.aux_get(match, ['HOMEPAGE'], mytree=search_dir)[0]
                 raise RuntimeError(
                     f'Not handled: {catpkg} (checksum), homepage: {home}, '
                     f'SRC_URI: {src_uri}')
@@ -457,7 +465,7 @@ def handle_outfox_serenity(s: str) -> str:
     return s.replace('s', '.')
 
 
-def assert_not_none(x: Optional[T]) -> T:
+def assert_not_none(x: T | None) -> T:
     assert x is not None
     return x
 
@@ -473,7 +481,7 @@ def handle_bsnes_hd(s: str) -> str:
     return ret
 
 
-def setup_logging_stderr(name: Optional[str] = LOG_NAME,
+def setup_logging_stderr(name: str = LOG_NAME,
                          verbose: bool = False) -> logging.Logger:
     name = name if name else basename(sys.argv[0])
     log = logging.getLogger(name)
@@ -486,7 +494,7 @@ def setup_logging_stderr(name: Optional[str] = LOG_NAME,
 
 
 def latest_jetbrains_versions(xml_content: str,
-                              product_name: str) -> Iterator[Dict[str, str]]:
+                              product_name: str) -> Iterator[dict[str, str]]:
     return (dict(version=z.attrib['version'],
                  fullNumber=z.attrib['fullNumber']) for z in [
                      y for y in [
@@ -620,7 +628,7 @@ def main() -> int:
             if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
                     or top_hash != version):
                 if args.auto_update and cp not in settings.no_auto_update:
-                    ebuild = P.findname(P.match(cp)[-1])
+                    ebuild = find_highest_match_ebuild_path(cp, search_dir)
                     with open(ebuild, 'r') as f:
                         old_content = f.read()
                     content = old_content.replace(version, top_hash)
@@ -669,7 +677,8 @@ def main() -> int:
                     sha_str = ''
                     new_sha = ''
                     if update_sha_too_source:
-                        ebuild = P.findname(P.match(cp)[-1])
+                        ebuild = find_highest_match_ebuild_path(
+                            cp, search_dir)
                         old_sha = get_old_sha(ebuild)
                         sha_str = f' ({old_sha}) '
                         log.debug('Fetching %s', update_sha_too_source)
