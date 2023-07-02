@@ -1,4 +1,4 @@
-From 17f12f0192d99c87ebeca31a2c4645284f7cf4be Mon Sep 17 00:00:00 2001
+From 39ec75131e1c786d3b4229f41248f39fd9f64110 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 22 Nov 2022 07:35:22 -0500
 Subject: [PATCH 2/3] Disable updates
@@ -10,7 +10,7 @@ Subject: [PATCH 2/3] Disable updates
  3 files changed, 1 insertion(+), 32 deletions(-)
 
 diff --git a/src/Ryujinx/Modules/Updater/Updater.cs b/src/Ryujinx/Modules/Updater/Updater.cs
-index 3e0dc99b..3ffc2761 100644
+index f8ce4c0b..e1911d44 100644
 --- a/src/Ryujinx/Modules/Updater/Updater.cs
 +++ b/src/Ryujinx/Modules/Updater/Updater.cs
 @@ -511,6 +511,7 @@ namespace Ryujinx.Modules
@@ -76,5 +76,5 @@ index 0caa477b..7f2d7a47 100644
                                    <object class="GtkCheckButton" id="_showConfirmExitToggle">
                                      <property name="label" translatable="yes">Show "Confirm Exit" Dialog</property>
 -- 
-2.40.1
+2.41.0
 

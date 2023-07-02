@@ -1,0 +1,32 @@
+From 3f2592d40d45277782076cb6d55d0a6ccf65ae9f Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 22 Nov 2022 07:52:55 -0500
+Subject: [PATCH 3/3] Use ConfigurationPath for log base path
+
+---
+ src/Ryujinx.Ui.Common/Configuration/LoggerModule.cs | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/Ryujinx.Ui.Common/Configuration/LoggerModule.cs b/src/Ryujinx.Ui.Common/Configuration/LoggerModule.cs
+index e18b2bfa..ce5e1dd2 100644
+--- a/src/Ryujinx.Ui.Common/Configuration/LoggerModule.cs
++++ b/src/Ryujinx.Ui.Common/Configuration/LoggerModule.cs
+@@ -1,4 +1,5 @@
+-﻿using Ryujinx.Common;
++﻿using Ryujinx.Ava;
++using Ryujinx.Common;
+ using Ryujinx.Common.Logging;
+ using Ryujinx.Common.Logging.Targets;
+ using System;
+@@ -81,7 +82,7 @@ namespace Ryujinx.Ui.Common.Configuration
+             if (e.NewValue)
+             {
+                 Logger.AddTarget(new AsyncLogTargetWrapper(
+-                    new FileLogTarget(ReleaseInformation.GetBaseApplicationDirectory(), "file"),
++                    new FileLogTarget(Program.ConfigurationPath, "file"),
+                     1000,
+                     AsyncLogTargetOverflowAction.Block
+                 ));
+-- 
+2.41.0
+
