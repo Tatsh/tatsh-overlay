@@ -3,14 +3,11 @@
 
 EAPI=8
 
-COMMIT="dbd7139b4eb7372813cfd0d58d3fa1f355763f3d"
-
 inherit cmake
 
 DESCRIPTION="File dialog library with C and C++ bindings, based on nativefiledialog"
 HOMEPAGE="https://github.com/btzy/nativefiledialog-extended"
-SRC_URI="https://github.com/btzy/nativefiledialog-extended/archive/${COMMIT}.tar.gz -> ${P}.gh.tar.gz"
-S="${WORKDIR}/${PN}-${COMMIT}"
+SRC_URI="https://github.com/btzy/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="ZLIB"
 SLOT="0/${PV}"
