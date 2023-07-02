@@ -176,15 +176,20 @@ def process_submodules(pkg_name: str, ref: str, contents: str,
 def get_highest_matches(search_dir: str) -> Iterator[str]:
     for path in glob.glob(f'{search_dir}/**/*.ebuild', recursive=True):
         dn = dirname(path)
+        name = f'{basename(dirname(dn))}/{basename(dn)}'
         if matches := P.xmatch('match-visible',
-                               f'{basename(dirname(dn))}/{basename(dn)}'):
-            yield matches[-1]
+                               name):
+            for m in matches:
+                if P.findname2(m)[1] == search_dir:
+                    yield m
 
 
-def get_highest_matches2(names: Sequence[str]) -> Iterator[str]:
+def get_highest_matches2(names: Sequence[str], search_dir: str) -> Iterator[str]:
     for name in names:
         if matches := P.xmatch('match-visible', name):
-            yield matches[-1]
+            for m in matches:
+                if P.findname2(m)[1] == search_dir:
+                    yield m
 
 
 def catpkg_catpkgsplit(s: str) -> Tuple[str, str, str, str]:
@@ -200,8 +205,8 @@ def chunks(l: Sequence[Any], n: int) -> Iterator[Sequence[Any]]:
         yield l[i:i + n]
 
 
-def get_first_src_uri(match: str) -> str:
-    return P.aux_get(match, ['SRC_URI'])[0].split(' ')[0]
+def get_first_src_uri(match: str, search_dir: str) -> str:
+    return P.aux_get(match, ['SRC_URI'], mytree=search_dir)[0].split(' ')[0]
 
 
 @dataclass
@@ -235,12 +240,12 @@ def get_props(search_dir: str,
     for match in sorted(
             set(
                 get_highest_matches(search_dir)
-                if not names else get_highest_matches2(names))):
+                if not names else get_highest_matches2(names, search_dir))):
         catpkg, cat, pkg, ebuild_version = catpkg_catpkgsplit(match)
         if catpkg in exclude or pkg in exclude:
             log.debug('Ignoring %s', catpkg)
             continue
-        src_uri = get_first_src_uri(match)
+        src_uri = get_first_src_uri(match, search_dir)
         parsed_uri = urlparse(src_uri)
         if cat.startswith('acct-') or catpkg in settings.ignored_packages:
             continue
@@ -278,7 +283,7 @@ def get_props(search_dir: str,
                            r'^[0-9a-f]+$', False)
                     break
             if not found:
-                home = P.aux_get(match, ['HOMEPAGE'])[0]
+                home = P.aux_get(match, ['HOMEPAGE'], mytree=[search_dir])[0]
                 raise RuntimeError(
                     f'Not handled: {catpkg} (checksum), homepage: {home}, '
                     f'SRC_URI: {src_uri}')
@@ -325,7 +330,7 @@ def get_props(search_dir: str,
                    r'<pubDate>([^<]+)</pubDate>', False)
         elif (parsed_uri.hostname == 'gist.github.com'
               or parsed_uri.hostname == 'gist.githubusercontent.com'):
-            home = P.aux_get(match, ['HOMEPAGE'])[0]
+            home = P.aux_get(match, ['HOMEPAGE'], mytree=search_dir)[0]
             yield (cat, pkg, ebuild_version, ebuild_version,
                    f'{home}/revisions',
                    r'<relative-time datetime="([0-9-]{10})', False)
@@ -341,7 +346,7 @@ def get_props(search_dir: str,
                    r'"version":"([^"]+)"[,\}]', True)
         elif src_uri.startswith('https://www.raphnet-tech.com/downloads/'):
             yield (cat, pkg, ebuild_version, ebuild_version,
-                   P.aux_get(match, ['HOMEPAGE'])[0],
+                   P.aux_get(match, ['HOMEPAGE'], mytree=search_dir)[0],
                    (r'\b' + pkg.replace('-', r'[-_]') + r'-([^"]+)\.tar\.gz'),
                    True)
         elif parsed_uri.hostname == 'download.jetbrains.com':
@@ -364,7 +369,7 @@ def get_props(search_dir: str,
                    r"href='/" + re.escape(proj) + r"/tag/\?h=([0-9][^']+)",
                    True)
         else:
-            home = P.aux_get(match, ['HOMEPAGE'])[0]
+            home = P.aux_get(match, ['HOMEPAGE'], mytree=search_dir)[0]
             raise RuntimeError(
                 f'Not handled: {catpkg} (non-GitHub/PyPI), homepage: {home}, '
                 f'SRC_URI: {src_uri}, parsed_uri: {parsed_uri}')
