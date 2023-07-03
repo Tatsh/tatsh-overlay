@@ -3,3 +3,4 @@
 /metadata/*
 !/metadata/layout.conf
 !/metadata/pkgcheck.conf
+/node_modules/

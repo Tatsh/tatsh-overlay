@@ -29,10 +29,7 @@ def is_elf(exe: str) -> bool:
 
 @lru_cache()
 def qfile(filename: str) -> str:
-    return sp.run(('qfile', filename),
-                  check=True,
-                  capture_output=True,
-                  text=True).stdout
+    return sp.run(('qfile', filename), check=True, capture_output=True, text=True).stdout
 
 
 def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
@@ -45,17 +42,16 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
             lines = qfile(x).splitlines()
             try:
                 lib_package = [
-                    y for y in lines if
-                    ('-libs/' in y or y.startswith('dev-qt/')
-                     or y.startswith('dev-cpp/') or re.match(
-                         r'^(?:app-pda/lib(?:irecovery|plist)|net-misc/curl|'
-                         r'media-sound/(?:pulseaudio|mpg123)|'
-                         r'media-video/(ffmpeg|pipewire)|'
-                         r'app-arch/(?:zstd|libarchive|lz4)|'
-                         r'app-emulation/faudio|'
-                         r'dev-util/glslang|net-wireless/bluez|sys-apps/dbus|'
-                         r'app-accessibility/at-spi2-atk|net-print/cups|'
-                         r'sys-apps/util-linux|app-crypt/mit-krb5)', y))
+                    y for y in lines if ('-libs/' in y or y.startswith('dev-qt/')
+                                         or y.startswith('dev-cpp/') or re.match(
+                                             r'^(?:app-pda/lib(?:irecovery|plist)|net-misc/curl|'
+                                             r'media-sound/(?:pulseaudio|mpg123)|'
+                                             r'media-video/(ffmpeg|pipewire)|'
+                                             r'app-arch/(?:zstd|libarchive|lz4)|'
+                                             r'app-emulation/faudio|'
+                                             r'dev-util/glslang|net-wireless/bluez|sys-apps/dbus|'
+                                             r'app-accessibility/at-spi2-atk|net-print/cups|'
+                                             r'sys-apps/util-linux|app-crypt/mit-krb5)', y))
                 ][0].split(':')[0]
             except IndexError:
                 continue
@@ -68,26 +64,20 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
                 yield lib_package
 
 
-def find_missing_deps0(
-        package_name: str,
-        exes: Iterable[str]) -> Iterator[Tuple[str, Sequence[str]]]:
+def find_missing_deps0(package_name: str,
+                       exes: Iterable[str]) -> Iterator[Tuple[str, Sequence[str]]]:
     for exe in exes:
-        yield (
-            exe,
-            list(
-                find_missing_deps(
-                    package_name,
-                    sorted(y for y in (
-                        x.split()[1]
-                        for x in sp.run(('objdump', '-p', exe),
-                                        check=True,
-                                        capture_output=True,
-                                        text=True).stdout.splitlines()
-                        if 'NEEDED' in x
-                    ) if not re.match(
-                        r'^lib(?:c|m|stdc\+\+|pthread|gcc_s|dl|asan|rt|util|'
-                        r'gomp)\.so.\d+$', y)
-                           and not y.startswith('ld-linux-')))))
+        yield (exe,
+               list(
+                   find_missing_deps(
+                       package_name,
+                       sorted(y for y in (x.split()[1] for x in sp.run(
+                           ('objdump', '-p',
+                            exe), check=True, capture_output=True, text=True).stdout.splitlines()
+                                          if 'NEEDED' in x)
+                              if not re.match(
+                                  r'^lib(?:c|m|stdc\+\+|pthread|gcc_s|dl|asan|rt|util|'
+                                  r'gomp)\.so.\d+$', y) and not y.startswith('ld-linux-')))))
 
 
 def main() -> int:
@@ -95,8 +85,7 @@ def main() -> int:
     This only works against packages installed and their configured USE flags.
     """
     if len(sys.argv) == 1:
-        package_names = sp.run(('eix', '--installed-from-overlay',
-                                'tatsh-overlay', '--only-names'),
+        package_names = sp.run(('eix', '--installed-from-overlay', 'tatsh-overlay', '--only-names'),
                                check=True,
                                capture_output=True,
                                text=True).stdout.splitlines()
@@ -104,18 +93,15 @@ def main() -> int:
         package_names = sys.argv[1:]
     for package_name in package_names:
         printed_name = False
-        exes = sorted(
-            x for x in sp.run(('qlist', '-e', package_name),
-                              check=True,
-                              capture_output=True,
-                              text=True).stdout.splitlines()
-            if is_elf(x) and not re.match(r'/usr/lib\d+/ryujinx/lib.*\.so$', x)
-            and not re.match(r'/opt/stepmania-outfox/lib.*\.so(?:\.\d+)?', x))
+        exes = sorted(x for x in sp.run(
+            ('qlist', '-e',
+             package_name), check=True, capture_output=True, text=True).stdout.splitlines()
+                      if is_elf(x) and not re.match(r'/usr/lib\d+/ryujinx/lib.*\.so$', x)
+                      and not re.match(r'/opt/stepmania-outfox/lib.*\.so(?:\.\d+)?', x))
         if len(exes):
             for exe, missing in find_missing_deps0(package_name, exes):
                 missing = [
-                    y for y in missing if not (
-                        package_name in IGNORE and y in IGNORE[package_name])
+                    y for y in missing if not (package_name in IGNORE and y in IGNORE[package_name])
                 ]
                 if len(missing):
                     if not printed_name:

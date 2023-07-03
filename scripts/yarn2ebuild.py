@@ -44,7 +44,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('package')
     parser.add_argument('yarn.lock')
-    args = dict(parser.parse_args()._get_kwargs())
+    args = dict(parser.parse_args()._get_kwargs())  # pylint: disable=protected-access
     yarn_lock = args['yarn.lock']
     root_dir = dirname(yarn_lock)
     package = args['package']
@@ -62,14 +62,11 @@ def main() -> int:
                 version = m.groups()[0]
             assert version is not None
             yarn_pkgs.add(f'\t{name}-{version}')
-        with open(path_join(root_dir, 'node_modules', package,
-                            'package.json')) as j:
+        with open(path_join(root_dir, 'node_modules', package, 'package.json')) as j:
             data = json.load(j)
             if lic := data.get('license'):
                 licenses.add(lic)
-        for item in glob.iglob('./**/package.json',
-                               root_dir=root_dir,
-                               recursive=True):
+        for item in glob.iglob('./**/package.json', root_dir=root_dir, recursive=True):
             with open(path_join(root_dir, item)) as j:
                 try:
                     dep_data = json.load(j)
@@ -78,14 +75,13 @@ def main() -> int:
                 except json.decoder.JSONDecodeError:
                     pass
         print(
-            EBUILD_TEMPLATE.format(
-                year=date.today().year,
-                description=data.get('description', 'FIXME'),
-                homepage=data.get('homepage',
-                                  f'https://www.npmjs.com/package/{package}'),
-                yarn_pkgs='\n'.join(sorted(yarn_pkgs)),
-                package=package,
-                licenses=' '.join(sorted(licenses))))
+            EBUILD_TEMPLATE.format(year=date.today().year,
+                                   description=data.get('description', 'FIXME'),
+                                   homepage=data.get('homepage',
+                                                     f'https://www.npmjs.com/package/{package}'),
+                                   yarn_pkgs='\n'.join(sorted(yarn_pkgs)),
+                                   package=package,
+                                   licenses=' '.join(sorted(licenses))))
     return 0
 
 

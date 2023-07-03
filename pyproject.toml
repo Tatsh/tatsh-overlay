@@ -1,0 +1,23 @@
+[tool.poetry]
+authors = ["Andrew Udvare <audvare@gmail.com>"]
+description = "Ebuilds."
+license = "GPL-2.0"
+name = "tatsh-overlay"
+readme = "README.md"
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+portage-types = { git = "https://github.com/Tatsh/portage-types.git" }
+types-requests = "^2.31.0.1"
+types-pyyaml = "^6.0.12.10"
+requests = "^2.31.0"
+pyyaml = "^6.0"
+mypy = "^1.4.1"
+pylint-quotes = "^0.2.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

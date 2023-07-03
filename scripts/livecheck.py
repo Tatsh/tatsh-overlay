@@ -2,10 +2,8 @@
 from dataclasses import dataclass
 from datetime import datetime
 from functools import cmp_to_key, lru_cache
-from os.path import basename, dirname, join as path_join, realpath, splitext
-from os.path import expanduser
-from typing import (Any, Callable, Final, Iterator, Mapping, Sequence, TypeVar,
-                    Union, cast)
+from os.path import basename, dirname, expanduser, join as path_join, realpath, splitext
+from typing import Callable, Final, Iterator, Mapping, Sequence, TypeVar, Union, cast
 from urllib.parse import urlparse
 import argparse
 import glob
@@ -124,14 +122,14 @@ RE_NON_SCOPED = r'^([^@\/]+)(?:@([^\/]+))?(\/.*)?$'
 
 
 def make_github_grit_commit_re(version: str) -> str:
-    return (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' +
-            str(len(version)) + r'})[0-9a-f]*</id>')
+    return (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' + str(len(version)) +
+            r'})[0-9a-f]*</id>')
 
 
 def parse_npm_package_name(s: str) -> tuple[str, str | None, str | None]:
     m = re.match(RE_SCOPED, s) or re.match(RE_NON_SCOPED, s)
     if not m:
-        raise Exception(f'Invalid package name: {s}')
+        raise ValueError(f'Invalid package name: {s}')
     return m[1], m[2], m[3]
 
 
@@ -139,17 +137,14 @@ def parse_npm_package_name(s: str) -> tuple[str, str | None, str | None]:
 def get_github_api_credentials() -> str:
     with open(expanduser('~/.config/gh/hosts.yml')) as f:
         data = yaml.safe_load(f)
-    return data['github.com']['oauth_token']
+    return cast(str, data['github.com']['oauth_token'])
 
 
-def process_submodules(pkg_name: str, ref: str, contents: str,
-                       repo_uri: str) -> str:
+def process_submodules(pkg_name: str, ref: str, contents: str, repo_uri: str) -> str:
     if pkg_name not in SUBMODULES:
         return contents
-    offset_a, offset_b = ((1, 3) if 'api.github.com/repos/' in repo_uri else
-                          (0, 2))
-    repo_root = '/'.join([x for x in urlparse(repo_uri).path.split('/')
-                          if x][offset_a:offset_b])
+    offset_a, offset_b = ((1, 3) if 'api.github.com/repos/' in repo_uri else (0, 2))
+    repo_root = '/'.join([x for x in urlparse(repo_uri).path.split('/') if x][offset_a:offset_b])
     ebuild_lines = contents.splitlines(keepends=True)
     for item in SUBMODULES[pkg_name]:
         name = item
@@ -157,12 +152,11 @@ def process_submodules(pkg_name: str, ref: str, contents: str,
             grep_for = f'{item[1]}="'
             name = item[0]
         else:
-            grep_for = f"{basename(item).upper().replace('-', '_')}_SHA=\""
-        r = requests.get(
-            (f'https://api.github.com/repos/{repo_root}/contents/{name}'
-             f'?ref={ref}'),
-            headers=dict(
-                Authorization=f'token {get_github_api_credentials()}'))
+            grep_for = f'{basename(item).upper().replace("-", "_")}_SHA="'
+        r = requests.get((f'https://api.github.com/repos/{repo_root}/contents/{name}'
+                          f'?ref={ref}'),
+                         headers=dict(Authorization=f'token {get_github_api_credentials()}'),
+                         timeout=30)
         r.raise_for_status()
         remote_sha = r.json()['sha']
         for line in ebuild_lines:
@@ -183,8 +177,7 @@ def get_highest_matches(search_dir: str) -> Iterator[str]:
                     yield m
 
 
-def get_highest_matches2(names: Sequence[str],
-                         search_dir: str) -> Iterator[str]:
+def get_highest_matches2(names: Sequence[str], search_dir: str) -> Iterator[str]:
     for name in names:
         if matches := P.xmatch('match-visible', name):
             for m in matches:
@@ -193,24 +186,32 @@ def get_highest_matches2(names: Sequence[str],
 
 
 def find_highest_match_ebuild_path(cp: str, search_dir: str) -> str:
-    return sorted(
-        [(s := P.findname2(x)) for x in P.match(cp) if s[1] == search_dir],
-        key=cmp_to_key(
-            lambda a, b: vercmp(catpkgsplit(a)[2],
-                                catpkgsplit(b)[2])))[-1][0]
+    def cmp(a: tuple[str, str], b: tuple[str, str]) -> int:
+        split_a = catpkgsplit(a[1])
+        split_b = catpkgsplit(b[1])
+        assert len(split_a) == 4
+        assert len(split_b) == 4
+        return vercmp(split_a[3], split_b[3]) or 0  # type: ignore[misc]
+
+    items: list[tuple[str, str]] = []
+    for atom in P.match(cp):
+        ebuild_path, tree = P.findname2(atom)
+        if ebuild_path and tree == search_dir:
+            items.append((ebuild_path, atom))
+    return sorted(items, key=cmp_to_key(cmp))[-1][0]
 
 
 def catpkg_catpkgsplit(s: str) -> tuple[str, str, str, str]:
     result = catpkgsplit(s)
-    if result:
-        cat, pkg, ebuild_version = result[0:3]
+    if len(result) == 3:
+        cat, pkg, ebuild_version = result  # type: ignore[misc]
         return '/'.join((cat, pkg)), cat, pkg, ebuild_version
     raise ValueError()
 
 
-def chunks(l: Sequence[Any], n: int) -> Iterator[Sequence[Any]]:
-    for i in range(0, len(l), n):
-        yield l[i:i + n]
+def chunks(seq: Sequence[T], n: int) -> Iterator[Sequence[T]]:
+    for i in range(0, len(seq), n):
+        yield seq[i:i + n]
 
 
 def get_first_src_uri(match: str, search_dir: str) -> str:
@@ -247,8 +248,8 @@ def get_props(search_dir: str,
     exclude = exclude or []
     for match in sorted(
             set(
-                get_highest_matches(search_dir)
-                if not names else get_highest_matches2(names, search_dir))):
+                get_highest_matches(search_dir
+                                    ) if not names else get_highest_matches2(names, search_dir))):
         catpkg, cat, pkg, ebuild_version = catpkg_catpkgsplit(match)
         if catpkg in exclude or pkg in exclude:
             log.debug('Ignoring %s', catpkg)
@@ -257,9 +258,8 @@ def get_props(search_dir: str,
         parsed_uri = urlparse(src_uri)
         if cat.startswith('acct-') or catpkg in settings.ignored_packages:
             continue
-        elif catpkg in settings.custom_livechecks:
-            url, regex, use_vercmp, version = settings.custom_livechecks[
-                catpkg]
+        if catpkg in settings.custom_livechecks:
+            url, regex, use_vercmp, version = settings.custom_livechecks[catpkg]
             yield (cat, pkg, version or ebuild_version, version
                    or ebuild_version, url, regex, use_vercmp)
         elif catpkg in settings.checksum_livechecks:
@@ -272,97 +272,77 @@ def get_props(search_dir: str,
                         continue
                     fields_s = ' '.join(line.strip().split(' ')[-4:])
                     rest = line.replace(fields_s, '').strip()
-                    filename = rest.replace(f' {rest.strip().split(" ")[-1]}',
-                                            '')[5:]
-                    m = re.match(
-                        '^' + pkg +
-                        r'-[0-9\.]+(?:_(?:alpha|beta|p)[0-9]+)?(tar\.gz|zip)',
-                        filename)
+                    filename = rest.replace(f' {rest.strip().split(" ")[-1]}', '')[5:]
+                    m = re.match('^' + pkg + r'-[0-9\.]+(?:_(?:alpha|beta|p)[0-9]+)?(tar\.gz|zip)',
+                                 filename)
                     if filename != bn and not m:
                         continue
                     found = True
-                    r = requests.get(src_uri)
+                    r = requests.get(src_uri, timeout=30)
                     r.raise_for_status()
                     yield (cat, pkg, ebuild_version,
-                           dict(
-                               cast(Sequence[tuple[str, str]],
-                                    chunks(fields_s.split(' '), 2)))['SHA512'],
-                           f'data:{hashlib.sha512(r.content).hexdigest()}',
-                           r'^[0-9a-f]+$', False)
+                           dict(cast(Sequence[tuple[str, str]], chunks(fields_s.split(' '),
+                                                                       2)))['SHA512'],
+                           f'data:{hashlib.sha512(r.content).hexdigest()}', r'^[0-9a-f]+$', False)
                     break
             if not found:
                 home = P.aux_get(match, ['HOMEPAGE'], mytree=search_dir)[0]
-                raise RuntimeError(
-                    f'Not handled: {catpkg} (checksum), homepage: {home}, '
-                    f'SRC_URI: {src_uri}')
+                raise RuntimeError(f'Not handled: {catpkg} (checksum), homepage: {home}, '
+                                   f'SRC_URI: {src_uri}')
         elif src_uri.startswith('https://github.com/'):
             log.debug('Parsed path: %s', parsed_uri.path)
-            github_homepage = ('https://github.com' +
-                               '/'.join(parsed_uri.path.split('/')[0:3]))
+            github_homepage = ('https://github.com' + '/'.join(parsed_uri.path.split('/')[0:3]))
             filename = basename(parsed_uri.path)
             version = re.split(r'\.(?:tar\.(?:gz|bz2)|zip)$', filename, 2)[0]
-            if (re.match(r'^[0-9a-f]{7,}$', version)
-                    and not re.match('^[0-9a-f]{8}$', version)):
-                branch = (settings.branches[catpkg]
-                          if catpkg in settings.branches else 'master')
+            if (re.match(r'^[0-9a-f]{7,}$', version) and not re.match('^[0-9a-f]{8}$', version)):
+                branch = (settings.branches[catpkg] if catpkg in settings.branches else 'master')
                 yield (cat, pkg, ebuild_version, version,
                        f'{github_homepage}/commits/{branch}.atom',
                        make_github_grit_commit_re(version), False)
-            elif ('/releases/download/' in parsed_uri.path
-                  or '/archive/' in parsed_uri.path):
+            elif ('/releases/download/' in parsed_uri.path or '/archive/' in parsed_uri.path):
                 prefix = ''
-                if (m := re.match(PREFIX_RE, filename)
-                        if '/archive/' in parsed_uri.path else re.match(
-                            PREFIX_RE, basename(dirname(parsed_uri.path)))):
+                if (m := re.match(PREFIX_RE, filename) if '/archive/' in parsed_uri.path else
+                        re.match(PREFIX_RE, basename(dirname(parsed_uri.path)))):
                     prefix = m.group(1)
                 url = f'{github_homepage}/tags'
                 regex = f'archive/refs/tags/{prefix}' + r'([^"]+)\.tar\.gz'
-                yield (cat, pkg, ebuild_version, ebuild_version, url, regex,
-                       True)
+                yield (cat, pkg, ebuild_version, ebuild_version, url, regex, True)
             elif m := re.search(r'/raw/([0-9a-f]+)/', parsed_uri.path):
                 version = m.group(1)
-                branch = (settings.branches[catpkg]
-                          if catpkg in settings.branches else 'master')
+                branch = (settings.branches[catpkg] if catpkg in settings.branches else 'master')
                 yield (cat, pkg, ebuild_version, version,
                        f'{github_homepage}/commits/{branch}.atom',
-                       (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' +
-                        str(len(version)) + r'})[0-9a-f]*</id>'), False)
+                       (r'<id>tag:github.com,2008:Grit::Commit/([0-9a-f]{' + str(len(version)) +
+                        r'})[0-9a-f]*</id>'), False)
             else:
                 raise ValueError(f'Unhandled GitHub package: {catpkg}')
         elif parsed_uri.hostname == 'git.sr.ht':
             user_repo = '/'.join(parsed_uri.path.split('/')[1:3])
-            branch = (settings.branches[catpkg]
-                      if catpkg in settings.branches else 'master')
+            branch = (settings.branches[catpkg] if catpkg in settings.branches else 'master')
             yield (cat, pkg, ebuild_version, ebuild_version,
                    f'https://git.sr.ht/{user_repo}/log/{branch}/rss.xml',
                    r'<pubDate>([^<]+)</pubDate>', False)
-        elif (parsed_uri.hostname == 'gist.github.com'
-              or parsed_uri.hostname == 'gist.githubusercontent.com'):
+        elif parsed_uri.hostname in ('gist.github.com', 'gist.githubusercontent.com'):
             home = P.aux_get(match, ['HOMEPAGE'], mytree=search_dir)[0]
-            yield (cat, pkg, ebuild_version, ebuild_version,
-                   f'{home}/revisions',
+            yield (cat, pkg, ebuild_version, ebuild_version, f'{home}/revisions',
                    r'<relative-time datetime="([0-9-]{10})', False)
         elif src_uri.startswith('mirror://pypi/'):
             dist_name = src_uri.split('/')[4]
             yield (cat, pkg, ebuild_version, ebuild_version,
-                   f'https://pypi.org/pypi/{dist_name}/json',
-                   r'"version":"([^"]+)"[,\}]', True)
+                   f'https://pypi.org/pypi/{dist_name}/json', r'"version":"([^"]+)"[,\}]', True)
         elif parsed_uri.hostname == 'files.pythonhosted.org':
             dist_name = src_uri.split('/')[-2]
             yield (cat, pkg, ebuild_version, ebuild_version,
-                   f'https://pypi.org/pypi/{dist_name}/json',
-                   r'"version":"([^"]+)"[,\}]', True)
+                   f'https://pypi.org/pypi/{dist_name}/json', r'"version":"([^"]+)"[,\}]', True)
         elif src_uri.startswith('https://www.raphnet-tech.com/downloads/'):
             yield (cat, pkg, ebuild_version, ebuild_version,
                    P.aux_get(match, ['HOMEPAGE'], mytree=search_dir)[0],
-                   (r'\b' + pkg.replace('-', r'[-_]') + r'-([^"]+)\.tar\.gz'),
-                   True)
+                   (r'\b' + pkg.replace('-', r'[-_]') + r'-([^"]+)\.tar\.gz'), True)
         elif parsed_uri.hostname == 'download.jetbrains.com':
             yield (cat, pkg, ebuild_version, ebuild_version,
                    'https://www.jetbrains.com/updates/updates.xml', None, True)
         elif (src_uri.startswith('https://gitlab.com/')
-              or src_uri.startswith('https://gitlab.freedesktop.org')
-              and '-/archive/' in src_uri):
+              or src_uri.startswith('https://gitlab.freedesktop.org') and '-/archive/' in src_uri):
             author, proj = src_uri.split('/')[3:5]
             m = re.match('^https://([^/]+)', src_uri)
             assert m is not None
@@ -372,15 +352,19 @@ def get_props(search_dir: str,
                    r'<title>v?([0-9][^>]+)</title', True)
         elif src_uri.startswith('https://cgit.libimobiledevice.org'):
             proj = src_uri.split('/')[3]
-            yield (cat, pkg, ebuild_version, ebuild_version,
-                   f'https://cgit.libimobiledevice.org/{proj}/',
-                   r"href='/" + re.escape(proj) + r"/tag/\?h=([0-9][^']+)",
-                   True)
+            yield (
+                cat,
+                pkg,
+                ebuild_version,
+                ebuild_version,
+                f'https://cgit.libimobiledevice.org/{proj}/',
+                # pylint: disable=invalid-string-quote
+                r"href='/" + re.escape(proj) + r"/tag/\?h=([0-9][^']+)",
+                True)
         else:
             home = P.aux_get(match, ['HOMEPAGE'], mytree=search_dir)[0]
-            raise RuntimeError(
-                f'Not handled: {catpkg} (non-GitHub/PyPI), homepage: {home}, '
-                f'SRC_URI: {src_uri}, parsed_uri: {parsed_uri}')
+            raise RuntimeError(f'Not handled: {catpkg} (non-GitHub/PyPI), homepage: {home}, '
+                               f'SRC_URI: {src_uri}, parsed_uri: {parsed_uri}')
 
 
 def gather_settings(search_dir: str) -> LivecheckSettings:
@@ -397,35 +381,38 @@ def gather_settings(search_dir: str) -> LivecheckSettings:
         with open(path) as f:
             dn = dirname(path)
             catpkg = f'{basename(dirname(dn))}/{basename(dn)}'
-            ls = json.load(f)
-            if ls.get('type', None) == 'none':
+            settings_parsed = json.load(f)
+            if settings_parsed.get('type', None) == 'none':
                 ignored_packages.add(catpkg)
-            elif ls.get('type', None) == 'regex':
-                custom_livechecks[catpkg] = (ls['url'], ls['regex'],
-                                             ls.get('use_vercmp', True),
-                                             ls.get('version', None))
-            elif ls.get('type', None) == 'checksum':
+            elif settings_parsed.get('type', None) == 'regex':
+                custom_livechecks[catpkg] = (settings_parsed['url'], settings_parsed['regex'],
+                                             settings_parsed.get('use_vercmp', True),
+                                             settings_parsed.get('version', None))
+            elif settings_parsed.get('type', None) == 'checksum':
                 checksum_livechecks.add(catpkg)
-            if ls.get('branch', None):
-                branches[catpkg] = ls['branch']
-            if ls.get('no_auto_update', None):
+            if settings_parsed.get('branch', None):
+                branches[catpkg] = settings_parsed['branch']
+            if settings_parsed.get('no_auto_update', None):
                 no_auto_update.add(catpkg)
-            if ls.get('transformation_function', None):
-                tfs = ls["transformation_function"]
+            if settings_parsed.get('transformation_function', None):
+                tfs = settings_parsed['transformation_function']
                 try:
                     tf: Callable[[str], str] = globals()[tfs]
                 except KeyError as e:
                     if tfs == 'dash_to_underscore':
-                        tf = lambda s: s.replace('-', '_')
+
+                        def dtu(s: str) -> str:
+                            return s.replace('-', '_')
+
+                        tf = dtu
                     else:
                         raise NameError('Unknown transformation '
                                         f'function: {tfs}') from e
                 transformations[catpkg] = tf
-            if ls.get('sha_source', None):
-                sha_sources[catpkg] = ls['sha_source']
-    return LivecheckSettings(branches, checksum_livechecks, custom_livechecks,
-                             ignored_packages, no_auto_update, sha_sources,
-                             transformations)
+            if settings_parsed.get('sha_source', None):
+                sha_sources[catpkg] = settings_parsed['sha_source']
+    return LivecheckSettings(branches, checksum_livechecks, custom_livechecks, ignored_packages,
+                             no_auto_update, sha_sources, transformations)
 
 
 @dataclass
@@ -437,13 +424,11 @@ class TextDataResponse:
 
 
 def handle_glabels(s: str) -> str:
-    r = requests.get(
-        f'https://github.com/jimevins/glabels-qt/commits/glabels-{s}.atom')
+    r = requests.get(f'https://github.com/jimevins/glabels-qt/commits/glabels-{s}.atom', timeout=30)
     r.raise_for_status()
     return ('3.99_p' + assert_not_none(
-        assert_not_none(
-            etree.fromstring(r.text).find(
-                'entry/updated', RSS_NS)).text).split('T')[0].replace('-', ''))
+        assert_not_none(etree.fromstring(r.text).find('entry/updated',
+                                                      RSS_NS)).text).split('T')[0].replace('-', ''))
 
 
 def handle_re(s: str) -> str:
@@ -455,10 +440,10 @@ def handle_cython_post_suffix(s: str) -> str:
 
 
 def handle_outfox(s: str) -> str:
-    x = re.split(r'-pre(?:0+)?', s)
+    x = re.split(r'-pre(?:0+)?', s, 2)
     if len(x) == 2:
         return f'{x[0]}_p{x[1]}'
-    return x
+    return x[0]
 
 
 def handle_outfox_serenity(s: str) -> str:
@@ -473,16 +458,14 @@ def assert_not_none(x: T | None) -> T:
 def handle_bsnes_hd(s: str) -> str:
     log = logging.getLogger(LOG_NAME)
     log.debug('handle_bsnes_hd() <- "%s"', s)
-    major, minor = assert_not_none(re.match(r'^beta_(\d+)_(\d+(?:h\d+)?)',
-                                            s)).groups()
+    major, minor = assert_not_none(re.match(r'^beta_(\d+)_(\d+(?:h\d+)?)', s)).groups()
     minor = re.sub(r'h\d+', '', minor)
     ret = f'{major}.{minor}_beta'
     log.debug('handle_bsnes_hd() -> "%s"', ret)
     return ret
 
 
-def setup_logging_stderr(name: str = LOG_NAME,
-                         verbose: bool = False) -> logging.Logger:
+def setup_logging_stderr(name: str = LOG_NAME, verbose: bool = False) -> logging.Logger:
     name = name if name else basename(sys.argv[0])
     log = logging.getLogger(name)
     log.setLevel(logging.DEBUG if verbose else logging.INFO)
@@ -493,20 +476,16 @@ def setup_logging_stderr(name: str = LOG_NAME,
     return log
 
 
-def latest_jetbrains_versions(xml_content: str,
-                              product_name: str) -> Iterator[dict[str, str]]:
-    return (dict(version=z.attrib['version'],
-                 fullNumber=z.attrib['fullNumber']) for z in [
-                     y for y in [
-                         x for x in etree.fromstring(xml_content)
-                         if x.attrib.get('name') == product_name
-                     ][0] if y.attrib.get('status') == 'release'
-                 ][0])
+def latest_jetbrains_versions(xml_content: str, product_name: str) -> Iterator[dict[str, str]]:
+    return (dict(version=z.attrib['version'], fullNumber=z.attrib['fullNumber']) for z in [
+        y
+        for y in [x for x in etree.fromstring(xml_content)
+                  if x.attrib.get('name') == product_name][0] if y.attrib.get('status') == 'release'
+    ][0])
 
 
 def main() -> int:
-
-    def vc(x: str, y: str) -> int:
+    def special_vercmp(x: str, y: str) -> int:
         return -1 if (ret := vercmp(x, y)) is None else ret
 
     parser = argparse.ArgumentParser()
@@ -536,22 +515,20 @@ def main() -> int:
         parsed_src = urlparse(src)
         if (parsed_src.hostname == 'github.com' and src.endswith('.atom')):
             m = re.search(make_github_grit_commit_re(40 * ' '),
-                          requests.get(src).content.decode())
+                          requests.get(src, timeout=30).content.decode())
             assert m is not None
             return m.groups()[0]
         if parsed_src.hostname == 'git.sr.ht' and src.endswith('xml'):
             user_repo = '/'.join(parsed_src.path.split('/')[1:3])
-            m = re.search(
-                rf'<guid>https://git\.sr\.ht/{user_repo}/commit/([a-f0-9]+)</guid>',
-                requests.get(src).content.decode())
+            m = re.search(rf'<guid>https://git\.sr\.ht/{user_repo}/commit/([a-f0-9]+)</guid>',
+                          requests.get(src, timeout=30).content.decode())
             assert m is not None
             return m.groups()[0]
         raise ValueError(f'Unsupported SHA source: {src}')
 
     settings = gather_settings(search_dir)
     for cat, pkg, ebuild_version, version, url, regex, use_vercmp in get_props(
-            search_dir, settings, names=args.package_names,
-            exclude=args.exclude):
+            search_dir, settings, names=args.package_names, exclude=args.exclude):
         log.debug('Fetching %s', url)
         headers = {}
         parsed_uri = urlparse(url)
@@ -559,8 +536,8 @@ def main() -> int:
             log.debug('Adding authorization header')
             headers['Authorization'] = f'token {get_github_api_credentials()}'
         try:
-            r: Response = (TextDataResponse(url[5:]) if url.startswith('data:')
-                           else session.get(url, headers=headers, timeout=30))
+            r: Response = (TextDataResponse(url[5:]) if url.startswith('data:') else session.get(
+                url, headers=headers, timeout=30))
         except (ReadTimeout, ConnectTimeout, requests.exceptions.HTTPError,
                 requests.exceptions.SSLError) as e:
             log.debug('Caught error %s attempting to fetch %s', e, url)
@@ -568,32 +545,28 @@ def main() -> int:
         try:
             r.raise_for_status()
             # Ignore beta/alpha/etc if semantic and coming from GitHub
-            if regex and re.match(SEMVER_RE,
-                                  version) and regex.startswith('archive/'):
+            if regex and re.match(SEMVER_RE, version) and regex.startswith('archive/'):
                 log.debug('Adjusting RE for semantic versioning')
                 regex = regex.replace(r'([^"]+)', r'(\d+\.\d+(?:\.\d+)?)')
-            prefixes: Optional[Dict[str, str]] = None
+            prefixes: dict[str, str] | None = None
             if not regex:
                 if 'www.jetbrains.com/updates' in url:
                     if pkg.startswith('idea'):
-                        jb_versions = list(
-                            latest_jetbrains_versions(r.text, 'IntelliJ IDEA'))
+                        jb_versions = list(latest_jetbrains_versions(r.text, 'IntelliJ IDEA'))
                         results = [x['fullNumber'] for x in jb_versions]
-                        prefixes = dict((z['fullNumber'], f"{z['version']}.")
-                                        for z in jb_versions)
+                        # pylint: disable=invalid-string-quote
+                        prefixes = dict((z['fullNumber'], f"{z['version']}.") for z in jb_versions)
                     else:
-                        raise NotImplementedError(
-                            'Unhandled state: '
-                            f'regex=None, cat={cat}, pkg={pkg}, url={url}')
+                        raise NotImplementedError('Unhandled state: '
+                                                  f'regex=None, cat={cat}, pkg={pkg}, url={url}')
                 else:
-                    raise NotImplementedError(
-                        'Unhandled state: non-JetBrains URI, regex=None, '
-                        f'url={url}, cat={cat}, pkg={pkg}')
+                    raise NotImplementedError('Unhandled state: non-JetBrains URI, regex=None, '
+                                              f'url={url}, cat={cat}, pkg={pkg}')
             else:
                 log.debug('Using RE: "%s"', regex)
                 results = re.findall(regex, r.text)
             log.debug('Result count: %d', len(results))
-            top_hash = (list(reversed(sorted(results, key=cmp_to_key(vc))))
+            top_hash = (list(reversed(sorted(results, key=cmp_to_key(special_vercmp))))
                         if use_vercmp else results)[0]
             log.debug('re.findall() -> "%s"', top_hash)
             cp = f'{cat}/{pkg}'
@@ -612,20 +585,15 @@ def main() -> int:
                 top_hash = top_hash.replace('-', '')
             else:
                 try:
-                    top_hash = datetime.strptime(
-                        ' '.join(top_hash.split(' ')[0:-2]),
-                        '%a, %d %b %Y').strftime('%Y%m%d')
+                    top_hash = datetime.strptime(' '.join(top_hash.split(' ')[0:-2]),
+                                                 '%a, %d %b %Y').strftime('%Y%m%d')
                     log.debug('Succeeded converting top_hash to datetime')
                 except ValueError:
-                    log.debug(
-                        'Attempted to fix top_hash date but it failed. Ignoring this error.'
-                    )
+                    log.debug('Attempted to fix top_hash date but it failed. Ignoring this error.')
             log.debug('top_hash = %s', top_hash)
-            log.debug(
-                'Comparing current ebuild version %s with live version %s',
-                version, top_hash)
+            log.debug('Comparing current ebuild version %s with live version %s', version, top_hash)
             assert isinstance(use_vercmp, bool)
-            if ((use_vercmp and vercmp(top_hash, version, silent=0) > 0)
+            if ((use_vercmp and (vercmp(top_hash, version, silent=0) or 0) > 0)
                     or top_hash != version):
                 if args.auto_update and cp not in settings.no_auto_update:
                     ebuild = find_highest_match_ebuild_path(cp, search_dir)
@@ -644,15 +612,12 @@ def main() -> int:
                     dn = dirname(ebuild)
                     new_filename = f'{dn}/{pkg}-{top_hash}.ebuild'
                     if is_sha(top_hash):
-                        updated_el = etree.fromstring(r.text).find(
-                            'entry/updated', RSS_NS)
+                        updated_el = etree.fromstring(r.text).find('entry/updated', RSS_NS)
                         assert updated_el is not None
                         assert updated_el.text is not None
                         if re.search(r'(2[0-9]{7})', ebuild_version):
-                            new_date = updated_el.text.split('T')[0].replace(
-                                '-', '')
-                            ebuild_version = re.sub(r'2[0-9]{7}', new_date,
-                                                    ebuild_version)
+                            new_date = updated_el.text.split('T')[0].replace('-', '')
+                            ebuild_version = re.sub(r'2[0-9]{7}', new_date, ebuild_version)
                             new_filename = (f'{dn}/{pkg}-{ebuild_version}'
                                             '.ebuild')
                     if ebuild == new_filename:
@@ -666,29 +631,24 @@ def main() -> int:
                     new_date = ''
                     if is_sha(top_hash):
                         doc = etree.fromstring(r.text)
-                        pub_date = False
                         updated_el = doc.find('entry/updated', RSS_NS)
                         assert updated_el is not None
                         assert updated_el.text is not None
                         if m := re.search(r'^(2[0-9]{7})', ebuild_version):
                             new_date = (' (' + ebuild_version[:m.span()[0]] +
-                                        updated_el.text.split('T')[0].replace(
-                                            '-', '') + ')')
+                                        updated_el.text.split('T')[0].replace('-', '') + ')')
                     sha_str = ''
                     new_sha = ''
                     if update_sha_too_source:
-                        ebuild = find_highest_match_ebuild_path(
-                            cp, search_dir)
+                        ebuild = find_highest_match_ebuild_path(cp, search_dir)
                         old_sha = get_old_sha(ebuild)
                         sha_str = f' ({old_sha}) '
                         log.debug('Fetching %s', update_sha_too_source)
                         new_sha = f' ({get_new_sha(update_sha_too_source)})'
-                    ebv_str = (f' ({ebuild_version}) '
-                               if ebuild_version != version else '')
+                    ebv_str = (f' ({ebuild_version}) ' if ebuild_version != version else '')
                     print(f'{cat}/{pkg}: {version}{ebv_str}{sha_str} -> '
                           f'{top_hash}{new_date}{new_sha}')
-        except (requests.exceptions.HTTPError,
-                requests.exceptions.SSLError) as e:
+        except (requests.exceptions.HTTPError, requests.exceptions.SSLError) as e:
             log.warning('Caught error while checking %s/%s: %s', cat, pkg, e)
         except Exception as e:
             print(f'Exception while checking {cat}/{pkg}', file=sys.stderr)
