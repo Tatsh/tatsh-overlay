@@ -169,7 +169,7 @@ src_prepare() {
 	! use l10n_te && find fonts -iname '*telugu*.ttf' -delete
 	! use music && find fonts -iname '*music*.ttf' -delete
 	! use l10n_tmh && find fonts -iname '*tifinagh*.ttf' -delete
-	find -type d -empty -delete
+	find . -type d -empty -delete
 	default
 }
 
