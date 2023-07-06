@@ -9,7 +9,7 @@ inherit systemd yarn
 DESCRIPTION="Full access to zwave-js driver through Websockets"
 HOMEPAGE="https://github.com/zwave-js/zwave-js-server#readme"
 YARN_PKGS=(
-	@zwave-js/server-${PV}
+	"@zwave-js/server-${PV}"
 	@alcalzone/jsonl-db-3.1.0
 	@alcalzone/pak-0.9.0
 	@alcalzone/proper-lockfile-4.1.3-0
