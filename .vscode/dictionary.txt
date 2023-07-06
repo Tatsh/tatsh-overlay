@@ -156,6 +156,7 @@ cemu
 cespare
 cffi
 cflags
+cgit
 chacha
 chakma
 charmbracelet
@@ -754,6 +755,7 @@ libhac
 libheif
 libhttps
 libidn
+libimobiledevice
 libjpeg
 libm
 libmad

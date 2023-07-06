@@ -203,8 +203,8 @@ def find_highest_match_ebuild_path(cp: str, search_dir: str) -> str:
 
 def catpkg_catpkgsplit(s: str) -> tuple[str, str, str, str]:
     result = catpkgsplit(s)
-    if len(result) == 3:
-        cat, pkg, ebuild_version = result  # type: ignore[misc]
+    if len(result) >= 3:
+        cat, pkg, ebuild_version = result[0:3]  # type: ignore[misc]
         return '/'.join((cat, pkg)), cat, pkg, ebuild_version
     raise ValueError()
 
@@ -289,7 +289,7 @@ def get_props(search_dir: str,
                 home = P.aux_get(match, ['HOMEPAGE'], mytree=search_dir)[0]
                 raise RuntimeError(f'Not handled: {catpkg} (checksum), homepage: {home}, '
                                    f'SRC_URI: {src_uri}')
-        elif src_uri.startswith('https://github.com/'):
+        elif parsed_uri.hostname == 'github.com':
             log.debug('Parsed path: %s', parsed_uri.path)
             github_homepage = ('https://github.com' + '/'.join(parsed_uri.path.split('/')[0:3]))
             filename = basename(parsed_uri.path)
@@ -334,15 +334,16 @@ def get_props(search_dir: str,
             dist_name = src_uri.split('/')[-2]
             yield (cat, pkg, ebuild_version, ebuild_version,
                    f'https://pypi.org/pypi/{dist_name}/json', r'"version":"([^"]+)"[,\}]', True)
-        elif src_uri.startswith('https://www.raphnet-tech.com/downloads/'):
+        elif (parsed_uri.hostname == 'www.raphnet-tech.com'
+              and parsed_uri.path.startswith('/downloads')):
             yield (cat, pkg, ebuild_version, ebuild_version,
                    P.aux_get(match, ['HOMEPAGE'], mytree=search_dir)[0],
                    (r'\b' + pkg.replace('-', r'[-_]') + r'-([^"]+)\.tar\.gz'), True)
         elif parsed_uri.hostname == 'download.jetbrains.com':
             yield (cat, pkg, ebuild_version, ebuild_version,
                    'https://www.jetbrains.com/updates/updates.xml', None, True)
-        elif (src_uri.startswith('https://gitlab.com/')
-              or src_uri.startswith('https://gitlab.freedesktop.org') and '-/archive/' in src_uri):
+        elif (parsed_uri.hostname in ('gitlab.com', 'gitlab.freedesktop.org')
+              and '~/archive' in parsed_uri.path):
             author, proj = src_uri.split('/')[3:5]
             m = re.match('^https://([^/]+)', src_uri)
             assert m is not None
@@ -350,7 +351,7 @@ def get_props(search_dir: str,
             yield (cat, pkg, ebuild_version, ebuild_version,
                    f'https://{domain}/{author}/{proj}/-/tags?format=atom',
                    r'<title>v?([0-9][^>]+)</title', True)
-        elif src_uri.startswith('https://cgit.libimobiledevice.org'):
+        elif parsed_uri.hostname == 'cgit.libimobiledevice.org':
             proj = src_uri.split('/')[3]
             yield (
                 cat,
