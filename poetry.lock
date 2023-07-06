@@ -157,6 +157,26 @@ files = [
 ]
 
 [[package]]
+name = "importlib-metadata"
+version = "6.7.0"
+description = "Read metadata from Python packages"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "importlib_metadata-6.7.0-py3-none-any.whl", hash = "sha256:cb52082e659e97afc5dac71e79de97d8681de3aa07ff18578330904a9d18e5b5"},
+    {file = "importlib_metadata-6.7.0.tar.gz", hash = "sha256:1aaf550d4f73e5d6783e7acb77aec43d49da8017410afae93822cc9cca98c4d4"},
+]
+
+[package.dependencies]
+zipp = ">=0.5"
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+perf = ["ipython"]
+testing = ["flufl.flake8", "importlib-resources (>=1.3)", "packaging", "pyfakefs", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-mypy (>=0.9.1)", "pytest-perf (>=0.9.2)", "pytest-ruff"]
+
+[[package]]
 name = "isort"
 version = "5.12.0"
 description = "A Python utility / library to sort Python imports."
@@ -308,20 +328,32 @@ docs = ["furo (>=2023.5.20)", "proselint (>=0.13)", "sphinx (>=7.0.1)", "sphinx-
 test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.3.1)", "pytest-cov (>=4.1)", "pytest-mock (>=3.10)"]
 
 [[package]]
+name = "portage"
+version = "3.0.49"
+description = "Portage is the package management and distribution system for Gentoo"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+files = []
+develop = false
+
+[package.source]
+type = "git"
+url = "https://github.com/gentoo/portage.git"
+reference = "HEAD"
+resolved_reference = "f24dd0d9808559571509add2c8c69c1bcb2bfec6"
+
+[[package]]
 name = "portage-types"
 version = "0.0.1"
 description = "Typing stubs for Portage"
 category = "dev"
 optional = false
 python-versions = ">=3.10,<4"
-files = []
-develop = false
-
-[package.source]
-type = "git"
-url = "https://github.com/Tatsh/portage-types.git"
-reference = "HEAD"
-resolved_reference = "e98d4ba0ba171c3b6702f697493f31553c7e2994"
+files = [
+    {file = "portage_types-0.0.1-py3-none-any.whl", hash = "sha256:eb2008ac67ed088f7d917a245555a799c475e81401da3f4f07cdd6c2b05672cf"},
+    {file = "portage_types-0.0.1.tar.gz", hash = "sha256:47ee6b87c8e548cdb81f8f441f11db4f1e495d6b71db91cd6352b78af8ffe3f4"},
+]
 
 [[package]]
 name = "pylint"
@@ -617,7 +649,40 @@ files = [
     {file = "wrapt-1.15.0.tar.gz", hash = "sha256:d06730c6aed78cee4126234cf2d071e01b44b915e725a6cb439a879ec9754a3a"},
 ]
 
+[[package]]
+name = "yapf"
+version = "0.40.1"
+description = "A formatter for Python code."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "yapf-0.40.1-py3-none-any.whl", hash = "sha256:b8bfc1f280949153e795181768ca14ef43d7312629a06c43e7abd279323af313"},
+    {file = "yapf-0.40.1.tar.gz", hash = "sha256:958587eb5c8ec6c860119a9c25d02addf30a44f75aa152a4220d30e56a98037c"},
+]
+
+[package.dependencies]
+importlib-metadata = ">=6.6.0"
+platformdirs = ">=3.5.1"
+tomli = ">=2.0.1"
+
+[[package]]
+name = "zipp"
+version = "3.15.0"
+description = "Backport of pathlib-compatible object wrapper for zip files"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "zipp-3.15.0-py3-none-any.whl", hash = "sha256:48904fc76a60e542af151aded95726c1a5c34ed43ab4134b597665c86d7ad556"},
+    {file = "zipp-3.15.0.tar.gz", hash = "sha256:112929ad649da941c23de50f356a2b5570c954b65150642bccdd66bf194d224b"},
+]
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
+testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)"]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "85bfb85cff4a718008641fda49ceb313ffb5ae78c71f23a2b566d81a74bca834"
+content-hash = "0b117902f3c9b308bfc100931e6dfd4b81a7c83b64b3229cafeb308dc4fd7e33"

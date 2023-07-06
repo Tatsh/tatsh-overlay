@@ -7,7 +7,7 @@ import sys
 
 import portage
 
-P = portage.db[portage.root]['porttree'].dbapi
+P = portage.db[portage.root]['porttree'].dbapi  # pylint: disable=no-member
 
 IGNORE = {
     'games-arcade/outfox': {

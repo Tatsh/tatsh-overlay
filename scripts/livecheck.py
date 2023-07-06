@@ -26,7 +26,7 @@ Response = Union['TextDataResponse', requests.Response]
 T = TypeVar('T')
 
 LOG_NAME: Final[str] = 'livecheck'
-P = portage.db[portage.root]['porttree'].dbapi
+P = portage.db[portage.root]['porttree'].dbapi  # pylint: disable=no-member
 PREFIX_RE: Final[str] = r'(^[^0-9]+)[0-9]'
 RSS_NS = {'': 'http://www.w3.org/2005/Atom'}
 SEMVER_RE: Final[str] = (r'^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.'

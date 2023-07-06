@@ -10,13 +10,13 @@
 	"name": "instagram-archiver",
 	"repository": "git@github.com:Tatsh/instagram-archiver.git",
 	"scripts": {
-		"check-formatting": "prettier -c './**/*.cfg' './**/*.ini' './**/*.md' './**/*.toml' './**/*.yml' ./.prettierrc ./.style.yapf && isort . --check && yapf -rd scripts",
+		"check-formatting": "prettier -c './**/*.cfg' './**/*.ini' './**/*.md' './**/*.toml' './**/*.yml' ./.prettierrc ./.style.yapf && poetry run isort . --check && poetry run yapf -rd scripts",
 		"check-spelling": "cspell --no-progress './**/*'  './**/.*'",
-		"format": "prettier -w './**/*.cfg' './**/*.ini' './**/*.md' './**/*.toml' './**/*.yml' ./.prettierrc ./.style.yapf && isort . && yapf -ri scripts",
-		"install-python-deps": "python -m pip install --upgrade pip && pip install poetry && poetry install && pip install -e . && pip install mypy pylint pylint-quotes pytest pytest-cov coveralls pytest-mock types-requests toml yapf",
-		"mypy": "mypy .",
-		"pylint": "pylint scripts",
-		"qa": "yarn mypy && yarn pylint && yarn check-spelling && yarn check-formatting"
+		"format": "prettier -w './**/*.cfg' './**/*.ini' './**/*.md' './**/*.toml' './**/*.yml' ./.prettierrc ./.style.yapf && poetry run isort . && poetry run yapf -ri scripts",
+		"mypy": "poetry run mypy .",
+		"pylint": "poetry run pylint scripts",
+		"qa": "yarn shellcheck && yarn mypy && yarn pylint && yarn check-spelling && yarn check-formatting",
+		"shellcheck": "shellcheck scripts/*.sh"
 	},
 	"version": "0.2.0"
 }

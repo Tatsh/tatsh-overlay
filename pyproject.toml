@@ -10,13 +10,15 @@ version = "0.0.1"
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
-portage-types = { git = "https://github.com/Tatsh/portage-types.git" }
 types-requests = "^2.31.0.1"
 types-pyyaml = "^6.0.12.10"
 requests = "^2.31.0"
 pyyaml = "^6.0"
 mypy = "^1.4.1"
 pylint-quotes = "^0.2.3"
+portage = { git = "https://github.com/gentoo/portage.git" }
+portage-types = "^0.0.1"
+yapf = "^0.40.1"
 
 [build-system]
 requires = ["poetry-core"]

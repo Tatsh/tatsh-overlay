@@ -5,11 +5,18 @@ jobs=0
 load-plugins=pylint_quotes
 
 [MESSAGES CONTROL]
-disable=invalid-triple-quote,
+disable=fixme,
+        invalid-triple-quote,
         missing-class-docstring,
         missing-function-docstring,
         missing-module-docstring,
+				too-few-public-methods,
+        too-many-boolean-expressions,
+        too-many-branches,
         too-many-instance-attributes,
+        too-many-locals,
+        too-many-return-statements,
+        too-many-statements,
         unspecified-encoding,
         use-dict-literal
 
@@ -53,6 +60,7 @@ good-names=a,
            z
 include-naming-hint=yes
 inlinevar-naming-style=snake_case
+module-naming-style=any
 
 [DESIGN]
 max-args=8
