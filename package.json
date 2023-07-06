@@ -16,7 +16,7 @@
 		"mypy": "poetry run mypy .",
 		"pylint": "poetry run pylint scripts",
 		"qa": "yarn shellcheck && yarn mypy && yarn pylint && yarn check-spelling && yarn check-formatting",
-		"shellcheck": "shellcheck scripts/*.sh"
+		"shellcheck": "shellcheck scripts/*.sh ./*/*/*.ebuild"
 	},
 	"version": "0.2.0"
 }
