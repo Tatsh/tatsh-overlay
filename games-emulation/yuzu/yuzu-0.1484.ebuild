@@ -39,6 +39,7 @@ DEPEND=">=app-arch/zstd-1.5.0
 	>=dev-libs/libfmt-9.1.0:=
 	dev-libs/libzip
 	dev-libs/openssl
+	dev-libs/vulkan-memory-allocator
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
