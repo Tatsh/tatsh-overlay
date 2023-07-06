@@ -398,7 +398,7 @@ QA_FLAGS_IGNORED="usr/bin/${PN}_cli usr/bin/${PN}_gui"
 src_configure() {
 	filter-lto
 	local myfeatures=(
-		$(usev heif)
+		"$(usev heif)"
 	)
 	cargo_src_configure
 }
