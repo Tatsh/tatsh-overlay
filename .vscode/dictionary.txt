@@ -18,6 +18,7 @@ alecthomas
 alessandro
 alif
 allenc
+pipx
 alnum
 alpn
 alsa
