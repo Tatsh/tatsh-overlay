@@ -18,7 +18,6 @@ alecthomas
 alessandro
 alif
 allenc
-pipx
 alnum
 alpn
 alsa
@@ -1074,6 +1073,7 @@ piftl
 pihole
 pingcap
 pipewire
+pipx
 pitmairen
 pixbuf
 pixman
