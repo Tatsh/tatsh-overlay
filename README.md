@@ -1,5 +1,7 @@
 # tatsh-overlay
 
+[![QA](https://github.com/Tatsh/tatsh-overlay/actions/workflows/qa.yml/badge.svg)](https://github.com/Tatsh/tatsh-overlay/actions/workflows/qa.yml)
+
 This is stuff I make randomly. Usually updated every Sunday after 9 AM EST.
 
 If you find a bug, please [file an issue](https://github.com/Tatsh/tatsh-overlay/issues/new).
