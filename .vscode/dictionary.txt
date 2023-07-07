@@ -190,6 +190,7 @@ codegen
 codegenerator
 codeman
 codepages
+codeql
 collecttoolinginfo
 colorama
 colorchoice
