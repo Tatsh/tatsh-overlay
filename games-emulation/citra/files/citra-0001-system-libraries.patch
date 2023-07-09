@@ -1,22 +1,25 @@
-From e4591048b9b0c3f7d8c341960125141a5eaee5a7 Mon Sep 17 00:00:00 2001
+From d8c5e95e36633f5c1911bee5e469ded62d299cbd Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/2] System libraries
 
 ---
  CMakeLists.txt                |  16 ++++
- externals/CMakeLists.txt      | 151 +++++++++++++++++++++-------------
+ externals/CMakeLists.txt      | 141 ++++++++++++++++++++++------------
+ externals/boost               |   2 +-
+ externals/discord-rpc         |   2 +-
+ externals/libressl            |   2 +-
  src/audio_core/CMakeLists.txt |   8 +-
  src/citra/CMakeLists.txt      |   7 +-
- src/common/CMakeLists.txt     |   9 +-
+ src/common/CMakeLists.txt     |   9 ++-
  src/core/CMakeLists.txt       |   2 +-
- 6 files changed, 131 insertions(+), 62 deletions(-)
+ 9 files changed, 129 insertions(+), 60 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 19d59f685..2cd235955 100644
+index 12c511b05..670872b97 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -54,6 +54,22 @@ CMAKE_DEPENDENT_OPTION(ENABLE_AUDIOTOOLBOX "Use AudioToolbox decoder (preferred
+@@ -72,6 +72,22 @@ CMAKE_DEPENDENT_OPTION(ENABLE_AUDIOTOOLBOX "Use AudioToolbox decoder (preferred
  CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ${IS_DEBUG_BUILD} "MINGW" OFF)
  option(ENABLE_LTO "Enable link time optimization" OFF)
  option(CITRA_USE_PRECOMPILED_HEADERS "Use precompiled headers" ON)
@@ -37,28 +40,28 @@ index 19d59f685..2cd235955 100644
 +CMAKE_DEPENDENT_OPTION(CITRA_BUNDLE_LIBRARIES "Bundle dependent libraries with the output executables" ON "APPLE" OFF)
 +
  option(CITRA_WARNINGS_AS_ERRORS "Enable warnings as errors" ON)
- 
+
  # System library options
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 79c7d57e4..56235eeb4 100644
+index 4406c3d66..a378bb2dc 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -12,46 +12,51 @@ include(DownloadExternals)
+@@ -12,40 +12,45 @@ include(DownloadExternals)
  include(ExternalProject)
- 
+
  # Boost
--set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/externals/boost")
--set(Boost_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/boost")
--set(Boost_NO_SYSTEM_PATHS ON)
+-set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/externals/boost" CACHE STRING "")
+-set(Boost_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/boost" CACHE STRING "")
+-set(Boost_NO_SYSTEM_PATHS ON CACHE BOOL "")
 -add_library(boost INTERFACE)
 -target_include_directories(boost SYSTEM INTERFACE ${Boost_INCLUDE_DIR})
 +if (NOT USE_SYSTEM_BOOST)
-+    set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/externals/boost")
-+    set(Boost_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/boost")
-+    set(Boost_NO_SYSTEM_PATHS ON)
++    set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/externals/boost" CACHE STRING "")
++    set(Boost_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/boost" CACHE STRING "")
++    set(Boost_NO_SYSTEM_PATHS ON CACHE BOOL "")
 +    add_library(boost INTERFACE)
 +    target_include_directories(boost SYSTEM INTERFACE ${Boost_INCLUDE_DIR})
- 
+
  # Boost::serialization
 -file(GLOB boost_serialization_SRC "${CMAKE_SOURCE_DIR}/externals/boost/libs/serialization/src/*.cpp")
 -add_library(boost_serialization STATIC ${boost_serialization_SRC})
@@ -66,7 +69,7 @@ index 79c7d57e4..56235eeb4 100644
 +    file(GLOB boost_serialization_SRC "${CMAKE_SOURCE_DIR}/externals/boost/libs/serialization/src/*.cpp")
 +    add_library(boost_serialization STATIC ${boost_serialization_SRC})
 +    target_link_libraries(boost_serialization PUBLIC boost)
- 
+
  # Boost::iostreams
 -add_library(
 -    boost_iostreams
@@ -83,48 +86,36 @@ index 79c7d57e4..56235eeb4 100644
 +    )
 +    target_link_libraries(boost_iostreams PUBLIC boost)
 +endif()
- 
+
  # Add additional boost libs here; remember to ALIAS them in the root CMakeLists!
- 
+
  # Catch2
- set(CATCH_INSTALL_DOCS OFF)
- set(CATCH_INSTALL_EXTRAS OFF)
+ set(CATCH_INSTALL_DOCS OFF CACHE BOOL "")
+ set(CATCH_INSTALL_EXTRAS OFF CACHE BOOL "")
 -add_subdirectory(catch2)
 +find_package(Catch2 REQUIRED)
- 
+
  # Crypto++
--set(CRYPTOPP_BUILD_DOCUMENTATION OFF)
--set(CRYPTOPP_BUILD_TESTING OFF)
--set(CRYPTOPP_INSTALL OFF)
--set(CRYPTOPP_SOURCES "${CMAKE_SOURCE_DIR}/externals/cryptopp")
+-set(CRYPTOPP_BUILD_DOCUMENTATION OFF CACHE BOOL "")
+-set(CRYPTOPP_BUILD_TESTING OFF CACHE BOOL "")
+-set(CRYPTOPP_INSTALL OFF CACHE BOOL "")
+-set(CRYPTOPP_SOURCES "${CMAKE_SOURCE_DIR}/externals/cryptopp" CACHE STRING "")
 -add_subdirectory(cryptopp-cmake)
 -
--# HACK: Mismatch between compilation of CryptoPP and headers used in Citra can cause runtime issues.
--# Pull out the compile definitions from CryptoPP and apply them to Citra as well to fix this.
--# See: https://github.com/weidai11/cryptopp/issues/1191
--get_source_file_property(CRYPTOPP_COMPILE_DEFINITIONS ${CRYPTOPP_SOURCES}/cryptlib.cpp TARGET_DIRECTORY cryptopp COMPILE_DEFINITIONS)
--set(CRYPTOPP_COMPILE_DEFINITIONS ${CRYPTOPP_COMPILE_DEFINITIONS} PARENT_SCOPE)
--
 +if (NOT USE_SYSTEM_CRYPTOPP)
-+    set(CRYPTOPP_BUILD_DOCUMENTATION OFF)
-+    set(CRYPTOPP_BUILD_TESTING OFF)
-+    set(CRYPTOPP_INSTALL OFF)
-+    set(CRYPTOPP_SOURCES "${CMAKE_SOURCE_DIR}/externals/cryptopp")
++    set(CRYPTOPP_BUILD_DOCUMENTATION OFF CACHE BOOL "")
++    set(CRYPTOPP_BUILD_TESTING OFF CACHE BOOL "")
++    set(CRYPTOPP_INSTALL OFF CACHE BOOL "")
++    set(CRYPTOPP_SOURCES "${CMAKE_SOURCE_DIR}/externals/cryptopp" CACHE STRING "")
 +    add_subdirectory(cryptopp-cmake)
-+
-+    # HACK: Mismatch between compilation of CryptoPP and headers used in Citra can cause runtime issues.
-+    # Pull out the compile definitions from CryptoPP and apply them to Citra as well to fix this.
-+    # See: https://github.com/weidai11/cryptopp/issues/1191
-+    get_source_file_property(CRYPTOPP_COMPILE_DEFINITIONS ${CRYPTOPP_SOURCES}/cryptlib.cpp TARGET_DIRECTORY cryptopp COMPILE_DEFINITIONS)
-+    set(CRYPTOPP_COMPILE_DEFINITIONS ${CRYPTOPP_COMPILE_DEFINITIONS} PARENT_SCOPE)
 +else()
 +    find_library(CRYPTOPP_LIBS cryptopp REQUIRED)
 +endif()
  # HACK: The logic to set up the base include directory for CryptoPP does not work with Android SDK CMake 3.22.1.
  # Until there is a fixed version available, this code will detect and add in the proper include if it does not exist.
  if(ANDROID)
-@@ -72,12 +77,20 @@ target_include_directories(dds-ktx INTERFACE ./dds-ktx)
- 
+@@ -66,12 +71,20 @@ target_include_directories(dds-ktx INTERFACE ./dds-ktx)
+
  # fmt and Xbyak need to be added before dynarmic
  # libfmt
 -option(FMT_INSTALL "" ON)
@@ -135,7 +126,7 @@ index 79c7d57e4..56235eeb4 100644
 +else()
 +    find_package(fmt REQUIRED)
 +endif()
- 
+
  # Xbyak
  if ("x86_64" IN_LIST ARCHITECTURE)
 -    add_subdirectory(xbyak EXCLUDE_FROM_ALL)
@@ -145,27 +136,29 @@ index 79c7d57e4..56235eeb4 100644
 +        find_path(XBYAK_INCLUDE xbyak.h PATH_SUFFIXES xbyak REQUIRED)
 +    endif()
  endif()
- 
+
  # Dynarmic
-@@ -96,14 +109,22 @@ endif()
+@@ -90,15 +103,23 @@ endif()
  add_subdirectory(glad)
- 
+
  # glslang
--set(SKIP_GLSLANG_INSTALL ON)
--set(ENABLE_GLSLANG_BINARIES OFF)
--set(ENABLE_SPVREMAPPER OFF)
--set(ENABLE_CTEST OFF)
+-set(SKIP_GLSLANG_INSTALL ON CACHE BOOL "")
+-set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "")
+-set(ENABLE_SPVREMAPPER OFF CACHE BOOL "")
+-set(ENABLE_CTEST OFF CACHE BOOL "")
+-set(ENABLE_HLSL OFF CACHE BOOL "")
 -add_subdirectory(glslang)
 +if (NOT USE_SYSTEM_GLSLANG)
-+    set(SKIP_GLSLANG_INSTALL ON)
-+    set(ENABLE_GLSLANG_BINARIES OFF)
-+    set(ENABLE_SPVREMAPPER OFF)
-+    set(ENABLE_CTEST OFF)
++    set(SKIP_GLSLANG_INSTALL ON CACHE BOOL "")
++    set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "")
++    set(ENABLE_SPVREMAPPER OFF CACHE BOOL "")
++    set(ENABLE_CTEST OFF CACHE BOOL "")
++    set(ENABLE_HLSL OFF CACHE BOOL "")
 +    add_subdirectory(glslang)
 +else()
 +    find_package(glslang REQUIRED)
 +endif()
- 
+
  # inih
 -add_subdirectory(inih)
 +if (NOT USE_SYSTEM_INIH)
@@ -173,12 +166,12 @@ index 79c7d57e4..56235eeb4 100644
 +else()
 +    find_library(INIH_LIBS INIReader REQUIRED)
 +endif()
- 
+
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -134,7 +155,11 @@ add_subdirectory(soundtouch EXCLUDE_FROM_ALL)
+@@ -128,7 +149,11 @@ add_subdirectory(soundtouch EXCLUDE_FROM_ALL)
  add_subdirectory(sirit EXCLUDE_FROM_ALL)
- 
+
  # Teakra
 -add_subdirectory(teakra EXCLUDE_FROM_ALL)
 +if (NOT USE_SYSTEM_TEAKRA)
@@ -186,10 +179,10 @@ index 79c7d57e4..56235eeb4 100644
 +else()
 +    find_library(TEAKRA_LIBS teakra REQUIRED)
 +endif()
- 
+
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-@@ -145,19 +170,31 @@ endif()
+@@ -146,19 +171,31 @@ endif()
  set(ZSTD_LEGACY_SUPPORT OFF)
  set(ZSTD_BUILD_PROGRAMS OFF)
  set(ZSTD_BUILD_SHARED OFF)
@@ -201,7 +194,7 @@ index 79c7d57e4..56235eeb4 100644
 +else()
 +    find_library(ZSTD_LIBS zstd REQUIRED)
 +endif()
- 
+
  # ENet
 -add_subdirectory(enet)
 -target_include_directories(enet INTERFACE ./enet/include)
@@ -211,7 +204,7 @@ index 79c7d57e4..56235eeb4 100644
 +else()
 +    find_library(ENET_LIBS enet REQUIRED)
 +endif()
- 
+
  # Cubeb
  if (ENABLE_CUBEB)
 -    set(BUILD_TESTS OFF CACHE BOOL "")
@@ -227,10 +220,10 @@ index 79c7d57e4..56235eeb4 100644
 +        find_package(cubeb REQUIRED)
 +    endif()
  endif()
- 
+
  # DiscordRPC
-@@ -223,15 +260,19 @@ endif()
- 
+@@ -219,15 +256,19 @@ endif()
+
  # OpenAL Soft
  if (ENABLE_OPENAL)
 -    set(ALSOFT_EMBED_HRTF_DATA OFF CACHE BOOL "")
@@ -256,7 +249,7 @@ index 79c7d57e4..56235eeb4 100644
 +        add_subdirectory(openal-soft EXCLUDE_FROM_ALL)
 +    endif()
  endif()
- 
+
  # VMA
 diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
 index 4385cdf5f..4e31196f8 100644
@@ -264,7 +257,7 @@ index 4385cdf5f..4e31196f8 100644
 +++ b/src/audio_core/CMakeLists.txt
 @@ -92,9 +92,13 @@ if(ENABLE_CUBEB)
  endif()
- 
+
  if(ENABLE_OPENAL)
 -    target_link_libraries(audio_core PRIVATE OpenAL)
      target_compile_definitions(audio_core PUBLIC HAVE_OPENAL)
@@ -276,15 +269,15 @@ index 4385cdf5f..4e31196f8 100644
 +        add_definitions(-DAL_LIBTYPE_STATIC)
 +    endif()
  endif()
- 
+
  if (CITRA_USE_PRECOMPILED_HEADERS)
 diff --git a/src/citra/CMakeLists.txt b/src/citra/CMakeLists.txt
-index 682dbbaa6..f1633949e 100644
+index 4e20b14d4..8401d0bb1 100644
 --- a/src/citra/CMakeLists.txt
 +++ b/src/citra/CMakeLists.txt
 @@ -19,7 +19,12 @@ add_executable(citra
  create_target_directory_groups(citra)
- 
+
  target_link_libraries(citra PRIVATE citra_common citra_core input_common network)
 -target_link_libraries(citra PRIVATE inih glad)
 +target_link_libraries(citra PRIVATE glad)
@@ -297,16 +290,16 @@ index 682dbbaa6..f1633949e 100644
      target_link_libraries(citra PRIVATE getopt)
  endif()
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index 14a21b867..8e0992091 100644
+index ddf715f2f..cecedbf6c 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
-@@ -158,11 +158,14 @@ else()
+@@ -162,11 +162,14 @@ else()
      $<$<CXX_COMPILER_ID:Clang>:-fsized-deallocation>
    )
  endif()
 -
  create_target_directory_groups(citra_common)
- 
+
 -target_link_libraries(citra_common PUBLIC fmt::fmt library-headers microprofile Boost::boost Boost::serialization Boost::iostreams)
 -target_link_libraries(citra_common PRIVATE libzstd_static)
 +target_link_libraries(citra_common PUBLIC fmt library-headers microprofile Boost::boost Boost::serialization Boost::iostreams)
@@ -316,21 +309,21 @@ index 14a21b867..8e0992091 100644
 +    target_link_libraries(citra_common PUBLIC zstd)
 +endif()
  set_target_properties(citra_common PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
- 
+
  if ("x86_64" IN_LIST ARCHITECTURE)
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
 index 0e628cb55..bb4f4ced8 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
 @@ -480,7 +480,7 @@ create_target_directory_groups(citra_core)
- 
+
  target_link_libraries(citra_core PUBLIC citra_common PRIVATE audio_core network video_core)
  target_link_libraries(citra_core PRIVATE Boost::boost Boost::serialization Boost::iostreams)
 -target_link_libraries(citra_core PUBLIC dds-ktx PRIVATE cryptopp fmt::fmt lodepng open_source_archives)
 +target_link_libraries(citra_core PUBLIC dds-ktx PRIVATE cryptopp fmt lodepng open_source_archives)
  set_target_properties(citra_core PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
- 
+
  if (ENABLE_WEB_SERVICE)
--- 
+--
 2.41.0
 
