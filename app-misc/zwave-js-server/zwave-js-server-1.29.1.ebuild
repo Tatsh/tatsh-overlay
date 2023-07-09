@@ -6,10 +6,9 @@ EAPI=8
 WANT_GYP=1
 inherit systemd yarn
 
-DESCRIPTION="Full access to zwave-js driver through Websockets"
-HOMEPAGE="https://github.com/zwave-js/zwave-js-server#readme"
+DESCRIPTION="Small server wrapper around Z-Wave JS to access it via a WebSocket."
+HOMEPAGE="https://github.com/zwave-js/zwave-js-server"
 YARN_PKGS=(
-	"@zwave-js/server-${PV}"
 	@alcalzone/jsonl-db-3.1.0
 	@alcalzone/pak-0.9.0
 	@alcalzone/proper-lockfile-4.1.3-0
@@ -53,14 +52,15 @@ YARN_PKGS=(
 	@serialport/stream-10.3.0
 	@types/http-cache-semantics-4.0.1
 	@types/triple-beam-1.3.2
-	@zwave-js/cc-11.0.0
-	@zwave-js/config-11.0.0
-	@zwave-js/core-11.0.0
-	@zwave-js/host-11.0.0
-	@zwave-js/nvmedit-11.0.0
-	@zwave-js/serial-11.0.0
-	@zwave-js/shared-11.0.0
-	@zwave-js/testing-11.0.0
+	@zwave-js/cc-11.4.0
+	@zwave-js/config-11.4.0
+	@zwave-js/core-11.4.0
+	@zwave-js/host-11.4.0
+	@zwave-js/nvmedit-11.4.0
+	@zwave-js/serial-11.4.0
+	"@zwave-js/server-${PV}"
+	@zwave-js/shared-11.3.0
+	@zwave-js/testing-11.4.0
 	agent-base-6.0.2
 	alcalzone-shared-4.0.8
 	ansi-colors-4.1.3
@@ -157,7 +157,7 @@ YARN_PKGS=(
 	safe-buffer-5.2.1
 	safe-stable-stringify-2.4.0
 	semver-7.3.8
-	semver-7.5.3
+	semver-7.5.4
 	serialport-10.4.0
 	shebang-command-2.0.0
 	shebang-regex-3.0.0
@@ -183,12 +183,12 @@ YARN_PKGS=(
 	winston-transport-4.5.0
 	wrap-ansi-7.0.0
 	ws-8.6.0
-	xstate-4.29.0
+	xstate-4.38.0
 	y18n-5.0.8
 	yallist-4.0.0
 	yargs-17.7.2
 	yargs-parser-21.1.1
-	zwave-js-11.0.0
+	zwave-js-11.4.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
