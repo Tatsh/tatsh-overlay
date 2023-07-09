@@ -16,6 +16,7 @@ alcalzone
 alcaro
 alecthomas
 alessandro
+alexedwards
 alif
 allenc
 alnum
