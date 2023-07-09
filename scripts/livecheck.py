@@ -343,7 +343,7 @@ def get_props(search_dir: str,
             yield (cat, pkg, ebuild_version, ebuild_version,
                    'https://www.jetbrains.com/updates/updates.xml', None, True)
         elif (parsed_uri.hostname in ('gitlab.com', 'gitlab.freedesktop.org')
-              and '~/archive' in parsed_uri.path):
+              and '/archive/' in parsed_uri.path):
             author, proj = src_uri.split('/')[3:5]
             m = re.match('^https://([^/]+)', src_uri)
             assert m is not None
