@@ -7,7 +7,7 @@ inherit autotools
 
 DESCRIPTION="An FFmpeg based library and VapourSynth plugin for easy frame accurate access"
 HOMEPAGE="https://github.com/FFMS/ffms2"
-SHA="cf7c4b250d5e60b7c7ddaae20f362e365bc33f30"
+SHA="76a9acbdcf1fbbe91df43bfc91826de1bc7ba30e"
 SRC_URI="https://github.com/FFMS/ffms2/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
