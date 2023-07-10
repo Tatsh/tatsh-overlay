@@ -4,9 +4,10 @@
 EAPI=8
 inherit cmake xdg
 
-DESCRIPTION="Nintendo Switch emulator"
+DESCRIPTION="Nintendo Switch emulator."
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
 MY_PV="mainline-${PV/./-}"
+CPP_HTTPLIB_SHA="6d963fbe8d415399d65e94db7910bbd22fe3741c"
 CPP_JWT_SHA="e12ef06218596b52d9b5d6e1639484866a8e7067"
 _DYNARMIC_SHA="7da378033a7764f955516f75194856d87bbcd7a5"
 NX_TZDB_VERSION="220816"
@@ -19,6 +20,7 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 	https://github.com/MerryMage/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/yuzu-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/lat9nq/tzdb_to_nx/releases/download/${NX_TZDB_VERSION}/${NX_TZDB_VERSION}.zip -> ${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip
+	https://github.com/yhirose/cpp-httplib/archive/${CPP_HTTPLIB_SHA}.tar.gz -> ${PN}-cpp-httplib-${CPP_HTTPLIB_SHA:0:7}.tar.gz
 	https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz"
 
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
@@ -74,10 +76,11 @@ pkg_setup() {
 
 src_prepare() {
 	rm .gitmodules || die
-	rmdir "${S}/externals/"{dynarmic,mbedtls,sirit,cpp-jwt,SDL} || die
+	rmdir "${S}/externals/"{dynarmic,mbedtls,sirit,cpp-jwt,cpp-httplib,SDL} || die
 	mv "${WORKDIR}/dynarmic-${_DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
 	mv "${WORKDIR}/cpp-jwt-${CPP_JWT_SHA}" "${S}/externals/cpp-jwt" || die
+	mv "${WORKDIR}/cpp-httplib-${CPP_HTTPLIB_SHA}" "${S}/externals/cpp-httplib" || die
 	mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
 	mkdir -p "${S}_build/externals/nx_tzdb" || die
