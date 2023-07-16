@@ -66,9 +66,11 @@ autocfg
 autogen
 autoload
 autoloading
+automagic
 automl
 automodule
 autotools
+autoupdate
 avalonia
 avaloniaedit
 avcodec
@@ -116,6 +118,7 @@ bitwidth
 blackbox
 blackfriday
 bluez
+bochs
 brrrip
 bsnes
 btrfs
@@ -260,6 +263,7 @@ dbfile
 dbuild
 dbus
 dbusmock
+dccache_bin
 dcli
 dcmake
 dcpihecpambacapedldabdbpakmachpb
@@ -277,6 +281,7 @@ deinterlace
 deinterlacing
 demangle
 denable
+dencode_framedumps
 denoise
 denoising
 depd
@@ -288,9 +293,11 @@ destdir
 devel
 devname
 devtype
+dfastlog
 dfilter
 dfluidsynth
 dfmderainbow
+dforce
 dgit
 dglslang
 dgtk
@@ -300,6 +307,7 @@ diasymreader
 difflib
 dinstall
 diropts
+disasm
 discordrichpresence
 discordrpc
 displaydoc
@@ -328,6 +336,7 @@ documentai
 dodoc
 doenvd
 doexe
+doforce
 doicon
 doinitd
 doins
@@ -337,6 +346,7 @@ domenu
 domo
 domodule
 dopenal
+doprofiling
 dorules
 dosbin
 dosbox
@@ -460,6 +470,7 @@ flatbuffers
 flate
 flatmap
 flexbox
+flto
 fluentavaloniaui
 fluidsynth
 fluxsmooth
@@ -561,6 +572,7 @@ graphicslibraryframework
 gravitydb
 groupcache
 gstreamer
+gtest
 gtksharp
 gtksourceview
 guidefor
@@ -778,11 +790,13 @@ libsamplerate
 libscenechange
 libsdl
 libseccomp
+libsfml
 libshared
 libslirp
 libsndfile
 libsodium
 libsoundio
+libspng
 libtemporalsoften
 libtermcap
 libtomcrypt
@@ -879,6 +893,7 @@ mergo
 meroitic
 metaprogramming
 metastore
+mgba
 mgree
 mholt
 miao
@@ -894,6 +909,7 @@ minipass
 miniupnp
 miniupnpc
 miniz
+minizip
 minizlib
 minsizerel
 miscfilters
@@ -951,6 +967,7 @@ neill
 neobrain
 netcore
 netlink
+netplay
 netrc
 netstandard
 networksecurity
@@ -983,6 +1000,7 @@ nopasswd
 nopt
 noreturn
 nosniff
+notfound
 noto
 notpeter
 npapi
@@ -1031,9 +1049,11 @@ openrc
 opentelemetry
 opentimelineio
 opentk
+oprofile
 optflags
 optionator
 optout
+optparse
 opusfile
 osconfig
 oslogin
@@ -1070,6 +1090,7 @@ phags
 phagspa
 phishingprotection
 phpstan
+picojson
 pidfile
 pierrec
 pietendo
@@ -1173,11 +1194,13 @@ qtxml
 querystring
 quicktest
 quse
+rangeset
 raphnet
 rapidjson
 rardecode
 rawio
 rawloader
+rcheevos
 rdepend
 rdepends
 rdparty
@@ -1418,9 +1441,11 @@ unicornengine
 unidecode
 uniseg
 unistd
+unittests
 universalify
 unscopables
 upconv
+upnp
 upscaler
 upscaling
 upstreams
