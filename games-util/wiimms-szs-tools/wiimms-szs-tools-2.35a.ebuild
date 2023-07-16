@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="A set of command line tools to maniuplate files of various Nintendo titles."
 HOMEPAGE="https://github.com/Wiimm/wiimms-szs-tools"
-SHA="74ac39c1af5c8e85bf10711aed2ffc9dfee2e277"
+SHA="b5b1fe7fc0cf460d6204c18ba7bb4c40f7597efa"
 SRC_URI="https://github.com/Wiimm/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
@@ -23,7 +23,10 @@ S="${WORKDIR}/${PN}-${SHA}/project"
 
 src_prepare() {
 	# shellcheck disable=SC2016
-	sed -re 's/@\$\(CC\)/$(CC)/g' -e 's/-O3\b//g' -i Makefile
+	sed -re 's/@\$\(CC\)/$(CC)/g' -e 's/-O3\b//g' \
+		-e 's/^CC\s+=(.*)/CC ?=\1/' \
+		-e 's/^STRIP\s+=(.*)/STRIP ?=\1/' \
+		-i Makefile
 	default
 }
 
