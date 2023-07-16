@@ -54,6 +54,7 @@ RDEPEND="
 	>=dev-libs/libfmt-8:=
 	dev-libs/lzo:=
 	dev-libs/pugixml:=
+	dev-libs/vulkan-memory-allocator
 	dev-libs/xxhash:=
 	media-libs/cubeb:=
 	media-libs/libglvnd:=
@@ -124,11 +125,11 @@ declare -A KEEP_BUNDLED=(
 	[mGBA]=MPL-2.0
 
 	[picojson]=BSD-2
-	[expr]=MTI
+	[expr]=MIT
 	[rangeset]=ZLIB
 	[FatFs]=BSD
 	[rcheevos]=MIT
-	[gtest]= # (build-time only)
+	[gtest]="" # (build-time only)
 )
 
 src_prepare() {
@@ -173,30 +174,30 @@ src_configure() {
 		# Use ccache only when user did set FEATURES=ccache (or similar)
 		# not when ccache binary is present in system (automagic).
 		-DCCACHE_BIN=CCACHE_BIN-NOTFOUND
-		-DENABLE_ALSA=$(usex alsa)
+		"-DENABLE_ALSA=$(usex alsa)"
 		-DENABLE_AUTOUPDATE=OFF
-		-DENABLE_BLUEZ=$(usex bluetooth)
-		-DENABLE_EVDEV=$(usex evdev)
-		-DENCODE_FRAMEDUMPS=$(usex ffmpeg)
+		"-DENABLE_BLUEZ=$(usex bluetooth)"
+		"-DENABLE_EVDEV=$(usex evdev)"
+		"-DENCODE_FRAMEDUMPS=$(usex ffmpeg)"
 		-DENABLE_LLVM=OFF
 		# just adds -flto, user can do that via flags
 		-DENABLE_LTO=OFF
-		-DUSE_MGBA=$(usex mgba)
-		-DENABLE_PULSEAUDIO=$(usex pulseaudio)
-		-DENABLE_QT=$(usex gui)
+		"-DUSE_MGBA=$(usex mgba)"
+		"-DENABLE_PULSEAUDIO=$(usex pulseaudio)"
+		"-DENABLE_QT=$(usex gui)"
 		-DENABLE_SDL=OFF # not supported: #666558
-		-DENABLE_TESTS=$(usex test)
-		-DENABLE_VULKAN=$(usex vulkan)
-		-DFASTLOG=$(usex log)
+		"-DENABLE_TESTS=$(usex test)"
+		"-DENABLE_VULKAN=$(usex vulkan)"
+		"-DFASTLOG=$(usex log)"
 		# Needed because it really is minizip-ng, at least one minizip-ng-specific function is used,
 		# and minizip-ng[compat] is not available
 		-DFORCE_BUNDLED_MINIZIP=ON
 		# zlib-ng[compat] is not available. Same reasoning as minizip for bundling
 		-DFORCE_BUNDLED_ZLIB_NG=ON
-		-DOPROFILING=$(usex profile)
-		-DUSE_DISCORD_PRESENCE=$(usex discord-presence)
+		"-DOPROFILING=$(usex profile)"
+		"-DUSE_DISCORD_PRESENCE=$(usex discord-presence)"
 		-DUSE_SHARED_ENET=ON
-		-DUSE_UPNP=$(usex upnp)
+		"-DUSE_UPNP=$(usex upnp)"
 		-DUSE_RETRO_ACHIEVEMENTS=ON
 
 		# Undo cmake.eclass's defaults.
