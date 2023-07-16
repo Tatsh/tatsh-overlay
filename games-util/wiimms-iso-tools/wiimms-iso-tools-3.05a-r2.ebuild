@@ -23,7 +23,10 @@ S="${WORKDIR}/${PN}-${SHA}/project"
 
 src_prepare() {
 	# shellcheck disable=SC2016
-	sed -re 's/@\$\(CC\)/$(CC)/g' -e 's/-O3\b//g' -i Makefile
+	sed -re 's/@\$\(CC\)/$(CC)/g' -e 's/-O3\b//g' \
+		-e 's/^CC\s+=(.*)/CC ?=\1/' \
+		-e 's/^STRIP\s+=(.*)/STRIP ?=\1/' \
+		-i Makefile
 	default
 }
 
