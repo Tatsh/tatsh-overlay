@@ -20,8 +20,8 @@ RDEPEND="${DEPEND}"
 
 src_configure() {
 	local emesonargs=(
-		$(meson_use amd64 enable_opt)
-		$(meson_use test dev_build)
+		"$(meson_use amd64 enable_opt)"
+		"$(meson_use test dev_build)"
 	)
 	meson_src_configure
 }
