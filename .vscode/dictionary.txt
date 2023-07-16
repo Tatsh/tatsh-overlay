@@ -580,6 +580,7 @@ guidocella
 gurmukhi
 gvim
 gzipped
+górny
 hactool
 hanunoo
 hanunó'o
@@ -773,6 +774,7 @@ libimobiledevice
 libjpeg
 libm
 libmad
+libmgba
 libmpv
 libmspack
 libnnedi
@@ -898,6 +900,7 @@ mgree
 mholt
 miao
 michaeldfallen
+michał
 microcom
 mina
 mindepth
