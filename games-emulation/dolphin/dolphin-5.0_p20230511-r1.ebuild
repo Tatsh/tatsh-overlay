@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake desktop xdg-utils pax-utils
+inherit cmake desktop flag-o-matic xdg-utils pax-utils
 
 if [[ ${PV} == *9999 ]]
 then
