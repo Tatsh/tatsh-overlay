@@ -1201,6 +1201,7 @@ rangeset
 raphnet
 rapidjson
 rardecode
+ratelimit
 rawio
 rawloader
 rcheevos
