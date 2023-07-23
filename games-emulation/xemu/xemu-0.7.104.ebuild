@@ -33,7 +33,7 @@ SRC_URI="https://github.com/xemu-project/xemu/archive/v${PV}.tar.gz -> ${P}.tar.
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-IUSE="xattr aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack malloc-trim membarrier nls doc pulseaudio test"
+IUSE="xattr aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack malloc-trim membarrier doc pulseaudio test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RESTRICT="!test? ( test )"
 
@@ -115,7 +115,7 @@ src_configure() {
 		"$(use_enable debug debug-tcg)"
 		"$(use_enable doc docs)"
 		"$(use_enable jack)"
-		"$(use_enable nls gettext)"
+		--disable-gettext
 		"$(use_enable pulseaudio pa)"
 		"$(use_enable xattr attr)"
 		--cc="$(tc-getCC)"
