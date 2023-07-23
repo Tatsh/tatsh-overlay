@@ -84,19 +84,26 @@ src_prepare() {
 	mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
 	mkdir -p "${S}_build/externals/nx_tzdb" || die
-	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip" "${S}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
-	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' -i src/common/CMakeLists.txt || die
-	sed -e '/enable_testing.*/d' -e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' -i externals/sirit/CMakeLists.txt || die
+	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip" \
+		"${S}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
+	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' \
+		-i src/common/CMakeLists.txt || die
+	sed -e '/enable_testing.*/d' \
+		-e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' \
+		-i externals/sirit/CMakeLists.txt || die
 	sed -e '/-Werror=missing-declarations/d' -i src/CMakeLists.txt || die
-	sed -re 's/(find_package\(Vulkan).*/\1)/' -i CMakeLists.txt || die
-	sed -re 's/set\(CAN_BUILD_NX_TZDB.*/set(CAN_BUILD_NX_TZDB false)/' -i externals/nx_tzdb/CMakeLists.txt || die
+	sed -re 's/(find_package\(Vulkan ).*/\1)/' \
+		-e 's/VulkanMemoryAllocator/VulkanMemoryAllocator REQUIRED/' -i CMakeLists.txt || die
+	sed -re 's/set\(CAN_BUILD_NX_TZDB.*/set(CAN_BUILD_NX_TZDB false)/' \
+		-i externals/nx_tzdb/CMakeLists.txt || die
 	cmake_src_prepare
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
 	if ! [ -f "${T}/compatibility_list.json" ]; then
 		einfo 'Using fallback compatibility list'
 		gunzip < "${FILESDIR}/${PN}-fallback-compat.json.gz" > "${T}/compatibility_list.json" || die
 	fi
-	mv -f "${T}/compatibility_list.json" "${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
+	mv -f "${T}/compatibility_list.json" \
+		"${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
 }
 
 src_configure() {
