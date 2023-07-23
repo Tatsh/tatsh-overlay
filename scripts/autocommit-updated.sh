@@ -14,7 +14,7 @@ while read -r ebuild; do
     cat=$(dirname "$dn")
     pn=$(basename "$dn")
     pushd "$dn" || exit 1
-    if grep -qE 'EGO_SUM|YARN_PKGS|ryujinx|videoduplicatefinder' ./*.ebuild; then
+    if grep -qE 'EGO_SUM|YARN_PKGS|ryujinx|avalonia-ilspy|videoduplicatefinder' ./*.ebuild; then
         popd || exit 1
         continue
     fi
