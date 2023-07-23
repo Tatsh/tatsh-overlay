@@ -65,6 +65,7 @@ SUBMODULES: Final[Mapping[str, set[str | tuple[str, str]]]] = {
         'genconfig',
         'hw/xbox/nv2a/thirdparty/nv2a_vsh_cpu',
         'tomlplusplus',
+        'ui/thirdparty/httplib',
         'ui/thirdparty/imgui',
         'ui/thirdparty/implot',
         'ui/keycodemapdb',
