@@ -1,4 +1,4 @@
-From ac2e9800cebbe2ba51a406784cf97adea5a3c949 Mon Sep 17 00:00:00 2001
+From b8f7064954cb2dfe9e65b12aea8b8a24a3ca7ec1 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 7 Oct 2021 07:24:08 -0400
 Subject: [PATCH 6/7] not for upstream: remove trace-events-all
@@ -8,10 +8,10 @@ Subject: [PATCH 6/7] not for upstream: remove trace-events-all
  1 file changed, 8 deletions(-)
 
 diff --git a/trace/meson.build b/trace/meson.build
-index ef18f11..8efd92c 100644
+index 26b54714d5..626299dc64 100644
 --- a/trace/meson.build
 +++ b/trace/meson.build
-@@ -53,14 +53,6 @@ foreach dir : [ '.' ] + trace_events_subdirs
+@@ -58,14 +58,6 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
    endif
  endforeach
  
@@ -23,9 +23,9 @@ index ef18f11..8efd92c 100644
 -                                 install: true,
 -                                 install_dir: qemu_datadir)
 -
- foreach d : [
-   ['generated-tcg-tracers.h', 'tcg-h'],
-   ['generated-helpers.c', 'tcg-helper-c'],
+ if 'ust' in get_option('trace_backends')
+   trace_ust_all_h = custom_target('trace-ust-all.h',
+                                   output: 'trace-ust-all.h',
 -- 
-2.35.1
+2.41.0
 

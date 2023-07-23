@@ -1,53 +1,42 @@
-From 61b14f4dbb0bd6cecc84da5f4e0393d80cf89443 Mon Sep 17 00:00:00 2001
+From b30507d163114d41b81b1a19910323cc68ca5269 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 7 Oct 2021 07:12:59 -0400
 Subject: [PATCH 5/7] allow use of system xxHash header
 
 ---
- configure         | 23 ++++++++++++++++++++---
+ configure         | 16 ++++++++++++++++
  meson.build       | 16 ++++++++++++++++
  meson_options.txt |  3 +++
- util/fast-hash.c  |  2 +-
- 4 files changed, 40 insertions(+), 4 deletions(-)
+ 3 files changed, 35 insertions(+)
 
 diff --git a/configure b/configure
-index 2b6b14d..1aacb87 100755
+index e2a3ca0a67..859ca59713 100755
 --- a/configure
 +++ b/configure
-@@ -359,7 +359,8 @@ modules="no"
- module_upgrades="no"
- prefix="/usr/local"
- qemu_suffix="qemu"
--slirp="internal"
-+slirp="auto"
-+xxhash="auto"
- oss_lib=""
- bsd="no"
- linux="no"
-@@ -1077,6 +1078,10 @@ for opt do
+@@ -803,6 +803,10 @@ for opt do
    ;;
-   --enable-slirp=system) slirp="system"
+   --enable-fortify-source) fortify_source="yes"
    ;;
-+  --with-xxhash=internal) xxhash="internal"
++  --with-xxhash=internal) meson_option_add -Dxxhash=internal
 +  ;;
-+  --with-xxhash=system) xxhash="system"
++  --with-xxhash=system) meson_option_add -Dxxhash=system
 +  ;;
-   --disable-vde) vde="no"
+   --disable-tcg) tcg="disabled"
+                  plugins="no"
    ;;
-   --enable-vde) vde="yes"
-@@ -1839,6 +1844,8 @@ Advanced options (experts only):
-   --with-trace-file=NAME   Full PATH,NAME of file to store traces
-                            Default:trace-<pid>
-   --disable-slirp          disable SLIRP userspace network connectivity
+@@ -1042,6 +1046,8 @@ Advanced options (experts only):
+   --enable-tsan            enable thread sanitizer
+   --disable-werror         disable compilation abort on warning
+   --disable-stack-protector disable compiler-provided stack protection
 +  --with-xxhash=internal   use internal version of xxHash
 +  --with-xxhash=system     link against system xxHash
-   --enable-tcg-interpreter enable TCI (TCG with bytecode interpreter, experimental and slow)
-   --enable-malloc-trim     enable libc malloc_trim() for memory optimization
-   --oss-lib                path to OSS library
-@@ -4365,6 +4372,16 @@ if test "$slirp_smbd" != "no" ; then
+   --cpu=CPU                Build for host CPU [$cpu]
+   --with-coroutine=BACKEND coroutine backend. Supported options:
+                            ucontext, sigaltstack, windows
+@@ -2214,6 +2220,16 @@ write_target_makefile() {
    fi
- fi
-
+ }
+ 
 +##########################################
 +# check for xxHash
 +case "$xxhash" in
@@ -59,28 +48,16 @@ index 2b6b14d..1aacb87 100755
 +esac
 +
  ##########################################
- # check for usable __NR_keyctl syscall
-
-@@ -5320,9 +5337,9 @@ if test "$skip_meson" = no; then
-         -Db_pie=$(if test "$pie" = yes; then echo true; else echo false; fi) \
-         ${staticpic:+-Db_staticpic=$staticpic} \
-         -Db_coverage=$(if test "$gcov" = yes; then echo true; else echo false; fi) \
--        -Db_lto=$lto -Dcfi=$cfi -Dcfi_debug=$cfi_debug -Drun_tests=$run_tests \
-+        -Db_lto=$lto -Dcfi=$cfi -Dcfi_debug=$cfi_debug -Drun_tests=${run_tests:-false} \
-         -Dmalloc=$malloc -Dmalloc_trim=$malloc_trim -Dsparse=$sparse \
--        -Dkvm=$kvm -Dhax=$hax -Dwhpx=$whpx -Dhvf=$hvf -Dnvmm=$nvmm \
-+        -Dkvm=$kvm -Dhax=$hax -Dwhpx=$whpx -Dhvf=$hvf -Dnvmm=$nvmm -Dxxhash=$xxhash \
-         -Dxen=$xen -Dxen_pci_passthrough=$xen_pci_passthrough -Dtcg=$tcg \
-         -Dcocoa=$cocoa -Dgtk=$gtk -Dmpath=$mpath -Dsdl=$sdl -Dsdl_image=$sdl_image \
-         -Dlibusb=$libusb -Dsmartcard=$smartcard -Dusb_redir=$usb_redir -Dvte=$vte \
+ # check for vfio_user_server
+ 
 diff --git a/meson.build b/meson.build
-index 3b961ce..2ef7358 100644
+index 6f98a3de8b..7d5b5f7e4e 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1946,6 +1946,19 @@ if get_option('cfi') and slirp_opt == 'system'
-          + ' Please configure with --enable-slirp=git')
+@@ -2769,6 +2769,19 @@ if have_system and vfio_user_server_allowed
+   libvfio_user_dep = declare_dependency(dependencies: [libvfio_user_lib])
  endif
-
+ 
 +xxhash = not_found
 +xxhash_opt = get_option('xxhash')
 +if xxhash_opt == 'system'
@@ -95,10 +72,10 @@ index 3b961ce..2ef7358 100644
 +endif
 +
  fdt = not_found
- fdt_opt = get_option('fdt')
  if have_system
-@@ -2611,6 +2624,9 @@ foreach target : target_dirs
-
+   fdt_opt = get_option('fdt')
+@@ -3479,6 +3492,9 @@ foreach target : target_dirs
+ 
    config_target += config_host
    target_inc = [include_directories('target' / config_target['TARGET_BASE_ARCH'])]
 +  if xxhash_opt == 'internal' and target == 'xemu'
@@ -108,16 +85,16 @@ index 3b961ce..2ef7358 100644
      target_inc += include_directories('linux-headers', is_system: true)
    endif
 diff --git a/meson_options.txt b/meson_options.txt
-index fbf91e0..c7640cb 100644
+index 6d353d4130..2ebb58200a 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -159,3 +159,6 @@ option('slirp', type: 'combo', value: 'auto',
- option('fdt', type: 'combo', value: 'auto',
-        choices: ['disabled', 'enabled', 'auto', 'system', 'internal'],
-        description: 'Whether and how to find the libfdt library')
+@@ -328,3 +328,6 @@ option('slirp_smbd', type : 'feature', value : 'auto',
+ 
+ option('renderdoc', type: 'feature', value: 'auto',
+        description: 'improved RenderDoc frame capture support')
 +option('xxhash', type: 'combo', value: 'internal',
 +       choices: ['internal', 'system'],
 +       description: 'Whether and how to find the xxHash library')
---
-2.35.1
+-- 
+2.41.0
 

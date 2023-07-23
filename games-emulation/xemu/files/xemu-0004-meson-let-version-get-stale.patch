@@ -1,4 +1,4 @@
-From 11e006cd93394c893ac91638e0473e3d635016de Mon Sep 17 00:00:00 2001
+From ea34b34825feeb8415f7171203f8b2b4d544231e Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 6 Oct 2021 03:48:34 -0400
 Subject: [PATCH 4/7] meson: let version get stale
@@ -8,10 +8,10 @@ Subject: [PATCH 4/7] meson: let version get stale
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index f490991..3b961ce 100644
+index e59b8d98da..6f98a3de8b 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -167,7 +167,7 @@ xemu_version = custom_target('xemu-version-macro.h',
+@@ -315,7 +315,7 @@ xemu_version = custom_target('xemu-version-macro.h',
                               command: xemu_version_cmd,
                               capture: true,
                               build_by_default: true,
@@ -20,7 +20,7 @@ index f490991..3b961ce 100644
  
  
  ###########################################
-@@ -2063,7 +2063,7 @@ qemu_version = custom_target('qemu-version.h',
+@@ -2887,7 +2887,7 @@ qemu_version = custom_target('qemu-version.h',
                               command: qemu_version_cmd,
                               capture: true,
                               build_by_default: true,
@@ -30,5 +30,5 @@ index f490991..3b961ce 100644
  genconfig_cmd = [
    python, files('genconfig/gen_config.py'),
 -- 
-2.35.1
+2.41.0
 
