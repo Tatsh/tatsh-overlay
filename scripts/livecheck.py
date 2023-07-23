@@ -64,7 +64,6 @@ SUBMODULES: Final[Mapping[str, set[str | tuple[str, str]]]] = {
     'games-emulation/xemu': {
         'genconfig',
         'hw/xbox/nv2a/thirdparty/nv2a_vsh_cpu',
-        'slirp',
         'tomlplusplus',
         'ui/thirdparty/imgui',
         'ui/thirdparty/implot',
