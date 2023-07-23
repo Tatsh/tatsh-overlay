@@ -101,7 +101,7 @@ src_prepare() {
 }
 
 src_configure() {
-	local audio_drv_list=( "'sdl'", )
+	local audio_drv_list=( "'sdl'," )
 	local build_cflags=("-I${S}/ui/imgui")
 	local debug_flag
 	if use debug; then
@@ -109,9 +109,9 @@ src_configure() {
 		build_cflags+=(-O0 -g -DXEMU_DEBUG_BUILD=1)
 		debug_flag=--enable-debug
 	fi
-	use alsa && audio_drv_list+=( "'alsa'", )
-	use jack && audio_drv_list+=( "'jack'", )
-	use pulseaudio && audio_drv_list+=( "'pa'", )
+	use alsa && audio_drv_list+=( "'alsa'," )
+	use jack && audio_drv_list+=( "'jack'," )
+	use pulseaudio && audio_drv_list+=( "'pa'," )
 	local other_opts=(
 		"$(use_enable alsa)"
 		"$(use_enable debug debug-info)"
