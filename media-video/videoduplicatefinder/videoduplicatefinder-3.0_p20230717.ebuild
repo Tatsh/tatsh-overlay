@@ -10,7 +10,7 @@ DESCRIPTION="Video duplicate finder."
 HOMEPAGE="https://github.com/0x90d/videoduplicatefinder"
 MY_PN="VideoDuplicateFinder"
 MY_PV="3.0.0-preview-${PV:5}"
-SHA="2ddca14a7d385a1b17f60fa2ac8d18b2a4820acb"
+SHA="ddf7e88b6d6f73984f92809c867792d3dcb9f565"
 NUGETS="avalonia-11.0.0-preview4
 	avalonia.angle.windows.natives-2.1.0.2020091801
 	avalonia.controls.datagrid-11.0.0-preview4
@@ -36,7 +36,9 @@ NUGETS="avalonia-11.0.0-preview4
 	harfbuzzsharp.nativeassets.win32-2.8.2.1-preview.108
 	jetbrains.annotations-10.3.0
 	microcom.runtime-0.11.0
+	microsoft.aspnetcore.app.runtime.linux-x64-7.0.3
 	microsoft.csharp-4.7.0
+	microsoft.netcore.app.runtime.linux-x64-7.0.3
 	microsoft.netcore.platforms-1.0.1
 	microsoft.netcore.targets-1.0.1
 	microsoft.win32.systemevents-6.0.0
@@ -44,6 +46,9 @@ NUGETS="avalonia-11.0.0-preview4
 	protobuf-net-3.2.16
 	protobuf-net.core-3.2.16
 	reactiveui-18.3.1
+	runtime.any.system.runtime-4.1.0
+	runtime.native.system-4.0.0
+	runtime.unix.system.private.uri-4.0.1
 	sixlabors.imagesharp-1.0.4
 	skiasharp-2.88.1
 	skiasharp.nativeassets.linux-2.88.1
@@ -56,19 +61,14 @@ NUGETS="avalonia-11.0.0-preview4
 	system.drawing.common-6.0.0
 	system.memory-4.5.3
 	system.numerics.vectors-4.5.0
+	system.private.uri-4.0.1
 	system.reactive-5.0.0
 	system.reflection.emit-4.7.0
 	system.runtime-4.1.0
 	system.runtime.compilerservices.unsafe-4.6.0
 	system.security.principal.windows-4.7.0
 	system.valuetuple-4.5.0
-	tmds.dbus-0.9.0
-	microsoft.netcore.app.runtime.linux-x64-7.0.3
-	microsoft.aspnetcore.app.runtime.linux-x64-7.0.3
-	runtime.any.system.runtime-4.1.0
-	system.private.uri-4.0.1
-	runtime.unix.system.private.uri-4.0.1
-	runtime.native.system-4.0.0"
+	tmds.dbus-0.9.0"
 SRC_URI="https://github.com/0x90d/videoduplicatefinder/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	$(nuget_uris)"
 
