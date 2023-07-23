@@ -50,6 +50,9 @@ DEPEND="dev-libs/glib
 	x11-libs/gtk+:3
 	x11-libs/pixman
 	aio? ( dev-libs/libaio )
+	alsa? ( media-libs/alsa-lib )
+	pulseaudio? ( media-libs/libpulse )
+	jack? ( virtual/jack )
 	io-uring? ( sys-libs/liburing )
 	xattr? ( sys-apps/attr )"
 RDEPEND="${DEPEND} ${PYTHON_DEPS}"
