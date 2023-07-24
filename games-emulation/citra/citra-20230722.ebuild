@@ -77,6 +77,16 @@ src_prepare() {
 	# shellcheck disable=SC2016
 	sed -e 's|${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak|/usr/include/xbyak|' \
 		-i externals/dynarmic/externals/CMakeLists.txt || die
+	sed -re 's/-W(all|error)//g' -i externals/dynarmic/CMakeLists.txt \
+		externals/dynarmic/externals/catch/CMake/CatchMiscFunctions.cmake \
+		externals/dynarmic/externals/catch/CMakeLists.txt \
+		externals/dynarmic/externals/fmt/CMakeLists.txt \
+		externals/dynarmic/externals/mcl/CMakeLists.txt \
+		externals/dynarmic/externals/robin-map/tests/CMakeLists.txt \
+		externals/dynarmic/externals/zycore/CMakeLists.txt \
+		externals/dynarmic/externals/zycore/cmake/zyan-functions.cmake \
+		externals/sirit/CMakeLists.txt \
+		src/CMakeLists.txt || die
 	cmake_src_prepare
 }
 
@@ -104,6 +114,7 @@ src_configure() {
 		-DUSE_SYSTEM_TEAKRA=ON
 		-DUSE_SYSTEM_XBYAK=OFF
 		-DUSE_SYSTEM_ZSTD=ON
+		-Wno-dev
 	)
 	cmake_src_configure
 }
