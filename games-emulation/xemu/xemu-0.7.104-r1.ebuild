@@ -46,6 +46,7 @@ DEPEND="dev-libs/glib
 	media-libs/libsdl2
 	net-libs/libpcap
 	net-libs/libslirp
+	sys-apps/dtc
 	sys-libs/zlib
 	x11-libs/gtk+:3
 	x11-libs/pixman
