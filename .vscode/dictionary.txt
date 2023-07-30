@@ -1585,4 +1585,6 @@ zstd
 zune
 zvbi
 zwave
+zyan
+zycore
 zzag
