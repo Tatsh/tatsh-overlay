@@ -52,15 +52,15 @@ YARN_PKGS=(
 	@serialport/stream-10.3.0
 	@types/http-cache-semantics-4.0.1
 	@types/triple-beam-1.3.2
-	@zwave-js/cc-11.4.0
-	@zwave-js/config-11.4.0
-	@zwave-js/core-11.4.0
-	@zwave-js/host-11.4.0
-	@zwave-js/nvmedit-11.4.0
-	@zwave-js/serial-11.4.0
-	"@zwave-js/server-${PV}"
-	@zwave-js/shared-11.3.0
-	@zwave-js/testing-11.4.0
+	@zwave-js/cc-11.8.0
+	@zwave-js/config-11.8.0
+	@zwave-js/core-11.8.0
+	@zwave-js/host-11.8.0
+	@zwave-js/nvmedit-11.8.0
+	@zwave-js/serial-11.8.0
+	@zwave-js/server-1.30.0
+	@zwave-js/shared-11.8.0
+	@zwave-js/testing-11.8.0
 	agent-base-6.0.2
 	alcalzone-shared-4.0.8
 	ansi-colors-4.1.3
@@ -188,7 +188,7 @@ YARN_PKGS=(
 	yallist-4.0.0
 	yargs-17.7.2
 	yargs-parser-21.1.1
-	zwave-js-11.4.0
+	zwave-js-11.8.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"

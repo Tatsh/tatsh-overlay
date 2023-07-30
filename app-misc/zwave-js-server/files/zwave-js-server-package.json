@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@zwave-js/server": "1.29.1",
-    "zwave-js": "^11.4.0"
+    "@zwave-js/server": "1.30.0",
+    "zwave-js": "^11.8.0"
   },
   "license": "GPL-2.0"
 }
