@@ -195,6 +195,7 @@ codegenerator
 codeman
 codepages
 codeql
+cohttp
 collecttoolinginfo
 colorama
 colorchoice
@@ -398,6 +399,7 @@ eclass
 econf
 edgecontainer
 edotnet
+edune
 eedi
 eend
 eerror
@@ -660,6 +662,7 @@ iuse
 jackc
 jackspeak
 jakcron
+janestreet
 jbenet
 jessevdk
 jetbrains
@@ -929,6 +932,7 @@ modlist
 modpost
 moduleinto
 moltenvk
+mparser
 mpfr
 mrlotfi
 msbuild
@@ -944,6 +948,7 @@ multierror
 multilib
 munt
 mupen
+murmour
 mvsfunc
 mvtools
 mwcap
@@ -1027,6 +1032,7 @@ objc
 objdump
 objectmodel
 objx
+ocamlopt
 occivink
 olchiki
 oldhungarian
@@ -1075,6 +1081,7 @@ pango
 pangosharp
 papertrail
 paramiko
+parany
 paren
 parrado
 parseargs
@@ -1296,6 +1303,7 @@ setgid
 setpcap
 setuid
 setuptools
+sexp
 shaderc
 sharada
 sharded
@@ -1395,6 +1403,7 @@ testfloat
 testhost
 testplatform
 texinfo
+textutils
 textwrap
 tfperms
 thaana
@@ -1567,6 +1576,7 @@ yapf
 yargs
 yasm
 ycmd
+yojson
 yookoala
 yoyodyne
 yuin
