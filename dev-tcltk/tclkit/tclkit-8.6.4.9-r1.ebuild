@@ -38,6 +38,7 @@ src_configure() {
 }
 
 src_compile() {
+	local -x MAKEOPTS=-j1
 	export B64=b64 options="thread allenc cli dyn"
 	cd build/kit-large || die
 	unset A
