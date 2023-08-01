@@ -818,6 +818,7 @@ libvapoursynth
 libvorbis
 libwebp
 libxcb
+libxkbcommon
 libxkbfile
 libz
 libzip
@@ -1140,6 +1141,7 @@ preinst
 privatecatalog
 procapture
 procatpure
+programfileslinux
 proto
 protobuf
 protoc
@@ -1290,6 +1292,7 @@ scopeguard
 screamf
 scrn
 sdist
+seatools
 secretmanager
 securecookie
 securitycenter
