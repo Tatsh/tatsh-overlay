@@ -24,6 +24,7 @@ DOCS=( release/sm64extend.README.txt release/n64split.README.txt README.md TODO 
 
 src_prepare() {
 	default
+	# shellcheck disable=SC2016
 	sed -re 's/-Wall -Wextra //g' \
 		-e 's/-s -Wl/-Wl/g' \
 		-e 's/-O2//' \
@@ -37,7 +38,7 @@ src_prepare() {
 src_install() {
 	dobin f3d f3d2obj mio0 mipsdisasm n64cksum n64graphics n64split sm64compress sm64extend \
 		sm64geo sm64walk
-	insinto /usr/share/${PN}
+	insinto "/usr/share/${PN}"
 	doins -r configs
 	einstalldocs
 }
