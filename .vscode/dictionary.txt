@@ -176,6 +176,7 @@ circl
 citi
 citra
 citywest
+cksum
 clangd
 cleanhttp
 cliui
@@ -820,6 +821,7 @@ libwebp
 libxcb
 libxkbcommon
 libxkbfile
+libyaml
 libz
 libzip
 libzrif
@@ -920,6 +922,7 @@ miniz
 minizip
 minizlib
 minsizerel
+mipsdisasm
 miscfilters
 mitchellh
 mizo
@@ -1528,6 +1531,7 @@ webtheme
 webuiboxedlayout
 weezl
 werror
+wextra
 whichcraft
 wiimm
 wiimms
