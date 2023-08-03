@@ -183,8 +183,10 @@ cliui
 clonehero
 cloudtasks
 cmakelang
+cmakerc
 cmdline
 cmdpack
+cmrc
 cmsis
 cncf
 codeanalysis
@@ -299,6 +301,7 @@ dfastlog
 dfilter
 dfluidsynth
 dfmderainbow
+dfmt
 dforce
 dgit
 dglslang
@@ -376,6 +379,7 @@ dubhater
 dudev
 duployan
 dvapoursynth
+dvcpkg
 dvec
 dvita
 dvnc
