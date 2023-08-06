@@ -59,7 +59,7 @@ SUBMODULES: Final[Mapping[str, set[str | tuple[str, str]]]] = {
         '3rdparty/hidapi/hidapi',
         '3rdparty/yaml-cpp/yaml-cpp',
         '3rdparty/SoundTouch/soundtouch',
-        'llvm',
+        '3rdparty/llvm/llvm',
     },
     'games-emulation/xemu': {
         'genconfig',
