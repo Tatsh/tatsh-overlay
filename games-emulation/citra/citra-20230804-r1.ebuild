@@ -6,7 +6,7 @@ inherit cmake xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://citra-emu.org/ https://github.com/citra-emu/citra"
-SHA="aaeba6759e6d57968ce0b12f6245f45836dec546"
+SHA="5b52849f901fbdfbdbb8a81728b3233307445d0c"
 DDS_KTX_SHA="42dd8aa6ded90b1ec06091522774feff51e83fc5"
 LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
 SIRIT_SHA="4ab79a8c023aa63caaa93848b09b9fe8b183b1a9"
@@ -14,7 +14,7 @@ SIRIT_SPIRV_HEADERS_SHA="c214f6f2d1a7253bb0e9f195c2dc5b0659dc99ef"
 SOUNDTOUCH_SHA="dd2252e9af3f2d6b749378173a4ae89551e06faf"
 SUB_DYNARMIC_SHA="c08c5a9362bb224dc343c2f616c24df027dfdf13"
 XBYAK_SHA="a1ac3750f9a639b5a6c6d6c7da4259b8d6790989"
-SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz
 	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
 	https://github.com/citra-emu/dynarmic/archive/${SUB_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${SUB_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz -> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz
@@ -26,7 +26,7 @@ SRC_URI="https://github.com/citra-emu/citra/archive/${SHA}.tar.gz -> ${P}.tar.gz
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="openal web-service"
+IUSE="openal +qt6 scripting web-service"
 
 # System xbyak is still used by Dynarmic, but not Citra itself
 DEPEND="app-arch/zstd
@@ -39,8 +39,7 @@ DEPEND="app-arch/zstd
 	dev-libs/mp
 	dev-libs/teakra
 	>=dev-libs/xbyak-5.941
-	dev-qt/qtbase:6
-	dev-qt/qtmultimedia:6
+	qt6? ( dev-qt/qtbase:6 dev-qt/qtmultimedia:6 )
 	dev-util/nihstro
 	media-libs/libsdl2
 	media-video/ffmpeg
@@ -95,11 +94,15 @@ src_configure() {
 		die 'Building with USE=web-service is broken at the moment'
 	fi
 	local mycmakeargs=(
-		-DBUILD_SHARED_LIBS=OFF
-		-DDISABLE_SUBMODULE_CHECK=ON
-		-DENABLE_TESTS=OFF
 		"-DENABLE_OPENAL=$(usex openal)"
+		"-DENABLE_QT=$(usex qt6)"
+		"-DENABLE_SCRIPTING=$(usex scripting)"
 		"-DENABLE_WEB_SERVICE=$(usex web-service)"
+		-DBUILD_SHARED_LIBS=OFF
+		-DCITRA_WARNINGS_AS_ERRORS=OFF
+		-DDISABLE_SUBMODULE_CHECK=ON
+		-DENABLE_QT_UPDATER=OFF
+		-DENABLE_TESTS=OFF
 		-DUSE_SYSTEM_BOOST=ON
 		-DUSE_SYSTEM_CRYPTOPP=ON
 		-DUSE_SYSTEM_CUBEB=ON

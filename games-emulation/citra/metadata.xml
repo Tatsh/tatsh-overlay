@@ -9,6 +9,7 @@
 		<remote-id type="github">citra-emu/citra</remote-id>
 	</upstream>
 	<use>
+		<flag name="scripting">Enable RPC server for scripting</flag>
 		<flag name="web-service">Enable web services (telemetry, etc.)</flag>
 	</use>
 </pkgmetadata>

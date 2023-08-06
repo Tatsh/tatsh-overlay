@@ -1,4 +1,4 @@
-From be45f5a0b3e4a64e031f6cd986ddee1ba9d87a3e Mon Sep 17 00:00:00 2001
+From 3d37c0307c205aec2101652635169b3e9c6864c2 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/2] System libraries
@@ -17,10 +17,10 @@ Subject: [PATCH 1/2] System libraries
  10 files changed, 115 insertions(+), 51 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6b6dc9c40..7ecf7fb61 100644
+index a52c4f66a..33f3edfb7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -72,6 +72,22 @@ CMAKE_DEPENDENT_OPTION(ENABLE_AUDIOTOOLBOX "Use AudioToolbox decoder (preferred
+@@ -73,6 +73,22 @@ CMAKE_DEPENDENT_OPTION(ENABLE_AUDIOTOOLBOX "Use AudioToolbox decoder (preferred
  CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ${IS_DEBUG_BUILD} "MINGW" OFF)
  option(ENABLE_LTO "Enable link time optimization" OFF)
  option(CITRA_USE_PRECOMPILED_HEADERS "Use precompiled headers" ON)
@@ -44,7 +44,7 @@ index 6b6dc9c40..7ecf7fb61 100644
 
  # System library options
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 1927d2ef6..195c0eb2c 100644
+index 38038af1d..2c1bdfff7 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -39,15 +39,18 @@ endif()
@@ -181,7 +181,7 @@ index 1927d2ef6..195c0eb2c 100644
  endif()
 
  # DiscordRPC
-@@ -221,15 +256,19 @@ endif()
+@@ -222,15 +257,19 @@ endif()
 
  # OpenAL Soft
  if (ENABLE_OPENAL)
@@ -296,13 +296,13 @@ index f39c79dea..d0758388f 100644
  #undef BOOST_STACKTRACE_USE_BACKTRACE
  #include <signal.h>
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index f507b5dc4..1c5d3d946 100644
+index 5ac61ce23..56a2216a4 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -484,7 +484,7 @@ create_target_directory_groups(citra_core)
+@@ -476,7 +476,7 @@ create_target_directory_groups(citra_core)
 
  target_link_libraries(citra_core PUBLIC citra_common PRIVATE audio_core network video_core)
- target_link_libraries(citra_core PRIVATE Boost::boost Boost::serialization Boost::iostreams)
+ target_link_libraries(citra_core PRIVATE Boost::boost Boost::serialization Boost::iostreams httplib)
 -target_link_libraries(citra_core PUBLIC dds-ktx PRIVATE cryptopp fmt::fmt lodepng open_source_archives)
 +target_link_libraries(citra_core PUBLIC dds-ktx PRIVATE cryptopp fmt lodepng open_source_archives)
  set_target_properties(citra_core PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
