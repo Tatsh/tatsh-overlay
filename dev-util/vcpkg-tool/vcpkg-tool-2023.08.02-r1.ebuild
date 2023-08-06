@@ -20,6 +20,7 @@ IUSE="test"
 # For future use (and remove libfmt from SRC_URI):
 # DEPEND=">=dev-libs/libfmt-10.0.0:="
 # RDEPEND="${DEPEND}"
+BDEPEND="dev-util/cmakerc"
 
 S="${WORKDIR}/${PN}-${MY_PV}"
 
