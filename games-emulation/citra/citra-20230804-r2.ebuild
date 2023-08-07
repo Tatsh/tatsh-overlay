@@ -47,8 +47,8 @@ DEPEND="app-arch/zstd
 	net-libs/enet:=
 	virtual/libusb:1
 	openal? ( media-libs/openal )"
-RDEPEND="${DEPEND}"
-BDEPEND="dev-cpp/catch:0"
+RDEPEND="${DEPEND} media-libs/fdk-aac"
+BDEPEND="dev-cpp/catch:0 media-libs/fdk-aac"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libraries.patch"
