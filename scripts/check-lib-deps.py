@@ -15,7 +15,8 @@ IGNORE = {
         'media-video/pipewire',  # ignored because virtual/jack is listed
         'virtual/libusb',
     },
-    'games-arcade/stepmania': {'media-video/pipewire'}
+    'games-arcade/stepmania': {'media-video/pipewire'},
+    'games-emulation/xemu': {'media-video/pipewire'}
 }
 
 
