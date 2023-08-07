@@ -16,7 +16,7 @@
 		"mypy": "poetry run mypy .",
 		"pylint": "poetry run pylint scripts",
 		"qa": "yarn shellcheck && yarn mypy && yarn pylint && yarn check-spelling && yarn check-formatting",
-		"shellcheck": "shellcheck scripts/*.sh ./*/*/*.ebuild"
+		"shellcheck": "shellcheck scripts/*.sh ./*/*/*.ebuild net-dns/pihole-ftl/files/pihole-FTL x11-misc/mimeo/files/mimeo-completion.sh"
 	},
 	"version": "0.2.0"
 }
