@@ -33,14 +33,10 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	media-libs/cubeb
 	dev-libs/xxhash
 	dev-util/spirv-tools
-	dev-qt/qtconcurrent
-	dev-qt/qtcore:5
-	dev-qt/qtdbus
-	dev-qt/qtgui
-	dev-qt/qtmultimedia:5[widgets]
-	dev-qt/qtnetwork:5
-	dev-qt/qtsvg
-	dev-qt/qtwidgets:5
+	dev-qt/qtbase:6
+	dev-qt/qtmultimedia:6
+	dev-qt/qtnetworkauth:6
+	dev-qt/qtsvg:6
 	media-libs/glew:0
 	media-libs/libglvnd[X]
 	media-libs/libpng:*
