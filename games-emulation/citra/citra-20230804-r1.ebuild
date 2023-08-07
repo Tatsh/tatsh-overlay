@@ -33,6 +33,7 @@ DEPEND="app-arch/zstd
 	dev-cpp/robin-map
 	dev-libs/boost:0
 	dev-libs/crypto++:=
+	dev-libs/openssl
 	media-libs/cubeb
 	dev-libs/inih
 	dev-libs/libfmt
