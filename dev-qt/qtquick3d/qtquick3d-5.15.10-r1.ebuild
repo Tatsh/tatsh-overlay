@@ -11,7 +11,9 @@ SLOT="5/${QT5_PV}"
 KEYWORDS="~amd64"
 DEPEND="=dev-qt/qtcore-${QT5_PV}*:5=
 	=dev-qt/qtdeclarative-${QT5_PV}*:5=
-	media-libs/assimp:="
+	=dev-qt/qtgui-${QT5_PV}*:5=
+	media-libs/assimp:=
+	sys-libs/zlib"
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}/${PN}-assimp.patch" )
