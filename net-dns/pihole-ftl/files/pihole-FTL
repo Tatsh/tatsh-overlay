@@ -26,16 +26,16 @@ start_pre() {
 		/var/log/pihole/FTL.log \
 		/var/log/pihole.log \
 		/var/lib/pihole/dhcp.leases
-	chown -f "$command_user" \
-		/var/lib/pihole/gravity.db \
-		/var/lib/pihole/pihole-FTL.db || ewarn "gravity.db or pihole-FTL.db is not properly installed"
+	chown -f "$command_user" /var/lib/pihole/gravity.db /var/lib/pihole/pihole-FTL.db ||
+		ewarn "gravity.db or pihole-FTL.db is not properly installed"
 	chown -f "$command_user" \
 		/var/lib/pihole/macvendor.db || ewarn "macvendor.db file is not properly installed"
 	# Prepare database file permissions so that the pihole group (web
 	# interface) can edit the file.
-	checkpath -m 0664 -f \
-		/var/lib/pihole/gravity.db \
-		/var/lib/pihole/pihole-FTL.db || ewarn "gravity.db or pihole-FTL.db is not properly installed"
+	{ [ -s /var/lib/pihole/gravity.db ] &&
+		[ -s /var/lib/pihole/pihole-FTL.db ] &&
+		checkpath -m 0664 -f \ /var/lib/pihole/gravity.db /var/lib/pihole/pihole-FTL.db; } ||
+			ewarn "gravity.db or pihole-FTL.db is not properly installed"
 }
 
 stop_post() {
