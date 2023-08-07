@@ -15,9 +15,11 @@ KEYWORDS="~amd64"
 
 DEPEND="dev-qt/qtcore:5
 	dev-qt/qtdbus:5
+	dev-qt/qtdeclarative:5
 	dev-qt/qtgui:5
 	dev-qt/qtquick3d:5
 	dev-qt/qtquickcontrols2:5
+	dev-qt/qtwidgets:5
 	kde-frameworks/kconfig:5
 	kde-frameworks/kconfigwidgets:5
 	kde-frameworks/kcoreaddons:5
