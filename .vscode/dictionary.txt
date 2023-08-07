@@ -1201,6 +1201,7 @@ qtdeclarative
 qtgui
 qtmultimedia
 qtnetwork
+qtnetworkauth
 qtopengl
 qtprintsupport
 qtquick
