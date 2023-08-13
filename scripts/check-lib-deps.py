@@ -40,7 +40,10 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
         elif x.startswith('libusb-'):
             lib_package = 'virtual/libusb'
         else:
-            lines = qfile(x).splitlines()
+            try:
+                lines = qfile(x).splitlines()
+            except sp.CalledProcessError:
+                continue
             try:
                 lib_package = [
                     y for y in lines if ('-libs/' in y or y.startswith('dev-qt/')
