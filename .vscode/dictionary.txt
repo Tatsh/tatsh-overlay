@@ -35,6 +35,7 @@ antonmedv
 appcontext
 appdata
 appengine
+appico
 appimage
 aprip
 aproba
@@ -713,6 +714,7 @@ kevinpollet
 keycodemapdb
 keym
 keymaps
+keysyms
 keyv
 kfmin
 kglobalaccel
@@ -763,6 +765,7 @@ libclang
 libcxx
 libcxxabi
 libdir
+libdrm
 libepoxy
 libevdev
 libfat
@@ -1149,6 +1152,7 @@ preinst
 privatecatalog
 procapture
 procatpure
+programfiles
 programfileslinux
 proto
 protobuf
@@ -1199,6 +1203,7 @@ qtcore
 qtdbus
 qtdeclarative
 qtgui
+qthelp
 qtmultimedia
 qtnetwork
 qtnetworkauth
@@ -1251,6 +1256,7 @@ relwithdebinfo
 removegrain
 remyoudompheng
 renameio
+renderutil
 repr
 resourcemanager
 responselike
