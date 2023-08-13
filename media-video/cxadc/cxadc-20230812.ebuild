@@ -6,7 +6,7 @@ inherit linux-mod-r1 udev
 
 DESCRIPTION="CX2388x direct ADC capture driver."
 HOMEPAGE="https://github.com/happycube/cxadc-linux3"
-SHA="3dd2fb4fe56a5e20af171ae57fe1d89a0238ebd5"
+SHA="86f73864d1c7dafc52c99455a75f3d6acab407ae"
 SRC_URI="https://github.com/happycube/cxadc-linux3/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
