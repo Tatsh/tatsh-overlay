@@ -14,16 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="strip splitdebug"
 
-RDEPEND="dev-qt/qtcore
-	dev-qt/qtdbus
-	dev-qt/qtgui
-	dev-qt/qthelp
-	dev-qt/qtnetwork
-	dev-qt/qtprintsupport
-	dev-qt/qtsql
-	dev-qt/qtsvg
-	dev-qt/qtwidgets
-	x11-libs/cairo
+RDEPEND="x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+
 	x11-libs/libdrm
