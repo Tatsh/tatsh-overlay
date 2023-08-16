@@ -14,6 +14,7 @@ SRC_URI="https://git.sr.ht/~guidocella/mpv-lrc/archive/${SHA}.tar.gz -> ${PN}-${
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
+IUSE="vim"
 
 MPV_PLUGIN_FILES=(
 	"${PN:4}.lua"
@@ -25,4 +26,5 @@ src_install() {
 	mpv-plugin_src_install
 	insinto /etc/mpv/script-opts
 	doins "script-opts/${PN:4}.conf"
+	dobin lrc.sh
 }
