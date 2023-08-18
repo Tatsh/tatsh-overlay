@@ -470,6 +470,7 @@ filecaps
 fileinfo
 filesdir
 findname
+findpackagesbyd
 fireweapon
 firmwares
 fizzler
@@ -519,6 +520,7 @@ gentoolkit
 getrandom
 getsentry
 gettext
+getupdates
 ggijpepdpiehgbiknmfpfbhcalffjlbj
 ghodss
 gickup
@@ -874,6 +876,7 @@ mailru
 mainpid
 makeopts
 malloc
+managedfusion
 mandaic
 manichaean
 maniuplate
@@ -1031,6 +1034,7 @@ nspr
 nstool
 ntlmssp
 nuanceur
+nugetdb
 nugets
 numba
 numpy
@@ -1112,6 +1116,7 @@ pgservicefile
 phags
 phagspa
 phishingprotection
+phpnuget
 phpstan
 picojson
 pidfile
@@ -1368,6 +1373,7 @@ spirv
 splitdebug
 sprintf
 sqlparse
+sqlscript
 squashfs
 srmd
 ssri
@@ -1489,6 +1495,7 @@ usbkill
 usedep
 usev
 usex
+usrs
 utilties
 vaapi
 valuetuple
