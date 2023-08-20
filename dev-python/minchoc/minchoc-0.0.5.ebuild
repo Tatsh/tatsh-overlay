@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=poetry
 PYTHON_COMPAT=( python3_{10..12} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="Minimal, Chocately-compatible NuGet server in a Django app."
+DESCRIPTION="Minimal, Chocolatey-compatible NuGet server in a Django app."
 HOMEPAGE="https://github.com/Tatsh/minchoc"
 
 LICENSE="MIT"
