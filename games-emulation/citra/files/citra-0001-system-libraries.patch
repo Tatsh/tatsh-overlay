@@ -1,11 +1,11 @@
-From 3d37c0307c205aec2101652635169b3e9c6864c2 Mon Sep 17 00:00:00 2001
+From e30ba2d3f9d01086dfae70d26bcd398ff4a745bc Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/2] System libraries
 
 ---
  CMakeLists.txt                 |  16 +++++
- externals/CMakeLists.txt       | 109 ++++++++++++++++++++++-----------
+ externals/CMakeLists.txt       | 111 ++++++++++++++++++++++-----------
  externals/boost                |   2 +-
  externals/discord-rpc          |   2 +-
  externals/libressl             |   2 +-
@@ -14,13 +14,13 @@ Subject: [PATCH 1/2] System libraries
  src/common/CMakeLists.txt      |  15 ++---
  src/common/logging/backend.cpp |   3 +-
  src/core/CMakeLists.txt        |   2 +-
- 10 files changed, 115 insertions(+), 51 deletions(-)
+ 10 files changed, 116 insertions(+), 52 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a52c4f66a..33f3edfb7 100644
+index 64b42a09e..2c546e76d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -73,6 +73,22 @@ CMAKE_DEPENDENT_OPTION(ENABLE_AUDIOTOOLBOX "Use AudioToolbox decoder (preferred
+@@ -75,6 +75,22 @@ CMAKE_DEPENDENT_OPTION(CITRA_ENABLE_BUNDLE_TARGET "Enable the distribution bundl
  CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ${IS_DEBUG_BUILD} "MINGW" OFF)
  option(ENABLE_LTO "Enable link time optimization" OFF)
  option(CITRA_USE_PRECOMPILED_HEADERS "Use precompiled headers" ON)
@@ -44,7 +44,7 @@ index a52c4f66a..33f3edfb7 100644
 
  # System library options
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 38038af1d..2c1bdfff7 100644
+index 44882d6cf..e3e1b6a69 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -39,15 +39,18 @@ endif()
@@ -97,7 +97,7 @@ index 38038af1d..2c1bdfff7 100644
  endif()
 
  # Dynarmic
-@@ -92,15 +103,23 @@ endif()
+@@ -92,16 +103,24 @@ endif()
  add_subdirectory(glad)
 
  # glslang
@@ -106,6 +106,7 @@ index 38038af1d..2c1bdfff7 100644
 -set(ENABLE_SPVREMAPPER OFF CACHE BOOL "")
 -set(ENABLE_CTEST OFF CACHE BOOL "")
 -set(ENABLE_HLSL OFF CACHE BOOL "")
+-set(BUILD_EXTERNAL OFF CACHE BOOL "")
 -add_subdirectory(glslang)
 +if (NOT USE_SYSTEM_GLSLANG)
 +    set(SKIP_GLSLANG_INSTALL ON CACHE BOOL "")
@@ -113,6 +114,7 @@ index 38038af1d..2c1bdfff7 100644
 +    set(ENABLE_SPVREMAPPER OFF CACHE BOOL "")
 +    set(ENABLE_CTEST OFF CACHE BOOL "")
 +    set(ENABLE_HLSL OFF CACHE BOOL "")
++    set(BUILD_EXTERNAL OFF CACHE BOOL "")
 +    add_subdirectory(glslang)
 +else()
 +    find_package(glslang REQUIRED)
@@ -128,7 +130,7 @@ index 38038af1d..2c1bdfff7 100644
 
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -130,7 +149,11 @@ add_subdirectory(soundtouch EXCLUDE_FROM_ALL)
+@@ -131,7 +150,11 @@ add_subdirectory(soundtouch EXCLUDE_FROM_ALL)
  add_subdirectory(sirit EXCLUDE_FROM_ALL)
 
  # Teakra
@@ -141,7 +143,7 @@ index 38038af1d..2c1bdfff7 100644
 
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-@@ -148,19 +171,31 @@ endif()
+@@ -149,19 +172,31 @@ endif()
  set(ZSTD_LEGACY_SUPPORT OFF)
  set(ZSTD_BUILD_PROGRAMS OFF)
  set(ZSTD_BUILD_SHARED OFF)
@@ -181,7 +183,7 @@ index 38038af1d..2c1bdfff7 100644
  endif()
 
  # DiscordRPC
-@@ -222,15 +257,19 @@ endif()
+@@ -224,15 +259,19 @@ endif()
 
  # OpenAL Soft
  if (ENABLE_OPENAL)
@@ -211,7 +213,7 @@ index 38038af1d..2c1bdfff7 100644
 
  # VMA
 diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
-index 4385cdf5f..4e31196f8 100644
+index fddcc866d..bd58a7031 100644
 --- a/src/audio_core/CMakeLists.txt
 +++ b/src/audio_core/CMakeLists.txt
 @@ -92,9 +92,13 @@ if(ENABLE_CUBEB)
@@ -296,10 +298,10 @@ index f39c79dea..d0758388f 100644
  #undef BOOST_STACKTRACE_USE_BACKTRACE
  #include <signal.h>
 diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index 5ac61ce23..56a2216a4 100644
+index b25a8c388..6308ae87f 100644
 --- a/src/core/CMakeLists.txt
 +++ b/src/core/CMakeLists.txt
-@@ -476,7 +476,7 @@ create_target_directory_groups(citra_core)
+@@ -479,7 +479,7 @@ create_target_directory_groups(citra_core)
 
  target_link_libraries(citra_core PUBLIC citra_common PRIVATE audio_core network video_core)
  target_link_libraries(citra_core PRIVATE Boost::boost Boost::serialization Boost::iostreams httplib)
