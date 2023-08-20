@@ -168,6 +168,7 @@ charmbracelet
 checkpath
 cheshirekow
 chksums
+chocolatey
 chownr
 chriskiehl
 chromaprint
@@ -283,6 +284,7 @@ decompilation
 decompile
 decompiled
 decompiler
+defusedxml
 deinterlace
 deinterlacing
 demangle
@@ -921,6 +923,7 @@ michaeldfallen
 michał
 microcom
 mina
+minchoc
 mindepth
 minideen
 minimaid
