@@ -20,6 +20,7 @@ src_prepare() {
 	echo 'include(GNUInstallDirs)' > new || die
 	cat CMakeLists.txt >> new || die
 	mv new CMakeLists.txt
+	# shellcheck disable=SC2016
 	sed -re '/include\/fat16\/.*/d' \
 		-e 's|target_include_directories\(.*|target_include_directories(FAT16 PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)|' \
 		-i CMakeLists.txt || die
