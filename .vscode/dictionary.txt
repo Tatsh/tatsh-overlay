@@ -646,6 +646,7 @@ implot
 importlib
 imurmurhash
 iname
+includedir
 inconshreveable
 indexmap
 inet
@@ -723,6 +724,7 @@ keyv
 kfmin
 kglobalaccel
 kharoshthi
+khronos
 khudawadi
 kikakui
 kisielk
