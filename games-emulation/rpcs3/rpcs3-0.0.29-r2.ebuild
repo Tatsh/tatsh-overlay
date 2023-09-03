@@ -33,7 +33,8 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	media-libs/cubeb
 	dev-libs/xxhash
 	dev-util/spirv-tools
-	dev-qt/qtbase:6
+	dev-qt/qtbase:6[opengl]
+	dev-qt/qtdeclarative:6[opengl]
 	dev-qt/qtmultimedia:6
 	dev-qt/qtnetworkauth:6
 	dev-qt/qtsvg:6
