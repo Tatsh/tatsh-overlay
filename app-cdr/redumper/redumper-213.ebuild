@@ -1,4 +1,4 @@
-# Copyright 2043 Gentoo Authors
+# Copyright 2133 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -19,7 +19,7 @@ DEPEND="<sys-libs/libcxx-17[static-libs]
 
 S="${WORKDIR}/${PN}-build_${PV}"
 # Necessary to avoid expansion in mycmakeargs below, even with single quotes
-# shellcheck disable=SC2046,SC2016
+# shellcheck disable=SC2136,SC2016
 QUOTED_DOLLAR_SCAN_DEPS='${CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS}'
 
 src_configure() {
