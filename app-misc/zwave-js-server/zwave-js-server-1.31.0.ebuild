@@ -8,6 +8,15 @@ inherit systemd yarn
 
 DESCRIPTION="Small server wrapper around Z-Wave JS to access it via a WebSocket."
 HOMEPAGE="https://github.com/zwave-js/zwave-js-server"
+# Copyright 2023 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+inherit yarn
+
+DESCRIPTION="Full access to zwave-js driver through Websockets"
+HOMEPAGE="https://github.com/zwave-js/zwave-js-server#readme"
 YARN_PKGS=(
 	@alcalzone/jsonl-db-3.1.0
 	@alcalzone/pak-0.9.0
@@ -27,14 +36,8 @@ YARN_PKGS=(
 	@esm2cjs/p-queue-7.3.0
 	@esm2cjs/p-timeout-5.1.0
 	@esm2cjs/responselike-3.0.0
-	@homebridge/ciao-1.1.4
+	@homebridge/ciao-1.1.7
 	@leichtgewicht/ip-codec-2.0.4
-	@sentry/core-7.14.2
-	@sentry/hub-7.14.2
-	@sentry/integrations-7.14.2
-	@sentry/node-7.14.2
-	@sentry/types-7.14.2
-	@sentry/utils-7.14.2
 	@serialport/binding-mock-10.2.2
 	@serialport/bindings-cpp-10.7.0
 	@serialport/bindings-interface-1.2.1
@@ -52,16 +55,15 @@ YARN_PKGS=(
 	@serialport/stream-10.3.0
 	@types/http-cache-semantics-4.0.1
 	@types/triple-beam-1.3.2
-	@zwave-js/cc-11.8.0
-	@zwave-js/config-11.8.0
-	@zwave-js/core-11.8.0
-	@zwave-js/host-11.8.0
-	@zwave-js/nvmedit-11.8.0
-	@zwave-js/serial-11.8.0
-	@zwave-js/server-1.30.0
-	@zwave-js/shared-11.8.0
-	@zwave-js/testing-11.8.0
-	agent-base-6.0.2
+	@zwave-js/cc-11.14.0
+	@zwave-js/config-11.14.0
+	@zwave-js/core-11.14.0
+	@zwave-js/host-11.14.0
+	@zwave-js/nvmedit-11.14.0
+	@zwave-js/serial-11.14.0
+	@zwave-js/server-1.31.0
+	@zwave-js/shared-11.13.1
+	@zwave-js/testing-11.14.0
 	alcalzone-shared-4.0.8
 	ansi-colors-4.1.3
 	ansi-regex-5.0.1
@@ -79,7 +81,6 @@ YARN_PKGS=(
 	color-string-1.9.1
 	colorspace-1.1.4
 	combined-stream-1.0.8
-	cookie-0.4.2
 	cross-spawn-7.0.3
 	dayjs-1.11.8
 	debug-4.3.4
@@ -107,9 +108,7 @@ YARN_PKGS=(
 	graceful-fs-4.2.10
 	http-cache-semantics-4.1.0
 	http2-wrapper-2.1.11
-	https-proxy-agent-5.0.1
 	human-signals-2.1.0
-	immediate-3.0.6
 	inherits-2.0.4
 	is-arrayish-0.3.2
 	is-fullwidth-code-point-3.0.0
@@ -121,20 +120,17 @@ YARN_PKGS=(
 	jsonfile-6.1.0
 	keyv-4.5.0
 	kuler-2.0.0
-	lie-3.1.1
-	localforage-1.10.0
 	logform-2.4.2
 	logform-2.5.1
 	lowercase-keys-3.0.0
 	lru-cache-6.0.0
-	lru_map-0.3.3
 	mdns-server-1.0.11
 	merge-stream-2.0.0
 	mime-db-1.52.0
 	mime-types-2.1.35
 	mimic-fn-2.1.0
 	mimic-response-3.1.0
-	minimist-1.2.6
+	minimist-1.2.8
 	moment-2.29.4
 	ms-2.1.2
 	ms-2.1.3
@@ -173,8 +169,7 @@ YARN_PKGS=(
 	text-hex-1.0.0
 	tiny-glob-0.2.9
 	triple-beam-1.3.0
-	tslib-1.14.1
-	tslib-2.4.0
+	tslib-2.6.2
 	universalify-2.0.0
 	util-deprecate-1.0.2
 	which-2.0.2
@@ -182,40 +177,25 @@ YARN_PKGS=(
 	winston-daily-rotate-file-4.7.1
 	winston-transport-4.5.0
 	wrap-ansi-7.0.0
-	ws-8.6.0
+	ws-8.13.0
 	xstate-4.38.0
 	y18n-5.0.8
 	yallist-4.0.0
 	yargs-17.7.2
 	yargs-parser-21.1.1
-	zwave-js-11.8.0
+	zwave-js-11.14.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
-LICENSE="0BSD Apache-2.0 BSD BSD-2 ISC MIT"
+
+LICENSE="0BSD Apache-2.0 BSD BSD-2-Clause BSD-3-Clause GPL-2.0 ISC MIT"
 KEYWORDS="~amd64"
 
 S="${WORKDIR}"
 
 src_install() {
 	yarn_src_install
-	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/"{client,server}.js
-	dosym "../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/client.js" /usr/bin/zwave-client
-	dosym "../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/server.js" /usr/bin/zwave-server
-	insinto /etc
-	doins "${FILESDIR}/${PN}.config.js"
-	systemd_newunit "${FILESDIR}/${PN}.service" "${PN}@.service"
-}
-
-pkg_postinst() {
-	elog
-	elog "You need to set up security keys. See"
-	elog "${PN}.keys.js.example in the documentation directory for more"
-	elog "information."
-	elog
-	elog "systemd: To create the service, the device path must be specified"
-	elog "with systemd-escape:"
-	elog
-	elog "  systemctl enable --now ${PN}@\$(systemd-escape --path /dev/ttyACM0)"
-	elog
+	# TODO Install symlink to main script here
+	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/server.js"
+	dosym "../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/server.js" "/usr/bin/${PN}"
 }
