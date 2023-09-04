@@ -7,7 +7,7 @@ inherit autotools
 
 DESCRIPTION="Format conversion tools for Vapoursynth"
 HOMEPAGE="https://github.com/EleonoreMizo/fmtconv"
-SHA="3eec42f8aaf86f3327b9190c6b25a0c9eca22028"
+SHA="77f26b9a101bf883868a0401f2e89140f4323579"
 SRC_URI="https://github.com/EleonoreMizo/fmtconv/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="WTFPL-2"
