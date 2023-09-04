@@ -1,5 +1,7 @@
 {
 	"[python]": {
+		"editor.defaultFormatter": "eeyore.yapf",
+		"editor.formatOnSaveMode": "file",
 		"editor.tabSize": 4
 	},
 	"[shellscript]": {
