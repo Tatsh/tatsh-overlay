@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="Tool for performing reflection on SPIR-V."
 HOMEPAGE="https://github.com/KhronosGroup/SPIRV-Cross"
-SHA="633dc301350952a9a895c8db42eed371ea969a64"
+SHA="54997fb4bc3adeb47b9b9f7bb67f1c25eaca2204"
 SRC_URI="https://github.com/KhronosGroup/SPIRV-Cross/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 
 LICENSE="Apache-2"
