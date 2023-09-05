@@ -107,7 +107,7 @@ src_configure() {
 src_install() {
 	make_wrapper stepmania "/usr/$(get_libdir)/${PN}/${PN}" "/usr/$(get_libdir)/${PN}"
 	exeinto "/usr/$(get_libdir)/${PN}"
-	doexe "${PN}" || die "dobin failed"
+	newexe "${PN}-release-symbols" "${PN}" || die "dobin failed"
 	doexe GtkModule.so || die "doexe GtkModule.so failed"
 	insinto "/usr/$(get_libdir)/${PN}"
 	! [ -d Announcers ] && mkdir Announcers
