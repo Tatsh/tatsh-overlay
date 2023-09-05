@@ -8,15 +8,6 @@ inherit systemd yarn
 
 DESCRIPTION="Small server wrapper around Z-Wave JS to access it via a WebSocket."
 HOMEPAGE="https://github.com/zwave-js/zwave-js-server"
-# Copyright 2023 Gentoo Authors
-# Distributed under the terms of the GNU General Public License v2
-
-EAPI=8
-
-inherit yarn
-
-DESCRIPTION="Full access to zwave-js driver through Websockets"
-HOMEPAGE="https://github.com/zwave-js/zwave-js-server#readme"
 YARN_PKGS=(
 	@alcalzone/jsonl-db-3.1.0
 	@alcalzone/pak-0.9.0
@@ -188,14 +179,30 @@ YARN_PKGS=(
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
 
-LICENSE="0BSD Apache-2.0 BSD BSD-2-Clause BSD-3-Clause GPL-2.0 ISC MIT"
+LICENSE="0BSD Apache-2.0 BSD BSD-2 ISC MIT"
 KEYWORDS="~amd64"
 
 S="${WORKDIR}"
 
 src_install() {
 	yarn_src_install
-	# TODO Install symlink to main script here
-	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/server.js"
-	dosym "../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/server.js" "/usr/bin/${PN}"
+	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/"{client,server}.js
+	dosym "../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/client.js" /usr/bin/zwave-client
+	dosym "../$(get_libdir)/${PN}/node_modules/@zwave-js/server/dist/bin/server.js" /usr/bin/zwave-server
+	insinto /etc
+	doins "${FILESDIR}/${PN}.config.js"
+	systemd_newunit "${FILESDIR}/${PN}.service" "${PN}@.service"
+}
+
+pkg_postinst() {
+	elog
+	elog "You need to set up security keys. See"
+	elog "${PN}.keys.js.example in the documentation directory for more"
+	elog "information."
+	elog
+	elog "systemd: To create the service, the device path must be specified"
+	elog "with systemd-escape:"
+	elog
+	elog "  systemctl enable --now ${PN}@\$(systemd-escape --path /dev/ttyACM0)"
+	elog
 }
