@@ -49,8 +49,8 @@ src_install() {
 	dodir "${dest%/*}"
 
 	# Create a magic workloads file, bug #841896
-	local featureband="$(( $(ver_cut 3) / 100 * 100 ))"       # e.g. 404 -> 400
-	local workloads="metadata/workloads/${SDK_SLOT}.${featureband}"
+	local feature_band="$(( $(ver_cut 3) / 100 * 100 ))"       # e.g. 404 -> 400
+	local workloads="metadata/workloads/${SDK_SLOT}.${feature_band}"
 
 	mkdir -p "${S}/${workloads}" || die
 	touch "${S}/${workloads}/userlocal" || die
@@ -59,7 +59,7 @@ src_install() {
 	mkdir "${S}" || die
 
 	fperms 0755 "/${dest}"
-	dosym ../../${dest}/dotnet /usr/bin/dotnet-bin-${SDK_SLOT}
+	dosym "../../${dest}/dotnet /usr/bin/dotnet-bin-${SDK_SLOT}"
 }
 
 pkg_postinst() {
