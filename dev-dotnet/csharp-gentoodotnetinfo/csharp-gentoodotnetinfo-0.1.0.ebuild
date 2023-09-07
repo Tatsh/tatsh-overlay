@@ -35,7 +35,7 @@ src_unpack() {
 src_install() {
 	dotnet-pkg-base_install
 	dotnet-pkg-base_dolauncher_portable \
-		/usr/share/${P}/GentooDotnetInfo.dll gentoo-dotnet-info
+		"/usr/share/${P}/GentooDotnetInfo.dll" gentoo-dotnet-info
 
 	einstalldocs
 }
