@@ -40,17 +40,18 @@ src_unpack() {
 }
 
 src_install() {
+	local runtime
 	nuget_donuget "${DISTDIR}/microsoft.aspnetcore.app.ref.3.1.10.nupkg"
 	nuget_donuget "${DISTDIR}/microsoft.netcore.app.ref.3.1.0.nupkg"
 
-	local runtime=$(dotnet-pkg-base_get-runtime)
+	runtime=$(dotnet-pkg-base_get-runtime)
 	local -a nuget_namespaces=(
 		microsoft.aspnetcore.app.runtime
 		microsoft.netcore.app.host
 		microsoft.netcore.app.runtime
 	)
 	local nuget_namespace
-	for nuget_namespace in ${nuget_namespaces[@]} ; do
+	for nuget_namespace in "${nuget_namespaces[@]}"; do
 		nuget_donuget "${DISTDIR}/${nuget_namespace}.${runtime}.${PV}.nupkg"
 	done
 }
