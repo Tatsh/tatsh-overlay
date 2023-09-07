@@ -342,6 +342,7 @@ dobashcomp
 dobin
 docdir
 documentai
+dodir
 dodoc
 doenvd
 doexe
@@ -354,6 +355,7 @@ doman
 domenu
 domo
 domodule
+donuget
 dopenal
 doprofiling
 dorules
@@ -431,6 +433,7 @@ eprefix
 epreifx
 epytest
 epython
+eqawarn
 eqmake
 errgo
 errno
@@ -1631,3 +1634,21 @@ zwave
 zyan
 zycore
 zzag
+barć
+dolauncher
+eclasses
+elibc
+gentoodotnetinfo
+idepend
+ifunset
+launcherdest
+launcherinto
+launchervar
+launchervars
+lttng
+maciej
+nake
+pdepend
+updatecheck
+userlocal
+xgqt
