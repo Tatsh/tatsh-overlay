@@ -165,13 +165,13 @@ dotnet-pkg_src_prepare() {
 #
 # Used by "dotnet-pkg_src_configure" and "dotnet-pkg_src_compile".
 dotnet-pkg_foreach-project() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	local dotnet_project
 	for dotnet_project in "${DOTNET_PROJECTS[@]}" ; do
 		ebegin "Running \"${*}\" for project: \"${dotnet_project##*/}\""
 		"${@}" "${dotnet_project}"
-		eend $? "${FUNCNAME}: failed for project: \"${dotnet_project}\"" || die
+		eend $? "${FUNCNAME[0]}: failed for project: \"${dotnet_project}\"" || die
 	done
 }
 
@@ -241,13 +241,13 @@ dotnet-pkg_src_install() {
 
 	# /usr/bin/Nake -> /usr/share/nake-3.0.0/Nake
 	if [[ -f "${D}/usr/share/${P}/${PN^}" ]] ; then
-		dotnet-pkg-base_dolauncher /usr/share/${P}/${PN^}
+		dotnet-pkg-base_dolauncher /usr/share/"${P}"/"${PN^}"
 
 		# Create a compatibility symlink and also for ease of use from CLI.
-		dosym -r /usr/bin/${PN^} /usr/bin/${PN}
+		dosym -r /usr/bin/"${PN^}" /usr/bin/"${PN}"
 
 	elif [[ -f "${D}/usr/share/${P}/${PN}" ]] ; then
-		dotnet-pkg-base_dolauncher /usr/share/${P}/${PN}
+		dotnet-pkg-base_dolauncher "/usr/share/${P}/${PN}"
 	fi
 
 	einstalldocs

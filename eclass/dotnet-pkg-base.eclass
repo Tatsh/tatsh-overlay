@@ -157,12 +157,12 @@ dotnet-pkg-base_get-configuration() {
 #
 # This function is used inside "dotnet-pkg-base_setup".
 dotnet-pkg-base_get-output() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	[[ -z ${DOTNET_CONFIGURATION} ]] &&
-		die "${FUNCNAME}: DOTNET_CONFIGURATION is not set."
+		die "${FUNCNAME[0]}: DOTNET_CONFIGURATION is not set."
 
-	echo "${WORKDIR}"/${1}_net${DOTNET_COMPAT}_${DOTNET_CONFIGURATION}
+	echo "${WORKDIR}"/"${1}"_net"${DOTNET_COMPAT}"_"${DOTNET_CONFIGURATION}"
 }
 
 # @FUNCTION: dotnet-pkg-base_get-runtime
@@ -171,18 +171,19 @@ dotnet-pkg-base_get-output() {
 #
 # Used by "dotnet-pkg-base_setup".
 dotnet-pkg-base_get-runtime() {
-	local libc="$(usex elibc_musl "-musl" "")"
+	local libc
+	libc="$(usex elibc_musl "-musl" "")"
 
 	if use amd64 ; then
-		echo linux${libc}-x64
+		echo linux"${libc}"-x64
 	elif use x86 ; then
-		echo linux${libc}-x86
+		echo linux"${libc}"-x86
 	elif use arm ; then
-		echo linux${libc}-arm
+		echo linux"${libc}"-arm
 	elif use arm64 ; then
-		echo linux${libc}-arm64
+		echo linux"${libc}"-arm64
 	else
-		die "${FUNCNAME}: Unsupported architecture: ${ARCH}"
+		die "${FUNCNAME[0]}: Unsupported architecture: ${ARCH}"
 	fi
 }
 
@@ -227,7 +228,7 @@ dotnet-pkg-base_setup() {
 
 	DOTNET_RUNTIME=$(dotnet-pkg-base_get-runtime)
 	DOTNET_CONFIGURATION=$(dotnet-pkg-base_get-configuration)
-	DOTNET_OUTPUT="$(dotnet-pkg-base_get-output ${P})"
+	DOTNET_OUTPUT="$(dotnet-pkg-base_get-output "${P}")"
 }
 
 # @FUNCTION: dotnet-pkg-base_remove-global-json
@@ -241,14 +242,14 @@ dotnet-pkg-base_setup() {
 #
 # Used by "dotnet-pkg_src_prepare" from the "dotnet-pkg" eclass.
 dotnet-pkg-base_remove-global-json() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	local file="${1:-.}"/global.json
 
 	if [[ -f "${file}" ]] ; then
 		ebegin "Removing the global.json file"
 		rm "${file}"
-		eend ${?} || die "${FUNCNAME}: failed to remove ${file}"
+		eend ${?} || die "${FUNCNAME[0]}: failed to remove ${file}"
 	fi
 }
 
@@ -257,10 +258,10 @@ dotnet-pkg-base_remove-global-json() {
 # @DESCRIPTION:
 # Call dotnet, passing the supplied arguments.
 edotnet() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	if [[ -z ${DOTNET_EXECUTABLE} ]] ; then
-	   die "${FUNCNAME}: DOTNET_EXECUTABLE not set. Was dotnet-pkg-base_setup called?"
+	   die "${FUNCNAME[0]}: DOTNET_EXECUTABLE not set. Was dotnet-pkg-base_setup called?"
 	fi
 
 	edo "${DOTNET_EXECUTABLE}" "${@}"
@@ -276,11 +277,11 @@ edotnet() {
 # Used by "dotnet-pkg_src_configure" from the "dotnet-pkg" eclass.
 dotnet-pkg-base_info() {
 	if [[ ${CATEGORY}/${PN} == dev-dotnet/csharp-gentoodotnetinfo ]] ; then
-		debug-print-function "${FUNCNAME}: ${P} is a special package, skipping dotnet-pkg-base_info"
+		debug-print-function "${FUNCNAME[0]}: ${P} is a special package, skipping dotnet-pkg-base_info"
 	elif ! command -v gentoo-dotnet-info >/dev/null ; then
-		ewarn "${FUNCNAME}: gentoo-dotnet-info not available"
+		ewarn "${FUNCNAME[0]}: gentoo-dotnet-info not available"
 	else
-		gentoo-dotnet-info || die "${FUNCNAME}: failed to execute gentoo-dotnet-info"
+		gentoo-dotnet-info || die "${FUNCNAME[0]}: failed to execute gentoo-dotnet-info"
 	fi
 }
 
@@ -295,16 +296,16 @@ dotnet-pkg-base_info() {
 #
 # Used by "dotnet-pkg_src_configure" from the "dotnet-pkg" eclass.
 dotnet-pkg-base_foreach-solution() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	local dotnet_solution
 	local dotnet_solution_name
-	while read dotnet_solution ; do
+	while read -r dotnet_solution ; do
 		dotnet_solution_name="$(basename "${dotnet_solution}")"
 
 		ebegin "Running \"${1}\" for solution: \"${dotnet_solution_name}\""
 		"${1}" "${dotnet_solution}"
-		eend $? "${FUNCNAME}: failed for solution: \"${dotnet_solution}\"" || die
+		eend $? "${FUNCNAME[0]}: failed for solution: \"${dotnet_solution}\"" || die
 	done < <(find "${2:-.}" -maxdepth 1 -type f -name "*.sln")
 }
 
@@ -320,7 +321,7 @@ dotnet-pkg-base_foreach-solution() {
 #
 # Used by "dotnet-pkg_src_configure" from the "dotnet-pkg" eclass.
 dotnet-pkg-base_restore() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	local directory
 	if [[ "${1}" ]] ; then
@@ -331,9 +332,9 @@ dotnet-pkg-base_restore() {
 	fi
 
 	local -a restore_args=(
-		--runtime ${DOTNET_RUNTIME}
+		--runtime "${DOTNET_RUNTIME}"
 		--source "${NUGET_PACKAGES}"
-		-maxCpuCount:$(makeopts_jobs)
+		"-maxCpuCount:$(makeopts_jobs)"
 		"${@}"
 	)
 
@@ -351,7 +352,7 @@ dotnet-pkg-base_restore() {
 # Additionally any number of "args" maybe be given, they are appended to
 # the "dotnet" command invocation.
 dotnet-pkg-base_restore_tools() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	local -a tool_restore_args=(
 		--add-source "${NUGET_PACKAGES}"
@@ -379,7 +380,7 @@ dotnet-pkg-base_restore_tools() {
 #
 # Used by "dotnet-pkg_src_compile" from the "dotnet-pkg" eclass.
 dotnet-pkg-base_build() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	local directory
 	if [[ "${1}" ]] ; then
@@ -394,8 +395,8 @@ dotnet-pkg-base_build() {
 		--no-restore
 		--no-self-contained
 		--output "${DOTNET_OUTPUT}"
-		--runtime ${DOTNET_RUNTIME}
-		-maxCpuCount:$(makeopts_jobs)
+		--runtime "${DOTNET_RUNTIME}"
+		"-maxCpuCount:$(makeopts_jobs)"
 		"${@}"
 	)
 
@@ -421,7 +422,7 @@ dotnet-pkg-base_build() {
 #
 # Used by "dotnet-pkg_src_test" from the "dotnet-pkg" eclass.
 dotnet-pkg-base_test() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	local directory
 	if [[ "${1}" ]] ; then
@@ -434,7 +435,7 @@ dotnet-pkg-base_test() {
 	local -a test_args=(
 		--configuration "${DOTNET_CONFIGURATION}"
 		--no-restore
-		-maxCpuCount:$(makeopts_jobs)
+		"-maxCpuCount:$(makeopts_jobs)"
 		"${@}"
 	)
 
@@ -449,7 +450,7 @@ dotnet-pkg-base_test() {
 #
 # Installation directory is relative to "ED".
 dotnet-pkg-base_install() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	local installation_directory="${1:-/usr/share/${P}}"
 
@@ -465,9 +466,9 @@ dotnet-pkg-base_install() {
 #
 # For more info see the "_DOTNET_LAUNCHERDEST" variable.
 dotnet-pkg-base_launcherinto() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
-	[[ -z ${1} ]] && die "${FUNCNAME}: no directory specified"
+	[[ -z ${1} ]] && die "${FUNCNAME[0]}: no directory specified"
 
 	_DOTNET_LAUNCHERDEST="${1}"
 }
@@ -489,9 +490,9 @@ dotnet-pkg-base_launcherinto() {
 #
 # For more info see the "DOTNET_LAUNCHERVARS" variable.
 dotnet-pkg-base_append_launchervar() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
-	[[ -z ${1} ]] && die "${FUNCNAME}: no variable setting specified"
+	[[ -z ${1} ]] && die "${FUNCNAME[0]}: no variable setting specified"
 
 	DOTNET_LAUNCHERVARS+=( "${1}" )
 }
@@ -515,7 +516,7 @@ dotnet-pkg-base_append_launchervar() {
 #
 # The path is prepended by "EPREFIX".
 dotnet-pkg-base_dolauncher() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	local executable_path executable_name
 
@@ -523,7 +524,7 @@ dotnet-pkg-base_dolauncher() {
 		local executable_path="${1}"
 		shift
 	else
-		die "${FUNCNAME}: No executable path given."
+		die "${FUNCNAME[0]}: No executable path given."
 	fi
 
 	if [[ ${#} -eq 0 ]] ; then
@@ -538,7 +539,7 @@ dotnet-pkg-base_dolauncher() {
 	cat <<-EOF > "${executable_target}" || die
 	#!/bin/sh
 
-	# Lanucher script for ${executable_path} (${executable_name}),
+	# Launcher script for ${executable_path} (${executable_name}),
 	# created from package "${CATEGORY}/${P}",
 	# compatible with dotnet version ${DOTNET_COMPAT}.
 
@@ -580,7 +581,7 @@ dotnet-pkg-base_dolauncher() {
 #
 # The path is prepended by "EPREFIX".
 dotnet-pkg-base_dolauncher_portable() {
-	debug-print-function ${FUNCNAME} "${@}"
+	debug-print-function "${FUNCNAME[0]}" "${@}"
 
 	local dll_path="${1}"
 	local executable_name="${2}"
@@ -589,7 +590,7 @@ dotnet-pkg-base_dolauncher_portable() {
 	cat <<-EOF > "${executable_target}" || die
 	#!/bin/sh
 
-	# Lanucher script for ${dll_path} (${executable_name}),
+	# Launcher script for ${dll_path} (${executable_name}),
 	# created from package "${CATEGORY}/${P}",
 	# compatible with any dotnet version, built on ${DOTNET_COMPAT}.
 
