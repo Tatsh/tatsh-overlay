@@ -1,5 +1,5 @@
 {
-	"regex": "## v(\\d[^ ]+)+",
-	"type": "regex",
-	"url": "https://raw.githubusercontent.com/raphnet/mupen64plus-input-raphnetraw/master/RELEASE"
+  "regex": "## v(\\d[^ ]+)+",
+  "type": "regex",
+  "url": "https://raw.githubusercontent.com/raphnet/mupen64plus-input-raphnetraw/master/RELEASE"
 }
