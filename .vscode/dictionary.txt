@@ -84,6 +84,7 @@ aymanbagabas
 backoff
 bamum
 barbieri
+barć
 basenames
 basepack
 baserom
@@ -341,6 +342,7 @@ dnssec
 dobashcomp
 dobin
 docdir
+docparams
 documentai
 dodir
 dodoc
@@ -350,6 +352,7 @@ doforce
 doicon
 doinitd
 doins
+dolauncher
 dolib
 doman
 domenu
@@ -407,6 +410,7 @@ eautoreconf
 ebegin
 ebuilds
 eclass
+eclasses
 econf
 edgecontainer
 edotnet
@@ -419,6 +423,7 @@ einfo
 einstalldocs
 elbasan
 eleonore
+elibc
 elif
 elog
 emake
@@ -521,6 +526,7 @@ gcrypt
 gdksharp
 genconfig
 genproto
+gentoodotnetinfo
 gentoolkit
 getrandom
 getsentry
@@ -635,7 +641,9 @@ iamadamdev
 ianlancetaylor
 icsharpcode
 identitymodel
+idepend
 idna
+ifunset
 ilgeneration
 ilspy
 imagepipe
@@ -751,6 +759,10 @@ kylemanna
 labbe's
 langid
 langneg
+launcherdest
+launcherinto
+launchervar
+launchervars
 ldconfig
 ldflags
 ldlibs
@@ -868,12 +880,14 @@ logrus
 loguru
 longdescription
 lsdvd
+lttng
 luajit
 lucasb
 lugaresi
 lukechampine
 lunixbochs
 macemu
+maciej
 macvendor
 macvendordb
 magewell
@@ -984,6 +998,7 @@ mygoargs
 mypy
 myqmakeargs
 mytree
+nake
 nall
 nameresolution
 nandinagari
@@ -1118,6 +1133,7 @@ patrickmn
 paucinhau
 pcap
 pcre
+pdepend
 permic
 pflag
 pgpassfile
@@ -1492,6 +1508,7 @@ unittests
 universalify
 unscopables
 upconv
+updatecheck
 upnp
 upscaler
 upscaling
@@ -1503,6 +1520,7 @@ urllib
 usbkill
 usedep
 useragent
+userlocal
 usev
 usex
 usrs
@@ -1593,6 +1611,7 @@ xemu
 xerrors
 xext
 xfce
+xgqt
 xinerama
 xiph
 xirvik
@@ -1634,21 +1653,3 @@ zwave
 zyan
 zycore
 zzag
-barć
-dolauncher
-eclasses
-elibc
-gentoodotnetinfo
-idepend
-ifunset
-launcherdest
-launcherinto
-launchervar
-launchervars
-lttng
-maciej
-nake
-pdepend
-updatecheck
-userlocal
-xgqt

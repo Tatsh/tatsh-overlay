@@ -53,8 +53,7 @@ def main() -> int:
         yarn_pkgs: Set[str] = set()
         lines = f.readlines()
         for i, line in enumerate(lines):
-            m = re.match(RE_SCOPED, line) or re.match(RE_NON_SCOPED, line)
-            if not m:
+            if not (m := re.match(RE_SCOPED, line) or re.match(RE_NON_SCOPED, line)):
                 continue
             name = m.groups()[0]
             version = None

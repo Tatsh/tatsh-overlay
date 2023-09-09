@@ -1,22 +1,32 @@
 {
-	"author": "Andrew Udvare <audvare@gmail.com>",
-	"devDependencies": {
-		"cspell": "^6.31.1",
-		"prettier": "^2.8.7",
-		"prettier-plugin-ini": "^1.1.0",
-		"prettier-plugin-toml": "^0.3.1"
-	},
-	"license": "MIT",
-	"name": "instagram-archiver",
-	"repository": "git@github.com:Tatsh/instagram-archiver.git",
-	"scripts": {
-		"check-formatting": "prettier -c './**/*.cfg' './**/*.ini' './**/*.md' './**/*.toml' './**/*.yml' ./.prettierrc ./.style.yapf && poetry run isort . --check && poetry run yapf -rd scripts",
-		"check-spelling": "cspell --no-progress './**/*'  './**/.*'",
-		"format": "prettier -w './**/*.cfg' './**/*.ini' './**/*.md' './**/*.toml' './**/*.yml' ./.prettierrc ./.style.yapf && poetry run isort . && poetry run yapf -ri scripts",
-		"mypy": "poetry run mypy .",
-		"pylint": "poetry run pylint scripts",
-		"qa": "yarn shellcheck && yarn mypy && yarn pylint && yarn check-spelling && yarn check-formatting",
-		"shellcheck": "shellcheck scripts/*.sh eclass/*.eclass ./*/*/*.ebuild net-dns/pihole-ftl/files/pihole-FTL x11-misc/mimeo/files/mimeo-completion.sh"
-	},
-	"version": "0.2.0"
+  "author": "Andrew Udvare <audvare@gmail.com>",
+  "devDependencies": {
+    "cspell": "^7.3.2",
+    "prettier": "^3.0.3",
+    "prettier-plugin-ini": "^1.1.0",
+    "prettier-plugin-toml": "^0.4.0"
+  },
+  "license": "MIT",
+  "name": "instagram-archiver",
+  "prettier": {
+    "endOfLine": "lf",
+    "iniSpaceAroundEquals": true,
+    "plugins": [
+      "prettier-plugin-ini",
+      "prettier-plugin-toml"
+    ],
+    "printWidth": 100,
+    "singleQuote": true
+  },
+  "repository": "git@github.com:Tatsh/instagram-archiver.git",
+  "scripts": {
+    "check-formatting": "yarn prettier -c './**/*.json' './**/*.md' './**/*.toml' './**/*.yml' && poetry run isort . --check && poetry run yapf -rd scripts",
+    "check-spelling": "yarn cspell --no-progress './**/*'  './**/.*'",
+    "format": "yarn prettier -w './**/*.json' './**/*.md' './**/*.toml' './**/*.yml' && poetry run isort . && poetry run yapf -ri scripts",
+    "mypy": "poetry run mypy .",
+    "pylint": "poetry run pylint scripts",
+    "qa": "yarn shellcheck && yarn mypy && yarn pylint && yarn check-spelling && yarn check-formatting",
+    "shellcheck": "shellcheck scripts/*.sh eclass/*.eclass ./*/*/*.ebuild net-dns/pihole-ftl/files/pihole-FTL x11-misc/mimeo/files/mimeo-completion.sh"
+  },
+  "version": "0.2.0"
 }

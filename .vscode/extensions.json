@@ -1,18 +1,18 @@
 {
-	"recommendations": [
-		"christian-kohler.path-intellisense",
-		"davidanson.vscode-markdownlint",
-		"dotjoshjohnson.xml",
-		"eeyore.yapf",
-		"foxundermoon.shell-format",
-		"henriiik.vscode-sort",
-		"jmredfern.sort-selection",
-		"mads-hartmann.bash-ide-vscode",
-		"richie5um2.vscode-sort-json",
-		"tatsh.pkgcheck",
-		"timonwong.shellcheck",
-		"tyriar.sort-lines",
-		"wayou.vscode-todo-highlight",
-		"zainchen.json"
-	]
+  "recommendations": [
+    "christian-kohler.path-intellisense",
+    "davidanson.vscode-markdownlint",
+    "dotjoshjohnson.xml",
+    "eeyore.yapf",
+    "foxundermoon.shell-format",
+    "henriiik.vscode-sort",
+    "jmredfern.sort-selection",
+    "mads-hartmann.bash-ide-vscode",
+    "richie5um2.vscode-sort-json",
+    "tatsh.pkgcheck",
+    "timonwong.shellcheck",
+    "tyriar.sort-lines",
+    "wayou.vscode-todo-highlight",
+    "zainchen.json"
+  ]
 }

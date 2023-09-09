@@ -1,28 +1,28 @@
 {
-	"[python]": {
-		"editor.defaultFormatter": "eeyore.yapf",
-		"editor.formatOnSaveMode": "file",
-		"editor.tabSize": 4
-	},
-	"[shellscript]": {
-		"editor.codeActionsOnSave": {
-			"source.fixAll.shellcheck": true
-		},
-		"editor.detectIndentation": false,
-		"editor.insertSpaces": false,
-		"editor.tabSize": 2,
-		"editor.useTabStops": true
-	},
-	"cSpell.enabled": true,
-	"editor.formatOnPaste": true,
-	"editor.formatOnSave": true,
-	"editor.formatOnType": true,
-	"editor.insertSpaces": true,
-	"editor.tabSize": 2,
-	"editor.useTabStops": false,
-	"files.associations": {
-		"*.ebuild": "shellscript",
-		"*.eclass": "shellscript"
-	},
-	"shellformat.flag": "-i,0,-kp,-s,-sr"
+  "[python]": {
+    "editor.defaultFormatter": "eeyore.yapf",
+    "editor.formatOnSaveMode": "file",
+    "editor.tabSize": 4
+  },
+  "[shellscript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.shellcheck": true
+    },
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": false,
+    "editor.tabSize": 2,
+    "editor.useTabStops": true
+  },
+  "cSpell.enabled": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.useTabStops": false,
+  "files.associations": {
+    "*.ebuild": "shellscript",
+    "*.eclass": "shellscript"
+  },
+  "shellformat.flag": "-i,0,-kp,-s,-sr"
 }

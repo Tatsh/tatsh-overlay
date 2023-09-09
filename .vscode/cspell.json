@@ -1,15 +1,15 @@
 {
-	"dictionaryDefinitions": [
-		{
-			"name": "main",
-			"path": "dictionary.txt"
-		}
-	],
-	"ignorePaths": ["metadata/md5-cache", "Manifest", "*.patch"],
-	"languageSettings": [
-		{
-			"dictionaries": ["main"],
-			"languageId": "*"
-		}
-	]
+  "dictionaryDefinitions": [
+    {
+      "name": "main",
+      "path": "dictionary.txt"
+    }
+  ],
+  "ignorePaths": ["metadata/md5-cache", "Manifest", "*.patch"],
+  "languageSettings": [
+    {
+      "dictionaries": ["main"],
+      "languageId": "*"
+    }
+  ]
 }

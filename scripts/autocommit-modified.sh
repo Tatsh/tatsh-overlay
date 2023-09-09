@@ -16,7 +16,7 @@ while read -r ebuild; do
         popd || exit 1
         continue
     fi
-    ebuild ./*.ebuild clean manifest prepare || exit 1
+    ebuild "$(find . -name '*.ebuild' | head -1)" clean manifest prepare || exit 1
 		git add .
 		pkgdev commit || pkgdev commit -m "${cat}/${pn}: lint" || exit 1
     popd || exit 1

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
+# pylint: disable=invalid-name
 from functools import lru_cache
-from typing import Iterable, Iterator, Sequence, Tuple
+from typing import Iterable, Iterator, Tuple
 import re
 import subprocess as sp
 import sys
@@ -68,8 +69,7 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
                 yield lib_package
 
 
-def find_missing_deps0(package_name: str,
-                       exes: Iterable[str]) -> Iterator[Tuple[str, Sequence[str]]]:
+def find_missing_deps0(package_name: str, exes: Iterable[str]) -> Iterator[Tuple[str, list[str]]]:
     for exe in exes:
         yield (exe,
                list(
@@ -88,13 +88,10 @@ def main() -> int:
     """
     This only works against packages installed and their configured USE flags.
     """
-    if len(sys.argv) == 1:
-        package_names = sp.run(('eix', '--installed-from-overlay', 'tatsh-overlay', '--only-names'),
-                               check=True,
-                               capture_output=True,
-                               text=True).stdout.splitlines()
-    else:
-        package_names = sys.argv[1:]
+    package_names = sp.run(('eix', '--installed-from-overlay', 'tatsh-overlay', '--only-names'),
+                           check=True,
+                           capture_output=True,
+                           text=True).stdout.splitlines() if len(sys.argv) == 1 else sys.argv[1:]
     for package_name in package_names:
         printed_name = False
         exes = sorted(x for x in sp.run(
@@ -103,16 +100,16 @@ def main() -> int:
                       if is_elf(x) and not re.match(r'/usr/lib\d+/ryujinx/lib.*\.so$', x)
                       and not re.match(r'/opt/stepmania-outfox/lib.*\.so(?:\.\d+)?', x))
         if len(exes):
-            for exe, missing in find_missing_deps0(package_name, exes):
-                missing = [
-                    y for y in missing if not (package_name in IGNORE and y in IGNORE[package_name])
-                ]
+            exe: str
+            for exe, missing in ((exe, [
+                    y for y in m if not (package_name in IGNORE and y in IGNORE[package_name])
+            ]) for m in find_missing_deps0(package_name, exes)):
                 if len(missing):
                     if not printed_name:
                         print(f'{package_name}:')
                         printed_name = True
                     print(f'  {exe}:')
-                    for x in sorted(set(missing)):
+                    for x in sorted(set(missing)):  # type: ignore[type-var]
                         print(f'\t{x}')
     return 0
 
