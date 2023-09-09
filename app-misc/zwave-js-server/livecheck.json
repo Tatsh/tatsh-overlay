@@ -1,5 +1,5 @@
 {
-  "type": "regex",
   "regex": "archive/refs/tags/(\\d+\\.\\d+(?:\\.\\d+)?)\\.tar\\.gz",
+  "type": "regex",
   "url": "https://github.com/zwave-js/zwave-js-server/tags"
 }
