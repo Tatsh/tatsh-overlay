@@ -59,7 +59,7 @@ src_install() {
 	mkdir "${S}" || die
 
 	fperms 0755 "/${dest}"
-	dosym "../../${dest}/dotnet /usr/bin/dotnet-bin-${SDK_SLOT}"
+	dosym "../../${dest}/dotnet" "/usr/bin/dotnet-bin-${SDK_SLOT}"
 }
 
 pkg_postinst() {
