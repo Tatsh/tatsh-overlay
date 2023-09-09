@@ -1,6 +1,6 @@
 {
-  "type": "regex",
-  "url": "https://api.github.com/repos/Ryujinx/release-channel-master/releases/latest",
   "regex": "tag_name\":\"(\\d+\\.\\d+\\.\\d+)\"",
-  "sha_source": "https://github.com/Ryujinx/Ryujinx/commits/master.atom"
+  "sha_source": "https://github.com/Ryujinx/Ryujinx/commits/master.atom",
+  "type": "regex",
+  "url": "https://api.github.com/repos/Ryujinx/release-channel-master/releases/latest"
 }
