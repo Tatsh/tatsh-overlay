@@ -4,6 +4,7 @@
     "cspell": "^7.3.2",
     "prettier": "^3.0.3",
     "prettier-plugin-ini": "^1.1.0",
+    "prettier-plugin-sort-json": "^3.0.1",
     "prettier-plugin-toml": "^0.4.0"
   },
   "license": "MIT",
@@ -11,8 +12,10 @@
   "prettier": {
     "endOfLine": "lf",
     "iniSpaceAroundEquals": true,
+    "jsonRecursiveSort": true,
     "plugins": [
       "prettier-plugin-ini",
+      "prettier-plugin-sort-json",
       "prettier-plugin-toml"
     ],
     "printWidth": 100,
