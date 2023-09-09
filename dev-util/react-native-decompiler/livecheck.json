@@ -1,5 +1,5 @@
 {
-  "type": "regex",
   "regex": "/package/react-native-decompiler/v/([^\"]+)\"",
+  "type": "regex",
   "url": "https://www.npmjs.com/package/react-native-decompiler?activeTab=versions"
 }
