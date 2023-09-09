@@ -1,6 +1,6 @@
 {
-    "regex": "href=\".*/releases/(\\d[^\"]+)\">",
-    "transformation_function": "handle_outfox",
-    "type": "regex",
-    "url": "https://projectoutfox.com/downloads"
+  "regex": "href=\".*/releases/(\\d[^\"]+)\">",
+  "transformation_function": "handle_outfox",
+  "type": "regex",
+  "url": "https://projectoutfox.com/downloads"
 }
