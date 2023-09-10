@@ -46,9 +46,11 @@ armon
 arrayish
 arrayref
 arrayvec
+arrify
 artifactregistry
 artifex
 asan
+asar
 asmflags
 asmjit
 aspnetcore
@@ -105,6 +107,7 @@ bigints
 bilogger
 binaryauthorization
 binarycookies
+binaryextensions
 binaryregexp
 binchecks
 bincode
@@ -121,6 +124,7 @@ blackbox
 blackfriday
 bluez
 bochs
+boolbase
 brrrip
 bsnes
 btrfs
@@ -132,6 +136,7 @@ buhid
 buildfiles
 buildmetadata
 buildservices
+builtins
 bulkedit
 bumpalo
 bwesterb
@@ -165,6 +170,7 @@ cflags
 cgit
 chacha
 chakma
+chardet
 charmbracelet
 checkpath
 cheshirekow
@@ -183,6 +189,7 @@ cksum
 clangd
 cleanhttp
 cliui
+cloneable
 clonehero
 cloudtasks
 cmakelang
@@ -211,6 +218,7 @@ colorstring
 colour
 commandline
 commandlineparser
+commondir
 compat
 compilerservices
 componentmodel
@@ -252,6 +260,7 @@ cython
 czkawka
 dabh
 danwakefield
+dargs
 dashmap
 datacatalog
 dataform
@@ -261,6 +270,7 @@ dataqna
 dataserv
 datasize
 datastream
+dateformat
 datetime
 davecgh
 dbapi
@@ -281,6 +291,8 @@ ddisable
 ddrivers
 ddynarec
 deark
+debuglog
+decamelize
 decompilation
 decompile
 decompiled
@@ -302,6 +314,7 @@ destdir
 devel
 devname
 devtype
+dezalgo
 dfastlog
 dfilter
 dfluidsynth
@@ -355,9 +368,12 @@ doins
 dolauncher
 dolib
 doman
+domelementtype
 domenu
+domhandler
 domo
 domodule
+domutils
 donuget
 dopenal
 doprofiling
@@ -430,9 +446,11 @@ emake
 emesonargs
 emirpasic
 emvi
+encodeurl
 enet
 enumn
 envify
+envinfo
 envoyproxy
 eprefix
 epreifx
@@ -458,6 +476,7 @@ eventemitter
 ewarn
 excss
 execa
+execall
 exeinto
 existance
 extglob
@@ -465,6 +484,7 @@ exzap
 fakecrc
 farto
 fastcgi
+fastq
 fastrand
 fastuuid
 fatih
@@ -478,6 +498,7 @@ fftw
 figueiredo
 filecaps
 fileinfo
+filelist
 filesdir
 findname
 findpackagesbyd
@@ -498,6 +519,7 @@ fmtconv
 fnmatch
 fomit
 fontconfig
+foreachasync
 foresto
 fowner
 fowners
@@ -513,6 +535,7 @@ fsetid
 fsnotify
 fsrcnn
 fsrcnnx
+fstream
 fullname
 fullwidth
 funcname
@@ -520,6 +543,7 @@ funcs
 fuser
 gamecube
 gandarez
+gast
 gcfg
 gcflags
 gcrypt
@@ -552,6 +576,7 @@ gliderlabs
 globalcache
 globalthis
 globalyzer
+globby
 globrex
 glog
 glsl
@@ -630,6 +655,7 @@ honnef
 hqdn
 htdocs
 htdocsdir
+htmlparser
 httpfs
 httplib
 httpprof
@@ -637,6 +663,7 @@ httprequest
 httprouter
 humansize
 hwmon
+hyperquest
 iamadamdev
 ianlancetaylor
 icsharpcode
@@ -673,11 +700,14 @@ intltool
 irecovery
 iregex
 isaacs
+isarray
 isatty
+isbinaryfile
 isexe
 isomp
 isort
 istring
+isurl
 itertools
 itoa
 ittapi
@@ -701,6 +731,7 @@ jsoncpp
 jsonfile
 jsonify
 jsonnet
+jsonparse
 jsonpointer
 jsonreference
 jsonwebtokens
@@ -731,6 +762,7 @@ keycodemapdb
 keym
 keymaps
 keysyms
+keytar
 keyv
 kfmin
 kglobalaccel
@@ -742,6 +774,7 @@ kisielk
 kitgen
 kiyamou
 klauspost
+kleur
 knownhosts
 kodi
 konsorten
@@ -857,6 +890,7 @@ libzrif
 libzvbi
 lighttpd
 limbu
+linkify
 linq
 lipgloss
 lisu
@@ -870,6 +904,7 @@ localereader
 localforage
 localmount
 localversions
+locutus
 lodepng
 logbuch
 logex
@@ -922,6 +957,7 @@ mbedtls
 mborgerson
 mbrt
 mdns
+mdurl
 mediatranslation
 meetei
 melbahja
@@ -934,6 +970,7 @@ mergo
 meroitic
 metaprogramming
 metastore
+metavuln
 mgba
 mgree
 mholt
@@ -941,6 +978,7 @@ miao
 michaeldfallen
 michał
 microcom
+microtask
 mileusna
 mina
 minchoc
@@ -984,6 +1022,7 @@ multani
 multicache
 multierror
 multilib
+multimatch
 munt
 mupen
 murmour
@@ -1003,6 +1042,7 @@ nall
 nameresolution
 nandinagari
 nanorand
+napi
 narqo
 naskh
 nasm
@@ -1031,6 +1071,7 @@ newren
 newscript
 newtonsoft
 newunit
+nextick
 niemeyer
 nihcode
 nihstro
@@ -1040,6 +1081,7 @@ nlzy
 nnedi
 noaccess
 nodedir
+nodelib
 noextract
 nofetch
 nologo
@@ -1113,7 +1155,11 @@ otlp
 oyvindln
 pacct
 pacho
+packlist
+pacote
 padd
+padend
+padstart
 pahawh
 pahawhhmong
 palmyrene
@@ -1144,10 +1190,12 @@ phishingprotection
 phpnuget
 phpstan
 picojson
+picomatch
 pidfile
 pierrec
 pietendo
 piftl
+pify
 pihole
 pingcap
 pipewire
@@ -1177,6 +1225,7 @@ postinst
 postrm
 pprof
 prdownloads
+prebuild
 prebuilds
 preinst
 privatecatalog
@@ -1264,15 +1313,18 @@ rdepends
 rdparty
 rdpend
 reactiveui
+readdir
 readerwriter
 readline
 realfft
 realpath
 realsr
 recaptchaenterprise
+rechoir
 recommendationengine
 recompiler
 recyclablememorystream
+redent
 redist
 redumper
 refractoring
@@ -1291,6 +1343,7 @@ repr
 resourcemanager
 responselike
 retryablehttp
+reusify
 revc
 rewx
 rgsf
@@ -1302,6 +1355,7 @@ riverwalk
 rivo
 rizu
 rmull
+roarr
 robfig
 rogpeppe
 roni
@@ -1330,6 +1384,7 @@ saraiki
 sasl
 saurashtra
 scandep
+scandir
 scenechange
 scipy
 scires
@@ -1357,6 +1412,7 @@ sharada
 sharded
 sharpziplib
 shellcheck
+shelljs
 shellquote
 shimskiasharp
 shlex
@@ -1364,13 +1420,16 @@ shuralyov
 shurcoo
 shutup
 siac
+sigstore
 simd
 simoninns
 simplexml
 simplier
+sindresorhus
 sinhala
 sirit
 sirupsen
+sisteransi
 sitedir
 sixlabors
 skeema
@@ -1427,11 +1486,14 @@ syscall
 sysconfdir
 systemevents
 systemunitdir
+szmarczak
 tablewriter
+tabtab
 tagbanawa
 tagbanwa
 taitham
 taiviet
+taketalk
 takri
 tasksh
 taskshell
@@ -1452,6 +1514,7 @@ testfloat
 testhost
 testplatform
 texinfo
+textextensions
 textutils
 textwrap
 tfperms
@@ -1468,7 +1531,9 @@ tinystr
 tinyvec
 tinyxml
 tirhuta
+titleize
 tmds
+tmpdir
 tomcrypt
 tomlplusplus
 tommath
@@ -1476,12 +1541,15 @@ tootallnate
 tostringtag
 tqdm
 trac
+treeverse
 trimend
 trimpath
 trimstart
 tsschecker
+tufjs
 tunables
 twemoji
+typedarray
 typedparts
 typeextensions
 typenum
@@ -1507,6 +1575,7 @@ unistd
 unittests
 universalify
 unscopables
+untildify
 upconv
 updatecheck
 upnp
@@ -1566,10 +1635,12 @@ warangciti
 warnflags
 wasi
 wchar
+wcwidth
 weakref
 webapps
 webassembly
 webengine
+webidl
 webp
 webpassword
 webrisk
@@ -1579,6 +1650,7 @@ webuiboxedlayout
 weezl
 werror
 wextra
+whatwg
 whichcraft
 wiimm
 wiimms
@@ -1618,11 +1690,14 @@ xirvik
 xkbcommon
 xlib
 xmatch
+xmlbuilder
 xmlpath
 xorg
 xrandr
+xregexp
 xrender
 xstate
+xtend
 xtst
 xvideo
 xxhash
@@ -1630,9 +1705,13 @@ yallist
 yapf
 yargs
 yasm
+yauzl
+yazl
 ycmd
+yocto
 yojson
 yookoala
+yosay
 yoyodyne
 yuin
 yuzu
