@@ -1,0 +1,12 @@
+LICENSE="BSD-2 MIT Apache-2 CC0-1.0 0BSD BlueOak-1.0.0 CC-BY-3.0 ISC WTFPL"
+KEYWORDS="~amd64"
+
+S="${WORKDIR}"
+
+src_install() {
+	yarn_src_install
+	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/${PN}/lib/cli.js"
+	dosym "../$(get_libdir)/${PN}/node_modules/${PN}/lib/cli.js" "/usr/bin/${PN}"
+	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/${PN}/lib/completion/index.js"
+	dosym "../$(get_libdir)/${PN}/node_modules/${PN}/lib/completion/index..js" "/usr/bin/${PN}-complete"
+}
