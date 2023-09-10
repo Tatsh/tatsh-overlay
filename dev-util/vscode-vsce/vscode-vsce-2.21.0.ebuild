@@ -10,7 +10,7 @@ HOMEPAGE="https://code.visualstudio.com"
 NPM_P="@${P/-/\/}"
 NPM_PN="@${PN/-/\/}"
 YARN_PKGS=(
-	${NPM_P}
+	"${NPM_P}"
 	ansi-styles-3.2.1
 	argparse-2.0.1
 	azure-devops-node-api-11.2.0
