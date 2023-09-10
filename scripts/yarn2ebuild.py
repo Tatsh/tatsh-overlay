@@ -57,10 +57,8 @@ def main() -> int:
                 continue
             name = m.groups()[0]
             version = None
-            if m := re.match(r'^version "([^"]+)"', lines[i + 1].strip()):
-                version = m.groups()[0]
-            assert version is not None
-            yarn_pkgs.add(f'\t{name}-{version}')
+            if (m := re.match(r'^version "([^"]+)"', lines[i + 1].strip())):
+                yarn_pkgs.add(f'\t{name}-{m.groups()[0]}')
         with open(path_join(root_dir, 'node_modules', package, 'package.json')) as j:
             data = json.load(j)
             if lic := data.get('license'):
@@ -70,6 +68,8 @@ def main() -> int:
                 try:
                     dep_data = json.load(j)
                     if lic := dep_data.get('license'):
+                        if isinstance(lic, dict):
+                            lic = lic['type']
                         licenses.add(lic)
                 except json.decoder.JSONDecodeError:
                     pass
