@@ -56,7 +56,6 @@ def main() -> int:
             if not (m := re.match(RE_SCOPED, line) or re.match(RE_NON_SCOPED, line)):
                 continue
             name = m.groups()[0]
-            version = None
             if (m := re.match(r'^version "([^"]+)"', lines[i + 1].strip())):
                 yarn_pkgs.add(f'\t{name}-{m.groups()[0]}')
         with open(path_join(root_dir, 'node_modules', package, 'package.json')) as j:
