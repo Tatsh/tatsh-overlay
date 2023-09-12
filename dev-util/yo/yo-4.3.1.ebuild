@@ -8,6 +8,7 @@ inherit yarn
 DESCRIPTION="CLI tool for running Yeoman generators"
 HOMEPAGE="http://yeoman.io"
 YARN_PKGS=(
+	"${P}"
 	@babel/code-frame-7.22.13
 	@babel/helper-validator-identifier-7.22.15
 	@babel/highlight-7.22.13
@@ -745,7 +746,6 @@ YARN_PKGS=(
 	yeoman-doctor-5.0.0
 	yeoman-environment-3.19.3
 	yeoman-generator-5.9.0
-	yo-4.3.1
 	yocto-queue-0.1.0
 	yosay-2.0.2
 )
