@@ -8,6 +8,7 @@ inherit yarn
 DESCRIPTION="Prettier is an opinionated code formatter"
 HOMEPAGE="https://prettier.io"
 YARN_PKGS=(
+	"${P}"
 	@chevrotain/cst-dts-gen-11.0.3
 	@chevrotain/gast-11.0.3
 	@chevrotain/regexp-to-ast-11.0.3
@@ -17,7 +18,6 @@ YARN_PKGS=(
 	@toml-tools/parser-1.0.0
 	chevrotain-11.0.3
 	lodash-es-4.17.21
-	prettier-3.0.3
 	prettier-plugin-ini-1.1.0
 	prettier-plugin-sort-json-3.0.1
 	prettier-plugin-toml-1.0.0
