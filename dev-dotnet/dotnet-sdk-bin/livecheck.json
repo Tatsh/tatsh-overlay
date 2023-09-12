@@ -1,0 +1,5 @@
+{
+    "regex": "h3 id=\"sdk-7[^\"]+\">SDK ([^<]+)<",
+    "type": "regex",
+    "url": "https://dotnet.microsoft.com/en-us/download/dotnet/7.0"
+}
