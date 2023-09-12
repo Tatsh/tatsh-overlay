@@ -6,7 +6,7 @@ inherit autotools
 
 DESCRIPTION="A library allowing to download single files from a remote zip archive"
 HOMEPAGE="https://github.com/tihmstar/libfragmentzip"
-SHA="9561b33155a4bf9a82f09fc4435e7c9fb9619d64"
+SHA="1f6b7af4eb113002c3473f873bb8d63598dd354f"
 SRC_URI="https://github.com/tihmstar/libfragmentzip/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-3"
