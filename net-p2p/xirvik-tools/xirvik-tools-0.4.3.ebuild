@@ -34,3 +34,13 @@ RDEPEND="
 	)"
 
 distutils_enable_tests pytest
+
+src_prepare() {
+	mv xirvik.1 .. || die
+	distutils-r1_src_prepare
+}
+
+src_install() {
+	doman ../xirvik.1
+	distutils-r1_src_install
+}
