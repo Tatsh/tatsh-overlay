@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DOTNET_COMPAT="7.0"
+DOTNET_PKG_COMPAT="7.0"
 NUGETS="avalonia@11.0.3
 	avalonia.angle.windows.natives@2.1.0.2023020321
 	avalonia.buildservices@0.0.29
