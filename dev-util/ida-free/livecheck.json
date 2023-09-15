@@ -1,5 +1,5 @@
 {
-    "regex": "Latest available.*>v([^<]+)<",
-    "type": "regex",
-    "url": "https://hex-rays.com/ida-free/"
+  "regex": "Latest available.*>v([^<]+)<",
+  "type": "regex",
+  "url": "https://hex-rays.com/ida-free/"
 }
