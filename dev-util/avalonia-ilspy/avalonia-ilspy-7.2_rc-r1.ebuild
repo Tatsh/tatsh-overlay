@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DOTNET_COMPAT="6.0"
+DOTNET_PKG_COMPAT="6.0"
 NUGETS="avalonia@0.10.13
 	avalonia.angle.windows.natives@2.1.0.2020091801
 	avalonia.avaloniaedit@0.10.12.2
@@ -268,12 +268,12 @@ src_install() {
 	newicon -s 48 "ILSpy.Core/Images/${MY_PN_SHORT}.png" "${MY_PN_SHORT}.png"
 	cat > "${MY_PN_SHORT}.sh" <<EOF
 #!/bin/sh
-dotnet-bin-${DOTNET_COMPAT} exec "${EPREFIX}/usr/share/${P}/${MY_PN_SHORT}.dll"
+dotnet-bin-${DOTNET_PKG_COMPAT} exec "${EPREFIX}/usr/share/${P}/${MY_PN_SHORT}.dll"
 EOF
 	newbin "${MY_PN_SHORT}.sh" "${MY_PN_SHORT}"
 	# For unknown reasons, having this entry point to the wrapper above causes an X crash
 	# (nvidia may be related)
-	make_desktop_entry "dotnet-bin-${DOTNET_COMPAT} exec \"${EPREFIX}/usr/share/${P}/${MY_PN_SHORT}.dll\"" \
+	make_desktop_entry "dotnet-bin-${DOTNET_PKG_COMPAT} exec \"${EPREFIX}/usr/share/${P}/${MY_PN_SHORT}.dll\"" \
 		"${MY_PN_SHORT}" "${MY_PN_SHORT}"
 	einstalldocs
 }
