@@ -16,6 +16,7 @@ alcalzone
 alcaro
 alecthomas
 alessandro
+alessio
 alexedwards
 alif
 allenc
@@ -756,6 +757,7 @@ keepends
 kelf
 kelftool
 kerneldir
+kethsar
 kevinburke
 kevinpollet
 keycodemapdb
@@ -1412,6 +1414,7 @@ sharada
 sharded
 sharpziplib
 shellcheck
+shellescape
 shelljs
 shellquote
 shimskiasharp
@@ -1713,6 +1716,7 @@ yojson
 yookoala
 yosay
 yoyodyne
+ytarchive
 yuin
 yuzu
 zarchive
