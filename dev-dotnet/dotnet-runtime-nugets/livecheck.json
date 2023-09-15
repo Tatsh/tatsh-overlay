@@ -1,5 +1,5 @@
 {
-    "regex": ">Version ([^,]+), released .*</",
-    "type": "regex",
-    "url": "https://dotnet.microsoft.com/en-us/download"
+  "regex": ">Version ([^,]+), released .*</",
+  "type": "regex",
+  "url": "https://dotnet.microsoft.com/en-us/download"
 }
