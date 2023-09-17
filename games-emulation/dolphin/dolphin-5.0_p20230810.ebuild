@@ -130,7 +130,7 @@ declare -A KEEP_BUNDLED=(
 	[rangeset]=ZLIB
 	[FatFs]=BSD
 	[rcheevos]=MIT
-	[gtest]= # (build-time only)
+	[gtest]="" # (build-time only)
 )
 
 src_prepare() {
@@ -177,24 +177,24 @@ src_configure() {
 		# Use ccache only when user did set FEATURES=ccache (or similar)
 		# not when ccache binary is present in system (automagic).
 		-DCCACHE_BIN=CCACHE_BIN-NOTFOUND
-		-DENABLE_ALSA=$(usex alsa)
+		-DENABLE_ALSA="$(usex alsa)"
 		-DENABLE_AUTOUPDATE=OFF
-		-DENABLE_BLUEZ=$(usex bluetooth)
-		-DENABLE_EVDEV=$(usex evdev)
-		-DENCODE_FRAMEDUMPS=$(usex ffmpeg)
+		-DENABLE_BLUEZ="$(usex bluetooth)"
+		-DENABLE_EVDEV="$(usex evdev)"
+		-DENCODE_FRAMEDUMPS="$(usex ffmpeg)"
 		-DENABLE_LLVM=OFF
 		# just adds -flto, user can do that via flags
 		-DENABLE_LTO=OFF
-		-DUSE_MGBA=$(usex mgba)
-		-DENABLE_PULSEAUDIO=$(usex pulseaudio)
-		-DENABLE_QT=$(usex gui)
+		-DUSE_MGBA="$(usex mgba)"
+		-DENABLE_PULSEAUDIO="$(usex pulseaudio)"
+		-DENABLE_QT="$(usex gui)"
 		-DENABLE_SDL=OFF # not supported: #666558
-		-DENABLE_TESTS=$(usex test)
-		-DENABLE_VULKAN=$(usex vulkan)
-		-DFASTLOG=$(usex log)
-		-DOPROFILING=$(usex profile)
-		-DUSE_DISCORD_PRESENCE=$(usex discord-presence)
-		-DUSE_UPNP=$(usex upnp)
+		-DENABLE_TESTS="$(usex test)"
+		-DENABLE_VULKAN="$(usex vulkan)"
+		-DFASTLOG="$(usex log)"
+		-DOPROFILING="$(usex profile)"
+		-DUSE_DISCORD_PRESENCE="$(usex discord-presence)"
+		-DUSE_UPNP="$(usex upnp)"
 		-DUSE_RETRO_ACHIEVEMENTS=ON
 		-DUSE_SYSTEM_MINIZIP=OFF
 		-DUSE_SYSTEM_ZLIB=OFF
@@ -230,7 +230,7 @@ src_install() {
 
 pkg_postinst() {
 	# Add pax markings for hardened systems
-	pax-mark -m "${EPREFIX}"/usr/games/bin/"${PN}"-emu
+	pax-mark -m "${EPREFIX}/usr/games/bin/${PN}"-emu
 	xdg_icon_cache_update
 }
 
