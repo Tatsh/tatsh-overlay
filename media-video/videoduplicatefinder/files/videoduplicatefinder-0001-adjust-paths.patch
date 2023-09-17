@@ -1,28 +1,28 @@
-From 033ad5b898cd9d0d7c670f75e8481dd7df732d7c Mon Sep 17 00:00:00 2001
+From 4a94bf4a93c925d1c5e0c96871be965949261520 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sat, 24 Jun 2023 23:42:36 -0400
 Subject: [PATCH] Adjust paths
 
 ---
- VDF.Core/FFTools/FFToolsUtils.cs              |  8 +++---
- VDF.Core/FFTools/FFmpegNative/FFmpegHelper.cs |  4 +--
- VDF.Core/Utils/CoreUtils.cs                   | 22 ++++++++++++++++
- VDF.Core/Utils/DatabaseUtils.cs               |  4 +--
+ VDF.Core/FFTools/FFToolsUtils.cs              |  8 +++----
+ VDF.Core/FFTools/FFmpegNative/FFmpegHelper.cs |  4 ++--
+ VDF.Core/Utils/CoreUtils.cs                   | 22 +++++++++++++++++
+ VDF.Core/Utils/DatabaseUtils.cs               |  4 ++--
  VDF.Core/Utils/Logger.cs                      |  2 +-
  VDF.GUI/Data/SettingsFile.cs                  |  6 ++---
- VDF.GUI/ViewModels/CustomSelectionVM.cs       |  4 +--
- VDF.GUI/ViewModels/MainWindowVM.cs            | 26 ++++++++++---------
- VDF.GUI/ViewModels/MainWindowVM_Selection.cs  |  7 +++--
- VDF.GUI/ViewModels/MainWindowVM_Settings.cs   | 11 +++++---
- 10 files changed, 62 insertions(+), 32 deletions(-)
+ VDF.GUI/ViewModels/CustomSelectionVM.cs       |  4 ++--
+ VDF.GUI/ViewModels/MainWindowVM.cs            | 24 ++++++++++---------
+ VDF.GUI/ViewModels/MainWindowVM_Selection.cs  |  7 ++++--
+ VDF.GUI/ViewModels/MainWindowVM_Settings.cs   | 11 +++++----
+ 10 files changed, 61 insertions(+), 31 deletions(-)
 
 diff --git a/VDF.Core/FFTools/FFToolsUtils.cs b/VDF.Core/FFTools/FFToolsUtils.cs
-index 3df8a6a..72a5e10 100644
+index 4f38eb7..4c4b102 100644
 --- a/VDF.Core/FFTools/FFToolsUtils.cs
 +++ b/VDF.Core/FFTools/FFToolsUtils.cs
-@@ -35,10 +35,10 @@ namespace VDF.Core.FFTools {
- 		}
- 		public static string? GetPath(FFTool tool) {
+@@ -41,10 +41,10 @@ namespace VDF.Core.FFTools {
+ 		/// <returns>path or null if not found</returns>
+ 		internal static string? GetPath(FFTool tool) {
  
 -			if (File.Exists($"{CoreUtils.CurrentFolder}\\bin\\{(tool == FFTool.FFmpeg ? ffMpegPlatformName : ffProbePlatformName)}"))
 -				return $"{CoreUtils.CurrentFolder}\\bin\\{(tool == FFTool.FFmpeg ? ffMpegPlatformName : ffProbePlatformName)}";
@@ -152,15 +152,15 @@ index 365fda0..f32390c 100644
  			var xDoc = XDocument.Load(path);
  			foreach (var n in xDoc.Descendants("Include"))
 diff --git a/VDF.GUI/ViewModels/CustomSelectionVM.cs b/VDF.GUI/ViewModels/CustomSelectionVM.cs
-index 334f237..f17862b 100644
+index a763cf9..7d8e044 100644
 --- a/VDF.GUI/ViewModels/CustomSelectionVM.cs
 +++ b/VDF.GUI/ViewModels/CustomSelectionVM.cs
 @@ -83,7 +83,7 @@ namespace VDF.GUI.ViewModels {
  		[JsonIgnore]
  		public ReactiveCommand<Unit, Unit> SaveCommand => ReactiveCommand.CreateFromTask(async () => {
  			var result = await Utils.PickerDialogUtils.SaveFilePicker(new FilePickerSaveOptions() {
--				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
-+				SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder),
+-				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder),
  				DefaultExtension = ".vdfselection",
  				FileTypeChoices = new FilePickerFileType[] {
  					 new FilePickerFileType("Selection File") { Patterns = new string[] { "*.vdfselection" }}}
@@ -168,13 +168,13 @@ index 334f237..f17862b 100644
  		[JsonIgnore]
  		public ReactiveCommand<Unit, Unit> LoadCommand => ReactiveCommand.CreateFromTask(async () => {
  			var result = await Utils.PickerDialogUtils.OpenFilePicker(new FilePickerOpenOptions() {
--				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
-+				SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder),
+-				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder),
  				FileTypeFilter = new FilePickerFileType[] {
  					 new FilePickerFileType("Selection File") { Patterns = new string[] { "*.vdfselection" }}}
  			});
 diff --git a/VDF.GUI/ViewModels/MainWindowVM.cs b/VDF.GUI/ViewModels/MainWindowVM.cs
-index d1e7488..d239a06 100644
+index 59ce450..eff9e49 100644
 --- a/VDF.GUI/ViewModels/MainWindowVM.cs
 +++ b/VDF.GUI/ViewModels/MainWindowVM.cs
 @@ -45,7 +45,7 @@ namespace VDF.GUI.ViewModels {
@@ -195,8 +195,8 @@ index d1e7488..d239a06 100644
  			if (groupBlacklistFile.Exists && groupBlacklistFile.Length > 0) {
  				using var stream = new FileStream(groupBlacklistFile.FullName, FileMode.Open);
  				GroupBlacklist = JsonSerializer.Deserialize<List<HashSet<string>>>(stream)!;
-@@ -166,7 +166,7 @@ namespace VDF.GUI.ViewModels {
- 			Scanner.NoThumbnailImage = SixLabors.ImageSharp.Image.Load(assets!.Open(new Uri("avares://VDF.GUI/Assets/icon.png")));
+@@ -165,7 +165,7 @@ namespace VDF.GUI.ViewModels {
+ 			Scanner.NoThumbnailImage = SixLabors.ImageSharp.Image.Load(AssetLoader.Open(new Uri("avares://VDF.GUI/Assets/icon.png")));
  
  			try {
 -				File.Delete(Path.Combine(CoreUtils.CurrentFolder, "log.txt"));
@@ -204,7 +204,7 @@ index d1e7488..d239a06 100644
  			}
  			catch { }
  			Logger.Instance.LogItemAdded += Instance_LogItemAdded;
-@@ -365,7 +365,7 @@ namespace VDF.GUI.ViewModels {
+@@ -368,7 +368,7 @@ namespace VDF.GUI.ViewModels {
  		});
  		public static ReactiveCommand<Unit, Unit> OpenOwnFolderCommand => ReactiveCommand.Create(() => {
  			Process.Start(new ProcessStartInfo {
@@ -213,66 +213,63 @@ index d1e7488..d239a06 100644
  				UseShellExecute = true,
  			});
  		});
-@@ -388,9 +388,9 @@ namespace VDF.GUI.ViewModels {
+@@ -391,7 +391,7 @@ namespace VDF.GUI.ViewModels {
  		});
  		public static ReactiveCommand<Unit, Unit> ImportDataBaseFromJsonCommand => ReactiveCommand.CreateFromTask(async () => {
  			var result = await Utils.PickerDialogUtils.OpenFilePicker(new FilePickerOpenOptions() {
--				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
+-				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder),
  				FileTypeFilter = new FilePickerFileType[] {
--					 new FilePickerFileType("Json File") { Patterns = new string[] { "*.json" }}}
-+					 new FilePickerFileType("Json File") { Patterns = new string[] { "*.json" }}},
-+				SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder)
+ 					 new FilePickerFileType("Json File") { Patterns = new string[] { "*.json" }}}
  			});
- 			if (string.IsNullOrEmpty(result)) return;
- 
-@@ -418,7 +418,8 @@ namespace VDF.GUI.ViewModels {
+@@ -421,7 +421,8 @@ namespace VDF.GUI.ViewModels {
  			var result = await Utils.PickerDialogUtils.SaveFilePicker(new FilePickerSaveOptions() {
  				DefaultExtension = ".json",
  				FileTypeChoices = new FilePickerFileType[] {
 -					 new FilePickerFileType("Json Files") { Patterns = new string[] { "*.json" }}}
 +					 new FilePickerFileType("Json Files") { Patterns = new string[] { "*.json" }}},
-+				SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder)
++				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder)
  			});
  			if (string.IsNullOrEmpty(result)) return;
  
-@@ -440,7 +441,8 @@ namespace VDF.GUI.ViewModels {
+@@ -443,7 +444,8 @@ namespace VDF.GUI.ViewModels {
  			var result = await Utils.PickerDialogUtils.SaveFilePicker(new FilePickerSaveOptions() {
  				DefaultExtension = ".json",
  				FileTypeChoices = new FilePickerFileType[] {
 -					 new FilePickerFileType("Json Files") { Patterns = new string[] { "*.json" }}}
 +					 new FilePickerFileType("Json Files") { Patterns = new string[] { "*.json" }}},
-+				SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder)
++				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder)
  			});
  			if (string.IsNullOrEmpty(result)) return;
  
-@@ -460,7 +462,7 @@ namespace VDF.GUI.ViewModels {
+@@ -463,7 +465,7 @@ namespace VDF.GUI.ViewModels {
  		});
  		async Task ExportScanResultsIncludingThumbnails(string? path = null) {
  			path ??= await Utils.PickerDialogUtils.SaveFilePicker(new FilePickerSaveOptions() {
--				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
-+				SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder),
+-				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder),
  				DefaultExtension = ".json",
  				FileTypeChoices = new FilePickerFileType[] {
  					 new FilePickerFileType("Scan Results") { Patterns = new string[] { "*.scanresults" }}}
-@@ -490,7 +492,7 @@ namespace VDF.GUI.ViewModels {
+@@ -493,7 +495,7 @@ namespace VDF.GUI.ViewModels {
  		}
  		public ReactiveCommand<Unit, Unit> ImportScanResultsFromFileCommand => ReactiveCommand.CreateFromTask(async () => {
  			var result = await Utils.PickerDialogUtils.OpenFilePicker(new FilePickerOpenOptions {
--				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
-+				SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder),
+-				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder),
  				FileTypeFilter = new FilePickerFileType[] {
  					 new FilePickerFileType("Scan Results") { Patterns = new string[] { "*.scanresults" }}}
  			});
-@@ -505,7 +507,7 @@ namespace VDF.GUI.ViewModels {
+@@ -508,7 +510,7 @@ namespace VDF.GUI.ViewModels {
  
  			if (path == null) {
  				path = await Utils.PickerDialogUtils.OpenFilePicker(new FilePickerOpenOptions() {
--					SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
-+					SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder),
+-					SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.CurrentFolder),
++					SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder),
  					FileTypeFilter = new FilePickerFileType[] {
  					 new FilePickerFileType("Scan Results") { Patterns = new string[] { "*.scanresults" }}}
  				});
-@@ -825,7 +827,7 @@ namespace VDF.GUI.ViewModels {
+@@ -829,7 +831,7 @@ namespace VDF.GUI.ViewModels {
  					blacklist.Add(duplicateItem.ItemInfo.Path);
  				GroupBlacklist.Add(blacklist);
  				try {
@@ -282,7 +279,7 @@ index d1e7488..d239a06 100644
  					await JsonSerializer.SerializeAsync(stream, GroupBlacklist);
  				}
 diff --git a/VDF.GUI/ViewModels/MainWindowVM_Selection.cs b/VDF.GUI/ViewModels/MainWindowVM_Selection.cs
-index 01937fa..7fe27a5 100644
+index d35d7e5..70ca4fc 100644
 --- a/VDF.GUI/ViewModels/MainWindowVM_Selection.cs
 +++ b/VDF.GUI/ViewModels/MainWindowVM_Selection.cs
 @@ -17,6 +17,7 @@
@@ -293,28 +290,28 @@ index 01937fa..7fe27a5 100644
  using Avalonia.Threading;
  using DynamicExpresso;
  using DynamicExpresso.Exceptions;
-@@ -252,7 +253,8 @@ namespace VDF.GUI.ViewModels {
+@@ -257,7 +258,8 @@ namespace VDF.GUI.ViewModels {
  		public ReactiveCommand<Unit, Unit> CopySelectionCommand => ReactiveCommand.CreateFromTask(async () => {
  			var result = await Utils.PickerDialogUtils.OpenDialogPicker(
  				new FolderPickerOpenOptions() {
 -					Title = "Select folder"
 +					Title = "Select folder",
-+					SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder)
++					SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder)
  				});
  
  			if (result == null || result.Count == 0) return;
-@@ -264,7 +266,8 @@ namespace VDF.GUI.ViewModels {
+@@ -269,7 +271,8 @@ namespace VDF.GUI.ViewModels {
  		public ReactiveCommand<Unit, Unit> MoveSelectionCommand => ReactiveCommand.CreateFromTask(async () => {
  			var result = await Utils.PickerDialogUtils.OpenDialogPicker(
  				new FolderPickerOpenOptions() {
 -					Title = "Select folder"
 +					Title = "Select folder",
-+					SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder)
++					SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder)
  				});
  
  			if (result == null || result.Count == 0) return;
 diff --git a/VDF.GUI/ViewModels/MainWindowVM_Settings.cs b/VDF.GUI/ViewModels/MainWindowVM_Settings.cs
-index 6481019..becef94 100644
+index a1365a4..97769fe 100644
 --- a/VDF.GUI/ViewModels/MainWindowVM_Settings.cs
 +++ b/VDF.GUI/ViewModels/MainWindowVM_Settings.cs
 @@ -62,7 +62,8 @@ namespace VDF.GUI.ViewModels {
@@ -323,46 +320,46 @@ index 6481019..becef94 100644
  					AllowMultiple = true,
 -					Title = "Select folder"
 +					Title = "Select folder",
-+					SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder)
++					SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder)
  				}
  				);
  
-@@ -104,7 +105,8 @@ namespace VDF.GUI.ViewModels {
+@@ -117,7 +118,8 @@ namespace VDF.GUI.ViewModels {
  			var result = await Utils.PickerDialogUtils.OpenDialogPicker(
  				new FolderPickerOpenOptions() {
  					AllowMultiple = true,
 -					Title = "Select folder"
 +					Title = "Select folder",
-+					SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder)
++					SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder)
  				});
  
  			if (result == null || result.Count == 0) return;
-@@ -124,6 +126,7 @@ namespace VDF.GUI.ViewModels {
+@@ -137,6 +139,7 @@ namespace VDF.GUI.ViewModels {
  		public ReactiveCommand<Unit, Unit> SaveLogCommand => ReactiveCommand.CreateFromTask(async () => {
  			var result = await Utils.PickerDialogUtils.SaveFilePicker(new FilePickerSaveOptions() {
  				DefaultExtension = ".txt",
-+				SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder)
++				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder)
  			});
  			if (string.IsNullOrEmpty(result)) return;
  			var sb = new StringBuilder();
-@@ -146,7 +149,7 @@ namespace VDF.GUI.ViewModels {
+@@ -159,7 +162,7 @@ namespace VDF.GUI.ViewModels {
  		});
  		public ReactiveCommand<Unit, Unit> SaveSettingsProfileCommand => ReactiveCommand.CreateFromTask(async () => {
  			var result = await Utils.PickerDialogUtils.SaveFilePicker(new FilePickerSaveOptions() {
--				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
-+				SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder),
+-				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder),
  				DefaultExtension = ".json",
  				FileTypeChoices = new FilePickerFileType[] {
  					 new FilePickerFileType("Setting File") { Patterns = new string[] { "*.json" }}}
-@@ -162,7 +165,7 @@ namespace VDF.GUI.ViewModels {
+@@ -175,7 +178,7 @@ namespace VDF.GUI.ViewModels {
  		});
  		public ReactiveCommand<Unit, Unit> LoadSettingsProfileCommand => ReactiveCommand.CreateFromTask(async () => {
  			var result = await Utils.PickerDialogUtils.OpenFilePicker(new FilePickerOpenOptions() {
--				SuggestedStartLocation = new BclStorageFolder(CoreUtils.CurrentFolder),
-+				SuggestedStartLocation = new BclStorageFolder(CoreUtils.HomeFolder),
+-				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.CurrentFolder),
++				SuggestedStartLocation = await ApplicationHelpers.MainWindow.StorageProvider.TryGetFolderFromPathAsync(CoreUtils.HomeFolder),
  				FileTypeFilter = new FilePickerFileType[] {
  					 new FilePickerFileType("Setting File") { Patterns = new string[] { "*.json", "*.xml" }}}
  			});
 -- 
-2.41.0
+2.42.0
 
