@@ -20,6 +20,7 @@ alessio
 alexedwards
 alif
 allenc
+alloc
 alnum
 alpn
 alsa
