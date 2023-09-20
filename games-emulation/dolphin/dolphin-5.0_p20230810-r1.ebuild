@@ -82,6 +82,7 @@ RDEPEND="
 	ffmpeg? ( media-video/ffmpeg:= )
 	gui? (
 		dev-qt/qtbase:6
+		dev-qt/qtsvg:6
 	)
 	profile? ( dev-util/oprofile )
 	pulseaudio? ( media-libs/libpulse media-sound/pulseaudio )
