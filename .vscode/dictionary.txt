@@ -198,6 +198,7 @@ cmakelang
 cmakerc
 cmdline
 cmdpack
+cmocka
 cmrc
 cmsis
 cncf
@@ -220,6 +221,7 @@ colorstring
 colour
 commandline
 commandlineparser
+commitizen
 commondir
 compat
 compilerservices
@@ -295,6 +297,7 @@ ddynarec
 deark
 debuglog
 decamelize
+decli
 decompilation
 decompile
 decompiled
@@ -618,6 +621,7 @@ grantha
 graphene
 graphengine
 graphicslibraryframework
+graphviz
 gravitydb
 groupcache
 gstreamer
@@ -1539,6 +1543,7 @@ titleize
 tmds
 tmpdir
 tomcrypt
+tomlkit
 tomlplusplus
 tommath
 tootallnate
@@ -1682,6 +1687,7 @@ xbmc
 xbrz
 xbyak
 xcursor
+xdist
 xdocument
 xemu
 xerrors
