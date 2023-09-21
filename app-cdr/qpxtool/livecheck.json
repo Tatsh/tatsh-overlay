@@ -1,0 +1,6 @@
+{
+  "regex": "<id>tag:github.com,2008:Repository/399859603/v?([0-9a-z\\.-]+)</id>",
+  "transformation_function": "handle_pl",
+  "type": "regex",
+  "url": "https://github.com/speed47/qpxtool/releases.atom"
+}
