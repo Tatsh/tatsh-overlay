@@ -32,10 +32,10 @@ src_prepare() {
 
 src_configure() {
 	econf \
-		$(use_enable gui) \
-		$(use_enable internal-wt) \
-		$(use_enable liteon-probe) \
-		$(use_enable debug)
+		"$(use_enable debug)" \
+		"$(use_enable gui)" \
+		"$(use_enable internal-wt)" \
+		"$(use_enable liteon-probe)"
 }
 
 src_install() {
