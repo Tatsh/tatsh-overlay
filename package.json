@@ -25,6 +25,7 @@
   "scripts": {
     "check-formatting": "yarn prettier -c './**/*.json' './**/*.md' './**/*.toml' './**/*.yml' && poetry run isort . --check && poetry run yapf -rd scripts",
     "check-spelling": "yarn cspell --no-progress './**/*'  './**/.*'",
+    "clean-dict": "r=(); while IFS=$\\n read -r w; do ! rg --no-config -qi. -g '!.vscode/dictionary.txt' -m 1 \"$w\" . && r+=(\"$w\"); done < ./.vscode/dictionary.txt; j=$(printf \"|%s\" \"${r[@]}\"); j=\"^(${j:1})$\"; grep -Ev \"${j}\" ./.vscode/dictionary.txt > new && mv new ./.vscode/dictionary.txt",
     "format": "yarn prettier -w './**/*.json' './**/*.md' './**/*.toml' './**/*.yml' && poetry run isort . && poetry run yapf -ri scripts",
     "mypy": "poetry run mypy .",
     "pylint": "poetry run pylint scripts",
