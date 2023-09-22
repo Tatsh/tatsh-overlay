@@ -1,3 +1,5 @@
+app-cdr/qpxtool: internal-wt - Use internal CD/DVD writing implementation instead of cdrecord.
+app-cdr/qpxtool: liteon-probe - Enable device probing in Lite-On plugin.
 app-emulation/basiliskii: jit-debug - Enable JIT debugger
 app-office/glabels: barcode - Enable barcode support with app-text/barcode
 app-office/glabels: qrcode - Enables QR code support with media-gfx/qrencode
