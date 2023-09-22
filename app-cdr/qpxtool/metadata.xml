@@ -9,7 +9,7 @@
 		<remote-id type="github">speed47/qpxtool</remote-id>
 	</upstream>
 	<use>
-		<flag name="internal-wt"></flag>
-		<flag name="liteon-probe"></flag>
+		<flag name="internal-wt">Use internal CD/DVD writing implementation instead of cdrecord.</flag>
+		<flag name="liteon-probe">Enable device probing in Lite-On plugin.</flag>
 	</use>
 </pkgmetadata>
