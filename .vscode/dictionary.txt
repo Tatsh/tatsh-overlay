@@ -88,7 +88,6 @@ aymanbagabas
 backoff
 bamum
 barbieri
-barć
 basenames
 basepack
 baserom
@@ -136,7 +135,6 @@ bufpipe
 buginese
 buhid
 buildfiles
-buildmetadata
 buildservices
 builtins
 bulkedit
@@ -156,12 +154,8 @@ camelcase
 canadianaboriginal
 cancelreader
 carian
-catpkg
-catpkgsplit
 ccache
-ccgo
 ccmd
-ccorpus
 cctalk
 cdecrypt
 cdpatch
@@ -325,7 +319,6 @@ dfilter
 dfluidsynth
 dfmderainbow
 dfmt
-dforce
 dgit
 dglslang
 dgtk
@@ -366,7 +359,6 @@ dodir
 dodoc
 doenvd
 doexe
-doforce
 doicon
 doinitd
 doins
@@ -431,10 +423,8 @@ eautoreconf
 ebegin
 ebuilds
 eclass
-eclasses
 econf
 edgecontainer
-edotnet
 edune
 eedi
 eend
@@ -462,7 +452,6 @@ epreifx
 epytest
 epython
 eqawarn
-eqmake
 errgo
 errno
 errwrap
@@ -487,7 +476,6 @@ existance
 extglob
 exzap
 fakecrc
-farto
 fastcgi
 fastq
 fastrand
@@ -500,13 +488,11 @@ fecha
 fexperimental
 ffms
 fftw
-figueiredo
 filecaps
 fileinfo
 filelist
 filesdir
 findname
-findpackagesbyd
 fireweapon
 firmwares
 fizzler
@@ -543,7 +529,6 @@ fsrcnnx
 fstream
 fullname
 fullwidth
-funcname
 funcs
 fuser
 gamecube
@@ -560,7 +545,6 @@ gentoolkit
 getrandom
 getsentry
 gettext
-getupdates
 ggijpepdpiehgbiknmfpfbhcalffjlbj
 ghodss
 gickup
@@ -601,7 +585,6 @@ gogs
 goja
 goldmark
 golib
-gomes
 gomp
 gonetz
 googleapis
@@ -662,7 +645,6 @@ hqdn
 htdocs
 htdocsdir
 htmlparser
-httpfs
 httplib
 httpprof
 httprequest
@@ -684,7 +666,6 @@ imagesharp
 imath
 imdario
 imgui
-implemention
 implemnting
 implot
 importlib
@@ -741,7 +722,6 @@ jsonparse
 jsonpointer
 jsonreference
 jsonwebtokens
-jssy
 jstemmer
 jsummers
 julienschmidt
@@ -751,14 +731,12 @@ kanjitalk
 kateschema
 kayah
 kayahli
-kballard
 kconfig
 kconfigwidgets
 kcoreaddons
 kdenlive
 kdir
 keepdir
-keepends
 kelf
 kelftool
 kerneldir
@@ -799,10 +777,6 @@ kylemanna
 labbe's
 langid
 langneg
-launcherdest
-launcherinto
-launchervar
-launchervars
 ldconfig
 ldflags
 ldlibs
@@ -857,7 +831,6 @@ libpcap
 libpcre
 libpietendo
 libpulse
-libqalculate
 librealcugannv
 libretro
 libretrodb
@@ -902,13 +875,12 @@ linq
 lipgloss
 lisu
 litecli
+liteon
 livecheck
-livechecks
 llvmlite
 lmod
 localbranches
 localereader
-localforage
 localmount
 localversions
 locutus
@@ -921,15 +893,14 @@ loggo
 logrus
 loguru
 longdescription
+lrelease
 lsdvd
 lttng
 luajit
 lucasb
 lugaresi
-lukechampine
 lunixbochs
 macemu
-maciej
 macvendor
 macvendordb
 magewell
@@ -939,7 +910,6 @@ mailru
 mainpid
 makeopts
 malloc
-managedfusion
 mandaic
 manichaean
 maniuplate
@@ -956,7 +926,6 @@ matryer
 mattn
 matttproud
 mawen
-maxcpucount
 maxdepth
 mazznoer
 mbedcrypto
@@ -1019,7 +988,6 @@ mparser
 mpfr
 mrlotfi
 msbuild
-msbuilddisablenodereuse
 msgpack
 msiemens
 msmoosh
@@ -1043,7 +1011,6 @@ myfeatures
 mygoargs
 mypy
 myqmakeargs
-mytree
 nake
 nall
 nameresolution
@@ -1074,7 +1041,6 @@ newdoc
 newexe
 newicon
 newins
-newren
 newscript
 newtonsoft
 newunit
@@ -1091,7 +1057,6 @@ nodedir
 nodelib
 noextract
 nofetch
-nologo
 nomi
 nopasswd
 nopt
@@ -1107,7 +1072,6 @@ nspr
 nstool
 ntlmssp
 nuanceur
-nugetdb
 nugets
 numba
 numpy
@@ -1151,7 +1115,6 @@ opentk
 oprofile
 optflags
 optionator
-optout
 optparse
 opusfile
 osconfig
@@ -1173,7 +1136,6 @@ palmyrene
 pango
 pangosharp
 papertrail
-paramiko
 parany
 paren
 parrado
@@ -1269,7 +1231,6 @@ pyrescene
 pyserial
 pyside
 pytest
-pythonhosted
 pyudev
 pyxdg
 pyyaml
@@ -1281,6 +1242,7 @@ qcustomplot
 qfile
 qlist
 qmake
+qpxtool
 qrcode
 qrencode
 qtbase
@@ -1289,7 +1251,6 @@ qtcore
 qtdbus
 qtdeclarative
 qtgui
-qthelp
 qtmultimedia
 qtnetwork
 qtnetworkauth
@@ -1318,7 +1279,6 @@ rcheevos
 rdepend
 rdepends
 rdparty
-rdpend
 reactiveui
 readdir
 readerwriter
@@ -1421,7 +1381,6 @@ sharpziplib
 shellcheck
 shellescape
 shelljs
-shellquote
 shimskiasharp
 shlex
 shuralyov
@@ -1465,7 +1424,6 @@ spirv
 splitdebug
 sprintf
 sqlparse
-sqlscript
 squashfs
 srmd
 ssri
@@ -1477,7 +1435,6 @@ stiefel
 stretchr
 stringprep
 strsim
-strutil
 subclassing
 subdir
 subfile
@@ -1491,7 +1448,6 @@ sylheti
 sylotinagri
 synstructure
 syscall
-sysconfdir
 systemevents
 systemunitdir
 szmarczak
@@ -1573,7 +1529,6 @@ udvare
 uips
 ulikunitz
 unecm
-unhinted
 unic
 unicase
 unice
@@ -1601,8 +1556,6 @@ useragent
 userlocal
 usev
 usex
-usrs
-utilties
 vaapi
 valuetuple
 vapoursynth
@@ -1614,7 +1567,6 @@ videointelligence
 viet
 vimfiles
 vimrc
-virtuals
 vorbis
 vosf
 vsaa
@@ -1680,7 +1632,6 @@ writename
 wweula
 wxpython
 wxwidgets
-xamlnamereferencegenerator
 xanzy
 xattr
 xbmc
@@ -1699,7 +1650,6 @@ xiph
 xirvik
 xkbcommon
 xlib
-xmatch
 xmlbuilder
 xmlpath
 xorg
