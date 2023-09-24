@@ -179,6 +179,7 @@ charmbracelet
 checkpath
 cheshirekow
 chksums
+choco
 chocolatey
 chownr
 chriskiehl
@@ -278,6 +279,7 @@ datasize
 datastream
 dateformat
 datetime
+dateutil
 davecgh
 dbapi
 dbcli
@@ -561,6 +563,7 @@ giosharp
 gitea
 githubv
 gitmodules
+giwty
 gkeconnect
 gkehub
 glabels
@@ -829,7 +832,6 @@ libhac
 libheif
 libhttps
 libidn
-libimobiledevice
 libjpeg
 libm
 libmad
@@ -1234,6 +1236,7 @@ pulseaudiosimple
 punycode
 pvrtc
 pyaaf
+pychoco
 pyfmt
 pygments
 pygtrie
