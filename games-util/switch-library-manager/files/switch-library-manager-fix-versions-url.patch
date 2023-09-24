@@ -1,0 +1,14 @@
+diff --git a/settings/settings.go b/settings/settings.go
+index 8095104..8ce5fb4 100644
+--- a/settings/settings.go
++++ b/settings/settings.go
+@@ -22,8 +22,7 @@ const (
+ 	SLM_VERSION            = "1.4.0"
+ 	TITLES_JSON_URL        = "https://tinfoil.media/repo/db/titles.json"
+ 	//TITLES_JSON_URL    = "https://raw.githubusercontent.com/blawar/titledb/master/titles.US.en.json"
+-	VERSIONS_JSON_URL = "https://tinfoil.media/repo/db/versions.json"
+-	//VERSIONS_JSON_URL = "https://raw.githubusercontent.com/blawar/titledb/master/versions.json"
++	VERSIONS_JSON_URL = "https://raw.githubusercontent.com/blawar/titledb/master/versions.json"
+ 	SLM_VERSION_URL = "https://raw.githubusercontent.com/giwty/switch-library-manager/master/slm.json"
+ )
+ 

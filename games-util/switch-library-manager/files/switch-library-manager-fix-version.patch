@@ -1,0 +1,19 @@
+From f69daa7e5e3bc9fc2cc17ad839a12ac3bf5e0372 Mon Sep 17 00:00:00 2001
+From: giwty <0b@LonXm#fkv>
+Date: Sun, 21 Feb 2021 20:38:54 -0800
+Subject: [PATCH] add support
+
+---
+ slm.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/slm.json b/slm.json
+index 24a4a6b..b911708 100644
+--- a/slm.json
++++ b/slm.json
+@@ -1,3 +1,3 @@
+ {
+-  "version":"1.3.7"
++  "version":"1.4.0"
+ }
+\ No newline at end of file
