@@ -11,7 +11,6 @@ YARN_PKGS=(
 	"@electron/${P}"
 	balanced-match-1.0.2
 	brace-expansion-1.1.11
-	chromium-pickle-js-0.2.0
 	commander-5.1.0
 	concat-map-0.0.1
 	fs.realpath-1.0.0
