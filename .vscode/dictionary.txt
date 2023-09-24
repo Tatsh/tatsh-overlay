@@ -1491,6 +1491,7 @@ tcltk
 tcpdump
 tdosym
 teakra
+teatest
 telematic
 tempfile
 termcolor
@@ -1548,6 +1549,7 @@ udalov
 udev
 udevadm
 udevdir
+udiff
 udpa
 udvare
 uips
