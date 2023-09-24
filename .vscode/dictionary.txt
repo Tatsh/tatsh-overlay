@@ -11,6 +11,7 @@ agentkeepalive
 ahom
 aiohttp
 aiplatform
+akavel
 alac
 alcalzone
 alcaro
@@ -53,6 +54,7 @@ artifactregistry
 artifex
 asan
 asar
+asaskevich
 asmflags
 asmjit
 aspnetcore
@@ -60,6 +62,9 @@ assimp
 assuredworkloads
 astc
 astdr
+asticode
+astikit
+astilectron
 asynckit
 atksharp
 atotto
@@ -115,6 +120,7 @@ bincode
 bincomp
 bincookie
 bincue
+bindata
 bindgen
 bindist
 binv
@@ -125,6 +131,7 @@ blackbox
 blackfriday
 bluez
 bochs
+boltdb
 boolbase
 brrrip
 bsnes
@@ -159,6 +166,7 @@ ccmd
 cctalk
 cdecrypt
 cdpatch
+cdrecord
 cemu
 cespare
 cffi
@@ -599,6 +607,7 @@ gotenv
 gotextdiff
 gotool
 gouuid
+govalidator
 grafeas
 grantha
 graphene
@@ -704,6 +713,7 @@ jackspeak
 jakcron
 janestreet
 jbenet
+jedib
 jessevdk
 jetbrains
 jimevins
@@ -727,6 +737,7 @@ jsummers
 julienschmidt
 jwalterweatherman
 kaithi
+kamerer
 kanjitalk
 kateschema
 kayah
@@ -932,6 +943,7 @@ mbedcrypto
 mbedtls
 mborgerson
 mbrt
+mcuadros
 mdns
 mdurl
 mediatranslation
@@ -995,6 +1007,7 @@ msvc
 muety
 multani
 multicache
+multierr
 multierror
 multilib
 multimatch
@@ -1047,6 +1060,7 @@ newunit
 nextick
 niemeyer
 nihcode
+nihongo
 nihstro
 nihui
 nlohmann
@@ -1181,6 +1195,7 @@ pkgjs
 pkgmetadata
 pkgs
 platformabstractions
+plister
 plugdev
 pluralrules
 plutoberth
@@ -1202,6 +1217,7 @@ procapture
 procatpure
 programfiles
 programfileslinux
+progressbar
 proto
 protobuf
 protoc
@@ -1324,11 +1340,13 @@ rizu
 rmull
 roarr
 robfig
+robpike
 rogpeppe
 roni
 rpath
 rpcli
 rpcs
+rsrc
 rssh
 rstcheck
 rtmidi
@@ -1353,6 +1371,7 @@ saurashtra
 scandep
 scandir
 scenechange
+schollz
 scipy
 scires
 scopeguard
@@ -1433,6 +1452,7 @@ stdc
 stepmania
 stiefel
 stretchr
+strfmt
 stringprep
 strsim
 subclassing
@@ -1487,6 +1507,7 @@ tham
 thirdparty
 thiserror
 threadpool
+tidwall
 tifinagh
 tihmstar
 tink
