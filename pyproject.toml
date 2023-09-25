@@ -10,7 +10,7 @@ version = "0.0.1"
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
-types-requests = "^2.31.0.2"
+types-requests = "^2.31.0.5"
 types-pyyaml = "^6.0.12.11"
 requests = "^2.31.0"
 pyyaml = "^6.0"
