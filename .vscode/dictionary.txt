@@ -218,7 +218,6 @@ cohttp
 collecttoolinginfo
 colorama
 colorchoice
-colorgrad
 colorspace
 colorstring
 colour
@@ -256,7 +255,6 @@ crashplan
 creack
 creds
 cryptopp
-csscolorparser
 cugan
 cunet
 cword
@@ -372,7 +370,6 @@ doexe
 doicon
 doinitd
 doins
-dolauncher
 dolib
 doman
 domelementtype
@@ -593,7 +590,6 @@ godbus
 godebug
 gofuzz
 gogs
-goja
 goldmark
 golib
 gomp
@@ -940,7 +936,6 @@ mattn
 matttproud
 mawen
 maxdepth
-mazznoer
 mbedcrypto
 mbedtls
 mborgerson
@@ -1670,7 +1665,6 @@ xemu
 xerrors
 xext
 xfce
-xgqt
 xinerama
 xiph
 xirvik
