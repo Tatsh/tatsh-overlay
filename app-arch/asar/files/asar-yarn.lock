@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@electron/asar@^3.2.5":
-  version "3.2.5"
-  resolved "https://registry.yarnpkg.com/@electron/asar/-/asar-3.2.5.tgz#1557d456e99123cbc0b69a79230199b32dca785a"
-  integrity sha512-Ypahc2ElTj9YOrFvUHuoXv5Z/V1nPA5enlhmQapc578m/HZBHKTbqhoL5JZQjje2+/6Ti5AHh7Gj1/haeJa63Q==
+"@electron/asar@^3.2.7":
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/@electron/asar/-/asar-3.2.7.tgz#bb8117dc6fd0c06a922ae7fb1c0e2d433e35a6e5"
+  integrity sha512-8FaSCAIiZGYFWyjeevPQt+0e9xCK9YmJ2Rjg5SXgdsXon6cRnU0Yxnbe6CvJbQn26baifur2Y2G5EBayRIsjyg==
   dependencies:
     commander "^5.0.0"
     glob "^7.1.6"
