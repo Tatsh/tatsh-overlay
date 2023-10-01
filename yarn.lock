@@ -1087,10 +1087,10 @@ prettier-plugin-ini@^1.1.0:
   dependencies:
     prettier ">=2.3"
 
-prettier-plugin-sort-json@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-sort-json/-/prettier-plugin-sort-json-3.0.1.tgz#552d2955d55b60fd2b588bcdedc55b356dec9995"
-  integrity sha512-YwBxM8FxhnTW/Y6oovigLOSvqdNdkyIAi9JdDK2SS5T+Nws6MDhr+xEuiPf83TSPDfWjRc71riMYMfmMHtj05w==
+prettier-plugin-sort-json@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-sort-json/-/prettier-plugin-sort-json-3.1.0.tgz#a54b33a4ac36ac6f9bf31ad7b81106fad161e6ba"
+  integrity sha512-eIDEUjwzekiVd+oKrpd0aoACBTp5zOW71wDTNy+qQ5C9Q8oqt9n9wCm4F+SeRZbXfgblh/WYIguJynImlBXrvQ==
 
 prettier-plugin-toml@^1.0.0:
   version "1.0.0"
