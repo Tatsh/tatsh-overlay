@@ -4,35 +4,33 @@
 EAPI=8
 
 DOTNET_PKG_COMPAT="7.0"
-NUGETS="avalonia@11.0.3
+NUGETS="avalonia@11.0.4
 	avalonia.angle.windows.natives@2.1.0.2023020321
 	avalonia.buildservices@0.0.29
-	avalonia.controls.colorpicker@11.0.0
-	avalonia.controls.colorpicker@11.0.3
-	avalonia.controls.datagrid@11.0.3
-	avalonia.controls.itemsrepeater@11.0.0
+	avalonia.controls.colorpicker@11.0.4
+	avalonia.controls.datagrid@11.0.4
 	avalonia.controls.itemsrepeater@11.0.0-rc2.1
-	avalonia.desktop@11.0.3
-	avalonia.diagnostics@11.0.3
-	avalonia.freedesktop@11.0.3
-	avalonia.markup.xaml.loader@11.0.3
-	avalonia.native@11.0.3
-	avalonia.remote.protocol@11.0.0
-	avalonia.remote.protocol@11.0.3
+	avalonia.controls.itemsrepeater@11.0.4
+	avalonia.desktop@11.0.4
+	avalonia.diagnostics@11.0.4
+	avalonia.freedesktop@11.0.4
+	avalonia.markup.xaml.loader@11.0.4
+	avalonia.native@11.0.4
+	avalonia.remote.protocol@11.0.4
 	avalonia.skia@11.0.0
-	avalonia.skia@11.0.3
-	avalonia.svg@11.0.0
-	avalonia.svg.skia@11.0.0
-	avalonia.themes.simple@11.0.3
-	avalonia.win32@11.0.3
-	avalonia.x11@11.0.3
+	avalonia.skia@11.0.4
+	avalonia.svg@11.0.0.2
+	avalonia.svg.skia@11.0.0.2
+	avalonia.themes.simple@11.0.4
+	avalonia.win32@11.0.4
+	avalonia.x11@11.0.4
 	commandlineparser@2.9.1
 	concentus@1.1.7
 	discordrichpresence@1.2.1.24
 	dynamicdata@7.14.2
 	excss@4.1.4
 	fizzler@1.2.1
-	fluentavaloniaui@2.0.1
+	fluentavaloniaui@2.0.4
 	fsharp.core@7.0.200
 	gtksharp.dependencies@1.1.1
 	harfbuzzsharp@2.8.2.3
@@ -55,16 +53,15 @@ NUGETS="avalonia@11.0.3
 	microsoft.codeanalysis.csharp@4.6.0
 	microsoft.codeanalysis.csharp.scripting@3.8.0
 	microsoft.codeanalysis.scripting.common@3.8.0
-	microsoft.codecoverage@17.6.3
+	microsoft.codecoverage@17.7.2
 	microsoft.csharp@4.3.0
-	microsoft.csharp@4.5.0
 	microsoft.csharp@4.7.0
 	microsoft.dotnet.platformabstractions@3.1.6
 	microsoft.extensions.dependencymodel@6.0.0
-	microsoft.identitymodel.abstractions@6.31.0
-	microsoft.identitymodel.jsonwebtokens@6.31.0
-	microsoft.identitymodel.logging@6.31.0
-	microsoft.identitymodel.tokens@6.31.0
+	microsoft.identitymodel.abstractions@7.0.0
+	microsoft.identitymodel.jsonwebtokens@7.0.0
+	microsoft.identitymodel.logging@7.0.0
+	microsoft.identitymodel.tokens@7.0.0
 	microsoft.io.recyclablememorystream@2.3.2
 	microsoft.netcore.app.host.osx-x64@7.0.11
 	microsoft.netcore.app.host.win-x64@7.0.11
@@ -77,9 +74,9 @@ NUGETS="avalonia@11.0.3
 	microsoft.netcore.platforms@2.1.2
 	microsoft.netcore.targets@1.0.1
 	microsoft.netcore.targets@1.1.0
-	microsoft.net.test.sdk@17.6.3
-	microsoft.testplatform.objectmodel@17.6.3
-	microsoft.testplatform.testhost@17.6.3
+	microsoft.net.test.sdk@17.7.2
+	microsoft.testplatform.objectmodel@17.7.2
+	microsoft.testplatform.testhost@17.7.2
 	microsoft.win32.primitives@4.0.1
 	microsoft.win32.registry@4.5.0
 	microsoft.win32.systemevents@7.0.0
@@ -160,7 +157,7 @@ NUGETS="avalonia@11.0.3
 	ryujinx.sdl2-cs@2.28.1-build28
 	shaderc.net@0.1.0
 	sharpziplib@1.4.2
-	shimskiasharp@1.0.0
+	shimskiasharp@1.0.0.2
 	silk.net.core@2.16.0
 	silk.net.vulkan@2.16.0
 	silk.net.vulkan.extensions.ext@2.16.0
@@ -175,9 +172,9 @@ NUGETS="avalonia@11.0.3
 	skiasharp.nativeassets.webassembly@2.88.3
 	skiasharp.nativeassets.win32@2.88.3
 	spb@0.0.4-build28
-	svg.custom@1.0.0
-	svg.model@1.0.0
-	svg.skia@1.0.0
+	svg.custom@1.0.0.2
+	svg.model@1.0.0.2
+	svg.skia@1.0.0.2
 	system.appcontext@4.1.0
 	system.buffers@4.0.0
 	system.buffers@4.3.0
@@ -202,7 +199,7 @@ NUGETS="avalonia@11.0.3
 	system.globalization@4.3.0
 	system.globalization.calendars@4.0.1
 	system.globalization.extensions@4.0.1
-	system.identitymodel.tokens.jwt@6.31.0
+	system.identitymodel.tokens.jwt@7.0.0
 	system.io@4.1.0
 	system.io@4.3.0
 	system.io.compression@4.1.0
@@ -266,7 +263,6 @@ NUGETS="avalonia@11.0.3
 	system.security.claims@4.3.0
 	system.security.cryptography.algorithms@4.2.0
 	system.security.cryptography.cng@4.2.0
-	system.security.cryptography.cng@4.5.0
 	system.security.cryptography.csp@4.0.0
 	system.security.cryptography.encoding@4.0.0
 	system.security.cryptography.openssl@4.0.0
@@ -280,9 +276,7 @@ NUGETS="avalonia@11.0.3
 	system.text.encoding.codepages@4.5.1
 	system.text.encoding.codepages@7.0.0
 	system.text.encoding.extensions@4.0.11
-	system.text.encodings.web@4.7.2
 	system.text.encodings.web@6.0.0
-	system.text.json@4.7.2
 	system.text.json@6.0.0
 	system.text.regularexpressions@4.1.0
 	system.threading@4.0.11
@@ -303,7 +297,7 @@ inherit desktop dotnet-pkg xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="d9f9bbfaa6b3400a4f33e342e6c290afe796123a"
+SHA="651e24fed9603084d45ee036a0f4558abc204482"
 MY_PN="R${PN:1}"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	${NUGET_URIS}"
