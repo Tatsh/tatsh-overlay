@@ -42,7 +42,7 @@ YARN_PKGS=(
 	@zwave-js/host-12.0.2
 	@zwave-js/nvmedit-12.0.2
 	@zwave-js/serial-12.0.2
-	@zwave-js/server-${PV}
+	"@zwave-js/server-${PV}"
 	@zwave-js/shared-12.0.0
 	@zwave-js/testing-12.0.2
 	alcalzone-shared-4.0.8
