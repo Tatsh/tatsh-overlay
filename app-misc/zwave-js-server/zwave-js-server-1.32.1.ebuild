@@ -14,47 +14,37 @@ YARN_PKGS=(
 	@alcalzone/proper-lockfile-4.1.3-0
 	@colors/colors-1.5.0
 	@dabh/diagnostics-2.0.3
-	@esm2cjs/cacheable-lookup-7.0.0
-	@esm2cjs/cacheable-request-10.2.1
-	@esm2cjs/form-data-encoder-2.1.3
-	@esm2cjs/got-12.5.3
-	@esm2cjs/http-timer-5.0.1
-	@esm2cjs/is-5.3.0
-	@esm2cjs/lowercase-keys-3.0.0
-	@esm2cjs/mimic-response-4.0.0
-	@esm2cjs/normalize-url-7.2.0
-	@esm2cjs/p-cancelable-3.0.0
-	@esm2cjs/p-queue-7.3.0
-	@esm2cjs/p-timeout-5.1.0
-	@esm2cjs/responselike-3.0.0
 	@homebridge/ciao-1.1.7
 	@leichtgewicht/ip-codec-2.0.4
 	@serialport/binding-mock-10.2.2
-	@serialport/bindings-cpp-10.7.0
-	@serialport/bindings-interface-1.2.1
+	@serialport/bindings-cpp-12.0.1
 	@serialport/bindings-interface-1.2.2
-	@serialport/parser-byte-length-10.3.0
-	@serialport/parser-cctalk-10.3.0
-	@serialport/parser-delimiter-10.3.0
-	@serialport/parser-inter-byte-timeout-10.3.0
-	@serialport/parser-packet-length-10.3.0
-	@serialport/parser-readline-10.3.0
-	@serialport/parser-ready-10.3.0
-	@serialport/parser-regex-10.3.0
-	@serialport/parser-slip-encoder-10.3.0
-	@serialport/parser-spacepacket-10.3.0
-	@serialport/stream-10.3.0
+	@serialport/parser-byte-length-12.0.0
+	@serialport/parser-cctalk-12.0.0
+	@serialport/parser-delimiter-11.0.0
+	@serialport/parser-delimiter-12.0.0
+	@serialport/parser-inter-byte-timeout-12.0.0
+	@serialport/parser-packet-length-12.0.0
+	@serialport/parser-readline-11.0.0
+	@serialport/parser-readline-12.0.0
+	@serialport/parser-ready-12.0.0
+	@serialport/parser-regex-12.0.0
+	@serialport/parser-slip-encoder-12.0.0
+	@serialport/parser-spacepacket-12.0.0
+	@serialport/stream-12.0.0
+	@sindresorhus/is-5.6.0
+	@szmarczak/http-timer-5.0.1
 	@types/http-cache-semantics-4.0.1
 	@types/triple-beam-1.3.2
-	@zwave-js/cc-11.14.0
-	@zwave-js/config-11.14.0
-	@zwave-js/core-11.14.0
-	@zwave-js/host-11.14.0
-	@zwave-js/nvmedit-11.14.0
-	@zwave-js/serial-11.14.0
-	@zwave-js/server-1.31.0
-	@zwave-js/shared-11.13.1
-	@zwave-js/testing-11.14.0
+	@zwave-js/cc-12.0.2
+	@zwave-js/config-12.0.2
+	@zwave-js/core-12.0.2
+	@zwave-js/host-12.0.2
+	@zwave-js/nvmedit-12.0.2
+	@zwave-js/serial-12.0.2
+	@zwave-js/server-${PV}
+	@zwave-js/shared-12.0.0
+	@zwave-js/testing-12.0.2
 	alcalzone-shared-4.0.8
 	ansi-colors-4.1.3
 	ansi-regex-5.0.1
@@ -63,6 +53,8 @@ YARN_PKGS=(
 	asynckit-0.4.0
 	axios-0.27.2
 	buffer-from-1.1.2
+	cacheable-lookup-7.0.0
+	cacheable-request-10.2.13
 	cliui-8.0.1
 	color-3.2.1
 	color-convert-1.9.3
@@ -73,7 +65,7 @@ YARN_PKGS=(
 	colorspace-1.1.4
 	combined-stream-1.0.8
 	cross-spawn-7.0.3
-	dayjs-1.11.8
+	dayjs-1.11.10
 	debug-4.3.4
 	decompress-response-6.0.0
 	defer-to-connect-2.0.1
@@ -82,7 +74,7 @@ YARN_PKGS=(
 	emoji-regex-8.0.0
 	enabled-2.0.0
 	escalade-3.1.1
-	eventemitter3-4.0.7
+	eventemitter3-5.0.1
 	execa-5.0.1
 	execa-5.1.1
 	fast-deep-equal-3.1.3
@@ -91,13 +83,16 @@ YARN_PKGS=(
 	fn.name-1.1.0
 	follow-redirects-1.15.2
 	form-data-4.0.0
+	form-data-encoder-2.1.4
 	fs-extra-10.1.0
+	fs-extra-11.1.1
 	get-caller-file-2.0.5
 	get-stream-6.0.1
 	globalyzer-0.1.0
 	globrex-0.1.2
+	got-13.0.0
 	graceful-fs-4.2.10
-	http-cache-semantics-4.1.0
+	http-cache-semantics-4.1.1
 	http2-wrapper-2.1.11
 	human-signals-2.1.0
 	inherits-2.0.4
@@ -109,7 +104,7 @@ YARN_PKGS=(
 	json-logic-js-2.0.2
 	json5-2.2.3
 	jsonfile-6.1.0
-	keyv-4.5.0
+	keyv-4.5.3
 	kuler-2.0.0
 	logform-2.4.2
 	logform-2.5.1
@@ -121,17 +116,22 @@ YARN_PKGS=(
 	mime-types-2.1.35
 	mimic-fn-2.1.0
 	mimic-response-3.1.0
+	mimic-response-4.0.0
 	minimist-1.2.8
 	moment-2.29.4
 	ms-2.1.2
 	ms-2.1.3
-	node-addon-api-4.3.0
-	node-gyp-build-4.5.0
+	node-addon-api-7.0.0
+	node-gyp-build-4.6.0
+	normalize-url-8.0.0
 	npm-run-path-4.0.1
 	nrf-intel-hex-1.3.0
 	object-hash-2.2.0
 	one-time-1.0.0
 	onetime-5.1.2
+	p-cancelable-3.0.0
+	p-queue-7.4.1
+	p-timeout-5.1.0
 	path-key-3.1.1
 	proper-lockfile-4.1.2
 	quick-lru-5.1.1
@@ -145,7 +145,7 @@ YARN_PKGS=(
 	safe-stable-stringify-2.4.0
 	semver-7.3.8
 	semver-7.5.4
-	serialport-10.4.0
+	serialport-12.0.0
 	shebang-command-2.0.0
 	shebang-regex-3.0.0
 	signal-exit-3.0.7
@@ -164,17 +164,17 @@ YARN_PKGS=(
 	universalify-2.0.0
 	util-deprecate-1.0.2
 	which-2.0.2
-	winston-3.8.2
+	winston-3.10.0
 	winston-daily-rotate-file-4.7.1
 	winston-transport-4.5.0
 	wrap-ansi-7.0.0
 	ws-8.13.0
-	xstate-4.38.0
+	xstate-4.38.2
 	y18n-5.0.8
 	yallist-4.0.0
 	yargs-17.7.2
 	yargs-parser-21.1.1
-	zwave-js-11.14.0
+	zwave-js-12.0.2
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
