@@ -86,8 +86,6 @@ EGO_SUM=(
 	"github.com/cloudflare/circl v1.3.3"
 	"github.com/cloudflare/circl v1.3.3/go.mod"
 	"github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod"
-	"github.com/cooperspencer/onedev v0.0.0-20230220110259-c2789266f8ed"
-	"github.com/cooperspencer/onedev v0.0.0-20230220110259-c2789266f8ed/go.mod"
 	"github.com/cooperspencer/onedev v0.0.0-20230615161456-95860e5aae3e"
 	"github.com/cooperspencer/onedev v0.0.0-20230615161456-95860e5aae3e/go.mod"
 	"github.com/coreos/go-systemd/v22 v22.3.3-0.20220203105225-a9a7ef127534/go.mod"
