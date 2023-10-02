@@ -60,7 +60,7 @@ RDEPEND="${DEPEND}
 BDEPEND="app-arch/unzip
 	dev-cpp/nlohmann_json
 	dev-util/glslang
-	>=dev-util/vulkan-headers-1.3.246
+	>=dev-util/vulkan-headers-1.3.261
 	dev-util/spirv-headers"
 
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
