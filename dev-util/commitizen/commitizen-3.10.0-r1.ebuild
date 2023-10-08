@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=poetry
-PYTHON_COMPAT=( python3_{8..12} )
+PYTHON_COMPAT=( python3_1{0,1,2} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Release management tool designed for teams (cz command)."
