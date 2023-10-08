@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9..11} )
+PYTHON_COMPAT=( python3_1{0,1,2} )
 inherit python-single-r1
 
 DESCRIPTION="A code-completion engine for Vim."
