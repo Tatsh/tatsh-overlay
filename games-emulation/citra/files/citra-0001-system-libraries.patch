@@ -1,28 +1,27 @@
-From e1ce2a52a49afe8e0fe40d762a26ac0926050008 Mon Sep 17 00:00:00 2001
+From ac74d59f271deff8ba080595486cb2be205a25c4 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/2] System libraries
 
 ---
  CMakeLists.txt                 |  16 +++++
- externals/CMakeLists.txt       | 111 ++++++++++++++++++++++-----------
+ externals/CMakeLists.txt       | 103 ++++++++++++++++++++++-----------
  externals/boost                |   2 +-
  externals/discord-rpc          |   2 +-
  externals/libressl             |   2 +-
  src/audio_core/CMakeLists.txt  |   8 ++-
  src/citra/CMakeLists.txt       |   7 ++-
- src/common/CMakeLists.txt      |  16 ++---
+ src/common/CMakeLists.txt      |  13 +++--
  src/common/logging/backend.cpp |   3 +-
- src/core/CMakeLists.txt        |   3 +-
- 10 files changed, 118 insertions(+), 52 deletions(-)
+ 9 files changed, 108 insertions(+), 48 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 7bd7edf13..fe7883d5a 100644
+index bf1fdb1b8..ec7cf8d66 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -77,6 +77,22 @@ CMAKE_DEPENDENT_OPTION(CITRA_ENABLE_BUNDLE_TARGET "Enable the distribution bundl
+@@ -84,6 +84,22 @@ CMAKE_DEPENDENT_OPTION(CITRA_ENABLE_BUNDLE_TARGET "Enable the distribution bundl
  CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ${IS_DEBUG_BUILD} "MINGW" OFF)
- option(ENABLE_LTO "Enable link time optimization" ${IS_RELEASE_BUILD})
+ option(ENABLE_LTO "Enable link time optimization" ${DEFAULT_ENABLE_LTO})
  option(CITRA_USE_PRECOMPILED_HEADERS "Use precompiled headers" ON)
 +
 +option(USE_SYSTEM_BOOST "Use the system Boost libs (instead of the bundled ones)" OFF)
@@ -44,7 +43,7 @@ index 7bd7edf13..fe7883d5a 100644
 
  # System library options
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 44882d6cf..e3e1b6a69 100644
+index 53fb777ea..5f4b6d8ae 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -39,15 +39,18 @@ endif()
@@ -73,18 +72,7 @@ index 44882d6cf..e3e1b6a69 100644
  # HACK: The logic to set up the base include directory for CryptoPP does not work with Android SDK CMake 3.22.1.
  # Until there is a fixed version available, this code will detect and add in the proper include if it does not exist.
  if(ANDROID)
-@@ -68,12 +71,20 @@ target_include_directories(dds-ktx INTERFACE ./dds-ktx)
-
- # fmt and Xbyak need to be added before dynarmic
- # libfmt
--option(FMT_INSTALL "" ON)
--add_subdirectory(fmt EXCLUDE_FROM_ALL)
-+if (NOT USE_SYSTEM_FMT)
-+    option(FMT_INSTALL "" ON)
-+    add_subdirectory(fmt EXCLUDE_FROM_ALL)
-+else()
-+    find_package(fmt REQUIRED)
-+endif()
+@@ -80,7 +83,11 @@ endif()
 
  # Xbyak
  if ("x86_64" IN_LIST ARCHITECTURE)
@@ -97,7 +85,7 @@ index 44882d6cf..e3e1b6a69 100644
  endif()
 
  # Dynarmic
-@@ -92,16 +103,24 @@ endif()
+@@ -110,16 +117,24 @@ endif()
  add_subdirectory(glad)
 
  # glslang
@@ -130,7 +118,7 @@ index 44882d6cf..e3e1b6a69 100644
 
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -131,7 +150,11 @@ add_subdirectory(soundtouch EXCLUDE_FROM_ALL)
+@@ -152,7 +167,11 @@ endif()
  add_subdirectory(sirit EXCLUDE_FROM_ALL)
 
  # Teakra
@@ -143,7 +131,7 @@ index 44882d6cf..e3e1b6a69 100644
 
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-@@ -149,19 +172,31 @@ endif()
+@@ -170,19 +189,31 @@ endif()
  set(ZSTD_LEGACY_SUPPORT OFF)
  set(ZSTD_BUILD_PROGRAMS OFF)
  set(ZSTD_BUILD_SHARED OFF)
@@ -183,7 +171,7 @@ index 44882d6cf..e3e1b6a69 100644
  endif()
 
  # DiscordRPC
-@@ -224,15 +259,19 @@ endif()
+@@ -270,15 +301,19 @@ endif()
 
  # OpenAL Soft
  if (ENABLE_OPENAL)
@@ -213,10 +201,10 @@ index 44882d6cf..e3e1b6a69 100644
 
  # VMA
 diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
-index 003ebf181..f72fe35ef 100644
+index 46967735d..d66b53072 100644
 --- a/src/audio_core/CMakeLists.txt
 +++ b/src/audio_core/CMakeLists.txt
-@@ -91,9 +91,13 @@ if(ENABLE_CUBEB)
+@@ -90,9 +90,13 @@ if(ENABLE_CUBEB)
  endif()
 
  if(ENABLE_OPENAL)
@@ -233,10 +221,10 @@ index 003ebf181..f72fe35ef 100644
 
  if (CITRA_USE_PRECOMPILED_HEADERS)
 diff --git a/src/citra/CMakeLists.txt b/src/citra/CMakeLists.txt
-index 4e20b14d4..8401d0bb1 100644
+index 80cfc46e4..498b77027 100644
 --- a/src/citra/CMakeLists.txt
 +++ b/src/citra/CMakeLists.txt
-@@ -19,7 +19,12 @@ add_executable(citra
+@@ -21,7 +21,12 @@ add_executable(citra
  create_target_directory_groups(citra)
 
  target_link_libraries(citra PRIVATE citra_common citra_core input_common network)
@@ -251,29 +239,27 @@ index 4e20b14d4..8401d0bb1 100644
      target_link_libraries(citra PRIVATE getopt)
  endif()
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index 8bb515488..60df3262c 100644
+index e2ee67835..ad4624c41 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
-@@ -162,11 +162,15 @@ else()
+@@ -170,11 +170,14 @@ else()
      $<$<CXX_COMPILER_ID:Clang>:-fsized-deallocation>
    )
  endif()
 -
  create_target_directory_groups(citra_common)
 
--target_link_libraries(citra_common PUBLIC fmt::fmt library-headers microprofile Boost::boost Boost::serialization Boost::iostreams)
+ target_link_libraries(citra_common PUBLIC fmt library-headers microprofile Boost::boost Boost::serialization Boost::iostreams)
 -target_link_libraries(citra_common PRIVATE libzstd_static)
-+target_link_libraries(citra_common PUBLIC fmt library-headers microprofile Boost::boost Boost::serialization Boost::iostreams)
 +if (NOT USE_SYSTEM_ZSTD)
 +    target_link_libraries(citra_common PRIVATE libzstd_static)
 +else()
 +    target_link_libraries(citra_common PUBLIC zstd)
 +endif()
-+set_target_properties(citra_common PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
 
  if ("x86_64" IN_LIST ARCHITECTURE)
      target_link_libraries(citra_common PRIVATE xbyak)
-@@ -176,8 +180,6 @@ if (CITRA_USE_PRECOMPILED_HEADERS)
+@@ -184,8 +187,6 @@ if (CITRA_USE_PRECOMPILED_HEADERS)
      target_precompile_headers(citra_common PRIVATE precompiled_headers.h)
  endif()
 
@@ -298,20 +284,6 @@ index f39c79dea..d0758388f 100644
  #include <boost/stacktrace.hpp>
  #undef BOOST_STACKTRACE_USE_BACKTRACE
  #include <signal.h>
-diff --git a/src/core/CMakeLists.txt b/src/core/CMakeLists.txt
-index 8c7acd8cb..6308ae87f 100644
---- a/src/core/CMakeLists.txt
-+++ b/src/core/CMakeLists.txt
-@@ -479,7 +479,8 @@ create_target_directory_groups(citra_core)
-
- target_link_libraries(citra_core PUBLIC citra_common PRIVATE audio_core network video_core)
- target_link_libraries(citra_core PRIVATE Boost::boost Boost::serialization Boost::iostreams httplib)
--target_link_libraries(citra_core PUBLIC dds-ktx PRIVATE cryptopp fmt::fmt lodepng open_source_archives)
-+target_link_libraries(citra_core PUBLIC dds-ktx PRIVATE cryptopp fmt lodepng open_source_archives)
-+set_target_properties(citra_core PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${ENABLE_LTO})
-
- if (ENABLE_WEB_SERVICE)
-     target_link_libraries(citra_core PRIVATE web_service)
 --
-2.41.0
+2.42.0
 

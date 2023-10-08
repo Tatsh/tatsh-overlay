@@ -1,4 +1,4 @@
-From 5fb324d1d2e098eff90ded30af29c69022c28a77 Mon Sep 17 00:00:00 2001
+From f6e5db10849da75881b55104913d5226857aaba0 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:47 -0400
 Subject: [PATCH 2/2] inih fix
@@ -9,7 +9,7 @@ Subject: [PATCH 2/2] inih fix
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/citra/config.cpp b/src/citra/config.cpp
-index 5edaf42da..2e5a23d25 100644
+index 9520a8f6d..9c7938bfa 100644
 --- a/src/citra/config.cpp
 +++ b/src/citra/config.cpp
 @@ -7,7 +7,7 @@
@@ -22,7 +22,7 @@ index 5edaf42da..2e5a23d25 100644
  #include "citra/default_ini.h"
  #include "common/file_util.h"
 diff --git a/src/video_core/renderer_vulkan/vk_shader_util.cpp b/src/video_core/renderer_vulkan/vk_shader_util.cpp
-index 2d84a76b9..4d0f9606e 100644
+index ba5c5f867..24a53857e 100644
 --- a/src/video_core/renderer_vulkan/vk_shader_util.cpp
 +++ b/src/video_core/renderer_vulkan/vk_shader_util.cpp
 @@ -2,7 +2,7 @@
@@ -35,5 +35,5 @@ index 2d84a76b9..4d0f9606e 100644
  #include <glslang/Public/ShaderLang.h>
  #include "common/assert.h"
 -- 
-2.41.0
+2.42.0
 
