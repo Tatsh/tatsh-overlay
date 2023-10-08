@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..12} pypy3 )
+PYTHON_COMPAT=( pypy3 python3_1{0,1,2} )
 DISTUTILS_USE_PEP517=flit
 inherit distutils-r1
 
