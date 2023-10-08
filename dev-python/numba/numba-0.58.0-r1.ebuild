@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{10,11} )
+PYTHON_COMPAT=( python3_1{0,1,2} )
 inherit distutils-r1 flag-o-matic pypi
 
 DESCRIPTION="NumPy aware dynamic Python compiler using LLVM"
