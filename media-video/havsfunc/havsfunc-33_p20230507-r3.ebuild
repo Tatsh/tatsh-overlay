@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_{10..12} )
+PYTHON_COMPAT=( python3_1{0,1,2} )
 DISTUTILS_USE_PEP517=hatchling
 
 inherit distutils-r1
