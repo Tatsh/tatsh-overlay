@@ -55,8 +55,7 @@ src_configure() {
 		--enable-sdl-video \
 		--with-bincue \
 		--with-gtk \
-		--without-esd \
-		--without-sdl1
+		--without-esd
 }
 
 src_install() {
