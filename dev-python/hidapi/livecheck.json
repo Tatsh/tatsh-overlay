@@ -1,6 +1,0 @@
-{
-  "regex": "tag/([^\"]+)",
-  "transformation_function": "handle_cython_post_suffix",
-  "type": "regex",
-  "url": "https://github.com/trezor/cython-hidapi/tags"
-}
