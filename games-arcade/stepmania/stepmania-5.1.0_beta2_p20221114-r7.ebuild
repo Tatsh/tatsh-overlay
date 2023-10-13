@@ -35,7 +35,7 @@ DEPEND="X? ( x11-libs/libX11 )
 	media-libs/libglvnd[X?]
 	media-libs/libjpeg-turbo
 	media-libs/libpng
-	media-video/ffmpeg
+	<media-video/ffmpeg-5
 	sys-libs/zlib
 	virtual/udev
 	x11-libs/gdk-pixbuf
