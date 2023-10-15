@@ -8,13 +8,15 @@ DISTUTILS_USE_PEP517=setuptools
 inherit autotools distutils-r1
 
 DESCRIPTION="A video processing framework with simplicity in mind."
-HOMEPAGE="http://www.vapoursynth.com/"
-SRC_URI="https://github.com/vapoursynth/${PN}/archive/R${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="http://www.vapoursynth.com/ https://github.com/vapoursynth/vapoursynth"
+MY_PV="R${PV//_/-}"
+MY_PV="${MY_PV^^}"
+SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
 RESTRICT="mirror"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd65-RC1 ~x86"
 IUSE="guard-pattern +x86-asm +vsscript +vspipe"
 
 DEPEND=">=media-libs/zimg-2.4
@@ -24,7 +26,7 @@ DEPEND=">=media-libs/zimg-2.4
 REQUIRED_USE="vspipe? ( vsscript )"
 BDEPEND="dev-python/cython[${PYTHON_USEDEP}]"
 
-S="${WORKDIR}/${PN}-R${PV}"
+S="${WORKDIR}/${PN}-${MY_PV}"
 
 src_prepare () {
 	eautoreconf
