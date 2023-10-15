@@ -30,6 +30,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0003-footer-remove-update-message.patch"
 )
 
+S="${WORKDIR}/web-${PV}"
+
 pkg_setup() {
 	webapp_pkg_setup
 	local -r ph_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/pi-hole/releases/latest' || die; } |
