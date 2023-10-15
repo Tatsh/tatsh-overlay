@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Tool for common file formats for the Nintendo Switch."
 HOMEPAGE="https://github.com/SciresM/hactool"
-SHA="c2c907430e674614223959f0377f5e71f9e44a4a"
+SHA="1d64a83450e025622f3468c28fc4164dad2c5ef6"
 SRC_URI="https://github.com/SciresM/hactool/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="ISC"
