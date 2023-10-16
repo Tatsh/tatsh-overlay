@@ -311,6 +311,7 @@ dbfile
 dbuild
 dbus
 dbusmock
+dcall
 dccache_bin
 dcitra
 dcli
