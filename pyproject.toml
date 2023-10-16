@@ -14,7 +14,7 @@ types-requests = "^2.31.0.8"
 types-pyyaml = "^6.0.12.12"
 requests = "^2.31.0"
 pyyaml = "^6.0"
-mypy = "^1.5.1"
+mypy = "^1.6.0"
 pylint-quotes = "^0.2.3"
 portage = { git = "https://github.com/gentoo/portage.git" }
 portage-types = "^0.0.2"
