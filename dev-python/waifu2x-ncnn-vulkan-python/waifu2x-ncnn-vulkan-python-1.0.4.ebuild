@@ -3,9 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_EXT=1
-DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_11 )
+PYTHON_COMPAT=( python3_1{0,1,2} )
 
 inherit cmake python-r1 pypi
 
@@ -18,9 +16,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-DEPEND="dev-libs/ncnn[vulkan]
+DEPEND="dev-libs/ncnn[vulkan]"
+BDEPEND="dev-lang/swig
 	dev-util/glslang"
-BDEPEND="dev-lang/swig"
 
 MY_PN_U="${PN//-/_}"
 S="${WORKDIR}/${P}/${MY_PN_U}"
