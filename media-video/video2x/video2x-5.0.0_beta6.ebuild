@@ -17,7 +17,6 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="nls"
 
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RDEPEND="${PYTHON_DEPS}
 	dev-python/ffmpeg-python[${PYTHON_USEDEP}]
 	dev-python/loguru[${PYTHON_USEDEP}]
@@ -36,6 +35,8 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 
 src_prepare() {
 	sed -re '/^license-expression.*/d' -i pyproject.toml || die
+	sed -re 's/^from cv2.*/import cv2/' -i "${PN}/${PN}.py" || die
+	echo 'from .__main__ import main' >> "${PN}/__init__.py" || die
 	distutils-r1_src_prepare
 }
 
