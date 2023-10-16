@@ -1,4 +1,4 @@
-From 3ba21489077fdce081bb336e9290d97df4d85d08 Mon Sep 17 00:00:00 2001
+From d5df3689070722447f96ed50fbcd5acc00192e23 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:11 -0500
 Subject: [PATCH] Gentoo fixes
@@ -65,7 +65,7 @@ index 677910f6..2f0954fd 100644
  
  log-async
 diff --git a/advanced/Scripts/chronometer.sh b/advanced/Scripts/chronometer.sh
-index d69a56d3..0d81886b 100755
+index bb94a857..f7ef9a8b 100755
 --- a/advanced/Scripts/chronometer.sh
 +++ b/advanced/Scripts/chronometer.sh
 @@ -15,7 +15,7 @@ LC_NUMERIC=C
@@ -409,7 +409,7 @@ index cf57800c..00000000
 -    fi
 -}
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 6f747855..a56ee41c 100755
+index 1ca52f45..188051e0 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,8 +22,12 @@ set -o pipefail
@@ -611,7 +611,7 @@ index 6f747855..a56ee41c 100755
      dashboard=$(echo "${full_curl_output_dashboard}" | awk '/X-Pi-hole/' | tr -d '\r')
      # Store what the X-Header should be in variables for comparison later
      local dashboard_working
-@@ -1173,11 +1185,9 @@ show_content_of_pihole_files() {
+@@ -1177,11 +1189,9 @@ show_content_of_pihole_files() {
      # Show the content of the files in each of Pi-hole's folders
      show_content_of_files_in_dir "${PIHOLE_DIRECTORY}"
      show_content_of_files_in_dir "${DNSMASQ_D_DIRECTORY}"
@@ -740,7 +740,7 @@ index 1d3b0a29..e740c380 100755
  if [[ "${options}" == "-h" ]] || [[ "${options}" == "--help" ]]; then
 diff --git a/advanced/Scripts/update.sh b/advanced/Scripts/update.sh
 deleted file mode 100755
-index c41c9232..00000000
+index 1b9997a6..00000000
 --- a/advanced/Scripts/update.sh
 +++ /dev/null
 @@ -1,232 +0,0 @@
@@ -757,7 +757,7 @@ index c41c9232..00000000
 -# Please see LICENSE file for your rights under this license.
 -
 -# Variables
--readonly ADMIN_INTERFACE_GIT_URL="https://github.com/pi-hole/AdminLTE.git"
+-readonly ADMIN_INTERFACE_GIT_URL="https://github.com/pi-hole/web.git"
 -readonly ADMIN_INTERFACE_DIR="/var/www/html/admin"
 -readonly PI_HOLE_GIT_URL="https://github.com/pi-hole/pi-hole.git"
 -readonly PI_HOLE_FILES_DIR="/etc/.pihole"
@@ -978,7 +978,7 @@ index c41c9232..00000000
 -main
 diff --git a/advanced/Scripts/updatecheck.sh b/advanced/Scripts/updatecheck.sh
 deleted file mode 100755
-index 0cc65218..00000000
+index 8ce69a75..00000000
 --- a/advanced/Scripts/updatecheck.sh
 +++ /dev/null
 @@ -1,133 +0,0 @@
@@ -1081,10 +1081,10 @@ index 0cc65218..00000000
 -    WEB_HASH="$(get_local_hash /var/www/html/admin)"
 -    addOrEditKeyValPair "${VERSION_FILE}" "WEB_HASH" "${WEB_HASH}"
 -
--    GITHUB_WEB_VERSION="$(get_remote_version AdminLTE)"
+-    GITHUB_WEB_VERSION="$(get_remote_version web)"
 -    addOrEditKeyValPair "${VERSION_FILE}" "GITHUB_WEB_VERSION" "${GITHUB_WEB_VERSION}"
 -
--    GITHUB_WEB_HASH="$(get_remote_hash AdminLTE "${WEB_BRANCH}")"
+-    GITHUB_WEB_HASH="$(get_remote_hash web "${WEB_BRANCH}")"
 -    addOrEditKeyValPair "${VERSION_FILE}" "GITHUB_WEB_HASH" "${GITHUB_WEB_HASH}"
 -
 -fi
@@ -1116,7 +1116,7 @@ index 0cc65218..00000000
 -    addOrEditKeyValPair "${VERSION_FILE}" "GITHUB_DOCKER_VERSION" "${GITHUB_DOCKER_VERSION}"
 -fi
 diff --git a/advanced/Scripts/version.sh b/advanced/Scripts/version.sh
-index 946c69fe..37bf397c 100755
+index 83fd0f39..afebbef8 100755
 --- a/advanced/Scripts/version.sh
 +++ b/advanced/Scripts/version.sh
 @@ -10,16 +10,16 @@
@@ -1140,7 +1140,7 @@ index 946c69fe..37bf397c 100755
      # shellcheck disable=SC1090
      . "$cachedVersions"
 diff --git a/advanced/Scripts/webpage.sh b/advanced/Scripts/webpage.sh
-index 7680590f..4adf4c6b 100755
+index e05a6aff..fc04a569 100755
 --- a/advanced/Scripts/webpage.sh
 +++ b/advanced/Scripts/webpage.sh
 @@ -12,28 +12,67 @@
@@ -1405,7 +1405,7 @@ index 708309be..00000000
 -# Please see LICENSE file for your rights under this license.
 -#
 diff --git a/gravity.sh b/gravity.sh
-index fe2097dd..52e7c8b7 100755
+index db199090..8b6909d3 100755
 --- a/gravity.sh
 +++ b/gravity.sh
 @@ -13,15 +13,16 @@
@@ -1458,7 +1458,7 @@ index fe2097dd..52e7c8b7 100755
  if [[ -f "${pihole_FTL}" ]]; then
    source "${pihole_FTL}"
  fi
-@@ -876,7 +877,7 @@ if [[ "${forceDelete:-}" == true ]]; then
+@@ -873,7 +874,7 @@ if [[ "${forceDelete:-}" == true ]]; then
    str="Deleting existing list cache"
    echo -ne "${INFO} ${str}..."
  
@@ -1686,5 +1686,5 @@ index 1d9ad82c..0cfc0ec3 100755
    "disable"                     ) piholeEnable 0 "$2";;
    "restartdns"                  ) restartDNS "$2";;
 -- 
-2.40.1
+2.42.0
 
