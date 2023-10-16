@@ -1299,6 +1299,7 @@ pygments
 pygtrie
 pyhht
 pylint
+pynput
 pypamtest
 pypi
 pyproject
@@ -1359,6 +1360,7 @@ reactiveui
 readdir
 readerwriter
 readline
+realcugan
 realfft
 realpath
 realsr
