@@ -1,22 +1,19 @@
-From ac74d59f271deff8ba080595486cb2be205a25c4 Mon Sep 17 00:00:00 2001
+From 0bfacc8f86f374d6a9f0e20e6d291c7a1e741c77 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/2] System libraries
 
 ---
- CMakeLists.txt                 |  16 +++++
- externals/CMakeLists.txt       | 103 ++++++++++++++++++++++-----------
- externals/boost                |   2 +-
- externals/discord-rpc          |   2 +-
- externals/libressl             |   2 +-
- src/audio_core/CMakeLists.txt  |   8 ++-
- src/citra/CMakeLists.txt       |   7 ++-
- src/common/CMakeLists.txt      |  13 +++--
- src/common/logging/backend.cpp |   3 +-
- 9 files changed, 108 insertions(+), 48 deletions(-)
+ CMakeLists.txt                 | 16 ++++++
+ externals/CMakeLists.txt       | 97 ++++++++++++++++++++++------------
+ src/audio_core/CMakeLists.txt  |  8 ++-
+ src/citra/CMakeLists.txt       |  7 ++-
+ src/common/CMakeLists.txt      | 13 ++---
+ src/common/logging/backend.cpp |  3 +-
+ 6 files changed, 100 insertions(+), 44 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index bf1fdb1b8..ec7cf8d66 100644
+index 8ac15f170..a4f935bd3 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -84,6 +84,22 @@ CMAKE_DEPENDENT_OPTION(CITRA_ENABLE_BUNDLE_TARGET "Enable the distribution bundl
@@ -40,10 +37,10 @@ index bf1fdb1b8..ec7cf8d66 100644
 +CMAKE_DEPENDENT_OPTION(CITRA_BUNDLE_LIBRARIES "Bundle dependent libraries with the output executables" ON "APPLE" OFF)
 +
  option(CITRA_WARNINGS_AS_ERRORS "Enable warnings as errors" ON)
-
+ 
  # System library options
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 53fb777ea..5f4b6d8ae 100644
+index 7f3f44476..55915ad3f 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
 @@ -39,15 +39,18 @@ endif()
@@ -52,7 +49,7 @@ index 53fb777ea..5f4b6d8ae 100644
  set(CATCH_INSTALL_EXTRAS OFF CACHE BOOL "")
 -add_subdirectory(catch2)
 +find_package(Catch2 REQUIRED)
-
+ 
  # Crypto++
 -set(CRYPTOPP_BUILD_DOCUMENTATION OFF CACHE BOOL "")
 -set(CRYPTOPP_BUILD_TESTING OFF CACHE BOOL "")
@@ -72,22 +69,9 @@ index 53fb777ea..5f4b6d8ae 100644
  # HACK: The logic to set up the base include directory for CryptoPP does not work with Android SDK CMake 3.22.1.
  # Until there is a fixed version available, this code will detect and add in the proper include if it does not exist.
  if(ANDROID)
-@@ -80,7 +83,11 @@ endif()
-
- # Xbyak
- if ("x86_64" IN_LIST ARCHITECTURE)
--    add_subdirectory(xbyak EXCLUDE_FROM_ALL)
-+    if (NOT USE_SYSTEM_XBYAK)
-+        add_subdirectory(xbyak EXCLUDE_FROM_ALL)
-+    else()
-+        find_path(XBYAK_INCLUDE xbyak.h PATH_SUFFIXES xbyak REQUIRED)
-+    endif()
- endif()
-
- # Dynarmic
-@@ -110,16 +117,24 @@ endif()
+@@ -117,16 +120,24 @@ endif()
  add_subdirectory(glad)
-
+ 
  # glslang
 -set(SKIP_GLSLANG_INSTALL ON CACHE BOOL "")
 -set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "")
@@ -107,7 +91,7 @@ index 53fb777ea..5f4b6d8ae 100644
 +else()
 +    find_package(glslang REQUIRED)
 +endif()
-
+ 
  # inih
 -add_subdirectory(inih)
 +if (NOT USE_SYSTEM_INIH)
@@ -115,12 +99,12 @@ index 53fb777ea..5f4b6d8ae 100644
 +else()
 +    find_library(INIH_LIBS INIReader REQUIRED)
 +endif()
-
+ 
  # MicroProfile
  add_library(microprofile INTERFACE)
-@@ -152,7 +167,11 @@ endif()
+@@ -159,7 +170,11 @@ endif()
  add_subdirectory(sirit EXCLUDE_FROM_ALL)
-
+ 
  # Teakra
 -add_subdirectory(teakra EXCLUDE_FROM_ALL)
 +if (NOT USE_SYSTEM_TEAKRA)
@@ -128,10 +112,10 @@ index 53fb777ea..5f4b6d8ae 100644
 +else()
 +    find_library(TEAKRA_LIBS teakra REQUIRED)
 +endif()
-
+ 
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-@@ -170,19 +189,31 @@ endif()
+@@ -177,19 +192,31 @@ endif()
  set(ZSTD_LEGACY_SUPPORT OFF)
  set(ZSTD_BUILD_PROGRAMS OFF)
  set(ZSTD_BUILD_SHARED OFF)
@@ -143,7 +127,7 @@ index 53fb777ea..5f4b6d8ae 100644
 +else()
 +    find_library(ZSTD_LIBS zstd REQUIRED)
 +endif()
-
+ 
  # ENet
 -add_subdirectory(enet)
 -target_include_directories(enet INTERFACE ./enet/include)
@@ -153,7 +137,7 @@ index 53fb777ea..5f4b6d8ae 100644
 +else()
 +    find_library(ENET_LIBS enet REQUIRED)
 +endif()
-
+ 
  # Cubeb
  if (ENABLE_CUBEB)
 -    set(BUILD_TESTS OFF CACHE BOOL "")
@@ -169,10 +153,10 @@ index 53fb777ea..5f4b6d8ae 100644
 +        find_package(cubeb REQUIRED)
 +    endif()
  endif()
-
+ 
  # DiscordRPC
-@@ -270,15 +301,19 @@ endif()
-
+@@ -277,15 +304,19 @@ endif()
+ 
  # OpenAL Soft
  if (ENABLE_OPENAL)
 -    set(ALSOFT_EMBED_HRTF_DATA OFF CACHE BOOL "")
@@ -198,7 +182,7 @@ index 53fb777ea..5f4b6d8ae 100644
 +        add_subdirectory(openal-soft EXCLUDE_FROM_ALL)
 +    endif()
  endif()
-
+ 
  # VMA
 diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
 index 46967735d..d66b53072 100644
@@ -206,7 +190,7 @@ index 46967735d..d66b53072 100644
 +++ b/src/audio_core/CMakeLists.txt
 @@ -90,9 +90,13 @@ if(ENABLE_CUBEB)
  endif()
-
+ 
  if(ENABLE_OPENAL)
 -    target_link_libraries(audio_core PRIVATE OpenAL)
      target_compile_definitions(audio_core PUBLIC HAVE_OPENAL)
@@ -218,7 +202,7 @@ index 46967735d..d66b53072 100644
 +        add_definitions(-DAL_LIBTYPE_STATIC)
 +    endif()
  endif()
-
+ 
  if (CITRA_USE_PRECOMPILED_HEADERS)
 diff --git a/src/citra/CMakeLists.txt b/src/citra/CMakeLists.txt
 index 80cfc46e4..498b77027 100644
@@ -226,7 +210,7 @@ index 80cfc46e4..498b77027 100644
 +++ b/src/citra/CMakeLists.txt
 @@ -21,7 +21,12 @@ add_executable(citra
  create_target_directory_groups(citra)
-
+ 
  target_link_libraries(citra PRIVATE citra_common citra_core input_common network)
 -target_link_libraries(citra PRIVATE inih glad)
 +target_link_libraries(citra PRIVATE glad)
@@ -248,7 +232,7 @@ index e2ee67835..ad4624c41 100644
  endif()
 -
  create_target_directory_groups(citra_common)
-
+ 
  target_link_libraries(citra_common PUBLIC fmt library-headers microprofile Boost::boost Boost::serialization Boost::iostreams)
 -target_link_libraries(citra_common PRIVATE libzstd_static)
 +if (NOT USE_SYSTEM_ZSTD)
@@ -256,13 +240,13 @@ index e2ee67835..ad4624c41 100644
 +else()
 +    target_link_libraries(citra_common PUBLIC zstd)
 +endif()
-
+ 
  if ("x86_64" IN_LIST ARCHITECTURE)
      target_link_libraries(citra_common PRIVATE xbyak)
 @@ -184,8 +187,6 @@ if (CITRA_USE_PRECOMPILED_HEADERS)
      target_precompile_headers(citra_common PRIVATE precompiled_headers.h)
  endif()
-
+ 
 -find_library(BACKTRACE_LIBRARY backtrace)
 -if (BACKTRACE_LIBRARY AND ${CMAKE_SYSTEM_NAME} STREQUAL "Linux" AND CMAKE_CXX_COMPILER_ID STREQUAL GNU)
 -    target_link_libraries(citra_common PRIVATE ${BACKTRACE_LIBRARY} dl)
@@ -277,13 +261,13 @@ index f39c79dea..d0758388f 100644
 @@ -13,8 +13,7 @@
  #define _SH_DENYWR 0
  #endif
-
+ 
 -#ifdef CITRA_LINUX_GCC_BACKTRACE
 -#define BOOST_STACKTRACE_USE_BACKTRACE
 +#if defined(__linux__) && defined(__GNUG__) && !defined(__clang__)
  #include <boost/stacktrace.hpp>
  #undef BOOST_STACKTRACE_USE_BACKTRACE
  #include <signal.h>
---
+-- 
 2.42.0
 
