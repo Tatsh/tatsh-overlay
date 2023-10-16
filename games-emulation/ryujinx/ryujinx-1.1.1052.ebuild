@@ -286,12 +286,13 @@ NUGETS="avalonia@11.0.4
 	system.xml.readerwriter@4.0.11
 	system.xml.xdocument@4.0.11
 	tmds.dbus.protocol@0.15.0
-	unicornengine.unicorn@2.0.2-rc1-fb78016"
+	unicornengine.unicorn@2.0.2-rc1-fb78016
+"
 inherit desktop dotnet-pkg xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="ac4f2c1e70b35ad4dada0ea1f9ae93cfc7851d4b"
+SHA="1e06b28b22848706014b18bffcec7553cdab2b2b"
 MY_PN="R${PN:1}"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	${NUGET_URIS}"
