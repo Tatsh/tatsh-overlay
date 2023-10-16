@@ -16,7 +16,7 @@ RESTRICT="mirror"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd65-RC1 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="guard-pattern +x86-asm +vsscript +vspipe"
 
 DEPEND=">=media-libs/zimg-2.4
