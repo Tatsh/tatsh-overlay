@@ -18,7 +18,6 @@ KEYWORDS="~amd64"
 IUSE="nls"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
-# shellcheck disable=SC2016
 RDEPEND="${PYTHON_DEPS}
 	dev-python/ffmpeg-python[${PYTHON_USEDEP}]
 	dev-python/loguru[${PYTHON_USEDEP}]
