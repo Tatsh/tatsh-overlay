@@ -30,7 +30,7 @@ custom_configure() {
 		"-DCMAKE_INSTALL_PREFIX=$(python_get_sitedir)/${MY_PN_U}"
 		"-DGLSLANG_TARGET_DIR=/usr/$(get_libdir)/cmake"
 		"-DPY_VERSION=${EPYTHON:6}"
-		-"DPYTHON_EXECUTABLE=${PYTHON}"
+		"-DPYTHON_EXECUTABLE=${PYTHON}"
 		-DBUILD_SHARED_LIBS=OFF
 		-DCALL_FROM_SETUP_PY=ON
 		-DUSE_SYSTEM_NCNN=ON
