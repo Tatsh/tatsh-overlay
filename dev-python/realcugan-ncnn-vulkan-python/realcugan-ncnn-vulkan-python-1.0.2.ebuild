@@ -49,8 +49,7 @@ src_compile() {
 custom_install() {
 	cmake_src_install
 	rm -f "${D}/$(python_get_sitedir)/${MY_PN_U}/LICENSE" || die
-	grep -E '\s+write_top_level_init="' ../setup.py | sed \
-		-re 's/.*"([^"]+)",$/\1/' > "${D}/$(python_get_sitedir)/${MY_PN_U}/__init__.py" || die
+	echo 'from .realcugan_ncnn_vulkan import Realcugan, RealCUGAN, wrapped' > "${D}/$(python_get_sitedir)/${MY_PN_U}/__init__.py" || die
 }
 
 src_install() {
