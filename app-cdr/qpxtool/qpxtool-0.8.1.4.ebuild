@@ -22,7 +22,7 @@ S="${WORKDIR}/${PN}-${MY_PV}-pl${MY_PL}"
 
 src_prepare() {
 	# Ignore invalid arguments
-	sed -re '809s/exit//' \
+	sed -re '811s/exit//' \
 		-e 's/.*strip --strip-unneeded.*/echo/g' \
 		-e "s|lrelease|${EPREFIX}/usr/$(get_libdir)/qt5/bin/lrelease|g" \
 		-i configure || die
@@ -36,9 +36,4 @@ src_configure() {
 		"$(use_enable gui)" \
 		"$(use_enable internal-wt)" \
 		"$(use_enable liteon-probe)"
-}
-
-src_install() {
-	# https://github.com/speed47/qpxtool/issues/33
-	emake DESTDIR="${D}" install -j1
 }
