@@ -1294,6 +1294,7 @@ pulseaudiosimple
 punycode
 pvrtc
 pyaaf
+pycargoebuild
 pychoco
 pyfmt
 pygments
