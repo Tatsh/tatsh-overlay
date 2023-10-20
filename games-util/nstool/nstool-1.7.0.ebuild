@@ -11,7 +11,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="app-arch/lz4 net-libs/mbedtls dev-libs/libfmt dev-libs/libtoolchain"
+DEPEND="app-arch/lz4 net-libs/mbedtls dev-libs/libfmt dev-libs/libtoolchain dev-libs/libpietendo"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${P}-r2"
