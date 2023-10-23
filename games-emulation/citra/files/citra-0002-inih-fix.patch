@@ -1,22 +1,21 @@
-From 0f5fa49f2b7339935ee783192a2348a66568ca06 Mon Sep 17 00:00:00 2001
+From 8aa392b07418fe8be95be0d5f61b33aaeedd80f8 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:47 -0400
 Subject: [PATCH 2/2] inih fix
 
 ---
- src/citra/config.cpp                              | 2 +-
+ src/citra/config.cpp                              | 1 +
  src/video_core/renderer_vulkan/vk_shader_util.cpp | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/src/citra/config.cpp b/src/citra/config.cpp
-index 9520a8f6d..9c7938bfa 100644
+index 1cbcf0262..4e773f60d 100644
 --- a/src/citra/config.cpp
 +++ b/src/citra/config.cpp
-@@ -7,7 +7,7 @@
- #include <sstream>
+@@ -8,6 +8,7 @@
  #include <type_traits>
+ #include <INIReader.h>
  #include <SDL.h>
--#include <inih/cpp/INIReader.h>
 +#include <INIReader.h>
  #include "citra/config.h"
  #include "citra/default_ini.h"

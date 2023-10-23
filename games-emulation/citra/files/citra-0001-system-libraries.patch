@@ -1,22 +1,22 @@
-From 0bfacc8f86f374d6a9f0e20e6d291c7a1e741c77 Mon Sep 17 00:00:00 2001
+From 4d0f19e097006c72bed4f5fee23107eba13c4082 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:31 -0400
 Subject: [PATCH 1/2] System libraries
 
 ---
- CMakeLists.txt                 | 16 ++++++
- externals/CMakeLists.txt       | 97 ++++++++++++++++++++++------------
- src/audio_core/CMakeLists.txt  |  8 ++-
- src/citra/CMakeLists.txt       |  7 ++-
- src/common/CMakeLists.txt      | 13 ++---
+ CMakeLists.txt                 | 16 ++++++++
+ externals/CMakeLists.txt       | 71 ++++++++++++++++++++--------------
+ src/audio_core/CMakeLists.txt  |  8 +++-
+ src/citra/CMakeLists.txt       |  7 +++-
+ src/common/CMakeLists.txt      | 13 ++++---
  src/common/logging/backend.cpp |  3 +-
- 6 files changed, 100 insertions(+), 44 deletions(-)
+ 6 files changed, 79 insertions(+), 39 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 8ac15f170..a4f935bd3 100644
+index 0c6342dfe..979a18314 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -84,6 +84,22 @@ CMAKE_DEPENDENT_OPTION(CITRA_ENABLE_BUNDLE_TARGET "Enable the distribution bundl
+@@ -90,6 +90,22 @@ CMAKE_DEPENDENT_OPTION(CITRA_ENABLE_BUNDLE_TARGET "Enable the distribution bundl
  CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ${IS_DEBUG_BUILD} "MINGW" OFF)
  option(ENABLE_LTO "Enable link time optimization" ${DEFAULT_ENABLE_LTO})
  option(CITRA_USE_PRECOMPILED_HEADERS "Use precompiled headers" ON)
@@ -38,12 +38,12 @@ index 8ac15f170..a4f935bd3 100644
 +
  option(CITRA_WARNINGS_AS_ERRORS "Enable warnings as errors" ON)
  
- # System library options
+ include(CitraHandleSystemLibs)
 diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
-index 7f3f44476..55915ad3f 100644
+index 69f4f3107..3905ad2e7 100644
 --- a/externals/CMakeLists.txt
 +++ b/externals/CMakeLists.txt
-@@ -39,15 +39,18 @@ endif()
+@@ -43,14 +43,18 @@ endif()
  # Catch2
  set(CATCH_INSTALL_DOCS OFF CACHE BOOL "")
  set(CATCH_INSTALL_EXTRAS OFF CACHE BOOL "")
@@ -56,7 +56,6 @@ index 7f3f44476..55915ad3f 100644
 -set(CRYPTOPP_INSTALL OFF CACHE BOOL "")
 -set(CRYPTOPP_SOURCES "${CMAKE_SOURCE_DIR}/externals/cryptopp" CACHE STRING "")
 -add_subdirectory(cryptopp-cmake)
--
 +if (NOT USE_SYSTEM_CRYPTOPP)
 +    set(CRYPTOPP_BUILD_DOCUMENTATION OFF CACHE BOOL "")
 +    set(CRYPTOPP_BUILD_TESTING OFF CACHE BOOL "")
@@ -66,43 +65,10 @@ index 7f3f44476..55915ad3f 100644
 +else()
 +    find_library(CRYPTOPP_LIBS cryptopp REQUIRED)
 +endif()
- # HACK: The logic to set up the base include directory for CryptoPP does not work with Android SDK CMake 3.22.1.
- # Until there is a fixed version available, this code will detect and add in the proper include if it does not exist.
- if(ANDROID)
-@@ -117,16 +120,24 @@ endif()
- add_subdirectory(glad)
  
- # glslang
--set(SKIP_GLSLANG_INSTALL ON CACHE BOOL "")
--set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "")
--set(ENABLE_SPVREMAPPER OFF CACHE BOOL "")
--set(ENABLE_CTEST OFF CACHE BOOL "")
--set(ENABLE_HLSL OFF CACHE BOOL "")
--set(BUILD_EXTERNAL OFF CACHE BOOL "")
--add_subdirectory(glslang)
-+if (NOT USE_SYSTEM_GLSLANG)
-+    set(SKIP_GLSLANG_INSTALL ON CACHE BOOL "")
-+    set(ENABLE_GLSLANG_BINARIES OFF CACHE BOOL "")
-+    set(ENABLE_SPVREMAPPER OFF CACHE BOOL "")
-+    set(ENABLE_CTEST OFF CACHE BOOL "")
-+    set(ENABLE_HLSL OFF CACHE BOOL "")
-+    set(BUILD_EXTERNAL OFF CACHE BOOL "")
-+    add_subdirectory(glslang)
-+else()
-+    find_package(glslang REQUIRED)
-+endif()
- 
- # inih
--add_subdirectory(inih)
-+if (NOT USE_SYSTEM_INIH)
-+    add_subdirectory(inih)
-+else()
-+    find_library(INIH_LIBS INIReader REQUIRED)
-+endif()
- 
- # MicroProfile
- add_library(microprofile INTERFACE)
-@@ -159,7 +170,11 @@ endif()
+ # dds-ktx
+ add_library(dds-ktx INTERFACE)
+@@ -196,7 +200,11 @@ endif()
  add_subdirectory(sirit EXCLUDE_FROM_ALL)
  
  # Teakra
@@ -115,18 +81,22 @@ index 7f3f44476..55915ad3f 100644
  
  # SDL2
  if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
-@@ -177,19 +192,31 @@ endif()
- set(ZSTD_LEGACY_SUPPORT OFF)
- set(ZSTD_BUILD_PROGRAMS OFF)
- set(ZSTD_BUILD_SHARED OFF)
--add_subdirectory(zstd/build/cmake EXCLUDE_FROM_ALL)
--target_include_directories(libzstd_static INTERFACE $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/externals/zstd/lib>)
-+if (NOT USE_SYSTEM_ZSTD)
-+    add_subdirectory(zstd/build/cmake EXCLUDE_FROM_ALL)
-+    target_include_directories(libzstd_static INTERFACE $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/externals/zstd/lib>)
-+else()
+@@ -212,12 +220,7 @@ endif()
+ 
+ # Zstandard
+ if(USE_SYSTEM_ZSTD)
+-    find_package(zstd REQUIRED)
+-    add_library(zstd INTERFACE)
+-    if(TARGET zstd::libzstd_shared)
+-        message(STATUS "Found system Zstandard")
+-    endif()
+-    target_link_libraries(zstd INTERFACE zstd::libzstd_shared)
 +    find_library(ZSTD_LIBS zstd REQUIRED)
-+endif()
+ else()
+     set(ZSTD_LEGACY_SUPPORT OFF)
+     set(ZSTD_BUILD_PROGRAMS OFF)
+@@ -228,15 +231,23 @@ else()
+ endif()
  
  # ENet
 -add_subdirectory(enet)
@@ -155,7 +125,7 @@ index 7f3f44476..55915ad3f 100644
  endif()
  
  # DiscordRPC
-@@ -277,15 +304,19 @@ endif()
+@@ -324,15 +335,19 @@ endif()
  
  # OpenAL Soft
  if (ENABLE_OPENAL)
@@ -223,7 +193,7 @@ index 80cfc46e4..498b77027 100644
      target_link_libraries(citra PRIVATE getopt)
  endif()
 diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
-index e2ee67835..ad4624c41 100644
+index 74a22e6b0..ad4624c41 100644
 --- a/src/common/CMakeLists.txt
 +++ b/src/common/CMakeLists.txt
 @@ -170,11 +170,14 @@ else()
@@ -234,7 +204,7 @@ index e2ee67835..ad4624c41 100644
  create_target_directory_groups(citra_common)
  
  target_link_libraries(citra_common PUBLIC fmt library-headers microprofile Boost::boost Boost::serialization Boost::iostreams)
--target_link_libraries(citra_common PRIVATE libzstd_static)
+-target_link_libraries(citra_common PRIVATE zstd)
 +if (NOT USE_SYSTEM_ZSTD)
 +    target_link_libraries(citra_common PRIVATE libzstd_static)
 +else()
