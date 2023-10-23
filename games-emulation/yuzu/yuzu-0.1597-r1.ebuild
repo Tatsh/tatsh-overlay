@@ -54,7 +54,7 @@ DEPEND=">=app-arch/zstd-1.5.0
 	sys-libs/libunwind
 	sys-libs/zlib
 	virtual/libusb:=
-	webengine? ( dev-qt/qtwebengine )"
+	webengine? ( dev-qt/qtwebengine:5 )"
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="app-arch/unzip
