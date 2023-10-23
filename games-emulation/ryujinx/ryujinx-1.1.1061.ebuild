@@ -4,42 +4,47 @@
 EAPI=8
 
 DOTNET_PKG_COMPAT="7.0"
-NUGETS="avalonia@11.0.4
+NUGETS="avalonia@11.0.5
 	avalonia.angle.windows.natives@2.1.0.2023020321
 	avalonia.buildservices@0.0.29
 	avalonia.controls.colorpicker@11.0.4
-	avalonia.controls.datagrid@11.0.4
+	avalonia.controls.colorpicker@11.0.5
+	avalonia.controls.datagrid@11.0.5
 	avalonia.controls.itemsrepeater@11.0.0-rc2.1
 	avalonia.controls.itemsrepeater@11.0.4
-	avalonia.desktop@11.0.4
-	avalonia.diagnostics@11.0.4
-	avalonia.freedesktop@11.0.4
-	avalonia.markup.xaml.loader@11.0.4
-	avalonia.native@11.0.4
+	avalonia.desktop@11.0.5
+	avalonia.diagnostics@11.0.5
+	avalonia.freedesktop@11.0.5
+	avalonia.markup.xaml.loader@11.0.5
+	avalonia.native@11.0.5
 	avalonia.remote.protocol@11.0.4
+	avalonia.remote.protocol@11.0.5
 	avalonia.skia@11.0.0
 	avalonia.skia@11.0.4
-	avalonia.svg@11.0.0.2
-	avalonia.svg.skia@11.0.0.2
-	avalonia.themes.simple@11.0.4
-	avalonia.win32@11.0.4
-	avalonia.x11@11.0.4
+	avalonia.skia@11.0.5
+	avalonia.svg@11.0.0.3
+	avalonia.svg.skia@11.0.0.3
+	avalonia.themes.simple@11.0.5
+	avalonia.win32@11.0.5
+	avalonia.x11@11.0.5
 	commandlineparser@2.9.1
 	concentus@1.1.7
 	discordrichpresence@1.2.1.24
 	dynamicdata@7.14.2
-	excss@4.1.4
-	fizzler@1.2.1
+	excss@4.2.3
 	fluentavaloniaui@2.0.4
 	fsharp.core@7.0.200
 	gtksharp.dependencies@1.1.1
 	harfbuzzsharp@2.8.2.3
+	harfbuzzsharp@7.3.0
 	harfbuzzsharp.nativeassets.linux@2.8.2.3
 	harfbuzzsharp.nativeassets.macos@2.8.2.3
+	harfbuzzsharp.nativeassets.macos@7.3.0
 	harfbuzzsharp.nativeassets.webassembly@2.8.2.3
 	harfbuzzsharp.nativeassets.win32@2.8.2.3
+	harfbuzzsharp.nativeassets.win32@7.3.0
 	jp2masa.avalonia.flexbox@0.3.0-beta.4
-	libhac@0.18.0
+	libhac@0.19.0
 	microcom.codegenerator.msbuild@0.11.0
 	microcom.runtime@0.11.0
 	microsoft.codeanalysis.analyzers@3.0.0
@@ -60,8 +65,6 @@ NUGETS="avalonia@11.0.4
 	microsoft.identitymodel.logging@7.0.0
 	microsoft.identitymodel.tokens@7.0.0
 	microsoft.io.recyclablememorystream@2.3.2
-	microsoft.netcore.app.host.osx-x64@7.0.11
-	microsoft.netcore.app.host.win-x64@7.0.11
 	microsoft.netcore.platforms@1.0.1
 	microsoft.netcore.platforms@1.1.0
 	microsoft.netcore.platforms@2.0.0
@@ -149,9 +152,11 @@ NUGETS="avalonia@11.0.4
 	ryujinx.gtksharp@3.24.24.59-ryujinx
 	ryujinx.pangosharp@3.24.24.59-ryujinx
 	ryujinx.sdl2-cs@2.28.1-build28
+	securifybv.propertystore@0.1.0
+	securifybv.shelllink@0.1.0
 	shaderc.net@0.1.0
 	sharpziplib@1.4.2
-	shimskiasharp@1.0.0.2
+	shimskiasharp@1.0.0.3
 	silk.net.core@2.16.0
 	silk.net.vulkan@2.16.0
 	silk.net.vulkan.extensions.ext@2.16.0
@@ -160,15 +165,20 @@ NUGETS="avalonia@11.0.4
 	sixlabors.imagesharp@1.0.4
 	sixlabors.imagesharp.drawing@1.0.0-beta11
 	skiasharp@2.88.3
-	skiasharp.harfbuzz@2.88.3
+	skiasharp@2.88.6
+	skiasharp.harfbuzz@2.88.6
 	skiasharp.nativeassets.linux@2.88.3
+	skiasharp.nativeassets.linux@2.88.6
 	skiasharp.nativeassets.macos@2.88.3
+	skiasharp.nativeassets.macos@2.88.6
 	skiasharp.nativeassets.webassembly@2.88.3
+	skiasharp.nativeassets.webassembly@2.88.6
 	skiasharp.nativeassets.win32@2.88.3
+	skiasharp.nativeassets.win32@2.88.6
 	spb@0.0.4-build28
-	svg.custom@1.0.0.2
-	svg.model@1.0.0.2
-	svg.skia@1.0.0.2
+	svg.custom@1.0.0.3
+	svg.model@1.0.0.3
+	svg.skia@1.0.0.3
 	system.appcontext@4.1.0
 	system.buffers@4.0.0
 	system.buffers@4.3.0
@@ -282,17 +292,15 @@ NUGETS="avalonia@11.0.4
 	system.threading.tasks.extensions@4.5.4
 	system.threading.threadpool@4.3.0
 	system.threading.timer@4.0.1
-	system.valuetuple@4.5.0
 	system.xml.readerwriter@4.0.11
 	system.xml.xdocument@4.0.11
 	tmds.dbus.protocol@0.15.0
-	unicornengine.unicorn@2.0.2-rc1-fb78016
-"
+	unicornengine.unicorn@2.0.2-rc1-fb78016"
 inherit desktop dotnet-pkg xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="1e06b28b22848706014b18bffcec7553cdab2b2b"
+SHA="d773d5152e685a164a6eb9f419873ef1908364f7"
 MY_PN="R${PN:1}"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	${NUGET_URIS}"
@@ -327,3 +335,4 @@ src_install() {
 	doins "distribution/linux/mime/${MY_PN}.xml"
 	domenu "distribution/linux/${MY_PN}.desktop"
 }
+
