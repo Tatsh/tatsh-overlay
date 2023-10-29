@@ -5,7 +5,7 @@ EAPI=8
 
 inherit yarn
 
-DESCRIPTION="VS Code Extensions Manager"
+DESCRIPTION="VS Code extensions manager for extension developers."
 HOMEPAGE="https://code.visualstudio.com"
 NPM_P="@${P/-/\/}"
 NPM_PN="@${PN/-/\/}"
