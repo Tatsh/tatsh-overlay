@@ -4,49 +4,51 @@
 EAPI=8
 
 DOTNET_PKG_COMPAT="7.0"
-NUGETS="avalonia@11.0.4
+NUGETS="actiprosoftware.controls.avalonia.themes.datagrid@23.1.0
+	actiprosoftware.controls.avalonia@23.1.0
+	avalonia@11.0.5
 	avalonia.angle.windows.natives@2.1.0.2023020321
 	avalonia.buildservices@0.0.29
-	avalonia.controls.datagrid@11.0.4
-	avalonia.desktop@11.0.4
-	avalonia.freedesktop@11.0.4
-	avalonia.native@11.0.4
-	avalonia.reactiveui@11.0.4
-	avalonia.remote.protocol@11.0.4
-	avalonia.skia@11.0.4
-	avalonia.themes.fluent@11.0.4
-	avalonia.win32@11.0.4
-	avalonia.x11@11.0.4
+	avalonia.controls.datagrid@11.0.5
+	avalonia.desktop@11.0.5
+	avalonia.freedesktop@11.0.5
+	avalonia.native@11.0.5
+	avalonia.reactiveui@11.0.5
+	avalonia.remote.protocol@11.0.5
+	avalonia.skia@11.0.5
+	avalonia.themes.fluent@11.0.5
+	avalonia.win32@11.0.5
+	avalonia.x11@11.0.5
 	avalonia.xaml.behaviors@11.0.2
-	avalonia.xaml.interactions@11.0.2
 	avalonia.xaml.interactions.custom@11.0.2
 	avalonia.xaml.interactions.draganddrop@11.0.2
 	avalonia.xaml.interactions.draggable@11.0.2
 	avalonia.xaml.interactions.events@11.0.2
 	avalonia.xaml.interactions.reactive@11.0.2
 	avalonia.xaml.interactions.responsive@11.0.2
+	avalonia.xaml.interactions@11.0.2
 	avalonia.xaml.interactivity@11.0.2
 	dynamicdata@7.9.5
 	dynamicexpresso.core@2.16.1
 	ffmpeg.autogen@6.0.0.2
-	harfbuzzsharp@2.8.2.3
 	harfbuzzsharp.nativeassets.linux@2.8.2.3
 	harfbuzzsharp.nativeassets.macos@2.8.2.3
 	harfbuzzsharp.nativeassets.webassembly@2.8.2.3
 	harfbuzzsharp.nativeassets.win32@2.8.2.3
+	harfbuzzsharp@2.8.2.3
 	microcom.runtime@0.11.0
 	microsoft.csharp@4.7.0
 	microsoft.win32.systemevents@6.0.0
 	mono.posix.netstandard@5.20.1-preview
-	protobuf-net@3.2.26
 	protobuf-net.core@3.2.26
+	protobuf-net@3.2.26
 	reactiveui@18.3.1
 	sixlabors.imagesharp@1.0.4
-	skiasharp@2.88.3
-	skiasharp.nativeassets.linux@2.88.3
-	skiasharp.nativeassets.macos@2.88.3
-	skiasharp.nativeassets.webassembly@2.88.3
-	skiasharp.nativeassets.win32@2.88.3
+	skiasharp.nativeassets.linux@2.88.6
+	skiasharp.nativeassets.macos@2.88.6
+	skiasharp.nativeassets.webassembly@2.88.6
+	skiasharp.nativeassets.win32@2.88.6
+	skiasharp@2.88.6
 	splat@14.4.1
 	system.collections.immutable@7.0.0
 	system.componentmodel.annotations@4.5.0
@@ -61,7 +63,7 @@ DESCRIPTION="Video duplicate finder."
 HOMEPAGE="https://github.com/0x90d/videoduplicatefinder"
 MY_PN="VideoDuplicateFinder"
 MY_PV="3.0.0-preview-${PV:5}"
-SHA="313d89a7e8bc29e33f8d92131cbe29cc75ebcb56"
+SHA="5d64ab2519e79d4c1f030881ade5d54aad09c4ee"
 SRC_URI="https://github.com/0x90d/videoduplicatefinder/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	${NUGET_URIS}"
 
