@@ -20,4 +20,4 @@ RDEPEND=">=dev-python/click-4.1
 	<dev-python/prompt-toolkit-4.0.0
 	dev-python/sqlparse
 	>=dev-python/configobj-5.0.6
-	>=dev-python/cli_helpers-1.0.1"
+	>=dev-python/cli-helpers-1.0.1"
