@@ -47,6 +47,9 @@ NUGETS="avalonia@11.0.5
 	libhac@0.19.0
 	microcom.codegenerator.msbuild@0.11.0
 	microcom.runtime@0.11.0
+	microsoft.aspnetcore.app.runtime.linux-x64@7.0.12
+	microsoft.aspnetcore.app.runtime.osx-x64@7.0.12
+	microsoft.aspnetcore.app.runtime.win-x64@7.0.12
 	microsoft.codeanalysis.analyzers@3.0.0
 	microsoft.codeanalysis.analyzers@3.3.4
 	microsoft.codeanalysis.common@3.8.0
@@ -65,6 +68,11 @@ NUGETS="avalonia@11.0.5
 	microsoft.identitymodel.logging@7.0.0
 	microsoft.identitymodel.tokens@7.0.0
 	microsoft.io.recyclablememorystream@2.3.2
+	microsoft.netcore.app.host.osx-x64@7.0.12
+	microsoft.netcore.app.host.win-x64@7.0.12
+	microsoft.netcore.app.runtime.linux-x64@7.0.12
+	microsoft.netcore.app.runtime.osx-x64@7.0.12
+	microsoft.netcore.app.runtime.win-x64@7.0.12
 	microsoft.netcore.platforms@1.0.1
 	microsoft.netcore.platforms@1.1.0
 	microsoft.netcore.platforms@2.0.0
@@ -78,6 +86,7 @@ NUGETS="avalonia@11.0.5
 	microsoft.win32.registry@4.5.0
 	microsoft.win32.systemevents@7.0.0
 	msgpack.cli@1.0.1
+	netcoreserver@7.0.0
 	netstandard.library@1.6.0
 	netstandard.library@2.0.0
 	netstandard.library@2.0.3
@@ -300,7 +309,7 @@ inherit desktop dotnet-pkg xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="d773d5152e685a164a6eb9f419873ef1908364f7"
+SHA="c14ce4d2a5c9b373fb454906a6dc142c028d7be2"
 MY_PN="R${PN:1}"
 SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	${NUGET_URIS}"
@@ -335,4 +344,3 @@ src_install() {
 	doins "distribution/linux/mime/${MY_PN}.xml"
 	domenu "distribution/linux/${MY_PN}.desktop"
 }
-
