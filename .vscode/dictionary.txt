@@ -514,6 +514,7 @@ exeinto
 existance
 extglob
 exzap
+faad
 fakecrc
 fastcgi
 fastq
