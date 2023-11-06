@@ -3,6 +3,7 @@
 
 EAPI=8
 
+CMAKE_MAKEFILE_GENERATOR=ninja # required for C++ modules
 inherit cmake flag-o-matic
 
 DESCRIPTION="Low level CD dumper utility"
@@ -13,9 +14,10 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
-BDEPEND="sys-devel/clang:16"
-DEPEND="<sys-libs/libcxx-17[static-libs]
-	<sys-libs/libcxxabi-17[static-libs]"
+BDEPEND=">=sys-devel/clang-16.0.6
+	dev-util/ninja"
+DEPEND=">=sys-libs/libcxx-16[static-libs]
+	>=sys-libs/libcxxabi-16[static-libs]"
 
 S="${WORKDIR}/${PN}-build_${PV}"
 # Necessary to avoid expansion in mycmakeargs below, even with single quotes
@@ -25,7 +27,8 @@ QUOTED_DOLLAR_SCAN_DEPS='${CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS}'
 src_configure() {
 	filter-flags -O*
 	append-cxxflags -Wno-unknown-warning-option -fexperimental-library
-	export CXX=clang++-16
+	CXX=$(command -v clang++-17 || command -v clang++-16)
+	export CXX
 	local mycmakeargs=(
 		"-DCMAKE_EXPERIMENTAL_CXX_SCANDEP_SOURCE=${QUOTED_DOLLAR_SCAN_DEPS} -format=p1709 -- <CMAKE_CXX_COMPILER> <DEFINES> <INCLUDES> <FLAGS> -x c++ <SOURCE> -c -o <OBJECT> -MT <DYNDEP_FILE> > <DYNDEP_FILE>"
 	)
