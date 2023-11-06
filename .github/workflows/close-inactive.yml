@@ -1,6 +1,7 @@
 ---
 jobs:
   close-issues:
+    if: false
     permissions:
       issues: write
       pull-requests: write
