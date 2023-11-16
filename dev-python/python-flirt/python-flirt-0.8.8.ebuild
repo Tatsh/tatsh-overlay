@@ -1,0 +1,216 @@
+# Copyright 2023 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+CRATES="addr2line@0.21.0
+	adler32@1.2.0
+	adler@1.0.2
+	aho-corasick@1.1.2
+	android-tzdata@0.1.1
+	android_system_properties@0.1.5
+	anes@0.1.6
+	ansi_term@0.12.1
+	anstream@0.6.4
+	anstyle-parse@0.2.2
+	anstyle-query@1.0.0
+	anstyle-wincon@3.0.1
+	anstyle@1.0.4
+	anyhow@1.0.75
+	atty@0.2.14
+	autocfg@1.1.0
+	backtrace@0.3.69
+	better-panic@0.3.0
+	bitflags@1.3.2
+	bitflags@2.4.1
+	bitvec@1.0.1
+	bumpalo@3.14.0
+	byteorder@1.5.0
+	cast@0.3.0
+	cc@1.0.83
+	cfg-if@0.1.10
+	cfg-if@1.0.0
+	chrono@0.4.31
+	ciborium-io@0.2.1
+	ciborium-ll@0.2.1
+	ciborium@0.2.1
+	clap@3.2.25
+	clap@4.4.8
+	clap_builder@4.4.8
+	clap_lex@0.2.4
+	clap_lex@0.6.0
+	cmake@0.1.50
+	colorchoice@1.0.0
+	console@0.15.7
+	console_error_panic_hook@0.1.7
+	const_format@0.2.32
+	const_format_proc_macros@0.2.32
+	core-foundation-sys@0.8.4
+	crc32fast@1.3.2
+	criterion-plot@0.5.0
+	criterion@0.4.0
+	crossbeam-deque@0.8.3
+	crossbeam-epoch@0.9.15
+	crossbeam-utils@0.8.16
+	dynasm@1.2.3
+	dynasmrt@1.2.3
+	either@1.9.0
+	encode_unicode@0.3.6
+	errno@0.3.7
+	fern@0.6.2
+	flate2@1.0.28
+	funty@2.0.0
+	gimli@0.28.0
+	goblin@0.6.1
+	half@1.8.2
+	hashbrown@0.12.3
+	hermit-abi@0.1.19
+	hermit-abi@0.3.3
+	hex@0.4.3
+	hexyl@0.12.0
+	iana-time-zone-haiku@0.1.2
+	iana-time-zone@0.1.58
+	indexmap@1.9.3
+	indoc@1.0.9
+	inflate@0.4.5
+	io-lifetimes@1.0.11
+	is_ci@1.1.1
+	itertools@0.10.5
+	itoa@1.0.9
+	js-sys@0.3.65
+	lazy_static@1.4.0
+	libc@0.2.150
+	linux-raw-sys@0.3.8
+	linux-raw-sys@0.4.11
+	lock_api@0.4.11
+	log@0.4.20
+	memchr@2.6.4
+	memmap2@0.5.10
+	memoffset@0.6.5
+	memoffset@0.9.0
+	memory_units@0.4.0
+	minimal-lexical@0.2.1
+	miniz_oxide@0.7.1
+	nom@7.1.3
+	num-traits@0.2.17
+	object@0.30.4
+	object@0.32.1
+	once_cell@1.18.0
+	oorandom@11.1.3
+	os_str_bytes@6.6.1
+	owo-colors@3.5.0
+	parking_lot@0.12.1
+	parking_lot_core@0.9.9
+	pkg-config@0.3.27
+	plain@0.2.3
+	plotters-backend@0.3.5
+	plotters-svg@0.3.5
+	plotters@0.3.5
+	proc-macro-error-attr@1.0.4
+	proc-macro-error@1.0.4
+	proc-macro2@1.0.69
+	pyo3-build-config@0.17.3
+	pyo3-ffi@0.17.3
+	pyo3-macros-backend@0.17.3
+	pyo3-macros@0.17.3
+	pyo3@0.17.3
+	quote@1.0.33
+	radium@0.7.0
+	rayon-core@1.12.0
+	rayon@1.8.0
+	redox_syscall@0.4.1
+	regex-automata@0.4.3
+	regex-syntax@0.8.2
+	regex@1.10.2
+	ar@0.9.0
+	rustc-demangle@0.1.23
+	rustix@0.37.27
+	rustix@0.38.24
+	ryu@1.0.15
+	same-file@1.0.6
+	scopeguard@1.2.0
+	scroll@0.11.0
+	scroll_derive@0.11.1
+	serde@1.0.192
+	serde_derive@1.0.192
+	serde_json@1.0.108
+	smallvec@1.11.2
+	smol_str@0.1.24
+	strsim@0.10.0
+	supports-color@1.3.1
+	syn@1.0.109
+	syn@2.0.39
+	tap@1.0.1
+	target-lexicon@0.12.12
+	termcolor@1.4.0
+	terminal_size@0.2.6
+	terminal_size@0.3.0
+	textwrap@0.16.0
+	thiserror-impl@1.0.50
+	thiserror@1.0.50
+	tinytemplate@1.2.1
+	unicode-ident@1.0.12
+	unicode-xid@0.2.4
+	unicorn-engine@2.0.1
+	unindent@0.1.11
+	utf8parse@0.2.1
+	version_check@0.9.4
+	walkdir@2.4.0
+	wasm-bindgen-backend@0.2.88
+	wasm-bindgen-macro-support@0.2.88
+	wasm-bindgen-macro@0.2.88
+	wasm-bindgen-shared@0.2.88
+	wasm-bindgen@0.2.88
+	web-sys@0.3.65
+	wee_alloc@0.4.5
+	widestring@1.0.2
+	winapi-i686-pc-windows-gnu@0.4.0
+	winapi-util@0.1.6
+	winapi-x86_64-pc-windows-gnu@0.4.0
+	winapi@0.3.9
+	windows-core@0.51.1
+	windows-sys@0.45.0
+	windows-sys@0.48.0
+	windows-targets@0.42.2
+	windows-targets@0.48.5
+	windows_aarch64_gnullvm@0.42.2
+	windows_aarch64_gnullvm@0.48.5
+	windows_aarch64_msvc@0.42.2
+	windows_aarch64_msvc@0.48.5
+	windows_i686_gnu@0.42.2
+	windows_i686_gnu@0.48.5
+	windows_i686_msvc@0.42.2
+	windows_i686_msvc@0.48.5
+	windows_x86_64_gnu@0.42.2
+	windows_x86_64_gnu@0.48.5
+	windows_x86_64_gnullvm@0.42.2
+	windows_x86_64_gnullvm@0.48.5
+	windows_x86_64_msvc@0.42.2
+	windows_x86_64_msvc@0.48.5
+	wyz@0.5.1
+	zydis@3.1.3"
+DISTUTILS_EXT=1
+DISTUTILS_USE_PEP517=maturin
+PYTHON_COMPAT=( python3_1{0,1,2} )
+
+inherit cargo distutils-r1
+
+DESCRIPTION="A Python library for parsing, compiling, and matching Fast Library Identification and Recognition Technology (FLIRT) signatures."
+HOMEPAGE="https://pypi.org/project/python-flirt/"
+SRC_URI="https://github.com/williballenthin/lancelot/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
+	${CARGO_CRATE_URIS}"
+
+LICENSE="Apache-2.0"
+SLOT="0"
+KEYWORDS="~amd64"
+
+RDEPEND="test? ( dev-python/pytest-sugar dev-python/pytest-instafail )"
+
+S="${WORKDIR}/lancelot-${PV}/pyflirt"
+
+python_prepare_all() {
+	sed -re 's/^ar =.*/ar = "0.9"/' -i ../bin/Cargo.toml || die
+	distutils-r1_python_prepare_all
+}
+
+distutils_enable_tests pytest
