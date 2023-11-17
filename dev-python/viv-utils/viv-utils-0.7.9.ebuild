@@ -16,11 +16,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	dev-pyhton/funcy
+	dev-python/funcy
 	dev-python/intervaltree
 	dev-python/python-flirt
 	dev-python/typing-extensions
-	dev-python/vivisect
+	dev-util/vivisect
 	test? (
 		dev-python/pytest-sugar
 		dev-python/pytest-instafail
