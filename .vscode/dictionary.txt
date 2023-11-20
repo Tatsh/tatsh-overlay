@@ -134,6 +134,7 @@ bincue
 bindata
 bindgen
 bindist
+binja
 binv
 bitflags
 bitrock
@@ -382,6 +383,7 @@ dman
 dminitrace
 dmunt
 dmupenplusapi
+dncil
 dndebug
 dnew
 dnfd
@@ -536,6 +538,7 @@ fileinfo
 filelist
 filesdir
 filestore
+filt
 findname
 firestore
 fireweapon
@@ -1109,6 +1112,7 @@ netrc
 netstandard
 networkmanagement
 networksecurity
+networkx
 newa
 newar
 newbashcomp
@@ -1307,6 +1311,7 @@ pyaaf
 pyasn
 pycargoebuild
 pychoco
+pycparser
 pydantic
 pyelftools
 pyflirt
