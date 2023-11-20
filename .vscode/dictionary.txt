@@ -174,6 +174,7 @@ callsites
 camelcase
 canadianaboriginal
 cancelreader
+capa
 carian
 ccache
 ccgo
@@ -280,6 +281,7 @@ cunet
 cword
 cxadc
 cxleveladj
+cxxfilt
 cxxflags
 cyphar
 cython
@@ -383,6 +385,7 @@ dmupenplusapi
 dndebug
 dnew
 dnfd
+dnfile
 dnsmasq
 dnssec
 dobashcomp
@@ -574,6 +577,7 @@ fstream
 fullname
 fullwidth
 funcs
+funcy
 fuser
 gamecube
 gandarez
@@ -739,9 +743,11 @@ inlines
 inlinevar
 inout
 insinto
+instafail
 installdir
 intelli
 interopservices
+intervaltree
 intltool
 irecovery
 iregex
@@ -989,6 +995,7 @@ matplotlib
 matryer
 mattn
 matttproud
+maturin
 mawen
 maxdepth
 mbedcrypto
@@ -1096,6 +1103,7 @@ neobrain
 netcore
 netlib
 netlink
+netnode
 netplay
 netrc
 netstandard
@@ -1220,6 +1228,7 @@ paucinhau
 pcap
 pcre
 pdepend
+pefile
 permic
 pflag
 pgpassfile
@@ -1295,8 +1304,12 @@ pulseaudiosimple
 punycode
 pvrtc
 pyaaf
+pyasn
 pycargoebuild
 pychoco
+pydantic
+pyelftools
+pyflirt
 pyfmt
 pygments
 pygtrie
@@ -1378,6 +1391,7 @@ redumper
 refractoring
 regexpp
 regularexpressions
+reimplementation
 rejang
 relcs
 releasesd
@@ -1417,6 +1431,7 @@ rssh
 rstcheck
 rtmidi
 rtmp
+ruamel
 runewidth
 runtimeinformation
 runtimemodel
