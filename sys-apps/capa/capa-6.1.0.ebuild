@@ -46,9 +46,9 @@ python_prepare_all() {
 
 python_install_all() {
 	distutils-r1_python_install_all
-	insinto /usr/share/${PN}/rules
+	insinto "/usr/share/${PN}/rules"
 	doins -r "${WORKDIR}/${PN}-rules-${PV}/"*
-	insinto /usr/share/${PN}/sigs
+	insinto "/usr/share/${PN}/sigs"
 	doins sigs/*.sig
 }
 
