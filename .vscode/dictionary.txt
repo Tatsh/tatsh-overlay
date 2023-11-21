@@ -256,6 +256,7 @@ configfile
 configobj
 configor
 configura
+conflicter
 conntrack
 contactcenterinsights
 containeranalysis
@@ -277,6 +278,7 @@ crashplan
 creack
 creds
 cryptopp
+cssesc
 cugan
 cunet
 cword
@@ -367,6 +369,7 @@ difflib
 dinstall
 diropts
 disasm
+discarder
 discordrichpresence
 discordrpc
 displaydoc
@@ -690,6 +693,7 @@ harrypm
 hashbrown
 hasher
 hashstructure
+hasown
 hatran
 havsfunc
 hclog
@@ -947,6 +951,7 @@ lisu
 litecli
 liteon
 livecheck
+ljharb
 llvmlite
 lmod
 localbranches
@@ -1278,6 +1283,7 @@ polkit
 portablepdb
 portfile
 porttree
+postcss
 postinst
 postrm
 pprof
@@ -1547,6 +1553,7 @@ stiefel
 stix
 storagetransfer
 strcase
+streamx
 stretchr
 strfmt
 stringprep
@@ -1587,6 +1594,7 @@ tcpdump
 tdosym
 teakra
 teatest
+teex
 telematic
 tempfile
 termcolor
@@ -1650,6 +1658,7 @@ udpa
 udvare
 uips
 ulikunitz
+undici
 unecm
 unic
 unicase
