@@ -8,77 +8,62 @@ inherit yarn
 DESCRIPTION="CLI tool for running Yeoman generators"
 HOMEPAGE="http://yeoman.io"
 YARN_PKGS=(
-	"${P}"
-	@babel/code-frame-7.22.13
-	@babel/helper-validator-identifier-7.22.15
-	@babel/highlight-7.22.13
-	@babel/runtime-7.22.15
-	@gar/promisify-1.1.3
+	@babel/code-frame-7.23.4
+	@babel/helper-validator-identifier-7.22.20
+	@babel/highlight-7.23.4
+	@babel/runtime-7.23.4
 	@isaacs/cliui-8.0.2
 	@isaacs/string-locale-compare-1.1.0
+	@ljharb/through-2.3.11
 	@nodelib/fs.scandir-2.1.5
 	@nodelib/fs.stat-2.0.5
 	@nodelib/fs.walk-1.2.8
-	@npmcli/arborist-4.3.1
-	@npmcli/fs-1.1.1
-	@npmcli/fs-2.1.2
+	@npmcli/agent-2.2.0
+	@npmcli/arborist-7.2.1
 	@npmcli/fs-3.1.0
-	@npmcli/git-2.1.0
-	@npmcli/git-4.1.0
-	@npmcli/installed-package-contents-1.0.7
+	@npmcli/git-5.0.3
 	@npmcli/installed-package-contents-2.0.2
-	@npmcli/map-workspaces-2.0.4
-	@npmcli/metavuln-calculator-2.0.0
-	@npmcli/move-file-1.1.2
-	@npmcli/move-file-2.0.1
-	@npmcli/name-from-folder-1.0.1
-	@npmcli/node-gyp-1.0.3
+	@npmcli/map-workspaces-3.0.4
+	@npmcli/metavuln-calculator-7.0.0
+	@npmcli/name-from-folder-2.0.0
 	@npmcli/node-gyp-3.0.0
-	@npmcli/package-json-1.0.1
-	@npmcli/promise-spawn-1.3.2
-	@npmcli/promise-spawn-6.0.2
-	@npmcli/run-script-2.0.0
-	@npmcli/run-script-6.0.2
-	@octokit/auth-token-2.5.0
-	@octokit/core-3.6.0
-	@octokit/endpoint-6.0.12
-	@octokit/graphql-4.8.0
-	@octokit/openapi-types-12.11.0
-	@octokit/plugin-paginate-rest-2.21.3
-	@octokit/plugin-request-log-1.0.4
-	@octokit/plugin-rest-endpoint-methods-5.16.2
-	@octokit/request-5.6.3
-	@octokit/request-error-2.1.0
-	@octokit/rest-18.12.0
-	@octokit/types-6.41.0
+	@npmcli/package-json-5.0.0
+	@npmcli/promise-spawn-7.0.0
+	@npmcli/query-3.0.1
+	@npmcli/run-script-7.0.2
 	@pkgjs/parseargs-0.11.0
-	@sigstore/bundle-1.1.0
+	@pnpm/config.env-replace-1.1.0
+	@pnpm/network.ca-file-1.0.2
+	@pnpm/npm-conf-2.2.2
+	@sigstore/bundle-2.1.0
 	@sigstore/protobuf-specs-0.2.1
-	@sigstore/sign-1.0.0
-	@sigstore/tuf-1.0.3
+	@sigstore/sign-2.2.0
+	@sigstore/tuf-2.2.0
 	@sindresorhus/is-0.14.0
-	@sindresorhus/is-0.7.0
 	@sindresorhus/is-4.6.0
 	@szmarczak/http-timer-1.1.2
 	@szmarczak/http-timer-4.0.6
-	@tootallnate/once-1.1.2
-	@tootallnate/once-2.0.0
-	@tufjs/canonical-json-1.0.0
-	@tufjs/models-1.0.4
+	@tufjs/canonical-json-2.0.0
+	@tufjs/models-2.0.0
 	@types/cacheable-request-6.0.3
-	@types/expect-1.20.4
-	@types/http-cache-semantics-4.0.1
+	@types/ejs-3.1.5
+	@types/http-cache-semantics-4.0.4
+	@types/inquirer-9.0.7
 	@types/keyv-3.1.4
 	@types/minimatch-3.0.5
-	@types/node-15.14.9
-	@types/node-20.6.0
-	@types/normalize-package-data-2.4.1
-	@types/responselike-1.0.0
-	@types/vinyl-2.0.7
-	abbrev-1.1.1
+	@types/node-16.18.63
+	@types/node-18.18.11
+	@types/node-20.9.3
+	@types/normalize-package-data-2.4.4
+	@types/responselike-1.0.3
+	@types/through-0.0.33
+	@yeoman/adapter-1.4.0
+	@yeoman/conflicter-2.0.0
+	@yeoman/namespace-1.0.0
+	@yeoman/transform-1.2.0
+	abbrev-2.0.0
 	abort-controller-3.0.0
-	agent-base-6.0.2
-	agentkeepalive-4.5.0
+	agent-base-7.1.0
 	aggregate-error-3.1.0
 	ansi-0.3.1
 	ansi-align-3.0.1
@@ -94,24 +79,23 @@ YARN_PKGS=(
 	ansi-styles-6.2.1
 	aproba-2.0.0
 	are-we-there-yet-1.1.7
-	are-we-there-yet-2.0.0
-	are-we-there-yet-3.0.1
-	argparse-1.0.10
-	array-differ-3.0.0
+	are-we-there-yet-4.0.1
+	array-differ-4.0.0
 	array-find-index-1.0.2
-	array-union-2.1.0
+	array-union-3.0.1
 	arrify-1.0.1
 	arrify-2.0.1
-	asap-2.0.6
-	async-3.2.4
+	arrify-3.0.0
+	async-3.2.5
 	balanced-match-1.0.2
 	base64-js-1.5.1
-	before-after-hook-2.2.3
-	bin-links-3.0.3
+	bin-links-4.0.3
 	bin-version-3.1.0
 	bin-version-check-4.0.0
-	binaryextensions-4.18.0
+	binary-extensions-2.2.0
+	binaryextensions-4.19.0
 	bl-4.1.0
+	bl-5.1.0
 	boolean-3.2.0
 	boxen-5.1.2
 	brace-expansion-1.1.11
@@ -120,15 +104,12 @@ YARN_PKGS=(
 	buffer-5.7.1
 	buffer-6.0.3
 	buffer-from-1.1.2
-	builtins-1.0.3
 	builtins-5.0.1
-	cacache-15.3.0
-	cacache-16.1.3
-	cacache-17.1.4
+	cacache-18.0.0
 	cacheable-lookup-5.0.4
-	cacheable-request-2.1.4
 	cacheable-request-6.1.0
 	cacheable-request-7.0.4
+	call-bind-1.0.5
 	camelcase-4.1.0
 	camelcase-6.3.0
 	camelcase-keys-4.2.0
@@ -136,6 +117,7 @@ YARN_PKGS=(
 	chalk-1.1.3
 	chalk-2.4.2
 	chalk-4.1.2
+	chalk-5.3.0
 	char-regex-1.0.2
 	chardet-0.7.0
 	chownr-2.0.0
@@ -145,20 +127,19 @@ YARN_PKGS=(
 	cli-boxes-2.2.1
 	cli-cursor-1.0.2
 	cli-cursor-3.1.0
+	cli-cursor-4.0.0
 	cli-list-0.2.0
-	cli-spinners-2.9.0
+	cli-spinners-2.9.1
 	cli-table-0.3.11
 	cli-width-2.2.1
 	cli-width-3.0.0
+	cli-width-4.1.0
 	clone-1.0.4
 	clone-2.1.2
-	clone-buffer-1.0.0
 	clone-regexp-1.0.1
-	clone-response-1.0.2
 	clone-response-1.0.3
 	clone-stats-1.0.0
-	cloneable-readable-1.1.3
-	cmd-shim-5.0.0
+	cmd-shim-6.0.2
 	code-point-at-1.1.0
 	color-convert-1.9.3
 	color-convert-2.0.1
@@ -166,7 +147,7 @@ YARN_PKGS=(
 	color-name-1.1.4
 	color-support-1.1.3
 	colors-1.0.3
-	commander-7.1.0
+	commander-11.1.0
 	common-ancestor-path-1.0.1
 	commondir-1.0.1
 	concat-map-0.0.1
@@ -174,22 +155,20 @@ YARN_PKGS=(
 	config-chain-1.1.13
 	configstore-5.0.1
 	console-control-strings-1.1.0
-	core-js-3.32.2
+	core-js-3.33.3
 	core-util-is-1.0.3
 	create-error-class-3.0.2
 	cross-spawn-6.0.5
 	cross-spawn-7.0.3
 	crypto-random-string-2.0.0
+	cssesc-3.0.0
 	currently-unhandled-0.4.1
-	dargs-7.0.0
-	dateformat-4.6.3
+	dateformat-5.0.3
 	debug-2.6.9
 	debug-4.3.4
-	debuglog-1.0.1
 	decamelize-1.2.0
 	decamelize-2.0.0
 	decamelize-keys-1.1.1
-	decode-uri-component-0.2.2
 	decompress-response-3.3.0
 	decompress-response-6.0.0
 	deep-extend-0.6.0
@@ -197,12 +176,11 @@ YARN_PKGS=(
 	defaults-1.0.4
 	defer-to-connect-1.1.3
 	defer-to-connect-2.0.1
+	define-data-property-1.1.1
 	define-lazy-prop-2.0.0
-	define-properties-1.2.0
+	define-properties-1.2.1
 	delegates-1.0.0
-	deprecation-2.3.1
 	detect-node-2.1.0
-	dezalgo-1.0.4
 	diff-5.1.0
 	dir-glob-3.0.1
 	dot-prop-5.3.0
@@ -216,121 +194,108 @@ YARN_PKGS=(
 	encoding-0.1.13
 	end-of-stream-1.4.4
 	env-paths-2.2.1
+	env-paths-3.0.0
 	err-code-2.0.3
-	error-10.4.0
 	error-ex-1.3.2
 	es6-error-4.1.1
 	escape-goat-2.1.1
 	escape-string-regexp-1.0.5
 	escape-string-regexp-4.0.0
-	esprima-4.0.1
+	escape-string-regexp-5.0.0
 	event-target-shim-5.0.1
-	eventemitter3-4.0.7
+	eventemitter3-5.0.1
 	events-3.3.0
 	execa-1.0.0
-	execa-5.1.1
+	execa-7.2.0
+	execa-8.0.1
 	execall-1.0.0
 	exit-hook-1.1.1
 	exponential-backoff-3.1.1
 	extend-3.0.2
 	external-editor-1.1.1
 	external-editor-3.1.0
-	fast-glob-3.3.1
-	fast-plist-0.1.3
+	fast-fifo-1.3.2
+	fast-glob-3.3.2
 	fastq-1.15.0
 	figures-1.7.0
 	figures-3.2.0
+	figures-5.0.0
 	filelist-1.0.4
 	fill-range-7.0.1
 	filter-obj-2.0.2
 	find-up-2.1.0
 	find-up-4.1.0
-	find-up-5.0.0
+	find-up-6.3.0
 	find-versions-3.2.0
-	find-yarn-workspace-root2-1.2.16
-	first-chunk-stream-2.0.0
+	fly-import-0.4.0
 	foreachasync-3.0.0
 	foreground-child-3.1.1
-	from2-2.3.0
 	fs-minipass-2.1.0
 	fs-minipass-3.0.3
-	fs.realpath-1.0.0
 	fullname-4.0.1
-	function-bind-1.1.1
+	function-bind-1.1.2
 	gauge-1.2.7
-	gauge-3.0.2
-	gauge-4.0.4
-	generator-code-1.7.8
-	get-intrinsic-1.2.1
+	gauge-5.0.1
+	get-intrinsic-1.2.2
 	get-stdin-4.0.1
 	get-stream-3.0.0
 	get-stream-4.1.0
 	get-stream-5.2.0
 	get-stream-6.0.1
-	github-username-6.0.0
-	glob-10.3.4
-	glob-7.2.3
-	glob-8.1.0
+	get-stream-8.0.1
+	glob-10.3.10
 	glob-parent-5.1.2
 	global-agent-2.2.0
 	global-agent-3.0.0
 	global-dirs-3.0.1
 	global-tunnel-ng-2.7.1
 	globalthis-1.0.3
-	globby-11.1.0
+	globby-13.2.2
+	gopd-1.0.1
 	got-11.8.6
 	got-6.7.1
-	got-8.3.2
 	got-9.6.0
+	graceful-fs-4.2.10
 	graceful-fs-4.2.11
 	grouped-queue-2.0.0
-	has-1.0.3
 	has-ansi-2.0.0
 	has-flag-1.0.0
 	has-flag-3.0.0
 	has-flag-4.0.0
-	has-property-descriptors-1.0.0
+	has-property-descriptors-1.0.1
 	has-proto-1.0.1
-	has-symbol-support-x-1.4.2
 	has-symbols-1.0.3
-	has-to-string-tag-x-1.4.1
 	has-unicode-2.0.1
 	has-yarn-2.1.0
+	hasown-2.0.0
 	hosted-git-info-2.8.9
-	hosted-git-info-4.1.0
-	hosted-git-info-6.1.1
-	http-cache-semantics-3.8.1
+	hosted-git-info-7.0.1
 	http-cache-semantics-4.1.1
-	http-proxy-agent-4.0.1
-	http-proxy-agent-5.0.0
+	http-proxy-agent-7.0.0
 	http2-wrapper-1.0.3
-	https-proxy-agent-5.0.1
-	human-signals-2.1.0
-	humanize-ms-1.2.1
+	https-proxy-agent-7.0.2
+	human-signals-4.3.1
+	human-signals-5.0.0
 	humanize-string-2.1.0
 	iconv-lite-0.4.24
 	iconv-lite-0.6.3
 	ieee754-1.2.1
-	ignore-5.2.4
-	ignore-walk-4.0.1
+	ignore-5.3.0
 	ignore-walk-6.0.3
 	import-lazy-2.1.0
 	imurmurhash-0.1.4
 	indent-string-3.2.0
 	indent-string-4.0.0
-	infer-owner-1.0.4
-	inflight-1.0.6
 	inherits-2.0.4
 	ini-1.3.8
 	ini-2.0.0
 	inquirer-1.2.3
 	inquirer-8.2.6
-	interpret-1.4.0
-	into-stream-3.1.0
+	inquirer-9.2.12
 	ip-2.0.0
 	is-arrayish-0.2.1
 	is-ci-2.0.0
-	is-core-module-2.13.0
+	is-core-module-2.13.1
 	is-docker-1.1.0
 	is-docker-2.2.1
 	is-extglob-2.1.1
@@ -340,37 +305,32 @@ YARN_PKGS=(
 	is-glob-4.0.3
 	is-installed-globally-0.4.0
 	is-interactive-1.0.0
+	is-interactive-2.0.0
 	is-lambda-1.0.1
 	is-npm-5.0.0
 	is-number-7.0.0
 	is-obj-2.0.0
-	is-object-1.0.2
 	is-path-inside-3.0.3
 	is-plain-obj-1.1.0
-	is-plain-obj-2.1.0
-	is-plain-object-5.0.0
 	is-redirect-1.0.0
 	is-regexp-1.0.0
 	is-retry-allowed-1.2.0
 	is-root-1.0.0
-	is-scoped-2.1.0
 	is-stream-1.1.0
-	is-stream-2.0.1
+	is-stream-3.0.0
 	is-supported-regexp-flag-1.0.1
 	is-typedarray-1.0.0
 	is-unicode-supported-0.1.0
-	is-utf8-0.2.1
+	is-unicode-supported-1.3.0
 	is-wsl-2.2.0
 	is-yarn-global-0.3.0
 	isarray-1.0.0
-	isbinaryfile-4.0.10
 	isbinaryfile-5.0.0
 	isexe-2.0.0
-	isurl-1.0.0
-	jackspeak-2.3.3
+	isexe-3.1.1
+	jackspeak-2.3.6
 	jake-10.8.7
 	js-tokens-4.0.0
-	js-yaml-3.14.1
 	json-buffer-3.0.0
 	json-buffer-3.0.1
 	json-parse-better-errors-1.0.2
@@ -379,64 +339,57 @@ YARN_PKGS=(
 	json-stringify-nice-1.1.4
 	json-stringify-safe-5.0.1
 	jsonparse-1.3.1
-	just-diff-5.2.0
+	just-diff-6.0.2
 	just-diff-apply-5.5.0
-	keyv-3.0.0
 	keyv-3.1.0
-	keyv-4.5.3
+	keyv-4.5.4
 	latest-version-3.1.0
 	latest-version-5.1.0
 	lines-and-columns-1.2.4
 	load-json-file-4.0.0
-	load-yaml-file-0.2.0
 	locate-path-2.0.0
 	locate-path-5.0.0
-	locate-path-6.0.0
+	locate-path-7.2.0
 	locutus-2.0.16
 	lodash-4.17.21
+	lodash-es-4.17.21
 	lodash.pad-4.5.1
 	lodash.padend-4.6.1
 	lodash.padstart-4.6.1
 	log-symbols-2.2.0
 	log-symbols-4.1.0
+	log-symbols-5.1.0
 	loud-rejection-1.6.0
-	lowercase-keys-1.0.0
 	lowercase-keys-1.0.1
 	lowercase-keys-2.0.0
-	lru-cache-10.0.1
+	lru-cache-10.0.3
 	lru-cache-6.0.0
-	lru-cache-7.18.3
 	make-dir-3.1.0
-	make-fetch-happen-10.2.1
-	make-fetch-happen-11.1.1
-	make-fetch-happen-9.1.0
+	make-fetch-happen-13.0.0
 	map-age-cleaner-0.1.3
 	map-obj-1.0.1
 	map-obj-2.0.0
 	matcher-3.0.0
 	mem-5.1.1
-	mem-fs-2.3.0
-	mem-fs-editor-9.7.0
+	mem-fs-editor-11.0.0
 	meow-5.0.0
 	merge-stream-2.0.0
 	merge2-1.4.1
 	micromatch-4.0.5
 	mimic-fn-2.1.0
+	mimic-fn-4.0.0
 	mimic-response-1.0.1
 	mimic-response-3.1.0
 	minimatch-3.0.8
 	minimatch-3.1.2
 	minimatch-5.1.6
-	minimatch-7.4.6
 	minimatch-9.0.3
 	minimist-1.2.8
 	minimist-options-3.0.2
 	minipass-3.3.6
 	minipass-5.0.0
-	minipass-7.0.3
+	minipass-7.0.4
 	minipass-collect-1.0.2
-	minipass-fetch-1.4.1
-	minipass-fetch-2.1.2
 	minipass-fetch-3.0.4
 	minipass-flush-1.0.5
 	minipass-json-stream-1.0.1
@@ -445,113 +398,94 @@ YARN_PKGS=(
 	minizlib-2.1.2
 	mkdirp-0.5.6
 	mkdirp-1.0.4
-	mkdirp-infer-owner-2.0.0
 	ms-2.0.0
 	ms-2.1.2
-	ms-2.1.3
-	multimatch-5.0.0
+	multimatch-6.0.0
 	mute-stream-0.0.6
 	mute-stream-0.0.8
+	mute-stream-1.0.0
 	negotiator-0.6.3
 	nice-try-1.0.5
-	node-fetch-2.7.0
-	node-gyp-8.4.1
-	node-gyp-9.4.0
-	nopt-5.0.0
-	nopt-6.0.0
+	node-gyp-10.0.1
+	nopt-7.2.0
 	normalize-package-data-2.5.0
-	normalize-package-data-5.0.0
+	normalize-package-data-6.0.0
 	normalize-path-3.0.0
-	normalize-url-2.0.1
 	normalize-url-4.5.1
 	normalize-url-6.1.0
-	npm-bundled-1.1.2
 	npm-bundled-3.0.0
 	npm-conf-1.1.3
-	npm-install-checks-4.0.0
-	npm-install-checks-6.2.0
+	npm-install-checks-6.3.0
 	npm-keyword-6.1.0
-	npm-normalize-package-bin-1.0.1
-	npm-normalize-package-bin-2.0.0
 	npm-normalize-package-bin-3.0.1
-	npm-package-arg-10.1.0
-	npm-package-arg-8.1.5
-	npm-packlist-3.0.0
-	npm-packlist-7.0.4
-	npm-pick-manifest-6.1.1
-	npm-pick-manifest-8.0.2
-	npm-registry-fetch-12.0.2
-	npm-registry-fetch-14.0.5
+	npm-package-arg-11.0.1
+	npm-packlist-8.0.0
+	npm-pick-manifest-9.0.0
+	npm-registry-fetch-16.1.0
 	npm-run-path-2.0.2
-	npm-run-path-4.0.1
+	npm-run-path-5.1.0
 	npmlog-2.0.4
-	npmlog-5.0.1
-	npmlog-6.0.2
+	npmlog-7.0.1
 	number-is-nan-1.0.1
 	object-assign-4.1.1
 	object-keys-1.1.1
 	once-1.4.0
 	onetime-1.1.0
 	onetime-5.1.2
+	onetime-6.0.0
 	open-8.4.2
 	ora-5.4.1
+	ora-6.3.1
 	os-homedir-1.0.2
 	os-shim-0.1.3
 	os-tmpdir-1.0.2
 	p-any-2.1.0
-	p-cancelable-0.4.1
 	p-cancelable-1.1.0
 	p-cancelable-2.1.1
 	p-defer-1.0.0
 	p-finally-1.0.0
-	p-is-promise-1.1.0
 	p-is-promise-2.1.0
 	p-limit-1.3.0
 	p-limit-2.3.0
-	p-limit-3.1.0
+	p-limit-4.0.0
 	p-locate-2.0.0
 	p-locate-4.1.0
-	p-locate-5.0.0
+	p-locate-6.0.0
 	p-map-4.0.0
-	p-queue-6.6.2
+	p-queue-7.4.1
 	p-some-4.1.0
-	p-timeout-2.0.1
-	p-timeout-3.2.0
-	p-transform-1.3.0
+	p-timeout-5.1.0
+	p-transform-4.1.5
 	p-try-1.0.0
 	p-try-2.2.0
 	package-json-4.0.1
 	package-json-6.5.0
 	package-json-7.0.0
-	pacote-12.0.3
-	pacote-15.2.0
+	pacote-17.0.4
 	pad-component-0.0.1
-	parse-conflict-json-2.0.2
+	parse-conflict-json-3.0.1
 	parse-help-1.0.0
 	parse-json-4.0.0
 	parse-json-5.2.0
 	passwd-user-3.0.0
 	path-exists-3.0.0
 	path-exists-4.0.0
-	path-is-absolute-1.0.1
+	path-exists-5.0.0
 	path-key-2.0.1
 	path-key-3.1.1
+	path-key-4.0.0
 	path-parse-1.0.7
 	path-scurry-1.10.1
 	path-type-3.0.0
 	path-type-4.0.0
 	picomatch-2.3.1
-	pify-2.3.0
 	pify-3.0.0
-	pify-4.0.1
 	pinkie-2.0.4
 	pinkie-promise-2.0.1
-	pkg-dir-4.2.0
-	preferred-pm-3.1.2
+	postcss-selector-parser-6.0.13
 	prepend-http-1.0.4
 	prepend-http-2.0.0
-	pretty-bytes-5.6.0
-	proc-log-1.0.0
+	pretty-bytes-6.1.1
 	proc-log-3.0.0
 	process-0.11.10
 	process-nextick-args-2.0.1
@@ -562,14 +496,13 @@ YARN_PKGS=(
 	proto-list-1.2.4
 	pump-3.0.0
 	pupa-2.1.1
-	query-string-5.1.1
 	queue-microtask-1.2.3
+	queue-tick-1.0.1
 	quick-lru-1.1.0
 	quick-lru-5.1.1
 	rc-1.2.8
-	read-cmd-shim-3.0.1
-	read-package-json-6.0.4
-	read-package-json-fast-2.0.3
+	read-cmd-shim-4.0.0
+	read-package-json-7.0.0
 	read-package-json-fast-3.0.2
 	read-pkg-3.0.0
 	read-pkg-5.2.0
@@ -578,37 +511,35 @@ YARN_PKGS=(
 	readable-stream-2.3.8
 	readable-stream-3.6.2
 	readable-stream-4.4.2
-	readdir-scoped-modules-1.1.0
-	rechoir-0.6.2
 	redent-2.0.0
 	regenerator-runtime-0.14.0
 	registry-auth-token-3.4.0
 	registry-auth-token-4.2.2
+	registry-auth-token-5.0.2
 	registry-url-3.1.0
 	registry-url-5.1.0
+	registry-url-6.0.1
 	remove-trailing-separator-1.1.0
-	replace-ext-1.0.1
-	request-light-0.7.0
-	resolve-1.22.4
+	replace-ext-2.0.0
+	resolve-1.22.8
 	resolve-alpn-1.2.1
 	responselike-1.0.2
 	responselike-2.0.1
 	restore-cursor-1.0.1
 	restore-cursor-3.1.0
+	restore-cursor-4.0.0
 	retry-0.12.0
 	reusify-1.0.4
-	rimraf-3.0.2
 	roarr-2.15.4
 	root-check-1.0.0
 	run-async-2.4.1
+	run-async-3.0.0
 	run-parallel-1.2.0
 	rx-4.1.0
 	rxjs-7.8.1
 	safe-buffer-5.1.2
 	safe-buffer-5.2.1
 	safer-buffer-2.1.2
-	sanitize-filename-1.6.3
-	scoped-regex-2.1.0
 	semver-5.7.2
 	semver-6.3.1
 	semver-7.5.4
@@ -618,50 +549,43 @@ YARN_PKGS=(
 	semver-truncate-1.1.2
 	serialize-error-7.0.1
 	set-blocking-2.0.0
+	set-function-length-1.1.1
 	shebang-command-1.2.0
 	shebang-command-2.0.0
 	shebang-regex-1.0.0
 	shebang-regex-3.0.0
-	shelljs-0.8.5
 	signal-exit-3.0.7
 	signal-exit-4.1.0
-	sigstore-1.9.0
-	slash-3.0.0
+	sigstore-2.1.0
+	slash-4.0.0
+	slash-5.1.0
 	smart-buffer-4.2.0
 	socks-2.7.1
-	socks-proxy-agent-6.2.1
-	socks-proxy-agent-7.0.0
-	sort-keys-2.0.0
-	sort-keys-4.2.0
+	socks-proxy-agent-8.0.2
 	sort-on-4.1.1
 	spawn-sync-1.0.15
 	spdx-correct-3.2.0
 	spdx-exceptions-2.3.0
 	spdx-expression-parse-3.0.1
-	spdx-license-ids-3.0.13
-	sprintf-js-1.0.3
-	sprintf-js-1.1.2
+	spdx-license-ids-3.0.16
+	sprintf-js-1.1.3
 	ssri-10.0.5
-	ssri-8.0.1
-	ssri-9.0.1
-	strict-uri-encode-1.1.0
+	stdin-discarder-0.1.0
+	streamx-2.15.5
 	string-length-4.0.2
 	string-width-1.0.2
 	string-width-2.1.1
-	string-width-5.1.2
 	string-width-4.2.3
+	string-width-5.1.2
 	string_decoder-1.1.1
 	string_decoder-1.3.0
 	strip-ansi-3.0.1
 	strip-ansi-4.0.0
-	strip-ansi-7.1.0
 	strip-ansi-6.0.1
-	strip-bom-2.0.0
+	strip-ansi-7.1.0
 	strip-bom-3.0.0
-	strip-bom-buf-1.0.0
-	strip-bom-stream-2.0.0
 	strip-eof-1.0.0
-	strip-final-newline-2.0.0
+	strip-final-newline-3.0.0
 	strip-indent-2.0.0
 	strip-json-comments-2.0.1
 	sudo-block-1.2.0
@@ -673,6 +597,7 @@ YARN_PKGS=(
 	tabtab-1.3.2
 	taketalk-1.0.0
 	tar-6.2.0
+	teex-1.0.1
 	text-table-0.2.0
 	textextensions-5.16.0
 	through-2.3.8
@@ -682,14 +607,12 @@ YARN_PKGS=(
 	tmp-0.0.33
 	to-readable-stream-1.0.0
 	to-regex-range-5.0.1
-	tr46-0.0.3
-	treeverse-1.0.4
+	treeverse-3.0.0
 	trim-newlines-2.0.0
-	truncate-utf8-bytes-1.0.2
 	tslib-2.6.2
-	tuf-js-1.1.7
+	tuf-js-2.1.0
 	tunnel-0.0.6
-	twig-1.16.0
+	twig-1.17.1
 	type-fest-0.13.1
 	type-fest-0.20.2
 	type-fest-0.21.3
@@ -698,55 +621,45 @@ YARN_PKGS=(
 	type-fest-0.8.1
 	typedarray-0.0.6
 	typedarray-to-buffer-3.1.5
-	unique-filename-1.1.1
-	unique-filename-2.0.1
+	undici-types-5.26.5
 	unique-filename-3.0.0
-	unique-slug-2.0.2
-	unique-slug-3.0.0
 	unique-slug-4.0.0
 	unique-string-2.0.0
-	universal-user-agent-6.0.0
-	untildify-4.0.0
+	untildify-5.0.0
 	unzip-response-2.0.1
 	update-notifier-5.1.0
 	url-parse-lax-1.0.0
 	url-parse-lax-3.0.0
-	url-to-options-1.0.1
 	user-home-2.0.0
-	utf8-byte-length-1.0.4
 	util-deprecate-1.0.2
 	validate-npm-package-license-3.0.4
-	validate-npm-package-name-3.0.0
 	validate-npm-package-name-5.0.0
-	vinyl-2.2.1
-	vinyl-file-3.0.0
+	vinyl-3.0.0
 	walk-2.3.15
-	walk-up-path-1.0.0
+	walk-up-path-3.0.1
 	wcwidth-1.0.1
-	webidl-conversions-3.0.1
-	whatwg-url-5.0.0
 	which-1.3.1
 	which-2.0.2
-	which-3.0.1
-	which-pm-2.0.0
+	which-4.0.0
+	which-package-manager-0.0.1
 	wide-align-1.1.5
 	widest-line-3.1.0
 	wrap-ansi-2.1.0
 	wrap-ansi-6.2.0
-	wrap-ansi-8.1.0
 	wrap-ansi-7.0.0
+	wrap-ansi-8.1.0
 	wrappy-1.0.2
 	write-file-atomic-3.0.3
-	write-file-atomic-4.0.2
+	write-file-atomic-5.0.1
 	xdg-basedir-4.0.0
 	xregexp-4.0.0
 	yallist-4.0.0
 	yargs-parser-10.1.0
 	yeoman-character-1.1.0
 	yeoman-doctor-5.0.0
-	yeoman-environment-3.19.3
-	yeoman-generator-5.9.0
-	yocto-queue-0.1.0
+	yeoman-environment-4.1.3
+	yo-5.0.0
+	yocto-queue-1.0.0
 	yosay-2.0.2
 )
 yarn_set_globals
