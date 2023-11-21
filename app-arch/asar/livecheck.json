@@ -1,3 +1,3 @@
 {
-    "yarn_base_package": "@electron/asar"
+  "yarn_base_package": "@electron/asar"
 }
