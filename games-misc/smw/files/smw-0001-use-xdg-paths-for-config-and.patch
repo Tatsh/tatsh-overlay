@@ -1,0 +1,99 @@
+From 70c5c0c5acd9ae376f5cf90720792800de5bca2a Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 21 Nov 2023 16:39:36 -0500
+Subject: [PATCH] Use XDG paths for config and saving
+
+---
+ src/common_rtl.c | 15 ++++++++++-----
+ src/common_rtl.h |  1 +
+ src/main.c       | 30 ++++++++++--------------------
+ 3 files changed, 21 insertions(+), 25 deletions(-)
+
+diff --git a/src/common_rtl.c b/src/common_rtl.c
+index 4556a34..b4befe4 100644
+--- a/src/common_rtl.c
++++ b/src/common_rtl.c
+@@ -790,8 +790,8 @@ void RtlCheat(char c) {
+ }
+ 
+ void RtlReadSram(void) {
+-  char filename[64];
+-  snprintf(filename, sizeof(filename), "saves/%s.srm", g_rtl_game_info->title);
++  char filename[4096];
++  snprintf(filename, sizeof(filename), "%s/.local/share/smw/saves/%s.srm", getenv("HOME"), g_rtl_game_info->title);
+   FILE *f = fopen(filename, "rb");
+   if (f) {
+     if (fread(g_sram, 1, g_sram_size, f) != g_sram_size)
+@@ -803,9 +803,14 @@ void RtlReadSram(void) {
+ }
+ 
+ void RtlWriteSram(void) {
+-  char filename[64], filename_bak[64];
+-  snprintf(filename, sizeof(filename), "saves/%s.srm", g_rtl_game_info->title);
+-  snprintf(filename_bak, sizeof(filename_bak), "saves/%s.srm.bak", g_rtl_game_info->title);
++  char share_dir[4096];
++  snprintf(share_dir, sizeof(share_dir), "%s/.local/share/smw", getenv("HOME"));
++  mkdir(share_dir, 0755);
++  strncat(share_dir, "/saves", 6);
++  mkdir(share_dir, 0755);
++  char filename[4096], filename_bak[4096];
++  snprintf(filename, sizeof(filename), "%s/%s.srm", share_dir, g_rtl_game_info->title);
++  snprintf(filename_bak, sizeof(filename_bak), "%s/%s.srm.bak", share_dir, g_rtl_game_info->title);
+   rename(filename, filename_bak);
+   FILE *f = fopen(filename, "wb");
+   if (f) {
+diff --git a/src/common_rtl.h b/src/common_rtl.h
+index dafe41b..70079b3 100644
+--- a/src/common_rtl.h
++++ b/src/common_rtl.h
+@@ -3,6 +3,7 @@
+ #include "snes/snes_regs.h"
+ #include <string.h>
+ #include <stdio.h>
++#include <sys/stat.h>
+ 
+ enum {
+   kGameID_SMW = 1,
+diff --git a/src/main.c b/src/main.c
+index da046dd..87d55b7 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -953,25 +953,15 @@ const uint8 *FindPtrInAsset(int asset, uint32 addr) {
+ // Go some steps up and find smw.ini
+ static void SwitchDirectory(void) {
+   char buf[4096];
+-  if (!getcwd(buf, sizeof(buf) - 32))
+-    return;
+-  size_t pos = strlen(buf);
+-
+-  for (int step = 0; pos != 0 && step < 3; step++) {
+-    memcpy(buf + pos, "/smw.ini", 9);
+-    FILE *f = fopen(buf, "rb");
+-    if (f) {
+-      fclose(f);
+-      buf[pos] = 0;
+-      if (step != 0) {
+-        printf("Found smw.ini in %s\n", buf);
+-        int err = chdir(buf);
+-        (void)err;
+-      }
+-      return;
+-    }
+-    pos--;
+-    while (pos != 0 && buf[pos] != '/' && buf[pos] != '\\')
+-      pos--;
++  char share_dir[4096];
++  snprintf(share_dir, sizeof(buf), "%s/.config/smw", getenv("HOME"));
++  mkdir(share_dir, 0755);
++  memcpy(buf, share_dir, strlen(share_dir));
++  strncat(buf, "/smw.ini", 8);
++  FILE *f = fopen(buf, "rb");
++  if (f) {
++    printf("Found smw.ini in %s\n", share_dir);
++    int err = chdir(share_dir);
++    (void)err;
+   }
+ }
+-- 
+2.43.0
+

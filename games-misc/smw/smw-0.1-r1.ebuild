@@ -17,6 +17,10 @@ KEYWORDS="~amd64"
 DEPEND="media-libs/libsdl2[joystick,opengl,sound,video]"
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-0001-use-xdg-paths-for-config-and.patch"
+)
+
 src_prepare() {
 	cp "${DISTDIR}/smw.sfc" . || die
 	default
