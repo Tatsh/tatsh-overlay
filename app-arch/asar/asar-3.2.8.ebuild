@@ -8,7 +8,7 @@ inherit yarn
 DESCRIPTION="Create Electron app packages."
 HOMEPAGE="https://github.com/electron/asar"
 YARN_PKGS=(
-	"@electron/${P}"
+	@electron/asar-3.2.8
 	balanced-match-1.0.2
 	brace-expansion-1.1.11
 	commander-5.1.0
