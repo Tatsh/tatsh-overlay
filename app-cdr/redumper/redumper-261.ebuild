@@ -26,9 +26,10 @@ QUOTED_DOLLAR_SCAN_DEPS='${CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS}'
 
 src_configure() {
 	filter-flags -O*
-	append-cxxflags -Wno-unknown-warning-option -fexperimental-library
+	CC=$(command -v clang-17 || command -v clang-16)
 	CXX=$(command -v clang++-17 || command -v clang++-16)
-	export CXX
+	export CC CXX
+	append-cxxflags -Wno-unknown-warning-option -fexperimental-library
 	local mycmakeargs=(
 		"-DCMAKE_EXPERIMENTAL_CXX_SCANDEP_SOURCE=${QUOTED_DOLLAR_SCAN_DEPS} -format=p1709 -- <CMAKE_CXX_COMPILER> <DEFINES> <INCLUDES> <FLAGS> -x c++ <SOURCE> -c -o <OBJECT> -MT <DYNDEP_FILE> > <DYNDEP_FILE>"
 	)
