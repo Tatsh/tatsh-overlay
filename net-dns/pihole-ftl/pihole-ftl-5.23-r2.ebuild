@@ -18,6 +18,7 @@ DEPEND="dev-libs/gmp
 	sys-libs/readline
 	sys-libs/libtermcap-compat"
 RDEPEND="${DEPEND}"
+BDEPEND="app-editors/vim-core" # needed for xxd
 
 S="${WORKDIR}/FTL-${PV}"
 
