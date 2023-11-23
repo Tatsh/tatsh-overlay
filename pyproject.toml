@@ -10,15 +10,15 @@ version = "0.0.1"
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
-types-requests = "^2.31.0.10"
-types-pyyaml = "^6.0.12.12"
-requests = "^2.31.0"
-pyyaml = "^6.0"
 mypy = "^1.7.0"
-pylint-quotes = "^0.2.3"
 portage = { git = "https://github.com/gentoo/portage.git" }
 portage-types = "^0.0.2"
+pyyaml = "^6.0"
+requests = "^2.31.0"
+types-pyyaml = "^6.0.12.12"
+types-requests = "^2.31.0.10"
 yapf = "^0.40.2"
+ruff = "^0.1.6"
 
 [build-system]
 requires = ["poetry-core"]
@@ -38,7 +38,6 @@ disallow_subclassing_any = true
 disallow_untyped_calls = true
 disallow_untyped_decorators = true
 disallow_untyped_defs = true
-enable_incomplete_feature = "Unpack"
 follow_imports = "silent"
 mypy_path = "./.stubs"
 show_column_numbers = true
@@ -49,77 +48,6 @@ warn_redundant_casts = true
 warn_return_any = true
 warn_unreachable = true
 warn_unused_ignores = true
-
-[tool.pylint.main]
-ignore = [".git", "node_modules"]
-load-plugins = [
-  "pylint.extensions.bad_builtin",
-  "pylint.extensions.check_elif",
-  "pylint.extensions.code_style",
-  "pylint.extensions.comparison_placement",
-  "pylint.extensions.consider_refactoring_into_while_condition",
-  "pylint.extensions.consider_ternary_expression",
-  "pylint.extensions.docparams",
-  "pylint.extensions.empty_comment",
-  "pylint.extensions.eq_without_hash",
-  "pylint.extensions.for_any_all",
-  "pylint.extensions.magic_value",
-  "pylint.extensions.overlapping_exceptions",
-  "pylint.extensions.redefined_loop_name",
-  "pylint.extensions.set_membership",
-  "pylint_quotes"
-]
-recursive = true
-
-[tool.pylint.basic]
-class-attribute-naming-style = "snake_case"
-good-names = ["e", "f", "g", "i", "id", "j", "k", "m", "n", "r", "x", "y", "z"]
-include-naming-hint = true
-inlinevar-naming-style = "snake_case"
-
-[tool.pylint.design]
-max-args = 8
-max-branches = 15
-max-locals = 30
-max-statements = 80
-
-[tool.pylint.format]
-expected-line-ending-format = "LF"
-
-[tool.pylint.logging]
-logging-format-style = "new"
-logging-modules = ["logging", "loguru"]
-
-[tool.pylint."messages control"]
-disable = [
-  "magic-value-comparison",
-  "missing-class-docstring",
-  "missing-function-docstring",
-  "missing-module-docstring",
-  "too-many-instance-attributes",
-  "unspecified-encoding",
-  "use-dict-literal"
-]
-enable = [
-  "bad-builtin",
-  "consider-refactoring-into-while-condition",
-  "consider-ternary-expression",
-  "consider-using-assignment-expr",
-  "else-if-used",
-  "empty-comment",
-  "eq-without-hash",
-  "misplaced-comparison-constant",
-  "overlapping-except",
-  "redefined-loop-name",
-  "use-set-for-membership",
-  "useless-type-doc"
-]
-
-[tool.pylint.parameter_documentation]
-default-docstring-type = "numpy"
-
-[tool.pylint.refactoring]
-max-nested-blocks = 6
 
 [tool.pytest.ini_options]
 mock_use_standalone_module = true

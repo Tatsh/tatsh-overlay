@@ -21,8 +21,8 @@ jobs:
         run: yarn shellcheck
       - name: Lint with mypy
         run: yarn mypy
-      - name: Lint with pylint
-        run: yarn pylint
+      - name: Lint with ruff
+        run: yarn ruff
       - name: Check spelling
         run: yarn check-spelling
       - name: Check formatting

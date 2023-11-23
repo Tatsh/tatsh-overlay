@@ -28,8 +28,8 @@
     "clean-dict": "r=(); while IFS=$\\n read -r w; do ! rg --no-config -qi. -g '!.vscode/dictionary.txt' -m 1 \"$w\" . && r+=(\"$w\"); done < ./.vscode/dictionary.txt; j=$(printf \"|%s\" \"${r[@]}\"); j=\"^(${j:1})$\"; grep -Ev \"${j}\" ./.vscode/dictionary.txt > new && mv new ./.vscode/dictionary.txt",
     "format": "yarn prettier -w './**/*.json' './**/*.md' './**/*.toml' './**/*.yml' && poetry run isort . && poetry run yapf -ri scripts",
     "mypy": "poetry run mypy .",
-    "pylint": "poetry run pylint scripts",
-    "qa": "yarn shellcheck && yarn mypy && yarn pylint && yarn check-spelling && yarn check-formatting",
+    "qa": "yarn shellcheck && yarn mypy && yarn ruff && yarn check-spelling && yarn check-formatting",
+    "ruff": "poetry run ruff scripts",
     "shellcheck": "shellcheck scripts/*.sh eclass/*.eclass ./*/*/*.ebuild net-dns/pihole-ftl/files/pihole-FTL x11-misc/mimeo/files/mimeo-completion.sh"
   },
   "version": "0.2.0"

@@ -1,6 +1,7 @@
-.*~
-.directory
-/metadata/*
 !/metadata/layout.conf
 !/metadata/pkgcheck.conf
+.*~
+.directory
+.ruff_cache/
+/metadata/*
 /node_modules/

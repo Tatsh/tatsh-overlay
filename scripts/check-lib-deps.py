@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# pylint: disable=invalid-name
 from functools import lru_cache
 from typing import Iterable, Iterator, Tuple
 import re
@@ -8,7 +7,7 @@ import sys
 
 import portage
 
-P = portage.db[portage.root]['porttree'].dbapi  # pylint: disable=no-member
+P = portage.db[portage.root]['porttree'].dbapi
 
 IGNORE = {
     'games-arcade/outfox': {
@@ -100,16 +99,15 @@ def main() -> int:
                       if is_elf(x) and not re.match(r'/usr/lib\d+/ryujinx/lib.*\.so$', x)
                       and not re.match(r'/opt/stepmania-outfox/lib.*\.so(?:\.\d+)?', x))
         if len(exes):
-            exe: str
             for exe, missing in ((exe, [
                     y for y in m if not (package_name in IGNORE and y in IGNORE[package_name])
-            ]) for m in find_missing_deps0(package_name, exes)):
+            ]) for exe, m in find_missing_deps0(package_name, exes)):
                 if len(missing):
                     if not printed_name:
                         print(f'{package_name}:')
                         printed_name = True
                     print(f'  {exe}:')
-                    for x in sorted(set(missing)):  # type: ignore[type-var]
+                    for x in sorted(set(missing)):
                         print(f'\t{x}')
     return 0
 

@@ -44,7 +44,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('package')
     parser.add_argument('yarn.lock')
-    args = dict(parser.parse_args()._get_kwargs())  # pylint: disable=protected-access
+    args = dict(parser.parse_args()._get_kwargs())
     yarn_lock = args['yarn.lock']
     root_dir = dirname(yarn_lock)
     package = args['package']
