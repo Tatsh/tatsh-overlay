@@ -25,8 +25,8 @@ S="${WORKDIR}/${PN}-${SHA}"
 
 src_configure() {
 	local mycmakeargs=(
-		-DCPP_JWT_BUILD_EXAMPLES=$(usex examples)
-		-DCPP_JWT_BUILD_TESTS=$(usex test)
+		"-DCPP_JWT_BUILD_EXAMPLES=$(usex examples)"
+		"-DCPP_JWT_BUILD_TESTS=$(usex test)"
 	)
 	cmake_src_configure
 }
