@@ -451,6 +451,7 @@ dvnc
 dwith
 dxbox
 dxemu
+dynaconf
 dynamicdata
 dynamicexpresso
 dynarec
@@ -1265,6 +1266,7 @@ pixbuf
 pixman
 pixmaps
 pjbgf
+pkcs
 pkgcheck
 pkgconfig
 pkgdev
@@ -1541,6 +1543,7 @@ spir
 spirv
 splitdebug
 sprintf
+sqlalchemy
 sqlparse
 squashfs
 srmd
@@ -1753,6 +1756,7 @@ wiimms
 winapi
 wincon
 windowsruntime
+wingetty
 winio
 wireshark
 wmclass
