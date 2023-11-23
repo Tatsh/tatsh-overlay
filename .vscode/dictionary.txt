@@ -59,6 +59,7 @@ arrayvec
 arrify
 artifactregistry
 artifex
+arun
 asan
 asar
 asaskevich
@@ -319,6 +320,7 @@ dcitra
 dcli
 dcmake
 dcpihecpambacapedldabdbpakmachpb
+dcpp
 dcrc
 ddev
 ddisable
