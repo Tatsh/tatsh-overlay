@@ -299,17 +299,23 @@ inherit desktop dotnet-pkg xdg
 
 DESCRIPTION="Experimental Nintendo Switch emulator written in C#"
 HOMEPAGE="https://ryujinx.org/ https://github.com/Ryujinx/Ryujinx"
-SHA="21cd4c0c00e4a06e399c93419c8f9eff0e663bfb"
-MY_PN="R${PN:1}"
-SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/${PN^}/${PN^}/archive/${PV}.tar.gz -> ${P}.tar.gz
 	${NUGET_URIS}"
 
 DEPEND="sys-libs/zlib"
 BDEPEND=">dev-dotnet/dotnet-sdk-bin-7.0.300"
 RDEPEND="${DEPEND}
+	app-arch/brotli
+	dev-libs/expat
 	dev-libs/icu
+	dev-libs/libxml2
 	dev-libs/openssl
+	media-gfx/graphite2
+	media-libs/fontconfig
+	media-libs/freetype
+	media-libs/harfbuzz
 	media-libs/libglvnd[X]
+	media-libs/libpng
 	media-libs/libsdl2
 	media-libs/libsoundio
 	media-libs/openal
@@ -318,19 +324,35 @@ RDEPEND="${DEPEND}
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+S="${WORKDIR}/${PN^}-${PV}"
+
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-better-defaults.patch"
 	"${FILESDIR}/${PN}-0002-disable-updates.patch"
+	"${FILESDIR}/${PN}-0003-use-configurationpath-for-lo.patch"
 )
 
-S="${WORKDIR}/${MY_PN}-${SHA}"
+DOTNET_PKG_PROJECTS=( "${S}/src/${PN^}" )
 
-DOTNET_PKG_PROJECTS=( "${S}/src/${MY_PN}" )
+src_prepare() {
+	sed -re "s|<Version>1\.0\.0-dirty</Version>|<Version>${PV}</Version>|g" -i src/*/*.csproj || die
+	dotnet-pkg_src_prepare
+}
+
+src_test() {
+	dotnet-pkg-base_test src/Ryujinx.Tests.Memory
+}
 
 src_install() {
-	dotnet-pkg_src_install
-	newicon distribution/misc/Logo.svg "${MY_PN}.svg"
+	dotnet-pkg-base_install
+	fperms +x "/usr/share/${P}/${PN^}.sh"
+	dotnet-pkg-base_dolauncher "/usr/share/${P}/${PN^}.sh"
+	newicon distribution/misc/Logo.svg "${PN^}.svg"
 	insinto /usr/share/mime/packages
-	doins "distribution/linux/mime/${MY_PN}.xml"
-	domenu "distribution/linux/${MY_PN}.desktop"
+	doins "distribution/linux/mime/${PN^}.xml"
+	domenu "distribution/linux/${PN^}.desktop"
+	einstalldocs
+	# CONSIDER: Why is this being created?
+	rm -r "${ED}/usr/share/${P}/share" || die
 }
