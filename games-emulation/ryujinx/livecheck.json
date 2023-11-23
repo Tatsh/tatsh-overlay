@@ -1,4 +1,5 @@
 {
+  "dotnet_project": "Ryujinx.sln",
   "regex": "tag_name\":\"(\\d+\\.\\d+\\.\\d+)\"",
   "sha_source": "https://github.com/Ryujinx/Ryujinx/commits/master.atom",
   "type": "regex",
