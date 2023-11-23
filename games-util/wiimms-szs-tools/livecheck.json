@@ -1,0 +1,6 @@
+{
+  "regex": "SZS v([0-9].*)",
+  "sha_source": "https://github.com/Wiimm/wiimms-szs-tools/commits/master.atom",
+  "type": "regex",
+  "url": "https://github.com/Wiimm/wiimms-szs-tools/commits/master.atom"
+}
