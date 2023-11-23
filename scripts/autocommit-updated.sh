@@ -14,10 +14,6 @@ while read -r ebuild; do
     cat=$(dirname "$dn")
     pn=$(basename "$dn")
     pushd "$dn" || exit 1
-    if grep -qE 'ryujinx|avalonia-ilspy|videoduplicatefinder' ./*.ebuild; then
-        popd || exit 1
-        continue
-    fi
     phases=(clean manifest prepare)
     if contains-element "${cat}/${pn}" "${test_install[@]}"; then
         phases+=(install)
