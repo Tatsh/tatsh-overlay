@@ -93,9 +93,6 @@ src_prepare() {
 }
 
 src_configure() {
-	if use web-service; then
-		die 'Building with USE=web-service is broken at the moment'
-	fi
 	local mycmakeargs=(
 		"-DENABLE_OPENAL=$(usex openal)"
 		"-DENABLE_QT=$(usex qt6)"
