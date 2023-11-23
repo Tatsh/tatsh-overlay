@@ -1,1 +1,1 @@
-{ "comment": "Disabled due to version string and not a highly active project", "type": "none" }
+{ "comment": "Disabled due to version string and not a highly active project", "dotnet_project": "ILSpy.sln", "type": "none" }
