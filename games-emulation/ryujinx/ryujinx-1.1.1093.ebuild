@@ -133,13 +133,6 @@ NUGETS="avalonia.angle.windows.natives@2.1.0.2023020321
 	runtime.unix.system.net.sockets@4.3.0
 	runtime.unix.system.private.uri@4.3.0
 	runtime.unix.system.runtime.extensions@4.3.0
-	runtime.win.microsoft.win32.primitives@4.3.0
-	runtime.win.system.console@4.3.0
-	runtime.win.system.diagnostics.debug@4.3.0
-	runtime.win.system.io.filesystem@4.3.0
-	runtime.win.system.net.primitives@4.3.0
-	runtime.win.system.net.sockets@4.3.0
-	runtime.win.system.runtime.extensions@4.3.0
 	ryujinx.atksharp@3.24.24.59-ryujinx
 	ryujinx.audio.openal.dependencies@1.21.0.1
 	ryujinx.cairosharp@3.24.24.59-ryujinx
