@@ -1,1 +1,1 @@
-{ "yarn_base_package": "yo" }
+{ "yarn_base_package": "yo", "yarn_packages": ["generator-code"] }

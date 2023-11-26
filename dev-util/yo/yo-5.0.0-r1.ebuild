@@ -8,6 +8,7 @@ inherit yarn
 DESCRIPTION="CLI tool for running Yeoman generators"
 HOMEPAGE="http://yeoman.io"
 YARN_PKGS=(
+	yo-5.0.0
 	@babel/code-frame-7.23.4
 	@babel/helper-validator-identifier-7.22.20
 	@babel/highlight-7.23.4
@@ -51,9 +52,9 @@ YARN_PKGS=(
 	@types/inquirer-9.0.7
 	@types/keyv-3.1.4
 	@types/minimatch-3.0.5
-	@types/node-16.18.63
-	@types/node-18.18.11
-	@types/node-20.9.3
+	@types/node-16.18.65
+	@types/node-18.18.13
+	@types/node-20.10.0
 	@types/normalize-package-data-2.4.4
 	@types/responselike-1.0.3
 	@types/through-0.0.33
@@ -129,7 +130,7 @@ YARN_PKGS=(
 	cli-cursor-3.1.0
 	cli-cursor-4.0.0
 	cli-list-0.2.0
-	cli-spinners-2.9.1
+	cli-spinners-2.9.2
 	cli-table-0.3.11
 	cli-width-2.2.1
 	cli-width-3.0.0
@@ -362,7 +363,7 @@ YARN_PKGS=(
 	loud-rejection-1.6.0
 	lowercase-keys-1.0.1
 	lowercase-keys-2.0.0
-	lru-cache-10.0.3
+	lru-cache-10.1.0
 	lru-cache-6.0.0
 	make-dir-3.1.0
 	make-fetch-happen-13.0.0
@@ -658,7 +659,6 @@ YARN_PKGS=(
 	yeoman-character-1.1.0
 	yeoman-doctor-5.0.0
 	yeoman-environment-4.1.3
-	yo-5.0.0
 	yocto-queue-1.0.0
 	yosay-2.0.2
 )
