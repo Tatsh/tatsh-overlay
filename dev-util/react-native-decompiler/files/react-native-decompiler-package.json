@@ -1,9 +1,5 @@
 {
   "dependencies": {
     "react-native-decompiler": "^0.2.4"
-  },
-  "license": "MIT",
-  "main": "index.js",
-  "name": "react-native-decompiler-yarn",
-  "version": "1.0.0"
+  }
 }

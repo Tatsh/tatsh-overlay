@@ -8,28 +8,28 @@ inherit yarn
 DESCRIPTION="React Native decompiler."
 HOMEPAGE="https://github.com/nomi9995/react-native-decompiler"
 YARN_PKGS=(
-	"${P}"
-	@babel/code-frame-7.22.5
+	react-native-decompiler-0.2.4
+	@aashutoshrathi/word-wrap-1.2.6
+	@babel/code-frame-7.23.4
 	@babel/generator-7.12.11
-	@babel/generator-7.22.5
-	@babel/helper-function-name-7.22.5
-	@babel/helper-split-export-declaration-7.22.5
-	@babel/helper-string-parser-7.22.5
-	@babel/helper-validator-identifier-7.22.5
-	@babel/highlight-7.22.5
+	@babel/generator-7.23.4
+	@babel/helper-function-name-7.23.0
+	@babel/helper-split-export-declaration-7.22.6
+	@babel/helper-string-parser-7.23.4
+	@babel/helper-validator-identifier-7.22.20
+	@babel/highlight-7.23.4
 	@babel/parser-7.12.11
-	@babel/parser-7.22.5
-	@babel/template-7.22.5
+	@babel/parser-7.23.4
+	@babel/template-7.22.15
 	@babel/traverse-7.12.12
 	@babel/types-7.12.11
-	@babel/types-7.22.5
+	@babel/types-7.23.4
 	@eslint/eslintrc-0.3.0
 	@jridgewell/gen-mapping-0.3.3
-	@jridgewell/resolve-uri-3.1.0
+	@jridgewell/resolve-uri-3.1.1
 	@jridgewell/set-array-1.1.2
-	@jridgewell/sourcemap-codec-1.4.14
 	@jridgewell/sourcemap-codec-1.4.15
-	@jridgewell/trace-mapping-0.3.18
+	@jridgewell/trace-mapping-0.3.20
 	acorn-7.4.1
 	acorn-jsx-5.3.2
 	ajv-6.12.6
@@ -42,14 +42,16 @@ YARN_PKGS=(
 	argv-tools-0.1.2
 	array-back-2.0.0
 	array-buffer-byte-length-1.0.0
-	array-includes-3.1.6
-	array.prototype.flatmap-1.3.1
+	array-includes-3.1.7
+	array.prototype.flat-1.3.2
+	array.prototype.flatmap-1.3.2
+	arraybuffer.prototype.slice-1.0.2
 	astral-regex-2.0.0
 	at-least-node-1.0.0
 	available-typed-arrays-1.0.5
 	balanced-match-1.0.2
 	brace-expansion-1.1.11
-	call-bind-1.0.2
+	call-bind-1.0.5
 	callsites-3.1.0
 	chalk-2.4.2
 	chalk-4.1.0
@@ -66,14 +68,15 @@ YARN_PKGS=(
 	debug-4.3.1
 	debug-4.3.4
 	deep-is-0.1.4
-	define-properties-1.2.0
+	define-data-property-1.1.1
+	define-properties-1.2.1
 	doctrine-2.1.0
 	doctrine-3.0.0
 	emoji-regex-8.0.0
-	enquirer-2.3.6
-	es-abstract-1.21.2
-	es-set-tostringtag-2.0.1
-	es-shim-unscopables-1.0.0
+	enquirer-2.4.1
+	es-abstract-1.22.3
+	es-set-tostringtag-2.0.2
+	es-shim-unscopables-1.0.2
 	es-to-primitive-1.2.1
 	escape-string-regexp-1.0.5
 	eslint-7.18.0
@@ -94,16 +97,16 @@ YARN_PKGS=(
 	fast-levenshtein-2.0.6
 	file-entry-cache-6.0.1
 	find-replace-2.0.1
-	flat-cache-3.0.4
-	flatted-3.2.7
+	flat-cache-3.2.0
+	flatted-3.2.9
 	for-each-0.3.3
 	fs-extra-9.0.1
 	fs.realpath-1.0.0
-	function-bind-1.1.1
-	function.prototype.name-1.1.5
+	function-bind-1.1.2
+	function.prototype.name-1.1.6
 	functional-red-black-tree-1.0.1
 	functions-have-names-1.2.3
-	get-intrinsic-1.2.1
+	get-intrinsic-1.2.2
 	get-symbol-description-1.0.0
 	glob-7.2.3
 	glob-parent-5.1.2
@@ -112,25 +115,26 @@ YARN_PKGS=(
 	globalthis-1.0.3
 	gopd-1.0.1
 	graceful-fs-4.2.11
-	has-1.0.3
+	has-1.0.4
 	has-bigints-1.0.2
 	has-flag-3.0.0
 	has-flag-4.0.0
-	has-property-descriptors-1.0.0
+	has-property-descriptors-1.0.1
 	has-proto-1.0.1
 	has-symbols-1.0.3
 	has-tostringtag-1.0.0
+	hasown-2.0.0
 	ignore-4.0.6
 	import-fresh-3.3.0
 	imurmurhash-0.1.4
 	inflight-1.0.6
 	inherits-2.0.4
-	internal-slot-1.0.5
+	internal-slot-1.0.6
 	is-array-buffer-3.0.2
 	is-bigint-1.0.4
 	is-boolean-object-1.1.2
 	is-callable-1.2.7
-	is-core-module-2.12.1
+	is-core-module-2.13.1
 	is-date-object-1.0.5
 	is-extglob-2.1.1
 	is-fullwidth-code-point-3.0.0
@@ -141,17 +145,20 @@ YARN_PKGS=(
 	is-shared-array-buffer-1.0.2
 	is-string-1.0.7
 	is-symbol-1.0.4
-	is-typed-array-1.1.10
+	is-typed-array-1.1.12
 	is-weakref-1.0.2
+	isarray-2.0.5
 	isexe-2.0.0
 	js-tokens-4.0.0
 	js-yaml-3.14.1
 	jsesc-2.5.2
+	json-buffer-3.0.1
 	json-schema-traverse-0.4.1
 	json-schema-traverse-1.0.0
 	json-stable-stringify-without-jsonify-1.0.1
 	jsonfile-6.1.0
-	jsx-ast-utils-3.3.3
+	jsx-ast-utils-3.3.5
+	keyv-4.5.4
 	levn-0.4.1
 	lodash-4.17.21
 	lodash.camelcase-4.3.0
@@ -162,14 +169,14 @@ YARN_PKGS=(
 	ms-2.1.2
 	natural-compare-1.4.0
 	object-assign-4.1.1
-	object-inspect-1.12.3
+	object-inspect-1.13.1
 	object-keys-1.1.1
 	object.assign-4.1.4
-	object.entries-1.1.6
-	object.fromentries-2.0.6
-	object.values-1.1.6
+	object.entries-1.1.7
+	object.fromentries-2.0.7
+	object.values-1.1.7
 	once-1.4.0
-	optionator-0.9.1
+	optionator-0.9.3
 	parent-module-1.0.1
 	path-is-absolute-1.0.1
 	path-key-3.1.1
@@ -178,16 +185,19 @@ YARN_PKGS=(
 	prettier-2.2.1
 	progress-2.0.3
 	prop-types-15.8.1
-	punycode-2.3.0
+	punycode-2.3.1
 	react-is-16.13.1
-	regexp.prototype.flags-1.5.0
+	regexp.prototype.flags-1.5.1
 	regexpp-3.2.0
 	require-from-string-2.0.2
-	resolve-1.22.2
+	resolve-1.22.8
 	resolve-from-4.0.0
 	rimraf-3.0.2
+	safe-array-concat-1.0.1
 	safe-regex-test-1.0.0
-	semver-7.5.3
+	semver-7.5.4
+	set-function-length-1.1.1
+	set-function-name-2.0.1
 	shebang-command-2.0.0
 	shebang-regex-3.0.0
 	side-channel-1.0.4
@@ -195,10 +205,10 @@ YARN_PKGS=(
 	source-map-0.5.7
 	sprintf-js-1.0.3
 	string-width-4.2.3
-	string.prototype.matchall-4.0.8
-	string.prototype.trim-1.2.7
-	string.prototype.trimend-1.0.6
-	string.prototype.trimstart-1.0.6
+	string.prototype.matchall-4.0.10
+	string.prototype.trim-1.2.8
+	string.prototype.trimend-1.0.7
+	string.prototype.trimstart-1.0.7
 	strip-ansi-6.0.1
 	strip-json-comments-3.1.1
 	supports-color-5.5.0
@@ -210,17 +220,19 @@ YARN_PKGS=(
 	to-fast-properties-2.0.0
 	type-check-0.4.0
 	type-fest-0.8.1
+	typed-array-buffer-1.0.0
+	typed-array-byte-length-1.0.0
+	typed-array-byte-offset-1.0.0
 	typed-array-length-1.0.4
 	typical-2.6.1
 	unbox-primitive-1.0.2
 	universalify-1.0.0
-	universalify-2.0.0
+	universalify-2.0.1
 	uri-js-4.4.1
-	v8-compile-cache-2.3.0
+	v8-compile-cache-2.4.0
 	which-2.0.2
 	which-boxed-primitive-1.0.2
-	which-typed-array-1.1.9
-	word-wrap-1.2.3
+	which-typed-array-1.1.13
 	wrappy-1.0.2
 	yallist-4.0.0
 )
