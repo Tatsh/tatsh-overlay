@@ -10,7 +10,7 @@ HOMEPAGE="https://code.visualstudio.com"
 NPM_P="@${P/-/\/}"
 NPM_PN="@${PN/-/\/}"
 YARN_PKGS=(
-	"${NPM_P}"
+	@vscode/vsce-2.22.0
 	ansi-styles-3.2.1
 	argparse-2.0.1
 	azure-devops-node-api-11.2.0
@@ -21,7 +21,7 @@ YARN_PKGS=(
 	brace-expansion-1.1.11
 	buffer-5.7.1
 	buffer-crc32-0.2.13
-	call-bind-1.0.2
+	call-bind-1.0.5
 	chalk-2.4.2
 	cheerio-1.0.0-rc.12
 	cheerio-select-2.1.0
@@ -34,6 +34,7 @@ YARN_PKGS=(
 	css-what-6.1.0
 	decompress-response-6.0.0
 	deep-extend-0.6.0
+	define-data-property-1.1.1
 	detect-libc-2.0.2
 	dom-serializer-2.0.0
 	domelementtype-2.3.0
@@ -47,14 +48,16 @@ YARN_PKGS=(
 	fd-slicer-1.1.0
 	fs-constants-1.0.0
 	fs.realpath-1.0.0
-	function-bind-1.1.1
-	get-intrinsic-1.2.1
+	function-bind-1.1.2
+	get-intrinsic-1.2.2
 	github-from-package-0.0.0
 	glob-7.2.3
-	has-1.0.3
+	gopd-1.0.1
 	has-flag-3.0.0
+	has-property-descriptors-1.0.1
 	has-proto-1.0.1
 	has-symbols-1.0.3
+	hasown-2.0.0
 	hosted-git-info-4.1.0
 	htmlparser2-8.0.2
 	ieee754-1.2.1
@@ -75,10 +78,10 @@ YARN_PKGS=(
 	mkdirp-classic-0.5.3
 	mute-stream-0.0.8
 	napi-build-utils-1.0.2
-	node-abi-3.47.0
+	node-abi-3.51.0
 	node-addon-api-4.3.0
 	nth-check-2.1.1
-	object-inspect-1.12.3
+	object-inspect-1.13.1
 	once-1.4.0
 	parse-semver-1.1.1
 	parse5-7.1.2
@@ -93,9 +96,10 @@ YARN_PKGS=(
 	readable-stream-3.6.2
 	rimraf-3.0.2
 	safe-buffer-5.2.1
-	sax-1.2.4
+	sax-1.3.0
 	semver-5.7.2
 	semver-7.5.4
+	set-function-length-1.1.1
 	side-channel-1.0.4
 	simple-concat-1.0.1
 	simple-get-4.0.1
