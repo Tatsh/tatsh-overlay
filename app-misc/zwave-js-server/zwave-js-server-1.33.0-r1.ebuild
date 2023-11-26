@@ -9,10 +9,11 @@ inherit systemd yarn
 DESCRIPTION="Small server wrapper around Z-Wave JS to access it via a WebSocket."
 HOMEPAGE="https://github.com/zwave-js/zwave-js-server"
 YARN_PKGS=(
+	@zwave-js/server-1.33.0
 	@alcalzone/jsonl-db-3.1.0
 	@alcalzone/pak-0.9.0
 	@alcalzone/proper-lockfile-4.1.3-0
-	@colors/colors-1.5.0
+	@colors/colors-1.6.0
 	@dabh/diagnostics-2.0.3
 	@homebridge/ciao-1.1.7
 	@leichtgewicht/ip-codec-2.0.4
@@ -34,27 +35,26 @@ YARN_PKGS=(
 	@serialport/stream-12.0.0
 	@sindresorhus/is-5.6.0
 	@szmarczak/http-timer-5.0.1
-	@types/http-cache-semantics-4.0.1
-	@types/triple-beam-1.3.2
-	@zwave-js/cc-12.2.1
-	@zwave-js/config-12.2.1
-	@zwave-js/core-12.2.1
-	@zwave-js/host-12.2.1
-	@zwave-js/nvmedit-12.2.1
-	@zwave-js/serial-12.2.1
-	"@zwave-js/server-${PV}"
-	@zwave-js/shared-12.2.1
-	@zwave-js/testing-12.2.1
+	@types/http-cache-semantics-4.0.4
+	@types/triple-beam-1.3.5
+	@zwave-js/cc-12.3.1
+	@zwave-js/config-12.3.1
+	@zwave-js/core-12.3.0
+	@zwave-js/host-12.3.1
+	@zwave-js/nvmedit-12.3.0
+	@zwave-js/serial-12.3.1
+	@zwave-js/shared-12.2.3
+	@zwave-js/testing-12.3.1
 	alcalzone-shared-4.0.8
 	ansi-colors-4.1.3
 	ansi-regex-5.0.1
 	ansi-styles-4.3.0
-	async-3.2.4
+	async-3.2.5
 	asynckit-0.4.0
 	axios-0.27.2
 	buffer-from-1.1.2
 	cacheable-lookup-7.0.0
-	cacheable-request-10.2.13
+	cacheable-request-10.2.14
 	cliui-8.0.1
 	color-3.2.1
 	color-convert-1.9.3
@@ -70,7 +70,7 @@ YARN_PKGS=(
 	decompress-response-6.0.0
 	defer-to-connect-2.0.1
 	delayed-stream-1.0.0
-	dns-packet-5.6.0
+	dns-packet-5.6.1
 	emoji-regex-8.0.0
 	enabled-2.0.0
 	escalade-3.1.1
@@ -81,7 +81,7 @@ YARN_PKGS=(
 	fecha-4.2.3
 	file-stream-rotator-0.6.1
 	fn.name-1.1.0
-	follow-redirects-1.15.2
+	follow-redirects-1.15.3
 	form-data-4.0.0
 	form-data-encoder-2.1.4
 	fs-extra-10.1.0
@@ -91,9 +91,9 @@ YARN_PKGS=(
 	globalyzer-0.1.0
 	globrex-0.1.2
 	got-13.0.0
-	graceful-fs-4.2.10
+	graceful-fs-4.2.11
 	http-cache-semantics-4.1.1
-	http2-wrapper-2.1.11
+	http2-wrapper-2.2.1
 	human-signals-2.1.0
 	inherits-2.0.4
 	is-arrayish-0.3.2
@@ -104,10 +104,9 @@ YARN_PKGS=(
 	json-logic-js-2.0.2
 	json5-2.2.3
 	jsonfile-6.1.0
-	keyv-4.5.3
+	keyv-4.5.4
 	kuler-2.0.0
-	logform-2.4.2
-	logform-2.5.1
+	logform-2.6.0
 	lowercase-keys-3.0.0
 	lru-cache-6.0.0
 	mdns-server-1.0.11
@@ -135,15 +134,14 @@ YARN_PKGS=(
 	path-key-3.1.1
 	proper-lockfile-4.1.2
 	quick-lru-5.1.1
-	readable-stream-3.6.0
+	readable-stream-3.6.2
 	reflect-metadata-0.1.13
 	require-directory-2.1.1
 	resolve-alpn-1.2.1
 	responselike-3.0.0
 	retry-0.12.0
 	safe-buffer-5.2.1
-	safe-stable-stringify-2.4.0
-	semver-7.3.8
+	safe-stable-stringify-2.4.3
 	semver-7.5.4
 	serialport-12.0.0
 	shebang-command-2.0.0
@@ -159,22 +157,22 @@ YARN_PKGS=(
 	strip-final-newline-2.0.0
 	text-hex-1.0.0
 	tiny-glob-0.2.9
-	triple-beam-1.3.0
+	triple-beam-1.4.1
 	tslib-2.6.2
-	universalify-2.0.0
+	universalify-2.0.1
 	util-deprecate-1.0.2
 	which-2.0.2
-	winston-3.10.0
+	winston-3.11.0
 	winston-daily-rotate-file-4.7.1
-	winston-transport-4.5.0
+	winston-transport-4.6.0
 	wrap-ansi-7.0.0
-	ws-8.13.0
+	ws-8.14.2
 	xstate-4.38.2
 	y18n-5.0.8
 	yallist-4.0.0
 	yargs-17.7.2
 	yargs-parser-21.1.1
-	zwave-js-12.2.1
+	zwave-js-12.3.1
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"

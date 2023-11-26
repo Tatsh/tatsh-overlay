@@ -2,5 +2,6 @@
   "regex": "archive/refs/tags/(\\d+\\.\\d+(?:\\.\\d+)?)\\.tar\\.gz",
   "type": "regex",
   "url": "https://github.com/zwave-js/zwave-js-server/tags",
-  "yarn_base_package": "@zwave-js/server"
+  "yarn_base_package": "@zwave-js/server",
+  "yarn_packages": ["zwave-js"]
 }
