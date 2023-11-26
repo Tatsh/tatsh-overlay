@@ -9,7 +9,7 @@ inherit python-r1 yarn
 DESCRIPTION="Node.js native addon build tool."
 HOMEPAGE="https://www.npmjs.com/package/node-gyp"
 YARN_PKGS=(
-	"${P}"
+	node-gyp-10.0.1
 	@isaacs/cliui-8.0.2
 	@npmcli/agent-2.2.0
 	@npmcli/fs-3.1.0
@@ -39,10 +39,9 @@ YARN_PKGS=(
 	exponential-backoff-3.1.1
 	foreground-child-3.1.1
 	fs-minipass-2.1.0
-	fs-minipass-3.0.2
-	glob-10.3.0
+	fs-minipass-3.0.3
 	glob-10.3.10
-	graceful-fs-4.2.10
+	graceful-fs-4.2.11
 	http-cache-semantics-4.1.1
 	http-proxy-agent-7.0.0
 	https-proxy-agent-7.0.2
@@ -54,19 +53,16 @@ YARN_PKGS=(
 	is-lambda-1.0.1
 	isexe-2.0.0
 	isexe-3.1.1
-	jackspeak-2.2.1
 	jackspeak-2.3.6
-	lru-cache-10.0.1
-	lru-cache-7.8.1
-	lru-cache-9.1.2
+	lru-cache-10.1.0
+	lru-cache-6.0.0
 	make-fetch-happen-13.0.0
-	minimatch-9.0.2
-	minipass-3.1.6
+	minimatch-9.0.3
+	minipass-3.3.6
 	minipass-5.0.0
-	minipass-6.0.2
 	minipass-7.0.4
 	minipass-collect-1.0.2
-	minipass-fetch-3.0.3
+	minipass-fetch-3.0.4
 	minipass-flush-1.0.5
 	minipass-pipeline-1.2.4
 	minipass-sized-1.0.3
@@ -78,29 +74,27 @@ YARN_PKGS=(
 	p-map-4.0.0
 	path-key-3.1.1
 	path-scurry-1.10.1
-	path-scurry-1.9.2
 	proc-log-3.0.0
 	promise-retry-2.0.1
 	retry-0.12.0
 	safer-buffer-2.1.2
-	semver-7.3.6
+	semver-7.5.4
 	shebang-command-2.0.0
 	shebang-regex-3.0.0
-	signal-exit-4.0.2
+	signal-exit-4.1.0
 	smart-buffer-4.2.0
 	socks-2.7.1
 	socks-proxy-agent-8.0.2
-	ssri-10.0.4
+	ssri-10.0.5
 	string-width-4.2.3
 	string-width-5.1.2
 	strip-ansi-6.0.1
 	strip-ansi-7.1.0
-	tar-6.1.11
+	tar-6.2.0
 	unique-filename-3.0.0
 	unique-slug-4.0.0
 	which-2.0.2
 	which-4.0.0
-	wrap-ansi-7.0.0
 	wrap-ansi-8.1.0
 	yallist-4.0.0
 )
