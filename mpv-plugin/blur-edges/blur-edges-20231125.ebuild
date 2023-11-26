@@ -8,7 +8,7 @@ inherit mpv-plugin
 
 DESCRIPTION="Fills the black bars on the side of a video with a blurred copy of its edges."
 HOMEPAGE="https://github.com/occivink/mpv-scripts"
-SHA="af360f332897dda907644480f785336bc93facf1"
+SHA="ad81737f98940c97330e44364162c55443d702fb"
 SRC_URI="https://github.com/occivink/mpv-scripts/archive/${SHA}.tar.gz -> occivink-mpv-scripts-${SHA:0:7}.tar.gz"
 
 LICENSE="GPL-3"
