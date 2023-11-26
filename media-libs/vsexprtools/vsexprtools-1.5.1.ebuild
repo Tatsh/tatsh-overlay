@@ -18,13 +18,11 @@ KEYWORDS="~amd64"
 RDEPEND="media-libs/vstools[${PYTHON_USEDEP}]
 	media-video/vapoursynth[${PYTHON_USEDEP}]"
 
-S="${WORKDIR}/${P^}"
-
-distutils_enable_tests pytest
-
 S="${WORKDIR}/${PN}-${PV}"
 
 src_prepare() {
 	touch requirements.txt
 	distutils-r1_src_prepare
 }
+
+distutils_enable_tests pytest
