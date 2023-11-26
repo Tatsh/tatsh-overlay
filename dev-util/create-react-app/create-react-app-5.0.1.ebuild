@@ -8,7 +8,7 @@ inherit yarn
 DESCRIPTION="Create React apps with no build configuration."
 HOMEPAGE="https://www.npmjs.com/package/create-react-app"
 YARN_PKGS=(
-	"${P}"
+	create-react-app-5.0.1
 	ansi-styles-4.3.0
 	balanced-match-1.0.2
 	block-stream-0.0.9
@@ -24,7 +24,7 @@ YARN_PKGS=(
 	cross-spawn-7.0.3
 	debug-2.6.9
 	duplexer2-0.0.2
-	envinfo-7.10.0
+	envinfo-7.11.0
 	fs-extra-10.1.0
 	fs.realpath-1.0.0
 	fstream-1.0.12
@@ -68,7 +68,7 @@ YARN_PKGS=(
 	through2-0.6.5
 	tmp-0.2.1
 	uid-number-0.0.6
-	universalify-2.0.0
+	universalify-2.0.1
 	util-deprecate-1.0.2
 	validate-npm-package-name-3.0.0
 	which-2.0.2
