@@ -7,7 +7,7 @@ inherit desktop edo linux-info toolchain-funcs wrapper
 
 DESCRIPTION="Fork of sm64-port with additional features (alpha branch)."
 HOMEPAGE="https://github.com/Render96/Render96ex/tree/alpha"
-SHA="4fe121fbf0d363d48577f739f5df2d605e831028"
+SHA="24738d3073a64843a2cf5df8e4a7b86eb4ac6d8f"
 MODELS_SHA="f4f438447748782b7c824cee903594706a3941e2"
 TEXTURES_SHA="7ad93cfbdde449cc07e86ebf17985ee9c157f36f"
 MY_PN="Render96ex"
@@ -17,7 +17,6 @@ SRC_URI="https://github.com/Render96/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	us? ( sm64.us.z64 )
 	eu? ( sm64.eu.z64 )
 	jp? ( sm64.jp.z64 )"
-RESTRICT="fetch"
 
 LICENSE="all-rights-reserved"
 SLOT="0"
