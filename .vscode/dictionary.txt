@@ -1,4 +1,5 @@
 aarch
+aashutoshrathi
 aatl
 accessapproval
 accesscontextmanager
@@ -53,6 +54,7 @@ archiver
 argcomplete
 argparse
 armon
+arraybuffer
 arrayish
 arrayref
 arrayvec
@@ -969,6 +971,7 @@ makeopts
 malloc
 managedidentities
 mandaic
+mandiant
 manichaean
 maniuplate
 manpages
@@ -1499,6 +1502,7 @@ smallvec
 smaniotto
 sndfile
 sndh
+snesrev
 socketfile
 softfloat
 sompeng
@@ -1586,6 +1590,7 @@ textwrap
 tfperms
 thaana
 tham
+thilojaeggi
 thirdparty
 thiserror
 threadpool
