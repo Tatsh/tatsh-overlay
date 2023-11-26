@@ -1,1 +1,4 @@
-{ "yarn_base_package": "prettier" }
+{
+  "yarn_base_package": "prettier",
+  "yarn_packages": ["prettier-plugin-ini", "prettier-plugin-sort-json", "prettier-plugin-toml"]
+}

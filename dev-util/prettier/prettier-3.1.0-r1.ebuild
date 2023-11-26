@@ -9,6 +9,18 @@ DESCRIPTION="Prettier is an opinionated code formatter"
 HOMEPAGE="https://prettier.io"
 YARN_PKGS=(
 	prettier-3.1.0
+	@chevrotain/cst-dts-gen-11.0.3
+	@chevrotain/gast-11.0.3
+	@chevrotain/regexp-to-ast-11.0.3
+	@chevrotain/types-11.0.3
+	@chevrotain/utils-11.0.3
+	@toml-tools/lexer-1.0.0
+	@toml-tools/parser-1.0.0
+	chevrotain-11.0.3
+	lodash-es-4.17.21
+	prettier-plugin-ini-1.1.0
+	prettier-plugin-sort-json-3.1.0
+	prettier-plugin-toml-1.0.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
