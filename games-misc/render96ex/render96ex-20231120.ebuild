@@ -34,7 +34,7 @@ REQUIRED_USE="|| ( eu jp us )"
 
 DEPEND="media-libs/glew:= media-libs/libsdl2 media-libs/libglvnd[X]"
 RDEPEND="${DEPEND}"
-BDEPEND="app-arch/p7zip"
+BDEPEND="app-arch/p7zip media-libs/audiofile"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-custom-flags.patch" )
 
