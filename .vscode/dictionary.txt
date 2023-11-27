@@ -1047,6 +1047,7 @@ modlist
 modpost
 moduleinto
 moltenvk
+mousea
 mparser
 mpfr
 mrlotfi
@@ -1484,6 +1485,7 @@ siac
 sigstore
 simd
 simoninns
+simpleini
 simplexml
 simplier
 sindresorhus
@@ -1789,6 +1791,7 @@ yuzu
 zarchive
 zaufi
 zeebo
+zeid
 zenyd
 zerocopy
 zerofill
