@@ -21,7 +21,7 @@ DEPEND=">=sys-libs/libcxx-16[static-libs]
 
 S="${WORKDIR}/${PN}-build_${PV}"
 # Necessary to avoid expansion in mycmakeargs below, even with single quotes
-# shellcheck disable=SC2676,SC2016
+# shellcheck disable=SC2736,SC2016
 QUOTED_DOLLAR_SCAN_DEPS='${CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS}'
 
 src_configure() {
