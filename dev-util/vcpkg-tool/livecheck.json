@@ -1,4 +1,5 @@
 {
   "semver": false,
-  "transformation_function": "dotize"
+  "transformation_function": "dotize",
+  "use_vercmp": false
 }
