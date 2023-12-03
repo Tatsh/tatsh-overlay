@@ -28,7 +28,7 @@ RDEPEND="${PYTHON_DEPS}
 	dev-python/rife-ncnn-vulkan-python[${PYTHON_USEDEP}]
 	dev-python/srmd-ncnn-vulkan-python[${PYTHON_USEDEP}]
 	dev-python/waifu2x-ncnn-vulkan-python[${PYTHON_USEDEP}]
-	media-libs/opencv[${PYTHON_USEDEP}]
+	media-libs/opencv[ffmpeg,${PYTHON_USEDEP}]
 "
 
 S="${WORKDIR}/${PN}-${MY_PV}"
