@@ -1,3 +1,4 @@
 {
+  "semver": false,
   "transformation_function": "dotize"
 }
