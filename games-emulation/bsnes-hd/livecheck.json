@@ -1,5 +1,5 @@
 {
-  "regex": "tag/([^\"]+)",
+  "regex": "tag/(beta_[^\"]+)",
   "transformation_function": "handle_bsnes_hd",
   "type": "regex",
   "url": "https://github.com/DerKoun/bsnes-hd/tags"
