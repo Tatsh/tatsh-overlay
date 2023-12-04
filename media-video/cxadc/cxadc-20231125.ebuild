@@ -35,6 +35,7 @@ src_install() {
 	udev_dorules "${PN}.rules"
 	insinto /lib/modprobe.d
 	doins "${PN}.conf"
-	dobin utils/c* cxleveladj
+	dobin utils/c*
+	newbin leveladj cxleveladj
 	systemd_dounit "${PN}nc.service"
 }
