@@ -6,10 +6,11 @@ EAPI=8
 DISTUTILS_USE_PEP517=poetry
 PYTHON_COMPAT=( python3_1{0,1,2} )
 
-inherit distutils-r1 pypi
+inherit distutils-r1
 
 DESCRIPTION="Fight back against the boilerplate monster."
 HOMEPAGE="https://pypi.org/project/cruft/ https://cruft.github.io/ https://github.com/cruft/cruft/"
+SRC_URI="https://github.com/${PN}/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -27,5 +28,7 @@ BDEPEND="test? (
 		dev-python/pytest-repeat[${PYTHON_USEDEP}]
 		dev-python/pytest-xdist[${PYTHON_USEDEP}]
 	)"
+
+PATCHES=( "${FILESDIR}/${PN}-0001-fix-globs-in-skip.patch" )
 
 distutils_enable_tests pytest
