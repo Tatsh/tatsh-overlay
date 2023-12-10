@@ -9,7 +9,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="Release management tool designed for teams (cz command)."
 HOMEPAGE="https://pypi.org/project/commitizen/"
-SRC_URI="https://github.com/${PN}-tools/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.gh.tar.gz"
+SRC_URI="https://github.com/${PN}-tools/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
