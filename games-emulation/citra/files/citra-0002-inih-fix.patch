@@ -1,4 +1,4 @@
-From 5a96ee21717990b2ba2982ce42857f8cbe333dea Mon Sep 17 00:00:00 2001
+From e9a4b9302be078a425d42d46a0dc1c62fd0739e9 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:47 -0400
 Subject: [PATCH 2/2] inih fix
@@ -52,5 +52,5 @@ index ba5c5f867..24a53857e 100644
  #include <glslang/Public/ShaderLang.h>
  #include "common/assert.h"
 -- 
-2.42.0
+2.43.0
 
