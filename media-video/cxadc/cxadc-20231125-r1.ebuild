@@ -13,6 +13,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
+MAKEOPTS+=" -j1"
 S="${WORKDIR}/${PN}-linux3-${SHA}"
 
 DOCS=( README.md "Tips-&-Notes.md" )
