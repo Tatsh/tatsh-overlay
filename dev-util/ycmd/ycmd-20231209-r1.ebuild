@@ -7,7 +7,6 @@ inherit cmake python-single-r1
 
 DESCRIPTION="A code-completion & code-comprehension server."
 HOMEPAGE="https://github.com/ycm-core/ycmd"
-CORE_VERSION=47
 SHA="0a276f779a596d75787d02c4e4343c6e9777507b"
 SRC_URI="https://github.com/ycm-core/ycmd/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
@@ -37,6 +36,7 @@ src_prepare() {
 		-e "s|@LIBCLANG_DIR@|$(llvm-config --libdir)|" \
 		-e "s:CLANG_RESOURCE_DIR =.*:CLANG_RESOURCE_DIR = '$(find "${EPREFIX}/usr/lib/clang" -mindepth 1 -maxdepth 1 -type d | head -n 1)':" \
 		-i ../ycmd/utils.py || die
+	sed -e "s/@CORE_VERSION@/$(< "../CORE_VERSION")/" -i ../ycmd/utils.py || die
 	local -r clang_version=$(best_version sys-devel/clang)
 	sed -e "s/@EPREFIX@/${EPREFIX}/g" \
 		-e "s/@CLANG_VERSION@/${clang_version:16:2}/" -i \
