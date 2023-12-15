@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+    <maintainer type="person">
+      <email>audvare@gmail.com</email>
+      <name>Andrew Udvare</name>
+    </maintainer>
+    <upstream>
+        <bugs-to>https://github.com/chrissimpkins/commandlines/issues</bugs-to>
+        <remote-id type="github">chrissimpkins/commandlines</remote-id>
+        <remote-id type="pypi">commandlines</remote-id>
+    </upstream>
+</pkgmetadata>
