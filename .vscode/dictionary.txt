@@ -102,6 +102,7 @@ awscli
 awslabs
 axios
 aymanbagabas
+backgroundremover
 backoff
 bamum
 barbieri
@@ -188,6 +189,7 @@ cdecrypt
 cdpatch
 cdrecord
 cemu
+certifi
 certificatemanager
 cespare
 cffi
@@ -204,6 +206,7 @@ choco
 chocolatey
 chownr
 chriskiehl
+chrissimpkins
 chromaprint
 chrono
 chzyer
@@ -245,6 +248,7 @@ colorstring
 colour
 commandline
 commandlineparser
+commandlines
 commitizen
 commondir
 compat
@@ -281,6 +285,7 @@ creack
 creds
 cryptopp
 cssesc
+cuda
 cugan
 cunet
 cword
@@ -583,6 +588,7 @@ fuser
 gamecube
 gandarez
 gast
+gccdir
 gcfg
 gcflags
 gcrypt
@@ -723,6 +729,7 @@ identitymodel
 idna
 ilgeneration
 ilspy
+imageio
 imagepipe
 imagesharp
 imath
@@ -1051,6 +1058,7 @@ moduleinto
 moltenvk
 mousa
 mousea
+moviepy
 mparser
 mpfr
 mrlotfi
@@ -1078,6 +1086,7 @@ myfeatures
 mygoargs
 mypy
 myqmakeargs
+nadermx
 nall
 nameresolution
 nandinagari
@@ -1131,6 +1140,7 @@ nomi
 nopasswd
 nopt
 noreturn
+nosetests
 nosniff
 notfound
 noto
@@ -1148,6 +1158,7 @@ numpy
 nunit
 nupkg
 nurio
+nvcc
 nvdec
 nvmedit
 nwaples
@@ -1276,6 +1287,7 @@ preinst
 privatecatalog
 procapture
 procatpure
+proglog
 programfiles
 programfileslinux
 progressbar
@@ -1308,6 +1320,7 @@ pygments
 pygtrie
 pyhht
 pylint
+pymatting
 pynput
 pypamtest
 pypi
@@ -1447,6 +1460,7 @@ scandep
 scandir
 scenechange
 schollz
+scikit
 scipy
 scires
 scopeguard
@@ -1567,6 +1581,7 @@ taitham
 taiviet
 taketalk
 takri
+taplo
 tasksh
 taskshell
 taskwarrior
@@ -1615,6 +1630,7 @@ tomcrypt
 tomlkit
 tomlplusplus
 tommath
+torchvision
 tostringtag
 tqdm
 trac
