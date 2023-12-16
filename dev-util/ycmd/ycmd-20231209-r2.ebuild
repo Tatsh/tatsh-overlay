@@ -32,11 +32,10 @@ S="${WORKDIR}/${PN}-${SHA}/cpp"
 src_prepare() {
 	rm -fR ../ycmd/tests ../third_party
 	eapply --directory="${WORKDIR}/${PN}-${SHA}" -p0 "${FILESDIR}"
-	sed -e "s/@CORE_VERSION@/${CORE_VERSION}/" \
+	sed -e "s/@CORE_VERSION@/$(< "../CORE_VERSION")/" \
 		-e "s|@LIBCLANG_DIR@|$(llvm-config --libdir)|" \
 		-e "s:CLANG_RESOURCE_DIR =.*:CLANG_RESOURCE_DIR = '$(find "${EPREFIX}/usr/lib/clang" -mindepth 1 -maxdepth 1 -type d | head -n 1)':" \
 		-i ../ycmd/utils.py || die
-	sed -e "s/@CORE_VERSION@/$(< "../CORE_VERSION")/" -i ../ycmd/utils.py || die
 	local -r clang_version=$(best_version sys-devel/clang)
 	sed -e "s/@EPREFIX@/${EPREFIX}/g" \
 		-e "s/@CLANG_VERSION@/${clang_version:16:2}/" -i \
