@@ -383,7 +383,7 @@ CRATES="
 	zune-inflate@0.2.54
 "
 
-inherit cargo
+inherit cargo desktop
 
 DESCRIPTION="CLI frontend of Czkawka"
 HOMEPAGE="https://github.com/qarmin/czkawka"
@@ -418,7 +418,7 @@ src_configure() {
 src_install() {
 	dobin "target/release/${PN}"_{gui,cli}
 	dosym "${PN}_cli" "/usr/bin/${PN}"
-	local upper_name="${PN^^}"
-	make_desktop_entry "${PN}_gui" "${upper_name:0:1}${PN:1}"
+	doicon "snap/gui/${PN}.png"
+	make_desktop_entry "${PN}_gui" "${PN^}" "${PN}" Utility
 	einstalldocs
 }
