@@ -89,8 +89,7 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 		local archive
 		for archive in ${A}; do
 			case "${archive}" in
-			*.tgz) ;;
-
+			node-*.tgz) ;;
 			*)
 				unpack "${archive}"
 				;;
@@ -105,11 +104,12 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 		if [[ ! ${_YARN_SET_GLOBALS_CALLED} ]]; then
 			die "yarn_set_globals must be called in global scope"
 		fi
-		mkdir lib packages || die
+		mkdir "${WORKDIR}/lib" "${WORKDIR}/packages" || die
 		local file bn
+		echo "${_YARN_DISTFILES[@]}"
 		for file in "${_YARN_DISTFILES[@]}"; do
 			bn=$(basename "$file")
-			ln -s "${DISTDIR}/${file}" "packages/${bn:5}" || die
+			ln -s "${DISTDIR}/${file}" "${WORKDIR}/packages/${bn:5}" || die
 		done
 		default
 	}
