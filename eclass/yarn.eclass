@@ -37,6 +37,7 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	_YARN_DISTFILES=()
 
 	WANT_GYP=${WANT_GYP:-0}
+	YARN_PRODUCTION=${YARN_PRODUCTION:-1}
 
 	# @FUNCTION: yarn_set_globals
 	# @DESCRIPTION:
@@ -129,18 +130,26 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 		cd lib || die
 		cp "${YARN_PACKAGE_JSON:-${FILESDIR}/${PN}-package.json}" package.json || die
 		cp "${YARN_LOCK:-${FILESDIR}/${PN}-yarn.lock}" yarn.lock || die
+		local args=(
+			--offline
+			--verbose
+			--no-progress
+			--non-interactive
+			--build-from-source
+		)
+		if [[ "$YARN_PRODUCTION" != 0 ]]; then
+			args+=(--production)
+		fi
 		edo env \
 			"npm_config_jobs=$(makeopts_jobs)" \
 			npm_config_verbose=true \
 			npm_config_release=true \
 			"npm_config_nodedir=${EPREFIX}/usr/include/node" \
-			yarn install --production --offline --verbose --no-progress \
-				--non-interactive --build-from-source
+			yarn install "${args[*]}"
 		# Delete known pre-built binaries
 		rm -fR \
 			node_modules/@serialport/bindings-cpp/prebuilds/{darwin,android,win32,linux-arm}* \
-			node_modules/@serialport/bindings-cpp/prebuilds/linux-x64/*musl.node \
-			package.json || die
+			node_modules/@serialport/bindings-cpp/prebuilds/linux-x64/*musl.node || die
 		find . -type d -empty -delete || die
 		# Delete files that need compilation and related unused files at
 		# runtime as we only want distributed .js files
