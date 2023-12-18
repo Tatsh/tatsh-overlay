@@ -9,11 +9,9 @@ HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
 ASMJIT_SHA="c59847629d3a19da4d10f0be4ac33b43fc4a100f"
 HIDAPI_SHA="8b43a97a9330f8b0035439ce9e255e4be202deca"
 ITTAPI_VERSION="3.18.12"
-LLVM_SHA="cd89023f797900e4492da58b7bed36f702120011"
 SOUNDTOUCH_SHA="83cfba67b6af80bb9bfafc0b324718c4841f2991"
 YAML_CPP_SHA="0b67821f307e8c6bf0eba9b6d3250e3cf1441450"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/llvm/llvm-project/archive/${LLVM_SHA}.tar.gz -> ${PN}-llvm-${LLVM_SHA:0:7}.tar.gz
 	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${PN}-asmjit-${ASMJIT_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${PN}-hidapi-${HIDAPI_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${PN}-yaml-cpp-${YAML_CPP_SHA:0:7}.tar.gz
@@ -46,6 +44,7 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	media-video/ffmpeg
 	net-libs/miniupnpc
 	net-misc/curl
+	sys-devel/llvm:17
 	sys-libs/ncurses
 	sys-libs/zlib
 	media-libs/libjpeg-turbo
@@ -71,12 +70,10 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0006-support-for-system-miniupnpc.patch"
 	"${FILESDIR}/${PN}-0007-remove-extra.patch"
 	"${FILESDIR}/${PN}-0008-allow-system-rtmidi.patch"
-	"${FILESDIR}/${PN}-9999-ittapi-remove-git-co.patch"
+	"${FILESDIR}/${PN}-9999-llvm-17.patch"
 )
 
 src_prepare() {
-	rmdir "${S}/3rdparty/llvm/llvm" || die
-	mv "${WORKDIR}/llvm-project-${LLVM_SHA}" "${S}/3rdparty/llvm/llvm" || die
 	rmdir "${S}/3rdparty/hidapi/hidapi" || die
 	mv "${WORKDIR}/hidapi-${HIDAPI_SHA}" "${S}/3rdparty/hidapi/hidapi" || die
 	rmdir "${S}/3rdparty/yaml-cpp/yaml-cpp" || die
@@ -87,8 +84,6 @@ src_prepare() {
 		echo '#define RPCS3_GIT_BRANCH "master"'
 		echo '#define RPCS3_GIT_FULL_BRANCH "RPCS3/rpcs3/master"'
 		echo '#define RPCS3_GIT_VERSION_NO_UPDATE 1'; } > rpcs3/git-version.h
-	sed -re 's/MATCHES "\^\(DEBUG\|RELEASE\|RELWITHDEBINFO\|MINSIZEREL\)\$/MATCHES "^(DEBUG|RELEASE|RELWITHDEBINFO|MINSIZEREL|GENTOO)/' \
-		-i "${S}/3rdparty/llvm/llvm/llvm/CMakeLists.txt" || die
 	sed -e '/find_program(CCACHE_FOUND/d' -i CMakeLists.txt || die
 	sed -re '/\s+add_compile_options\(-Werror=missing-noreturn\).*/d' \
 		-e '/\s+add_compile_options\(-Werror=old-style-cast\).*/d' \
