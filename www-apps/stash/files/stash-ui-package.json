@@ -1,22 +1,4 @@
 {
-  "name": "stash",
-  "version": "0.1.0",
-  "private": true,
-  "homepage": "./",
-  "scripts": {
-    "start": "vite",
-    "build": "vite build",
-    "build-ci": "yarn run validate && yarn run build",
-    "validate": "yarn run lint && yarn run check && yarn run format-check",
-    "lint": "yarn run lint:js && yarn run lint:css",
-    "lint:css": "stylelint --cache \"src/**/*.scss\"",
-    "lint:js": "eslint --cache src/",
-    "check": "tsc --noEmit",
-    "format": "prettier --write . ../../graphql",
-    "format-check": "prettier --check . ../../graphql",
-    "gqlgen": "gql-gen --config codegen.yml",
-    "extract": "NODE_ENV=development extract-messages -l=en,de -o src/locale -d en --flat false 'src/**/!(*.test).tsx'"
-  },
   "dependencies": {
     "@ant-design/react-slick": "^1.0.0",
     "@apollo/client": "^3.7.17",
@@ -124,7 +106,25 @@
     "vite-plugin-compression": "^0.5.1",
     "vite-tsconfig-paths": "^4.0.5"
   },
+  "homepage": "./",
+  "name": "stash",
+  "private": true,
   "resolutions": {
     "webcomponents.js": "^0.7.24"
-  }
+  },
+  "scripts": {
+    "build": "vite build",
+    "build-ci": "yarn run validate && yarn run build",
+    "check": "tsc --noEmit",
+    "extract": "NODE_ENV=development extract-messages -l=en,de -o src/locale -d en --flat false 'src/**/!(*.test).tsx'",
+    "format": "prettier --write . ../../graphql",
+    "format-check": "prettier --check . ../../graphql",
+    "gqlgen": "gql-gen --config codegen.yml",
+    "lint": "yarn run lint:js && yarn run lint:css",
+    "lint:css": "stylelint --cache \"src/**/*.scss\"",
+    "lint:js": "eslint --cache src/",
+    "start": "vite",
+    "validate": "yarn run lint && yarn run check && yarn run format-check"
+  },
+  "version": "0.1.0"
 }
