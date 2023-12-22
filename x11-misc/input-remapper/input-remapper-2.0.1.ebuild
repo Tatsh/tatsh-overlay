@@ -40,6 +40,6 @@ src_install() {
 	doins "data/${PN}-autoload.desktop"
 	udev_dorules "data/99-${PN}.rules"
 	dobin "bin/${PN}-"*
-	insinto /usr/share/${PN}
+	insinto "/usr/share/${PN}"
 	doins "data/${PN}-large.png" "data/${PN}.glade" "data/${PN}.svg" data/style.css
 }
