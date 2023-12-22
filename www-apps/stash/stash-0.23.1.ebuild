@@ -2706,13 +2706,13 @@ LICENSE="AGPL-3 MIT 0BSD Apache-2.0 Apache-2.0 WITH LLVM-exception BSD-2-Clause 
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="${DEPEND} media-video/ffmpeg"
+RDEPEND="media-video/ffmpeg"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-makefile-remove-ui-steps.patch" )
 
 _go-module_src_unpack_gosum_no_unpack() {
 	# shellcheck disable=SC2120
-	debug-print-function "${FUNCNAME}" "$@"
+	debug-print-function "${FUNCNAME[0]}"
 
 	if [[ ! ${_GO_MODULE_SET_GLOBALS_CALLED} ]]; then
 		die "go-module_set_globals must be called in global scope"
@@ -2730,7 +2730,7 @@ _go-module_src_unpack_gosum_no_unpack() {
 			# Build symlink hierarchy
 			goproxy_mod_dir=$( dirname "${goproxy_dir}"/"${goproxy_mod_path}" )
 			mkdir -p "${goproxy_mod_dir}" || die
-			ln -sf "${DISTDIR}"/"${f}" "${goproxy_dir}/${goproxy_mod_path}" ||
+			ln -sf "${DISTDIR}/${f}" "${goproxy_dir}/${goproxy_mod_path}" ||
 				die "Failed to ln"
 			local v=${goproxy_mod_path}
 			v="${v%.mod}"
@@ -2766,9 +2766,10 @@ src_compile() {
 		node_modules/@serialport/bindings-cpp/prebuilds/{darwin,android,win32,linux-arm}* \
 		node_modules/@serialport/bindings-cpp/prebuilds/linux-x64/*musl.node || die
 	edo yarn gql-gen
-	export VITE_APP_NOLEGACY=true
-	export VITE_APP_STASH_VERSION="${PV}"
-	export VITE_APP_DATE=$(date '+%Y-%m-%d %H:%M:%S')
+	VITE_APP_DATE="$(date '+%Y-%m-%d %H:%M:%S')"
+	VITE_APP_NOLEGACY=true
+	VITE_APP_STASH_VERSION="${PV}"
+	export VITE_APP_DATE VITE_APP_NOLEGACY VITE_APP_STASH_VERSION
 	edo yarn vite build
 	cd "${S}" || die
 	MAKEOPTS=-j1 LDFLAGS="" emake release
