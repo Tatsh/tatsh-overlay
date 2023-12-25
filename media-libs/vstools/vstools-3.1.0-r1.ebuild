@@ -16,6 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="dev-python/rich[${PYTHON_USEDEP}]
+	dev-python/stgpytools[${PYTHON_USEDEP}]
 	media-libs/vstools[${PYTHON_USEDEP}]
 	media-video/vapoursynth[${PYTHON_USEDEP}]"
 
