@@ -6,12 +6,13 @@ EAPI=8
 inherit qt5-build
 
 DESCRIPTION="Qt module and API for defining 3D content in Qt QuickTools"
-SLOT="5/${QT5_PV}"
+_QT5_PV="5.15.11"
+SLOT="5/${_QT5_PV}"
 
 KEYWORDS="~amd64"
-DEPEND="=dev-qt/qtcore-${QT5_PV}*:5=
-	=dev-qt/qtdeclarative-${QT5_PV}*:5=
-	=dev-qt/qtgui-${QT5_PV}*:5=
+DEPEND="=dev-qt/qtcore-${_QT5_PV}*:5=
+	=dev-qt/qtdeclarative-${_QT5_PV}*:5=
+	=dev-qt/qtgui-${_QT5_PV}*:5=
 	media-libs/assimp:=
 	sys-libs/zlib"
 RDEPEND="${DEPEND}"
