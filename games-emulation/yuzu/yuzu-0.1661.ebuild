@@ -108,6 +108,8 @@ src_prepare() {
 	fi
 	mv -f "${T}/compatibility_list.json" \
 		"${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
+	sed -re '/.*case VkResult::VK_ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR.*/d' -i \
+		src/video_core/vulkan_common/vulkan_wrapper.cpp || die
 }
 
 src_configure() {
