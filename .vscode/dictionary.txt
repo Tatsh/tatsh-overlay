@@ -201,6 +201,7 @@ callsites
 camelcase
 canadianaboriginal
 cancelreader
+caniuse
 capa
 carian
 ccache
@@ -1806,6 +1807,7 @@ stashapp
 statigz
 stdc
 stepmania
+stgpytools
 stiefel
 stix
 storagetransfer
