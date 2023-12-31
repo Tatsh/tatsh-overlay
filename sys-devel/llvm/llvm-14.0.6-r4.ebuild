@@ -36,6 +36,7 @@ DEPEND="
 	${RDEPEND}
 	binutils-plugin? ( sys-libs/binutils-libs )
 "
+# shellcheck disable=SC2016
 BDEPEND="
 	${PYTHON_DEPS}
 	dev-lang/perl
@@ -79,10 +80,9 @@ python_check_deps() {
 }
 
 check_uptodate() {
-	local prod_targets=(
-		$(sed -n -e '/set(LLVM_ALL_TARGETS/,/)/p' CMakeLists.txt \
+	local prod_targets
+	mapfile -t prod_targets < <(sed -n -e '/set(LLVM_ALL_TARGETS/,/)/p' CMakeLists.txt \
 			| tail -n +2 | head -n -1)
-	)
 	local all_targets=(
 		lib/Target/*/
 	)
@@ -94,14 +94,14 @@ check_uptodate() {
 		has "${i}" "${prod_targets[@]}" || exp_targets+=( "${i}" )
 	done
 
-	if [[ ${exp_targets[*]} != ${ALL_LLVM_EXPERIMENTAL_TARGETS[*]} ]]; then
+	if [[ ${exp_targets[*]} != "${ALL_LLVM_EXPERIMENTAL_TARGETS[*]}" ]]; then
 		eqawarn "ALL_LLVM_EXPERIMENTAL_TARGETS is outdated!"
 		eqawarn "    Have: ${ALL_LLVM_EXPERIMENTAL_TARGETS[*]}"
 		eqawarn "Expected: ${exp_targets[*]}"
 		eqawarn
 	fi
 
-	if [[ ${prod_targets[*]} != ${ALL_LLVM_PRODUCTION_TARGETS[*]} ]]; then
+	if [[ ${prod_targets[*]} != "${ALL_LLVM_PRODUCTION_TARGETS[*]}" ]]; then
 		eqawarn "ALL_LLVM_PRODUCTION_TARGETS is outdated!"
 		eqawarn "    Have: ${ALL_LLVM_PRODUCTION_TARGETS[*]}"
 		eqawarn "Expected: ${prod_targets[*]}"
@@ -325,41 +325,42 @@ multilib_src_configure() {
 		ffi_cflags=$($(tc-getPKG_CONFIG) --cflags-only-I libffi)
 		ffi_ldflags=$($(tc-getPKG_CONFIG) --libs-only-L libffi)
 	fi
-	local libdir=$(get_libdir)
+	local libdir
+	libdir=$(get_libdir)
 	local mycmakeargs=(
 		# disable appending VCS revision to the version to improve
 		# direct cache hit ratio
 		-DLLVM_APPEND_VC_REV=OFF
 		-DCMAKE_INSTALL_PREFIX="${EPREFIX}/usr/lib/llvm/${SLOT}"
-		-DLLVM_LIBDIR_SUFFIX=${libdir#lib}
+		-DLLVM_LIBDIR_SUFFIX="${libdir#lib}"
 
 		-DBUILD_SHARED_LIBS=OFF
 		-DLLVM_BUILD_LLVM_DYLIB=ON
 		-DLLVM_LINK_LLVM_DYLIB=ON
-		-DLLVM_DISTRIBUTION_COMPONENTS=$(get_distribution_components)
+		"-DLLVM_DISTRIBUTION_COMPONENTS=$(get_distribution_components)"
 
 		# cheap hack: LLVM combines both anyway, and the only difference
 		# is that the former list is explicitly verified at cmake time
 		-DLLVM_TARGETS_TO_BUILD=""
 		-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="${LLVM_TARGETS// /;}"
-		-DLLVM_BUILD_TESTS=$(usex test)
+		"-DLLVM_BUILD_TESTS=$(usex test)"
 
-		-DLLVM_ENABLE_FFI=$(usex libffi)
-		-DLLVM_ENABLE_LIBEDIT=$(usex libedit)
-		-DLLVM_ENABLE_TERMINFO=$(usex ncurses)
-		-DLLVM_ENABLE_LIBXML2=$(usex xml)
-		-DLLVM_ENABLE_ASSERTIONS=$(usex debug)
-		-DLLVM_ENABLE_LIBPFM=$(usex exegesis)
+		"-DLLVM_ENABLE_FFI=$(usex libffi)"
+		"-DLLVM_ENABLE_LIBEDIT=$(usex libedit)"
+		"-DLLVM_ENABLE_TERMINFO=$(usex ncurses)"
+		"-DLLVM_ENABLE_LIBXML2=$(usex xml)"
+		"-DLLVM_ENABLE_ASSERTIONS=$(usex debug)"
+		"-DLLVM_ENABLE_LIBPFM=$(usex exegesis)"
 		-DLLVM_ENABLE_EH=ON
 		-DLLVM_ENABLE_RTTI=ON
-		-DLLVM_ENABLE_Z3_SOLVER=$(usex z3)
+		"-DLLVM_ENABLE_Z3_SOLVER=$(usex z3)"
 
 		-DLLVM_HOST_TRIPLE="${CHOST}"
 
 		-DFFI_INCLUDE_DIR="${ffi_cflags#-I}"
 		-DFFI_LIBRARY_DIR="${ffi_ldflags#-L}"
 		# used only for llvm-objdump tool
-		-DLLVM_HAVE_LIBXAR=$(multilib_native_usex xar 1 0)
+		"-DLLVM_HAVE_LIBXAR=$(multilib_native_usex xar 1 0)"
 
 		-DPython3_EXECUTABLE="${PYTHON}"
 
@@ -401,9 +402,9 @@ multilib_src_configure() {
 		fi
 
 		mycmakeargs+=(
-			-DLLVM_BUILD_DOCS=${build_docs}
+			"-DLLVM_BUILD_DOCS=${build_docs}"
 			-DLLVM_ENABLE_OCAMLDOC=OFF
-			-DLLVM_ENABLE_SPHINX=${build_docs}
+			"-DLLVM_ENABLE_SPHINX=${build_docs}"
 			-DLLVM_ENABLE_DOXYGEN=OFF
 			-DLLVM_INSTALL_UTILS=ON
 		)
@@ -468,7 +469,7 @@ multilib_src_test() {
 
 src_install() {
 	local MULTILIB_CHOST_TOOLS=(
-		/usr/lib/llvm/${SLOT}/bin/llvm-config
+		"/usr/lib/llvm/${SLOT}/bin/llvm-config"
 	)
 
 	local MULTILIB_WRAPPED_HEADERS=(
@@ -479,7 +480,7 @@ src_install() {
 	multilib-minimal_src_install
 
 	# move wrapped headers back
-	mv "${ED}"/usr/include "${ED}"/usr/lib/llvm/${SLOT}/include || die
+	mv "${ED}"/usr/include "${ED}/usr/lib/llvm/${SLOT}/include" || die
 }
 
 multilib_src_install() {
@@ -487,13 +488,13 @@ multilib_src_install() {
 
 	# move headers to /usr/include for wrapping
 	rm -rf "${ED}"/usr/include || die
-	mv "${ED}"/usr/lib/llvm/${SLOT}/include "${ED}"/usr/include || die
+	mv "${ED}/usr/lib/llvm/${SLOT}/include" "${ED}"/usr/include || die
 
 	LLVM_LDPATHS+=( "${EPREFIX}/usr/lib/llvm/${SLOT}/$(get_libdir)" )
 }
 
 multilib_src_install_all() {
-	local revord=$(( 9999 - ${SLOT} ))
+	local revord=$(( 9999 - SLOT ))
 	newenvd - "60llvm-${revord}" <<-_EOF_
 		PATH="${EPREFIX}/usr/lib/llvm/${SLOT}/bin"
 		# we need to duplicate it in ROOTPATH for Portage to respect...
