@@ -6,7 +6,7 @@
   },
   "[shellscript]": {
     "editor.codeActionsOnSave": {
-      "source.fixAll.shellcheck": true
+      "source.fixAll.shellcheck": "explicit"
     },
     "editor.detectIndentation": false,
     "editor.insertSpaces": false,

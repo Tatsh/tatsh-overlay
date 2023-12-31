@@ -130,6 +130,7 @@ bassa
 bassavah
 batak
 bbolt
+bcanalyzer
 bdepend
 beautifulsoup
 behaviour
@@ -155,7 +156,9 @@ bindata
 bindgen
 bindist
 binja
+binutils
 binv
+bitcode
 bitflags
 bitrock
 bitwidth
@@ -169,6 +172,7 @@ boltdb
 boolbase
 boombuler
 bradfitz
+broot
 brotli
 browserify
 browserslist
@@ -180,6 +184,7 @@ btzy
 bubbletea
 bufpipe
 buginese
+bugpoint
 buhid
 buildfiles
 buildservices
@@ -232,6 +237,7 @@ chksums
 choco
 chocolatey
 chokidar
+chost
 chownr
 chriskiehl
 chrissimpkins
@@ -327,6 +333,7 @@ cpython
 crashplan
 creack
 creds
+crosscompiling
 cryptopp
 cspotcode
 cssesc
@@ -336,11 +343,14 @@ csstype
 cuda
 cugan
 cunet
+cvtres
 cword
 cxadc
 cxleveladj
+cxxdump
 cxxfilt
 cxxflags
+cxxmap
 cyphar
 cython
 czkawka
@@ -389,6 +399,7 @@ ddisable
 ddrivers
 ddynarec
 deark
+debuginfod
 decamelize
 decli
 decompilation
@@ -418,6 +429,7 @@ devel
 devname
 devtype
 dfastlog
+dffi
 dfilter
 dfluidsynth
 dfmderainbow
@@ -449,6 +461,8 @@ distutils
 dktest
 dlclark
 dlibrw
+dlltool
+dllvm
 dlmalloc
 dman
 dminitrace
@@ -463,7 +477,9 @@ dnsmasq
 dnssec
 dobashcomp
 dobin
+docamlfind
 docdir
+docompress
 docopt
 documentai
 dodoc
@@ -507,7 +523,9 @@ dsirit
 dslackw
 dslirp
 dsnet
+dsphinx
 dsplit
+dsymutil
 dsystemd
 dubhater
 dudev
@@ -517,9 +535,11 @@ dvcpkg
 dvec
 dvita
 dvnc
+dwarfdump
 dwith
 dxbox
 dxemu
+dylib
 dynaconf
 dynamicdata
 dynamicexpresso
@@ -566,6 +586,7 @@ eprefix
 epreifx
 epython
 eqawarn
+eroot
 errcheck
 errgo
 errno
@@ -729,6 +750,7 @@ glslang
 glslangtospv
 gmailctl
 gnomovision
+gnuconfig
 gnuflag
 gnullvm
 gnutls
@@ -798,6 +820,7 @@ groupby
 groupcache
 gstreamer
 gsuiteaddons
+gsymutil
 gtest
 gtksharp
 gtksourceview
@@ -877,6 +900,7 @@ importlib
 imsc
 imurmurhash
 iname
+incdir
 includedir
 inconshreveable
 indexmap
@@ -890,6 +914,7 @@ instafail
 installdir
 intelli
 interopservices
+interprocedural
 intervaltree
 intltool
 irecovery
@@ -918,6 +943,7 @@ jetbrains
 jimevins
 jinzhu
 jiti
+jitlink
 jmespath
 jmoiron
 joho
@@ -1001,6 +1027,8 @@ langneg
 ldconfig
 ldflags
 ldlibs
+ldpath
+ldpaths
 leandro
 leasetime
 lebe
@@ -1022,6 +1050,7 @@ libcxx
 libcxxabi
 libdir
 libdrm
+libedit
 libepoxy
 libevdev
 libfat
@@ -1049,6 +1078,7 @@ libnnedi
 libogg
 libpcap
 libpcre
+libpfm
 libpietendo
 libpulse
 librealcugannv
@@ -1066,6 +1096,7 @@ libsndfile
 libsodium
 libsoundio
 libspng
+libstdc
 libtemporalsoften
 libtermcap
 libtomcrypt
@@ -1080,6 +1111,7 @@ libva
 libvapoursynth
 libvorbis
 libwebp
+libxar
 libxcb
 libxkbcommon
 libxkbfile
@@ -1095,6 +1127,7 @@ limbu
 linkify
 linq
 lipgloss
+lipo
 listformat
 listr
 lisu
@@ -1103,6 +1136,7 @@ liteon
 livecheck
 ljharb
 lldb
+llvmgold
 llvmlite
 lmod
 localbranches
@@ -1145,9 +1179,11 @@ malloc
 managedidentities
 mandaic
 mandiant
+mandir
 manichaean
 maniuplate
 manpages
+manpath
 mapbox
 mapi
 mapstructure
@@ -1171,6 +1207,7 @@ mbedcrypto
 mbedtls
 mborgerson
 mbrt
+mcjit
 mcuadros
 mdast
 mdns
@@ -1233,6 +1270,7 @@ mlabbe
 mmap
 modargs
 modernc
+modextract
 modlist
 modpost
 moduleinto
@@ -1305,6 +1343,7 @@ newar
 newbashcomp
 newbin
 newdoc
+newenvd
 newexe
 newicon
 newins
@@ -1358,9 +1397,11 @@ nvmedit
 nwaples
 nyarla
 objc
+objcopy
 objdump
 objectmodel
 objx
+ocamldoc
 ocamlopt
 occivink
 olchiki
@@ -1407,6 +1448,7 @@ oslogin
 osmanya
 otio
 otlp
+otool
 oyvindln
 pacct
 pacho
@@ -1429,12 +1471,15 @@ parrado
 parseargs
 pascaldekloe
 patchelf
+patchset
 pathdiff
 pathstr
 patrickmn
 paucinhau
 pcap
 pcre
+pdbutil
+pdepend
 pefile
 permic
 pflag
@@ -1504,6 +1549,8 @@ preinst
 privatecatalog
 procapture
 procatpure
+profdata
+profgen
 proglog
 programfiles
 programfileslinux
@@ -1589,6 +1636,7 @@ querystring
 quicktest
 quse
 rangeset
+ranlib
 raphnet
 rapidjson
 rardecode
@@ -1602,8 +1650,10 @@ rdparty
 reactiveui
 readdir
 readdirp
+readelf
 readerwriter
 readline
+readobj
 realcugan
 realfft
 realpath
@@ -1611,6 +1661,7 @@ realsr
 recaptchaenterprise
 rechoir
 recommendationengine
+recommonmark
 recompiler
 recyclablememorystream
 redent
@@ -1647,6 +1698,7 @@ responselike
 retryablehttp
 reusify
 revc
+revord
 rewx
 rfdc
 rgsf
@@ -1667,14 +1719,17 @@ rogpeppe
 rollup
 roni
 rootcerts
+rootpath
 rpath
 rpcli
 rpcs
 rsrc
 rssh
 rstcheck
+rtdyld
 rtmidi
 rtmp
+rtti
 ruamel
 runewidth
 runtimeinformation
@@ -1693,7 +1748,9 @@ ryujinx
 sagikazarmark
 sahilm
 samplerate
+sancov
 sanitiser
+sanstats
 saraiki
 sasl
 saurashtra
@@ -1785,6 +1842,7 @@ soundfile
 soundfont
 soundtouch
 sourcehut
+soversion
 spacepacket
 spaolacci
 spdlog
@@ -1806,6 +1864,7 @@ starkits
 stashapp
 statigz
 stdc
+stdlib
 stepmania
 stgpytools
 stiefel
@@ -1836,6 +1895,7 @@ svgo
 swaggo
 sylheti
 sylotinagri
+symbolizer
 syncx
 synstructure
 syscall
@@ -1845,6 +1905,7 @@ systemunitdir
 systray
 sysutil
 szmarczak
+tablegen
 tablewriter
 tabtab
 taffydb
@@ -1856,11 +1917,13 @@ taitham
 taiviet
 taketalk
 takri
+tapi
 taplo
 tasksh
 taskshell
 taskwarrior
 tatsh
+tblgen
 tclkit
 tcltk
 tcpdump
@@ -1872,6 +1935,7 @@ telematic
 tempfile
 termcolor
 termenv
+terminfo
 testadapter
 testdata
 testfloat
@@ -1942,6 +2006,7 @@ udvare
 uips
 ulikunitz
 undici
+undname
 unecm
 ungap
 unic
@@ -1963,6 +2028,7 @@ upnp
 upscaler
 upscaling
 upstreams
+uptodate
 urandom
 urfave
 uring
@@ -1970,6 +2036,7 @@ urllib
 urlpattern
 usbkill
 usedep
+uselistorder
 useragent
 usev
 usex
@@ -2053,6 +2120,7 @@ willf
 winapi
 wincon
 windowsruntime
+windres
 wingetty
 winio
 wireshark
@@ -2074,6 +2142,7 @@ xattr
 xbmc
 xbrz
 xbyak
+xcrun
 xcursor
 xdist
 xdocument
