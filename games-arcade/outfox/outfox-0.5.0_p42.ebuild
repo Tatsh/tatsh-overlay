@@ -10,10 +10,10 @@ HOMEPAGE="https://projectoutfox.com/"
 
 UPPER_PN="${PN^^}"
 MY_PN="${UPPER_PN:0:1}${PN:1:1}${PN:2:1}${UPPER_PN:3:1}${PN:4}"
-DATE="20230501"
-MAJOR="${PV:2:3}.0"
+DATE="20231224"
+MAJOR="${PV:2:3}"
 PRE="${PV:7}"
-SRC_URI="https://github.com/TeamRizu/${MY_PN}/releases/download/OF${MAJOR}-0${PRE}/OutFox-AlphaV-0.${MAJOR}-pre0${PRE}-Linux-amd64-modern-date-${DATE}.tar.gz"
+SRC_URI="https://github.com/TeamRizu/${MY_PN}/releases/download/OF${MAJOR}.0-0${PRE}/OutFox-alpha-0.${MAJOR}-pre0${PRE}-Linux-22.04-amd64-current-date-${DATE}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -41,7 +41,7 @@ S="${WORKDIR}"
 
 src_prepare() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-0.${MAJOR:0:3}-pre0${PRE}-amd64-modern-date-${DATE}" || die
+		cd "${MY_PN}-alpha-0.${MAJOR}-pre0${PRE}-22.04-amd64-current-date-${DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
@@ -61,7 +61,7 @@ src_prepare() {
 
 src_install() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-0.${MAJOR:0:3}-pre0${PRE}-amd64-modern-date-${DATE}" || die
+		cd "${MY_PN}-alpha-0.${MAJOR}-pre0${PRE}-22.04-amd64-current-date-${DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
