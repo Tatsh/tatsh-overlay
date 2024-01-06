@@ -35,7 +35,7 @@ DEPEND="X? ( x11-libs/libX11 )
 	media-libs/libglvnd[X?]
 	media-libs/libjpeg-turbo
 	media-libs/libpng
-	<media-video/ffmpeg-5
+	media-video/ffmpeg
 	sys-libs/zlib
 	virtual/udev
 	x11-libs/gdk-pixbuf
@@ -43,7 +43,10 @@ DEPEND="X? ( x11-libs/libX11 )
 	x11-libs/libXext
 	x11-libs/libXtst"
 
-PATCHES=( "${FILESDIR}/${PN}-add-ppc64-detection.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-add-ppc64-detection.patch"
+	"${FILESDIR}/${PN}-ffmpeg-6.patch"
+)
 
 S="${WORKDIR}/${PN}-${SHA}"
 
