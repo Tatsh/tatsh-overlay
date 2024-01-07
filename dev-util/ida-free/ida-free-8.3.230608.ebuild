@@ -14,17 +14,37 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="strip splitdebug"
 
-RDEPEND="x11-libs/cairo
+RDEPEND="app-crypt/mit-krb5
+	dev-libs/glib
+	dev-qt/qtcore
+	dev-qt/qtgui
+	dev-qt/qthelp
+	dev-qt/qtnetwork
+	dev-qt/qtprintsupport
+	dev-qt/qtsql
+	dev-qt/qtwidgets
+	media-libs/fontconfig
+	media-libs/freetype
+	media-libs/libglvnd
+	sys-apps/dbus
+	sys-libs/zlib
+	x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+
-	x11-libs/libdrm
+	x11-libs/libICE
+	x11-libs/libSM
+	x11-libs/libX11
 	x11-libs/libXau
 	x11-libs/libXext
+	x11-libs/libdrm
+	x11-libs/libxcb
+	x11-libs/libxkbcommon
 	x11-libs/pango
 	x11-libs/xcb-util-image
 	x11-libs/xcb-util-keysyms
 	x11-libs/xcb-util-renderutil
-	x11-libs/xcb-util-wm"
+	x11-libs/xcb-util-wm
+"
 BDEPEND="app-arch/bitrock-unpacker"
 
 S="${WORKDIR}/ida/programfiles_custom"
