@@ -29,6 +29,9 @@ RDEPEND="$(python_gen_cond_dep '
 	')
 	sci-libs/pytorch[${PYTHON_SINGLE_USEDEP}]
 	media-video/ffmpeg
+	sci-libs/caffe2
+	media-libs/libjpeg-turbo
+	media-libs/libpng
 	dev-qt/qtcore:5
 "
 DEPEND="${RDEPEND}"
