@@ -125,8 +125,8 @@ inherit cargo
 DESCRIPTION="Command line csv viewer"
 HOMEPAGE="https://github.com/YS-L/csvlens"
 SRC_URI="
-	${CARGO_CRATE_URIS}
 	https://github.com/YS-L/${PN}/archive/refs/tags/v${PV}.tar.gz
+	${CARGO_CRATE_URIS}
 "
 
 LICENSE="MIT"
