@@ -28,6 +28,7 @@ DEPEND="app-emulation/faudio
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
 	dev-qt/qtwidgets:5
+	x11-libs/libxkbcommon
 	x11-libs/libX11
 	x11-libs/libXi"
 RDEPEND="${DEPEND}"
