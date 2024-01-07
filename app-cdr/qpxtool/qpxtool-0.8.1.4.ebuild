@@ -14,7 +14,13 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="debug +gui +internal-wt +liteon-probe"
 
-DEPEND="gui? ( dev-qt/qtcore:5 )
+DEPEND="gui? (
+		dev-qt/qtgui:5
+		dev-qt/qtnetwork:5
+		dev-qt/qtprintsupport:5
+		dev-qt/qtsql:5
+		dev-qt/qtwidgets:5
+	)
 	media-libs/libpng"
 RDEPEND="${DEPEND}"
 
