@@ -1,4 +1,4 @@
-From e878a7be3960789ddfd0c33884fd07c2453d8b33 Mon Sep 17 00:00:00 2001
+From 5bd4c8782fd514fc316ee6a12133c0da283884a9 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 20:38:09 -0500
 Subject: [PATCH 6/8] Support for system miniupnpc
@@ -10,10 +10,10 @@ Subject: [PATCH 6/8] Support for system miniupnpc
  3 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index d2bda51db..00aba6021 100644
+index 1611850ba..7b0506137 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
-@@ -367,7 +367,11 @@ if(USE_SDL)
+@@ -350,7 +350,11 @@ if(USE_SDL)
  endif()
  
  # MINIUPNP
@@ -26,8 +26,8 @@ index d2bda51db..00aba6021 100644
  
  # RTMIDI
  add_subdirectory(rtmidi EXCLUDE_FROM_ALL)
-@@ -399,5 +403,5 @@ add_library(3rdparty::wolfssl ALIAS wolfssl)
- add_library(3rdparty::libcurl ALIAS libcurl)
+@@ -382,5 +386,5 @@ add_library(3rdparty::wolfssl ALIAS wolfssl)
+ add_library(3rdparty::libcurl ALIAS 3rdparty_libcurl)
  add_library(3rdparty::soundtouch ALIAS soundtouch)
  add_library(3rdparty::sdl2 ALIAS ${SDL2_TARGET})
 -add_library(3rdparty::miniupnpc ALIAS libminiupnpc-static)
@@ -62,5 +62,5 @@ index 40892f744..bb99b88ae 100644
  #include "upnp_config.h"
  #include "Utilities/mutex.h"
 -- 
-2.40.1
+2.43.0
 

@@ -1,4 +1,4 @@
-From eff98c800235662c8b93a0ddd0ba9f3c92a51872 Mon Sep 17 00:00:00 2001
+From e709c917fee9cf81f7a682ac9dd189e3f6a96183 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 09:09:09 -0400
 Subject: [PATCH 2/8] vk: use system GlslangToSpv.h
@@ -21,5 +21,5 @@ index a9005d520..f91851e22 100644
  #pragma warning(pop)
  #else
 -- 
-2.40.1
+2.43.0
 

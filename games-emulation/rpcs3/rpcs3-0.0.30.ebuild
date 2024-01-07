@@ -6,11 +6,11 @@ inherit cmake flag-o-matic xdg
 
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
-ASMJIT_SHA="c59847629d3a19da4d10f0be4ac33b43fc4a100f"
+ASMJIT_SHA="416f7356967c1f66784dc1580fe157f9406d8bff"
 HIDAPI_SHA="8b43a97a9330f8b0035439ce9e255e4be202deca"
 ITTAPI_VERSION="3.18.12"
-SOUNDTOUCH_SHA="83cfba67b6af80bb9bfafc0b324718c4841f2991"
-YAML_CPP_SHA="0b67821f307e8c6bf0eba9b6d3250e3cf1441450"
+SOUNDTOUCH_SHA="ced3ce8d5ecc5aef8a5156fea206a37b33774bf3"
+YAML_CPP_SHA="456c68f452da09d8ca84b375faa2b1397713eaba"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${PN}-asmjit-${ASMJIT_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${PN}-hidapi-${HIDAPI_SHA:0:7}.tar.gz
@@ -70,7 +70,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0006-support-for-system-miniupnpc.patch"
 	"${FILESDIR}/${PN}-0007-remove-extra.patch"
 	"${FILESDIR}/${PN}-0008-allow-system-rtmidi.patch"
-	"${FILESDIR}/${PN}-9999-llvm-17.patch"
 )
 
 src_prepare() {

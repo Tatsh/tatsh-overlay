@@ -1,4 +1,4 @@
-From 90c4be5bbe215f656fcc68e7af74dd94f2afa388 Mon Sep 17 00:00:00 2001
+From fc5193690183d209fa3b081c78da7c0cc751df46 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 21:46:38 -0500
 Subject: [PATCH 7/8] Remove extra
@@ -8,10 +8,10 @@ Subject: [PATCH 7/8] Remove extra
  1 file changed, 4 deletions(-)
 
 diff --git a/rpcs3/CMakeLists.txt b/rpcs3/CMakeLists.txt
-index e372c6650..e0fe3856b 100644
+index 53429411c..d28a618bd 100644
 --- a/rpcs3/CMakeLists.txt
 +++ b/rpcs3/CMakeLists.txt
-@@ -215,8 +215,4 @@ if(UNIX AND NOT APPLE)
+@@ -165,8 +165,4 @@ if(UNIX AND NOT APPLE)
          DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
      install(DIRECTORY ../bin/GuiConfigs
          DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
@@ -21,5 +21,5 @@ index e372c6650..e0fe3856b 100644
 -        DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
  endif()
 -- 
-2.40.1
+2.43.0
 

@@ -1,4 +1,4 @@
-From 20edfe5fcbb285dd77f6a081e3c885d8b68008a1 Mon Sep 17 00:00:00 2001
+From 8dae0fa2ea44e8de555e201c0b3e5850bf38c088 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 2 Jan 2022 03:32:54 -0500
 Subject: [PATCH 5/8] Allow system cubeb
@@ -9,10 +9,10 @@ Subject: [PATCH 5/8] Allow system cubeb
  2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index 5743b9bd2..d2bda51db 100644
+index 44b06d672..1611850ba 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
-@@ -136,7 +136,11 @@ target_include_directories(3rdparty_stblib INTERFACE stblib/include)
+@@ -134,7 +134,11 @@ target_include_directories(3rdparty_stblib INTERFACE stblib/include)
  add_subdirectory(discord-rpc)
  
  # Cubeb
@@ -26,10 +26,10 @@ index 5743b9bd2..d2bda51db 100644
  # SoundTouch
  add_subdirectory(SoundTouch EXCLUDE_FROM_ALL)
 diff --git a/rpcs3/Emu/CMakeLists.txt b/rpcs3/Emu/CMakeLists.txt
-index 822dddcd6..ce1fc5745 100644
+index d8c33ae69..4413e3cac 100644
 --- a/rpcs3/Emu/CMakeLists.txt
 +++ b/rpcs3/Emu/CMakeLists.txt
-@@ -154,7 +154,7 @@ target_link_libraries(rpcs3_emu
+@@ -174,7 +174,7 @@ target_link_libraries(rpcs3_emu
  
  target_link_libraries(rpcs3_emu
      PUBLIC
@@ -39,5 +39,5 @@ index 822dddcd6..ce1fc5745 100644
  target_link_libraries(rpcs3_emu
      PUBLIC
 -- 
-2.40.1
+2.43.0
 

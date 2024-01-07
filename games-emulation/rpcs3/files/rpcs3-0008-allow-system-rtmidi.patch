@@ -1,4 +1,4 @@
-From 76224efd976cbb326ab1803f27c707c0414ce0db Mon Sep 17 00:00:00 2001
+From f292eb26f29a3556fed181f8fda9615b99b0d941 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 4 Jun 2023 01:50:57 -0400
 Subject: [PATCH 8/8] Allow system rtmidi
@@ -8,10 +8,10 @@ Subject: [PATCH 8/8] Allow system rtmidi
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index 00aba6021..9885858c3 100644
+index 7b0506137..f0838dc7a 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
-@@ -374,7 +374,11 @@ else()
+@@ -357,7 +357,11 @@ else()
  endif()
  
  # RTMIDI
@@ -24,12 +24,12 @@ index 00aba6021..9885858c3 100644
  
  # add nice ALIAS targets for ease of use
  if(USE_SYSTEM_LIBUSB)
-@@ -404,4 +408,4 @@ add_library(3rdparty::libcurl ALIAS libcurl)
+@@ -387,4 +391,4 @@ add_library(3rdparty::libcurl ALIAS 3rdparty_libcurl)
  add_library(3rdparty::soundtouch ALIAS soundtouch)
  add_library(3rdparty::sdl2 ALIAS ${SDL2_TARGET})
  add_library(3rdparty::miniupnpc ALIAS PkgConfig::PC_MINIUNPNPC)
 -add_library(3rdparty::rtmidi ALIAS rtmidi)
 +add_library(3rdparty::rtmidi ALIAS PkgConfig::PC_RTMIDI)
 -- 
-2.40.1
+2.43.0
 
