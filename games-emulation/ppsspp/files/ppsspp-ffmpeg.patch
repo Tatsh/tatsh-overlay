@@ -1,0 +1,108 @@
+diff --git a/Core/AVIDump.cpp b/Core/AVIDump.cpp
+index 99c74af7b..a7d72071f 100644
+--- a/Core/AVIDump.cpp
++++ b/Core/AVIDump.cpp
+@@ -91,7 +91,7 @@ bool AVIDump::Start(int w, int h)
+ 
+ bool AVIDump::CreateAVI() {
+ #ifdef USE_FFMPEG
+-	AVCodec *codec = nullptr;
++	const AVCodec *codec = nullptr;
+ 
+ 	// Use gameID_EmulatedTimestamp for filename
+ 	std::string discID = g_paramSFO.GetDiscID();
+diff --git a/Core/HLE/sceAtrac.cpp b/Core/HLE/sceAtrac.cpp
+index 86017681b..2cbb1da7c 100644
+--- a/Core/HLE/sceAtrac.cpp
++++ b/Core/HLE/sceAtrac.cpp
+@@ -126,6 +126,7 @@ extern "C" {
+ #include "libavformat/avformat.h"
+ #include "libswresample/swresample.h"
+ #include "libavutil/samplefmt.h"
++#include "libavcodec/avcodec.h"
+ }
+ 
+ #endif // USE_FFMPEG
+diff --git a/Core/HLE/sceMpeg.cpp b/Core/HLE/sceMpeg.cpp
+index 8e4586a6d..d19418425 100644
+--- a/Core/HLE/sceMpeg.cpp
++++ b/Core/HLE/sceMpeg.cpp
+@@ -105,12 +105,13 @@ static bool pmp_oldStateLoaded = false; // for dostate
+ static int ringbufferPutPacketsAdded = 0;
+ static bool useRingbufferPutCallbackMulti = true;
+ 
+-#ifdef USE_FFMPEG 
++#ifdef USE_FFMPEG
+ 
+ extern "C" {
+ #include "libavformat/avformat.h"
+ #include "libavutil/imgutils.h"
+ #include "libswscale/swscale.h"
++#include "libavcodec/avcodec.h"
+ }
+ static AVPixelFormat pmp_want_pix_fmt;
+ 
+@@ -802,7 +803,7 @@ static bool InitPmp(MpegContext * ctx){
+ 	pmp_want_pix_fmt = AV_PIX_FMT_RGBA;
+ 
+ 	// Create H264 video codec
+-	AVCodec * pmp_Codec = avcodec_find_decoder(AV_CODEC_ID_H264);
++	const AVCodec * pmp_Codec = avcodec_find_decoder(AV_CODEC_ID_H264);
+ 	if (pmp_Codec == NULL){
+ 		ERROR_LOG(ME, "Can not find H264 codec, please update ffmpeg");
+ 		return false;
+diff --git a/Core/HW/MediaEngine.cpp b/Core/HW/MediaEngine.cpp
+index fa4b8191c..ac7f4e057 100644
+--- a/Core/HW/MediaEngine.cpp
++++ b/Core/HW/MediaEngine.cpp
+@@ -410,13 +410,14 @@ bool MediaEngine::addVideoStream(int streamNum, int streamId) {
+ #else
+ 			stream->request_probe = 0;
+ #endif
+-			stream->need_parsing = AVSTREAM_PARSE_FULL;
+ 			// We could set the width here, but we don't need to.
+ 			if (streamNum >= m_expectedVideoStreams) {
+ 				++m_expectedVideoStreams;
+ 			}
+ 
+-			m_codecsToClose.push_back(stream->codec);
++			const AVCodec *codec = avcodec_find_decoder(stream->codecpar->codec_id);
++			AVCodecContext *codecCtx = avcodec_alloc_context3(codec);
++			m_codecsToClose.push_back(codecCtx);
+ 			return true;
+ 		}
+ 	}
+@@ -499,7 +500,7 @@ bool MediaEngine::setVideoStream(int streamNum, bool force) {
+ 
+ 		AVStream *stream = m_pFormatCtx->streams[streamNum];
+ #if LIBAVFORMAT_VERSION_INT >= AV_VERSION_INT(57, 33, 100)
+-		AVCodec *pCodec = avcodec_find_decoder(stream->codecpar->codec_id);
++		const AVCodec *pCodec = avcodec_find_decoder(stream->codecpar->codec_id);
+ 		if (!pCodec) {
+ 			WARN_LOG_REPORT(ME, "Could not find decoder for %d", (int)stream->codecpar->codec_id);
+ 			return false;
+diff --git a/Core/HW/SimpleAudioDec.cpp b/Core/HW/SimpleAudioDec.cpp
+index 8f250abdd..7994a7f40 100644
+--- a/Core/HW/SimpleAudioDec.cpp
++++ b/Core/HW/SimpleAudioDec.cpp
+@@ -31,6 +31,7 @@ extern "C" {
+ #include "libavformat/avformat.h"
+ #include "libswresample/swresample.h"
+ #include "libavutil/samplefmt.h"
++#include "libavcodec/avcodec.h"
+ }
+ 
+ #endif  // USE_FFMPEG
+diff --git a/Core/HW/SimpleAudioDec.h b/Core/HW/SimpleAudioDec.h
+index ec792c903..c96715bf2 100644
+--- a/Core/HW/SimpleAudioDec.h
++++ b/Core/HW/SimpleAudioDec.h
+@@ -78,7 +78,7 @@ class SimpleAudio {
+ 	int wanted_resample_freq; // wanted resampling rate/frequency
+ 
+ 	AVFrame *frame_;
+-	AVCodec *codec_;
++	const AVCodec *codec_;
+ 	AVCodecContext  *codecCtx_;
+ 	SwrContext      *swrCtx_;
+ 
