@@ -30,6 +30,7 @@ RDEPEND="
 	dev-libs/libzip:=
 	media-libs/glew:=
 	media-libs/libpng:=
+	media-libs/libglvnd
 	media-libs/libsdl2[joystick]
 	media-video/ffmpeg
 	sys-libs/zlib:=
