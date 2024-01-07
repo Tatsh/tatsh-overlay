@@ -98,6 +98,7 @@ audiofile
 authorisation
 authorware
 autocfg
+autodetection
 autogen
 autoload
 autoloading
@@ -122,6 +123,7 @@ backoff
 bamum
 barbieri
 baremetalsolution
+barć
 basenames
 basepack
 baserom
@@ -340,6 +342,7 @@ cssesc
 cssmin
 csstools
 csstype
+csvlens
 cuda
 cugan
 cunet
@@ -439,6 +442,7 @@ dglslang
 dgrijalva
 dgryski
 dgtk
+dheadless
 dhui
 diagnosticsource
 dialogflow
@@ -530,6 +534,7 @@ dsystemd
 dubhater
 dudev
 duployan
+dusing
 dvapoursynth
 dvcpkg
 dvec
@@ -860,6 +865,7 @@ honnef
 hostpool
 hpcloud
 hqdn
+hrydgard
 htdocs
 htdocsdir
 htmlparser
@@ -1167,6 +1173,7 @@ lugaresi
 lukechampine
 lunixbochs
 macemu
+maciej
 macvendor
 macvendordb
 magewell
@@ -1542,6 +1549,7 @@ postcss
 postinst
 postrm
 pprof
+ppsspp
 prdownloads
 prebuild
 prebuilds
