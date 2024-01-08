@@ -61,7 +61,12 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
                 continue
             if lib_package == package_name:
                 continue
-        ebuild = P.findname(P.match(package_name)[-1])
+        try:
+            ebuild = [
+                y for y in (P.findname(x) for x in P.match(package_name)) if 'db/repos/tatsh' in y
+            ][0]
+        except IndexError:
+            raise RuntimeError(f'Unable to determine ebuild for {package_name}')
         with open(ebuild) as f:
             lines_s = f.read()
             if lib_package not in lines_s and lib_package != 'sys-libs/glibc':
@@ -93,9 +98,10 @@ def main() -> int:
                            text=True).stdout.splitlines() if len(sys.argv) == 1 else sys.argv[1:]
     for package_name in package_names:
         printed_name = False
-        exes = sorted(x for x in sp.run(
-            ('qlist', '-e',
-             package_name), check=True, capture_output=True, text=True).stdout.splitlines()
+        exes = sorted(x for x in sp.run(('qlist', '-e', f'{package_name}::tatsh-overlay'),
+                                        check=True,
+                                        capture_output=True,
+                                        text=True).stdout.splitlines()
                       if is_elf(x) and not re.match(r'/usr/lib\d+/ryujinx/lib.*\.so$', x)
                       and not re.match(r'/opt/stepmania-outfox/lib.*\.so(?:\.\d+)?', x))
         if len(exes):
