@@ -17,11 +17,13 @@ RESTRICT="strip splitdebug"
 RDEPEND="app-crypt/mit-krb5
 	dev-libs/glib
 	dev-qt/qtcore
+	dev-qt/qtdbus
 	dev-qt/qtgui
 	dev-qt/qthelp
 	dev-qt/qtnetwork
 	dev-qt/qtprintsupport
 	dev-qt/qtsql
+	dev-qt/qtsvg
 	dev-qt/qtwidgets
 	media-libs/fontconfig
 	media-libs/freetype
@@ -43,8 +45,7 @@ RDEPEND="app-crypt/mit-krb5
 	x11-libs/xcb-util-image
 	x11-libs/xcb-util-keysyms
 	x11-libs/xcb-util-renderutil
-	x11-libs/xcb-util-wm
-"
+	x11-libs/xcb-util-wm"
 BDEPEND="app-arch/bitrock-unpacker"
 
 S="${WORKDIR}/ida/programfiles_custom"
