@@ -15,6 +15,7 @@ KEYWORDS="~amd64"
 IUSE="debug +gui +internal-wt +liteon-probe"
 
 DEPEND="gui? (
+		dev-qt/qtcore:5
 		dev-qt/qtgui:5
 		dev-qt/qtnetwork:5
 		dev-qt/qtprintsupport:5
