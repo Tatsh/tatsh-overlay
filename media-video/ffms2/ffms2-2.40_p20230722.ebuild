@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="debug"
 
-DEPEND="<media-video/ffmpeg-5 sys-libs/zlib"
+DEPEND="media-video/ffmpeg sys-libs/zlib"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}-${SHA}"
