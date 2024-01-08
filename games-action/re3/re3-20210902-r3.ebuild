@@ -19,7 +19,7 @@ IUSE="opus sanitizer sndfile"
 DEPEND="media-libs/libsndfile
 	media-libs/openal
 	media-libs/glew:0
-	media-sound/mpg123
+	media-sound/mpg123-base
 	>=media-libs/glfw-3.3.2
 	opus? ( media-libs/opus media-libs/opusfile )
 	sndfile? ( media-libs/libsndfile )"
