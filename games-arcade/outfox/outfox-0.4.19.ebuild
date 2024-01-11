@@ -85,9 +85,8 @@ src_install() {
 	! use bundled-songs && keepdir "${inst}/Songs"
 	! use bundled-courses && keepdir "${inst}/Courses"
 	exeinto "${inst}"
-	doexe OutFox *.so*
+	doexe OutFox ./*.so*
 	use doc && dodoc -r Docs/*
-	newicon "Appearance/Themes/default/Graphics/Common window icon.png" \
-		${PN}.png
+	newicon "Appearance/Themes/default/Graphics/Common window icon.png" "${PN}.png"
 	make_desktop_entry "${PN}" "OutFox"
 }
