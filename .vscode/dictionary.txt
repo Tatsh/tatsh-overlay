@@ -5,7 +5,6 @@ abloop
 accessapproval
 accesscontextmanager
 accesscontrol
-acomagu
 adal
 adbsync
 adlam
@@ -50,7 +49,6 @@ anymatch
 apigeeconnect
 apigeeregistry
 apikeys
-appcontext
 appdata
 appengine
 appico
@@ -77,7 +75,6 @@ asaskevich
 asmflags
 asmfmt
 asmjit
-aspnetcore
 assignin
 assimp
 assuredworkloads
@@ -90,10 +87,8 @@ astisub
 astits
 asynciterator
 asynckit
-atksharp
 atotto
 atrac
-attributedmodel
 audiofile
 authorisation
 authorware
@@ -109,7 +104,6 @@ autorest
 autotools
 autoupdate
 avalonia
-avaloniaedit
 avcodec
 avisynth
 avstream
@@ -184,7 +178,6 @@ bsnes
 btrfs
 btzy
 bubbletea
-bufpipe
 buginese
 bugpoint
 buhid
@@ -203,7 +196,7 @@ byteswapped
 cacache
 cacerts
 cacheable
-cairosharp
+caffe
 callsites
 camelcase
 canadianaboriginal
@@ -275,18 +268,12 @@ cmrc
 cmsis
 cncf
 cockroachdb
-codeanalysis
 codeberg
-codecoverage
-codedom
 codegen
-codegenerator
 codem
 codeman
-codepages
 codeql
 cohttp
-collecttoolinginfo
 colorama
 colorchoice
 colord
@@ -296,32 +283,28 @@ colorstring
 colour
 columnize
 commandline
-commandlineparser
 commandlines
 commitizen
 commondir
 compat
-compilerservices
 componentmodel
 concat
-concentus
 cond
 configfile
 configobj
 configor
 configura
-configurationpath
 conflicter
 conntrack
 contactcenterinsights
 containeranalysis
 containerd
-contentmodel
 cookiecutter
 cooperspencer
 copytime
 corasick
 corejs
+coreplugins
 coretemp
 corlett's
 cosmiconfig
@@ -421,7 +404,6 @@ dencode_framedumps
 denisenkom
 denoise
 denoising
-dependencymodel
 depgen
 dequal
 deque
@@ -444,15 +426,12 @@ dgryski
 dgtk
 dheadless
 dhui
-diagnosticsource
 dialogflow
-diasymreader
 difflib
 dinstall
 diropts
 disasm
 discarder
-discordrichpresence
 discordrpc
 displaydoc
 displaynames
@@ -492,7 +471,6 @@ doexe
 doicon
 doinitd
 doins
-dolauncher
 dolib
 doman
 domelementtype
@@ -614,7 +592,6 @@ evdev
 eventarc
 eventemitter
 ewarn
-excss
 execa
 execall
 exeinto
@@ -660,9 +637,7 @@ flate
 flatmap
 flect
 flexbin
-flexbox
 flto
-fluentavaloniaui
 fluidsynth
 fluxsmooth
 fmtconv
@@ -702,17 +677,14 @@ funcy
 fuser
 gamecube
 gandarez
-gast
 gccdir
 gcfg
 gcflags
 gcrypt
-gdksharp
 genconfig
 genny
 genproto
 gensync
-gentoodotnetinfo
 gentoolkit
 getcanonicallocales
 getobject
@@ -724,7 +696,6 @@ ggijpepdpiehgbiknmfpfbhcalffjlbj
 ghodss
 gickup
 gifs
-giosharp
 gioui
 gitea
 gitgen
@@ -741,7 +712,6 @@ glebarez
 gles
 glew
 glfw
-glibsharp
 gliderlabs
 globalcache
 globalthis
@@ -818,7 +788,6 @@ grantha
 graphemer
 graphene
 graphengine
-graphicslibraryframework
 graphviz
 gravitydb
 groupby
@@ -827,7 +796,6 @@ gstreamer
 gsuiteaddons
 gsymutil
 gtest
-gtksharp
 gtksourceview
 guidefor
 guidocella
@@ -888,11 +856,8 @@ hyperscript
 iamadamdev
 iancoleman
 ianlancetaylor
-icsharpcode
-identitymodel
 idna
 ieproxy
-ilgeneration
 ilspy
 imageio
 imagepipe
@@ -919,7 +884,6 @@ insinto
 instafail
 installdir
 intelli
-interopservices
 interprocedural
 intervaltree
 intltool
@@ -933,7 +897,6 @@ isexe
 isobject
 isoboxer
 isomp
-isort
 istring
 itertools
 itoa
@@ -945,7 +908,6 @@ jakcron
 janestreet
 jbenet
 jedib
-jetbrains
 jimevins
 jinzhu
 jiti
@@ -966,7 +928,6 @@ jsonnet
 jsonparse
 jsonpointer
 jsonreference
-jsonwebtokens
 jstemmer
 jsummers
 jtolds
@@ -1070,7 +1031,6 @@ libgeneral
 libglvnd
 libgudev
 libgusb
-libhac
 libheif
 libhttps
 libidn
@@ -1100,7 +1060,6 @@ libshared
 libslirp
 libsndfile
 libsodium
-libsoundio
 libspng
 libstdc
 libtemporalsoften
@@ -1197,7 +1156,6 @@ mapstructure
 marchen
 markbates
 markreidvfx
-masa
 masterzen
 matchall
 mathml
@@ -1285,12 +1243,10 @@ moltenvk
 montanaflynn
 morikuni
 mousa
-mousea
 moviepy
 mparser
 mpfr
 mrlotfi
-msbuild
 mschoch
 msgp
 msgpack
@@ -1322,7 +1278,6 @@ myqmakeargs
 nadermx
 nakagami
 nall
-nameresolution
 nandinagari
 napi
 narqo
@@ -1335,7 +1290,6 @@ ncnn
 nego
 neill
 neobrain
-netcore
 netlib
 netlink
 netnode
@@ -1355,7 +1309,6 @@ newexe
 newicon
 newins
 newscript
-newtonsoft
 newunit
 nextick
 nfnt
@@ -1399,14 +1352,12 @@ nunit
 nupkg
 nurio
 nvcc
-nvdec
 nvmedit
 nwaples
 nyarla
 objc
 objcopy
 objdump
-objectmodel
 objx
 ocamldoc
 ocamlopt
@@ -1439,7 +1390,6 @@ openocd
 openrc
 opentelemetry
 opentimelineio
-opentk
 oprofile
 optflags
 optimise
@@ -1470,7 +1420,6 @@ pahawh
 pahawhhmong
 palmyrene
 pango
-pangosharp
 papertrail
 parany
 paren
@@ -1505,7 +1454,6 @@ phasher
 philhofer
 phishingprotection
 phpdave
-phpnuget
 phpstan
 picocolors
 picojson
@@ -1531,7 +1479,6 @@ pkger
 pkgjs
 pkgmetadata
 pkgs
-platformabstractions
 plister
 plugdev
 pluralrules
@@ -1541,7 +1488,6 @@ pngdefry
 policytroubleshooter
 polkit
 popperjs
-portablepdb
 portfile
 porttree
 posener
@@ -1595,7 +1541,6 @@ pygments
 pygobject
 pygtrie
 pyhht
-pylint
 pymatting
 pynput
 pypamtest
@@ -1610,7 +1555,6 @@ pyudev
 pyxdg
 pyyaml
 pyzmq
-qalculate
 qarmin
 qatom
 qcustomplot
@@ -1626,6 +1570,7 @@ qtcore
 qtdbus
 qtdeclarative
 qtgui
+qthelp
 qtmultimedia
 qtnetwork
 qtnetworkauth
@@ -1659,7 +1604,6 @@ reactiveui
 readdir
 readdirp
 readelf
-readerwriter
 readline
 readobj
 realcugan
@@ -1671,7 +1615,6 @@ rechoir
 recommendationengine
 recommonmark
 recompiler
-recyclablememorystream
 redent
 redist
 redumper
@@ -1680,7 +1623,6 @@ regexpp
 regexpu
 regjsgen
 regjsparser
-regularexpressions
 rehype
 reimplementation
 rejang
@@ -1741,7 +1683,6 @@ rtti
 ruamel
 runewidth
 runtimeinformation
-runtimemodel
 runtimes
 russross
 rustc
@@ -1799,17 +1740,16 @@ sezanzeb
 shaderc
 sharada
 sharded
-sharpziplib
 shellcheck
 shellescape
 shellquote
-shimskiasharp
 shlex
 shopspring
 shuralyov
 shurcoo
 shutup
 siac
+siglibs
 signedsource
 sigstore
 silvermine
@@ -1944,11 +1884,8 @@ tempfile
 termcolor
 termenv
 terminfo
-testadapter
 testdata
 testfloat
-testhost
-testplatform
 texinfo
 textextensions
 texttospeech
@@ -1961,7 +1898,6 @@ thehandy
 thilojaeggi
 thirdparty
 thiserror
-threadpool
 tidwall
 tifinagh
 tihmstar
@@ -1997,8 +1933,7 @@ tunables
 tweenjs
 twemoji
 typedarray
-typedparts
-typeextensions
+typelibs
 typenum
 typeof
 typer
@@ -2020,7 +1955,6 @@ ungap
 unic
 unicase
 unice
-unicornengine
 unidecode
 uniseg
 unistd
@@ -2048,8 +1982,6 @@ uselistorder
 useragent
 usev
 usex
-vaapi
-valuetuple
 vapoursynth
 vcpkg
 vearutop
@@ -2127,7 +2059,6 @@ wiimms
 willf
 winapi
 wincon
-windowsruntime
 windres
 wingetty
 winio
@@ -2208,7 +2139,6 @@ zerofill
 zerolog
 zimg
 zint
-zipfile
 znedi
 zstd
 zune
