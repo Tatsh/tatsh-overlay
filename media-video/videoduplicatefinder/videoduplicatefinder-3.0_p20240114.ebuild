@@ -6,7 +6,6 @@ EAPI=8
 DOTNET_PKG_COMPAT="7.0"
 NUGETS="actiprosoftware.controls.avalonia.themes.datagrid@23.1.0
 	actiprosoftware.controls.avalonia@23.1.0
-	avalonia@11.0.5
 	avalonia.angle.windows.natives@2.1.0.2023020321
 	avalonia.buildservices@0.0.29
 	avalonia.controls.datagrid@11.0.5
@@ -28,6 +27,7 @@ NUGETS="actiprosoftware.controls.avalonia.themes.datagrid@23.1.0
 	avalonia.xaml.interactions.responsive@11.0.2
 	avalonia.xaml.interactions@11.0.2
 	avalonia.xaml.interactivity@11.0.2
+	avalonia@11.0.5
 	dynamicdata@7.9.5
 	dynamicexpresso.core@2.16.1
 	ffmpeg.autogen@6.0.0.2
@@ -63,7 +63,7 @@ DESCRIPTION="Video duplicate finder."
 HOMEPAGE="https://github.com/0x90d/videoduplicatefinder"
 MY_PN="VideoDuplicateFinder"
 MY_PV="3.0.0-preview-${PV:5}"
-SHA="5d64ab2519e79d4c1f030881ade5d54aad09c4ee"
+SHA="fb04deb4ef67550d27c4b92d4c4e1a4b94ad0708"
 SRC_URI="https://github.com/0x90d/videoduplicatefinder/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	${NUGET_URIS}"
 
