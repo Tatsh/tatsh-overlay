@@ -59,8 +59,8 @@ DEPEND="dev-libs/glib
 RDEPEND="${DEPEND} ${PYTHON_DEPS}"
 # shellcheck disable=SC2016
 BDEPEND="dev-lang/perl
-	dev-util/meson
-	dev-util/ninja
+	dev-build/meson
+	dev-build/ninja
 	sys-apps/texinfo
 	virtual/pkgconfig
 	$(python_gen_impl_dep)
