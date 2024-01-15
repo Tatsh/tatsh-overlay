@@ -57,7 +57,7 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 		media-libs/vulkan-loader
 		dev-util/glslang )
 	wayland? ( dev-libs/wayland )"
-RDEPEND="${DEPEND} sys-devel/gdb"
+RDEPEND="${DEPEND} dev-debug/gdb"
 BDEPEND=">=sys-devel/gcc-9
 	dev-util/spirv-headers"
 
