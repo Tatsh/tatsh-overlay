@@ -31,7 +31,7 @@ DEPEND="dev-qt/qtcore:5
 	kde-plasma/kwin
 	x11-libs/libxcb"
 RDEPEND="${DEPEND}"
-BDEPEND="dev-util/cmake
+BDEPEND="dev-build/cmake
 	kde-frameworks/extra-cmake-modules"
 
 src_prepare() {
