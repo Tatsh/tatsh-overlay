@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 BDEPEND=">=sys-devel/clang-16.0.6
-	dev-util/ninja"
+	dev-build/ninja"
 DEPEND=">=sys-libs/libcxx-16[static-libs]
 	>=sys-libs/libcxxabi-16[static-libs]"
 
