@@ -14,7 +14,7 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="doc test +tools"
 RESTRICT="!test? ( test )"
 
-BDEPEND="doc? ( app-doc/doxygen media-gfx/graphviz )
+BDEPEND="doc? ( app-text/doxygen media-gfx/graphviz )
 	test? ( dev-util/cmocka )"
 
 src_configure() {
