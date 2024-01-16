@@ -670,6 +670,7 @@ fsouza
 fsrcnn
 fsrcnnx
 fstream
+fsutil
 fullname
 fullwidth
 funcs
