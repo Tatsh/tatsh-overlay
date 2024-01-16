@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit cmake
+inherit cmake flag-o-matic
 
 DESCRIPTION="3DS shader assembler and disassembler"
 HOMEPAGE="https://github.com/neobrain/nihstro"
@@ -19,6 +19,11 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${PN}-${SHA}"
 
 DOCS=( Readme.md docs/instruction_set.md docs/nihcode_spec.md )
+
+src_compile() {
+	filter-lto
+	cmake_src_compile
+}
 
 src_install() {
 	insinto "/usr/include/${PN}"
