@@ -34,10 +34,10 @@ src_prepare() {
 	eapply --directory="${WORKDIR}/${PN}-${SHA}" -p0 "${FILESDIR}"
 	sed -e "s/@CORE_VERSION@/$(< "../CORE_VERSION")/" \
 		-e "s|@LIBCLANG_DIR@|$(llvm-config --libdir)|" \
-		-e "s:CLANG_RESOURCE_DIR =.*:CLANG_RESOURCE_DIR = '$(find "${EPREFIX}/usr/lib/clang" -mindepth 1 -maxdepth 1 -type d | head -n 1)':" \
+		-e "s:CLANG_RESOURCE_DIR =.*:CLANG_RESOURCE_DIR = '$(clang -print-resource-dir)':" \
 		-i ../ycmd/utils.py || die
 	local -r clang_version=$(best_version sys-devel/clang)
-	sed -e "s/@EPREFIX@/${EPREFIX}/g" \
+	sed -e "s,@EPREFIX@,${EPREFIX},g" \
 		-e "s/@CLANG_VERSION@/${clang_version:16:2}/" -i \
 		../ycmd/completers/cpp/clangd_completer.py || die
 	sed -r \
@@ -55,7 +55,6 @@ src_configure() {
 }
 
 src_install() {
-	into "$(python_get_sitedir)"
-	cp ../ycm_core.cpython*.so "${D}/$(python_get_sitedir)"
 	python_domodule ../ycmd
+	cp ../ycm_core.cpython*.so "${D}/$(python_get_sitedir)"
 }
