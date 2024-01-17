@@ -20,9 +20,9 @@ S="${WORKDIR}/${PN}-${SHA}"
 
 DOCS=( Readme.md docs/instruction_set.md docs/nihcode_spec.md )
 
-src_compile() {
-	filter-lto
-	cmake_src_compile
+src_prepare() {
+	sed -re 's/boost::swap/std::swap/g' -i src/assembler.cpp || die
+	cmake_src_prepare
 }
 
 src_install() {
