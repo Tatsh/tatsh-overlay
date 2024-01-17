@@ -70,6 +70,7 @@ src_configure() {
 		-DENABLE_WXWIDGETS=ON
 		-DPORTABLE=OFF
 		"-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3"
+		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF
 		-Wno-dev
 	)
 	cmake_src_configure
