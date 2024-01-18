@@ -7,6 +7,7 @@ inherit cmake flag-o-matic xdg
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
 ASMJIT_SHA="416f7356967c1f66784dc1580fe157f9406d8bff"
+GLSLANG_SHA="36d08c0d940cf307a23928299ef52c7970d8cee6"
 HIDAPI_SHA="8b43a97a9330f8b0035439ce9e255e4be202deca"
 ITTAPI_VERSION="3.18.12"
 SOUNDTOUCH_SHA="ced3ce8d5ecc5aef8a5156fea206a37b33774bf3"
@@ -16,7 +17,8 @@ SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${PN}-hidapi-${HIDAPI_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${PN}-yaml-cpp-${YAML_CPP_SHA:0:7}.tar.gz
 	https://github.com/intel/ittapi/archive/refs/tags/v${ITTAPI_VERSION}.tar.gz -> ${PN}-ittapi-${ITTAPI_VERSION}.tar.gz
-	https://github.com/RPCS3/soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-${SOUNDTOUCH_SHA:0:7}.tar.gz"
+	https://github.com/RPCS3/soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-${SOUNDTOUCH_SHA:0:7}.tar.gz
+	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> glslang-${GLSLANG_SHA:0:7}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -53,9 +55,7 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	x11-libs/libX11
 	faudio? ( app-emulation/faudio )
 	joystick? ( dev-libs/libevdev )
-	vulkan? (
-		media-libs/vulkan-loader
-		dev-util/glslang )
+	vulkan? ( media-libs/vulkan-loader )
 	wayland? ( dev-libs/wayland )"
 RDEPEND="${DEPEND} dev-debug/gdb"
 BDEPEND=">=sys-devel/gcc-9
@@ -79,6 +79,8 @@ src_prepare() {
 	mv "${WORKDIR}/yaml-cpp-${YAML_CPP_SHA}" "${S}/3rdparty/yaml-cpp/yaml-cpp" || die
 	rmdir "${S}/3rdparty/asmjit/asmjit" || die
 	mv "${WORKDIR}/asmjit-${ASMJIT_SHA}" "${S}/3rdparty/asmjit/asmjit" || die
+	rmdir "${S}/3rdparty/glslang/glslang" || die
+	mv "${WORKDIR}/glslang-${GLSLANG_SHA}" "${S}/3rdparty/glslang/glslang" || die
 	{ echo "#define RPCS3_GIT_VERSION \"0000-v${PV}\""
 		echo '#define RPCS3_GIT_BRANCH "master"'
 		echo '#define RPCS3_GIT_FULL_BRANCH "RPCS3/rpcs3/master"'
@@ -110,7 +112,7 @@ src_configure() {
 		-DUSE_SYSTEM_CURL=ON
 		-DUSE_SYSTEM_FFMPEG=ON
 		-DUSE_SYSTEM_FLATBUFFERS=ON
-		-DUSE_SYSTEM_GLSLANG=ON
+		-DUSE_SYSTEM_GLSLANG=OFF
 		-DUSE_SYSTEM_LIBPNG=ON
 		-DUSE_SYSTEM_LIBUSB=ON
 		-DUSE_SYSTEM_MINIUPNP=ON
