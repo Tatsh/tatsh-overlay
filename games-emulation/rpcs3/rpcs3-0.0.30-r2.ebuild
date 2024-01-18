@@ -70,6 +70,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0006-support-for-system-miniupnpc.patch"
 	"${FILESDIR}/${PN}-0007-remove-extra.patch"
 	"${FILESDIR}/${PN}-0008-allow-system-rtmidi.patch"
+	"${FILESDIR}/${PN}-0009-add-missing-glslang-incl.patch"
 )
 
 src_prepare() {

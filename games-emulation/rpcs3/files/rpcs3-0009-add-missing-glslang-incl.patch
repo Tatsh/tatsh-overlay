@@ -1,0 +1,13 @@
+diff --git a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
+index f91851e22..184d7b44c 100644
+--- a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
++++ b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
+@@ -14,6 +14,8 @@
+ #endif
+ #endif
+ #include <glslang/SPIRV/GlslangToSpv.h>
++#include <glslang/Public/ResourceLimits.h>
++#include <glslang/Public/ShaderLang.h>
+ #ifdef _MSC_VER
+ #pragma warning(pop)
+ #else
