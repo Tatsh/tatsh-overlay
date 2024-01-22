@@ -64,7 +64,7 @@ BDEPEND="app-arch/unzip
 	dev-cpp/cpp-jwt
 	dev-cpp/nlohmann_json
 	dev-cpp/robin-map
-	>=dev-util/vulkan-headers-1.3.261
+	>=dev-util/vulkan-headers-1.3.275
 	dev-util/spirv-headers"
 
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
