@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit cmake xdg
+inherit cmake flag-o-matic xdg
 
 DESCRIPTION="Nintendo Switch emulator."
 HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
@@ -108,11 +108,13 @@ src_prepare() {
 	fi
 	mv -f "${T}/compatibility_list.json" \
 		"${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
-	sed -re '/.*case VkResult::VK_ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR.*/d' -i \
-		src/video_core/vulkan_common/vulkan_wrapper.cpp || die
 }
 
 src_configure() {
+	# This is so I do not have to keep patching the VkResult:: constants in the error handler
+	# switch/case statement in vulkan_wrapper.cpp. Oddly enough this works despite -Werror=all
+	# coming after.
+	append-cxxflags -Wno-switch
 	local mycmakeargs=(
 		-DBUILD_FULLNAME="${MY_PV}"
 		-DBUILD_SHARED_LIBS=OFF
