@@ -71,6 +71,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0007-remove-extra.patch"
 	"${FILESDIR}/${PN}-0008-allow-system-rtmidi.patch"
 	"${FILESDIR}/${PN}-0009-add-missing-glslang-incl.patch"
+	"${FILESDIR}/${PN}-0010-pr-15075.patch"
 )
 
 src_prepare() {
@@ -103,9 +104,7 @@ src_configure() {
 	mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
 		-DBUILD_TESTING=OFF
-		-DUSE_PRECOMPILED_HEADERS=OFF
 		-DUSE_DISCORD_RPC=OFF
-		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF
 		"-DUSE_FAUDIO=$(usex faudio)"
 		"-DUSE_SYSTEM_FAUDIO=$(usex faudio)"
 		"-DUSE_LIBEVDEV=$(usex joystick)"
