@@ -1,7 +1,7 @@
-From 3a458b1d40b11a68247bb33c563f2321ad86d7fe Mon Sep 17 00:00:00 2001
+From da964f701d9357d7b492781d442b88f27bc5aa18 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 09:08:30 -0400
-Subject: [PATCH 1/8] versioning
+Subject: [PATCH 01/10] versioning
 
 ---
  rpcs3/rpcs3_version.cpp | 4 ++--

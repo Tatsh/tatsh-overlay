@@ -1,7 +1,7 @@
-From 5bd4c8782fd514fc316ee6a12133c0da283884a9 Mon Sep 17 00:00:00 2001
+From 1422a7297cccdc72d01af90264c1fb4f6c594e3c Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 20:38:09 -0500
-Subject: [PATCH 6/8] Support for system miniupnpc
+Subject: [PATCH 06/10] Support for system miniupnpc
 
 ---
  3rdparty/CMakeLists.txt       | 8 ++++++--

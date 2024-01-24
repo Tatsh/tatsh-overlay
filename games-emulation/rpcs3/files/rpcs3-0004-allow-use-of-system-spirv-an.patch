@@ -1,7 +1,7 @@
-From d5cf5bb6f99691969207949a2fefd167ecd9c1d5 Mon Sep 17 00:00:00 2001
+From 36f5ec10ef5395579eb1e135f5da7cc0ec8d4509 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 11:37:19 -0400
-Subject: [PATCH 4/8] Allow use of system SPIRV and glslang
+Subject: [PATCH 04/10] Allow use of system SPIRV and glslang
 
 ---
  3rdparty/CMakeLists.txt | 4 +++-

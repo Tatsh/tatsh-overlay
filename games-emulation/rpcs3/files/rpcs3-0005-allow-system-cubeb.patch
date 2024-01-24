@@ -1,7 +1,7 @@
-From 8dae0fa2ea44e8de555e201c0b3e5850bf38c088 Mon Sep 17 00:00:00 2001
+From e9866a908890544b657363aa1a1f1176a99a3818 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 2 Jan 2022 03:32:54 -0500
-Subject: [PATCH 5/8] Allow system cubeb
+Subject: [PATCH 05/10] Allow system cubeb
 
 ---
  3rdparty/CMakeLists.txt  | 6 +++++-

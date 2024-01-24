@@ -1,7 +1,7 @@
-From e709c917fee9cf81f7a682ac9dd189e3f6a96183 Mon Sep 17 00:00:00 2001
+From 75a4ffe2ff762879455bc48cad01ceb67bf5eb6f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 09:09:09 -0400
-Subject: [PATCH 2/8] vk: use system GlslangToSpv.h
+Subject: [PATCH 02/10] vk: use system GlslangToSpv.h
 
 ---
  rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp | 2 +-

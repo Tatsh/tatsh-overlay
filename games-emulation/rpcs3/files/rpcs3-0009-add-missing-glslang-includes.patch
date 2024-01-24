@@ -1,3 +1,12 @@
+From f364c6cd9cb0dd0b832cc4281d3fb1333fba63bd Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Thu, 18 Jan 2024 03:17:04 -0500
+Subject: [PATCH 09/10] Add missing glslang includes
+
+---
+ rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
 diff --git a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp b/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
 index f91851e22..184d7b44c 100644
 --- a/rpcs3/Emu/RSX/VK/VKCommonDecompiler.cpp
@@ -11,3 +20,6 @@ index f91851e22..184d7b44c 100644
  #ifdef _MSC_VER
  #pragma warning(pop)
  #else
+-- 
+2.43.0
+

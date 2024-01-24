@@ -1,7 +1,7 @@
-From 60ff21d6077a1016f56d59a75231ea3ddc9a7965 Mon Sep 17 00:00:00 2001
+From 3dda7803c375f378e19fb631658304be7f1760a7 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 09:09:18 -0400
-Subject: [PATCH 3/8] Add USE_WAYLAND
+Subject: [PATCH 03/10] Add USE_WAYLAND
 
 ---
  3rdparty/CMakeLists.txt | 2 +-
