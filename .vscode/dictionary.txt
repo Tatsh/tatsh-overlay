@@ -9,6 +9,7 @@ adal
 adbsync
 adlam
 adpcm
+aescts
 aesni
 afero
 agnivade
@@ -100,7 +101,6 @@ autoloading
 automagic
 automl
 automodule
-autorest
 autotools
 autoupdate
 avalonia
@@ -112,6 +112,9 @@ awslabs
 axios
 axobject
 aymanbagabas
+azcore
+azidentity
+azkeys
 backgroundremover
 backoff
 bamum
@@ -158,11 +161,9 @@ bitcode
 bitflags
 bitrock
 bitwidth
-bkaradzic
 blackbox
 blackfriday
 bluez
-bmizerany
 bochs
 boltdb
 boolbase
@@ -215,7 +216,6 @@ cdpatch
 cdproto
 cdrecord
 cemu
-cenkalti
 certifi
 certificatemanager
 cespare
@@ -240,7 +240,6 @@ chromaprint
 chromecast
 chromedp
 chrono
-chunkreader
 chzyer
 circbuf
 circl
@@ -253,7 +252,6 @@ cksum
 clangd
 classnames
 cleanhttp
-clickhouse
 cliui
 clonehero
 cloudbuild
@@ -267,7 +265,6 @@ cmocka
 cmrc
 cmsis
 cncf
-cockroachdb
 codeberg
 codegen
 codem
@@ -340,8 +337,8 @@ cxxmap
 cyphar
 cython
 czkawka
-cznic
 dabh
+dallow
 damerau
 danwakefield
 dargs
@@ -421,11 +418,9 @@ dfmderainbow
 dfmt
 dgit
 dglslang
-dgrijalva
 dgryski
 dgtk
 dheadless
-dhui
 dialogflow
 difflib
 dinstall
@@ -441,7 +436,6 @@ distfiles
 distname
 distro
 distutils
-dktest
 dlclark
 dlibrw
 dlltool
@@ -451,6 +445,7 @@ dman
 dminitrace
 dmunt
 dmupenplusapi
+dnaeon
 dncil
 dndebug
 dnew
@@ -458,6 +453,7 @@ dnfd
 dnfile
 dnsmasq
 dnssec
+dnsutils
 dobashcomp
 dobin
 docamlfind
@@ -541,7 +537,6 @@ ebuilds
 eclass
 econf
 edgecontainer
-edsrzf
 edune
 eedi
 eend
@@ -626,7 +621,6 @@ finalizationregistry
 findlastindex
 findname
 findup
-firebirdsql
 firestore
 fireweapon
 firmwares
@@ -666,7 +660,6 @@ fromentries
 fsetid
 fsevents
 fsnotify
-fsouza
 fsrcnn
 fsrcnnx
 fstream
@@ -732,26 +725,23 @@ gnullvm
 gnutls
 goasm
 gobject
-gobuffalo
 gobwas
 goccy
 gocheck
 goconvey
-gocql
 godbus
 godebug
-godirwalk
-godotenv
+gofork
 gofpdf
 gofpdi
 gofrs
 gofuzz
 gogen
 gogs
+goidentity
 goimagehash
-goji
+gokrb
 goldmark
-golex
 golib
 golz
 gomega
@@ -772,15 +762,14 @@ goproxy
 goqu
 gorm
 goskiplist
-gosnowflake
 gosum
 gosx
 gotenv
-gotest
 gotextdiff
 gotool
 gouuid
 govalidator
+gover
 gqlgen
 gqlgenc
 gqlparser
@@ -806,7 +795,6 @@ gvim
 gzipped
 górny
 hactool
-hailocab
 hanunoo
 hanunó'o
 happycube
@@ -831,8 +819,6 @@ hinterwaeldlers
 hmac
 homebridge
 honnef
-hostpool
-hpcloud
 hqdn
 hrydgard
 htdocs
@@ -858,7 +844,6 @@ iamadamdev
 iancoleman
 ianlancetaylor
 idna
-ieproxy
 ilspy
 imageio
 imagepipe
@@ -908,14 +893,13 @@ jackspeak
 jakcron
 janestreet
 jbenet
+jcmturner
 jedib
 jimevins
 jinzhu
 jiti
 jitlink
-jmespath
 jmoiron
-joho
 joncampbell
 josharian
 joystickwake
@@ -937,8 +921,6 @@ jwalterweatherman
 kaithi
 kamerer
 kanjitalk
-kardianos
-karrick
 kateschema
 kayah
 kayahli
@@ -963,6 +945,7 @@ keymaps
 keysyms
 keytar
 keyv
+keyvault
 kfmin
 kglobalaccel
 kharoshthi
@@ -1000,6 +983,7 @@ ldpaths
 leandro
 leasetime
 lebe
+ledongthuc
 leichtgewicht
 lepcha
 leveladj
@@ -1152,10 +1136,8 @@ maniuplate
 manpages
 manpath
 mapbox
-mapi
 mapstructure
 marchen
-markbates
 markreidvfx
 masterzen
 matchall
@@ -1167,7 +1149,6 @@ mattn
 matttproud
 maturin
 mawen
-maxdepth
 maxmin
 mbedcrypto
 mbedtls
@@ -1210,7 +1191,6 @@ miekg
 mileusna
 mina
 minchoc
-mindepth
 minideen
 minifier
 minimaid
@@ -1238,11 +1218,11 @@ modargs
 modernc
 modextract
 modlist
+modocache
 modpost
 moduleinto
 moltenvk
 montanaflynn
-morikuni
 mousa
 moviepy
 mparser
@@ -1265,7 +1245,6 @@ multimatch
 munt
 mupen
 murmour
-mutecomm
 mvsfunc
 mvtools
 mwcap
@@ -1277,7 +1256,6 @@ mygoargs
 mypy
 myqmakeargs
 nadermx
-nakagami
 nall
 nandinagari
 napi
@@ -1355,7 +1333,6 @@ nurio
 nvcc
 nvmedit
 nwaples
-nyarla
 objc
 objcopy
 objdump
@@ -1383,7 +1360,6 @@ openal
 openapi
 opencensus
 opencl
-opencontainers
 opencv
 opengl
 openmp
@@ -1399,9 +1375,9 @@ optparse
 opusfile
 organiser
 orgpolicy
+orisano
 osconfig
 osenv
-osext
 oslogin
 osmanya
 otio
@@ -1410,9 +1386,7 @@ otool
 oyvindln
 pacct
 pacho
-packd
 packlist
-packr
 pacote
 padd
 padend
@@ -1440,14 +1414,8 @@ pdepend
 pefile
 permic
 pflag
-pgconn
-pgerrcode
-pgio
-pgmock
 pgpassfile
-pgproto
 pgservicefile
-pgtype
 pgzip
 phags
 phagspa
@@ -1470,13 +1438,13 @@ pipewire
 pipx
 pitmairen
 pixbuf
+pixelmatch
 pixman
 pjbgf
 pkcs
 pkgcheck
 pkgconfig
 pkgdev
-pkger
 pkgjs
 pkgmetadata
 pkgs
@@ -1745,7 +1713,6 @@ shellcheck
 shellescape
 shellquote
 shlex
-shopspring
 shuralyov
 shurcoo
 shutup
@@ -1779,14 +1746,12 @@ smetrics
 sndfile
 sndh
 snesrev
-snowflakedb
 sockaddr
 socketfile
 softfloat
 sompeng
 sorasompeng
 sortorder
-sortutil
 soundfile
 soundfont
 soundtouch
@@ -1800,7 +1765,7 @@ spirv
 splitdebug
 sprintf
 sqlalchemy
-sqlcipher
+sqlexp
 sqlmock
 sqlparse
 sqlx
@@ -1845,7 +1810,6 @@ swaggo
 sylheti
 sylotinagri
 symbolizer
-syncx
 synstructure
 syscall
 systemevents
@@ -2123,7 +2087,6 @@ yocto
 yojson
 yookoala
 yosay
-youmark
 yoyodyne
 ytarchive
 yuin
@@ -2132,7 +2095,6 @@ zarchive
 zaufi
 zeebo
 zeid
-zenazn
 zencoder
 zenyd
 zerocopy
