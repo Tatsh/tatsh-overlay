@@ -1,0 +1,60 @@
+From 4fc5290f36413ab24f7b0ac97479840ba2535e77 Mon Sep 17 00:00:00 2001
+From: Stephen Sherratt <stephen@sherra.tt>
+Date: Sun, 18 Jul 2021 11:54:56 +1000
+Subject: [PATCH] Check result of reading _NET_WORKAREA before using
+
+It seems like not all window managers set _NET_WORKAREA. For example in
+dwm this property isn't set when X first starts (but running certain
+graphical applications such as firefox seem to cause the property to
+become set). This change prevents a crash when bsnes is run in an
+environment where _NET_WORKAREA has not been set.
+
+Prior to this change, running bsnes as the first program under the dwm
+window manager would result in the following error:
+
+The program 'hiro' received an X Window System error.
+This probably reflects a bug in the program.
+The error was 'BadAtom (invalid Atom parameter)'.
+
+This was the result of calling XGetWindowProperty with an Atom which
+does not name a defined Atom.
+---
+ hiro/gtk/desktop.cpp | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
+
+diff --git a/hiro/gtk/desktop.cpp b/hiro/gtk/desktop.cpp
+index 8ff555f8..d89f00b5 100644
+--- a/hiro/gtk/desktop.cpp
++++ b/hiro/gtk/desktop.cpp
+@@ -26,16 +26,21 @@ auto pDesktop::workspace() -> Geometry {
+   XlibAtom returnAtom;
+ 
+   XlibAtom netWorkarea = XInternAtom(display, "_NET_WORKAREA", XlibTrue);
+-  int result = XGetWindowProperty(
+-    display, RootWindow(display, screen), netWorkarea, 0, 4, XlibFalse,
+-    XInternAtom(display, "CARDINAL", XlibTrue), &returnAtom, &format, &items, &after, &data
+-  );
+-
+-  XlibAtom cardinal = XInternAtom(display, "CARDINAL", XlibTrue);
+-  if(result == Success && returnAtom == cardinal && format == 32 && items == 4) {
+-    unsigned long* workarea = (unsigned long*)data;
+-    XCloseDisplay(display);
+-    return {(int)workarea[0], (int)workarea[1], (int)workarea[2], (int)workarea[3]};
++
++  // Under certain window managers the _NET_WORKAREA atom is not set initially
++  if (netWorkarea != XlibNone) {
++
++    int result = XGetWindowProperty(
++      display, RootWindow(display, screen), netWorkarea, 0, 4, XlibFalse,
++      XInternAtom(display, "CARDINAL", XlibTrue), &returnAtom, &format, &items, &after, &data
++    );
++
++    XlibAtom cardinal = XInternAtom(display, "CARDINAL", XlibTrue);
++    if(result == Success && returnAtom == cardinal && format == 32 && items == 4) {
++      unsigned long* workarea = (unsigned long*)data;
++      XCloseDisplay(display);
++      return {(int)workarea[0], (int)workarea[1], (int)workarea[2], (int)workarea[3]};
++    }
+   }
+ 
+   XCloseDisplay(display);

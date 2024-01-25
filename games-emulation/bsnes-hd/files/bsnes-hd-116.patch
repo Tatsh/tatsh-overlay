@@ -1,0 +1,37 @@
+From 351ab73618b3c2043f0d0da5e7a64d0277ac35d2 Mon Sep 17 00:00:00 2001
+From: zoltanvb <balogh.zoltan.v@gmail.com>
+Date: Sun, 7 Aug 2022 13:17:49 +0200
+Subject: [PATCH] Makefile fix to enable build for "unix" and
+ "unix-armv7-hardfloat-neon"
+
+---
+ bsnes/GNUmakefile                 | 2 +-
+ bsnes/target-libretro/GNUmakefile | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/bsnes/GNUmakefile b/bsnes/GNUmakefile
+index 58466fbc..370a4aea 100644
+--- a/bsnes/GNUmakefile
++++ b/bsnes/GNUmakefile
+@@ -34,7 +34,7 @@ else ifeq ($(platform),macos)
+     flags += -fPIC
+     options += -dynamiclib
+   endif
+-else ifneq ($(filter $(platform),linux bsd),)
++else ifneq ($(filter $(platform),linux bsd unix unix-armv7-hardfloat-neon),)
+   ifeq ($(binary),application)
+     options += -Wl,-export-dynamic
+     options += -lX11 -lXext
+diff --git a/bsnes/target-libretro/GNUmakefile b/bsnes/target-libretro/GNUmakefile
+index 340c40af..fe7a2439 100644
+--- a/bsnes/target-libretro/GNUmakefile
++++ b/bsnes/target-libretro/GNUmakefile
+@@ -22,7 +22,7 @@ objects := $(patsubst %,obj/%.o,$(objects))
+ obj/libretro.o: target-libretro/libretro.cpp
+ 
+ all: $(objects)
+-ifeq ($(platform),linux)
++ifneq ($(filter $(platform),linux bsd unix unix-armv7-hardfloat-neon),)
+ 	$(strip $(compiler) -o out/bsnes_hd_beta_libretro.so -shared $(objects) -Wl,--no-undefined -Wl,--version-script=target-libretro/link.T -lgomp -Wl,-Bdynamic $(options))
+ else ifeq ($(platform),windows)
+ 	$(strip $(compiler) -o out/bsnes_hd_beta_libretro.dll -shared $(objects) -Wl,--no-undefined -Wl,--version-script=target-libretro/link.T -lgomp -Wl,-Bdynamic $(options))

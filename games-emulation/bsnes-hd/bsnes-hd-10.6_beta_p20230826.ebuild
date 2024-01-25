@@ -43,6 +43,12 @@ DEPEND="dev-libs/glib
 	udev? ( virtual/udev )"
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-102.patch"
+	"${FILESDIR}/${PN}-114.patch"
+	"${FILESDIR}/${PN}-116.patch"
+)
+
 S="${WORKDIR}/${PN}-${SHA}"
 
 disable_module() {
