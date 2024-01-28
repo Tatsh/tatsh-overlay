@@ -1,33 +1,15 @@
-From e9a4b9302be078a425d42d46a0dc1c62fd0739e9 Mon Sep 17 00:00:00 2001
+From 991c484f16d0394a26dec79385abe1082325a704 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 30 Oct 2022 22:55:47 -0400
 Subject: [PATCH 2/2] inih fix
 
 ---
- src/citra/CMakeLists.txt                          | 6 +-----
  src/citra/config.cpp                              | 1 +
  src/video_core/renderer_vulkan/vk_shader_util.cpp | 2 +-
- 3 files changed, 3 insertions(+), 6 deletions(-)
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/src/citra/CMakeLists.txt b/src/citra/CMakeLists.txt
-index 498b77027..d78d65e76 100644
---- a/src/citra/CMakeLists.txt
-+++ b/src/citra/CMakeLists.txt
-@@ -22,11 +22,7 @@ create_target_directory_groups(citra)
- 
- target_link_libraries(citra PRIVATE citra_common citra_core input_common network)
- target_link_libraries(citra PRIVATE glad)
--if (NOT USE_SYSTEM_INIH)
--    target_link_libraries(citra PRIVATE inih)
--else()
--    target_link_libraries(citra PRIVATE ${INIH_LIBS})
--endif()
-+target_link_libraries(citra PRIVATE inih)
- if (MSVC)
-     target_link_libraries(citra PRIVATE getopt)
- endif()
 diff --git a/src/citra/config.cpp b/src/citra/config.cpp
-index 1cbcf0262..4e773f60d 100644
+index baf5bbded..2ddc70d70 100644
 --- a/src/citra/config.cpp
 +++ b/src/citra/config.cpp
 @@ -8,6 +8,7 @@
