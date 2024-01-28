@@ -47,6 +47,7 @@ antchfx
 antihax
 antonmedv
 anymatch
+apac
 apigeeconnect
 apigeeregistry
 apikeys
@@ -227,6 +228,7 @@ chakma
 chardet
 charmbracelet
 checkpath
+chertsey
 cheshirekow
 chksums
 choco
@@ -550,6 +552,7 @@ eleonore
 elif
 elog
 emake
+emea
 emesonargs
 emirpasic
 emvi
@@ -1306,6 +1309,8 @@ noextract
 nofetch
 nolegacy
 nomi
+nonrenewal
+nontransferability
 nopasswd
 nopt
 noreturn
@@ -1772,6 +1777,7 @@ sqlx
 squashfs
 srcset
 srmd
+sslvpn
 ssri
 stackexchange
 starkits
@@ -1798,14 +1804,17 @@ stylis
 subclassing
 subdir
 subfile
+sublicensable
 subosito
 subtag
 suidsgid
 sunos
+suntec
 superdrive
 superg
 svcname
 svgo
+svpn
 swaggo
 sylheti
 sylotinagri
@@ -1845,6 +1854,7 @@ teakra
 teatest
 teex
 telematic
+temasek
 tempfile
 termcolor
 termenv
