@@ -90,6 +90,7 @@ src_prepare() {
 	mkdir -p "${S}_build/externals/nx_tzdb/nx_tzdb" || die
 	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip" \
 		"${S}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
+	mv "${WORKDIR}/zoneinfo" "${S}_build/externals/nx_tzdb/nx_tzdb/" || die
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' \
 		-i src/common/CMakeLists.txt || die
 	sed -e '/enable_testing.*/d' \
