@@ -87,7 +87,7 @@ src_prepare() {
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
 	mv "${WORKDIR}/simpleini-${SIMPLEINI_SHA}" "${S}/externals/simpleini" || die
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
-	mkdir -p "${S}_build/externals/nx_tzdb" || die
+	mkdir -p "${S}_build/externals/nx_tzdb/nx_tzdb" || die
 	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip" \
 		"${S}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' \
