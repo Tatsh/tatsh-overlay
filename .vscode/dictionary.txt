@@ -2113,6 +2113,7 @@ zerolog
 zimg
 zint
 znedi
+zoneinfo
 zstd
 zune
 zvbi
