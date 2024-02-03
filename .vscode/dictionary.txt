@@ -1757,6 +1757,7 @@ softfloat
 sompeng
 sorasompeng
 sortorder
+sounddevice
 soundfile
 soundfont
 soundtouch
