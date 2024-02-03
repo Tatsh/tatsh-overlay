@@ -10,7 +10,7 @@ inherit cmake desktop distutils-r1
 
 DESCRIPTION="Software defined VHS decoder."
 HOMEPAGE="https://github.com/oyvindln/vhs-decode"
-SHA="92489f0c4cb5a3dc1262356e9954849b75c67076"
+SHA="db40e2d98cae35aaff37198e237a308005054348"
 LD_DECODE_TESTDATA_SHA="eeddec3e9040f2110a3fcad5cadb45a3b733dee9"
 SRC_URI="https://github.com/oyvindln/vhs-decode/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	test? ( https://github.com/happycube/ld-decode-testdata/archive/${LD_DECODE_TESTDATA_SHA}.tar.gz -> ld-decode-testdata-${LD_DECODE_TESTDATA_SHA:0:7}.tar.gz )"
@@ -33,14 +33,12 @@ DEPEND="x11-libs/qwt:6
 RDEPEND="${DEPEND}
 	${PYTHON_DEPS}
 	dev-python/numpy[${PYTHON_USEDEP}]
-	dev-python/pandas[${PYTHON_USEDEP}]
 	media-video/ffmpeg
 	dev-python/scipy[${PYTHON_USEDEP}]
 	gtk? ( dev-python/gooey[${PYTHON_USEDEP}] )
 	dev-python/numba[${PYTHON_USEDEP}]
 	dev-python/samplerate[${PYTHON_USEDEP}]
-	dev-python/pyzmq[${PYTHON_USEDEP}]
-	dev-python/pyhht[${PYTHON_USEDEP}]
+	dev-python/sounddevice[${PYTHON_USEDEP}]
 	<dev-python/soundfile-0.11.0[${PYTHON_USEDEP}]"
 BDEPEND="dev-python/cython:0[${PYTHON_USEDEP}]
 	dev-python/wheel[${PYTHON_USEDEP}]
