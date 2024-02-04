@@ -52,9 +52,9 @@ BDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/${PN}-CMakeLists-flags.patch"
-	"${FILESDIR}/${PN}-disable-ccache-autodetection.patch"
 	"${FILESDIR}/${PN}-ffmpeg.patch"
+	"${FILESDIR}/${PN}-disable-ccache-autodetection.patch"
+	"${FILESDIR}/${PN}-CMakeLists-flags.patch"
 )
 
 pkg_setup() {
@@ -70,6 +70,7 @@ src_configure() {
 		-DUSE_SYSTEM_LIBZIP=ON
 		-DUSE_SYSTEM_SNAPPY=ON
 		-DUSE_SYSTEM_ZSTD=ON
+		-DUSE_FFMPEG=ON
 		"-DUSE_DISCORD=$(usex discord)"
 		"-DUSING_QT_UI=$(usex qt5)"
 	)

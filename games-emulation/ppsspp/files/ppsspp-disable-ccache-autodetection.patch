@@ -1,26 +1,36 @@
-From ca18b1b578ec7215277a73b6658753ff35e677ea Mon Sep 17 00:00:00 2001
-From: "Azamat H. Hackimov" <azamat.hackimov@gmail.com>
-Date: Sun, 28 Aug 2022 17:53:05 +0300
-Subject: [PATCH] Disable ccache autodetection
+From 200e2bd7c0ab70f97ecb94fb55064695909a360d Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 4 Feb 2024 18:39:18 -0500
+Subject: [PATCH 2/2] Option to disable ccache detection
 
-Build system automagically detects ccache and use it in situations where
-it should'nt do that.
 ---
- CMakeLists.txt | 1 -
- 1 file changed, 1 deletion(-)
+ CMakeLists.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 376e2c5ad..8c382ce5c 100644
+index f7c43800f..59061631e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -111,7 +111,6 @@ if(MACOSX AND NOT USE_SYSTEM_LIBSDL2)
- 	set(SDL2_LIBRARY ${CMAKE_SOURCE_DIR}/SDL/macOS/SDL2.framework)
+@@ -116,7 +116,6 @@ if(NOT IOS)
+ 	list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/sdl)
  endif()
  
 -include(ccache)
+ include(CheckCXXSourceCompiles)
  include(GNUInstallDirs)
  
- add_definitions(-DASSETS_DIR="${CMAKE_INSTALL_FULL_DATADIR}/ppsspp/assets/")
+@@ -174,6 +173,11 @@ option(USE_SYSTEM_ZSTD "Dynamically link against system zstd" ${USE_SYSTEM_ZSTD}
+ option(USE_SYSTEM_MINIUPNPC "Dynamically link against system miniUPnPc" ${USE_SYSTEM_MINIUPNPC})
+ option(USE_ASAN "Use address sanitizer" OFF)
+ option(USE_UBSAN "Use undefined behaviour sanitizer" OFF)
++option(USE_CCACHE "Use ccache if detected" ON)
++
++if(USE_CACHE)
++	include(ccache)
++endif()
+ 
+ if(UNIX AND NOT (APPLE OR ANDROID) AND VULKAN)
+ 	if(USING_X11_VULKAN)
 -- 
-2.35.1
+2.43.0
 
