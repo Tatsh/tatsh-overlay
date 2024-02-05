@@ -44,6 +44,7 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	dev-libs/libzip
 	dev-libs/openssl:=
 	dev-libs/vulkan-memory-allocator:=
+	dev-util/vulkan-utility-libraries
 	dev-util/glslang
 	dev-qt/qtcore:5
 	dev-qt/qtdbus:5
@@ -132,6 +133,7 @@ src_configure() {
 		-DYUZU_TESTS=OFF
 		-DYUZU_USE_EXTERNAL_SDL2=ON
 		-DYUZU_USE_EXTERNAL_VULKAN_HEADERS=OFF
+		-DYUZU_USE_EXTERNAL_VULKAN_UTILITY_LIBRARIES=OFF
 		-DYUZU_USE_QT_MULTIMEDIA=ON
 		"-DYUZU_USE_QT_WEB_ENGINE=$(usex webengine)"
 		-DYUZU_USE_FASTER_LD=OFF
