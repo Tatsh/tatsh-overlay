@@ -8,7 +8,7 @@ DISTUTILS_EXT=1
 DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_USE_PEP517=setuptools
 
-inherit cuda distutils-r1
+inherit cuda distutils-r1 multiprocessing
 
 DESCRIPTION="Datasets, transforms and models to specific to computer vision"
 HOMEPAGE="https://github.com/pytorch/vision"
@@ -48,8 +48,9 @@ distutils_enable_tests pytest
 
 src_prepare() {
 	default
+	MAX_JOBS=$(makeopts_jobs)
 	MAKEOPTS=-j1
-	export MAKEOPTS
+	export MAKEPOPTS MAX_JOBS
 	if use cuda; then
 		FORCE_CUDA=1
 		NVCC_FLAGS="$(cuda_gccdir -f | tr -d \")"
