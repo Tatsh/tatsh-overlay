@@ -50,7 +50,7 @@ src_prepare() {
 	default
 	MAX_JOBS=$(makeopts_jobs)
 	MAKEOPTS=-j1
-	export MAKEPOPTS MAX_JOBS
+	export MAKEOPTS MAX_JOBS
 	if use cuda; then
 		FORCE_CUDA=1
 		NVCC_FLAGS="$(cuda_gccdir -f | tr -d \")"
