@@ -22,7 +22,6 @@ S="${WORKDIR}/${MY_PN}-${SHA}"
 src_prepare() {
 	rmdir contrib || die
 	mv "${WORKDIR}/${PN}-contrib-${CONTRIB_SHA}" contrib || die
-	fgrep .git GNUmakefile
 	sed -re 's/ \.git //g' -e "s|doc/blesh|doc/${P}|" -i GNUmakefile || die
 	sed -re "s/system\(\"git show -s --format=%h\"\)/\"${SHA}\"/" -i ble.pp || die
 	default
