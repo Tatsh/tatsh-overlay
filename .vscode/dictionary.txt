@@ -18,6 +18,7 @@ aiohttp
 aiplatform
 ajstarks
 akavel
+akinomyoga
 alac
 alcalzone
 alcaro
@@ -164,6 +165,7 @@ bitrock
 bitwidth
 blackbox
 blackfriday
+blesh
 bluez
 bochs
 boltdb
@@ -439,6 +441,7 @@ distname
 distro
 distutils
 dlclark
+dlenski
 dlibrw
 dlltool
 dllvm
@@ -454,6 +457,7 @@ dnew
 dnfd
 dnfile
 dnsmasq
+dnspython
 dnssec
 dnsutils
 dobashcomp
@@ -1549,6 +1553,7 @@ qtmultimedia
 qtnetwork
 qtnetworkauth
 qtopengl
+qtpaths
 qtprintsupport
 qtquick
 qtquickcontrols
@@ -1979,6 +1984,7 @@ vmwareengine
 vorbis
 vosf
 vpcaccess
+vpnc
 vsaa
 vsexprtools
 vskernels
@@ -2123,6 +2129,3 @@ zwitch
 zyan
 zycore
 zzag
-blesh
-akinomyoga
-qtpaths
