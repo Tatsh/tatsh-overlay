@@ -29,7 +29,7 @@ SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+compatibility-reporting +cubeb +web-service +webengine"
+IUSE="+compatibility-reporting +cubeb llvm-libunwind +web-service +webengine"
 REQUIRED_USE="compatibility-reporting? ( web-service )"
 
 DEPEND=">=app-arch/zstd-1.5.0:=
@@ -55,10 +55,11 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	media-libs/libva
 	media-libs/opus
 	net-libs/enet:=
-	sys-libs/libunwind
 	sys-libs/zlib
 	virtual/libusb:=
-	webengine? ( dev-qt/qtwebengine:5 )"
+	webengine? ( dev-qt/qtwebengine:5 )
+	llvm-libunwind? ( sys-libs/llvm-libunwind )
+	!llvm-libunwind? ( sys-libs/libunwind:= )"
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="app-arch/unzip
