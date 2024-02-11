@@ -1779,6 +1779,7 @@ sqlalchemy
 sqlexp
 sqlmock
 sqlparse
+sqlserver
 sqlx
 squashfs
 srcset
