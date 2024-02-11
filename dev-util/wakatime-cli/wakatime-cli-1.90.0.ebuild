@@ -654,6 +654,11 @@ LICENSE="BSD MIT MPL-2.0 BSD-2 Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
+src_prepare() {
+	sed -re 's/go 1\.22/go 1.21/' -i go.mod || die
+	default
+}
+
 src_compile() {
 	local mygoargs=(
 		-v
