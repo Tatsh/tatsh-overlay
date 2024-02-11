@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Bash Line Editor."
 HOMEPAGE="https://github.com/akinomyoga/ble.sh"
-SHA="27e6309ef2344d37a6cec49f37b958c70f660472"
+SHA="6154d71cd93be79d55e559ab525f78bf27abfc3f"
 CONTRIB_SHA="eff9494fe05c47adab59e7cf27e0ef557ae22138"
 MY_PN="ble.sh"
 SRC_URI="https://github.com/akinomyoga/${MY_PN}/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz
