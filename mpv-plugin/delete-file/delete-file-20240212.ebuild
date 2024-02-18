@@ -9,7 +9,7 @@ inherit mpv-plugin
 
 DESCRIPTION="Queue files for deletion on quit."
 HOMEPAGE="https://github.com/zenyd/mpv-scripts"
-SHA="7100d19d18d111ce77fc9e6e8947c0d542a86397"
+SHA="9bdce0050144cb24f92475f7bdd77180e0e4c26b"
 SRC_URI="https://github.com/zenyd/mpv-scripts/archive/${SHA}.tar.gz -> zenyd-mpv-scripts-${SHA:0:7}.tar.gz"
 
 LICENSE="GPL-3"
