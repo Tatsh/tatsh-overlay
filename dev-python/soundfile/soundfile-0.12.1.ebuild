@@ -10,7 +10,6 @@ inherit distutils-r1 pypi
 DESCRIPTION="An audio library based on libsndfile, CFFI and NumPy"
 HOMEPAGE="https://pypi.org/project/soundfile/"
 MY_PN="SoundFile"
-SRC_URI="$(pypi_sdist_url --no-normalize "${MY_PN}" "${PV:0:7}post1")"
 
 LICENSE="BSD"
 SLOT="0"
@@ -21,5 +20,3 @@ RDEPEND="media-libs/libsndfile
 	dev-python/numpy[${PYTHON_USEDEP}]"
 
 distutils_enable_tests pytest
-
-S="${WORKDIR}/${MY_PN}-${PV:0:7}post1"
