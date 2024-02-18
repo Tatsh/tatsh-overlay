@@ -7,7 +7,7 @@ inherit desktop wrapper
 
 DESCRIPTION="Free version of the code analyzer."
 HOMEPAGE="https://hex-rays.com/ida-free/"
-SRC_URI="https://out7.hex-rays.com/files/idafree83_linux.run -> ${P}.run"
+SRC_URI="https://out7.hex-rays.com/files/idafree84_linux.run -> ${P}.run"
 
 LICENSE="EULA"
 SLOT="0"
@@ -16,15 +16,6 @@ RESTRICT="strip splitdebug"
 
 RDEPEND="app-crypt/mit-krb5
 	dev-libs/glib
-	dev-qt/qtcore
-	dev-qt/qtdbus
-	dev-qt/qtgui
-	dev-qt/qthelp
-	dev-qt/qtnetwork
-	dev-qt/qtprintsupport
-	dev-qt/qtsql
-	dev-qt/qtsvg
-	dev-qt/qtwidgets
 	media-libs/fontconfig
 	media-libs/freetype
 	media-libs/libglvnd
@@ -39,7 +30,6 @@ RDEPEND="app-crypt/mit-krb5
 	x11-libs/libXau
 	x11-libs/libXext
 	x11-libs/libdrm
-	x11-libs/libxcb
 	x11-libs/libxkbcommon
 	x11-libs/pango
 	x11-libs/xcb-util-image
