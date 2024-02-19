@@ -15,7 +15,7 @@ LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-python/python-evdev[${PYTHON_USEDEP}]
+RDEPEND="dev-python/evdev[${PYTHON_USEDEP}]
 	dev-python/python-xlib[${PYTHON_USEDEP}]
 	dev-python/six[${PYTHON_USEDEP}]"
 
