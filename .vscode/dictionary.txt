@@ -495,9 +495,11 @@ dotize
 dounit
 downscaler
 doxygen
+dpackage
 dpdb
 dportable
 dproject
+dpython
 dracut
 drelcs
 drelease
@@ -1507,6 +1509,7 @@ pvtsutils
 pvutils
 pyaaf
 pyasn
+pybind
 pycargoebuild
 pychoco
 pycparser
