@@ -38,7 +38,7 @@ RDEPEND="${DEPEND}
 	dev-python/numba[${PYTHON_USEDEP}]
 	dev-python/samplerate[${PYTHON_USEDEP}]
 	dev-python/sounddevice[${PYTHON_USEDEP}]
-	<dev-python/soundfile-0.11.0[${PYTHON_USEDEP}]"
+	dev-python/soundfile[${PYTHON_USEDEP}]"
 BDEPEND="dev-python/cython:0[${PYTHON_USEDEP}]
 	dev-python/wheel[${PYTHON_USEDEP}]
 	dev-python/setuptools-scm[${PYTHON_USEDEP}]"
