@@ -1,0 +1,234 @@
+From 1d589a9f49ab9a8d3a71f7c7b30700c014f415ce Mon Sep 17 00:00:00 2001
+From: Eli Schwartz <eschwartz93@gmail.com>
+Date: Tue, 20 Feb 2024 14:30:57 -0500
+Subject: [PATCH 1/3] pyproject: fix pointless marking of readme as dynamic
+
+The PEP 621 readme field does exactly the same thing, is statically
+defined, and is easier to read.
+
+Signed-off-by: Eli Schwartz <eschwartz93@gmail.com>
+---
+ pyproject.toml | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/pyproject.toml b/pyproject.toml
+index 7192c4b..68d1fe2 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -4,8 +4,9 @@ build-backend = "setuptools.build_meta"
+
+ [project]
+ name="samplerate"
+-dynamic = ["version", "readme"]
++dynamic = ["version"]
+ description="Monolithic python wrapper for libsamplerate based on pybind11 and NumPy"
++readme = "README.rst"
+ authors=[
+ {"name" = "Robin Scheibler", "email" ="fakufaku@gmail.com"},
+ {"name" = "Tino Wagner", "email" ="ich@tinowagner.com"}
+@@ -26,7 +27,4 @@ keywords=["samplerate", "converter", "signal processing", "audio"]
+ license = {text = "MIT"}
+ dependencies = ["numpy"]
+
+-[tool.setuptools.dynamic]
+-readme = {file = ["README.rst"]}
+-
+ [tool.setuptools_scm]
+--
+2.43.0
+
+
+From d24484a75c4e888eedb75d5f3f9790edf7b1b0b3 Mon Sep 17 00:00:00 2001
+From: Eli Schwartz <eschwartz93@gmail.com>
+Date: Mon, 19 Feb 2024 18:54:48 -0500
+Subject: [PATCH 2/3] add meson.build
+
+Signed-off-by: Eli Schwartz <eschwartz93@gmail.com>
+---
+ meson.build               | 27 +++++++++++++++++++++++++++
+ pyproject.toml            |  4 ++--
+ subprojects/pybind11.wrap | 13 +++++++++++++
+ 3 files changed, 42 insertions(+), 2 deletions(-)
+ create mode 100644 meson.build
+ create mode 100644 subprojects/pybind11.wrap
+
+diff --git a/meson.build b/meson.build
+new file mode 100644
+index 0000000..6616566
+--- /dev/null
++++ b/meson.build
+@@ -0,0 +1,27 @@
++project('samplerate', 'cpp',
++    version: run_command('python', '-m', 'setuptools_scm', check: true).stdout().strip(),
++    default_options: ['cpp_std=c++14', 'warning_level=2', 'optimization=3'],
++    meson_version: '>=1.1.0',
++)
++
++pybind11 = dependency('pybind11')
++libsamplerate = dependency('samplerate')
++
++py = import('python').find_installation()
++cxx = meson.get_compiler('cpp')
++
++if cxx.get_argument_syntax() == 'msvc'
++    add_project_arguments('/EHsc', '/bigobj', language: 'cpp')
++endif
++add_project_arguments(
++    '-DLIBSAMPLERATE_VERSION="@0@"'.format(libsamplerate.version()),
++    '-DVERSION_INFO="@0@"'.format(meson.project_version()),
++    language: 'cpp',
++)
++
++py.extension_module(
++    'samplerate',
++    'src/samplerate.cpp',
++    dependencies: [libsamplerate, pybind11],
++    install: true,
++)
+diff --git a/pyproject.toml b/pyproject.toml
+index 68d1fe2..08b1e0f 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,6 +1,6 @@
+ [build-system]
+-requires = ["setuptools>=61", "setuptools_scm[toml]>=6.2"]
+-build-backend = "setuptools.build_meta"
++requires = ["meson-python"]
++build-backend = "mesonpy"
+
+ [project]
+ name="samplerate"
+diff --git a/subprojects/pybind11.wrap b/subprojects/pybind11.wrap
+new file mode 100644
+index 0000000..4db583a
+--- /dev/null
++++ b/subprojects/pybind11.wrap
+@@ -0,0 +1,13 @@
++[wrap-file]
++directory = pybind11-2.11.1
++source_url = https://github.com/pybind/pybind11/archive/refs/tags/v2.11.1.tar.gz
++source_filename = pybind11-2.11.1.tar.gz
++source_hash = d475978da0cdc2d43b73f30910786759d593a9d8ee05b1b6846d1eb16c6d2e0c
++patch_filename = pybind11_2.11.1-1_patch.zip
++patch_url = https://wrapdb.mesonbuild.com/v2/pybind11_2.11.1-1/get_patch
++patch_hash = 77c3fdc4057b214d3d5d45b8bddfafb97e34af80df696ad4dedb06e61adb48ab
++source_fallback_url = https://github.com/mesonbuild/wrapdb/releases/download/pybind11_2.11.1-1/pybind11-2.11.1.tar.gz
++wrapdb_version = 2.11.1-1
++
++[provide]
++pybind11 = pybind11_dep
+--
+2.43.0
+
+
+From cde62be35cd31d44bfe4510660a48ad4279644fd Mon Sep 17 00:00:00 2001
+From: Eli Schwartz <eschwartz93@gmail.com>
+Date: Tue, 20 Feb 2024 14:35:36 -0500
+Subject: [PATCH 3/3] remove old cmake build
+
+Signed-off-by: Eli Schwartz <eschwartz93@gmail.com>
+---
+ CMakeLists.txt          |  46 -------------
+ MANIFEST.in             |   8 ---
+ external/CMakeLists.txt |  22 -------
+ setup.py                | 140 ----------------------------------------
+ 4 files changed, 216 deletions(-)
+ delete mode 100644 CMakeLists.txt
+ delete mode 100644 MANIFEST.in
+ delete mode 100644 external/CMakeLists.txt
+ delete mode 100644 setup.py
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+deleted file mode 100644
+index 6635a53..0000000
+--- a/CMakeLists.txt
++++ /dev/null
+@@ -1,46 +0,0 @@
+-# https://stackoverflow.com/questions/51907755/building-a-pybind11-module-with-cpp-and-cuda-sources-using-cmake
+-
+-cmake_minimum_required(VERSION 3.15)
+-
+-message(STATUS "Found Python prefix ${PYTHON_PREFIX}")
+-list(PREPEND CMAKE_PREFIX_PATH "${PYTHON_PREFIX}")
+-
+-project(python-samplerate)
+-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+-
+-cmake_policy(SET CMP0094 NEW)
+-
+-# adds the external dependencies
+-add_subdirectory(external)
+-
+-pybind11_add_module(python-samplerate src/samplerate.cpp)
+-
+-target_include_directories(python-samplerate PRIVATE ./external/libsamplerate/include)
+-
+-if(MSVC)
+-    target_compile_options(python-samplerate PRIVATE /EHsc /MP /bigobj)
+-    set(CMAKE_EXE_LINKER_FLAGS /MANIFEST:NO)
+-endif()
+-
+-if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR
+-    CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR
+-    (CMAKE_CXX_COMPILER_ID MATCHES "Intel" AND NOT WIN32))
+-    target_compile_options(python-samplerate PRIVATE -std=c++14 -O3 -Wall -Wextra)
+-endif()
+-
+-### stick the package and libsamplerate version into the module
+-target_compile_definitions(python-samplerate
+-    PUBLIC LIBSAMPLERATE_VERSION="${LIBSAMPLERATE_VERSION}"
+-    PRIVATE $<$<BOOL:${PACKAGE_VERSION_INFO}>:VERSION_INFO="${PACKAGE_VERSION_INFO}">
+-)
+-
+-### Final target setup
+-set_target_properties(
+-    python-samplerate
+-    PROPERTIES
+-        PREFIX ""
+-        OUTPUT_NAME "samplerate"
+-        LINKER_LANGUAGE C
+-    )
+-
+-target_link_libraries(python-samplerate PUBLIC samplerate)
+diff --git a/MANIFEST.in b/MANIFEST.in
+deleted file mode 100644
+index 4f7c701..0000000
+--- a/MANIFEST.in
++++ /dev/null
+@@ -1,8 +0,0 @@
+-include README.rst
+-include LICENSE.rst
+-include versioneer.py
+-include src/*.cpp
+-include CMakeLists.txt
+-include external/CMakeLists.txt
+-include requirements.txt
+-include examples/*.py
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+deleted file mode 100644
+index f41cf9e..0000000
+--- a/external/CMakeLists.txt
++++ /dev/null
+@@ -1,22 +0,0 @@
+-include(FetchContent)
+-
+-# pybind11
+-FetchContent_Declare(
+-  pybind11
+-  GIT_REPOSITORY https://github.com/pybind/pybind11
+-  GIT_TAG 5b0a6fc2017fcc176545afe3e09c9f9885283242 # 2.10.4
+-)
+-
+-FetchContent_MakeAvailable(pybind11)
+-
+-# libsamplerate
+-set(BUILD_TESTING OFF CACHE BOOL "Disable libsamplerate test build")
+-
+-FetchContent_Declare(
+-  libsamplerate
+-  GIT_REPOSITORY https://github.com/libsndfile/libsamplerate
+-  GIT_TAG c96f5e3de9c4488f4e6c97f59f5245f22fda22f7 # 0.2.2
+-)
+-set(LIBSAMPLERATE_VERSION 0.2.2 CACHE STRING PUBLIC)  # <-- update libsamplerate version here
+-
+-FetchContent_MakeAvailable(libsamplerate)
