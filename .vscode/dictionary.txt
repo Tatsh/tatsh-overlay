@@ -219,6 +219,7 @@ cdpatch
 cdproto
 cdrecord
 cemu
+certbot
 certifi
 certificatemanager
 cespare
