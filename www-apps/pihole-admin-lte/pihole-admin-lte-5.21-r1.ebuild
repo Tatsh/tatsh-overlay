@@ -90,4 +90,22 @@ src_install() {
 			cut '-d ' -f3)
 	{ echo "v${core_ver} v${PV} v${ftl_ver}" > \
 		"${ED}/var/lib/pihole/localversions"; } || die
+	{ cat <<EOF > "${ED}/var/lib/pihole/versions"
+CORE_VERSION=${core_ver}
+CORE_BRANCH=master
+CORE_HASH=
+GITHUB_CORE_VERSION=${core_ver}
+GITHUB_CORE_HASH=
+FTL_VERSION=${ftl_ver}
+FTL_BRANCH=master
+FTL_HASH=
+WEB_VERSION=${PV}
+WEB_BRANCH=master
+WEB_HASH=
+GITHUB_FTL_VERSION=${ftl_ver}
+GITHUB_FTL_HASH=
+DOCKER_VERSION=
+GITHUB_DOCKER_VERSION=
+EOF
+} || die
 }
