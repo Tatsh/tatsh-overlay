@@ -316,6 +316,7 @@ cpuguy
 cpuid
 cpus
 cpython
+crashpad
 crashplan
 creack
 creds
@@ -689,6 +690,8 @@ genny
 genproto
 gensync
 gentoolkit
+geoip
+geolocation
 getcanonicallocales
 getobject
 getprototypeof
@@ -842,6 +845,7 @@ httpprof
 httprequest
 httprouter
 httpsig
+httptoolkit
 httpunix
 huandu
 humansize
@@ -1041,6 +1045,7 @@ libpcre
 libpfm
 libpietendo
 libpulse
+libraw
 librealcugannv
 libretro
 libretrodb
@@ -1068,7 +1073,9 @@ liburing
 libusb
 libva
 libvapoursynth
+libvk
 libvorbis
+libvulkan
 libwebp
 libxar
 libxcb
@@ -1300,6 +1307,7 @@ newscript
 newunit
 nextick
 nfnt
+nftables
 niemeyer
 nihcode
 nihongo
@@ -1507,6 +1515,7 @@ punycode
 pvrtc
 pvtsutils
 pvutils
+pvxe
 pyaaf
 pyasn
 pybind
@@ -1826,6 +1835,7 @@ svcname
 svgo
 svpn
 swaggo
+swiftshader
 sylheti
 sylotinagri
 symbolizer
@@ -2067,14 +2077,17 @@ xattr
 xbmc
 xbrz
 xbyak
+xcomposite
 xcrun
 xcursor
+xdamage
 xdist
 xdocument
 xemu
 xerrors
 xext
 xfce
+xfixes
 xinerama
 xiph
 xirvik
