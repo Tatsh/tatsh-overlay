@@ -81,11 +81,11 @@ src_install() {
 	{ echo 'master master master' > \
 		"${ED}/var/lib/pihole/localbranches"; } || die
 	local -r core_ver=$({
-		qatom -q "$(best_version net-dns/pihole)" || \
+		qatom -Cq "$(best_version net-dns/pihole)" || \
 			die 'qatom failed to get net-dns/pihole version'; } |
 			cut '-d ' -f3)
 	local -r ftl_ver=$({
-		qatom -q "$(best_version net-dns/pihole-ftl)" || \
+		qatom -Cq "$(best_version net-dns/pihole-ftl)" || \
 			die 'qatom failed to get FTL version'; } |
 			cut '-d ' -f3)
 	{ echo "v${core_ver} v${PV} v${ftl_ver}" > \

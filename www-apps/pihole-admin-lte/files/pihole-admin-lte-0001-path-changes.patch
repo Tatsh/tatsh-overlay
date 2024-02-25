@@ -1,4 +1,4 @@
-From ed0e40ae22873e4c0f5d60a18e06dbfa4fc2a515 Mon Sep 17 00:00:00 2001
+From 7d21c005512cdafe06f4b30bfc9f12bedd30e77f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:45:41 -0500
 Subject: [PATCH 1/3] Path changes
@@ -45,7 +45,7 @@ index 25870f4e..c818b117 100644
                  <p>Only the first record will trigger an address-to-name association.</p>
                  <button type="button" id="btnAdd" class="btn btn-primary pull-right">Add</button>
 diff --git a/scripts/pi-hole/php/database.php b/scripts/pi-hole/php/database.php
-index f52c6169..33a379cb 100644
+index 54e92b07..a27c1662 100644
 --- a/scripts/pi-hole/php/database.php
 +++ b/scripts/pi-hole/php/database.php
 @@ -16,23 +16,23 @@ const LISTTYPE_REGEX_BLACKLIST = 3;
@@ -81,10 +81,10 @@ index f52c6169..33a379cb 100644
  
  function SQLite3_connect_try($filename, $mode, $trytoreconnect)
 diff --git a/scripts/pi-hole/php/func.php b/scripts/pi-hole/php/func.php
-index 6a7ed0f5..4bf78b11 100644
+index b345ca87..5da2ef27 100644
 --- a/scripts/pi-hole/php/func.php
 +++ b/scripts/pi-hole/php/func.php
-@@ -176,7 +176,7 @@ function pihole_execute($argument_string)
+@@ -177,7 +177,7 @@ function pihole_execute($argument_string)
  }
  
  // Custom DNS
@@ -93,7 +93,7 @@ index 6a7ed0f5..4bf78b11 100644
  
  function echoCustomDNSEntries()
  {
-@@ -348,7 +348,7 @@ function deleteAllCustomDNSEntries($reload = '')
+@@ -350,7 +350,7 @@ function deleteAllCustomDNSEntries($reload = '')
  }
  
  // CNAME
@@ -103,7 +103,7 @@ index 6a7ed0f5..4bf78b11 100644
  function echoCustomCNAMEEntries()
  {
 diff --git a/scripts/pi-hole/php/password.php b/scripts/pi-hole/php/password.php
-index 02872630..a2a59808 100644
+index f6629d3d..de514d0e 100644
 --- a/scripts/pi-hole/php/password.php
 +++ b/scripts/pi-hole/php/password.php
 @@ -14,7 +14,7 @@ require_once 'persistentlogin_token.php';
@@ -116,7 +116,7 @@ index 02872630..a2a59808 100644
  if (isset($setupVars['WEBPASSWORD'])) {
      $pwhash = $setupVars['WEBPASSWORD'];
 diff --git a/scripts/pi-hole/php/savesettings.php b/scripts/pi-hole/php/savesettings.php
-index 41f03a64..925d1f50 100644
+index 8b528d24..b2a86c91 100644
 --- a/scripts/pi-hole/php/savesettings.php
 +++ b/scripts/pi-hole/php/savesettings.php
 @@ -37,7 +37,7 @@ function formatMAC($mac_addr)
@@ -138,10 +138,10 @@ index 41f03a64..925d1f50 100644
          while (($line = fgets($handle)) !== false) {
              $line = rtrim($line);
 diff --git a/scripts/pi-hole/php/teleporter.php b/scripts/pi-hole/php/teleporter.php
-index 0161a9ad..612c3674 100644
+index d7a937eb..c38eb5ec 100644
 --- a/scripts/pi-hole/php/teleporter.php
 +++ b/scripts/pi-hole/php/teleporter.php
-@@ -466,7 +466,7 @@ if (isset($_POST['action'])) {
+@@ -467,7 +467,7 @@ if (isset($_POST['action'])) {
  
              if (isset($_POST['staticdhcpleases']) && $file->getFilename() === '04-pihole-static-dhcp.conf') {
                  if ($flushtables) {
@@ -150,7 +150,7 @@ index 0161a9ad..612c3674 100644
                      if ($local_file !== false) {
                          ftruncate($local_file, 0);
                          fclose($local_file);
-@@ -592,12 +592,12 @@ if (isset($_POST['action'])) {
+@@ -595,12 +595,12 @@ if (isset($_POST['action'])) {
      archive_add_table('adlist_by_group.json', 'adlist_by_group');
      archive_add_table('client_by_group.json', 'client_by_group');
  
@@ -181,7 +181,7 @@ index 00f7b349..15e71832 100644
  if (!is_readable($versionsfile)) {
      $core_branch = 'master';
 diff --git a/settings.php b/settings.php
-index f024b894..af8c5f7d 100644
+index 6ad968d9..1ffacd68 100644
 --- a/settings.php
 +++ b/settings.php
 @@ -14,7 +14,7 @@ require_once 'scripts/pi-hole/php/FTL.php';
@@ -193,7 +193,7 @@ index f024b894..af8c5f7d 100644
  $piholeFTLConf = piholeFTLConfig(DEFAULT_FTLCONFFILE, true);
  
  // Handling of PHP internal errors
-@@ -566,7 +566,7 @@ $dhcp_leases = array();
+@@ -583,7 +583,7 @@ $dhcp_leases = array();
  if ($DHCP) {
      // Read leases file
      $leasesfile = true;
@@ -203,5 +203,5 @@ index f024b894..af8c5f7d 100644
          $leasesfile = false;
      }
 -- 
-2.39.1
+2.44.0
 

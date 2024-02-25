@@ -1,4 +1,4 @@
-From 9cb52a46ea67a10e8670a7d0e7ce0559fb780e4c Mon Sep 17 00:00:00 2001
+From f968d9215c2f1ee9eeca5c0ecce4c6fc9dc07bcf Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 13 Jan 2022 12:46:13 -0500
 Subject: [PATCH 2/3] settings: disable power off and restart system buttons
@@ -9,10 +9,10 @@ Update paths
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/settings.php b/settings.php
-index af8c5f7d..6e4bbfa4 100644
+index 1ffacd68..a4e6fd5f 100644
 --- a/settings.php
 +++ b/settings.php
-@@ -338,11 +338,11 @@ if ($FTLpid !== 0) {
+@@ -353,11 +353,11 @@ if ($FTLpid !== 0) {
                                          </div>
                                          <p class="hidden-md hidden-lg"></p>
                                          <div class="col-md-4">
@@ -27,5 +27,5 @@ index af8c5f7d..6e4bbfa4 100644
                                      </div>
  
 -- 
-2.39.1
+2.44.0
 
