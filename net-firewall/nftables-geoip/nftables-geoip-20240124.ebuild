@@ -30,7 +30,7 @@ src_prepare() {
 
 src_install() {
 	python_foreach_impl python_newscript nft_geoip.py nft-geoip
-	insinto /usr/share/${PN}
+	insinto "/usr/share/${PN}"
 	doins location.csv
 	einstalldocs
 }
