@@ -1,7 +1,7 @@
 {
   "author": "Andrew Udvare <audvare@gmail.com>",
   "devDependencies": {
-    "cspell": "^8.3.2",
+    "cspell": "^8.4.1",
     "prettier": "^3.2.5",
     "prettier-plugin-ini": "^1.1.0",
     "prettier-plugin-sort-json": "^3.1.0",
