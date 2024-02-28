@@ -155,6 +155,7 @@ bincookie
 bincue
 bindata
 bindgen
+bindir
 bindist
 binja
 binutils
@@ -332,6 +333,7 @@ csvlens
 cuda
 cugan
 cunet
+cuse
 cvtres
 cword
 cxadc
@@ -345,6 +347,7 @@ cython
 czkawka
 dabh
 dallow
+dalsa
 damerau
 danwakefield
 dargs
@@ -383,6 +386,7 @@ dcmake
 dcpihecpambacapedldabdbpakmachpb
 dcpp
 dcrc
+ddaemon
 ddev
 ddisable
 ddrivers
@@ -501,6 +505,7 @@ dpackage
 dpdb
 dportable
 dproject
+dpulseaudio
 dpython
 dracut
 drelcs
@@ -1019,6 +1024,7 @@ libdrm
 libedit
 libepoxy
 libevdev
+libexecdir
 libfat
 libffms
 libfluidsynth
@@ -1400,6 +1406,9 @@ osconfig
 osenv
 oslogin
 osmanya
+ossemul
+ossp
+osspd
 otio
 otlp
 otool
@@ -1976,6 +1985,7 @@ usbkill
 usedep
 uselistorder
 useragent
+userspace
 usev
 usex
 vapoursynth
