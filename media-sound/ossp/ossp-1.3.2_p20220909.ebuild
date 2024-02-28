@@ -29,16 +29,17 @@ CONFIG_CHECK="!SND_OSSEMUL
 	CUSE"
 
 src_prepare() {
+	# shellcheck disable=SC2016
 	sed -re 's|"\$\{CMAKE_INSTALL_LIBEXECDIR\}/ossp"|${CMAKE_INSTALL_BINDIR}|g' \
-		-i cmake/${PN}-util.cmake || die
+		-i "cmake/${PN}-util.cmake" || die
 	cmake_src_prepare
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-Dalsa=$(usex alsa)
+		-Dalsa="$(usex alsa)"
 		-Ddaemon=ON
-		-Dpulseaudio=$(usex pulseaudio)
+		-Dpulseaudio="$(usex pulseaudio)"
 	)
 	cmake_src_configure
 }
