@@ -35,6 +35,10 @@ DEPEND="
 RDEPEND="${DEPEND}"
 BDEPEND="kde? ( dev-qt/qtpaths )"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-0001-seccomp-add-faccessat2.patch"
+)
+
 DOCS=( README.md NEWS.md )
 
 src_configure() {

@@ -1,0 +1,24 @@
+From ee3c10efabd8b65a307f5f34a232cc5d0b009b68 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 3 Mar 2024 21:10:28 -0500
+Subject: [PATCH 11/11] seccomp: add faccessat2
+
+---
+ src/librpsecure/os-secure_linux.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/librpsecure/os-secure_linux.c b/src/librpsecure/os-secure_linux.c
+index 4a2e11c54..f842bb6f2 100644
+--- a/src/librpsecure/os-secure_linux.c
++++ b/src/librpsecure/os-secure_linux.c
+@@ -68,6 +68,7 @@ int rp_secure_enable(rp_secure_param_t param)
+ 		SCMP_SYS(brk),
+ 		SCMP_SYS(exit),
+ 		SCMP_SYS(exit_group),
++		SCMP_SYS(faccessat2),
+ 		SCMP_SYS(read),
+ 		SCMP_SYS(rt_sigreturn),
+ 		SCMP_SYS(write),
+-- 
+2.44.0
+
