@@ -610,6 +610,7 @@ existance
 extglob
 exzap
 faad
+faccessat
 fakecrc
 fastcgi
 fastq
@@ -1718,6 +1719,7 @@ scrn
 scuid
 sdist
 seatools
+seccomp
 secretmanager
 securecookie
 securejoin
