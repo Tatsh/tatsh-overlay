@@ -5,7 +5,7 @@ EAPI=8
 inherit cmake flag-o-matic xdg
 
 DESCRIPTION="Nintendo Switch emulator."
-HOMEPAGE="https://yuzu-emu.org/ https://github.com/yuzu-emu/yuzu-mainline"
+HOMEPAGE="https://web.archive.org/web/20240304190805/https://yuzu-emu.org/ https://github.com/yuzu-mirror/yuzu-mainline"
 MY_PV="mainline-${PV/./-}"
 CPP_HTTPLIB_SHA="6d963fbe8d415399d65e94db7910bbd22fe3741c"
 CPP_JWT_SHA="10ef5735d842b31025f1257ae78899f50a40fb14"
@@ -16,10 +16,10 @@ SDL_SHA="cc016b0046d563287f0aa9f09b958b5e70d43696"
 SIMPLEINI_SHA="382ddbb4b92c0b26aa1b32cefba2002119a5b1f2"
 SIRIT_SHA="ab75463999f4f3291976b079d42d52ee91eebf3f"
 XBYAK_SHA="a1ac3750f9a639b5a6c6d6c7da4259b8d6790989"
-SRC_URI="https://github.com/yuzu-emu/yuzu-mainline/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/yuzu-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
-	https://github.com/MerryMage/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
-	https://github.com/yuzu-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
+SRC_URI="https://web.archive.org/web/20240304185516mp_/https://github.com/yuzu-emu/yuzu-mainline/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz
+	https://github.com/yuzu-mirror/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
+	https://github.com/yuzu-mirror/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
+	https://github.com/yuzu-mirror/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/lat9nq/tzdb_to_nx/releases/download/${NX_TZDB_VERSION}/${NX_TZDB_VERSION}.zip -> ${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip
 	https://github.com/yhirose/cpp-httplib/archive/${CPP_HTTPLIB_SHA}.tar.gz -> ${PN}-cpp-httplib-${CPP_HTTPLIB_SHA:0:7}.tar.gz
 	https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz
@@ -75,11 +75,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"
 )
 
-pkg_setup() {
-	wget -t 1 --timeout=15 -O "${T}/compatibility_list.json" https://api.yuzu-emu.org/gamedb/ ||
-		rm -f "${T}/compatibility_list.json"
-}
-
 src_prepare() {
 	rm .gitmodules || die
 	rmdir "${S}/externals/"{dynarmic,mbedtls,simpleini,sirit,SDL,xbyak} || die
@@ -105,10 +100,8 @@ src_prepare() {
 		-i externals/nx_tzdb/CMakeLists.txt || die
 	cmake_src_prepare
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
-	if ! [ -f "${T}/compatibility_list.json" ]; then
-		einfo 'Using fallback compatibility list'
-		gunzip < "${FILESDIR}/${PN}-fallback-compat.json.gz" > "${T}/compatibility_list.json" || die
-	fi
+	einfo 'Using fallback compatibility list'
+	gunzip < "${FILESDIR}/${PN}-fallback-compat.json.gz" > "${T}/compatibility_list.json" || die
 	mv -f "${T}/compatibility_list.json" \
 		"${BUILD_DIR}/dist/compatibility_list/compatibility_list.json" || die
 }
