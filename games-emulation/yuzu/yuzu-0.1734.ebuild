@@ -16,7 +16,7 @@ SDL_SHA="cc016b0046d563287f0aa9f09b958b5e70d43696"
 SIMPLEINI_SHA="382ddbb4b92c0b26aa1b32cefba2002119a5b1f2"
 SIRIT_SHA="ab75463999f4f3291976b079d42d52ee91eebf3f"
 XBYAK_SHA="a1ac3750f9a639b5a6c6d6c7da4259b8d6790989"
-SRC_URI="https://web.archive.org/web/20240304185516mp_/https://github.com/yuzu-emu/yuzu-mainline/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://web.archive.org/web/20240304181657if_/https://codeload.github.com/yuzu-emu/yuzu-mainline/tar.gz/refs/tags/${MY_PV} -> ${P}.tar.gz
 	https://github.com/yuzu-mirror/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
 	https://github.com/yuzu-mirror/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/yuzu-mirror/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
