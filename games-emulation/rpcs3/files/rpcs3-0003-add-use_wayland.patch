@@ -1,7 +1,7 @@
-From 3dda7803c375f378e19fb631658304be7f1760a7 Mon Sep 17 00:00:00 2001
+From 3d94677d123e209adb9c670c098bcd67545c71ed Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 09:09:18 -0400
-Subject: [PATCH 03/10] Add USE_WAYLAND
+Subject: [PATCH 3/9] Add USE_WAYLAND
 
 ---
  3rdparty/CMakeLists.txt | 2 +-
@@ -21,5 +21,5 @@ index 4006a4920..2eb105ed4 100644
  			if (WAYLAND_FOUND)
  				target_include_directories(3rdparty_vulkan
 -- 
-2.43.0
+2.44.0
 

@@ -1,7 +1,7 @@
-From e9866a908890544b657363aa1a1f1176a99a3818 Mon Sep 17 00:00:00 2001
+From b3c05855bfff279c6e1dab0251a2e5203744b849 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 2 Jan 2022 03:32:54 -0500
-Subject: [PATCH 05/10] Allow system cubeb
+Subject: [PATCH 5/9] Allow system cubeb
 
 ---
  3rdparty/CMakeLists.txt  | 6 +++++-
@@ -26,10 +26,10 @@ index 44b06d672..1611850ba 100644
  # SoundTouch
  add_subdirectory(SoundTouch EXCLUDE_FROM_ALL)
 diff --git a/rpcs3/Emu/CMakeLists.txt b/rpcs3/Emu/CMakeLists.txt
-index d8c33ae69..4413e3cac 100644
+index 3c001bf98..dea9fa8c3 100644
 --- a/rpcs3/Emu/CMakeLists.txt
 +++ b/rpcs3/Emu/CMakeLists.txt
-@@ -174,7 +174,7 @@ target_link_libraries(rpcs3_emu
+@@ -157,7 +157,7 @@ target_link_libraries(rpcs3_emu
  
  target_link_libraries(rpcs3_emu
      PUBLIC
@@ -39,5 +39,5 @@ index d8c33ae69..4413e3cac 100644
  target_link_libraries(rpcs3_emu
      PUBLIC
 -- 
-2.43.0
+2.44.0
 
