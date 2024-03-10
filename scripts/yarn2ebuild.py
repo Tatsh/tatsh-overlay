@@ -52,8 +52,10 @@ def main() -> int:
     path_join_args = ((root_dir, 'node_modules', package, 'package.json') if not args['root'] else
                       (root_dir, 'package.json'))
     yarn_lock = args['yarn.lock']
-    root_dir = dirname(yarn_lock)
     package = args['package']
+    root_dir = dirname(yarn_lock)
+    path_join_args = ((root_dir, 'node_modules', package, 'package.json') if not args['root'] else
+                      (root_dir, 'package.json'))
     licenses: Set[str] = set()
     with open(yarn_lock) as f:
         yarn_pkgs: Set[str] = set()
