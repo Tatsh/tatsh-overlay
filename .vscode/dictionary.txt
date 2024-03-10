@@ -940,6 +940,7 @@ julienschmidt
 jwalterweatherman
 kaithi
 kamerer
+kamilkisiela
 kanjitalk
 kateschema
 kayah
@@ -1718,6 +1719,7 @@ screamf
 scrn
 scuid
 sdist
+sdsl
 seatools
 seccomp
 secretmanager
@@ -1791,6 +1793,7 @@ soundfile
 soundfont
 soundtouch
 sourcehut
+sourcemaps
 soversion
 spacepacket
 spaolacci
