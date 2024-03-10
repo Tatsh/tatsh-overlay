@@ -8,19 +8,19 @@ inherit yarn
 DESCRIPTION="Create Electron app packages."
 HOMEPAGE="https://github.com/electron/asar"
 YARN_PKGS=(
-	@electron/asar-3.2.8
-	balanced-match-1.0.2
-	brace-expansion-1.1.11
-	commander-5.1.0
-	concat-map-0.0.1
-	fs.realpath-1.0.0
-	glob-7.2.3
-	inflight-1.0.6
-	inherits-2.0.4
-	minimatch-3.1.2
+	@electron/asar-3.2.9
 	once-1.4.0
-	path-is-absolute-1.0.1
+	concat-map-0.0.1
+	minimatch-3.1.2
 	wrappy-1.0.2
+	path-is-absolute-1.0.1
+	balanced-match-1.0.2
+	inherits-2.0.4
+	fs.realpath-1.0.0
+	brace-expansion-1.1.11
+	inflight-1.0.6
+	glob-7.2.3
+	commander-5.1.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
