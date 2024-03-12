@@ -2101,6 +2101,8 @@
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@silvermine/videojs-chromecast/-/videojs-chromecast-1.4.1.tgz#a5763eb85dfd4bc8f47a1b8b150d5dadbb8ea658"
   integrity sha512-tXeikkWoNC3WIl2WSkIag1CLMbGsgn+26LM4LoB4qx0TQ8mkg7pgpldCTkvXxLVaDluQ/uEm2uxrgrMmjOc6sw==
+  dependencies:
+    webcomponents.js "git+https://git@github.com/webcomponents/webcomponentsjs.git#v0.7.24"
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.9"
@@ -8035,6 +8037,11 @@ web-streams-polyfill@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/web-streams-polyfill/-/web-streams-polyfill-3.2.1.tgz#71c2718c52b45fd49dbeee88634b3a60ceab42a6"
   integrity sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==
+
+webcomponents.js@^0.7.24, "webcomponents.js@git+https://git@github.com/webcomponents/webcomponentsjs.git#v0.7.24":
+  version "0.7.24"
+  resolved "https://registry.yarnpkg.com/webcomponents.js/-/webcomponents.js-0.7.24.tgz#2116fbfa1468ec416a7befdaa333e1d118f69c04"
+  integrity sha512-YICWfSBmTB1mkhYlSqfTBN6vtunG+sacpzDF13K7fXsj03BGB3QfETF7f0fuMV/P/4GwSr4yiRNeeRk91p5tUg==
 
 webcrypto-core@^1.7.4:
   version "1.7.6"

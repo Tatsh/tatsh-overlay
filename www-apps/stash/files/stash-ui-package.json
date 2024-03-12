@@ -110,6 +110,9 @@
   "homepage": "./",
   "name": "stash",
   "private": true,
+  "resolutions": {
+    "webcomponents.js": "^0.7.24"
+  },
   "scripts": {
     "build": "vite build",
     "build-ci": "yarn run validate && yarn run build",
