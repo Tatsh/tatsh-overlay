@@ -1063,6 +1063,7 @@ libsamplerate
 libscenechange
 libsdl
 libseccomp
+libsecret
 libsfml
 libshared
 libslirp
