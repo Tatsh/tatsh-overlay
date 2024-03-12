@@ -49,8 +49,6 @@ def main() -> int:
                         action='store_true',
                         help='Package is at root and is not a dependency.')
     args = dict(parser.parse_args()._get_kwargs())
-    path_join_args = ((root_dir, 'node_modules', package, 'package.json') if not args['root'] else
-                      (root_dir, 'package.json'))
     yarn_lock = args['yarn.lock']
     package = args['package']
     root_dir = dirname(yarn_lock)
