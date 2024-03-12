@@ -37,6 +37,7 @@ BDEPEND="kde? ( dev-qt/qtpaths )"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-seccomp-add-faccessat2.patch"
+	"${FILESDIR}/${PN}-e1a6e6b.patch"
 )
 
 DOCS=( README.md NEWS.md )
