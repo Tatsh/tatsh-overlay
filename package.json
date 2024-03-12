@@ -29,7 +29,7 @@
     "format": "yarn prettier -w './**/*.json' './**/*.md' './**/*.toml' './**/*.yml' && poetry run yapf -ri scripts",
     "mypy": "poetry run mypy .",
     "qa": "yarn shellcheck && yarn mypy && yarn ruff && yarn check-spelling && yarn check-formatting",
-    "ruff": "poetry run ruff scripts",
+    "ruff": "poetry run ruff check scripts",
     "shellcheck": "shellcheck scripts/*.sh eclass/*.eclass ./*/*/*.ebuild net-dns/pihole-ftl/files/pihole-FTL x11-misc/mimeo/files/mimeo-completion.sh"
   },
   "version": "0.2.0"
