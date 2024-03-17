@@ -392,6 +392,7 @@ ddisable
 ddrivers
 ddynarec
 deark
+deband
 debuginfod
 decamelize
 decli
@@ -612,6 +613,7 @@ exzap
 faad
 faccessat
 fakecrc
+fakegem
 fastcgi
 fastq
 fastrand
@@ -709,6 +711,7 @@ ggijpepdpiehgbiknmfpfbhcalffjlbj
 ghodss
 gickup
 gifs
+gileshuang
 gioui
 gitea
 gitgen
@@ -1137,6 +1140,7 @@ longrunning
 loong
 lrelease
 lsdvd
+lssecret
 luajit
 lucasb
 lugaresi
@@ -1749,6 +1753,7 @@ sharded
 shellcheck
 shellescape
 shellquote
+shifta
 shlex
 shuralyov
 shurcoo
@@ -2042,6 +2047,8 @@ warang
 warangciti
 warnflags
 wasi
+wayback
+wayback
 wchar
 wcwidth
 weakmap
