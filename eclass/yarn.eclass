@@ -49,7 +49,7 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 		# shellcheck disable=SC2034
 		BDEPEND="sys-apps/yarn"
 		if [ "${WANT_GYP}" -ne 0 ]; then
-			BDEPEND+=" dev-util/node-gyp"
+			BDEPEND+=" dev-build/node-gyp"
 		fi
 		# shellcheck disable=SC2034
 		RDEPEND="net-libs/nodejs:="
