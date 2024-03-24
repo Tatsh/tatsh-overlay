@@ -519,6 +519,7 @@ dslirp
 dsnet
 dsphinx
 dsplit
+dsuyu
 dsymutil
 dsystemd
 dubhater
@@ -762,6 +763,7 @@ gogen
 gogs
 goidentity
 goimagehash
+goja
 gokrb
 goldmark
 golib
@@ -1009,6 +1011,7 @@ leasetime
 lebe
 ledongthuc
 leichtgewicht
+leodido
 lepcha
 leveladj
 levelname
