@@ -56,6 +56,10 @@ games-emulation/rpcs3: faudio - Enable audio rendering with app-emulation/faudio
 games-emulation/rpcs3: joystick - Enable support for input devices with evdev
 games-emulation/rpcs3: llvm - LLVM recompiler support
 games-emulation/rpcs3: vulkan - Enable Vulkan graphics library support
+games-emulation/suyu: compatibility-reporting - Enable compatibility reporting
+games-emulation/suyu: cubeb - Build with cubeb audio backend
+games-emulation/suyu: webengine - Use  for embedded web browser
+games-emulation/suyu: web-service - Enable web-services
 games-emulation/xemu: aio - Add support for AIO
 games-emulation/xemu: io-uring - Enable efficient I/O via sys-libs/liburing
 games-emulation/xemu: malloc-trim - Enable malloc_trim() support
@@ -151,6 +155,7 @@ mpv-plugin/shutup: autoload - Auto-load the plugin
 mpv-plugin/writeedits: autoload - Auto-load the plugin
 mpv-plugin/writename: autoload - Auto-load the plugin
 net-dns/pihole: cron - Installs cron job
+sci-libs/torchvision: cuda - 
 sys-apps/kylemanna-systemd-utils: amazon - Install Amazon Cloud Drive service
 sys-apps/kylemanna-systemd-utils: btrfs - Install units for btrfs
 sys-apps/kylemanna-systemd-utils: cmsis-dap - Unknown
@@ -161,6 +166,14 @@ sys-apps/kylemanna-systemd-utils: rssh - Install rssh service
 sys-apps/kylemanna-systemd-utils: storj - Install storj-dataserv-client.service
 sys-apps/kylemanna-systemd-utils: tahoe - Install Tahoe-related services
 sys-apps/kylemanna-systemd-utils: youtube - Install YouTube TV service
+sys-devel/llvm: binutils-plugin - Build the binutils plugin
+sys-devel/llvm: doc - Build and install the HTML documentation and regenerate the man pages
+sys-devel/llvm: exegesis - Enable performance counter support for llvm-exegesis tool
+sys-devel/llvm: ncurses - Support querying terminal properties using ncurses' terminfo
+sys-devel/llvm: 			that can be used to measure host machine instruction characteristics
+sys-devel/llvm: 			(uses )
+sys-devel/llvm: xar - Support dumping LLVM bitcode sections in Mach-O files
+sys-devel/llvm: z3 - Enable support for  constraint solver
 www-plugins/bypass-paywalls: chrome - Install file for Chrome and Chrome Beta
 www-plugins/bypass-paywalls: chromium - Install file for Chromium-based browsers
 x11-misc/rom-properties: achievements - Enable achievement pop-ups.
