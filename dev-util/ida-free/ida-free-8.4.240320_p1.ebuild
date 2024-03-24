@@ -7,7 +7,8 @@ inherit desktop wrapper
 
 DESCRIPTION="Free version of the code analyzer."
 HOMEPAGE="https://hex-rays.com/ida-free/"
-SRC_URI="https://out7.hex-rays.com/files/idafree84_linux.run -> ${P}.run"
+MAJOR_MINOR="$(ver_cut 1)$(ver_cut 2)"
+SRC_URI="https://out7.hex-rays.com/files/idafree${MAJOR_MINOR}_linux.run -> ${P}.run"
 
 LICENSE="EULA"
 SLOT="0"
