@@ -26,8 +26,8 @@ QUOTED_DOLLAR_SCAN_DEPS='${CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS}'
 
 src_configure() {
 	filter-flags -O*
-	CC=$(command -v clang-17 || command -v clang-16)
-	CXX=$(command -v clang++-17 || command -v clang++-16)
+	CC=$(command -v clang-18 || command -v clang-17 || command -v clang-16)
+	CXX=$(command -v clang++-18 || command -v clang++-17 || command -v clang++-16)
 	export CC CXX
 	append-cxxflags -Wno-unknown-warning-option -fexperimental-library
 	local mycmakeargs=(
