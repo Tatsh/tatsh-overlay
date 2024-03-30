@@ -929,6 +929,7 @@ joncampbell
 josharian
 joystickwake
 jridgewell
+jsbn
 jsdoc
 jsesc
 jsoncpp
@@ -1855,6 +1856,7 @@ sunos
 suntec
 superdrive
 superg
+suyu
 svcname
 svgo
 svpn
@@ -2050,7 +2052,6 @@ warang
 warangciti
 warnflags
 wasi
-wayback
 wayback
 wchar
 wcwidth
