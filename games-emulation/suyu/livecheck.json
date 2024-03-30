@@ -1,0 +1,5 @@
+{
+  "regex": "href=\"/suyu/suyu/src/tag/v([^\"]+)\"",
+  "type": "regex",
+  "url": "https://git.suyu.dev/suyu/suyu/releases"
+}
