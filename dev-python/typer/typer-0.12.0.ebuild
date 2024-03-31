@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=flit
+DISTUTILS_USE_PEP517=pdm-backend
 PYTHON_COMPAT=( python3_1{0,1,2} )
 
 inherit distutils-r1 pypi
