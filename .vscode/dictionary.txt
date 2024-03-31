@@ -843,6 +843,7 @@ hinterwaeldlers
 hmac
 homebridge
 honnef
+hppa
 hqdn
 hrydgard
 htdocs
@@ -854,6 +855,7 @@ httphead
 httplib
 httplog
 httpprof
+httprate
 httprequest
 httprouter
 httpsig
@@ -1300,6 +1302,7 @@ natefinch
 nativeassets
 nativefiledialog
 ncnn
+ncruces
 nego
 neill
 neobrain
@@ -1839,6 +1842,7 @@ streamsearch
 streamx
 stretchr
 strfmt
+strftime
 strikethrough
 stringprep
 strsim
