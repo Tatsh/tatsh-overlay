@@ -33,9 +33,9 @@ src_prepare() {
 
 multilib_src_configure() {
 	ECONF_SOURCE="${S}" econf \
-		$(use_enable debug) \
-		$(use_enable static-libs static) \
-		$(use_enable test unit-test)
+		"$(use_enable debug)" \
+		"$(use_enable static-libs static)" \
+		"$(use_enable test unit-test)"
 }
 
 multilib_src_install_all() {
