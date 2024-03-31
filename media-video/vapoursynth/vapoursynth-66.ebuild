@@ -4,6 +4,7 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_1{0,1,2} )
+DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
 inherit autotools distutils-r1
 
@@ -19,7 +20,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="guard-pattern +x86-asm +vsscript +vspipe"
 
-DEPEND=">=media-libs/zimg-2.4
+DEPEND=">=media-libs/zimg-3.0.5
 	x86-asm? ( >=dev-lang/yasm-1.3.0 )
 	vsscript? ( >=dev-lang/python-3.9 )
 	sys-libs/zlib"
