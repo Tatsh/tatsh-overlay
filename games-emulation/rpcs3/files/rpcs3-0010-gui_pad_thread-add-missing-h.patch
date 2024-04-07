@@ -1,7 +1,7 @@
 From 85521a63d1ffdc6e7f42ae6c84e858e7ea6eea16 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 Mar 2024 00:09:38 -0400
-Subject: [PATCH 10/10] gui_pad_thread: add missing header
+Subject: [PATCH 10/11] gui_pad_thread: add missing header
 
 ---
  rpcs3/Input/gui_pad_thread.cpp | 1 +

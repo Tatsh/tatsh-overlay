@@ -1,7 +1,7 @@
 From 78ead8bbb652af4f6649bbdd45df15b09d347d06 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 4 Jun 2023 01:50:57 -0400
-Subject: [PATCH 8/9] Allow system rtmidi
+Subject: [PATCH 08/11] Allow system rtmidi
 
 ---
  3rdparty/CMakeLists.txt | 8 ++++++--

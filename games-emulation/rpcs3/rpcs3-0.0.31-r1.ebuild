@@ -72,6 +72,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0008-allow-system-rtmidi.patch"
 	"${FILESDIR}/${PN}-0009-add-missing-glslang-includes.patch"
 	"${FILESDIR}/${PN}-0010-gui_pad_thread-add-missing-h.patch"
+	"${FILESDIR}/${PN}-0011-add-missing-headers.patch"
 )
 
 src_prepare() {

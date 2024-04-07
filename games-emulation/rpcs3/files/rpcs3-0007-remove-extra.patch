@@ -1,7 +1,7 @@
 From e1c379167bc70edfd9aa83906d505486f8bd629c Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 21:46:38 -0500
-Subject: [PATCH 7/9] Remove extra
+Subject: [PATCH 07/11] Remove extra
 
 ---
  rpcs3/CMakeLists.txt | 4 ----
