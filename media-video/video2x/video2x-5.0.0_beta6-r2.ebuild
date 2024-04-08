@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-DISTUTILS_USE_PEP517=pdm
+DISTUTILS_USE_PEP517=pdm-backend
 PYTHON_COMPAT=( python3_1{0,1,2} )
 
 inherit distutils-r1
@@ -34,7 +34,10 @@ RDEPEND="${PYTHON_DEPS}
 S="${WORKDIR}/${PN}-${MY_PV}"
 
 src_prepare() {
-	sed -re '/^license-expression.*/d' -i pyproject.toml || die
+	sed -re '/^license-expression.*/d' -e 's/build-backend.*=.*/build-backend = "pdm.backend"/' \
+		-e 's/version = .*/version = { source = "file", path = "video2x\/__init__.py" }/' \
+		-i pyproject.toml || die
+	cat pyproject.toml
 	sed -re 's/^from cv2.*/import cv2/' -i "${PN}/${PN}.py" || die
 	echo 'from .__main__ import main' >> "${PN}/__init__.py" || die
 	distutils-r1_src_prepare
