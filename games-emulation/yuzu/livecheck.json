@@ -1,6 +1,3 @@
 {
-  "regex": "tag/mainline-(\\d+-\\d+)\"",
-  "transformation_function": "dotize",
-  "type": "regex",
-  "url": "https://github.com/yuzu-mirror/yuzu-mainline/tags"
+  "type": "none"
 }
