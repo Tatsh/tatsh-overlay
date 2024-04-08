@@ -29,7 +29,7 @@ src_prepare() {
 
 src_compile() {
 	local DIR ROOT dir
-	pushd src
+	pushd src || die
 	DIR=$(pwd -P)
 	ROOT="${DIR}/.."
 	for dir in bin lib tools vfs/app_card/PALM/Programs vfs/app_install vfs/app_storage registry; do
