@@ -8,7 +8,7 @@ inherit meson python-single-r1 systemd
 
 DESCRIPTION="D-Bus service to access fingerprint readers"
 HOMEPAGE="https://cgit.freedesktop.org/libfprint/fprintd/"
-SHA="0d2e2a6742cbec847aa756da25afd4b73d9ec53f"
+SHA="2cf0650dd4f832aaba400dd4f7f73269f6cd185e"
 SRC_URI="https://gitlab.freedesktop.org/libfprint/fprintd/-/archive/v${PV}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
@@ -47,7 +47,6 @@ src_prepare() {
 	if ! use test; then
 		sed -e "/.*'dbusmock': true.*/d" -i meson.build || die "sed failed"
 		sed -e "/.*'pypamtest': .*/d" -i meson.build || die "sed failed"
-		sed -e '/pam_wrapper_dep =.*/d' -i meson.build || die "sed failed"
 		sed -e "/^subdir('tests')/d" -i meson.build || die "sed failed"
 		sed -e "/With address sanitizer: /d" -i meson.build || die "sed failed"
 	fi
