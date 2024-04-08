@@ -1,0 +1,25 @@
+diff --git a/script/pumpkin_linux.lua b/script/pumpkin_linux.lua
+index fde411a..42d96e2 100644
+--- a/script/pumpkin_linux.lua
++++ b/script/pumpkin_linux.lua
+@@ -14,7 +14,19 @@ if not wp then
+   return
+ end
+ 
+-pit.mount("./vfs/", "/")
++--- Check if a file or directory exists in this path
++function exists(file)
++   local ok, err, code = os.rename(file, file)
++   if not ok then
++      if code == 13 then
++         -- Permission denied, but it exists
++         return true
++      end
++   end
++   return ok, err
++end
++
++pit.mount(os.getenv('HOME') .. '/.local/share/PumpkinOS/vfs/', "/")
+ 
+ pumpkin = pit.loadlib("libos")
+ pumpkin.init()
