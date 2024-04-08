@@ -4,6 +4,7 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_1{0,1,2} )
+DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
 inherit cmake distutils-r1 pypi
 
@@ -28,7 +29,6 @@ S="${WORKDIR}/${MY_PN}-${PV}"
 
 python_prepare_all() {
 	sed -re '/.*: OTIO_build_ext,/d' -i setup.py
-	eapply "${FILESDIR}/${PN}-fix-include.patch"
 	cmake_src_prepare
 	distutils-r1_python_prepare_all
 }
