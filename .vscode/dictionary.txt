@@ -636,6 +636,7 @@ filelist
 filesdir
 filestore
 fileutil
+filippo
 filt
 finalizationregistry
 findlastindex
@@ -1051,6 +1052,7 @@ libheif
 libhttps
 libidn
 libjpeg
+liblsdl
 libm
 libmad
 libmgba
@@ -1058,11 +1060,14 @@ libmpv
 libmspack
 libnnedi
 libogg
+libos
 libpcap
 libpcre
 libpfm
 libpietendo
+libpit
 libpulse
+libpumpkin
 libraw
 librealcugannv
 libretro
@@ -1070,11 +1075,13 @@ libretrodb
 librw
 libsamplerate
 libscenechange
+libscriptlua
 libsdl
 libseccomp
 libsecret
 libsfml
 libshared
+libshell
 libslirp
 libsndfile
 libsodium
@@ -1420,6 +1427,7 @@ osconfig
 osenv
 oslogin
 osmanya
+osname
 ossemul
 ossp
 osspd
@@ -1476,6 +1484,7 @@ pietendo
 piftl
 pify
 pihole
+pilrc
 pingcap
 pipewire
 pipx
@@ -1508,6 +1517,7 @@ postinst
 postrm
 pprof
 ppsspp
+prcbuild
 prdownloads
 prebuild
 prebuilds
@@ -1801,6 +1811,7 @@ softfloat
 sompeng
 sorasompeng
 sortorder
+sortutil
 sounddevice
 soundfile
 soundfont
