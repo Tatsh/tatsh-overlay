@@ -16,5 +16,3 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/colorama-0.3.9"
-
-distutils_enable_tests nose
