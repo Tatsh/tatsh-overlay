@@ -1231,6 +1231,7 @@ microcom
 micromark
 microtask
 miekg
+migueletto
 mileusna
 mina
 minchoc
@@ -1749,6 +1750,7 @@ securecookie
 securejoin
 securitycenter
 sekrit
+sendgmail
 serde
 sergi
 serialport
