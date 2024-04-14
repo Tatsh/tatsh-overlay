@@ -11,7 +11,7 @@ inherit distutils-r1
 
 DESCRIPTION="Remove backgrounds from images and video using AI."
 HOMEPAGE="https://github.com/nadermx/backgroundremover"
-SRC_URI="https://github.com/nadermx/backgroundremover/archive/refs/tags/v0.2.6.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/nadermx/backgroundremover/archive/refs/tags/v0.2.7.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
