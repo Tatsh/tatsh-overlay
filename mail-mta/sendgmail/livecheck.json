@@ -1,1 +1,3 @@
-{ "go_sum_uri": "https://raw.githubusercontent.com/google/gmail-oauth2-tools/@SHA@/go/sendgmail/go.sum" }
+{
+  "go_sum_uri": "https://raw.githubusercontent.com/google/gmail-oauth2-tools/@SHA@/go/sendgmail/go.sum"
+}
