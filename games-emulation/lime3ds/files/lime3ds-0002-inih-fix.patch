@@ -1,0 +1,26 @@
+From d67d0a09a48e57366010802e499f52930be6aab9 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 30 Oct 2022 22:55:47 -0400
+Subject: [PATCH 2/2] inih fix
+
+---
+ src/lime/config.cpp                              | 1 +
+ src/video_core/renderer_vulkan/vk_shader_util.cpp | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/video_core/renderer_vulkan/vk_shader_util.cpp b/src/video_core/renderer_vulkan/vk_shader_util.cpp
+index ba5c5f867..24a53857e 100644
+--- a/src/video_core/renderer_vulkan/vk_shader_util.cpp
++++ b/src/video_core/renderer_vulkan/vk_shader_util.cpp
+@@ -2,7 +2,7 @@
+ // Licensed under GPLv2 or any later version
+ // Refer to the license.txt file included.
+
+-#include <SPIRV/GlslangToSpv.h>
++#include <glslang/SPIRV/GlslangToSpv.h>
+ #include <glslang/Include/ResourceLimits.h>
+ #include <glslang/Public/ShaderLang.h>
+ #include "common/assert.h"
+--
+2.43.0
+
