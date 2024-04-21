@@ -46,18 +46,15 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	dev-libs/vulkan-memory-allocator:=
 	dev-util/vulkan-utility-libraries
 	dev-util/glslang
-	dev-qt/qtcore:5
-	dev-qt/qtdbus:5
-	dev-qt/qtgui:5
-	dev-qt/qtmultimedia:5
-	dev-qt/qtwidgets:5
+	dev-qt/qtbase:6
+	dev-qt/qtmultimedia:6
 	media-libs/libsdl2
 	media-libs/libva
 	media-libs/opus
 	net-libs/enet:=
 	sys-libs/zlib
 	virtual/libusb:=
-	webengine? ( dev-qt/qtwebengine:5 )
+	webengine? ( dev-qt/qtwebengine:6 )
 	llvm-libunwind? ( sys-libs/llvm-libunwind )
 	!llvm-libunwind? ( sys-libs/libunwind:= )"
 RDEPEND="${DEPEND}
@@ -117,6 +114,7 @@ src_configure() {
 		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF  # FIXME
 		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=OFF
 		"-DENABLE_CUBEB=$(usex cubeb)"
+		-DENABLE_QT6=ON
 		"-DENABLE_WEB_SERVICE=$(usex web-service)"
 		-DGIT_BRANCH="${PN}"
 		-DGIT_DESC="${PV}"
