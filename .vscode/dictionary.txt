@@ -135,6 +135,7 @@ bcanalyzer
 bdepend
 beautifulsoup
 behaviour
+benbjohnson
 benc
 bencoder
 beorn
@@ -173,6 +174,7 @@ boltdb
 boolbase
 boombuler
 bradfitz
+bradleyjkemp
 broot
 brotli
 browserify
@@ -192,6 +194,7 @@ builtins
 bulkedit
 bumpalo
 bwesterb
+bytebufferpool
 bytemuck
 byteorder
 byteshuf
@@ -333,6 +336,7 @@ csvlens
 cuda
 cugan
 cunet
+cupaloy
 cuse
 cvtres
 cword
@@ -519,6 +523,7 @@ dslirp
 dsnet
 dsphinx
 dsplit
+dsudachi
 dsuyu
 dsymutil
 dsystemd
@@ -616,6 +621,7 @@ faccessat
 fakecrc
 fakegem
 fastcgi
+fasthttp
 fastq
 fastrand
 fastuuid
@@ -923,6 +929,7 @@ janestreet
 jbenet
 jcmturner
 jedib
+jessevdk
 jimevins
 jinzhu
 jiti
@@ -1280,6 +1287,7 @@ msmoosh
 mssqldb
 msvc
 muety
+muffet
 multani
 multicache
 multierr
@@ -1435,6 +1443,7 @@ osspd
 otio
 otlp
 otool
+oxffaa
 oyvindln
 pacct
 pacho
@@ -1620,6 +1629,7 @@ raphnet
 rapidjson
 rardecode
 ratelimit
+raviqqe
 rawio
 rawloader
 rcheevos
@@ -1690,6 +1700,7 @@ rmull
 roarr
 robertkrimen
 robfig
+robotstxt
 robpike
 rogpeppe
 rollup
@@ -1868,6 +1879,7 @@ subfile
 sublicensable
 subosito
 subtag
+sudachi
 suidsgid
 sunos
 suntec
@@ -1918,6 +1930,7 @@ teatest
 teex
 telematic
 temasek
+temoto
 tempfile
 termcolor
 termenv
@@ -2021,6 +2034,7 @@ useragent
 userspace
 usev
 usex
+valyala
 vapoursynth
 vcpkg
 vearutop
@@ -2162,6 +2176,7 @@ yasm
 yauzl
 yazl
 ycmd
+yhat
 yocto
 yojson
 yookoala
