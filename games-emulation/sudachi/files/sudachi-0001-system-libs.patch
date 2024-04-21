@@ -1,0 +1,24 @@
+From a0397db9220ae26e7dc95475967aebedeea608b9 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 26 Nov 2023 20:43:32 -0500
+Subject: [PATCH] System libs
+
+---
+ CMakeLists.txt                     | 2 +-
+ externals/CMakeLists.txt           | 6 +++++-
+ src/frontend_common/CMakeLists.txt | 1 +
+ 3 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e5cac8fe9..2a5c14ec4 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -321,7 +321,7 @@ endif()
+
+ if (ENABLE_WEB_SERVICE)
+     find_package(cpp-jwt 1.4 CONFIG)
+-    find_package(httplib 0.12 MODULE COMPONENTS OpenSSL)
++    find_package(httplib)
+ endif()
+
+ if (SUDACHI_TESTS)
