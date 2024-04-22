@@ -25,6 +25,7 @@ RDEPEND="app-arch/bzip2
 	app-arch/lz4
 	media-libs/alsa-lib
 	media-libs/flac
+	media-libs/freetype
 	media-libs/libglvnd[X]
 	media-libs/libogg
 	media-libs/libsndfile
