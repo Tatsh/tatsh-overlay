@@ -12,7 +12,7 @@ LICENSE="Unlicensed"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="app-crypt/libsecret"
+DEPEND="app-crypt/libsecret dev-libs/glib"
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}/${PN}-makefile-changes.patch" )
