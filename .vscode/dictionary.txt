@@ -314,6 +314,7 @@ coreplugins
 coretemp
 corlett's
 cosmiconfig
+coyove
 cplugins
 cppflags
 cpufeatures
@@ -913,10 +914,15 @@ isaacs
 isarray
 isatty
 isbinaryfile
+isboolean
 isexe
+isinteger
+isnumber
 isobject
 isoboxer
 isomp
+isplainobject
+isstring
 istring
 itertools
 itoa
@@ -949,6 +955,7 @@ jsonnet
 jsonparse
 jsonpointer
 jsonreference
+jsonwebtoken
 jstemmer
 jsummers
 jtolds
@@ -1051,12 +1058,17 @@ libfmt
 libfmtconv
 libfprint
 libfragmentzip
+libgcrypt
 libgeneral
 libglvnd
+libgpg
 libgudev
 libgusb
 libheif
 libhttps
+libicudata
+libicui
+libicuuc
 libidn
 libjpeg
 liblsdl
@@ -1094,6 +1106,7 @@ libsndfile
 libsodium
 libspng
 libstdc
+libtasn
 libtemporalsoften
 libtermcap
 libtomcrypt
@@ -1106,10 +1119,12 @@ liburing
 libusb
 libva
 libvapoursynth
+libvdpau
 libvk
 libvorbis
 libvulkan
 libwebp
+libwoff
 libxar
 libxcb
 libxkbcommon
@@ -1279,6 +1294,7 @@ moviepy
 mparser
 mpfr
 mrlotfi
+msal
 mschoch
 msgp
 msgpack
@@ -1480,6 +1496,7 @@ pgservicefile
 pgzip
 phags
 phagspa
+phantomjs
 phasher
 philhofer
 phishingprotection
@@ -1610,6 +1627,7 @@ qtnetwork
 qtnetworkauth
 qtopengl
 qtpaths
+qtpositioning
 qtprintsupport
 qtquick
 qtquickcontrols
@@ -1617,6 +1635,7 @@ qtserialport
 qtsql
 qtsvg
 qtwebengine
+qtwebkit
 qtwebsockets
 qtwidgets
 qtxml
