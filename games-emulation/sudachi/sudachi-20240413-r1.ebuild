@@ -56,6 +56,9 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	net-libs/enet:=
 	sys-libs/zlib
 	virtual/libusb:=
+	x11-libs/libX11
+	x11-libs/libdrm
+	x11-libs/libvdpau
 	webengine? ( dev-qt/qtwebengine:6 )
 	llvm-libunwind? ( sys-libs/llvm-libunwind )
 	!llvm-libunwind? ( sys-libs/libunwind:= )"
