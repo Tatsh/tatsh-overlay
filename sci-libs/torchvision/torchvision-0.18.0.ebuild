@@ -42,8 +42,6 @@ BDEPEND="test? ( $(python_gen_cond_dep '
 		')
 	)"
 
-PATCHES=( "${FILESDIR}/${PN}-8096.patch" )
-
 distutils_enable_tests pytest
 
 src_prepare() {
