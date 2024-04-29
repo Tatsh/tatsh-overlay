@@ -17,10 +17,3 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 distutils_enable_tests pytest
-
-python_prepare_all() {
-	# Add backend specification
-	sed -i '1 i[build-system]\nrequires = ["poetry>=0.12"]\nbuild-backend = "poetry.core.masonry.api"' \
-		pyproject.toml || die "sed failed for pyproject.toml"
-	distutils-r1_python_prepare_all
-}
