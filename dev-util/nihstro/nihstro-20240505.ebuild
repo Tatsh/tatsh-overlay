@@ -6,7 +6,7 @@ inherit cmake flag-o-matic
 
 DESCRIPTION="3DS shader assembler and disassembler"
 HOMEPAGE="https://github.com/neobrain/nihstro"
-SHA="e924e21b1da60170f0f0a4e5a073cb7d579969c0"
+SHA="f4d8659decbfe5d234f04134b5002b82dc515a44"
 SRC_URI="https://github.com/neobrain/nihstro/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD"
