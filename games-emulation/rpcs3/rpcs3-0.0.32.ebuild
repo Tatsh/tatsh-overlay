@@ -10,7 +10,7 @@ ASMJIT_SHA="416f7356967c1f66784dc1580fe157f9406d8bff"
 GLSLANG_SHA="36d08c0d940cf307a23928299ef52c7970d8cee6"
 HIDAPI_SHA="8b43a97a9330f8b0035439ce9e255e4be202deca"
 ITTAPI_VERSION="3.18.12"
-SOUNDTOUCH_SHA="ced3ce8d5ecc5aef8a5156fea206a37b33774bf3"
+SOUNDTOUCH_SHA="394e1f58b23dc80599214d2e9b6a5e0dfd0bbe07"
 YAML_CPP_SHA="456c68f452da09d8ca84b375faa2b1397713eaba"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${PN}-asmjit-${ASMJIT_SHA:0:7}.tar.gz
@@ -63,15 +63,12 @@ BDEPEND=">=sys-devel/gcc-9
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-versioning.patch"
-	"${FILESDIR}/${PN}-0002-vk-use-system-glslangtospv.h.patch"
 	"${FILESDIR}/${PN}-0003-add-use_wayland.patch"
 	"${FILESDIR}/${PN}-0004-allow-use-of-system-spirv-an.patch"
 	"${FILESDIR}/${PN}-0005-allow-system-cubeb.patch"
 	"${FILESDIR}/${PN}-0006-support-for-system-miniupnpc.patch"
 	"${FILESDIR}/${PN}-0007-remove-extra.patch"
 	"${FILESDIR}/${PN}-0008-allow-system-rtmidi.patch"
-	"${FILESDIR}/${PN}-0009-add-missing-glslang-includes.patch"
-	"${FILESDIR}/${PN}-0010-gui_pad_thread-add-missing-h.patch"
 	"${FILESDIR}/${PN}-0011-add-missing-headers.patch"
 )
 
