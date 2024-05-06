@@ -5,8 +5,8 @@ EAPI=8
 
 DESCRIPTION="macOS cursor theme."
 HOMEPAGE="https://www.pling.com/p/1408466/"
-TAR_NAME="macOS-Monterey"
-SRC_URI="https://github.com/ful1e5/apple_cursor/releases/download/v${PV}/${TAR_NAME}.tar.gz -> ${P}.tar.gz"
+TAR_NAME="macOS"
+SRC_URI="https://github.com/ful1e5/apple_cursor/releases/download/v${PV}/${TAR_NAME}.tar.xz -> ${P}.tar.xz"
 
 LICENSE="GPL-3"
 SLOT="0"
