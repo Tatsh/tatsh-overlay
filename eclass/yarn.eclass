@@ -118,6 +118,7 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	# @DESCRIPTION:
 	# Sets up the offline Yarn environment.
 	yarn_src_configure() {
+		edo yarn config set ignore-engines true
 		edo yarn config set prefix "${HOME}/.node"
 		edo yarn config set yarn-offline-mirror "$(realpath "${WORKDIR}/packages")"
 	}
