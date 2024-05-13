@@ -53,6 +53,8 @@ EGO_SUM=(
 	"github.com/davecgh/go-spew v1.1.0/go.mod"
 	"github.com/davecgh/go-spew v1.1.1"
 	"github.com/davecgh/go-spew v1.1.1/go.mod"
+	"github.com/dchest/captcha v1.0.0"
+	"github.com/dchest/captcha v1.0.0/go.mod"
 	"github.com/dnaeon/go-vcr v1.1.0/go.mod"
 	"github.com/dnaeon/go-vcr v1.2.0/go.mod"
 	"github.com/duke-git/lancet/v2 v2.3.0"
