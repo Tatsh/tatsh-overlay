@@ -15,11 +15,11 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="<dev-python/pyasn1-0.6.0
-	<dev-python/pyasn1-modules-0.4.0
-	<dev-python/cxxfilt-0.4.0
-	<dev-python/msgpack-1.1.0
-	>=dev-python/pycparser-2.2.0
+RDEPEND="dev-python/pyasn1
+	dev-python/pyasn1-modules
+	>=dev-python/cxxfilt-0.3.0
+	>=dev-python/msgpack-1.0.8
+	>=dev-python/pycparser-2.22
 	>=dev-python/PyQt5-5.15.7
 	>=dev-python/PyQtWebEngine-5.15.6"
 
