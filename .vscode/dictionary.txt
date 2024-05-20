@@ -385,6 +385,7 @@ dbus
 dbusmock
 dcall
 dccache_bin
+dchest
 dcitra
 dcli
 dcmake
