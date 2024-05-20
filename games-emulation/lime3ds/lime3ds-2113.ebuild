@@ -6,6 +6,7 @@ inherit cmake xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://github.com/Lime3DS/Lime3DS https://web.archive.org/web/20240301162216/https://citra-emu.org/"
+COMPAT_LIST_SHA="29291d417596d5c384397c7b6e521406586be6d5"
 DDS_KTX_SHA="42dd8aa6ded90b1ec06091522774feff51e83fc5"
 LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
 SIRIT_SHA="4ab79a8c023aa63caaa93848b09b9fe8b183b1a9"
@@ -21,7 +22,7 @@ SRC_URI="https://github.com/Lime3DS/Lime3DS/archive/${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/septag/dds-ktx/archive/${DDS_KTX_SHA}.tar.gz -> ${PN}-dds-ktx-${DDS_KTX_SHA:0:7}.tar.gz
 	https://github.com/yuzu-mirror/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-yuzu-emu-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/KhronosGroup/SPIRV-Headers/archive/${SIRIT_SPIRV_HEADERS_SHA}.tar.gz -> ${PN}-yuzu-emu-sirit-spirv-headers-${SIRIT_SPIRV_HEADERS_SHA:0:7}.tar.gz
-	https://web.archive.org/web/20231111133415/https://api.citra-emu.org/gamedb -> ${PN}-compatibility_list.json"
+	https://github.com/Lime3DS/compatibility-list/archive/${COMPAT_LIST_SHA}.tar.gz -> ${PN}-compatibility-list-${COMPAT_LIST_SHA:0:7}.tar.gz"
 
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
@@ -63,6 +64,8 @@ S="${WORKDIR}/Lime3DS-${PV}"
 src_prepare() {
 	rmdir "${S}/externals/lodepng/lodepng" \
 		"${S}/externals/"{soundtouch,dynarmic,fmt,xbyak,dds-ktx,sirit} || die
+	rmdir "${S}/dist/compatibility_list" || die
+	mv "${WORKDIR}/compatibility-list-${COMPAT_LIST_SHA}" "${S}/dist/compatibility_list" || die
 	mv "${WORKDIR}/soundtouch" "${S}/externals/soundtouch" || die
 	mv "${WORKDIR}/dds-ktx-${DDS_KTX_SHA}" "${S}/externals/dds-ktx" || die
 	mv "${WORKDIR}/dynarmic-${SUB_DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
@@ -71,8 +74,6 @@ src_prepare() {
 	rmdir "${S}/externals/sirit/externals/SPIRV-Headers" || die
 	mv "${WORKDIR}/SPIRV-Headers-${SIRIT_SPIRV_HEADERS_SHA}" "${S}/externals/sirit/externals/SPIRV-Headers"
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
-	mkdir -p "${WORKDIR}/${P}_build/dist/compatibility_list" || die
-	cp -f "${DISTDIR}/${PN}-compatibility_list.json" "${WORKDIR}/${P}_build/dist/compatibility_list/compatibility_list.json" || die
 	# shellcheck disable=SC2016
 	sed -e 's|${CMAKE_CURRENT_SOURCE_DIR}/xbyak/xbyak|/usr/include/xbyak|' \
 		-i externals/dynarmic/externals/CMakeLists.txt || die
