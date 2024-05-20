@@ -53,6 +53,7 @@ apigeeconnect
 apigeeregistry
 apikeys
 appdata
+appdirs
 appengine
 appico
 appimage
@@ -1482,6 +1483,7 @@ pascaldekloe
 patchelf
 patchset
 pathdiff
+pathspec
 pathstr
 patrickmn
 paucinhau
@@ -1861,6 +1863,7 @@ splitdebug
 sprintf
 sqlalchemy
 sqlexp
+sqlfluff
 sqlmock
 sqlparse
 sqlserver
@@ -1941,6 +1944,7 @@ taskshell
 taskwarrior
 tatsh
 tblgen
+tblib
 tclkit
 tcltk
 tcpdump
