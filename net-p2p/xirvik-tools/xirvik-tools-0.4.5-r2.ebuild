@@ -18,7 +18,6 @@ RESTRICT="!test? ( test )"
 
 RDEPEND="
 	dev-python/beautifulsoup4[${PYTHON_USEDEP}]
-	dev-python/cached-property[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
 	dev-python/html5lib[${PYTHON_USEDEP}]
 	dev-python/loguru[${PYTHON_USEDEP}]
