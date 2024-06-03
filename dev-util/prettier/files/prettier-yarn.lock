@@ -14,17 +14,17 @@
   dependencies:
     "@taplo/core" "^0.1.0"
 
-prettier-plugin-ini@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-ini/-/prettier-plugin-ini-1.1.0.tgz#922fc10398a72e1bfe2d742c702b58060da43eb5"
-  integrity sha512-xlWM//GrLYU5CX3Qdn5isOlxz1LHnTi4fdSHZX/UYV/C5ipbcFfdCglENoOPGp4N5EvtA5Q1FuVhg95K58TMRg==
+prettier-plugin-ini@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-ini/-/prettier-plugin-ini-1.2.0.tgz#265d8736d37414183eb969c2de98ff213007fc64"
+  integrity sha512-8RR2n3AGlObQ11NCpyvv1N+xkTe/RdGp1vko8xeuXubWUa9NrOEZMX463H1AvnhnUX8b1NeJk3TKFkgvWunApg==
   dependencies:
-    prettier ">=2.3"
+    prettier ">=3.0.0-alpha.3"
 
-prettier-plugin-sort-json@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-sort-json/-/prettier-plugin-sort-json-3.1.0.tgz#a54b33a4ac36ac6f9bf31ad7b81106fad161e6ba"
-  integrity sha512-eIDEUjwzekiVd+oKrpd0aoACBTp5zOW71wDTNy+qQ5C9Q8oqt9n9wCm4F+SeRZbXfgblh/WYIguJynImlBXrvQ==
+prettier-plugin-sort-json@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-sort-json/-/prettier-plugin-sort-json-4.0.0.tgz#b72a44b57183dd7f8cef5c07a0614f21d29a0e4a"
+  integrity sha512-zV5g+bWFD2zAqyQ8gCkwUTC49o9FxslaUdirwivt5GZHcf57hCocavykuyYqbExoEsuBOg8IU36OY7zmVEMOWA==
 
 prettier-plugin-toml@^2.0.1:
   version "2.0.1"
@@ -33,7 +33,7 @@ prettier-plugin-toml@^2.0.1:
   dependencies:
     "@taplo/lib" "^0.4.0-alpha.2"
 
-prettier@>=2.3, prettier@^3.2.5:
-  version "3.2.5"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.2.5.tgz#e52bc3090586e824964a8813b09aba6233b28368"
-  integrity sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==
+prettier@>=3.0.0-alpha.3, prettier@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.3.0.tgz#d173ea0524a691d4c0b1181752f2b46724328cdf"
+  integrity sha512-J9odKxERhCQ10OC2yb93583f6UnYutOeiV5i0zEDS7UGTdUt0u+y8erxl3lBKvwo/JHyyoEdXjwp4dke9oyZ/g==
