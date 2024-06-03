@@ -642,6 +642,7 @@ fftw
 filecaps
 fileinfo
 filelist
+filelock
 filesdir
 filestore
 fileutil
@@ -1530,8 +1531,10 @@ pkgdev
 pkgjs
 pkgmetadata
 pkgs
+platformdirs
 plister
 plugdev
+pluggy
 pluralrules
 plutoberth
 pmezard
@@ -1581,6 +1584,7 @@ pvtsutils
 pvutils
 pvxe
 pyaaf
+pyarrow
 pyasn
 pybind
 pycargoebuild
@@ -1595,8 +1599,10 @@ pygments
 pygobject
 pygtrie
 pyhht
+pyjwt
 pymatting
 pynput
+pyopenssl
 pypamtest
 pypi
 pyproject
@@ -1605,6 +1611,7 @@ pyrescene
 pyserial
 pyside
 pytest
+pytz
 pyudev
 pyxdg
 pyyaml
@@ -1845,6 +1852,7 @@ socketfile
 softfloat
 sompeng
 sorasompeng
+sortedcontainers
 sortorder
 sortutil
 sounddevice
