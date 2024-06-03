@@ -1,0 +1,74 @@
+From 4d6d7d81c7304698326709a57ed9b1f935160b3b Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 3 Jun 2024 01:10:25 -0400
+Subject: [PATCH] Fix for latest glslang
+
+---
+ CMakeLists.txt | 36 ++-------------------
+ __init__.py    |  1 +
+ 2 files changed, 4 insertions(+), 33 deletions(-)
+ create mode 100644 __init__.py
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d7e8654..fc0970e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -84,45 +84,15 @@ else()
+ endif()
+
+ if(USE_SYSTEM_NCNN)
+-  set(GLSLANG_TARGET_DIR
+-      "GLSLANG-NOTFOUND"
+-      CACHE PATH "Absolute path to glslangTargets.cmake directory")
+-  if(NOT GLSLANG_TARGET_DIR AND NOT DEFINED ENV{GLSLANG_TARGET_DIR})
+-    message(
+-      WARNING
+-        "GLSLANG_TARGET_DIR must be defined! USE_SYSTEM_NCNN will be turned off."
+-    )
+-    set(USE_SYSTEM_NCNN OFF)
+-  else()
+-    message(STATUS "Using glslang install located at ${GLSLANG_TARGET_DIR}")
+-
+-    find_package(Threads)
+-
+-    include("${GLSLANG_TARGET_DIR}/OSDependentTargets.cmake")
+-    include("${GLSLANG_TARGET_DIR}/OGLCompilerTargets.cmake")
+-    if(EXISTS "${GLSLANG_TARGET_DIR}/HLSLTargets.cmake")
+-      # hlsl support can be optional
+-      include("${GLSLANG_TARGET_DIR}/HLSLTargets.cmake")
+-    endif()
+-    include("${GLSLANG_TARGET_DIR}/glslangTargets.cmake")
+-    include("${GLSLANG_TARGET_DIR}/SPIRVTargets.cmake")
+-
+-    if(NOT TARGET glslang OR NOT TARGET SPIRV)
+-      message(
+-        WARNING
+-          "glslang or SPIRV target not found! USE_SYSTEM_NCNN will be turned off."
+-      )
+-      set(USE_SYSTEM_NCNN OFF)
+-    endif()
+-  endif()
++  find_package(Threads)
++  find_package(glslang REQUIRED)
+ endif()
+
+ if(USE_SYSTEM_NCNN)
+   find_package(ncnn)
+   if(NOT TARGET ncnn)
+     message(
+-      WARNING "ncnn target not found! USE_SYSTEM_NCNN will be turned off.")
+-    set(USE_SYSTEM_NCNN OFF)
++      FATAL_ERROR "ncnn target not found! USE_SYSTEM_NCNN will be turned off.")
+   endif()
+ endif()
+
+diff --git a/__init__.py b/__init__.py
+new file mode 100644
+index 0000000..3657516
+--- /dev/null
++++ b/__init__.py
+@@ -0,0 +1 @@
++from .realcugan_ncnn_vulkan import Realcugan, RealCUGAN, wrapped
+--
+2.45.2
+

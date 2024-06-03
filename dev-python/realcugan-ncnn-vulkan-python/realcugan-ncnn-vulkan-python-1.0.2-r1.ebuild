@@ -21,6 +21,10 @@ BDEPEND="dev-lang/swig dev-util/glslang"
 MY_PN_U="${PN//-/_}"
 S="${WORKDIR}/${P}/${MY_PN_U}"
 
+PATCHES=(
+        "${FILESDIR}/${PN}-0001-fix-for-latest-glslang.patch"
+)
+
 src_prepare() {
 	python_foreach_impl cmake_src_prepare
 }
@@ -28,7 +32,6 @@ src_prepare() {
 custom_configure() {
 	local mycmakeargs=(
 		"-DCMAKE_INSTALL_PREFIX=$(python_get_sitedir)/${MY_PN_U}"
-		"-DGLSLANG_TARGET_DIR=/usr/$(get_libdir)/cmake"
 		"-DPY_VERSION=${EPYTHON:6}"
 		-DBUILD_SHARED_LIBS=OFF
 		-DCALL_FROM_SETUP_PY=ON
@@ -49,7 +52,6 @@ src_compile() {
 custom_install() {
 	cmake_src_install
 	rm -f "${D}/$(python_get_sitedir)/${MY_PN_U}/LICENSE" || die
-	echo 'from .realcugan_ncnn_vulkan import Realcugan, RealCUGAN, wrapped' > "${D}/$(python_get_sitedir)/${MY_PN_U}/__init__.py" || die
 }
 
 src_install() {
