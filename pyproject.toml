@@ -16,7 +16,7 @@ portage-types = "^0.0.2"
 pyyaml = "^6.0"
 requests = "^2.32.2"
 types-pyyaml = "^6.0.12.20240311"
-types-requests = "^2.32.0.20240523"
+types-requests = "^2.32.0.20240602"
 yapf = "^0.40.2"
 ruff = "^0.4.7"
 
