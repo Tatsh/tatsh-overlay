@@ -46,7 +46,10 @@ IUSE="
 	profile pulseaudio systemd test upnp vulkan
 "
 
-PATCHES=( "${FILESDIR}/${P}-system-libs.patch" )
+PATCHES=(
+	"${FILESDIR}/${P}-system-libs.patch"
+	"${FILESDIR}/${P}-rename-ip_protocol.patch"
+)
 
 RDEPEND="
 	app-arch/bzip2:=

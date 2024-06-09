@@ -1,0 +1,38 @@
+From c284580bb0f0c27c4ec1ea16104895ba82533efc Mon Sep 17 00:00:00 2001
+From: Jeremy Newton <alexjnewt@hotmail.com>
+Date: Mon, 2 Oct 2023 13:39:21 -0400
+Subject: [PATCH] Rename IP_PROTOCOL
+
+Linux headers define this, so there's a name collision.
+This just renames the expr to avoid this conflict.
+---
+ Source/Core/Core/HW/EXI/BBA/BuiltIn.cpp | 2 +-
+ Source/Core/Core/HW/EXI/BBA/BuiltIn.h   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Source/Core/Core/HW/EXI/BBA/BuiltIn.cpp b/Source/Core/Core/HW/EXI/BBA/BuiltIn.cpp
+index 6e5c3eac9749..2aa970ddb1e7 100644
+--- a/Source/Core/Core/HW/EXI/BBA/BuiltIn.cpp
++++ b/Source/Core/Core/HW/EXI/BBA/BuiltIn.cpp
+@@ -746,7 +746,7 @@ void CEXIETHERNET::BuiltInBBAInterface::ReadThreadHandler(CEXIETHERNET::BuiltInB
+       u8* buffer = reinterpret_cast<u8*>(self->m_eth_ref->mRecvBuffer.get());
+       Common::PacketView packet(buffer, datasize);
+       const auto packet_type = packet.GetEtherType();
+-      if (packet_type.has_value() && packet_type == IP_PROTOCOL)
++      if (packet_type.has_value() && packet_type == DOLPHIN_IP_PROTOCOL)
+       {
+         SetIPIdentification(buffer, datasize, ++self->m_ip_frame_id);
+       }
+diff --git a/Source/Core/Core/HW/EXI/BBA/BuiltIn.h b/Source/Core/Core/HW/EXI/BBA/BuiltIn.h
+index 4478f4de48da..c851c269c420 100644
+--- a/Source/Core/Core/HW/EXI/BBA/BuiltIn.h
++++ b/Source/Core/Core/HW/EXI/BBA/BuiltIn.h
+@@ -20,7 +20,7 @@ constexpr u16 TCP_FLAG_PSH = 0x8;
+ constexpr u16 TCP_FLAG_FIN = 0x1;
+ constexpr u16 TCP_FLAG_RST = 0x4;
+ 
+-constexpr u16 IP_PROTOCOL = 0x800;
++constexpr u16 DOLPHIN_IP_PROTOCOL = 0x800;
+ constexpr u16 ARP_PROTOCOL = 0x806;
+ 
+ constexpr u8 MAX_TCP_BUFFER = 4;
