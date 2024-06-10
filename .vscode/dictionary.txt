@@ -52,6 +52,7 @@ apac
 apigeeconnect
 apigeeregistry
 apikeys
+appconfig
 appdata
 appdirs
 appengine
@@ -308,6 +309,7 @@ containeranalysis
 containerd
 cookiecutter
 cooperspencer
+copystructure
 copytime
 corasick
 corejs
@@ -765,6 +767,7 @@ gocheck
 goconvey
 godbus
 godebug
+godotenv
 gofork
 gofpdf
 gofpdi
@@ -851,6 +854,7 @@ hexops
 hicolor
 hidapi
 hinterwaeldlers
+hjson
 hmac
 homebridge
 honnef
@@ -943,10 +947,13 @@ jimevins
 jinzhu
 jiti
 jitlink
+jmespath
 jmoiron
+joho
 joncampbell
 josharian
 joystickwake
+jpillora
 jridgewell
 jsbn
 jsdoc
@@ -1005,7 +1012,9 @@ kiyamou
 klauspost
 klaw
 kleur
+knadh
 knownhosts
+koanf
 kodi
 konsorten
 koun
@@ -1341,6 +1350,7 @@ ncruces
 nego
 neill
 neobrain
+nestext
 netlib
 netlink
 netnode
@@ -1391,6 +1401,7 @@ notfound
 noto
 notpeter
 npapi
+npillmayer
 npmcli
 npmlog
 nspr
@@ -1415,6 +1426,7 @@ objx
 ocamldoc
 ocamlopt
 occivink
+oklog
 olchiki
 oldhungarian
 olditalic
@@ -1683,6 +1695,7 @@ recompiler
 redent
 redist
 redumper
+reflectwalk
 refractoring
 regexpp
 regexpu
@@ -1718,6 +1731,7 @@ rewx
 rfdc
 rgsf
 rgvs
+rhnvrm
 rimraf
 ripdb
 riscv
@@ -1901,6 +1915,7 @@ strftime
 strikethrough
 stringprep
 strsim
+structs
 strutil
 stylelint
 stylis
@@ -2202,6 +2217,7 @@ xvideo
 xxhash
 yallist
 yamashou
+yamux
 yapf
 yargs
 yasm
