@@ -5,7 +5,6 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_1{0,1,2} )
 DISTUTILS_USE_PEP517=setuptools
-PYPI_NO_NORMALIZE=1
 inherit distutils-r1 pypi
 
 DESCRIPTION="Route53 DNS Authenticator plugin for Certbot"
