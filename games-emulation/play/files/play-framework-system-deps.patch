@@ -1,33 +1,3 @@
-diff --git a/deps/Framework/build_cmake/Framework/CMakeLists.txt b/deps/Framework/build_cmake/Framework/CMakeLists.txt
-index 0109c6d..65cc58c 100644
---- a/deps/Framework/build_cmake/Framework/CMakeLists.txt
-+++ b/deps/Framework/build_cmake/Framework/CMakeLists.txt
-@@ -19,14 +19,14 @@ if(NOT TARGET ghc_filesystem)
- endif()
- LIST(APPEND PROJECT_LIBS ghc_filesystem)
- 
--find_package(ICUUC)
-+find_package(ICUUC REQUIRED)
- if(ICUUC_FOUND)
- 	LIST(APPEND PROJECT_INCLUDES ${ICUUC_INCLUDE_DIRS})
- 	LIST(APPEND PROJECT_LIBS ${ICUUC_LIBRARIES})
- 	add_definitions(-DHAS_ICU)
- endif()
- 
--find_package(OpenSSL)
-+find_package(OpenSSL REQUIRED)
- if(OPENSSL_FOUND)
- 	LIST(APPEND PROJECT_INCLUDES ${OPENSSL_INCLUDE_DIR})
- 	LIST(APPEND PROJECT_LIBS ${OPENSSL_LIBRARIES})
-@@ -149,7 +149,7 @@ if(ANDROID)
- 		../../src/android/javax_crypto_Mac.cpp
- 		../../src/android/javax_crypto_spec_SecretKeySpec.cpp
- 		../../src/PosixFileStream.cpp
--		
-+
- 		../../include/android/android_content_ContentResolver.h
- 		../../include/android/android_database_Cursor.h
- 		../../include/android/android_net_Uri.h
 diff --git a/deps/Framework/build_cmake/FrameworkOpenGl/CMakeLists.txt b/deps/Framework/build_cmake/FrameworkOpenGl/CMakeLists.txt
 index c242179..67ab556 100644
 --- a/deps/Framework/build_cmake/FrameworkOpenGl/CMakeLists.txt
@@ -66,3 +36,42 @@ index 8a3b7b3..d7870bc 100644
  
  #define SET_PROC_ADDR(functionName) this->functionName = reinterpret_cast<PFN_##functionName>(CLoader::GetInstance().vkGetInstanceProcAddr(m_handle, #functionName));
  
+diff --git a/deps/Framework/build_cmake/Framework/CMakeLists.txt b/deps/Framework/build_cmake/Framework/CMakeLists.txt
+index dbcef49..a9572cd 100644
+--- a/deps/Framework/build_cmake/Framework/CMakeLists.txt
++++ b/deps/Framework/build_cmake/Framework/CMakeLists.txt
+@@ -19,14 +19,14 @@ endif()
+ LIST(APPEND PROJECT_LIBS ghc_filesystem)
+ 
+ if(NOT APPLE)
+-	find_package(ICUUC)
++	find_package(ICUUC REQUIRED)
+ 	if(ICUUC_FOUND)
+ 		LIST(APPEND PROJECT_INCLUDES ${ICUUC_INCLUDE_DIRS})
+ 		LIST(APPEND PROJECT_LIBS ${ICUUC_LIBRARIES})
+ 		add_definitions(-DHAS_ICU)
+ 	endif()
+ 
+-	find_package(OpenSSL)
++	find_package(OpenSSL REQUIRED)
+ 	if(OPENSSL_FOUND)
+ 		LIST(APPEND PROJECT_INCLUDES ${OPENSSL_INCLUDE_DIR})
+ 		LIST(APPEND PROJECT_LIBS ${OPENSSL_LIBRARIES})
+@@ -160,7 +160,7 @@ if(ANDROID)
+ 		../../src/android/javax_crypto_Mac.cpp
+ 		../../src/android/javax_crypto_spec_SecretKeySpec.cpp
+ 		../../src/PosixFileStream.cpp
+-		
++
+ 		../../include/android/android_content_ContentResolver.h
+ 		../../include/android/android_database_Cursor.h
+ 		../../include/android/android_net_Uri.h
+diff --git a/deps/Framework/tests/TestDefs.h b/deps/Framework/tests/TestDefs.h
+index b365c4c..fcacb8f 100644
+--- a/deps/Framework/tests/TestDefs.h
++++ b/deps/Framework/tests/TestDefs.h
+@@ -1,3 +1,4 @@
+ #pragma once
++#include <cstdio>
+ 
+ #define TEST_VERIFY(a) if(!(a)) { printf("Verification failed: '%s'. Aborting.\n", #a); std::abort(); }

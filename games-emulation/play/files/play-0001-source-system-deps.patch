@@ -1,4 +1,4 @@
-From 9a0e443f0b0f80cd1f0c2cf3e1a9b9675a5b81d8 Mon Sep 17 00:00:00 2001
+From 76bec10737498904e2b85ac3bafa79a4d85d4062 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 7 Aug 2022 16:14:54 -0400
 Subject: [PATCH] Source: system deps
@@ -11,10 +11,10 @@ Subject: [PATCH] Source: system deps
  4 files changed, 11 insertions(+), 10 deletions(-)
 
 diff --git a/Source/CMakeLists.txt b/Source/CMakeLists.txt
-index 73d75dee..34856a61 100644
+index df3903bf..fbbaa0d7 100644
 --- a/Source/CMakeLists.txt
 +++ b/Source/CMakeLists.txt
-@@ -71,7 +71,7 @@ if(NOT TARGET CodeGen)
+@@ -79,7 +79,7 @@ if(NOT TARGET CodeGen)
  endif()
  list(APPEND PROJECT_LIBS CodeGen)
  
@@ -23,7 +23,7 @@ index 73d75dee..34856a61 100644
  if(NOT BZIP2_FOUND)
  	MESSAGE("-- Using Provided BZip2 source")
  	if(NOT TARGET BZip2::BZip2)
-@@ -108,7 +108,7 @@ endif()
+@@ -116,7 +116,7 @@ endif()
  LIST(APPEND PROJECT_LIBS xxHash::xxhash)
  
  # If ICU is available, add its libraries because Framework might need its functions
@@ -33,17 +33,17 @@ index 73d75dee..34856a61 100644
  	list(APPEND PROJECT_LIBS ${ICUUC_LIBRARIES})
  endif()
 diff --git a/Source/hdd/ApaDefs.h b/Source/hdd/ApaDefs.h
-index ae9b5bcc..1bba3b95 100644
+index 8dfbe04c..4f35291c 100644
 --- a/Source/hdd/ApaDefs.h
 +++ b/Source/hdd/ApaDefs.h
 @@ -1,4 +1,5 @@
  #pragma once
 +#include <cstdint>
  
- namespace Hdd
- {
+ #include <cstdint>
+ 
 diff --git a/Source/ui_qt/CMakeLists.txt b/Source/ui_qt/CMakeLists.txt
-index acb51501..74492f35 100644
+index 27e8f818..5de59a5b 100644
 --- a/Source/ui_qt/CMakeLists.txt
 +++ b/Source/ui_qt/CMakeLists.txt
 @@ -10,9 +10,9 @@ project(PlayUI)
@@ -98,7 +98,7 @@ index acb51501..74492f35 100644
  	BootableModel.h
  	BootableModelProxy.h
 diff --git a/Source/ui_shared/CMakeLists.txt b/Source/ui_shared/CMakeLists.txt
-index 41ebbfb9..b75a48cb 100644
+index 4cf00732..f71e36ff 100644
 --- a/Source/ui_shared/CMakeLists.txt
 +++ b/Source/ui_shared/CMakeLists.txt
 @@ -23,7 +23,7 @@ if(NOT TARGET Framework_Http)
@@ -111,5 +111,5 @@ index 41ebbfb9..b75a48cb 100644
  	MESSAGE("-- Using Provided nlohmann_json source")
  	if(NOT TARGET nlohmann_json)
 -- 
-2.41.0
+2.45.2
 
