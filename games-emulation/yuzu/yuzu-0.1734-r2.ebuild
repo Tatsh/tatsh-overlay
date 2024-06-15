@@ -29,7 +29,7 @@ SRC_URI="https://web.archive.org/web/20240304181657if_/https://codeload.github.c
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+compatibility-reporting +cubeb llvm-libunwind +web-service +webengine"
+IUSE="+compatibility-reporting +cubeb llvm-libunwind qt5 +qt6 +web-service +webengine"
 REQUIRED_USE="compatibility-reporting? ( web-service )"
 
 DEPEND=">=app-arch/zstd-1.5.0:=
@@ -46,15 +46,26 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	dev-libs/vulkan-memory-allocator:=
 	dev-util/vulkan-utility-libraries
 	dev-util/glslang
-	dev-qt/qtbase:6
-	dev-qt/qtmultimedia:6
+	qt5? (
+		dev-qt/qtcore
+		dev-qt/qtdbus
+		dev-qt/qtmultimedia:5
+		dev-qt/qtwidgets
+	)
+	qt6? (
+		dev-qt/qtbase
+		dev-qt/qtmultimedia:6
+	)
 	media-libs/libsdl2
 	media-libs/libva
 	media-libs/opus
 	net-libs/enet:=
 	sys-libs/zlib
 	virtual/libusb:=
-	webengine? ( dev-qt/qtwebengine:6 )
+	webengine? (
+		qt5? ( dev-qt/qtwebengine:5 )
+		qt6? ( dev-qt/qtwebengine:6 )
+	)
 	llvm-libunwind? ( sys-libs/llvm-libunwind )
 	!llvm-libunwind? ( sys-libs/libunwind:= )"
 RDEPEND="${DEPEND}
@@ -65,6 +76,9 @@ BDEPEND="app-arch/unzip
 	dev-cpp/robin-map
 	>=dev-util/vulkan-headers-1.3.275
 	dev-util/spirv-headers"
+REQUIRED_USE="|| ( qt5 qt6 )
+	qt5? ( !qt6 )
+	qt6? ( !qt5 )"
 
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
@@ -114,7 +128,7 @@ src_configure() {
 		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF  # FIXME
 		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=OFF
 		"-DENABLE_CUBEB=$(usex cubeb)"
-		-DENABLE_QT6=ON
+		"-DENABLE_QT6=$(usex qt6)"
 		"-DENABLE_WEB_SERVICE=$(usex web-service)"
 		-DGIT_BRANCH="${PN}"
 		-DGIT_DESC="${PV}"
