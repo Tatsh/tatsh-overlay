@@ -22,7 +22,7 @@ MY_PN_U="${PN//-/_}"
 S="${WORKDIR}/${P}/${MY_PN_U}"
 
 PATCHES=(
-        "${FILESDIR}/${PN}-0001-fix-for-latest-glslang.patch"
+	"${FILESDIR}/${PN}-0001-fix-for-latest-glslang.patch"
 )
 
 src_prepare() {
@@ -51,6 +51,7 @@ src_compile() {
 
 custom_install() {
 	cmake_src_install
+	cp __init__.py "${D}/$(python_get_sitedir)/${MY_PN_U}/__init__.py" || die
 	rm -f "${D}/$(python_get_sitedir)/${MY_PN_U}/LICENSE" || die
 }
 
