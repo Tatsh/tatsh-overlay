@@ -30,7 +30,7 @@ NUGETS="actiprosoftware.controls.avalonia.themes.datagrid@23.1.0
 	avalonia@11.0.5
 	dynamicdata@7.9.5
 	dynamicexpresso.core@2.16.1
-	ffmpeg.autogen@6.0.0.2
+	ffmpeg.autogen@7.0.0
 	harfbuzzsharp.nativeassets.linux@2.8.2.3
 	harfbuzzsharp.nativeassets.macos@2.8.2.3
 	harfbuzzsharp.nativeassets.webassembly@2.8.2.3
@@ -63,7 +63,7 @@ DESCRIPTION="Video duplicate finder."
 HOMEPAGE="https://github.com/0x90d/videoduplicatefinder"
 MY_PN="VideoDuplicateFinder"
 MY_PV="3.0.0-preview-${PV:5}"
-SHA="1d93ac090f842fb49cd36ed741729aad58e81b0a"
+SHA="3302d4958cdb7bd0dd30a195dd081b8754d2919e"
 SRC_URI="https://github.com/0x90d/videoduplicatefinder/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	${NUGET_URIS}"
 
