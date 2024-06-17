@@ -979,6 +979,7 @@ kateschema
 kayah
 kayahli
 kballard
+kcompletion
 kconfig
 kconfigwidgets
 kcoreaddons
@@ -1018,11 +1019,13 @@ koanf
 kodi
 konsorten
 koun
+kparts
 krig
 ktexteditor
 ktrysmt
 kubun
 kuler
+kwidgetsaddons
 kwin
 kwindowsystem
 kxmlgui
@@ -1644,6 +1647,7 @@ qtdbus
 qtdeclarative
 qtgui
 qthelp
+qtmin
 qtmultimedia
 qtnetwork
 qtnetworkauth
