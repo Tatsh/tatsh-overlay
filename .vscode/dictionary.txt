@@ -18,7 +18,6 @@ aiohttp
 aiplatform
 ajstarks
 akavel
-akinomyoga
 alac
 alcalzone
 alcaro
@@ -33,6 +32,8 @@ alloc
 alnum
 alpn
 alsa
+altserver
+altsign
 amiri
 amodding
 ampproject
@@ -80,7 +81,6 @@ asaskevich
 asmflags
 asmfmt
 asmjit
-assignin
 assimp
 assuredworkloads
 astc
@@ -90,7 +90,6 @@ astikit
 astilectron
 astisub
 astits
-asynciterator
 asynckit
 atotto
 atrac
@@ -124,7 +123,6 @@ backoff
 bamum
 barbieri
 baremetalsolution
-barć
 basenames
 basepack
 baserom
@@ -219,6 +217,7 @@ ccgo
 ccmd
 ccorpus
 ccount
+ccsha
 cctalk
 cdecrypt
 cdpatch
@@ -312,14 +311,15 @@ cooperspencer
 copystructure
 copytime
 corasick
+corecrypto
 corejs
-coreplugins
 coretemp
 corlett's
 cosmiconfig
 coyove
 cplugins
 cppflags
+cpprestsdk
 cpufeatures
 cpuguy
 cpuid
@@ -440,11 +440,11 @@ dgit
 dglslang
 dgryski
 dgtk
-dheadless
 dialogflow
 difflib
 dinstall
 diropts
+disabl
 disasm
 discarder
 discordrpc
@@ -529,13 +529,11 @@ dsnet
 dsphinx
 dsplit
 dsudachi
-dsuyu
 dsymutil
 dsystemd
 dubhater
 dudev
 duployan
-dusing
 dvapoursynth
 dvcpkg
 dvec
@@ -601,6 +599,7 @@ errwrap
 esac
 esbuild
 eselect
+espen
 espree
 esprima
 esquery
@@ -650,10 +649,7 @@ filestore
 fileutil
 filippo
 filt
-finalizationregistry
-findlastindex
 findname
-findup
 firestore
 fireweapon
 firmwares
@@ -673,7 +669,6 @@ fogleman
 fomit
 fontawesome
 fontconfig
-foodoc
 foreachasync
 foresto
 formatjs
@@ -709,15 +704,12 @@ gcfg
 gcflags
 gcrypt
 genconfig
-genny
 genproto
 gensync
 gentoolkit
 geoip
 geolocation
 getcanonicallocales
-getobject
-getprototypeof
 getrandom
 getsentry
 gettext
@@ -781,7 +773,6 @@ goja
 gokrb
 goldmark
 golib
-golz
 gomega
 gometrics
 gomodule
@@ -813,12 +804,10 @@ gqlgenc
 gqlparser
 grafeas
 grantha
-graphemer
 graphene
 graphengine
 graphviz
 gravitydb
-groupby
 groupcache
 gstreamer
 gsuiteaddons
@@ -860,7 +849,6 @@ homebridge
 honnef
 hppa
 hqdn
-hrydgard
 htdocs
 htdocsdir
 htmlparser
@@ -885,6 +873,7 @@ hyperscript
 iamadamdev
 iancoleman
 ianlancetaylor
+ideviceinstaller
 idna
 ilspy
 imageio
@@ -893,6 +882,7 @@ imagesharp
 imath
 imds
 imgui
+imobiledevice
 implemnting
 implot
 importlib
@@ -925,7 +915,6 @@ isboolean
 isexe
 isinteger
 isnumber
-isobject
 isoboxer
 isomp
 isplainobject
@@ -956,7 +945,6 @@ joystickwake
 jpillora
 jridgewell
 jsbn
-jsdoc
 jsesc
 jsoncpp
 jsonfile
@@ -1011,7 +999,6 @@ kisielk
 kitgen
 kiyamou
 klauspost
-klaw
 kleur
 knadh
 knownhosts
@@ -1085,6 +1072,7 @@ libicudata
 libicui
 libicuuc
 libidn
+libimobiledevice
 libjpeg
 liblsdl
 libm
@@ -1100,6 +1088,7 @@ libpcre
 libpfm
 libpietendo
 libpit
+libplist
 libpulse
 libpumpkin
 libraw
@@ -1122,6 +1111,7 @@ libsodium
 libspng
 libstdc
 libtasn
+libtatsu
 libtemporalsoften
 libtermcap
 libtomcrypt
@@ -1132,6 +1122,7 @@ libunity
 libunwind
 liburing
 libusb
+libusbmuxd
 libva
 libvapoursynth
 libvdpau
@@ -1150,7 +1141,6 @@ libzip
 libzrif
 libzvbi
 lifecycles
-liftup
 lighttpd
 limbu
 linkify
@@ -1197,7 +1187,6 @@ lugaresi
 lukechampine
 lunixbochs
 macemu
-maciej
 macvendor
 macvendordb
 magewell
@@ -1223,7 +1212,6 @@ masterzen
 matchall
 mathml
 mathutil
-matplotlib
 matryer
 mattn
 matttproud
@@ -1273,7 +1261,6 @@ mileusna
 mina
 minchoc
 minideen
-minifier
 minimaid
 minimatch
 minimist
@@ -1284,7 +1271,6 @@ miniupnpc
 miniz
 minizip
 minizlib
-minsizerel
 mipsdisasm
 miscfilters
 missinggo
@@ -1334,6 +1320,7 @@ mwcap
 mwitkow
 mycmakeargs
 myctestargs
+myeconfargs
 myfeatures
 mygoargs
 mypy
@@ -1467,7 +1454,6 @@ organiser
 orgpolicy
 orisano
 osconfig
-osenv
 oslogin
 osmanya
 osname
@@ -1477,6 +1463,7 @@ osspd
 otio
 otlp
 otool
+oversand
 oxffaa
 oyvindln
 pacct
@@ -1564,7 +1551,6 @@ postcss
 postinst
 postrm
 pprof
-ppsspp
 prcbuild
 prdownloads
 prebuild
@@ -1613,7 +1599,6 @@ pyfmt
 pygments
 pygobject
 pygtrie
-pyhht
 pyjwt
 pymatting
 pynput
@@ -1630,7 +1615,6 @@ pytz
 pyudev
 pyxdg
 pyyaml
-pyzmq
 qarmin
 qatom
 qcustomplot
@@ -1646,7 +1630,6 @@ qtcore
 qtdbus
 qtdeclarative
 qtgui
-qthelp
 qtmin
 qtmultimedia
 qtnetwork
@@ -1692,13 +1675,13 @@ realfft
 realpath
 realsr
 recaptchaenterprise
-rechoir
 recommendationengine
 recommonmark
 recompiler
 redent
 redist
 redumper
+referer
 reflectwalk
 refractoring
 regexpp
@@ -1708,7 +1691,6 @@ regjsparser
 rehype
 reimplementation
 rejang
-relateurl
 relcs
 releasesd
 rels
@@ -1722,7 +1704,6 @@ renderutil
 repeaterjs
 replaceall
 repr
-requizzle
 resourcemanager
 resourcesettings
 respawn
@@ -1772,6 +1753,7 @@ russross
 rustc
 rustdct
 rustfft
+rustflags
 rustix
 rustversion
 ruudk
@@ -1836,7 +1818,6 @@ shuralyov
 shurcoo
 shutup
 siac
-siglibs
 signedsource
 sigstore
 silvermine
@@ -1895,7 +1876,6 @@ sqlparse
 sqlserver
 sqlx
 squashfs
-srcset
 srmd
 sslvpn
 ssri
@@ -1955,7 +1935,6 @@ szmarczak
 tablegen
 tablewriter
 tabtab
-taffydb
 tagbanawa
 tagbanwa
 tagfilter
@@ -1970,6 +1949,7 @@ tasksh
 taskshell
 taskwarrior
 tatsh
+tatsu
 tblgen
 tblib
 tclkit
@@ -2027,6 +2007,7 @@ treeverse
 trimend
 trimpath
 trimstart
+trng
 tsconfck
 tsschecker
 tsutils
@@ -2035,7 +2016,6 @@ tunables
 tweenjs
 twemoji
 typedarray
-typelibs
 typenum
 typeof
 typer
@@ -2053,7 +2033,6 @@ ulikunitz
 undici
 undname
 unecm
-ungap
 unic
 unicase
 unice
@@ -2079,6 +2058,7 @@ uring
 urllib
 urlpattern
 usbkill
+usbmuxd
 usedep
 uselistorder
 useragent
@@ -2150,6 +2130,7 @@ webp
 webpassword
 webrisk
 websecurityscanner
+websocketpp
 websockets
 webtheme
 webuiboxedlayout
@@ -2159,7 +2140,6 @@ weezl
 werror
 wextra
 whatwg
-whichcraft
 wiimm
 wiimms
 willf
@@ -2204,9 +2184,7 @@ xirvik
 xkbcommon
 xlib
 xmlbuilder
-xmlcreate
 xmldom
-xmlparser
 xmlpath
 xorg
 xrandr
@@ -2243,6 +2221,7 @@ zeebo
 zeid
 zencoder
 zenyd
+zeroconf
 zerocopy
 zerofill
 zerolog
