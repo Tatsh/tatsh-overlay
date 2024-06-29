@@ -17,7 +17,7 @@ DEPEND="${RDEPEND}"
 BDEPEND="virtual/pkgconfig"
 
 src_configure() {
-	local myeconfargs=( $(use_enable static-libs static) )
+	local myeconfargs=( "$(use_enable static-libs static)" )
 	econf "${myeconfargs[@]}"
 }
 
