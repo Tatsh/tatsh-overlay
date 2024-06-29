@@ -12,6 +12,7 @@ SRC_URI="https://cgit.libimobiledevice.org/${PN}.git/snapshot/${P}.tar.bz2"
 LICENSE="GPL-2+ LGPL-2.1+"
 SLOT="0/4"
 KEYWORDS="~amd64 ~arm ~arm64 ~loong ~ppc ~ppc64 ~riscv ~x86"
+IUSE="static-libs"
 
 DEPEND="${RDEPEND}"
 BDEPEND="virtual/pkgconfig"
@@ -29,7 +30,7 @@ src_prepare() {
 
 src_configure() {
 	local myeconfargs=(
-		--disable-static
+		$(use_enable static-libs static)
 		--without-cython
 	)
 	econf "${myeconfargs[@]}"
