@@ -47,6 +47,6 @@ src_install() {
 	# CURRENT : REVISION : AGE
 	# LIBPLIST_SO_VERSION=8:0:4
 	# 2.0.so.4 + AGE + REVISION
-	dosym ./libplist++-2.0.so.4.5.0 /usr/$(get_libdir)/libplist++.so
-	dosym ./libplist-2.0.so.4.5.0 /usr/$(get_libdir)/libplist.so
+	dosym ./libplist++-2.0.so.4.6.0 /usr/$(get_libdir)/libplist++.so
+	dosym ./libplist-2.0.so.4.6.0 /usr/$(get_libdir)/libplist.so
 }
