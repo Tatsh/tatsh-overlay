@@ -1,0 +1,12 @@
+diff --git a/upstream_repo/AltSign/Archiver.cpp b/upstream_repo/AltSign/Archiver.cpp
+index 1693220..c689e62 100755
+--- a/upstream_repo/AltSign/Archiver.cpp
++++ b/upstream_repo/AltSign/Archiver.cpp
+@@ -30,6 +30,7 @@ const int ALTReadBufferSize = 8192;
+ const int ALTMaxFilenameLength = 512;
+ 
+ #include <sstream>
++#include <vector>
+ 
+ extern std::string StringFromWideString(std::wstring wideString);
+ 

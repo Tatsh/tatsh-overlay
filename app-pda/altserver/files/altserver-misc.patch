@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index 0d3ce07..3893f4e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -117,7 +117,7 @@ $(main_objs) : lib_AltSign lib_libimobiledevice lib_dnssd_loader
+ 
+ $(main_objs) : EXTRA_FLAGS := -I$(main_patched_root) -I$(ROOT_DIR)/src -fpermissive -include "common.h" $(INC_CFLAGS)
+ 
+-LDFLAGS = -static -lssl -lcrypto -lpthread -lcorecrypto_static -lzip -lm -lz -lcpprest -lboost_system -lboost_filesystem -lstdc++ -lssl -lcrypto -luuid
++LDFLAGS = -lssl -lcrypto -lpthread -lcorecrypto_static -lzip -lm -lz -lcpprest -lboost_system -lboost_filesystem -lstdc++ -lssl -lcrypto -luuid
+ 
+ $(BUILD_DIR)/$(PROGRAM):: $(main_objs) $(BUILD_DIR)/libimobiledevice.a $(BUILD_DIR)/AltSign.a $(BUILD_DIR)/libplist.a $(BUILD_DIR)/dnssd_loader.a
+ 	$(CC) -o $@ $^ $(LDFLAGS)
