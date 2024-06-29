@@ -54,7 +54,8 @@ src_prepare() {
 }
 
 src_install() {
-	local exec=$(find . -maxdepth 1 -type f -executable -name 'AltServer-*' | head -n 1)
+	local exec
+	exec=$(find . -maxdepth 1 -type f -executable -name 'AltServer-*' | head -n 1)
 	newbin "$exec" AltServer
 	einstalldocs
 }
