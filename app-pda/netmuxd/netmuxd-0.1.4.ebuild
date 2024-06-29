@@ -210,7 +210,8 @@ src_configure() {
 }
 
 src_compile() {
-	export RUSTFLAGS="-L /usr/$(get_libdir) -l dylib=imobiledevice-1.0 -l dylib=plist"
+	RUSTFLAGS="-L /usr/$(get_libdir) -l dylib=imobiledevice-1.0 -l dylib=plist"
+	export RUSTFLAGS
 	cargo_src_compile
 }
 
