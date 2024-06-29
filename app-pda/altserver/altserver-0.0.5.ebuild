@@ -26,6 +26,7 @@ KEYWORDS="~amd64"
 
 DEPEND="dev-cpp/cpprestsdk
 	dev-libs/boost
+	dev-libs/corecrypto
 	dev-libs/libzip
 	dev-libs/openssl
 	sys-apps/util-linux
