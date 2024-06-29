@@ -1,3 +1,5 @@
+This file has mixed line endings. For this reason, it is marked as binary in .gitattributes.
+
 diff --git a/upstream_repo/AltSign/Archiver.cpp b/upstream_repo/AltSign/Archiver.cpp
 index 1693220..c689e62 100755
 --- a/upstream_repo/AltSign/Archiver.cpp
