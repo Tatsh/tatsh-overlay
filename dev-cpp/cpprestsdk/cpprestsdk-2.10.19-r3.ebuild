@@ -26,9 +26,9 @@ BDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}"/cpprestsdk-${PV}-warnings.patch
-	"${FILESDIR}"/cpprestsdk-${PV}-disabl-int-tests.patch
-	"${FILESDIR}"/cpprestsdk-${PV}-disable-werror-default.patch
+	"${FILESDIR}/cpprestsdk-${PV}-warnings.patch"
+	"${FILESDIR}/cpprestsdk-${PV}-disabl-int-tests.patch"
+	"${FILESDIR}/cpprestsdk-${PV}-disable-werror-default.patch"
 )
 
 src_configure() {
