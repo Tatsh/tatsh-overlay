@@ -10,9 +10,7 @@ inherit cmake distutils-r1 pypi
 
 DESCRIPTION="Editorial interchange format and API (for use with Kdenlive)."
 HOMEPAGE="https://pypi.org/project/OpenTimelineIO/ https://github.com/AcademySoftwareFoundation/OpenTimelineIO"
-MY_PN="OpenTimelineIO"
-MY_P="${MY_PN}-${PV}"
-SRC_URI="$(pypi_sdist_url --no-normalize OpenTimelineIO)"
+SRC_URI="$(pypi_sdist_url OpenTimelineIO)"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -24,8 +22,6 @@ RDEPEND="dev-python/pyside2[${PYTHON_USEDEP}]
 	dev-libs/imath
 	dev-python/pyaaf2"
 DEPEND="${RDEPEND}"
-
-S="${WORKDIR}/${MY_PN}-${PV}"
 
 python_prepare_all() {
 	sed -re '/.*: OTIO_build_ext,/d' -i setup.py
