@@ -6,7 +6,7 @@ inherit linux-mod-r1
 
 DESCRIPTION="Kernel module for the embedded controller of MSI laptops."
 HOMEPAGE="https://github.com/BeardOverflow/msi-ec"
-SHA="42cab47c10664e23916601ea32981bcdc3772968"
+SHA="d93861a828f7a5960e0c7f7fb67e9dbffd7ac31a"
 SRC_URI="https://github.com/BeardOverflow/msi-ec/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
