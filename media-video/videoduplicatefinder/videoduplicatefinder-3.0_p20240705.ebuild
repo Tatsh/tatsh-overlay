@@ -63,7 +63,7 @@ DESCRIPTION="Video duplicate finder."
 HOMEPAGE="https://github.com/0x90d/videoduplicatefinder"
 MY_PN="VideoDuplicateFinder"
 MY_PV="3.0.0-preview-${PV:5}"
-SHA="f21ddfdce6a5a3d70d802598b568894ef0f6fb65"
+SHA="68448459689b6ce52b28c8b327796fe4d5b590ca"
 SRC_URI="https://github.com/0x90d/videoduplicatefinder/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	${NUGET_URIS}"
 
