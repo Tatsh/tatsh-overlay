@@ -1,4 +1,4 @@
-From d5df3689070722447f96ed50fbcd5acc00192e23 Mon Sep 17 00:00:00 2001
+From 04099cf6696379f20cffad85fbc4e9cc0d53eb9b Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 15 Dec 2021 06:31:11 -0500
 Subject: [PATCH] Gentoo fixes
@@ -19,7 +19,7 @@ Subject: [PATCH] Gentoo fixes
  advanced/Scripts/version.sh                   |   6 +-
  advanced/Scripts/webpage.sh                   |  65 ++++-
  advanced/Templates/gravity_copy.sql           |   2 +-
- advanced/Templates/logrotate                  |   6 +-
+ advanced/Templates/logrotate                  |   4 +-
  advanced/Templates/pihole-FTL-poststop.sh     |   2 +-
  advanced/Templates/pihole-FTL-prestart.sh     |  29 +--
  advanced/Templates/pihole-FTL.service         |   4 +-
@@ -27,7 +27,7 @@ Subject: [PATCH] Gentoo fixes
  advanced/Templates/pihole.sudo                |   9 -
  gravity.sh                                    |  23 +-
  pihole                                        | 100 ++------
- 23 files changed, 201 insertions(+), 792 deletions(-)
+ 23 files changed, 199 insertions(+), 792 deletions(-)
  delete mode 100755 advanced/Scripts/piholeCheckout.sh
  delete mode 100755 advanced/Scripts/update.sh
  delete mode 100755 advanced/Scripts/updatecheck.sh
@@ -116,7 +116,7 @@ index bb94a857..f7ef9a8b 100755
      fi
  }
 diff --git a/advanced/Scripts/database_migration/gravity-db.sh b/advanced/Scripts/database_migration/gravity-db.sh
-index a7ba60a9..a43a6360 100755
+index 378321ff..379d2717 100755
 --- a/advanced/Scripts/database_migration/gravity-db.sh
 +++ b/advanced/Scripts/database_migration/gravity-db.sh
 @@ -10,7 +10,7 @@
@@ -127,9 +127,9 @@ index a7ba60a9..a43a6360 100755
 +readonly scriptPath="@EPREFIX@/usr/@LIBDIR@/pihole/database_migration/gravity"
  
  upgrade_gravityDB(){
- 	local database piholeDir auditFile version
+     local database piholeDir auditFile version
 diff --git a/advanced/Scripts/list.sh b/advanced/Scripts/list.sh
-index b76a7ef7..99efc8da 100755
+index 76558e58..ac2f5638 100755
 --- a/advanced/Scripts/list.sh
 +++ b/advanced/Scripts/list.sh
 @@ -11,8 +11,8 @@
@@ -166,7 +166,7 @@ index 93ec3b95..99d8b87a 100755
  sleep "${1}"
  "${PI_HOLE_BIN_DIR}"/pihole enable
 diff --git a/advanced/Scripts/piholeARPTable.sh b/advanced/Scripts/piholeARPTable.sh
-index 5daa025d..14517d09 100755
+index b92dd124..b6110804 100755
 --- a/advanced/Scripts/piholeARPTable.sh
 +++ b/advanced/Scripts/piholeARPTable.sh
 @@ -10,7 +10,7 @@
@@ -409,7 +409,7 @@ index cf57800c..00000000
 -    fi
 -}
 diff --git a/advanced/Scripts/piholeDebug.sh b/advanced/Scripts/piholeDebug.sh
-index 1ca52f45..188051e0 100755
+index fb1efbeb..770f2aad 100755
 --- a/advanced/Scripts/piholeDebug.sh
 +++ b/advanced/Scripts/piholeDebug.sh
 @@ -22,8 +22,12 @@ set -o pipefail
@@ -627,7 +627,7 @@ index 1ca52f45..188051e0 100755
      show_content_of_files_in_dir "${SHM_DIRECTORY}"
      show_content_of_files_in_dir "${ETC}"
 diff --git a/advanced/Scripts/piholeLogFlush.sh b/advanced/Scripts/piholeLogFlush.sh
-index 3473fad5..ad669776 100755
+index b06aac8b..e068a638 100755
 --- a/advanced/Scripts/piholeLogFlush.sh
 +++ b/advanced/Scripts/piholeLogFlush.sh
 @@ -8,58 +8,58 @@
@@ -715,7 +715,7 @@ index 3473fad5..ad669776 100755
      echo -e "  ${TICK} Deleted ${deleted} queries from database"
  fi
 diff --git a/advanced/Scripts/query.sh b/advanced/Scripts/query.sh
-index 1d3b0a29..e740c380 100755
+index ebcc6f79..32677e89 100755
 --- a/advanced/Scripts/query.sh
 +++ b/advanced/Scripts/query.sh
 @@ -11,8 +11,8 @@
@@ -1140,7 +1140,7 @@ index 83fd0f39..afebbef8 100755
      # shellcheck disable=SC1090
      . "$cachedVersions"
 diff --git a/advanced/Scripts/webpage.sh b/advanced/Scripts/webpage.sh
-index e05a6aff..fc04a569 100755
+index 62ab4ea9..9f03141f 100755
 --- a/advanced/Scripts/webpage.sh
 +++ b/advanced/Scripts/webpage.sh
 @@ -12,28 +12,67 @@
@@ -1245,33 +1245,24 @@ index ed11b61a..6fad1019 100644
  BEGIN TRANSACTION;
  
 diff --git a/advanced/Templates/logrotate b/advanced/Templates/logrotate
-index 9a56b552..0a2e3fbd 100644
+index bb63b118..51cea5fa 100644
 --- a/advanced/Templates/logrotate
 +++ b/advanced/Templates/logrotate
 @@ -1,4 +1,4 @@
 -/var/log/pihole/pihole.log {
-+@EPREFIX@/var/log/pihole.log {
- 	# su #
- 	daily
- 	copytruncate
-@@ -7,9 +7,10 @@
- 	delaycompress
- 	notifempty
- 	nomail
-+    missingok
++@EPREFIX@/var/log/pihole/pihole.log {
+     # su #
+     daily
+     copytruncate
+@@ -9,7 +9,7 @@
+     nomail
  }
  
 -/var/log/pihole/FTL.log {
-+@EPREFIX@/var/log/pihole-FTL.log {
- 	# su #
- 	weekly
- 	copytruncate
-@@ -18,4 +19,5 @@
- 	delaycompress
- 	notifempty
- 	nomail
-+    missingok
- }
++@EPREFIX@/var/log/pihole/FTL.log {
+     # su #
+     weekly
+     copytruncate
 diff --git a/advanced/Templates/pihole-FTL-poststop.sh b/advanced/Templates/pihole-FTL-poststop.sh
 index ac3898d2..9296ec64 100755
 --- a/advanced/Templates/pihole-FTL-poststop.sh
@@ -1405,7 +1396,7 @@ index 708309be..00000000
 -# Please see LICENSE file for your rights under this license.
 -#
 diff --git a/gravity.sh b/gravity.sh
-index db199090..8b6909d3 100755
+index c4622ead..e3744b8c 100755
 --- a/gravity.sh
 +++ b/gravity.sh
 @@ -13,15 +13,16 @@
@@ -1458,7 +1449,7 @@ index db199090..8b6909d3 100755
  if [[ -f "${pihole_FTL}" ]]; then
    source "${pihole_FTL}"
  fi
-@@ -873,7 +874,7 @@ if [[ "${forceDelete:-}" == true ]]; then
+@@ -907,7 +908,7 @@ if [[ "${forceDelete:-}" == true ]]; then
    str="Deleting existing list cache"
    echo -ne "${INFO} ${str}..."
  
@@ -1686,5 +1677,5 @@ index 1d9ad82c..0cfc0ec3 100755
    "disable"                     ) piholeEnable 0 "$2";;
    "restartdns"                  ) restartDNS "$2";;
 -- 
-2.42.0
+2.45.2
 
