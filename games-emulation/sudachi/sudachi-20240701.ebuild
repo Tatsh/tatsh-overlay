@@ -6,17 +6,17 @@ inherit cmake flag-o-matic xdg
 
 DESCRIPTION="Nintendo Switch emulator."
 HOMEPAGE="https://github.com/sudachi-emu/sudachi"
-SHA="4ce69bc41f33e3816b9a73ecc6268bd808e44367"
+SHA="128b258427ec9a836343a0738fb09e335377174d"
 CPP_HTTPLIB_SHA="6791a8364d1644b44e0fb13fca472c398f78eb67"
 CPP_JWT_SHA="4a970bc302d671476122cbc6b43cc89fbf4a96ec"
 _DYNARMIC_SHA="efa2ebefe1f502fc886cbbcebabed2506121eb24"
-FFMPEG_SHA="65c1c83ca42540415516c37e21c9aeb7dd2c96d1"
+FFMPEG_SHA="cc6fb1643d7e14c6f76a48e0cffad96394cb197c"
 NX_TZDB_VERSION="221202"
 MBEDTLS_SHA="86ed7bfaa80079a97c763a651d0b2cd8d9d59100"
-SDL_SHA="cc016b0046d563287f0aa9f09b958b5e70d43696"
+SDL_SHA="e1e36d213bea3a0b56d91b454c53a2c94312a5be"
 SIMPLEINI_SHA="f7862c3dd7ad35becc2741f268e3402e89a37666"
 SIRIT_SHA="795ef4d8318c7d344da99c076dd60e5580d3d5ac"
-XBYAK_SHA="9c0f5d3ecb06d2c93c2b59becb9b3b763213e74e"
+XBYAK_SHA="aabb091ae37068498751fd58202a9854408ecb0e"
 SRC_URI="https://github.com/sudachi-emu/sudachi/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz
 	https://github.com/sudachi-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
 	https://github.com/sudachi-emu/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
@@ -31,8 +31,7 @@ SRC_URI="https://github.com/sudachi-emu/sudachi/archive/${SHA}.tar.gz -> ${PN}-$
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+compatibility-reporting +cubeb llvm-libunwind +web-service +webengine"
-REQUIRED_USE="compatibility-reporting? ( web-service )"
+IUSE="+cubeb llvm-libunwind +web-service +webengine"
 
 DEPEND=">=app-arch/zstd-1.5.0:=
 	>=dev-libs/xbyak-6.03:=
@@ -103,7 +102,7 @@ src_prepare() {
 	sed -re 's/set\(CAN_BUILD_NX_TZDB.*/set(CAN_BUILD_NX_TZDB false)/' \
 		-i externals/nx_tzdb/CMakeLists.txt || die
 	sed -re '/add_subdirectory\(externals\)/d' -i CMakeLists.txt || die
-	sed -re '703s/.*/add_subdirectory(externals)/' -i CMakeLists.txt || die
+	sed -re '707s/.*/add_subdirectory(externals)/' -i CMakeLists.txt || die
 	cmake_src_prepare
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
 	einfo 'Using fallback compatibility list'
@@ -118,20 +117,15 @@ src_configure() {
 	# coming after.
 	append-cxxflags -Wno-switch
 	local mycmakeargs=(
-		-DBUILD_FULLNAME="${PV}"
 		-DBUILD_SHARED_LIBS=OFF
 		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF  # FIXME
 		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=OFF
 		-DENABLE_QT6=ON
 		"-DENABLE_CUBEB=$(usex cubeb)"
 		"-DENABLE_WEB_SERVICE=$(usex web-service)"
-		-DGIT_BRANCH="${PN}"
-		-DGIT_DESC="${PV}"
-		-DGIT_REV="${PV}"
 		-DSIRIT_USE_SYSTEM_SPIRV_HEADERS=ON
 		-DUSE_DISCORD_PRESENCE=OFF
 		-DSUDACHI_DOWNLOAD_TIME_ZONE_DATA=OFF
-		"-DSUDACHI_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)"
 		-DSUDACHI_ENABLE_PORTABLE=OFF
 		-DSUDACHI_TESTS=OFF
 		-DSUDACHI_USE_BUNDLED_FFMPEG=ON
