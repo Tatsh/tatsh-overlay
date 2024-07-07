@@ -21,4 +21,5 @@ S="${WORKDIR}"
 src_install() {
 	java-pkg_newjar "${DISTDIR}/${P}-all.jar"
 	java-pkg_dolauncher "${PN}"
+	dosym ./revanced-cli "${EPREFIX}/usr/bin/revanced"
 }
