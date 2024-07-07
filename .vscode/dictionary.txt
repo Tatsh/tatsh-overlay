@@ -489,6 +489,7 @@ doexe
 doicon
 doinitd
 doins
+dolauncher
 dolib
 doman
 domelementtype
@@ -1281,6 +1282,7 @@ mknod
 mkorenkov
 mlabbe
 mmap
+mobilephone
 modargs
 modernc
 modextract
@@ -1359,6 +1361,7 @@ newenvd
 newexe
 newicon
 newins
+newjar
 newscript
 newunit
 nextick
@@ -1710,6 +1713,7 @@ respawn
 responselike
 retryablehttp
 reusify
+revanced
 revc
 revord
 rewx
@@ -2066,6 +2070,7 @@ userspace
 usev
 usex
 valyala
+vanced
 vapoursynth
 vcpkg
 vearutop
