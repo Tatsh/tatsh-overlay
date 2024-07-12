@@ -15,11 +15,10 @@ LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-BDEPEND="dev-python/numpy[${PYTHON_USEDEP}]"
-DEPEND="tbb? ( <dev-cpp/tbb-2021.5.0-r1 )"
+DEPEND="tbb? ( <dev-cpp/tbb-2021.5.0-r1 )
+	=dev-python/numpy-1.26.4:=[${PYTHON_USEDEP}]"
 RDEPEND="dev-python/llvmlite[${PYTHON_USEDEP}]
-	dev-python/setuptools:0[${PYTHON_USEDEP}]
-	${BDEPEND}"
+	dev-python/setuptools:0[${PYTHON_USEDEP}]"
 
 src_configure() {
 	append-ldflags "$(no-as-needed)"
