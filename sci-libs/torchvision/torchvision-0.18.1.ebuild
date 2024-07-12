@@ -46,6 +46,7 @@ distutils_enable_tests pytest
 
 src_prepare() {
 	default
+	addpredict "/proc/self/task/"
 	MAX_JOBS=$(makeopts_jobs)
 	MAKEOPTS=-j1
 	export MAKEOPTS MAX_JOBS
