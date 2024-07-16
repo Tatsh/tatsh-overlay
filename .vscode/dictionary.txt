@@ -7,6 +7,7 @@ accesscontextmanager
 accesscontrol
 adal
 adbsync
+addpredict
 adlam
 adpcm
 aescts
