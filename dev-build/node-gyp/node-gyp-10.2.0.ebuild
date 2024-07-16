@@ -99,6 +99,7 @@ YARN_PKGS=(
 	fs-minipass-3.0.3
 	negotiator-0.6.3
 	make-fetch-happen-13.0.1
+	wrap-ansi-7.0.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
