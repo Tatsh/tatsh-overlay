@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@zwave-js/server": "^1.36.0",
-    "zwave-js": "^12.11.0"
+    "@zwave-js/server": "^1.37.0",
+    "zwave-js": "^13.0.1"
   }
 }
