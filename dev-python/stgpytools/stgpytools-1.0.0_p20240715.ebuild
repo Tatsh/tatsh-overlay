@@ -10,7 +10,7 @@ inherit distutils-r1
 
 DESCRIPTION="Collection of stuff that's useful in general Python programming."
 HOMEPAGE="https://pypi.org/project/${PN}/"
-SHA="0e6b247e2381edf5fdab470e5d8116544b6f3bcd"
+SHA="5b85b4e830dd53a86aba2f22dc16e4dc45576d4a"
 SRC_URI="https://github.com/Setsugennoao/stgpytools/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
