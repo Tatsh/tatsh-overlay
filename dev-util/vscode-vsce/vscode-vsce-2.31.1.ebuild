@@ -209,6 +209,7 @@ YARN_PKGS=(
 	buffer-equal-constant-time-1.0.1
 	cross-spawn-7.0.3
 	typed-rest-client-1.8.11
+	wrap-ansi-7.0.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
