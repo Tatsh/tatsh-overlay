@@ -56,6 +56,8 @@ src_prepare() {
 		-i src/CMakeLists.txt || die
 	mv "${WORKDIR}/glslang-${GLSLANG_SHA}" "${S}/glslang" || die
 	sed -re 's/find_package\(glslang.*/add_subdirectory(glslang)/' -i CMakeLists.txt || die
+	sed -re '1s/^\.rodata$/.section .rodata,"",%progbits/' -i src/resource/embedded/fontawesome.S || die
+	echo '.section .note.GNU-stack,"",%progbits' >> src/resource/embedded/fontawesome.S || die
 	cmake_src_prepare
 	rmdir dependencies/imgui || die
 	mv "${WORKDIR}/imgui-${IMGUI_PV}" dependencies/imgui || die
