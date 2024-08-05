@@ -8,7 +8,7 @@ inherit cmake
 DESCRIPTION="Library manager for C/C++ (tool only)."
 HOMEPAGE="https://github.com/microsoft/vcpkg-tool https://vcpkg.io/en/index.html"
 MY_PV="${PV//./-}"
-FMT_PV=10.1.0
+FMT_PV=11.0.2
 SRC_URI="https://github.com/microsoft/${PN}/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/fmtlib/fmt/archive/${FMT_PV}.tar.gz -> libfmt-${FMT_PV}.tar.gz"
 
