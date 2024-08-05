@@ -527,7 +527,6 @@ dset
 dsirit
 dslackw
 dslirp
-dsnet
 dsphinx
 dsplit
 dsudachi
@@ -754,6 +753,7 @@ gnuflag
 gnullvm
 gnutls
 goasm
+goautoneg
 gobject
 gobwas
 goccy
@@ -774,7 +774,6 @@ goimagehash
 goja
 gokrb
 goldmark
-golib
 gomega
 gometrics
 gomodule
@@ -1250,7 +1249,6 @@ metastore
 metavuln
 mgba
 mgree
-mholt
 miao
 michaeldfallen
 michał
@@ -1314,6 +1312,7 @@ multierr
 multierror
 multilib
 multimatch
+munnerz
 munt
 mupen
 murmour
@@ -1412,7 +1411,6 @@ nupkg
 nurio
 nvcc
 nvmedit
-nwaples
 objc
 objcopy
 objdump
@@ -1503,7 +1501,6 @@ permic
 pflag
 pgpassfile
 pgservicefile
-pgzip
 phags
 phagspa
 phantomjs
@@ -1659,7 +1656,6 @@ rangeset
 ranlib
 raphnet
 rapidjson
-rardecode
 ratelimit
 raviqqe
 rawio
@@ -2034,7 +2030,6 @@ udiff
 udpa
 udvare
 uips
-ulikunitz
 undici
 undname
 unecm
