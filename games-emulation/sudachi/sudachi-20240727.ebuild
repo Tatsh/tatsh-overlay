@@ -5,8 +5,7 @@ EAPI=8
 inherit cmake flag-o-matic xdg
 
 DESCRIPTION="Nintendo Switch emulator."
-HOMEPAGE="https://github.com/sudachi-emu/sudachi"
-SHA="128b258427ec9a836343a0738fb09e335377174d"
+HOMEPAGE="https://sudachi.emuplace.app/"
 CPP_HTTPLIB_SHA="6791a8364d1644b44e0fb13fca472c398f78eb67"
 CPP_JWT_SHA="4a970bc302d671476122cbc6b43cc89fbf4a96ec"
 _DYNARMIC_SHA="efa2ebefe1f502fc886cbbcebabed2506121eb24"
@@ -17,7 +16,7 @@ SDL_SHA="e1e36d213bea3a0b56d91b454c53a2c94312a5be"
 SIMPLEINI_SHA="f7862c3dd7ad35becc2741f268e3402e89a37666"
 SIRIT_SHA="795ef4d8318c7d344da99c076dd60e5580d3d5ac"
 XBYAK_SHA="aabb091ae37068498751fd58202a9854408ecb0e"
-SRC_URI="https://github.com/sudachi-emu/sudachi/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz
+SRC_URI="https://sudachi.emuplace.app/releases/latest.zip -> ${P}.zip
 	https://github.com/sudachi-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
 	https://github.com/sudachi-emu/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/sudachi-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
@@ -68,16 +67,25 @@ BDEPEND="app-arch/unzip
 	dev-cpp/nlohmann_json
 	dev-cpp/robin-map
 	>=dev-util/vulkan-headers-1.3.275
-	dev-util/spirv-headers"
+	dev-util/spirv-headers
+	app-text/dos2unix"
 
-S="${WORKDIR}/${PN}-${SHA}"
+S="${WORKDIR}/${PN}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"
 )
 
-src_prepare() {
+src_unpack() {
+	default
 	rm .gitmodules || die
+	mkdir sudachi || die
+	dos2unix CMakeLists.txt || die
+	mv {CMakeModules,LICENSES,dist,documentation,externals,hooks,patches,src,tools} \
+		CMake*.{json,txt} README.md LICENSE.md sudachi || die
+}
+
+src_prepare() {
 	rmdir "${S}/externals/"{dynarmic,mbedtls,simpleini,sirit,SDL,xbyak} || die
 	rmdir "${S}/externals/ffmpeg/ffmpeg" || die
 	mv "${WORKDIR}/dynarmic-${_DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
@@ -102,7 +110,8 @@ src_prepare() {
 	sed -re 's/set\(CAN_BUILD_NX_TZDB.*/set(CAN_BUILD_NX_TZDB false)/' \
 		-i externals/nx_tzdb/CMakeLists.txt || die
 	sed -re '/add_subdirectory\(externals\)/d' -i CMakeLists.txt || die
-	sed -re '707s/.*/add_subdirectory(externals)/' -i CMakeLists.txt || die
+	sed -re '706s/.*/add_subdirectory(externals)/' -i CMakeLists.txt || die
+	sed -re '/-Werror=.*/d' -i src/CMakeLists.txt || die
 	cmake_src_prepare
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
 	einfo 'Using fallback compatibility list'
