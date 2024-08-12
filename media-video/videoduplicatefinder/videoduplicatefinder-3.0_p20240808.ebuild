@@ -43,7 +43,7 @@ NUGETS="actiprosoftware.controls.avalonia.themes.datagrid@23.1.0
 	protobuf-net.core@3.2.26
 	protobuf-net@3.2.26
 	reactiveui@18.3.1
-	sixlabors.imagesharp@3.1.4
+	sixlabors.imagesharp@3.1.5
 	skiasharp.nativeassets.linux@2.88.6
 	skiasharp.nativeassets.macos@2.88.6
 	skiasharp.nativeassets.webassembly@2.88.6
@@ -63,7 +63,7 @@ DESCRIPTION="Video duplicate finder."
 HOMEPAGE="https://github.com/0x90d/videoduplicatefinder"
 MY_PN="VideoDuplicateFinder"
 MY_PV="3.0.0-preview-${PV:5}"
-SHA="68448459689b6ce52b28c8b327796fe4d5b590ca"
+SHA="018ad5213fa1cdd2269e3acb0d38dcca9402fda0"
 SRC_URI="https://github.com/0x90d/videoduplicatefinder/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	${NUGET_URIS}"
 
