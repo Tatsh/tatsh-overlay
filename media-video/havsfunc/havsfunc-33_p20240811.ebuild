@@ -9,7 +9,7 @@ inherit distutils-r1
 
 DESCRIPTION="Holy's ported AviSynth functions for VapourSynth"
 HOMEPAGE="http://forum.doom9.org/showthread.php?t=166582"
-SHA="8707846664a692108c579780e27061ca593559f8"
+SHA="1d2189a8c53d73bad20e9419b8f7a85c7aad5e0c"
 SRC_URI="https://github.com/HomeOfVapourSynthEvolution/havsfunc/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 RESTRICT="mirror"
 
