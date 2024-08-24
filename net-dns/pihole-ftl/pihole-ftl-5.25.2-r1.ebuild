@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit cmake systemd
+inherit cmake fcaps systemd
 
 DESCRIPTION="The Pi-hole FTL engine"
 HOMEPAGE="https://github.com/pi-hole/FTL"
@@ -23,6 +23,10 @@ BDEPEND="app-editors/vim-core" # needed for xxd
 S="${WORKDIR}/FTL-${PV}"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-fixes.patch" )
+
+FILECAPS=(
+	cap_net_bind_service cap_net_admin cap_net_raw cap_sys_nice usr/bin/pihole-FTL
+)
 
 src_prepare() {
 	sed -re 's/-Werror //g' -i src/CMakeLists.txt || die
