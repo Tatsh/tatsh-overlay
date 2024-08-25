@@ -1,0 +1,233 @@
+# Copyright 2023 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+inherit yarn
+
+DESCRIPTION="VS Code extensions manager for extension developers."
+HOMEPAGE="https://code.visualstudio.com"
+NPM_P="@${P/-/\/}"
+NPM_PN="@${PN/-/\/}"
+YARN_PKGS=(
+	@vscode/vsce-3.0.0
+	markdown-it-12.3.2
+	signal-exit-4.1.0
+	has-property-descriptors-1.0.2
+	get-intrinsic-1.2.4
+	@azure/core-tracing-1.1.2
+	lodash.isboolean-3.0.3
+	foreground-child-3.3.0
+	encoding-sniffer-0.2.0
+	htmlparser2-9.1.0
+	string-width-4.2.3
+	uuid-8.3.2
+	@azure/core-auth-1.7.2
+	color-name-1.1.4
+	asynckit-0.4.0
+	tmp-0.2.3
+	form-data-4.0.0
+	ecdsa-sig-formatter-1.0.11
+	readable-stream-3.6.2
+	typed-rest-client-1.8.11
+	hosted-git-info-4.1.0
+	ieee754-1.2.1
+	css-what-6.1.0
+	xmlbuilder-11.0.1
+	http-proxy-agent-7.0.2
+	events-3.3.0
+	parse5-htmlparser2-tree-adapter-7.0.0
+	nth-check-2.1.1
+	semver-7.6.3
+	@azure/core-client-1.9.2
+	xml2js-0.5.0
+	ini-1.3.8
+	mimic-response-3.1.0
+	parse5-7.1.2
+	gopd-1.0.1
+	es-define-property-1.0.0
+	side-channel-1.0.6
+	strip-ansi-7.1.0
+	lodash.isstring-4.0.1
+	@vscode/vsce-sign-win32-x64-2.0.2
+	path-scurry-2.0.0
+	ansi-styles-3.2.1
+	azure-devops-node-api-12.5.0
+	domhandler-5.0.3
+	jwa-2.0.0
+	set-function-length-1.2.2
+	is-docker-2.2.1
+	entities-2.1.0
+	buffer-5.7.1
+	jwa-1.4.1
+	@vscode/vsce-sign-linux-arm64-2.0.2
+	detect-libc-2.0.3
+	define-data-property-1.1.4
+	ansi-styles-6.2.1
+	pump-3.0.0
+	cockatiel-3.2.1
+	keytar-7.9.0
+	strip-ansi-6.0.1
+	@azure/identity-4.4.1
+	escape-string-regexp-1.0.5
+	simple-get-4.0.1
+	css-select-5.1.0
+	combined-stream-1.0.8
+	which-2.0.2
+	has-proto-1.0.3
+	minimatch-10.0.1
+	brace-expansion-1.1.11
+	agent-base-7.1.1
+	@vscode/vsce-sign-linux-arm-2.0.2
+	@azure/core-util-1.9.2
+	ms-2.1.3
+	minipass-7.1.2
+	define-lazy-prop-2.0.0
+	cheerio-1.0.0
+	tar-stream-2.2.0
+	https-proxy-agent-7.0.5
+	emoji-regex-8.0.0
+	yauzl-2.10.0
+	isexe-2.0.0
+	glob-11.0.0
+	is-fullwidth-code-point-3.0.0
+	bl-4.1.0
+	boolbase-1.0.0
+	jws-4.0.0
+	domutils-3.1.0
+	ms-2.1.2
+	supports-color-5.5.0
+	deep-extend-0.6.0
+	eastasianwidth-0.2.0
+	@vscode/vsce-sign-2.0.4
+	@vscode/vsce-sign-darwin-x64-2.0.2
+	sax-1.4.1
+	decompress-response-6.0.0
+	linkify-it-3.0.3
+	github-from-package-0.0.0
+	whatwg-encoding-3.1.1
+	jws-3.2.2
+	package-json-from-dist-1.0.0
+	lru-cache-11.0.0
+	color-name-1.1.3
+	commander-6.2.1
+	prebuild-install-7.1.2
+	mute-stream-0.0.8
+	ansi-styles-4.3.0
+	yazl-2.5.1
+	jsonc-parser-3.3.1
+	cross-spawn-7.0.3
+	@azure/abort-controller-2.1.2
+	wrappy-1.0.2
+	lodash.isplainobject-4.0.6
+	function-bind-1.1.2
+	expand-template-2.0.3
+	jackspeak-4.0.1
+	end-of-stream-1.4.4
+	call-bind-1.0.7
+	qs-6.13.0
+	string_decoder-1.3.0
+	lodash.includes-4.3.0
+	underscore-1.13.7
+	minimist-1.2.8
+	url-join-4.0.1
+	cheerio-select-2.1.0
+	lodash.isnumber-3.0.3
+	brace-expansion-2.0.1
+	semver-5.7.2
+	has-flag-3.0.0
+	buffer-equal-constant-time-1.0.1
+	read-1.0.7
+	whatwg-mimetype-4.0.0
+	mime-1.6.0
+	@vscode/vsce-sign-win32-arm64-2.0.2
+	concat-map-0.0.1
+	buffer-crc32-0.2.13
+	@azure/msal-browser-3.21.0
+	fs-constants-1.0.0
+	rc-1.2.8
+	@azure/msal-node-2.13.0
+	undici-6.19.8
+	napi-build-utils-1.0.2
+	wrap-ansi-8.1.0
+	tar-fs-2.1.1
+	@vscode/vsce-sign-linux-x64-2.0.2
+	parse-semver-1.1.1
+	safe-buffer-5.2.1
+	@vscode/vsce-sign-darwin-arm64-2.0.2
+	delayed-stream-1.0.0
+	es-errors-1.3.0
+	debug-4.3.6
+	color-convert-2.0.1
+	mime-types-2.1.35
+	@vscode/vsce-sign-alpine-arm64-2.0.2
+	lodash.once-4.1.1
+	shebang-regex-3.0.0
+	mkdirp-classic-0.5.3
+	node-abi-3.67.0
+	minimatch-3.1.2
+	object-inspect-1.13.2
+	tunnel-0.0.6
+	lodash.isinteger-4.0.4
+	string-width-5.1.2
+	@azure/abort-controller-1.1.0
+	node-addon-api-4.3.0
+	balanced-match-1.0.2
+	once-1.4.0
+	argparse-2.0.1
+	has-symbols-1.0.3
+	@azure/msal-common-14.14.1
+	pend-1.2.0
+	simple-concat-1.0.1
+	path-key-3.1.1
+	@vscode/vsce-sign-alpine-x64-2.0.2
+	safer-buffer-2.1.2
+	domelementtype-2.3.0
+	open-8.4.2
+	iconv-lite-0.6.3
+	chownr-1.1.4
+	chalk-2.4.2
+	@azure/logger-1.1.4
+	lru-cache-6.0.0
+	shebang-command-2.0.0
+	entities-4.5.0
+	tslib-2.7.0
+	tunnel-agent-0.6.0
+	ansi-regex-6.0.1
+	leven-3.1.0
+	mime-db-1.52.0
+	ansi-regex-5.0.1
+	dom-serializer-2.0.0
+	fd-slicer-1.1.0
+	parse5-parser-stream-7.1.2
+	@pkgjs/parseargs-0.11.0
+	color-convert-1.9.3
+	jsonwebtoken-9.0.2
+	uc.micro-1.0.6
+	yallist-4.0.0
+	mdurl-1.0.1
+	strip-json-comments-2.0.1
+	base64-js-1.5.1
+	emoji-regex-9.2.2
+	@azure/core-rest-pipeline-1.16.3
+	inherits-2.0.4
+	stoppable-1.1.0
+	util-deprecate-1.0.2
+	hasown-2.0.2
+	is-wsl-2.2.0
+	@isaacs/cliui-8.0.2
+)
+yarn_set_globals
+SRC_URI="${YARN_SRC_URI}"
+
+BDEPEND="dev-libs/glib"
+LICENSE="BSD-2 MIT Apache-2 ISC MIT PSF-2"
+KEYWORDS="~amd64"
+
+S="${WORKDIR}"
+
+src_install() {
+	yarn_src_install
+	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/${NPM_PN}/vsce"
+	dosym "../$(get_libdir)/${PN}/node_modules/${NPM_PN}/vsce" "/usr/bin/vsce"
+}

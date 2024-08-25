@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@vscode/vsce": "^2.31.1"
+    "@vscode/vsce": "^3.0.0"
   }
 }
