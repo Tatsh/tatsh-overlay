@@ -25,7 +25,7 @@ S="${WORKDIR}/FTL-${PV}"
 PATCHES=( "${FILESDIR}/${PN}-0001-fixes.patch" )
 
 FILECAPS=(
-	cap_net_bind_service cap_net_admin cap_net_raw cap_sys_nice usr/bin/pihole-FTL
+	'cap_net_bind_service,cap_net_admin,cap_net_raw,cap_sys_nice' usr/bin/pihole-FTL
 )
 
 src_prepare() {
