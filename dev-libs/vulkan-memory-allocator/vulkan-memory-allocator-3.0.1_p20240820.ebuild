@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="Easy to integrate Vulkan memory allocation library"
 HOMEPAGE="https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator"
-SHA="871913da6a4b132b567d7b65c509600363c0041e"
+SHA="b8e57472fffa3bd6e0a0b675f4615bf0a823ec4d"
 SRC_URI="https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
