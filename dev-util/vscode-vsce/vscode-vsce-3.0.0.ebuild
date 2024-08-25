@@ -150,6 +150,7 @@ YARN_PKGS=(
 	undici-6.19.8
 	napi-build-utils-1.0.2
 	wrap-ansi-8.1.0
+	wrap-ansi-7.0.0
 	tar-fs-2.1.1
 	@vscode/vsce-sign-linux-x64-2.0.2
 	parse-semver-1.1.1
