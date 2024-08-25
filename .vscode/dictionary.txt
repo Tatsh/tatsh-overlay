@@ -1141,6 +1141,7 @@ libz
 libzip
 libzrif
 libzvbi
+lide
 lifecycles
 lighttpd
 limbu
