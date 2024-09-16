@@ -7,7 +7,7 @@ inherit cmake linux-info systemd udev
 
 DESCRIPTION="Emulate OSS devices using CUSE."
 HOMEPAGE="https://github.com/OpenMandrivaSoftware/ossp"
-SHA="c380089faa21cb92738fc02560fa195042023512"
+SHA="72f82cc7b98f026c6827743d8f48bd43f6b49b32"
 SRC_URI="https://github.com/OpenMandrivaSoftware/${PN}/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 
 LICENSE=""
