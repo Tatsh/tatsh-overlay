@@ -55,6 +55,7 @@ YARN_PKGS=(
 	@vscode/vsce-sign-win32-x64-2.0.2
 	markdown-it-14.1.0
 	wrap-ansi-8.1.0
+	wrap-ansi-7.0.0
 	buffer-equal-constant-time-1.0.1
 	lodash.includes-4.3.0
 	mkdirp-classic-0.5.3
