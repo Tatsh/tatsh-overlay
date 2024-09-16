@@ -135,6 +135,7 @@ bbolt
 bcanalyzer
 bdepend
 beautifulsoup
+becheran
 behaviour
 benbjohnson
 benc
@@ -1764,6 +1765,7 @@ ryszard
 ryujinx
 sagikazarmark
 sahilm
+samber
 samplerate
 sancov
 sanitiser
@@ -2144,6 +2146,7 @@ wextra
 whatwg
 wiimm
 wiimms
+wildmatch
 willf
 winapi
 wincon
