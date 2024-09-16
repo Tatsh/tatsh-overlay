@@ -240,7 +240,6 @@ charmbracelet
 checkpath
 chertsey
 cheshirekow
-chksums
 choco
 chocolatey
 chokidar
@@ -1169,7 +1168,6 @@ localmount
 localversions
 locutus
 lodepng
-logbuch
 logex
 logfmt
 logform
@@ -1810,7 +1808,6 @@ setuid
 setuptools
 sexp
 sezanzeb
-shaderc
 sharada
 sharded
 shellcheck
