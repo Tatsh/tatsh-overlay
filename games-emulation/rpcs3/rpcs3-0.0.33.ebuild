@@ -59,17 +59,20 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	wayland? ( dev-libs/wayland )"
 RDEPEND="${DEPEND} dev-debug/gdb"
 BDEPEND=">=sys-devel/gcc-9
-	dev-util/spirv-headers"
+	dev-util/spirv-headers
+	dev-libs/stb"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-versioning.patch"
-	"${FILESDIR}/${PN}-0003-add-use_wayland.patch"
-	"${FILESDIR}/${PN}-0004-allow-use-of-system-spirv-an.patch"
-	"${FILESDIR}/${PN}-0005-allow-system-cubeb.patch"
-	"${FILESDIR}/${PN}-0006-support-for-system-miniupnpc.patch"
-	"${FILESDIR}/${PN}-0007-remove-extra.patch"
-	"${FILESDIR}/${PN}-0008-allow-system-rtmidi.patch"
-	"${FILESDIR}/${PN}-0011-add-missing-headers.patch"
+	"${FILESDIR}/${PN}-0002-add-use_wayland.patch"
+	"${FILESDIR}/${PN}-0003-allow-use-of-system-spirv-an.patch"
+	"${FILESDIR}/${PN}-0004-allow-system-cubeb.patch"
+	"${FILESDIR}/${PN}-0005-support-for-system-miniupnpc.patch"
+	"${FILESDIR}/${PN}-0006-remove-extra.patch"
+	"${FILESDIR}/${PN}-0007-allow-system-rtmidi.patch"
+	"${FILESDIR}/${PN}-0008-add-missing-headers.patch"
+	"${FILESDIR}/${PN}-0009-allow-use-of-system-zstd.patch"
+	"${FILESDIR}/${PN}-0010-fix-openal-header-include.patch"
 )
 
 src_prepare() {
@@ -97,7 +100,7 @@ src_prepare() {
 
 src_configure() {
 	append-cflags -DNDEBUG
-	append-cxxflags -DNDEBUG
+	append-cxxflags -DNDEBUG -I/usr/include/stb
 	filter-lto
 	mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
@@ -120,6 +123,7 @@ src_configure() {
 		-DUSE_SYSTEM_WOLFSSL=ON
 		-DUSE_SYSTEM_XXHASH=ON
 		-DUSE_SYSTEM_ZLIB=ON
+		-DUSE_SYSTEM_ZSTD=ON
 		"-DUSE_VULKAN=$(usex vulkan)"
 		"-DUSE_WAYLAND=$(usex wayland)"
 		"-DWITH_LLVM=$(usex llvm)"

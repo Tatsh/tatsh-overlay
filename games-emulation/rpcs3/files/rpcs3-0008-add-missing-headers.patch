@@ -1,24 +1,24 @@
-From 510db902c8fa23db81b48e9cefe113e846282378 Mon Sep 17 00:00:00 2001
+From 5cb73483fa95506be649f066087356bcb23b7f36 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sat, 6 Apr 2024 22:58:57 -0400
-Subject: [PATCH 11/11] add missing headers
+Subject: [PATCH 08/10] add missing headers
 
 ---
  rpcs3/Emu/NP/np_handler.cpp | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/rpcs3/Emu/NP/np_handler.cpp b/rpcs3/Emu/NP/np_handler.cpp
-index 04bfb3120..8142eaf39 100644
+index 499b6b917..69a0e9be5 100644
 --- a/rpcs3/Emu/NP/np_handler.cpp
 +++ b/rpcs3/Emu/NP/np_handler.cpp
-@@ -27,6 +27,7 @@
- #endif
+@@ -28,6 +28,7 @@
  #include <sys/socket.h>
+ #include <sys/ioctl.h>
  #include <netinet/in.h>
 +#include <sys/ioctl.h>
  #include <net/if.h>
  #include <arpa/inet.h>
  #include <netdb.h>
 -- 
-2.44.0
+2.46.0
 

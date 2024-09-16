@@ -1,17 +1,17 @@
-From e1c379167bc70edfd9aa83906d505486f8bd629c Mon Sep 17 00:00:00 2001
+From cf8ece445e83d92fdbb85436642fbd6b74e5828a Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 21:46:38 -0500
-Subject: [PATCH 07/11] Remove extra
+Subject: [PATCH 06/10] Remove extra
 
 ---
  rpcs3/CMakeLists.txt | 4 ----
  1 file changed, 4 deletions(-)
 
 diff --git a/rpcs3/CMakeLists.txt b/rpcs3/CMakeLists.txt
-index aa89b5097..51f82a3a3 100644
+index 226a126f2..3026407aa 100644
 --- a/rpcs3/CMakeLists.txt
 +++ b/rpcs3/CMakeLists.txt
-@@ -168,8 +168,4 @@ if(UNIX AND NOT APPLE)
+@@ -174,8 +174,4 @@ if(UNIX AND NOT APPLE)
          DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
      install(DIRECTORY ../bin/GuiConfigs
          DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
@@ -21,5 +21,5 @@ index aa89b5097..51f82a3a3 100644
 -        DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
  endif()
 -- 
-2.44.0
+2.46.0
 
