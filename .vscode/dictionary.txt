@@ -240,6 +240,7 @@ charmbracelet
 checkpath
 chertsey
 cheshirekow
+chksums
 choco
 chocolatey
 chokidar
