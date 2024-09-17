@@ -7,12 +7,14 @@ inherit cmake flag-o-matic xdg
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
 ASMJIT_SHA="416f7356967c1f66784dc1580fe157f9406d8bff"
+FFMPEG_SHA="10d0ebc0b8c7c4f0b242c9998c8bdc4e55bb5067"
 GLSLANG_SHA="36d08c0d940cf307a23928299ef52c7970d8cee6"
 HIDAPI_SHA="8b43a97a9330f8b0035439ce9e255e4be202deca"
 ITTAPI_VERSION="3.18.12"
 SOUNDTOUCH_SHA="394e1f58b23dc80599214d2e9b6a5e0dfd0bbe07"
 YAML_CPP_SHA="456c68f452da09d8ca84b375faa2b1397713eaba"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
+	https://github.com/RPCS3/ffmpeg-core/archive/${FFMPEG_SHA}.tar.gz -> ${PN}-ffmpeg-${FFMPEG_SHA:0:7}.tar.gz
 	https://github.com/asmjit/asmjit/archive/${ASMJIT_SHA}.tar.gz -> ${PN}-asmjit-${ASMJIT_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/hidapi/archive/${HIDAPI_SHA}.tar.gz -> ${PN}-hidapi-${HIDAPI_SHA:0:7}.tar.gz
 	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${PN}-yaml-cpp-${YAML_CPP_SHA:0:7}.tar.gz
@@ -24,7 +26,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE="faudio joystick +llvm vulkan wayland"
+IUSE="faudio joystick +llvm system-ffmpeg vulkan wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
 DEPEND=">=dev-libs/flatbuffers-2.0.6
@@ -76,6 +78,8 @@ PATCHES=(
 )
 
 src_prepare() {
+	rmdir "${S}/3rdparty/ffmpeg" || die
+	mv "${WORKDIR}/ffmpeg-core-${FFMPEG_SHA}" "${S}/3rdparty/ffmpeg" || die
 	rmdir "${S}/3rdparty/hidapi/hidapi" || die
 	mv "${WORKDIR}/hidapi-${HIDAPI_SHA}" "${S}/3rdparty/hidapi/hidapi" || die
 	rmdir "${S}/3rdparty/yaml-cpp/yaml-cpp" || die
@@ -112,7 +116,7 @@ src_configure() {
 		-DUSE_NATIVE_INSTRUCTIONS=OFF
 		-DUSE_SYSTEM_CUBEB=ON
 		-DUSE_SYSTEM_CURL=ON
-		-DUSE_SYSTEM_FFMPEG=ON
+		"-DUSE_SYSTEM_FFMPEG=$(usex system-ffmpeg)"
 		-DUSE_SYSTEM_FLATBUFFERS=ON
 		-DUSE_SYSTEM_GLSLANG=OFF
 		-DUSE_SYSTEM_LIBPNG=ON
