@@ -18,5 +18,6 @@ KEYWORDS="~amd64"
 RDEPEND="dev-python/click[${PYTHON_USEDEP}]
 	dev-python/loguru[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
+	dev-python/pyxdg[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
