@@ -33,10 +33,11 @@ DEPEND="
 	xml? ( dev-libs/tinyxml2 )
 	zstd? ( app-arch/zstd )"
 RDEPEND="${DEPEND}"
-BDEPEND="kde? ( dev-qt/qtpaths )"
+BDEPEND="kde? ( dev-qt/qtbase )"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-seccomp-add-faccessat2.patch"
+	"${FILESDIR}/${PN}-0002-qt6.patch"
 	"${FILESDIR}/${PN}-e1a6e6b.patch"
 )
 
@@ -44,6 +45,7 @@ DOCS=( README.md NEWS.md )
 
 src_configure() {
 	local mycmakeargs=(
+		-DBUILD_KF5=NO
 		-DENABLE_JPEG=ON
 		-DINSTALL_APPARMOR=OFF
 		-DINSTALL_DOC=OFF
@@ -58,7 +60,7 @@ src_configure() {
 		-Wno-dev
 		"-DBUILD_CLI=$(usex cli)"
 		"-DBUILD_GTK3=$(usex gtk)"
-		"-DBUILD_KF5=$(usex kde)"
+		"-DBUILD_KF6=$(usex kde)"
 		"-DBUILD_TESTING=$(usex test)"
 		"-DBUILD_XFCE=$(usex xfce)"
 		"-DENABLE_ACHIEVEMENTS=$(usex achievements)"
