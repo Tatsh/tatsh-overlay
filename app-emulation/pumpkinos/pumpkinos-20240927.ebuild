@@ -7,7 +7,7 @@ inherit desktop wrapper
 
 DESCRIPTION=""
 HOMEPAGE="https://github.com/migueletto/PumpkinOS https://pmig96.wordpress.com/category/palmos/"
-SHA="035c2180d9d25e4573d4ebbfd163a0fcc0840b72"
+SHA="858d4d80df8564174d8694d792b9112ca0408bbc"
 MY_PN="PumpkinOS"
 SRC_URI="https://github.com/migueletto/${MY_PN}/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 
