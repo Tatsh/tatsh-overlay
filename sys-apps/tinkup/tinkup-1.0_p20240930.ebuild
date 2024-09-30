@@ -8,7 +8,7 @@ inherit python-single-r1
 
 DESCRIPTION="Firmware update utility for the RetroTINK family of retro gaming devices."
 HOMEPAGE="https://github.com/rmull/tinkup"
-SHA="1429b9d102be2b4c81e10e659569c848cb634308"
+SHA="c1cf6d265ef6ae2c3bae7696739c52f9279afd27"
 SRC_URI="https://github.com/rmull/tinkup/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD"
