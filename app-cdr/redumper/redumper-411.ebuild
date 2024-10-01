@@ -13,6 +13,8 @@ SRC_URI="https://github.com/superg/redumper/archive/refs/tags/build_${PV}.tar.gz
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
+# Clang is forced due to ICE with GCC with -j1, failure otherwise
+IUSE="+clang"
 
 BDEPEND=">=sys-devel/clang-16.0.6
 	dev-build/ninja"
@@ -20,19 +22,14 @@ DEPEND=">=sys-libs/libcxx-16[static-libs]
 	>=sys-libs/libcxxabi-16[static-libs]"
 
 S="${WORKDIR}/${PN}-build_${PV}"
-# Necessary to avoid expansion in mycmakeargs below, even with single quotes
-# shellcheck disable=SC4116,SC2016
-QUOTED_DOLLAR_SCAN_DEPS='${CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS}'
 
 src_configure() {
 	filter-flags -O*
-	CC=$(command -v clang-18 || command -v clang-17 || command -v clang-16)
-	CXX=$(command -v clang++-18 || command -v clang++-17 || command -v clang++-16)
-	export CC CXX
-	append-cxxflags -Wno-unknown-warning-option -fexperimental-library
-	local mycmakeargs=(
-		"-DCMAKE_EXPERIMENTAL_CXX_SCANDEP_SOURCE=${QUOTED_DOLLAR_SCAN_DEPS} -format=p1709 -- <CMAKE_CXX_COMPILER> <DEFINES> <INCLUDES> <FLAGS> -x c++ <SOURCE> -c -o <OBJECT> -MT <DYNDEP_FILE> > <DYNDEP_FILE>"
-	)
+	if use clang; then
+		CC=clang
+		CXX=clang++
+		export CC CXX
+	fi
 	cmake_src_configure
 }
 
