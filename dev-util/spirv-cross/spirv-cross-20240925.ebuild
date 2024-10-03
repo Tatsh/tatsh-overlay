@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/KhronosGroup/SPIRV-Cross"
 SHA="b28b3559d3882f918825cd90342dcfa955770bad"
 SRC_URI="https://github.com/KhronosGroup/SPIRV-Cross/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 
-LICENSE="Apache-2"
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
