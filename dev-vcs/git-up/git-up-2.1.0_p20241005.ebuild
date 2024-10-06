@@ -8,7 +8,7 @@ inherit distutils-r1
 
 DESCRIPTION="Python implementation of git-up"
 HOMEPAGE="https://github.com/msiemens/PyGitUp"
-SHA="0aa437834c08b63f439c53bb8a959f28d33e8559"
+SHA="ae06420e2833f6b1c91473bd2756ea8ed296b3d1"
 SRC_URI="https://github.com/msiemens/PyGitUp/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 IUSE="test"
 RESTRICT="!test? ( test )"
