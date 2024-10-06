@@ -16,7 +16,7 @@ SDL_SHA="e1e36d213bea3a0b56d91b454c53a2c94312a5be"
 SIMPLEINI_SHA="f7862c3dd7ad35becc2741f268e3402e89a37666"
 SIRIT_SHA="795ef4d8318c7d344da99c076dd60e5580d3d5ac"
 XBYAK_SHA="aabb091ae37068498751fd58202a9854408ecb0e"
-SRC_URI="https://sudachi.emuplace.app/releases/latest.zip -> ${P}.zip
+SRC_URI="https://github.com/emuplace/sudachi.emuplace.app/releases/download/v${PV}/latest.zip -> ${P}.zip
 	https://github.com/sudachi-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
 	https://github.com/sudachi-emu/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/sudachi-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
@@ -70,7 +70,7 @@ BDEPEND="app-arch/unzip
 	dev-util/spirv-headers
 	app-text/dos2unix"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"
@@ -79,10 +79,7 @@ PATCHES=(
 src_unpack() {
 	default
 	rm .gitmodules || die
-	mkdir sudachi || die
-	dos2unix CMakeLists.txt || die
-	mv {CMakeModules,LICENSES,dist,documentation,externals,hooks,patches,src,tools} \
-		CMake*.{json,txt} README.md LICENSE.md sudachi || die
+	dos2unix CMakeLists.txt dist/*.desktop || die
 }
 
 src_prepare() {
@@ -95,10 +92,10 @@ src_prepare() {
 	mv "${WORKDIR}/FFmpeg-${FFMPEG_SHA}" "${S}/externals/ffmpeg/ffmpeg" || die
 	mv "${WORKDIR}/simpleini-${SIMPLEINI_SHA}" "${S}/externals/simpleini" || die
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
-	mkdir -p "${S}_build/externals/nx_tzdb/nx_tzdb" || die
+	mkdir -p "${P}_build/externals/nx_tzdb/nx_tzdb" || die
 	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip" \
-		"${S}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
-	mv "${WORKDIR}/zoneinfo" "${S}_build/externals/nx_tzdb/nx_tzdb/" || die
+		"${P}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
+	mv "${WORKDIR}/zoneinfo" "${P}_build/externals/nx_tzdb/nx_tzdb/" || die
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' \
 		-i src/common/CMakeLists.txt || die
 	sed -e '/enable_testing.*/d' \
@@ -110,7 +107,7 @@ src_prepare() {
 	sed -re 's/set\(CAN_BUILD_NX_TZDB.*/set(CAN_BUILD_NX_TZDB false)/' \
 		-i externals/nx_tzdb/CMakeLists.txt || die
 	sed -re '/add_subdirectory\(externals\)/d' -i CMakeLists.txt || die
-	sed -re '706s/.*/add_subdirectory(externals)/' -i CMakeLists.txt || die
+	sed -re '704s/.*/add_subdirectory(externals)/' -i CMakeLists.txt || die
 	sed -re '/-Werror=.*/d' -i src/CMakeLists.txt || die
 	cmake_src_prepare
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
