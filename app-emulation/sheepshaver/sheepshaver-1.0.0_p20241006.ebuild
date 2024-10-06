@@ -7,7 +7,7 @@ inherit autotools desktop fcaps flag-o-matic
 
 DESCRIPTION="Macintosh emulator (updated fork)."
 HOMEPAGE="https://github.com/kanjitalk755/macemu"
-SHA="03e159338732095c7da536681900677f6c5a5ede"
+SHA="1928f2ecefd429b1ff91d120c211670e265c77b9"
 SRC_URI="https://github.com/kanjitalk755/macemu/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://sheepshaver.cebix.net/images/sheep.png -> ${PN}-icon.png"
 
