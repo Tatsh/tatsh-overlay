@@ -7,7 +7,7 @@ inherit cmake python-single-r1
 
 DESCRIPTION="A code-completion & code-comprehension server."
 HOMEPAGE="https://github.com/ycm-core/ycmd"
-SHA="9cb5a8462e03359a8c5c0fd2d4271bdbbdfa5ba2"
+SHA="d8c3b699dd95ba054ea5331972f9ddb40f0cb7d1"
 SRC_URI="https://github.com/ycm-core/ycmd/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
