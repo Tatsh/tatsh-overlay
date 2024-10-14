@@ -8,7 +8,7 @@ inherit meson python-single-r1 systemd
 
 DESCRIPTION="D-Bus service to access fingerprint readers"
 HOMEPAGE="https://cgit.freedesktop.org/libfprint/fprintd/"
-SHA="2cf0650dd4f832aaba400dd4f7f73269f6cd185e"
+SHA="a1ce7322372cb848f7cd6c3f499b757edd709dd2"
 SRC_URI="https://gitlab.freedesktop.org/libfprint/fprintd/-/archive/v${PV}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
