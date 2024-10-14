@@ -1,0 +1,66 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b2d398e..9eacb05 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -208,21 +208,7 @@ else()
+     add_subdirectory(third_party/ncnn)
+ endif()
+ 
+-# Include ExternalProject module
+-include(ExternalProject)
+-
+-# Add libreal-esrgan-ncnn-vulkan as an external project
+-ExternalProject_Add(
+-    realesrgan
+-    SOURCE_DIR ${PROJECT_SOURCE_DIR}/third_party/libreal_esrgan_ncnn_vulkan/src
+-    CMAKE_ARGS
+-        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+-        -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/realesrgan_install
+-        -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+-        -DUSE_SYSTEM_NCNN=${USE_SYSTEM_NCNN}
+-    BUILD_ALWAYS ON
+-    INSTALL_COMMAND ${CMAKE_COMMAND} --build . --target install --config ${CMAKE_BUILD_TYPE}
+-)
++add_subdirectory(third_party/realesrgan)
+ 
+ # Add all source files for libvideo2x
+ file(GLOB LIBVIDEO2X_SOURCES src/*.cpp)
+@@ -237,7 +223,7 @@ else()
+ endif()
+ 
+ # Ensure libvideo2x depends on realesrgan being built and installed
+-add_dependencies(libvideo2x realesrgan)
++#add_dependencies(libvideo2x realesrgan-ncnn-vulkan)
+ 
+ # Include directories for the shared library
+ target_include_directories(libvideo2x PRIVATE
+@@ -264,7 +250,7 @@ else()
+ endif()
+ 
+ # Link the shared library with the dependencies
+-target_link_libraries(libvideo2x PRIVATE ${ALL_LIBRARIES} ${REALESRGAN_LIB})
++target_link_libraries(libvideo2x PRIVATE ${ALL_LIBRARIES} realesrgan-ncnn-vulkan)
+ 
+ if(NOT WIN32)
+     if (USE_SYSTEM_NCNN)
+@@ -305,7 +291,7 @@ if(WIN32)
+ else()
+     set(BIN_DESTINATION_DEFAULT "bin")
+     set(INCLUDE_DESTINATION_DEFAULT "include/libvideo2x")
+-    set(LIB_DESTINATION_DEFAULT "lib")
++    set(LIB_DESTINATION_DEFAULT "lib64")
+     set(MODEL_DESTINATION_DEFAULT "share/video2x")
+ endif()
+ 
+@@ -355,11 +341,4 @@ if(WIN32)
+                     GROUP_READ GROUP_EXECUTE
+                     WORLD_READ WORLD_EXECUTE
+     )
+-else()
+-    # Install Unix-specific dependencies
+-    install(FILES ${REALESRGAN_LIB} DESTINATION ${INSTALL_LIB_DESTINATION}
+-        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
+-                    GROUP_READ GROUP_EXECUTE
+-                    WORLD_READ WORLD_EXECUTE
+-    )
+ endif()
