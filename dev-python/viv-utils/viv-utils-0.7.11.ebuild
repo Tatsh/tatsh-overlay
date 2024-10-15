@@ -10,6 +10,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="Utilities for Vivisect."
 HOMEPAGE="https://pypi.org/project/viv-utils/"
+SRC_URI="https://github.com/williballenthin/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -26,5 +27,7 @@ RDEPEND="
 		dev-python/pytest-instafail
 	)
 "
+
+S="${WORKDIR}/${PN}-${PV}"
 
 distutils_enable_tests pytest
