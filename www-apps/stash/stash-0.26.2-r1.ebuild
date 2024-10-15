@@ -1601,7 +1601,7 @@ YARN_PKGS=(
 	bl-4.1.0
 	bootstrap-4.6.2
 	brace-expansion-1.1.11
-	braces-3.0.2
+	braces-3.0.3
 	browserslist-4.22.3
 	bser-2.1.1
 	buffer-5.7.1
@@ -1752,7 +1752,7 @@ YARN_PKGS=(
 	fflate-0.6.10
 	figures-3.2.0
 	file-entry-cache-6.0.1
-	fill-range-7.0.1
+	fill-range-7.1.1
 	find-root-1.1.0
 	find-up-4.1.0
 	find-up-5.0.0
@@ -1973,7 +1973,7 @@ YARN_PKGS=(
 	micromark-extension-gfm-table-0.4.3
 	micromark-extension-gfm-tagfilter-0.3.0
 	micromark-extension-gfm-task-list-item-0.3.3
-	micromatch-4.0.5
+	micromatch-4.0.8
 	mimic-fn-2.1.0
 	min-document-2.19.0
 	min-indent-1.0.1
@@ -2318,7 +2318,7 @@ YARN_PKGS=(
 	write-file-atomic-3.0.3
 	write-file-atomic-5.0.1
 	write-json-file-4.3.0
-	ws-8.16.0
+	ws-8.17.1
 	xtend-4.0.2
 	y18n-4.0.3
 	y18n-5.0.8
