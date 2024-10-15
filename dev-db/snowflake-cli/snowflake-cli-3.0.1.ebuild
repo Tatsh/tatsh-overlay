@@ -10,7 +10,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="CLI to Snowflake database."
 HOMEPAGE="https://pypi.org/project/snowflake-cli-labs/"
-SRC_URI="$(pypi_sdist_url "${PN}-labs" "${PV}")"
+SRC_URI="https://github.com/snowflakedb/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -25,8 +25,21 @@ RDEPEND="dev-python/jinja[${PYTHON_USEDEP}]
 	dev-python/rich[${PYTHON_USEDEP}]
 	dev-python/snowflake-connector-python[secure-local-storage,${PYTHON_USEDEP}]
 	dev-python/tomlkit[${PYTHON_USEDEP}]
-	dev-python/typer[${PYTHON_USEDEP}]"
+	dev-python/typer[${PYTHON_USEDEP}]
+	dev-python/urllib3[${PYTHON_USEDEP}]
+	>=dev-python/pydantic-2.9.2[${PYTHON_USEDEP}]
+	dev-python/GitPython[${PYTHON_USEDEP}]"
 
-S="${WORKDIR}/${PN//-/_}_labs-${PV}"
+S="${WORKDIR}/${PN}-${PV}"
+
+src_prepare() {
+	sed -re '/^license =/d' -i pyproject.toml || die
+	distutils-r1_src_prepare
+}
+
+python_install() {
+	rm README.md || die
+	distutils-r1_python_install
+}
 
 distutils_enable_tests pytest
