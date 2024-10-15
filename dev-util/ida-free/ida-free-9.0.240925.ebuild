@@ -7,13 +7,12 @@ inherit desktop wrapper
 
 DESCRIPTION="Free version of the code analyzer."
 HOMEPAGE="https://hex-rays.com/ida-free/"
-MAJOR_MINOR="$(ver_cut 1)$(ver_cut 2)"
-SRC_URI="https://out7.hex-rays.com/files/idafree${MAJOR_MINOR}_linux.run -> ${P}.run"
+SRC_URI="${P}.run"
 
 LICENSE="EULA"
 SLOT="0"
 KEYWORDS="~amd64"
-RESTRICT="strip splitdebug"
+RESTRICT="fetch strip splitdebug"
 
 RDEPEND="app-crypt/mit-krb5
 	dev-libs/glib
@@ -39,7 +38,7 @@ RDEPEND="app-crypt/mit-krb5
 	x11-libs/xcb-util-wm"
 BDEPEND="app-arch/bitrock-unpacker"
 
-S="${WORKDIR}/ida/programfiles_custom"
+S="${WORKDIR}/ida/programfiles"
 
 src_unpack() {
 	cp "${DISTDIR}/${A}" . || die
@@ -51,7 +50,7 @@ src_install() {
 	einstalldocs
 	mkdir -p "${D}/opt/ida" || die
 	cp -Rv ./* "${D}/opt/ida" || die
-	newicon appico64.png "${PN}.png"
-	make_wrapper ida64 "${EPREFIX}/opt/ida/ida64" "${EPREFIX}/opt/ida"
-	make_desktop_entry ida64 IDA "${PN}"
+	newicon appico.png "${PN}.png"
+	make_wrapper ida "${EPREFIX}/opt/ida/ida" "${EPREFIX}/opt/ida"
+	make_desktop_entry ida IDA "${PN}"
 }
