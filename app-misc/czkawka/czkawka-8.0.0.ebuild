@@ -786,7 +786,7 @@ src_configure() {
 }
 
 src_install() {
-	dobin "target/release/${PN}"_{gui,cli}
+	dobin target/*/release/"${PN}_"{gui,cli} target/*/release/krokiet
 	dosym "${PN}_cli" "/usr/bin/${PN}"
 	doicon "snap/gui/${PN}.png"
 	make_desktop_entry "${PN}_gui" "${PN^}" "${PN}" Utility
