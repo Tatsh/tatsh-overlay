@@ -214,6 +214,7 @@ cancelreader
 caniuse
 capa
 carian
+cascadia
 ccache
 ccgo
 ccmd
@@ -359,6 +360,7 @@ dabh
 dallow
 dalsa
 damerau
+dannav
 danwakefield
 dargs
 dashjs
@@ -551,7 +553,6 @@ dynamicdata
 dynamicexpresso
 dynarec
 dynarmic
-dyndep
 dynrec
 dyuzu
 eapis
@@ -637,7 +638,6 @@ fbjs
 fcaps
 fdeflate
 fecha
-fexperimental
 fflate
 ffms
 ffprobe
@@ -763,6 +763,7 @@ goconvey
 godbus
 godebug
 godotenv
+goexif
 gofork
 gofpdf
 gofpdi
@@ -791,6 +792,7 @@ gopkg
 gopls
 goproxy
 goqu
+goquery
 gorm
 goskiplist
 gosum
@@ -904,6 +906,7 @@ insinto
 instafail
 installdir
 intelli
+interconverter
 interprocedural
 intervaltree
 intltool
@@ -928,6 +931,7 @@ ittapi
 iuse
 jackc
 jackspeak
+jaconv
 jakcron
 janestreet
 jbenet
@@ -962,6 +966,7 @@ jtolds
 julienschmidt
 jwalterweatherman
 kaithi
+kakasi
 kamerer
 kamilkisiela
 kanjitalk
@@ -970,8 +975,6 @@ kayah
 kayahli
 kballard
 kcompletion
-kconfig
-kconfigwidgets
 kcoreaddons
 kdenlive
 kdir
@@ -992,7 +995,6 @@ keytar
 keyv
 keyvault
 kfmin
-kglobalaccel
 kharoshthi
 khronos
 khudawadi
@@ -1010,13 +1012,13 @@ konsorten
 koun
 kparts
 krig
+krokiet
 ktexteditor
 ktrysmt
 kubun
 kuler
 kwidgetsaddons
 kwin
-kwindowsystem
 kxmlgui
 kylelemons
 kylemanna
@@ -1094,6 +1096,7 @@ libplist
 libpulse
 libpumpkin
 libraw
+libreal
 librealcugannv
 libretro
 libretrodb
@@ -1214,6 +1217,7 @@ masterzen
 matchall
 mathml
 mathutil
+matishsiao
 matryer
 mattn
 matttproud
@@ -1578,6 +1582,7 @@ psvpfstools
 pthread
 ptrace
 pubsublite
+puerkito
 pugixml
 pulseaudio
 pulseaudiosimple
@@ -1641,7 +1646,6 @@ qtpaths
 qtpositioning
 qtprintsupport
 qtquick
-qtquickcontrols
 qtserialport
 qtsql
 qtsvg
@@ -1672,6 +1676,7 @@ readelf
 readline
 readobj
 realcugan
+realesrgan
 realfft
 realpath
 realsr
@@ -1734,6 +1739,7 @@ robotstxt
 robpike
 rogpeppe
 rollup
+romaji
 roni
 rootcerts
 rootpath
@@ -1759,6 +1765,7 @@ rustflags
 rustix
 rustversion
 ruudk
+rwcarlsen
 ryanuber
 ryszard
 ryujinx
@@ -1773,7 +1780,6 @@ saraiki
 sasl
 saurashtra
 sbinet
-scandep
 scandir
 scenechange
 schollz
@@ -1821,6 +1827,7 @@ shurcoo
 shutup
 siac
 signedsource
+signoff
 sigstore
 silvermine
 simd
@@ -1856,6 +1863,7 @@ sorasompeng
 sortedcontainers
 sortorder
 sortutil
+sosodev
 sounddevice
 soundfile
 soundfont
@@ -2181,6 +2189,7 @@ xerrors
 xext
 xfce
 xfixes
+xhit
 xinerama
 xiph
 xirvik
@@ -2239,4 +2248,3 @@ zwave
 zwitch
 zyan
 zycore
-zzag
