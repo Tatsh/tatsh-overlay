@@ -9,7 +9,6 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="Dict subclass with various extras."
 HOMEPAGE="https://pypi.org/project/python-benedict/"
-SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
 
 LICENSE="MIT"
 SLOT="0"
@@ -18,5 +17,3 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 RDEPEND="dev-python/python-fsutil[${PYTHON_USEDEP}]
 	dev-python/python-slugify[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]"
-
-S="${WORKDIR}/${P}"
