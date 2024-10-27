@@ -24,7 +24,7 @@ DEPEND="dev-libs/ncnn
 
 S="${WORKDIR}/${PN}-${MY_PV}"
 
-PATCHES=( "${FILESDIR}/${PN}-0001-realesrgan.patch" )
+PATCHES=( "${FILESDIR}/${PN}-0001-build-system-fix.patch" )
 
 src_prepare() {
 	rmdir third_party/libreal_esrgan_ncnn_vulkan || die

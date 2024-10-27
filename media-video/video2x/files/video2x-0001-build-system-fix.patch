@@ -1,8 +1,17 @@
+From a7da2ad9fd0b660999703701ea006378190e2ce1 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 27 Oct 2024 06:08:21 -0400
+Subject: [PATCH] Build system fix
+
+---
+ CMakeLists.txt | 30 ++++--------------------------
+ 1 file changed, 4 insertions(+), 26 deletions(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b2d398e..9eacb05 100644
+index 86af44d..e407582 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -208,21 +208,7 @@ else()
+@@ -268,21 +268,7 @@ else()
      add_subdirectory(third_party/ncnn)
  endif()
  
@@ -23,9 +32,9 @@ index b2d398e..9eacb05 100644
 -)
 +add_subdirectory(third_party/realesrgan)
  
- # Add all source files for libvideo2x
- file(GLOB LIBVIDEO2X_SOURCES src/*.cpp)
-@@ -237,7 +223,7 @@ else()
+ # Remove duplicate entries
+ list(REMOVE_DUPLICATES ALL_INCLUDE_DIRS)
+@@ -301,7 +287,7 @@ else()
  endif()
  
  # Ensure libvideo2x depends on realesrgan being built and installed
@@ -34,7 +43,7 @@ index b2d398e..9eacb05 100644
  
  # Include directories for the shared library
  target_include_directories(libvideo2x PRIVATE
-@@ -264,7 +250,7 @@ else()
+@@ -327,7 +313,7 @@ else()
  endif()
  
  # Link the shared library with the dependencies
@@ -43,7 +52,7 @@ index b2d398e..9eacb05 100644
  
  if(NOT WIN32)
      if (USE_SYSTEM_NCNN)
-@@ -305,7 +291,7 @@ if(WIN32)
+@@ -365,7 +351,7 @@ if(WIN32)
  else()
      set(BIN_DESTINATION_DEFAULT "bin")
      set(INCLUDE_DESTINATION_DEFAULT "include/libvideo2x")
@@ -52,15 +61,19 @@ index b2d398e..9eacb05 100644
      set(MODEL_DESTINATION_DEFAULT "share/video2x")
  endif()
  
-@@ -355,11 +341,4 @@ if(WIN32)
+@@ -440,12 +426,4 @@ if(WIN32)
                      GROUP_READ GROUP_EXECUTE
                      WORLD_READ WORLD_EXECUTE
      )
 -else()
 -    # Install Unix-specific dependencies
--    install(FILES ${REALESRGAN_LIB} DESTINATION ${INSTALL_LIB_DESTINATION}
+-    install(FILES ${REALESRGAN_LIB}
+-        DESTINATION ${INSTALL_LIB_DESTINATION}
 -        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
 -                    GROUP_READ GROUP_EXECUTE
 -                    WORLD_READ WORLD_EXECUTE
 -    )
  endif()
+-- 
+2.47.0
+
