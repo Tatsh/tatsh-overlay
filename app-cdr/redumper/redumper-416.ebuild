@@ -12,7 +12,7 @@ SRC_URI="https://github.com/superg/redumper/archive/refs/tags/build_${PV}.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 # Clang is forced due to ICE with GCC with -j1, failure otherwise
 IUSE="+clang"
 
