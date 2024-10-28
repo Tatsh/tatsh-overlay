@@ -17,7 +17,7 @@ S="${WORKDIR}/vision-${PV}"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 IUSE="cuda"
 
 # shellcheck disable=SC2016
