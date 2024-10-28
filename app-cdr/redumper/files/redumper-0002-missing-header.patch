@@ -1,0 +1,219 @@
+diff --git a/analyzers/sync.ixx b/analyzers/sync.ixx
+index 15fdfcb..41d4ccc 100644
+--- a/analyzers/sync.ixx
++++ b/analyzers/sync.ixx
+@@ -1,4 +1,5 @@
+ module;
++#include <cstdint>
+ #include <utility>
+ #include <vector>
+ 
+diff --git a/cd/cd_dump.ixx b/cd/cd_dump.ixx
+index c75ef65..a05c3c4 100644
+--- a/cd/cd_dump.ixx
++++ b/cd/cd_dump.ixx
+@@ -2,6 +2,7 @@ module;
+ #include <algorithm>
+ #include <bit>
+ #include <cstdint>
++#include <cstring>
+ #include <filesystem>
+ #include <format>
+ #include <fstream>
+diff --git a/cd/fix_msf.ixx b/cd/fix_msf.ixx
+index 2c31bcf..5a5345f 100644
+--- a/cd/fix_msf.ixx
++++ b/cd/fix_msf.ixx
+@@ -1,5 +1,6 @@
+ module;
+ 
++#include <cstring>
+ #include <filesystem>
+ #include <fstream>
+ #include <list>
+diff --git a/cd/split.ixx b/cd/split.ixx
+index 36b8c5b..406bfff 100644
+--- a/cd/split.ixx
++++ b/cd/split.ixx
+@@ -1,5 +1,6 @@
+ module;
+ #include <chrono>
++#include <cstring>
+ #include <filesystem>
+ #include <fstream>
+ #include <limits>
+diff --git a/cd/toc.ixx b/cd/toc.ixx
+index f2c0384..8f8aa82 100644
+--- a/cd/toc.ixx
++++ b/cd/toc.ixx
+@@ -1,6 +1,8 @@
+ module;
+ #include <cctype>
++#include <cmath>
+ #include <cstdint>
++#include <cstring>
+ #include <format>
+ #include <map>
+ #include <ostream>
+diff --git a/debug.ixx b/debug.ixx
+index 67e9948..af42649 100644
+--- a/debug.ixx
++++ b/debug.ixx
+@@ -1,6 +1,7 @@
+ module;
+ #include <bit>
+ #include <cstdint>
++#include <cstring>
+ #include <filesystem>
+ #include <fstream>
+ #include <map>
+diff --git a/drive.ixx b/drive.ixx
+index 4bdb307..5c41a7d 100644
+--- a/drive.ixx
++++ b/drive.ixx
+@@ -1,6 +1,7 @@
+ module;
+ #include <chrono>
+ #include <cstdint>
++#include <cstring>
+ #include <format>
+ #include <fstream>
+ #include <iostream>
+diff --git a/dump.ixx b/dump.ixx
+index 9028869..6112775 100644
+--- a/dump.ixx
++++ b/dump.ixx
+@@ -1,5 +1,6 @@
+ module;
+ #include <algorithm>
++#include <cstring>
+ #include <filesystem>
+ #include <format>
+ #include <fstream>
+diff --git a/dvd/css/css.ixx b/dvd/css/css.ixx
+index 4aa135b..e0ea7c2 100644
+--- a/dvd/css/css.ixx
++++ b/dvd/css/css.ixx
+@@ -2,6 +2,7 @@
+ 
+ module;
+ #include <algorithm>
++#include <cstring>
+ #include <vector>
+ #include "throw_line.hh"
+ 
+diff --git a/dvd/dvd_key.ixx b/dvd/dvd_key.ixx
+index df39e85..b8c6a4c 100644
+--- a/dvd/dvd_key.ixx
++++ b/dvd/dvd_key.ixx
+@@ -1,5 +1,6 @@
+ module;
+ #include <algorithm>
++#include <climits>
+ #include <cstdint>
+ #include <filesystem>
+ #include <fstream>
+diff --git a/filesystem/iso9660/iso9660_browser.ixx b/filesystem/iso9660/iso9660_browser.ixx
+index e2a29f8..13ec64b 100644
+--- a/filesystem/iso9660/iso9660_browser.ixx
++++ b/filesystem/iso9660/iso9660_browser.ixx
+@@ -1,5 +1,6 @@
+ module;
+ #include <cstdint>
++#include <cstring>
+ #include <functional>
+ #include <memory>
+ #include <queue>
+diff --git a/filesystem/iso9660/iso9660_map.ixx b/filesystem/iso9660/iso9660_map.ixx
+index 1948b70..367dacf 100644
+--- a/filesystem/iso9660/iso9660_map.ixx
++++ b/filesystem/iso9660/iso9660_map.ixx
+@@ -1,5 +1,6 @@
+ module;
+ #include <cstdint>
++#include <cstring>
+ #include <map>
+ #include <vector>
+ #include "throw_line.hh"
+diff --git a/readers/image_bin_form1_reader.ixx b/readers/image_bin_form1_reader.ixx
+index 86b7a4d..057fb49 100644
+--- a/readers/image_bin_form1_reader.ixx
++++ b/readers/image_bin_form1_reader.ixx
+@@ -1,5 +1,6 @@
+ module;
+ #include <cstdint>
++#include <cstring>
+ #include <filesystem>
+ #include <fstream>
+ #include "utils/throw_line.hh"
+diff --git a/scsi/cmd.ixx b/scsi/cmd.ixx
+index 1719a6e..29072d2 100644
+--- a/scsi/cmd.ixx
++++ b/scsi/cmd.ixx
+@@ -1,5 +1,6 @@
+ module;
+ #include <cstdint>
++#include <cstring>
+ #include <format>
+ #include <vector>
+ 
+diff --git a/skeleton.ixx b/skeleton.ixx
+index 18aefe5..ce236e6 100644
+--- a/skeleton.ixx
++++ b/skeleton.ixx
+@@ -1,6 +1,7 @@
+ module;
+ 
+ #include <algorithm>
++#include <cstring>
+ #include <filesystem>
+ #include <fstream>
+ #include <list>
+diff --git a/systems/dc.ixx b/systems/dc.ixx
+index c5ae187..537a999 100644
+--- a/systems/dc.ixx
++++ b/systems/dc.ixx
+@@ -2,6 +2,7 @@ module;
+ 
+ #include <cctype>
+ #include <cstdint>
++#include <cstring>
+ #include <filesystem>
+ #include <format>
+ #include <fstream>
+diff --git a/systems/mcd.ixx b/systems/mcd.ixx
+index 701c2aa..98cfc14 100644
+--- a/systems/mcd.ixx
++++ b/systems/mcd.ixx
+@@ -2,6 +2,7 @@ module;
+ 
+ #include <cctype>
+ #include <cstdint>
++#include <cstring>
+ #include <filesystem>
+ #include <format>
+ #include <fstream>
+diff --git a/systems/sat.ixx b/systems/sat.ixx
+index 490abce..25fd844 100644
+--- a/systems/sat.ixx
++++ b/systems/sat.ixx
+@@ -2,6 +2,7 @@ module;
+ 
+ #include <cctype>
+ #include <cstdint>
++#include <cstring>
+ #include <filesystem>
+ #include <format>
+ #include <fstream>
+diff --git a/utils/misc.ixx b/utils/misc.ixx
+index c4feb31..5f4aab1 100644
+--- a/utils/misc.ixx
++++ b/utils/misc.ixx
+@@ -6,6 +6,7 @@ module;
+ #include <climits>
+ #include <cmath>
+ #include <cstdint>
++#include <cstring>
+ #include <functional>
+ #include <iomanip>
+ #include <map>

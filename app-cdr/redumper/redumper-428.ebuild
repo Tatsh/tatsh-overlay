@@ -15,19 +15,27 @@ SLOT="0"
 KEYWORDS=""
 # Clang is forced due to ICE with GCC with -j1, failure otherwise
 IUSE="+clang"
+REQUIRED_CLANG_MAJOR_VERSION="18"
 
-BDEPEND=">=sys-devel/clang-16.0.6
+BDEPEND="sys-devel/clang:${REQUIRED_CLANG_MAJOR_VERSION}
 	dev-build/ninja"
-DEPEND=">=sys-libs/libcxx-16[static-libs]
-	>=sys-libs/libcxxabi-16[static-libs]"
+DEPEND=">=sys-libs/libcxx-${REQUIRED_CLANG_MAJOR_VERSION}[static-libs]
+	>=sys-libs/libcxxabi-${REQUIRED_CLANG_MAJOR_VERSION}[static-libs]"
+
+PATCHES=(
+	"${FILESDIR}/${PN}-0002-missing-header.patch"
+	"${FILESDIR}/${PN}-0003-no-stdlib-libcxx.patch"
+)
 
 S="${WORKDIR}/${PN}-build_${PV}"
 
 src_configure() {
+	# filter-lto
 	filter-flags -O*
 	if use clang; then
-		CC=clang
-		CXX=clang++
+		append-ldflags -fuse-ld=lld # For now because it has better error messages
+		CC="clang-${REQUIRED_CLANG_MAJOR_VERSION}"
+		CXX="clang++-${REQUIRED_CLANG_MAJOR_VERSION}"
 		export CC CXX
 	fi
 	cmake_src_configure
