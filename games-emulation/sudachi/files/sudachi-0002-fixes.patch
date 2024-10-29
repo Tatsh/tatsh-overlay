@@ -1,0 +1,12 @@
+diff --git a/src/core/hle/service/am/am.cpp b/src/core/hle/service/am/am.cpp
+index 4512997..e64ce1e 100644
+--- a/src/core/hle/service/am/am.cpp
++++ b/src/core/hle/service/am/am.cpp
+@@ -12,6 +12,7 @@
+ #include "core/hle/service/apm/apm_interface.h"
+ #include "core/hle/service/caps/caps_manager.h"
+ #include "core/hle/service/server_manager.h"
++#include "core/core.h"
+ 
+ namespace Service::AM {
+ 

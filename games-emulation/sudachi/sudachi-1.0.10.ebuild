@@ -74,6 +74,7 @@ S="${WORKDIR}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"
+	"${FILESDIR}/${PN}-0002-fixes.patch"
 )
 
 src_unpack() {
