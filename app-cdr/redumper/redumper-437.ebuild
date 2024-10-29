@@ -12,30 +12,22 @@ SRC_URI="https://github.com/superg/redumper/archive/refs/tags/build_${PV}.tar.gz
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 # Clang is forced due to ICE with GCC with -j1, failure otherwise
 IUSE="+clang"
-REQUIRED_CLANG_MAJOR_VERSION="18"
+MIN_CLANG_VERSION="18.1.8"
 
-BDEPEND="sys-devel/clang:${REQUIRED_CLANG_MAJOR_VERSION}
+BDEPEND=">=sys-devel/clang-${MIN_CLANG_VERSION}
 	dev-build/ninja"
-DEPEND=">=sys-libs/libcxx-${REQUIRED_CLANG_MAJOR_VERSION}[static-libs]
-	>=sys-libs/libcxxabi-${REQUIRED_CLANG_MAJOR_VERSION}[static-libs]"
-
-PATCHES=(
-	"${FILESDIR}/${PN}-0002-missing-header.patch"
-	"${FILESDIR}/${PN}-0003-no-stdlib-libcxx.patch"
-)
+DEPEND=">=sys-libs/libcxx-${MIN_CLANG_VERSION}[static-libs]
+	>=sys-libs/libcxxabi-${MIN_CLANG_VERSION}[static-libs]"
 
 S="${WORKDIR}/${PN}-build_${PV}"
 
 src_configure() {
-	# filter-lto
-	filter-flags -O*
 	if use clang; then
-		append-ldflags -fuse-ld=lld # For now because it has better error messages
-		CC="clang-${REQUIRED_CLANG_MAJOR_VERSION}"
-		CXX="clang++-${REQUIRED_CLANG_MAJOR_VERSION}"
+		CC=clang
+		CXX=clang++
 		export CC CXX
 	fi
 	cmake_src_configure
