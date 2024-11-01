@@ -110,6 +110,7 @@ src_prepare() {
 	sed -re '/add_subdirectory\(externals\)/d' -i CMakeLists.txt || die
 	sed -re '704s/.*/add_subdirectory(externals)/' -i CMakeLists.txt || die
 	sed -re '/-Werror=.*/d' -i src/CMakeLists.txt || die
+	sed -re 's/@GIT_BRANCH@/sudachi/' -e "s/@GIT_DESC@/${PV}/" -i src/common/scm_rev.cpp.in || die
 	cmake_src_prepare
 	mkdir -p "${BUILD_DIR}/dist/compatibility_list" || die
 	einfo 'Using fallback compatibility list'
