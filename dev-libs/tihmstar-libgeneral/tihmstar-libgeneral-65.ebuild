@@ -11,7 +11,7 @@ SRC_URI="https://github.com/tihmstar/${MY_PN}/archive/${PV}.tar.gz -> ${P}.tar.g
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd65 ~ppc65 ~x86"
+KEYWORDS="~amd64 ~ppc64 ~x86"
 
 PATCHES=( "${FILESDIR}/configure-ac.patch" )
 
@@ -25,4 +25,9 @@ src_prepare() {
 
 src_compile() {
 	emake
+}
+
+src_install() {
+	default
+	rm "${ED}/usr/$(get_libdir)/libgeneral.la" || die
 }
