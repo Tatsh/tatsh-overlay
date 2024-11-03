@@ -1,4 +1,5 @@
 * text=auto eol=lf
 *.lock binary
+app-arch/unalz/files/*.patch binary
 app-pda/altserver/files/altserver-altsign.patch binary
 games-emulation/sudachi/files/*.patch binary
