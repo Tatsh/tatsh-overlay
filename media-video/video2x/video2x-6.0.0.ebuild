@@ -27,7 +27,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 PATCHES=( "${FILESDIR}/${PN}-0001-build-system-fix.patch" )
 
 src_prepare() {
-	rmdir third_party/libreal_esrgan_ncnn_vulkan || die
+	#rmdir third_party/libreal_esrgan_ncnn_vulkan || die
 	mv "${WORKDIR}/libreal-esrgan-ncnn-vulkan-${LIBREAL_ESRGAN_NCNN_VULKAN_SHA}/src" third_party/realesrgan || die
 	sed -re 's/(LIBRARY|ARCHIVE) DESTINATION lib/\1 DESTINATION lib64/' -i third_party/realesrgan/CMakeLists.txt || die
 	cmake_src_prepare

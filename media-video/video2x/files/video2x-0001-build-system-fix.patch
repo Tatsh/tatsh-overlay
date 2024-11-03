@@ -1,4 +1,4 @@
-From a7da2ad9fd0b660999703701ea006378190e2ce1 Mon Sep 17 00:00:00 2001
+From 44ac77a11dd9af00040dc1749eee6f3c98e08a54 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 27 Oct 2024 06:08:21 -0400
 Subject: [PATCH] Build system fix
@@ -8,7 +8,7 @@ Subject: [PATCH] Build system fix
  1 file changed, 4 insertions(+), 26 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 86af44d..e407582 100644
+index 98e7e5f..269ac8d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -268,21 +268,7 @@ else()
@@ -18,10 +18,10 @@ index 86af44d..e407582 100644
 -# Include ExternalProject module
 -include(ExternalProject)
 -
--# Add libreal-esrgan-ncnn-vulkan as an external project
+-# Add librealesrgan-ncnn-vulkan as an external project
 -ExternalProject_Add(
 -    realesrgan
--    SOURCE_DIR ${PROJECT_SOURCE_DIR}/third_party/libreal_esrgan_ncnn_vulkan/src
+-    SOURCE_DIR ${PROJECT_SOURCE_DIR}/third_party/librealesrgan_ncnn_vulkan/src
 -    CMAKE_ARGS
 -        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 -        -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/realesrgan_install
