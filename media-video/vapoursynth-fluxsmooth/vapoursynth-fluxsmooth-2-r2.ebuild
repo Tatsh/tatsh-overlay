@@ -34,4 +34,5 @@ src_compile() {
 src_install() {
 	emake install DESTDIR="${D}"
 	einstalldocs
+	rm "${ED}/usr/$(get_libdir)/vapoursynth/libfluxsmooth.la" || die
 }
