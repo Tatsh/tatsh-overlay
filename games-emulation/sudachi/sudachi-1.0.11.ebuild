@@ -6,7 +6,6 @@ inherit cmake flag-o-matic xdg
 
 DESCRIPTION="Nintendo Switch emulator."
 HOMEPAGE="https://sudachi.emuplace.app/"
-CPP_HTTPLIB_SHA="6791a8364d1644b44e0fb13fca472c398f78eb67"
 CPP_JWT_SHA="4a970bc302d671476122cbc6b43cc89fbf4a96ec"
 _DYNARMIC_SHA="efa2ebefe1f502fc886cbbcebabed2506121eb24"
 FFMPEG_SHA="cc6fb1643d7e14c6f76a48e0cffad96394cb197c"
@@ -21,7 +20,6 @@ SRC_URI="https://github.com/emuplace/sudachi.emuplace.app/releases/download/v${P
 	https://github.com/sudachi-emu/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/sudachi-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/lat9nq/tzdb_to_nx/releases/download/${NX_TZDB_VERSION}/${NX_TZDB_VERSION}.zip -> ${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip
-	https://github.com/yhirose/cpp-httplib/archive/${CPP_HTTPLIB_SHA}.tar.gz -> ${PN}-cpp-httplib-${CPP_HTTPLIB_SHA:0:7}.tar.gz
 	https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz
 	https://github.com/brofield/simpleini/archive/${SIMPLEINI_SHA}.tar.gz -> ${PN}-simpleini-${SIMPLEINI_SHA:0:7}.tar.gz
 	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz -> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz
@@ -37,8 +35,7 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	>=media-video/ffmpeg-4.3
 	app-arch/lz4
 	cubeb? ( media-libs/cubeb )
-	web-service? ( dev-cpp/cpp-httplib )
-	dev-cpp/cpp-httplib:=
+	web-service? ( dev-cpp/cpp-httplib:= )
 	dev-libs/boost:=[context]
 	>=dev-libs/libfmt-9.1.0:=
 	dev-libs/libzip
@@ -70,8 +67,6 @@ BDEPEND="app-arch/unzip
 	dev-util/spirv-headers
 	app-text/dos2unix"
 
-S="${WORKDIR}"
-
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"
 	"${FILESDIR}/${PN}-0002-fixes.patch"
@@ -80,7 +75,10 @@ PATCHES=(
 src_unpack() {
 	default
 	rm .gitmodules || die
-	dos2unix CMakeLists.txt dist/*.desktop || die
+	dos2unix dist/*.desktop || die
+	mkdir "${P}" || die
+	mv "${WORKDIR}"/{dist,externals,CMakeLists.txt,patches,src,tools,CMakeModules,vcpkg.json} "${S}" || die
+	mv "${WORKDIR}"/{LICENSES,LICENSE.md,hooks,Doxyfile,README.md} "${S}" || die
 }
 
 src_prepare() {
@@ -93,10 +91,10 @@ src_prepare() {
 	mv "${WORKDIR}/FFmpeg-${FFMPEG_SHA}" "${S}/externals/ffmpeg/ffmpeg" || die
 	mv "${WORKDIR}/simpleini-${SIMPLEINI_SHA}" "${S}/externals/simpleini" || die
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
-	mkdir -p "${P}_build/externals/nx_tzdb/nx_tzdb" || die
+	mkdir -v -p "${WORKDIR}/${P}_build/externals/nx_tzdb/nx_tzdb" || die
 	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip" \
-		"${P}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
-	mv "${WORKDIR}/zoneinfo" "${P}_build/externals/nx_tzdb/nx_tzdb/" || die
+		"${WORKDIR}/${P}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
+	mv "${WORKDIR}/zoneinfo" "${WORKDIR}/${P}_build/externals/nx_tzdb/nx_tzdb/" || die
 	sed -e 's/find_package(Boost .*/find_package(Boost 1.71 COMPONENTS context REQUIRED)/' \
 		-i src/common/CMakeLists.txt || die
 	sed -e '/enable_testing.*/d' \
