@@ -70,6 +70,7 @@ BDEPEND="app-arch/unzip
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"
 	"${FILESDIR}/${PN}-0002-fixes.patch"
+	"${FILESDIR}/${PN}-0003-boost-fix.patch"
 )
 
 src_unpack() {
