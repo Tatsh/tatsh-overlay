@@ -1,0 +1,34 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2a5c14ec4..68ee358ba 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -263,8 +263,6 @@ endif()
+ # Configure C++ standard
+ # ===========================
+ 
+-# boost asio's concept usage doesn't play nicely with some compilers yet.
+-add_definitions(-DBOOST_ASIO_DISABLE_CONCEPTS)
+ if (MSVC)
+     add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/std:c++20>)
+ 
+diff --git a/src/input_common/helpers/udp_protocol.h b/src/input_common/helpers/udp_protocol.h
+index d9643ffe0..5d0c25a5f 100644
+--- a/src/input_common/helpers/udp_protocol.h
++++ b/src/input_common/helpers/udp_protocol.h
+@@ -13,6 +13,7 @@
+ #endif
+ 
+ #include <boost/crc.hpp>
++#include <boost/numeric/conversion/cast.hpp>
+ 
+ #ifdef _MSC_VER
+ #pragma warning(pop)
+@@ -69,7 +70,7 @@ Message<T> CreateMessage(const u32 magic, const T data, const u32 sender_id) {
+     };
+     Message<T> message{header, data};
+     crc.process_bytes(&message, sizeof(Message<T>));
+-    message.header.crc = crc.checksum();
++    message.header.crc = boost::numeric_cast<u32_le>(crc.checksum());
+     return message;
+ }
+ 
