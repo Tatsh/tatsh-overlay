@@ -57,6 +57,7 @@ BDEPEND="dev-cpp/catch:0 media-libs/fdk-aac"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libraries.patch"
 	"${FILESDIR}/${PN}-0002-inih-fix.patch"
+	"${FILESDIR}/${PN}-0003-boost-fix.patch"
 )
 
 S="${WORKDIR}/${PN}-${SHA}"
