@@ -56,6 +56,7 @@ BDEPEND="dev-cpp/catch:0 media-libs/fdk-aac"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-library-changes.patch"
+	"${FILESDIR}/${PN}-0002-boost-fix.patch"
 )
 
 S="${WORKDIR}/Lime3DS-${PV}"
@@ -96,7 +97,6 @@ src_configure() {
 		"-DENABLE_SCRIPTING=$(usex scripting)"
 		"-DENABLE_WEB_SERVICE=$(usex web-service)"
 		-DBUILD_SHARED_LIBS=OFF
-		-DCITRA_WARNINGS_AS_ERRORS=OFF
 		-DDISABLE_SUBMODULE_CHECK=ON
 		-DENABLE_QT_UPDATER=OFF
 		-DENABLE_TESTS=OFF
