@@ -515,6 +515,7 @@ dotio
 dotize
 dounit
 downscaler
+doxyfile
 doxygen
 dpackage
 dpdb
@@ -1060,6 +1061,7 @@ libexecdir
 libfat
 libffms
 libfluidsynth
+libfluxsmooth
 libfmt
 libfmtconv
 libfprint
@@ -1657,6 +1659,7 @@ qtxml
 querystring
 quicktest
 quse
+randomstring
 rangeset
 ranlib
 raphnet
@@ -2039,6 +2042,7 @@ udiff
 udpa
 udvare
 uips
+unalz
 undici
 undname
 unecm
@@ -2209,6 +2213,7 @@ xtend
 xtst
 xvideo
 xxhash
+xyproto
 yallist
 yamashou
 yamux
