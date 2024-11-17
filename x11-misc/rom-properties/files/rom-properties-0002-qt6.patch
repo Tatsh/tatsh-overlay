@@ -1,15 +1,12 @@
 diff --git a/cmake/libs/RP_FindQt6andKF6.cmake b/cmake/libs/RP_FindQt6andKF6.cmake
-index febfbdfee..339ba579b 100644
+index 1dff71633..3484b77eb 100644
 --- a/cmake/libs/RP_FindQt6andKF6.cmake
 +++ b/cmake/libs/RP_FindQt6andKF6.cmake
-@@ -5,13 +5,12 @@ MACRO(FIND_QT6_AND_KF6)
- 	SET(QT_DEFAULT_MAJOR_VERSION 6)
+@@ -10,10 +10,9 @@ MACRO(FIND_QT6_AND_KF6)
+ 	SET(QT_NO_CREATE_VERSIONLESS_TARGETS TRUE)
  
  	# FIXME: Search for Qt6 first instead of ECM?
 -	SET(KF6_MIN 5.248.0)
- 
- 	# FIXME: KF6 is overwriting CMAKE_LIBRARY_OUTPUT_DIRECTORY.
- 	SET(TMP_CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
  
  	# Find KF6 Extra CMake Modules.
 -	FIND_PACKAGE(ECM ${REQUIRE_KF6} ${KF6_MIN} NO_MODULE)
@@ -17,21 +14,13 @@ index febfbdfee..339ba579b 100644
  	IF(ECM_MODULE_PATH AND ECM_KDE_MODULE_DIR)
  		# Make sure ECM's CMake files don't create an uninstall rule.
  		SET(KDE_SKIP_UNINSTALL_TARGET TRUE)
-@@ -50,7 +49,7 @@ MACRO(FIND_QT6_AND_KF6)
- 
+@@ -53,7 +52,9 @@ MACRO(FIND_QT6_AND_KF6)
  			# Find the qtpaths6 executable.
  			FIND_PROGRAM(QTPATHS6 NAMES qtpaths6 qtpaths
--				PATHS /usr/local/lib/qt6/bin	# FreeBSD
-+				PATHS /usr/lib64/qt6/bin /usr/local/lib/qt6/bin	# FreeBSD
+ 				PATHS /usr/local/lib/qt6/bin	# FreeBSD
++				/usr/lib64/qt6/bin	#Gentoo
+ 				/usr/lib/qt6/bin	#Archlinux
++				/usr/local/lib/qt6/bin	# FreeBSD
  				)
  			IF(NOT QTPATHS6)
  				MESSAGE(FATAL_ERROR "qtpaths6 not found. Install one of these packages:
-@@ -71,7 +70,7 @@ MACRO(FIND_QT6_AND_KF6)
- 			SET(QT_PLUGIN_INSTALL_DIR "${KF6_PLUGIN_INSTALL_DIR}")
- 
- 			# Find KF6.
--			FIND_PACKAGE(KF6 ${REQUIRE_KF6} ${KF6_MIN} COMPONENTS KIO WidgetsAddons FileMetaData)
-+			FIND_PACKAGE(KF6 ${REQUIRE_KF6} COMPONENTS KIO WidgetsAddons FileMetaData)
- 			IF(NOT KF6KIO_FOUND OR NOT KF6WidgetsAddons_FOUND OR NOT KF6FileMetaData_FOUND)
- 				# KF6 not found.
- 				SET(BUILD_KF6 OFF CACHE INTERNAL "Build the KDE Frameworks 6 plugin." FORCE)
