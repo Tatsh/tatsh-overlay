@@ -119,6 +119,7 @@ aymanbagabas
 azcore
 azidentity
 azkeys
+bachmann
 backgroundremover
 backoff
 bamum
@@ -777,6 +778,7 @@ goimagehash
 goja
 gokrb
 goldmark
+goleak
 gomega
 gometrics
 gomodule
@@ -870,6 +872,7 @@ httpsig
 httptoolkit
 httpunix
 huandu
+hubbs
 humansize
 humanwhocodes
 hwmon
@@ -1100,6 +1103,7 @@ libpumpkin
 libraw
 libreal
 librealcugannv
+librealesrgan
 libretro
 libretrodb
 librw
@@ -2007,6 +2011,7 @@ titleize
 tmds
 tmpdir
 tomcrypt
+tomli
 tomlkit
 tomlplusplus
 tommath
