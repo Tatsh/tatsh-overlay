@@ -3,11 +3,9 @@
 
 EAPI=8
 
-inherit java-utils-2
-
 DESCRIPTION="Patches for ReVanced."
 HOMEPAGE="https://github.com/ReVanced/revanced-patches https://revanced.app/"
-SRC_URI="https://github.com/ReVanced/revanced-patches/releases/download/v${PV}/${P}.jar"
+SRC_URI="https://github.com/ReVanced/revanced-patches/releases/download/v${PV}/patches-${PV}.rvp -> ${P}.rvp"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -18,5 +16,6 @@ RDEPEND=">=virtual/jre-11-r2"
 S="${WORKDIR}"
 
 src_install() {
-	java-pkg_newjar "${DISTDIR}/${P}.jar"
+	insinto "/usr/share/${PN}"
+	newins "${DISTDIR}/${P}.rvp" patches.rvp
 }
