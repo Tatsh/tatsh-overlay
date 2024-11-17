@@ -23,7 +23,7 @@ RDEPEND="dev-python/colorama
 	dev-python/ida-settings
 	dev-python/networkx
 	dev-python/pefile
-	dev-python/protobuf-python
+	dev-python/protobuf
 	dev-python/pydantic
 	dev-python/pyelftools
 	dev-python/pyyaml
