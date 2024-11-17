@@ -15,9 +15,9 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-RDEPEND="dev-python/pyyaml
-	dev-python/jinja2
-	dev-python/six"
+RDEPEND="dev-python/pyyaml[${PYTHON_USEDEP}]
+	dev-python/jinja2[${PYTHON_USEDEP}]
+	dev-python/six[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${PN/-/_}-${PV}"
