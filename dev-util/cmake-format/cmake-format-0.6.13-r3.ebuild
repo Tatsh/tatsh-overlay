@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
 RDEPEND="dev-python/pyyaml
-	dev-python/jinja
+	dev-python/jinja2
 	dev-python/six"
 DEPEND="${RDEPEND}"
 
