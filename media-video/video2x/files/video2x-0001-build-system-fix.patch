@@ -1,18 +1,27 @@
-From 44ac77a11dd9af00040dc1749eee6f3c98e08a54 Mon Sep 17 00:00:00 2001
+From f4729f9b6daeb7d4c1c92933cc5cfc2bd8653945 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 27 Oct 2024 06:08:21 -0400
 Subject: [PATCH] Build system fix
 
 ---
- CMakeLists.txt | 30 ++++--------------------------
- 1 file changed, 4 insertions(+), 26 deletions(-)
+ CMakeLists.txt | 35 +++++------------------------------
+ 1 file changed, 5 insertions(+), 30 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 98e7e5f..269ac8d 100644
+index 6d0035b..9d2f1c1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -268,21 +268,7 @@ else()
+@@ -256,6 +256,8 @@ else()
      add_subdirectory(third_party/ncnn)
+ endif()
+ 
++add_subdirectory(third_party/realesrgan)
++
+ # spdlog
+ if (USE_SYSTEM_SPDLOG)
+     find_package(spdlog REQUIRED)
+@@ -287,22 +289,6 @@ if (BUILD_VIDEO2X_CLI)
+     set(VULKAN_LIB Vulkan::Vulkan)
  endif()
  
 -# Include ExternalProject module
@@ -30,29 +39,38 @@ index 98e7e5f..269ac8d 100644
 -    BUILD_ALWAYS ON
 -    INSTALL_COMMAND ${CMAKE_COMMAND} --build . --target install --config ${CMAKE_BUILD_TYPE}
 -)
-+add_subdirectory(third_party/realesrgan)
- 
+-
  # Remove duplicate entries
  list(REMOVE_DUPLICATES ALL_INCLUDE_DIRS)
-@@ -301,7 +287,7 @@ else()
+ list(REMOVE_DUPLICATES ALL_LIBRARIES)
+@@ -325,16 +311,13 @@ else()
+     set_target_properties(libvideo2x PROPERTIES OUTPUT_NAME video2x)
  endif()
  
- # Ensure libvideo2x depends on realesrgan being built and installed
+-# Ensure libvideo2x depends on realesrgan being built and installed
 -add_dependencies(libvideo2x realesrgan)
-+#add_dependencies(libvideo2x realesrgan-ncnn-vulkan)
- 
+-
  # Include directories for the shared library
  target_include_directories(libvideo2x PRIVATE
-@@ -327,7 +313,7 @@ else()
+     ${ALL_INCLUDE_DIRS}
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${PROJECT_SOURCE_DIR}/include
+     ${PROJECT_SOURCE_DIR}/include/libvideo2x
+-    ${PROJECT_SOURCE_DIR}/third_party/librealesrgan_ncnn_vulkan/src
++    ${PROJECT_SOURCE_DIR}/third_party/realesrgan
+ )
+ 
+ # Compile options for the shared library
+@@ -349,7 +332,7 @@ if(WIN32)
+     set(REALESRGAN_LIB ${CMAKE_BINARY_DIR}/realesrgan_install/lib/librealesrgan-ncnn-vulkan.lib)
+     list(APPEND ALL_LIBRARIES ${REALESRGAN_LIB})
+ else()
+-    set(REALESRGAN_LIB ${CMAKE_BINARY_DIR}/realesrgan_install/lib/librealesrgan-ncnn-vulkan.so)
++    set(REALESRGAN_LIB ${CMAKE_BINARY_DIR}/third_party/realesrgan/librealesrgan-ncnn-vulkan.so)
+     list(APPEND ALL_LIBRARIES ${REALESRGAN_LIB})
  endif()
  
- # Link the shared library with the dependencies
--target_link_libraries(libvideo2x PRIVATE ${ALL_LIBRARIES} ${REALESRGAN_LIB})
-+target_link_libraries(libvideo2x PRIVATE ${ALL_LIBRARIES} realesrgan-ncnn-vulkan)
- 
- if(NOT WIN32)
-     if (USE_SYSTEM_NCNN)
-@@ -365,7 +351,7 @@ if(WIN32)
+@@ -399,7 +382,7 @@ if(WIN32)
  else()
      set(BIN_DESTINATION_DEFAULT "bin")
      set(INCLUDE_DESTINATION_DEFAULT "include/libvideo2x")
@@ -61,7 +79,7 @@ index 98e7e5f..269ac8d 100644
      set(MODEL_DESTINATION_DEFAULT "share/video2x")
  endif()
  
-@@ -440,12 +426,4 @@ if(WIN32)
+@@ -467,12 +450,4 @@ if(WIN32)
                      GROUP_READ GROUP_EXECUTE
                      WORLD_READ WORLD_EXECUTE
      )
