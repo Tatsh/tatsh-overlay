@@ -22,6 +22,7 @@ src_prepare() {
 	echo 'leveladj:' >> Makefile
 	# shellcheck disable=SC2016
 	echo -e '\tcc $(CFLAGS) -o cxleveladj leveladj.c' >> Makefile
+	sed -re 's/no_ll/noop_ll/g' -i cxadc.c || die
 	default
 }
 
