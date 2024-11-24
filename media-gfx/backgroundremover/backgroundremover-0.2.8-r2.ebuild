@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 # shellcheck disable=SC2016
-RDEPEND="$(python_gen_cond_dep 'dev-python/PySocks[${PYTHON_USEDEP}]
+RDEPEND="$(python_gen_cond_dep 'dev-python/pysocks[${PYTHON_USEDEP}]
 		dev-python/certifi[${PYTHON_USEDEP}]
 		dev-python/ffmpeg-python[${PYTHON_USEDEP}]
 		dev-python/filetype[${PYTHON_USEDEP}]
