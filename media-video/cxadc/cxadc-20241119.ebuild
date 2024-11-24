@@ -6,7 +6,7 @@ inherit linux-mod-r1 systemd udev
 
 DESCRIPTION="CX2388x direct ADC capture driver."
 HOMEPAGE="https://github.com/happycube/cxadc-linux3"
-SHA="27721c563a041d8b40432723435ad2e47e223990"
+SHA="6ffc17cfb504b8d71da6fa84891e706558af3d40"
 SRC_URI="https://github.com/happycube/cxadc-linux3/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
@@ -22,7 +22,6 @@ src_prepare() {
 	echo 'leveladj:' >> Makefile
 	# shellcheck disable=SC2016
 	echo -e '\tcc $(CFLAGS) -o cxleveladj leveladj.c' >> Makefile
-	sed -re 's/no_ll/noop_ll/g' -i cxadc.c || die
 	default
 }
 
