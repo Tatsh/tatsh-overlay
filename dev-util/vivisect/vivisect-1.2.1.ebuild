@@ -20,7 +20,7 @@ RDEPEND="dev-python/pyasn1
 	>=dev-python/cxxfilt-0.3.0
 	>=dev-python/msgpack-1.0.8
 	>=dev-python/pycparser-2.22
-	>=dev-python/PyQt5-5.15.7
-	>=dev-python/PyQtWebEngine-5.15.6"
+	>=dev-python/pyqt5-5.15.7
+	>=dev-python/pyqtwebengine-5.15.6"
 
 distutils_enable_tests unittest
