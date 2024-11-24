@@ -28,7 +28,7 @@ RDEPEND="dev-python/jinja2[${PYTHON_USEDEP}]
 	dev-python/typer[${PYTHON_USEDEP}]
 	dev-python/urllib3[${PYTHON_USEDEP}]
 	>=dev-python/pydantic-2.9.2[${PYTHON_USEDEP}]
-	dev-python/GitPython[${PYTHON_USEDEP}]"
+	dev-python/gitpython[${PYTHON_USEDEP}]"
 
 S="${WORKDIR}/${PN}-${PV}"
 
