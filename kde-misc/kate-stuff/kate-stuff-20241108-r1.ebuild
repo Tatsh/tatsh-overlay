@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Updated and improved Kate editor syntax files and code snippets."
 HOMEPAGE="https://github.com/zaufi/kate-stuff"
-SHA="2712e17bcc0c4c6d01fc2d606648a937ebe91e61"
+SHA="e49cd767daf63b93693ea39b22c65c430d78ab82"
 SRC_URI="https://github.com/zaufi/kate-stuff/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
