@@ -10,7 +10,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="A Python library for alpha matting."
 HOMEPAGE="https://pypi.org/project/PyMatting/"
-SHA="042adbdf1af352a60ab3bc9d43be7d00f50ad31a"
+SHA="afd2dec073cb08b8119300feec18c179a9d436f3"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
