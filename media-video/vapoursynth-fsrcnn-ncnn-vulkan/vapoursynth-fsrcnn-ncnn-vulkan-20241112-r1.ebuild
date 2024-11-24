@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="FSRCNN ported to VapourSynth."
 HOMEPAGE="https://github.com/Sg4Dylan/vapoursynth-fsrcnn-ncnn-vulkan"
-SHA="c9dad37dad64346afdff925fb409e6c6005b719a"
+SHA="0a721959116f6f86dbd13bda70a5fd6a883938f4"
 SRC_URI="https://github.com/Sg4Dylan/vapoursynth-fsrcnn-ncnn-vulkan/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
