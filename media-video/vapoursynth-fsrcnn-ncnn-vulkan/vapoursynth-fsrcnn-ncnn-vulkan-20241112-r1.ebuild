@@ -19,6 +19,4 @@ DEPEND="dev-libs/ncnn
 	media-libs/opencv"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${PN}-0001-linux-support.patch" )
-
 S="${WORKDIR}/${PN}-${SHA}"
