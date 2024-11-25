@@ -5,7 +5,7 @@ EAPI=8
 inherit cmake xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
-HOMEPAGE="https://github.com/Lime3DS/Lime3DS https://web.archive.org/web/20240301162216/https://citra-emu.org/"
+HOMEPAGE="https://github.com/Lime3DS/lime3ds-archive https://web.archive.org/web/20240301162216/https://citra-emu.org/"
 COMPAT_LIST_SHA="29291d417596d5c384397c7b6e521406586be6d5"
 DDS_KTX_SHA="42dd8aa6ded90b1ec06091522774feff51e83fc5"
 LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
@@ -14,7 +14,7 @@ SIRIT_SPIRV_HEADERS_SHA="c214f6f2d1a7253bb0e9f195c2dc5b0659dc99ef"
 SOUNDTOUCH_SHA="dd2252e9af3f2d6b749378173a4ae89551e06faf"
 SUB_DYNARMIC_SHA="c08c5a9362bb224dc343c2f616c24df027dfdf13"
 XBYAK_SHA="a1ac3750f9a639b5a6c6d6c7da4259b8d6790989"
-SRC_URI="https://github.com/Lime3DS/Lime3DS/archive/${PV}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/Lime3DS/lime3ds-archive/archive/${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
 	https://github.com/yuzu-mirror/dynarmic/archive/${SUB_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${SUB_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz -> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz
@@ -59,7 +59,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0002-boost-fix.patch"
 )
 
-S="${WORKDIR}/Lime3DS-${PV}"
+S="${WORKDIR}/lime3ds-archive-${PV}"
 
 src_prepare() {
 	rmdir "${S}/externals/lodepng/lodepng" \
