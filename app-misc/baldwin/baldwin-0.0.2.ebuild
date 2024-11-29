@@ -18,3 +18,9 @@ RDEPEND="dev-python/gitpython
 	dev-python/binaryornot
 	dev-python/click
 	dev-python/platformdirs"
+
+pkg_postinst() {
+	einfo
+	einfo 'Install app-misc/jq and dev-util/prettier for formatting and readable diff support.'
+	einfo
+}
