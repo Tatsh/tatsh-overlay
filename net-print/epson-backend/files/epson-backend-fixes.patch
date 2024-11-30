@@ -1,0 +1,99 @@
+diff '--color=auto' --ignore-all-space -urN epson-backend-arm-1.2.6-a/daemon/cbtd_comserv.c epson-backend-arm-1.2.6-b/daemon/cbtd_comserv.c
+--- epson-backend-arm-1.2.6-a/daemon/cbtd_comserv.c	2022-08-01 15:09:22.000000000 -0400
++++ epson-backend-arm-1.2.6-b/daemon/cbtd_comserv.c	2024-11-30 00:21:50.096938505 -0500
+@@ -737,6 +737,16 @@
+ 	return 0;
+ }
+ 
++EPS_ERR_CODE epsMakeMainteCmd     (
++
++                EPS_INT32               cmd,
++                EPS_UINT8*              buffer,
++                EPS_UINT32*             buffersize,
++                EPS_INT32               inputslot,
++                EPS_INT32               mediatype,
++                EPS_INT32               pagesize
++);
++
+ /* received a nozzle check command */
+ static int
+ nozzlecheck_recept (P_CBTD_INFO p_info, int fd, char* inputslot, char* mediatype, char* pagesize)
+@@ -760,7 +770,7 @@
+ 
+ 	char buffer[256];
+ 	int bufsize;	
+-	epsMakeMainteCmd(EPS_MNT_CLEANING, buffer, &bufsize);
++	epsMakeMainteCmd(EPS_MNT_CLEANING, buffer, &bufsize, 0, 0, 0);
+ 
+ 	SendCommand (buffer, bufsize);
+ 
+@@ -776,7 +786,7 @@
+ 
+ 	char buffer[256];
+ 	int bufsize;	
+-	epsMakeMainteCmd(EPS_MNT_INKFLUSHING, buffer, &bufsize);
++	epsMakeMainteCmd(EPS_MNT_INKFLUSHING, buffer, &bufsize, 0, 0, 0);
+ 
+ 	SendCommand (buffer, bufsize);
+ 
+@@ -785,6 +795,8 @@
+ 	return 0;
+ }
+ 
++void get_device_id (char* device_id);
++
+ /* received a get device_id command */
+ static int
+ getdeviceid_recept (P_CBTD_INFO p_info, int fd)
+@@ -797,6 +809,14 @@
+ 	return 0;
+ }
+ 
++EPS_ERR_CODE epsMakeSleepTimerCmd     (
++
++                EPS_INT32               cmd,
++                EPS_UINT8*              buffer,
++                EPS_UINT32*             buffersize,
++                EPS_UINT8*              sleeptimer
++
++);
+ 
+ /* set sleep timer command */
+ static int
+diff '--color=auto' --ignore-all-space -urN epson-backend-arm-1.2.6-a/daemon/cbtd_datatrans.c epson-backend-arm-1.2.6-b/daemon/cbtd_datatrans.c
+--- epson-backend-arm-1.2.6-a/daemon/cbtd_datatrans.c	2019-01-18 18:53:12.000000000 -0500
++++ epson-backend-arm-1.2.6-b/daemon/cbtd_datatrans.c	2024-11-30 00:13:04.891689493 -0500
+@@ -211,9 +211,9 @@
+ 							
+ 							if (p_info->sleepTime > 0 && err == 0) {
+ 								writeLogFile("datatrans_work:sleep\n");
+-								Sleep(p_info->sleepTime);
++								sleep(p_info->sleepTime);
+ 							} else if (err == 1) {
+-								Sleep(100);
++								sleep(100);
+ 							}
+ 
+ 						}
+diff '--color=auto' --ignore-all-space -urN epson-backend-arm-1.2.6-a/daemon/ecbteg.h epson-backend-arm-1.2.6-b/daemon/ecbteg.h
+--- epson-backend-arm-1.2.6-a/daemon/ecbteg.h	2018-06-15 06:35:24.000000000 -0400
++++ epson-backend-arm-1.2.6-b/daemon/ecbteg.h	2024-11-30 00:12:45.780716211 -0500
+@@ -26,6 +26,7 @@
+ #ifndef __ECBTEG_H
+ #define __ECBTEG_H
+ #include "daemon_osdef.h"
++#include "cbtd_thread.h"
+ #include "cbtd.h"
+ 
+ /******************************************************************************\
+diff '--color=auto' --ignore-all-space -urN epson-backend-arm-1.2.6-a/daemon/epmnt.c epson-backend-arm-1.2.6-b/daemon/epmnt.c
+--- epson-backend-arm-1.2.6-a/daemon/epmnt.c	2022-08-01 13:11:10.000000000 -0400
++++ epson-backend-arm-1.2.6-b/daemon/epmnt.c	2024-11-30 00:13:49.869626391 -0500
+@@ -1,5 +1,7 @@
+ #include "epson-typdefs.h"
+ #include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
+ #include <time.h>
+ 
+ static const EPS_UINT8 ExitPacketMode[]= {
