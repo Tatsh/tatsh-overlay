@@ -6,10 +6,10 @@ EAPI=8
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0,1,2} )
 
-inherit distutils-r1 pypi
+inherit distutils-r1
 
 DESCRIPTION="Utilities for Vivisect."
-HOMEPAGE="https://pypi.org/project/viv-utils/"
+HOMEPAGE="https://github.com/williballenthin/viv-utils https://pypi.org/project/viv-utils/"
 SRC_URI="https://github.com/williballenthin/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
