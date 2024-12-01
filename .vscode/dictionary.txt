@@ -113,7 +113,6 @@ avisynth
 avstream
 awscli
 awslabs
-axios
 axobject
 aymanbagabas
 azcore
@@ -151,6 +150,7 @@ bigints
 binaryauthorization
 binarycookies
 binaryextensions
+binaryornot
 binaryregexp
 binchecks
 bincode
@@ -397,7 +397,6 @@ dchest
 dcitra
 dcli
 dcmake
-dcpihecpambacapedldabdbpakmachpb
 dcpp
 dcrc
 ddaemon
@@ -564,6 +563,7 @@ easyjson
 eautoreconf
 ebegin
 ebuilds
+ecbd
 eclass
 econf
 edgecontainer
@@ -727,6 +727,7 @@ gitea
 gitgen
 githubv
 gitmodules
+gitpython
 giwty
 gjson
 gkebackup
@@ -741,7 +742,6 @@ glfw
 gliderlabs
 globalcache
 globalthis
-globalyzer
 globby
 globjoin
 globrex
@@ -878,7 +878,6 @@ humanwhocodes
 hwmon
 hyperquest
 hyperscript
-iamadamdev
 iancoleman
 ianlancetaylor
 ideviceinstaller
@@ -1170,6 +1169,7 @@ lldb
 llvmgold
 llvmlite
 lmod
+locafero
 localbranches
 localematcher
 localereader
@@ -1417,7 +1417,6 @@ nullthrows
 numba
 numberformat
 numpy
-nunit
 nupkg
 nurio
 nvcc
@@ -1620,9 +1619,12 @@ pypamtest
 pypi
 pyproject
 pypy
+pyqt
+pyqtwebengine
 pyrescene
 pyserial
 pyside
+pysocks
 pytest
 pytz
 pyudev
@@ -1875,6 +1877,7 @@ sounddevice
 soundfile
 soundfont
 soundtouch
+sourcegraph
 sourcehut
 sourcemaps
 soversion
@@ -2002,6 +2005,7 @@ tifinagh
 tihmstar
 tink
 tinkup
+tinygltf
 tinylib
 tinystr
 tinyvec
