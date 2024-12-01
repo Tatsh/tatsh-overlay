@@ -11,20 +11,28 @@ then
 	EGIT_SUBMODULES=( Externals/mGBA/mgba Externals/rcheevos/rcheevos )
 	inherit git-r3
 else
-	EGIT_COMMIT=5512d19d4b66af1f7738cf5df9744e01364ffb11
+	EGIT_COMMIT=a68ae37df7168464459f395d2af3bee979a146ad
+	FMT_COMMIT=e69e5f977d458f2650bb346dadf2ad30c5320281
 	IMPLOT_COMMIT=cc5e1daa5c7f2335a9460ae79c829011dc5cef2d
 	MGBA_COMMIT=8739b22fbc90fdf0b4f6612ef9c0520f0ba44a51
-	RCHEEVOS_COMMIT=d9e990e6d13527532b7e2bb23164a1f3b7f33bb5
-	VK_MEM_ALLOC_COMMIT=498e20dfd1343d99b9115201034bb0219801cdec
+	MINIZIP_NG_COMMIT=3eed562ef0ea3516db30d1c8ecb0e1b486d8cb70
+	RCHEEVOS_COMMIT=d54cf8f1059cebc90a6f5ecdf03df69259f22054
+	TINYGLTF_COMMIT=c5641f2c22d117da7971504591a8f6a41ece488b
+	VK_MEM_ALLOC_COMMIT=009ecd192c1289c7529bff248a16cfe896254816
 	ZLIB_NG_COMMIT=ce01b1e41da298334f8214389cc9369540a7560f
 	SRC_URI="
 		https://github.com/dolphin-emu/dolphin/archive/${EGIT_COMMIT}.tar.gz
 			-> ${P}.tar.gz
+		https://github.com/fmtlib/fmt/archive/${FMT_COMMIT}.tar.gz -> fmt-${FMT_COMMIT}.tar.gz
 		https://github.com/epezent/implot/archive/${IMPLOT_COMMIT}.tar.gz
 			-> implot-${IMPLOT_COMMIT}.tar.gz
+		https://github.com/zlib-ng/minizip-ng/archive/${MINIZIP_NG_COMMIT}.tar.gz
+			-> minizip-ng-${MINIZIP_NG_COMMIT}.tar.gz
 		https://github.com/RetroAchievements/rcheevos/archive/${RCHEEVOS_COMMIT}.tar.gz
 			-> rcheevos-${RCHEEVOS_COMMIT}.tar.gz
 		https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/${VK_MEM_ALLOC_COMMIT}.tar.gz -> VulkanMemoryAllocator-${VK_MEM_ALLOC_COMMIT}.tar.gz
+		https://github.com/syoyo/tinygltf/archive/${TINYGLTF_COMMIT}.tar.gz
+			-> tinygltf-${TINYGLTF_COMMIT}.tar.gz
 		https://github.com/zlib-ng/zlib-ng/archive/${ZLIB_NG_COMMIT}.tar.gz
 			-> zlib-ng-${ZLIB_NG_COMMIT}.tar.gz
 		mgba? (
@@ -46,17 +54,13 @@ IUSE="
 	profile pulseaudio systemd test upnp vulkan
 "
 
-PATCHES=(
-	"${FILESDIR}/${P}-system-libs.patch"
-	"${FILESDIR}/${P}-rename-ip_protocol.patch"
-)
+PATCHES=( "${FILESDIR}/${P}-system-libs.patch" )
 
 RDEPEND="
 	app-arch/bzip2:=
 	app-arch/xz-utils:=
 	app-arch/zstd:=
 	dev-libs/hidapi:=
-	>=dev-libs/libfmt-8:=
 	dev-libs/lzo:=
 	dev-libs/pugixml:=
 	dev-libs/xxhash:=
@@ -112,12 +116,14 @@ declare -A KEEP_BUNDLED=(
 
 	[Bochs_disasm]=LGPL-2.1+
 	[cpp-optparse]=MIT
+	[fmt]=MIT
 	[imgui]=MIT
 	[implot]=MIT
 	[glslang]=BSD
+	[tinygltf]=MIT
 	[VulkanMemoryAllocator]=MIT
-	# This is actually minizip-ng and needs minizip-ng[compat], which is masked in base profile.
-	[minizip]=ZLIB
+	# This needs minizip-ng[compat], which is masked in base profile.
+	[minizip-ng]=ZLIB
 	# zlib-ng[compat] is masked.
 	[zlib-ng]=ZLIB
 
@@ -151,6 +157,12 @@ src_prepare() {
 		mv "${WORKDIR}/zlib-ng-${ZLIB_NG_COMMIT}" Externals/zlib-ng/zlib-ng || die
 		rmdir Externals/VulkanMemoryAllocator || die
 		mv "${WORKDIR}/VulkanMemoryAllocator-${VK_MEM_ALLOC_COMMIT}" Externals/VulkanMemoryAllocator || die
+		rmdir Externals/fmt/fmt || die
+		mv "${WORKDIR}/fmt-${FMT_COMMIT}" Externals/fmt/fmt || die
+		rmdir Externals/minizip-ng/minizip-ng || die
+		mv "${WORKDIR}/minizip-ng-${MINIZIP_NG_COMMIT}" Externals/minizip-ng/minizip-ng || die
+		rmdir Externals/tinygltf/tinygltf || die
+		mv "${WORKDIR}/tinygltf-${TINYGLTF_COMMIT}" Externals/tinygltf/tinygltf || die
 	fi
 
 	cmake_src_prepare
@@ -201,7 +213,6 @@ src_configure() {
 		-DUSE_UPNP="$(usex upnp)"
 		-DUSE_RETRO_ACHIEVEMENTS=ON
 		-DUSE_SYSTEM_MINIZIP=OFF
-		-DUSE_SYSTEM_ZLIB=OFF
 
 		# Undo cmake.eclass's defaults.
 		# All dolphin's libraries are private
