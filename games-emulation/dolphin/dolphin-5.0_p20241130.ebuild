@@ -92,7 +92,7 @@ RDEPEND="
 		dev-qt/qtsvg:6
 	)
 	profile? ( dev-util/oprofile )
-	pulseaudio? ( media-libs/libpulse media-sound/pulseaudio )
+	pulseaudio? ( media-libs/libpulse )
 	systemd? ( sys-apps/systemd:0= )
 	upnp? ( net-libs/miniupnpc )
 "
