@@ -30,6 +30,7 @@ src_unpack() {
 
 src_install() {
 	default
+	# shellcheck disable=SC2115
 	rm -R "${D}/usr/$(get_libdir)/${PN}" "${D}/usr/share/doc" || die
 	dodoc "debian/${PN}/usr/share/doc/${PN}/README"
 	systemd_newunit "${FILESDIR}/${PN}-ecbd.service" ecbd.service
