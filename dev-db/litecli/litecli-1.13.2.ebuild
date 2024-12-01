@@ -21,3 +21,10 @@ RDEPEND=">=dev-python/click-4.1
 	dev-python/sqlparse
 	>=dev-python/configobj-5.0.6
 	>=dev-python/cli-helpers-1.0.1"
+
+python_prepare_all() {
+	export SETUPTOOLS_SCM_PRETEND_VERSION="${PV}"
+	distutils-r1_python_prepare_all
+}
+
+distutils_enable_tests pytest
