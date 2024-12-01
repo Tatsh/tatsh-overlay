@@ -7,8 +7,8 @@ inherit font
 DESCRIPTION="Google's font family that aims to support all the world's languages"
 HOMEPAGE="https://www.google.com/get/noto/ https://github.com/notofonts/notofonts.github.io"
 
-COMMIT="28b15b4b43b7bed62b5cf6e6b0b5ff5846270535"
-SRC_URI="https://github.com/notofonts/notofonts.github.io/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
+SHA="eabc8c16e34b64e6a6c376c5fdb6b203ed3d7cfd"
+SRC_URI="https://github.com/notofonts/notofonts.github.io/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="OFL-1.1"
 SLOT="0"
@@ -33,7 +33,7 @@ RDEPEND="l10n_zh-CN? ( media-fonts/noto-cjk )
 	l10n_ko? ( media-fonts/noto-cjk )"
 RESTRICT="binchecks strip"
 
-S="${WORKDIR}/${PN}fonts.github.io-${COMMIT}"
+S="${WORKDIR}/${PN}fonts.github.io-${SHA}"
 
 FONT_SUFFIX="ttf"
 FONT_CONF=(
