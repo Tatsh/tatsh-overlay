@@ -1,1 +1,5 @@
-{ "branch": "main" }
+{
+  "regex": "/sudachi-linux-v(\\d+.\\d+.\\d+)\\.7z\"",
+  "type": "regex",
+  "url": "https://sudachi.emuplace.app/assets/index-J-Va0IF-.js"
+}
