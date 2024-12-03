@@ -85,6 +85,8 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"
 	"${FILESDIR}/${PN}-0002-boost-fix.patch"
+	"${FILESDIR}/${PN}-0003-fmt-10-fixes.patch"
+	"${FILESDIR}/${PN}-0004-header-fixes.patch"
 )
 
 src_prepare() {
