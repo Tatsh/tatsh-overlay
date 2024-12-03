@@ -68,9 +68,11 @@ BDEPEND="app-arch/unzip
 	app-text/dos2unix"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-system-libs.patch"
-	"${FILESDIR}/${PN}-0002-fixes.patch"
+	"${FILESDIR}/${PN}-0001-add-missing-header.patch"
+	"${FILESDIR}/${PN}-0002-system-libs.patch"
 	"${FILESDIR}/${PN}-0003-boost-fix.patch"
+	"${FILESDIR}/${PN}-0004-fmt-10-fixes.patch"
+	"${FILESDIR}/${PN}-0006-header-fixes.patch"
 )
 
 src_unpack() {

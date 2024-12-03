@@ -1,3 +1,13 @@
+From 2eec39bd2c613d089b2327ca197375e7b575fe82 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 2 Dec 2024 17:27:07 -0500
+Subject: [PATCH 3/6] Boost fix
+
+---
+ CMakeLists.txt                          | 2 --
+ src/input_common/helpers/udp_protocol.h | 3 ++-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index a39d08d..14a7a50 100644
 --- a/CMakeLists.txt
@@ -32,3 +42,6 @@ index 7bc5992..e64127e 100644
      return message;
  }
  
+-- 
+2.47.1
+

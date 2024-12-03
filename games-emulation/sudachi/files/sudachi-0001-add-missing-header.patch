@@ -1,3 +1,12 @@
+From 4344b99ff830be91b6830701264af7d44a69cd62 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 1 Nov 2024 05:16:00 -0400
+Subject: [PATCH 1/6] Add missing header
+
+---
+ src/core/hle/service/am/am.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
 diff --git a/src/core/hle/service/am/am.cpp b/src/core/hle/service/am/am.cpp
 index 4512997..e64ce1e 100644
 --- a/src/core/hle/service/am/am.cpp
@@ -10,3 +19,6 @@ index 4512997..e64ce1e 100644
  
  namespace Service::AM {
  
+-- 
+2.47.1
+

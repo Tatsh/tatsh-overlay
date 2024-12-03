@@ -1,3 +1,12 @@
+From 9e4fb9b8cb13985cb57de9b88d97bb349296a166 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 3 Nov 2024 08:33:42 -0500
+Subject: [PATCH 2/6] System libs
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index ed30417..a39d08d 100644
 --- a/CMakeLists.txt
@@ -11,3 +20,6 @@ index ed30417..a39d08d 100644
  endif()
  
  if (SUDACHI_TESTS)
+-- 
+2.47.1
+
