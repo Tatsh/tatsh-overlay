@@ -1,0 +1,35 @@
+diff --git a/ffi/cdef.c b/ffi/cdef.c
+index 9c22ce7..e8c8a1f 100644
+--- a/ffi/cdef.c
++++ b/ffi/cdef.c
+@@ -56,8 +56,8 @@ struct curl_ws_frame {
+   ...;
+ };
+ 
+-int curl_ws_recv(void *curl, void *buffer, int buflen, int *recv, struct curl_ws_frame **meta);
+-int curl_ws_send(void *curl, void *buffer, int buflen, int *sent, int fragsize, unsigned int sendflags);
++int curl_ws_recv(void *curl, void *buffer, int buflen, size_t *recv, const struct curl_ws_frame **meta);
++int curl_ws_send(void *curl, void *buffer, int buflen, size_t *sent, int fragsize, unsigned int sendflags);
+ 
+ // mime
+ void *curl_mime_init(void* curl);  // -> form
+diff --git a/scripts/build.py b/scripts/build.py
+index 4891867..9edb53a 100644
+--- a/scripts/build.py
++++ b/scripts/build.py
+@@ -103,7 +103,6 @@ def get_curl_libraries():
+ ffibuilder = FFI()
+ system = platform.system()
+ root_dir = Path(__file__).parent.parent
+-download_libcurl()
+ 
+ 
+ ffibuilder.set_source(
+@@ -113,7 +112,6 @@ ffibuilder.set_source(
+     """,
+     # FIXME from `curl-impersonate`
+     libraries=get_curl_libraries(),
+-    extra_objects=get_curl_archives(),
+     library_dirs=[arch["libdir"]],
+     source_extension=".c",
+     include_dirs=[
