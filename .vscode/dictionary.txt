@@ -5,6 +5,7 @@ abloop
 accessapproval
 accesscontextmanager
 accesscontrol
+aclocal
 adal
 adbsync
 addpredict
@@ -176,6 +177,7 @@ bochs
 boltdb
 boolbase
 boombuler
+boringssl
 bradfitz
 bradleyjkemp
 broot
@@ -1028,6 +1030,7 @@ kylemanna
 labbe's
 langid
 langneg
+lbrotlidec
 ldconfig
 ldflags
 ldlibs
@@ -1043,6 +1046,7 @@ lepcha
 leveladj
 levelname
 levn
+lexiforest
 libaio
 libao
 libatrac
@@ -1378,6 +1382,7 @@ newunit
 nextick
 nfnt
 nftables
+nghttp
 niemeyer
 nihcode
 nihongo
@@ -1897,6 +1902,7 @@ sqlserver
 sqlx
 squashfs
 srmd
+sslkeylogfile
 sslvpn
 ssri
 stackexchange
