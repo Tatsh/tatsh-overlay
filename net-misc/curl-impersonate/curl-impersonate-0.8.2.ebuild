@@ -37,13 +37,13 @@ src_prepare() {
 	eapply ../chrome/patches/boringssl.patch
 	touch .patched || die
 	cmake_src_prepare
-	popd
+	popd || die
 	mv "${WORKDIR}/curl-${CURL_VERSION}" "${S}/${CURL_VERSION}" || die
 	pushd "${CURL_VERSION}" || die
 	eapply ../chrome/patches/curl-impersonate.patch
 	eautoreconf
 	touch .patched-chrome || die
-	popd
+	popd || die
 	eapply "${FILESDIR}/${PN}-0001-build-fixes.patch"
 	eautoreconf
 	default
@@ -55,13 +55,13 @@ src_configure() {
 	filter-lto
 	local mycmakeargs=( -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON )
 	cmake_src_configure
-	popd
+	popd || die
 }
 
 src_compile() {
 	pushd "boringssl-${BORINGSSL_SHA}" || die
 	cmake_src_compile
-	popd
+	popd || die
 	mkdir "boringssl-${BORINGSSL_SHA}/lib" || die
 	cp "boringssl-${BORINGSSL_SHA}_build"/*.a "boringssl-${BORINGSSL_SHA}/lib" || die
 	pushd "${CURL_VERSION}" || die
@@ -82,14 +82,14 @@ src_compile() {
 		LIBS="-pthread -lbrotlidec -lc++" \
 		USE_CURL_SSLKEYLOGFILE=true
 	emake
-	popd
+	popd || die
 }
 
 src_install() {
 	pushd "${CURL_VERSION}" || die
 	emake DESTDIR="${D}" install
 	rm -fR "${D}/usr/share/man" "${D}/usr/share/aclocal" "${D}/usr/include" || die
-	popd
+	popd || die
 	if use clients; then
 		local bn i
 		for i in chrome/curl_*; do
