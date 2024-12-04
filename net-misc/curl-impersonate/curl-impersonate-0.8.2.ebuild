@@ -44,8 +44,6 @@ src_prepare() {
 	eautoreconf
 	touch .patched-chrome || die
 	popd || die
-	eapply "${FILESDIR}/${PN}-0001-build-fixes.patch"
-	eautoreconf
 	default
 }
 
