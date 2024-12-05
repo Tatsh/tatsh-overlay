@@ -20,7 +20,8 @@ IUSE="clients"
 
 DEPEND="app-arch/brotli:=
 	dev-libs/nss:=
-	net-libs/nghttp2:="
+	net-libs/nghttp2:=
+	sys-libs/libcxx:="
 RDEPEND="${DEPEND}"
 BDEPEND="dev-build/ninja
 	dev-build/cmake"
