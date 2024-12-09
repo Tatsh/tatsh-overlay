@@ -8,12 +8,12 @@ inherit yarn
 DESCRIPTION="Prettier is an opinionated code formatter"
 HOMEPAGE="https://prettier.io"
 YARN_PKGS=(
-	prettier-3.4.1
-	prettier-plugin-sort-json-4.0.0
-	prettier-plugin-toml-2.0.1
-	@taplo/core-0.1.1
-	@taplo/lib-0.4.0-alpha.2
+	prettier-3.4.2
 	prettier-plugin-ini-1.3.0
+	prettier-plugin-toml-2.0.1
+	@taplo/lib-0.4.0-alpha.2
+	prettier-plugin-sort-json-4.0.0
+	@taplo/core-0.1.1
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
