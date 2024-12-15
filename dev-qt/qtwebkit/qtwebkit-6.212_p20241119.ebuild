@@ -28,11 +28,11 @@ PATCHES=(
 S="${WORKDIR}/webkit-${SHA}"
 
 src_configure() {
+	append-cxxflags -U_GLIBCXX_ASSERTIONS
 	filter-lto
 	local mycmakeargs=(
 		"-DENABLE_X11_TARGET=$(usex X)"
 		-DDEVELOPER_MODE_FATAL_WARNINGS=OFF
-		#-DENABLE_ASSERTS=OFF
 		#-DENABLE_DEVICE_ORIENTATION=ON
 		#-DENABLE_PRINT_SUPPORT=ON
 		#-DENABLE_SPELLCHECK=OFF
@@ -40,6 +40,7 @@ src_configure() {
 		-DUSE_MINIMAL_DEBUG_INFO=ON
 		-DUSE_SYSTEM_MALLOC=ON
 		# Broken
+		# -DENABLE_ASSERTS=OFF
 		# -DENABLE_MEDIA_SOURCE=$(usex gstreamer)
 		# -DENABLE_WEB_AUDIO=$(usex gstreamer)
 		# -DUSE_GSTREAMER=$(usex gstreamer)
