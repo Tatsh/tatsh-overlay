@@ -15,9 +15,21 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="X"
 
-DEPEND="media-libs/woff2
+DEPEND="dev-libs/hyphen
+	dev-libs/icu:=
+	dev-libs/libgcrypt
+	dev-libs/libtasn1
+	dev-libs/libxml2
+	dev-libs/libxslt
+	dev-qt/qtbase:6
 	dev-qt/qtpositioning:6
-	dev-qt/qtsensors:6"
+	dev-qt/qtsensors:6
+	media-libs/harfbuzz
+	media-libs/libjpeg-turbo
+	media-libs/libpng
+	media-libs/libwebp
+	media-libs/woff2
+	sys-libs/zlib"
 RDEPEND="${DEPEND}"
 
 PATCHES=(
