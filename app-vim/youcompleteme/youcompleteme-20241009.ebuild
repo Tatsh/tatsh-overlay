@@ -21,7 +21,7 @@ DEPEND="|| ( >=app-editors/vim-7.3[python] >=app-editors/gvim-7.3[python] )"
 # shellcheck disable=SC2016
 RDEPEND="${DEPEND}
 	${PYTHON_DEPS}
-	sys-devel/clang:=
+	llvm-core/clang:=
 	$(python_gen_cond_dep 'dev-python/requests-futures[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	$(python_gen_cond_dep 'dev-python/requests[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	$(python_gen_cond_dep 'dev-util/ycmd[${PYTHON_SINGLE_USEDEP}]' "${PYTHON_COMPAT[@]}")"

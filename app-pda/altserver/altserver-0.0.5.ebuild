@@ -32,7 +32,7 @@ DEPEND="dev-cpp/cpprestsdk
 	sys-apps/util-linux
 	sys-libs/zlib"
 RDEPEND="${DEPEND}"
-BDEPEND="sys-devel/clang"
+BDEPEND="llvm-core/clang"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 

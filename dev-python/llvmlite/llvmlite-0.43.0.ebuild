@@ -15,7 +15,7 @@ LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-BDEPEND="sys-devel/llvm:14"
+BDEPEND="llvm-core/llvm:14"
 RDEPEND="${BDEPEND}"
 DEPEND="${RDEPEND}"
 

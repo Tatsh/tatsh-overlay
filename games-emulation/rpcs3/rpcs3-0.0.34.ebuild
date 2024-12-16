@@ -40,6 +40,7 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	dev-qt/qtmultimedia:6
 	dev-qt/qtnetworkauth:6
 	dev-qt/qtsvg:6
+	llvm-core/llvm:17
 	media-libs/glew:0
 	media-libs/libglvnd[X]
 	media-libs/libpng:*
@@ -48,7 +49,6 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	media-video/ffmpeg
 	net-libs/miniupnpc
 	net-misc/curl
-	sys-devel/llvm:17
 	sys-libs/ncurses
 	sys-libs/zlib
 	media-libs/libjpeg-turbo
