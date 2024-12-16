@@ -25,7 +25,7 @@ RDEPEND="
 	$(python_gen_cond_dep 'dev-python/regex[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	$(python_gen_cond_dep 'dev-python/waitress[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
-	sys-devel/clang:=[static-analyzer]"
+	llvm-core/clang:=[static-analyzer]"
 
 S="${WORKDIR}/${PN}-${SHA}/cpp"
 
@@ -36,7 +36,7 @@ src_prepare() {
 		-e "s|@LIBCLANG_DIR@|$(llvm-config --libdir)|" \
 		-e "s:CLANG_RESOURCE_DIR =.*:CLANG_RESOURCE_DIR = '$(clang -print-resource-dir)':" \
 		-i ../ycmd/utils.py || die
-	local -r clang_version=$(best_version sys-devel/clang)
+	local -r clang_version=$(best_version llvm-core/clang)
 	sed -e "s,@EPREFIX@,${EPREFIX},g" \
 		-e "s/@CLANG_VERSION@/${clang_version:16:2}/" -i \
 		../ycmd/completers/cpp/clangd_completer.py || die

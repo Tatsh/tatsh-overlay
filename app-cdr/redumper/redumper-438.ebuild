@@ -16,10 +16,10 @@ KEYWORDS="~amd64"
 # Clang is forced due to ICE with GCC with -j1, failure otherwise
 IUSE="+clang"
 
-BDEPEND=">=sys-devel/clang-16.0.6
+BDEPEND=">=llvm-core/clang-16.0.6
 	dev-build/ninja"
-DEPEND=">=sys-libs/libcxx-16[static-libs]
-	>=sys-libs/libcxxabi-16[static-libs]"
+DEPEND=">=llvm-runtimes/libcxx-16[static-libs]
+	>=llvm-runtimes/libcxxabi-16[static-libs]"
 
 S="${WORKDIR}/${PN}-build_${PV}"
 

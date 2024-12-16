@@ -43,7 +43,7 @@ BDEPEND="
 	>=dev-build/cmake-3.16
 	sys-devel/gnuconfig
 	kernel_Darwin? (
-		<sys-libs/libcxx-$(ver_cut 1-3).9999
+		<llvm-runtimes/libcxx-$(ver_cut 1-3).9999
 		>=sys-devel/binutils-apple-5.1
 	)
 	doc? ( $(python_gen_any_dep '
@@ -59,11 +59,11 @@ BDEPEND="
 # installed means llvm-config there will take precedence.
 RDEPEND="
 	${RDEPEND}
-	!sys-devel/llvm:0
+	!llvm-core/llvm:0
 "
 PDEPEND="
-	sys-devel/llvm-common
-	binutils-plugin? ( >=sys-devel/llvmgold-${SLOT} )
+	llvm-core/llvm-common
+	binutils-plugin? ( >=llvm-core/llvmgold-${SLOT} )
 "
 
 LLVM_COMPONENTS=( llvm cmake third-party )
