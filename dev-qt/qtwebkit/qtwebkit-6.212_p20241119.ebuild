@@ -11,7 +11,7 @@ SHA="1682e2f4438250510d6ed29f506f5d7306aea45d"
 SRC_URI="https://github.com/movableink/webkit/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
 
 LICENSE="LGPL-2 BSD-2"
-SLOT="0"
+SLOT="6/${PV%%_*}"
 KEYWORDS="~amd64"
 IUSE="X"
 
