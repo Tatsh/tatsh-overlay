@@ -1,0 +1,39 @@
+From d89615e9f9519349bd4bd796e873bbc635dc3c99 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 17 Dec 2024 14:32:14 -0500
+Subject: [PATCH 4/4] Fix for Boost 1.87
+
+---
+ src/input_common/drivers/udp_client.cpp                  | 2 +-
+ src/tests/input_common/calibration_configuration_job.cpp | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/input_common/drivers/udp_client.cpp b/src/input_common/drivers/udp_client.cpp
+index 60821b31a..8aa113ced 100644
+--- a/src/input_common/drivers/udp_client.cpp
++++ b/src/input_common/drivers/udp_client.cpp
+@@ -113,7 +113,7 @@ private:
+     }
+
+     SocketCallback callback;
+-    boost::asio::io_service io_service;
++    boost::asio::io_context io_service;
+     boost::asio::basic_waitable_timer<clock> timer;
+     udp::socket socket;
+
+diff --git a/src/tests/input_common/calibration_configuration_job.cpp b/src/tests/input_common/calibration_configuration_job.cpp
+index 516ff1b30..40af1e4b9 100644
+--- a/src/tests/input_common/calibration_configuration_job.cpp
++++ b/src/tests/input_common/calibration_configuration_job.cpp
+@@ -82,7 +82,7 @@ public:
+     }
+
+ private:
+-    boost::asio::io_service io_service;
++    boost::asio::io_context io_service;
+     boost::asio::ip::udp::socket socket;
+     std::array<u8, InputCommon::CemuhookUDP::MAX_PACKET_SIZE> send_buffer;
+     std::array<u8, InputCommon::CemuhookUDP::MAX_PACKET_SIZE> receive_buffer;
+--
+2.47.1
+
