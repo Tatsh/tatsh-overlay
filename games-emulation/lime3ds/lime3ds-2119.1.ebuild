@@ -57,6 +57,7 @@ BDEPEND="dev-cpp/catch:0 media-libs/fdk-aac"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-library-changes.patch"
 	"${FILESDIR}/${PN}-0002-boost-fix.patch"
+	"${FILESDIR}/${PN}-0003-boost-1.87-fixes.patch"
 )
 
 S="${WORKDIR}/lime3ds-archive-${PV}"

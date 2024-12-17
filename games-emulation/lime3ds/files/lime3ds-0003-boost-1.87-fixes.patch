@@ -1,0 +1,25 @@
+From 085443f6de417a98607d50d9c6afd018cc8dc52c Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 17 Dec 2024 14:41:59 -0500
+Subject: [PATCH 2/2] Boost 1.87 fixes
+
+---
+ src/input_common/udp/client.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/input_common/udp/client.cpp b/src/input_common/udp/client.cpp
+index 7b14dbc76..9af45306b 100644
+--- a/src/input_common/udp/client.cpp
++++ b/src/input_common/udp/client.cpp
+@@ -108,7 +108,7 @@ private:
+     }
+ 
+     SocketCallback callback;
+-    boost::asio::io_service io_service;
++    boost::asio::io_context io_service;
+     boost::asio::basic_waitable_timer<clock> timer;
+     udp::socket socket;
+ 
+-- 
+2.47.1
+
