@@ -58,6 +58,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libraries.patch"
 	"${FILESDIR}/${PN}-0002-inih-fix.patch"
 	"${FILESDIR}/${PN}-0003-boost-fix.patch"
+	"${FILESDIR}/${PN}-0004-boost-1.87.patch"
 )
 
 S="${WORKDIR}/${PN}-${SHA}"
