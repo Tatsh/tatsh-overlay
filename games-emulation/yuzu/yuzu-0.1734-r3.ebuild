@@ -67,7 +67,7 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 		qt6? ( dev-qt/qtwebengine:6 )
 	)
 	llvm-libunwind? ( llvm-runtimes/libunwind )
-	!llvm-libunwind? ( llvm-runtimes/libunwind:= )"
+	!llvm-libunwind? ( sys-libs/libunwind:= )"
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="app-arch/unzip
