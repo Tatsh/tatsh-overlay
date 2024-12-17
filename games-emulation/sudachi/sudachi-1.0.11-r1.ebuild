@@ -73,6 +73,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0003-boost-fix.patch"
 	"${FILESDIR}/${PN}-0004-fmt-10-fixes.patch"
 	"${FILESDIR}/${PN}-0006-header-fixes.patch"
+	"${FILESDIR}/${PN}-0007-boost-1.87-changes.patch"
 )
 
 src_unpack() {
