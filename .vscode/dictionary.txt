@@ -403,6 +403,7 @@ dcpp
 dcrc
 ddaemon
 ddev
+ddeveloper
 ddisable
 ddrivers
 ddynarec
@@ -521,6 +522,7 @@ doxyfile
 doxygen
 dpackage
 dpdb
+dport
 dportable
 dproject
 dpulseaudio
@@ -538,6 +540,7 @@ dsplit
 dsudachi
 dsymutil
 dsystemd
+dtracker
 dubhater
 dudev
 duployan
@@ -741,6 +744,7 @@ glebarez
 gles
 glew
 glfw
+glibcxx
 gliderlabs
 globalcache
 globalthis
@@ -1024,6 +1028,7 @@ kubun
 kuler
 kwidgetsaddons
 kwin
+kwsites
 kxmlgui
 kylelemons
 kylemanna
@@ -1109,6 +1114,7 @@ librealcugannv
 librealesrgan
 libretro
 libretrodb
+librife
 librw
 libsamplerate
 libscenechange
@@ -1577,6 +1583,7 @@ procapture
 procatpure
 profdata
 profgen
+proggy
 proglog
 programfiles
 programfileslinux
@@ -1659,6 +1666,7 @@ qtpaths
 qtpositioning
 qtprintsupport
 qtquick
+qtsensors
 qtserialport
 qtsql
 qtsvg
@@ -1802,6 +1810,7 @@ scipy
 scires
 scopeguard
 screamf
+scriptable
 scrn
 scuid
 sdist
@@ -2240,6 +2249,7 @@ yazl
 ycmd
 yhat
 yocto
+yoctocolors
 yojson
 yookoala
 yosay
