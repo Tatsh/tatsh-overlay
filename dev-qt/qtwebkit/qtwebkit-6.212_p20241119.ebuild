@@ -40,6 +40,7 @@ PATCHES=(
 S="${WORKDIR}/webkit-${SHA}"
 
 src_configure() {
+	# Disable assertions https://bugs.webkit.org/show_bug.cgi?id=284786
 	append-cxxflags -U_GLIBCXX_ASSERTIONS
 	filter-lto
 	local mycmakeargs=(
