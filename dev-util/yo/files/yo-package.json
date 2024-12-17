@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "yo": "^5.0.0"
+    "generator-code": "^1.11.5",
+    "yo": "^5.1.0"
   }
 }
