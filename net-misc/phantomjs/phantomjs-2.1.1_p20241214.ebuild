@@ -16,8 +16,7 @@ KEYWORDS="~amd64"
 
 DEPEND="dev-qt/qtwebkit:6
 	dev-qt/qtbase:6
-	dev-qt/qt5compat:6
-	dev-qt/qtnetwork:6"
+	dev-qt/qt5compat:6"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${PN}-${SHA}"
