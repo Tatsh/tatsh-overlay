@@ -5,8 +5,7 @@ index 6f8086d234..32ea22a6ab 100644
 @@ -994,7 +994,7 @@ private:
  /* This check is for normal Release builds; ASSERT_ENABLED changes the size. */
  #if !ASSERT_ENABLED
- // TODO Figure out why this went up on my machine
--static_assert(sizeof(CodeBlock) <= 240, "Keep it small for memory saving");
+-static_assert(sizeof(CodeBlock) <= 224, "Keep it small for memory saving");
 +static_assert(sizeof(CodeBlock) <= 248, "Keep it small for memory saving");
  #endif
  

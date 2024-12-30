@@ -7,7 +7,7 @@ inherit cmake flag-o-matic
 
 DESCRIPTION="Community fork of QtWebKit."
 HOMEPAGE="https://github.com/movableink/webkit"
-SHA="1682e2f4438250510d6ed29f506f5d7306aea45d"
+SHA="7e43fe7000b319ce68334c09eed1031642099726"
 SRC_URI="https://github.com/movableink/webkit/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
 
 LICENSE="LGPL-2 BSD-2"
@@ -33,7 +33,6 @@ DEPEND="dev-libs/hyphen
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-icu-76.patch"
 	"${FILESDIR}/${PN}-size.patch"
 )
 
