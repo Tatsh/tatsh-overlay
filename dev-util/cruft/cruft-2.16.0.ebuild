@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=poetry
+DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_1{0,1,2} )
 
 inherit distutils-r1
@@ -28,7 +28,5 @@ BDEPEND="test? (
 		dev-python/pytest-repeat[${PYTHON_USEDEP}]
 		dev-python/pytest-xdist[${PYTHON_USEDEP}]
 	)"
-
-PATCHES=( "${FILESDIR}/${PN}-0001-fix-globs-in-skip.patch" )
 
 distutils_enable_tests pytest
