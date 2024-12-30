@@ -7,7 +7,7 @@ inherit autotools desktop
 
 DESCRIPTION="68k Macintosh emulator (updated fork)."
 HOMEPAGE="https://github.com/kanjitalk755/macemu"
-SHA="d3aa80f70391f00f5db02b34efb12ae1ce3486ba"
+SHA="e013a8854688bef1390aae4716620035f46edab0"
 SRC_URI="https://github.com/kanjitalk755/macemu/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://basilisk.cebix.net/images/apple.png -> ${PN}-icon.png"
 
