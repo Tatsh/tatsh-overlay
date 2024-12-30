@@ -7,7 +7,7 @@ inherit cmake desktop xdg
 
 DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
-SHA="b53b223ba9b45974cd80674d8de9c6e736e34ae9"
+SHA="2b0cbf7f6b6c34c748585d255ee7756ff592a502"
 MY_PN="Cemu"
 GLSLANG_SHA="36d08c0d940cf307a23928299ef52c7970d8cee6"
 IMGUI_PV="1.88"
@@ -48,7 +48,6 @@ S="${WORKDIR}/${MY_PN}-${SHA}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0002-remove-default-from-system-g.patch"
-	"${FILESDIR}/${PN}-0003-boost-1.87.patch"
 )
 
 src_prepare() {
