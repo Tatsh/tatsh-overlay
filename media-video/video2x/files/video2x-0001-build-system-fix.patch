@@ -1,30 +1,31 @@
-From ad838fbabc820a99c5d4ceb3102e82a0d9bfd499 Mon Sep 17 00:00:00 2001
+From 1d88808c0b8b8ba2d4fb6ab1f9e2b842e7ffbb28 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 27 Oct 2024 06:08:21 -0400
 Subject: [PATCH] Build system fix
 
 ---
- CMakeLists.txt                 | 52 ++++++----------------------------
+ CMakeLists.txt                 | 70 ++++++----------------------------
  src/encoder.cpp                |  1 +
- tools/video2x/src/argparse.cpp | 28 +-----------------
- 3 files changed, 10 insertions(+), 71 deletions(-)
+ tools/video2x/src/argparse.cpp |  2 +
+ 3 files changed, 14 insertions(+), 59 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3307f8a..c0a274a 100644
+index 0e89eca..cf29079 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -206,6 +206,9 @@ else()
+@@ -207,6 +207,10 @@ else()
      add_subdirectory(third_party/ncnn)
  endif()
  
 +add_subdirectory(third_party/realesrgan)
++add_subdirectory(third_party/realcugan)
 +add_subdirectory(third_party/rife)
 +
  # spdlog
  if(USE_SYSTEM_SPDLOG)
      find_package(spdlog REQUIRED)
-@@ -237,35 +240,6 @@ if(BUILD_VIDEO2X_CLI)
-     set(VULKAN_LIB Vulkan::Vulkan)
+@@ -244,48 +248,6 @@ if(BUILD_VIDEO2X_CLI)
+     list(APPEND VIDEO2X_LIBS Boost::program_options)
  endif()
  
 -# Include ExternalProject module
@@ -43,7 +44,20 @@ index 3307f8a..c0a274a 100644
 -    INSTALL_COMMAND ${CMAKE_COMMAND} --build . --target install --config ${CMAKE_BUILD_TYPE}
 -)
 -
--# Add librealesrgan-ncnn-vulkan as an external project
+-# Add librealcugan-ncnn-vulkan as an external project
+-ExternalProject_Add(
+-    realcugan
+-    SOURCE_DIR ${PROJECT_SOURCE_DIR}/third_party/librealcugan_ncnn_vulkan/src
+-    CMAKE_ARGS
+-        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+-        -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/realcugan_install
+-        -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+-        -DUSE_SYSTEM_NCNN=${USE_SYSTEM_NCNN}
+-    BUILD_ALWAYS ON
+-    INSTALL_COMMAND ${CMAKE_COMMAND} --build . --target install --config ${CMAKE_BUILD_TYPE}
+-)
+-
+-# Add librife-ncnn-vulkan as an external project
 -ExternalProject_Add(
 -    rife
 -    SOURCE_DIR ${PROJECT_SOURCE_DIR}/third_party/librife_ncnn_vulkan/src
@@ -57,40 +71,44 @@ index 3307f8a..c0a274a 100644
 -)
 -
  # Remove duplicate entries
- list(REMOVE_DUPLICATES ALL_INCLUDE_DIRS)
- list(REMOVE_DUPLICATES ALL_LIBRARIES)
-@@ -280,17 +254,14 @@ else()
+ list(REMOVE_DUPLICATES LIBVIDEO2X_INCLUDE_DIRS)
+ list(REMOVE_DUPLICATES LIBVIDEO2X_LIBS)
+@@ -302,18 +264,15 @@ else()
      set_target_properties(libvideo2x PROPERTIES OUTPUT_NAME video2x)
  endif()
  
 -# Ensure that the shared library is built after the external projects
--add_dependencies(libvideo2x realesrgan rife)
+-add_dependencies(libvideo2x realesrgan realcugan rife)
 -
  # Include directories for the shared library
  target_include_directories(libvideo2x PRIVATE
-     ${ALL_INCLUDE_DIRS}
+     ${LIBVIDEO2X_INCLUDE_DIRS}
      ${CMAKE_CURRENT_BINARY_DIR}
      ${PROJECT_SOURCE_DIR}/include
      ${PROJECT_SOURCE_DIR}/include/libvideo2x
 -    ${PROJECT_SOURCE_DIR}/third_party/librealesrgan_ncnn_vulkan/src
+-    ${PROJECT_SOURCE_DIR}/third_party/librealcugan_ncnn_vulkan/src
 -    ${PROJECT_SOURCE_DIR}/third_party/librife_ncnn_vulkan/src
 +    ${PROJECT_SOURCE_DIR}/third_party/realesrgan
++    ${PROJECT_SOURCE_DIR}/third_party/realcugan
 +    ${PROJECT_SOURCE_DIR}/third_party/rife
  )
  
  # Compile options for the shared library
-@@ -305,8 +276,8 @@ if(WIN32)
-     set(REALESRGAN_LIB ${CMAKE_BINARY_DIR}/realesrgan_install/lib/librealesrgan-ncnn-vulkan.lib)
+@@ -325,9 +284,9 @@ if(WIN32)
+     set(REALCUGAN_LIB ${CMAKE_BINARY_DIR}/realcugan_install/lib/librealcugan-ncnn-vulkan.lib)
      set(RIFE_LIB ${CMAKE_BINARY_DIR}/rife_install/lib/librife-ncnn-vulkan.lib)
  else()
 -    set(REALESRGAN_LIB ${CMAKE_BINARY_DIR}/realesrgan_install/lib/librealesrgan-ncnn-vulkan.so)
+-    set(REALCUGAN_LIB ${CMAKE_BINARY_DIR}/realcugan_install/lib/librealcugan-ncnn-vulkan.so)
 -    set(RIFE_LIB ${CMAKE_BINARY_DIR}/rife_install/lib/librife-ncnn-vulkan.so)
 +    set(REALESRGAN_LIB ${CMAKE_BINARY_DIR}/third_party/realesrgan/librealesrgan-ncnn-vulkan.so)
++    set(REALCUGAN_LIB ${CMAKE_BINARY_DIR}/third_party/realcugan/librealcugan-ncnn-vulkan.so)
 +    set(RIFE_LIB ${CMAKE_BINARY_DIR}/third_party/rife/librife-ncnn-vulkan.so)
  endif()
- list(APPEND ALL_LIBRARIES ${REALESRGAN_LIB} ${RIFE_LIB})
+ list(APPEND LIBVIDEO2X_LIBS ${REALESRGAN_LIB} ${REALCUGAN_LIB} ${RIFE_LIB})
  
-@@ -357,7 +328,7 @@ if(WIN32)
+@@ -372,7 +331,7 @@ if(WIN32)
  else()
      set(BIN_DESTINATION_DEFAULT "bin")
      set(INCLUDE_DESTINATION_DEFAULT "include/libvideo2x")
@@ -99,12 +117,12 @@ index 3307f8a..c0a274a 100644
      set(MODEL_DESTINATION_DEFAULT "share/video2x")
  endif()
  
-@@ -413,11 +384,4 @@ if(WIN32)
+@@ -429,11 +388,4 @@ if(WIN32)
                      GROUP_READ GROUP_EXECUTE
                      WORLD_READ WORLD_EXECUTE
      )
 -else()
--    install(FILES ${REALESRGAN_LIB} ${RIFE_LIB}
+-    install(FILES ${REALESRGAN_LIB} ${REALCUGAN_LIB} ${RIFE_LIB}
 -        DESTINATION ${INSTALL_LIB_DESTINATION}
 -        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
 -                    GROUP_READ GROUP_EXECUTE
@@ -112,63 +130,30 @@ index 3307f8a..c0a274a 100644
 -    )
  endif()
 diff --git a/src/encoder.cpp b/src/encoder.cpp
-index cf1195f..edeb642 100644
+index 7b732f3..115a74b 100644
 --- a/src/encoder.cpp
 +++ b/src/encoder.cpp
-@@ -8,6 +8,7 @@ extern "C" {
+@@ -10,6 +10,7 @@ extern "C" {
  
  #include "avutils.h"
  #include "conversions.h"
 +#include "libvideo2x/fsutils.h"
  
- Encoder::Encoder()
-     : ofmt_ctx_(nullptr), enc_ctx_(nullptr), out_vstream_idx_(-1), stream_map_(nullptr) {}
+ namespace video2x {
+ namespace encoder {
 diff --git a/tools/video2x/src/argparse.cpp b/tools/video2x/src/argparse.cpp
-index ff9b532..8c52707 100644
+index b32c26e..0b8aecb 100644
 --- a/tools/video2x/src/argparse.cpp
 +++ b/tools/video2x/src/argparse.cpp
-@@ -12,6 +12,7 @@
- #include <vulkan_utils.h>
+@@ -12,6 +12,8 @@
+ #include <spdlog/spdlog.h>
  #include <boost/program_options.hpp>
  
 +#include "libvideo2x/fsutils.h"
- #include "logging.h"
++#include "libvideo2x/logging.h"
  #include "validators.h"
+ #include "vulkan_utils.h"
  
-@@ -24,33 +25,6 @@
- 
- namespace po = boost::program_options;
- 
--#ifdef _WIN32
--std::string wstring_to_u8string(const std::wstring &wstr) {
--    if (wstr.empty()) {
--        return std::string();
--    }
--    int size_needed = WideCharToMultiByte(
--        CP_UTF8, 0, wstr.data(), static_cast<int>(wstr.size()), nullptr, 0, nullptr, nullptr
--    );
--    std::string converted_str(size_needed, 0);
--    WideCharToMultiByte(
--        CP_UTF8,
--        0,
--        wstr.data(),
--        static_cast<int>(wstr.size()),
--        &converted_str[0],
--        size_needed,
--        nullptr,
--        nullptr
--    );
--    return converted_str;
--}
--#else
--std::string wstring_to_u8string(const std::string &str) {
--    return str;
--}
--#endif
--
- int parse_args(
-     int argc,
- #ifdef _WIN32
 -- 
 2.47.1
 
