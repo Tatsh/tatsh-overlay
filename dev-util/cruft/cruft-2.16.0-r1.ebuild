@@ -29,4 +29,15 @@ BDEPEND="test? (
 		dev-python/pytest-xdist[${PYTHON_USEDEP}]
 	)"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-0001-generate-remove-filtering-_-.patch"
+	"${FILESDIR}/${PN}-0002-improve-get_skip_paths.patch"
+	"${FILESDIR}/${PN}-0003-add-include-deleted-files-ex.patch"
+)
+
 distutils_enable_tests pytest
+
+src_prepare() {
+	sed -re "s/^version =.*/version = \"${PV}\"/" -i pyproject.toml || die
+	distutils-r1_src_prepare
+}

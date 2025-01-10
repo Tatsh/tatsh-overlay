@@ -1,0 +1,98 @@
+From 45dde6fe37493b0f2bbc19a94bb6379cf5b2c163 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?P=C3=A1draic=20Calpin?= <padraic.calpin@zensor.be>
+Date: Wed, 7 Jun 2023 09:38:30 +0200
+Subject: [PATCH 3/3] Add 'include-deleted-files/exclude-deleted-files' flag to
+ cruft diff
+
+This flag controls if files present in the template but not in
+the project get added to diff output.
+---
+ cruft/_cli.py           | 15 ++++++++++++++-
+ cruft/_commands/diff.py |  9 +++++++--
+ tests/test_cli.py       | 14 ++++++++++++++
+ 3 files changed, 35 insertions(+), 3 deletions(-)
+
+diff --git a/cruft/_cli.py b/cruft/_cli.py
+index 73822a3..793cfe7 100644
+--- a/cruft/_cli.py
++++ b/cruft/_cli.py
+@@ -318,6 +318,19 @@ def diff(
+         "-c",
+         help=("The git reference to check against. Supports branches, tags and commit hashes."),
+     ),
++    exclude_deleted_files: bool = typer.Option(
++        True,
++        "--exclude-deleted-files/--include-deleted-files",
++        help=(
++            "Control if files present in the template and missing from the project "
++            + "are included in the diff output."
++        ),
++    ),
+ ) -> None:
+-    if not _commands.diff(project_dir=project_dir, exit_code=exit_code, checkout=checkout):
++    if not _commands.diff(
++        project_dir=project_dir,
++        exit_code=exit_code,
++        checkout=checkout,
++        exclude_deleted_files=exclude_deleted_files,
++    ):
+         raise typer.Exit(1)
+diff --git a/cruft/_commands/diff.py b/cruft/_commands/diff.py
+index dd38a1a..589f67c 100644
+--- a/cruft/_commands/diff.py
++++ b/cruft/_commands/diff.py
+@@ -11,7 +11,10 @@ from .utils.iohelper import AltTemporaryDirectory
+ 
+ 
+ def diff(
+-    project_dir: Path = Path("."), exit_code: bool = False, checkout: Optional[str] = None
++    project_dir: Path = Path("."),
++    exit_code: bool = False,
++    checkout: Optional[str] = None,
++    exclude_deleted_files: bool = True,
+ ) -> bool:
+     """Show the diff between the project and the linked Cookiecutter template"""
+     cruft_file = utils.cruft.get_cruft_file(project_dir)
+@@ -47,7 +50,7 @@ def diff(
+                 cruft_state=cruft_state,
+                 project_dir=project_dir,
+                 checkout=checkout,
+-                update_deleted_paths=True,
++                update_deleted_paths=exclude_deleted_files,
+             )
+ 
+         # Then we create a new tree with each file in the template that also exist
+@@ -56,6 +59,8 @@ def diff(
+             relative_path = path.relative_to(remote_template_dir)
+             local_path = project_dir / relative_path
+             destination = local_template_dir / relative_path
++            if not local_path.exists():
++                continue
+             if path.is_file():
+                 shutil.copy(str(local_path), str(destination))
+             else:
+diff --git a/tests/test_cli.py b/tests/test_cli.py
+index 01a77d0..3cd7e78 100644
+--- a/tests/test_cli.py
++++ b/tests/test_cli.py
+@@ -853,3 +853,17 @@ def test_submodule_diff_includes_submodule(cruft_runner, cookiecutter_dir_submod
+     assert "@@ -1 +1 @@" in result.stdout
+     assert "-revision 3" in result.stdout
+     assert "+revision 1" in result.stdout
++
++
++@pytest.mark.parametrize("expected_exit_code, include_deleted", [(0, False), (1, True)])
++def test_diff_deleted_files(expected_exit_code, include_deleted, cruft_runner, cookiecutter_dir):
++    print("cookiecutter_dir", cookiecutter_dir)
++    print(list(cookiecutter_dir.iterdir()))
++    # Delete a file from the project
++    (cookiecutter_dir / "README.md").unlink()
++    args = ["diff", "--project-dir", cookiecutter_dir.as_posix(), "--exit-code"]
++    if include_deleted:
++        args += ["--include-deleted-files"]
++    result = cruft_runner(args)
++    print(result.stdout)
++    assert result.exit_code == expected_exit_code
+-- 
+2.47.1
+
