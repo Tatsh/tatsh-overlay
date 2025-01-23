@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Floating IPS is a patcher for IPS and BPS files."
 HOMEPAGE="https://github.com/Alcaro/Flips"
-SHA="07162cac69114bdb4b8a2302d131604c29df853b"
+SHA="76c5e02f0aadf4f4ec69b482cceb06ca087f4b5a"
 SRC_URI="https://github.com/Alcaro/Flips/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
