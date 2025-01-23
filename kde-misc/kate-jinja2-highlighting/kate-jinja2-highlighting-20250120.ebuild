@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Improved Jinja2 syntax highlighting for Kate."
 HOMEPAGE="https://github.com/Pitmairen/kate-jinja2-highlighting"
-SHA="8ab9b0d40c54425d6a6b3e5f5ca9bf9f163389d9"
+SHA="df606468593f340207749eb7f7048c4c854d174a"
 SRC_URI="https://github.com/Pitmairen/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-3+"
