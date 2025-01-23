@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="C++ FAT16 read library."
 HOMEPAGE="https://github.com/Vita3K/libfat16"
-SHA="14ec3073358544c70b77702ff6394f09ce349c59"
+SHA="d9a890b712dcdb46d3d33230997efc59f5ad8d62"
 SRC_URI="https://github.com/Vita3K/libfat16/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 
 LICENSE="MIT"
