@@ -7,7 +7,7 @@ inherit lua
 
 DESCRIPTION="API to allow scripts to create interactive scrollable lists in mpv player."
 HOMEPAGE="https://github.com/CogentRedTester/mpv-scroll-list"
-SHA="1a12e4adf7ac583c9207b422d19b9c4d33f4c715"
+SHA="b8a3498b35fbb1d1d08aff98079acdb0da672277"
 SRC_URI="https://github.com/CogentRedTester/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
