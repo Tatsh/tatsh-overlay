@@ -13,7 +13,14 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
+MODULES_KERNEL_MAX=6.12
+
 S="${WORKDIR}/${PN}-${SHA}"
+
+src_prepare() {
+	sed "s%\$(shell uname -r)%${KV_FULL}%g" -i Makefile || die
+	default
+}
 
 src_compile() {
 	local modlist=( "${PN}" )
