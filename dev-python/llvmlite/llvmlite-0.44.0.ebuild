@@ -12,15 +12,15 @@ DESCRIPTION="A lightweight LLVM python binding for writing JIT compilers"
 HOMEPAGE="https://llvmlite.readthedocs.io/en/latest/ https://pypi.org/project/llvmlite/"
 
 LICENSE="BSD-2"
-SLOT="0/0.43.0"
+SLOT="0/0.44.0"
 KEYWORDS="~amd64"
 
-BDEPEND="llvm-core/llvm:14"
+BDEPEND="llvm-core/llvm:15"
 RDEPEND="${BDEPEND}"
 DEPEND="${RDEPEND}"
 
 python_compile() {
-	export "LLVM_CONFIG=${EPREFIX}/usr/lib/llvm/14/bin/llvm-config"
+	export "LLVM_CONFIG=${EPREFIX}/usr/lib/llvm/15/bin/llvm-config"
 	distutils-r1_python_compile
 }
 
