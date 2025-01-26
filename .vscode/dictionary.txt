@@ -2,8 +2,6 @@ aarch
 aashutoshrathi
 aatl
 abloop
-accessapproval
-accesscontextmanager
 accesscontrol
 aclocal
 adal
@@ -17,7 +15,6 @@ afero
 agnivade
 ahom
 aiohttp
-aiplatform
 ajstarks
 akavel
 alac
@@ -52,9 +49,6 @@ antihax
 antonmedv
 anymatch
 apac
-apigeeconnect
-apigeeregistry
-apikeys
 appconfig
 appdata
 appdirs
@@ -62,7 +56,6 @@ appengine
 appico
 appimage
 aprip
-aproba
 arbovm
 archiver
 ardatan
@@ -74,17 +67,14 @@ arrayish
 arrayref
 arrayvec
 arrify
-artifactregistry
 artifex
 arun
 asan
 asar
 asaskevich
 asmflags
-asmfmt
 asmjit
 assimp
-assuredworkloads
 astc
 astdr
 asticode
@@ -103,11 +93,8 @@ autodetection
 autogen
 autoload
 autoloading
-automagic
-automl
 automodule
 autotools
-autoupdate
 avalonia
 avcodec
 avisynth
@@ -119,7 +106,6 @@ aymanbagabas
 azcore
 azidentity
 azkeys
-bachmann
 backgroundremover
 backoff
 bamum
@@ -142,13 +128,11 @@ benbjohnson
 benc
 bencoder
 beorn
-beyondcorp
 bgentry
 bhaiksuki
 bidi
 bigfft
 bigints
-binaryauthorization
 binarycookies
 binaryextensions
 binaryornot
@@ -171,12 +155,10 @@ bitrock
 bitwidth
 blackbox
 blackfriday
-blesh
 bluez
 bochs
 boltdb
 boolbase
-boombuler
 boringssl
 bradfitz
 bradleyjkemp
@@ -203,7 +185,6 @@ bytebufferpool
 bytemuck
 byteorder
 byteshuf
-bytestream
 byteswap
 byteswapped
 cacache
@@ -221,7 +202,6 @@ cascadia
 ccache
 ccgo
 ccmd
-ccorpus
 ccount
 ccsha
 cctalk
@@ -232,7 +212,6 @@ cdrecord
 cemu
 certbot
 certifi
-certificatemanager
 cespare
 cffi
 cflags
@@ -270,9 +249,6 @@ classnames
 cleanhttp
 cliui
 clonehero
-cloudbuild
-clouddms
-cloudtasks
 cmakelang
 cmakerc
 cmdline
@@ -309,8 +285,6 @@ configor
 configura
 conflicter
 conntrack
-contactcenterinsights
-containeranalysis
 containerd
 cookiecutter
 cooperspencer
@@ -322,7 +296,6 @@ corejs
 coretemp
 corlett's
 cosmiconfig
-coyove
 cplugins
 cppflags
 cpprestsdk
@@ -368,18 +341,11 @@ danwakefield
 dargs
 dashjs
 dashmap
-datacatalog
-dataform
 datafusion
 datagrid
-datalabeling
 dataloaden
-dataplex
-dataproc
-dataqna
 dataserv
 datasize
-datastream
 dateformat
 datepicker
 datetime
@@ -421,10 +387,8 @@ deepmerge
 defusedxml
 deinterlace
 deinterlacing
-dejavu
 demangle
 denable
-dencode_framedumps
 denisenkom
 denoise
 denoising
@@ -437,7 +401,6 @@ destdir
 devel
 devname
 devtype
-dfastlog
 dffi
 dfilter
 dfluidsynth
@@ -447,7 +410,6 @@ dgit
 dglslang
 dgryski
 dgtk
-dialogflow
 difflib
 dinstall
 diropts
@@ -489,7 +451,6 @@ docamlfind
 docdir
 docompress
 docopt
-documentai
 dodoc
 doenvd
 doexe
@@ -506,7 +467,6 @@ domo
 domodule
 domutils
 dopenal
-doprofiling
 dorules
 dosbin
 dosbox
@@ -571,7 +531,6 @@ ebuilds
 ecbd
 eclass
 econf
-edgecontainer
 edune
 eedi
 eend
@@ -604,7 +563,6 @@ eroot
 errcheck
 errgo
 errno
-errorreporting
 errwrap
 esac
 esbuild
@@ -615,13 +573,11 @@ esprima
 esquery
 esrecurse
 esrgan
-essentialcontacts
 estraverse
 estree
 esutils
 eutils
 evdev
-eventarc
 eventemitter
 ewarn
 execa
@@ -645,6 +601,7 @@ fbjs
 fcaps
 fdeflate
 fecha
+felixge
 fflate
 ffms
 ffprobe
@@ -654,7 +611,6 @@ fileinfo
 filelist
 filelock
 filesdir
-filestore
 fileutil
 filippo
 filt
@@ -669,7 +625,6 @@ flate
 flatmap
 flect
 flexbin
-flto
 fluidsynth
 fluxsmooth
 fmtconv
@@ -727,7 +682,6 @@ ghodss
 gickup
 gifs
 gileshuang
-gioui
 gitea
 gitgen
 githubv
@@ -735,10 +689,6 @@ gitmodules
 gitpython
 giwty
 gjson
-gkebackup
-gkeconnect
-gkehub
-gkemulticloud
 glabels
 glebarez
 gles
@@ -761,7 +711,6 @@ gnuconfig
 gnuflag
 gnullvm
 gnutls
-goasm
 goautoneg
 gobject
 gobwas
@@ -773,8 +722,6 @@ godebug
 godotenv
 goexif
 gofork
-gofpdf
-gofpdi
 gofrs
 gofuzz
 gogen
@@ -790,7 +737,6 @@ gometrics
 gomodule
 gomp
 gonetz
-gonum
 googleapis
 googlei
 gookit
@@ -815,7 +761,6 @@ gover
 gqlgen
 gqlgenc
 gqlparser
-grafeas
 grantha
 graphene
 graphengine
@@ -823,7 +768,6 @@ graphviz
 gravitydb
 groupcache
 gstreamer
-gsuiteaddons
 gsymutil
 gtest
 gtksourceview
@@ -833,7 +777,6 @@ guregu
 gurmukhi
 gvim
 gzipped
-górny
 hactool
 hanunoo
 hanunó'o
@@ -866,7 +809,6 @@ htdocs
 htdocsdir
 htmlparser
 htmlquery
-httpfs
 httphead
 httplib
 httplog
@@ -875,10 +817,10 @@ httprate
 httprequest
 httprouter
 httpsig
+httpsnoop
 httptoolkit
 httpunix
 huandu
-hubbs
 humansize
 humanwhocodes
 hwmon
@@ -982,7 +924,6 @@ kanjitalk
 kateschema
 kayah
 kayahli
-kballard
 kcompletion
 kcoreaddons
 kdenlive
@@ -1061,6 +1002,7 @@ libbz
 libc
 libchdr
 libclang
+libcrypt
 libcxx
 libcxxabi
 libdir
@@ -1080,14 +1022,10 @@ libfragmentzip
 libgcrypt
 libgeneral
 libglvnd
-libgpg
 libgudev
 libgusb
 libheif
 libhttps
-libicudata
-libicui
-libicuuc
 libidn
 libimobiledevice
 libjpeg
@@ -1110,6 +1048,7 @@ libpulse
 libpumpkin
 libraw
 libreal
+librealcugan
 librealcugannv
 librealesrgan
 libretro
@@ -1122,7 +1061,6 @@ libscriptlua
 libsdl
 libseccomp
 libsecret
-libsfml
 libshared
 libshell
 libslirp
@@ -1150,7 +1088,6 @@ libvk
 libvorbis
 libvulkan
 libwebp
-libwoff
 libxar
 libxcb
 libxkbcommon
@@ -1174,7 +1111,6 @@ lisu
 litecli
 liteon
 livecheck
-ljharb
 lldb
 llvmgold
 llvmlite
@@ -1192,12 +1128,12 @@ logex
 logfmt
 logform
 loggo
+logr
 logrus
 logrusorgru
 loguru
 logutils
 longdescription
-longrunning
 loong
 lrelease
 lsdvd
@@ -1205,7 +1141,6 @@ lssecret
 luajit
 lucasb
 lugaresi
-lukechampine
 lunixbochs
 macemu
 macvendor
@@ -1217,7 +1152,6 @@ mailru
 mainpid
 makeopts
 malloc
-managedidentities
 mandaic
 mandiant
 mandir
@@ -1249,7 +1183,6 @@ mcuadros
 mdast
 mdns
 mdurl
-mediatranslation
 meetei
 melbahja
 membarrier
@@ -1266,13 +1199,11 @@ meshoptimizer
 messageformat
 metainfo
 metaprogramming
-metastore
 metavuln
 mgba
 mgree
 miao
 michaeldfallen
-michał
 microcom
 micromark
 microtask
@@ -1290,7 +1221,6 @@ minipass
 miniupnp
 miniupnpc
 miniz
-minizip
 minizlib
 mipsdisasm
 miscfilters
@@ -1364,14 +1294,10 @@ nego
 neill
 neobrain
 nestext
-netlib
 netlink
 netnode
-netplay
 netrc
 netstandard
-networkmanagement
-networksecurity
 networkx
 newa
 newar
@@ -1471,18 +1397,16 @@ oprofile
 optflags
 optimise
 optionator
-optparse
 opusfile
 organiser
-orgpolicy
 orisano
-osconfig
 oslogin
 osmanya
 osname
 ossemul
 ossp
 osspd
+otelhttp
 otio
 otlp
 otool
@@ -1527,8 +1451,6 @@ phagspa
 phantomjs
 phasher
 philhofer
-phishingprotection
-phpdave
 phpstan
 picocolors
 picojson
@@ -1563,7 +1485,6 @@ pluralrules
 plutoberth
 pmezard
 pngdefry
-policytroubleshooter
 polkit
 popperjs
 portfile
@@ -1578,7 +1499,6 @@ prdownloads
 prebuild
 prebuilds
 preinst
-privatecatalog
 procapture
 procatpure
 profdata
@@ -1598,7 +1518,6 @@ psvpfsparser
 psvpfstools
 pthread
 ptrace
-pubsublite
 puerkito
 pugixml
 pulseaudio
@@ -1679,7 +1598,6 @@ querystring
 quicktest
 quse
 randomstring
-rangeset
 ranlib
 raphnet
 rapidjson
@@ -1687,7 +1605,6 @@ ratelimit
 raviqqe
 rawio
 rawloader
-rcheevos
 rdepend
 rdepends
 rdparty
@@ -1702,8 +1619,6 @@ realesrgan
 realfft
 realpath
 realsr
-recaptchaenterprise
-recommendationengine
 recommonmark
 recompiler
 redent
@@ -1732,8 +1647,6 @@ renderutil
 repeaterjs
 replaceall
 repr
-resourcemanager
-resourcesettings
 respawn
 responselike
 retryablehttp
@@ -1786,7 +1699,6 @@ rustfft
 rustflags
 rustix
 rustversion
-ruudk
 rwcarlsen
 ryanuber
 ryszard
@@ -1801,7 +1713,6 @@ sanstats
 saraiki
 sasl
 saurashtra
-sbinet
 scandir
 scenechange
 schollz
@@ -1817,19 +1728,13 @@ sdist
 sdsl
 seatools
 seccomp
-secretmanager
 securecookie
 securejoin
-securitycenter
 sekrit
 sendgmail
 serde
 sergi
 serialport
-servicecontrol
-servicedirectory
-servicemanagement
-serviceusage
 setfcap
 setgid
 setimmediate
@@ -1842,7 +1747,6 @@ sharada
 sharded
 shellcheck
 shellescape
-shellquote
 shifta
 shlex
 shuralyov
@@ -1920,11 +1824,11 @@ stashapp
 statigz
 stdc
 stdlib
+stdr
 stepmania
 stgpytools
 stiefel
 stix
-storagetransfer
 strcase
 streamsearch
 streamx
@@ -1943,6 +1847,7 @@ subdir
 subfile
 sublicensable
 subosito
+subshell
 subtag
 sudachi
 suidsgid
@@ -2005,7 +1910,6 @@ testdata
 testfloat
 texinfo
 textextensions
-texttospeech
 textutils
 textwrap
 tfperms
@@ -2020,7 +1924,6 @@ tifinagh
 tihmstar
 tink
 tinkup
-tinygltf
 tinylib
 tinystr
 tinyvec
@@ -2113,7 +2016,6 @@ vercmp
 vfile
 vhosts
 videoduplicatefinder
-videointelligence
 videojs
 viet
 vimfiles
@@ -2121,10 +2023,8 @@ vimrc
 vite
 vitejs
 vmmigration
-vmwareengine
 vorbis
 vosf
-vpcaccess
 vpnc
 vsaa
 vsexprtools
@@ -2166,8 +2066,6 @@ webengine
 webidl
 webp
 webpassword
-webrisk
-websecurityscanner
 websocketpp
 websockets
 webtheme
@@ -2259,7 +2157,6 @@ yuin
 yuzu
 zarchive
 zaufi
-zeebo
 zeid
 zencoder
 zenyd

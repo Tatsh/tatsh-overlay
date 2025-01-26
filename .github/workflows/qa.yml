@@ -12,7 +12,7 @@ jobs:
           cache: poetry
           python-version: '3.11'
       - name: Install dependencies (Poetry)
-        run: poetry install --with=dev
+        run: poetry install --with=dev --no-root
       - name: Install dependencies (Yarn)
         run: yarn
       - name: Install Shellcheck
