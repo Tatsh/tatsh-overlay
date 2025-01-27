@@ -17,6 +17,7 @@ KEYWORDS="~amd64"
 
 RDEPEND="
 	>=dev-python/poetry-2.0.0[${PYTHON_USEDEP}]
+	dev-python/pexpect[${PYTHON_USEDEP}]
 "
 
 DEPEND="
