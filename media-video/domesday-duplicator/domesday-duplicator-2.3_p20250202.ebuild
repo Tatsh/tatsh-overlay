@@ -7,7 +7,7 @@ inherit cmake desktop
 
 DESCRIPTION="Software for the 40Mhz USB-3.0 RF sampler (harrypm fork)."
 HOMEPAGE="https://github.com/simoninns/DomesdayDuplicator"
-SHA="1bb891fcdd8e2de0e073c01fb16846ca1c3c5a0a"
+SHA="5364ac64a4826c410887cdd666815ac3fd4c59f3"
 MY_PN="DomesdayDuplicator"
 SRC_URI="https://github.com/simoninns/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
