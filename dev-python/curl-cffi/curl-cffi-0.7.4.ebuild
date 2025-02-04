@@ -13,7 +13,7 @@ HOMEPAGE="https://pypi.org/project/curl-cffi/"
 
 LICENSE="BSD-2"
 SLOT="0"
-# KEYWORDS="~amd64"
+KEYWORDS="~amd64"
 
 RDEPEND="dev-python/cffi[${PYTHON_USEDEP}]
 	dev-python/certifi[${PYTHON_USEDEP}]
