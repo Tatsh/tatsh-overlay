@@ -1,0 +1,23 @@
+diff --git a/DomesdayDuplicator/ILogger.inl b/DomesdayDuplicator/ILogger.inl
+index 7f6ea10..60a5685 100644
+--- a/DomesdayDuplicator/ILogger.inl
++++ b/DomesdayDuplicator/ILogger.inl
+@@ -1,5 +1,6 @@
+ #include <cassert>
+ #include <cstring>
++#include <cstdint>
+ #include <iostream>
+ #include <sstream>
+ #include <utility>
+diff --git a/DomesdayDuplicator/UsbDeviceBase.cpp b/DomesdayDuplicator/UsbDeviceBase.cpp
+index 30380f6..5e3b9c7 100644
+--- a/DomesdayDuplicator/UsbDeviceBase.cpp
++++ b/DomesdayDuplicator/UsbDeviceBase.cpp
+@@ -507,7 +507,6 @@ bool UsbDeviceBase::UsbTransferStopRequested() const
+ //----------------------------------------------------------------------------------------------------------------------
+ UsbDeviceBase::DiskBufferEntry& UsbDeviceBase::GetDiskBuffer(size_t bufferNo)
+ {
+-    assert(bufferNo < bufferCount);
+     return diskBufferEntries[bufferNo];
+ }
+ 

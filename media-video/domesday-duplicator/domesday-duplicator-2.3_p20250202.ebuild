@@ -20,12 +20,10 @@ DEPEND="dev-libs/qcustomplot
 	dev-qt/qtserialport:6
 	virtual/libusb:1"
 RDEPEND="${DEPEND}"
-S="${WORKDIR}/${MY_PN}-${SHA}/Linux-Application"
 
-src_configure() {
-	local mycmakeargs=( -DUSE_QT_VERSION=6 )
-	cmake_src_configure
-}
+PATCHES=( "${FILESDIR}/${PN}-missing-header.patch" )
+
+S="${WORKDIR}/${MY_PN}-${SHA}/Linux-Application"
 
 src_install() {
 	cmake_src_install
