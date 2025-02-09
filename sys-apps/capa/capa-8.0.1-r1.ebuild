@@ -16,24 +16,25 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-python/colorama
-	dev-python/dncil
-	dev-python/dnfile
-	dev-python/halo
-	dev-python/ida-settings
-	dev-python/networkx
-	dev-python/pefile
-	dev-python/protobuf
-	dev-python/pydantic
-	dev-python/pyelftools
-	dev-python/pyyaml
-	dev-python/ruamel-yaml
-	dev-python/tabulate
-	dev-python/termcolor
-	dev-python/tqdm
-	dev-python/viv-utils
-	dev-util/vivisect
-	dev-python/wcwidth"
+RDEPEND="dev-python/colorama[${PYTHON_USEDEP}]
+	dev-python/dncil[${PYTHON_USEDEP}]
+	dev-python/dnfile[${PYTHON_USEDEP}]
+	dev-python/halo[${PYTHON_USEDEP}]
+	dev-python/ida-settings[${PYTHON_USEDEP}]
+	dev-python/msgspec[${PYTHON_USEDEP}]
+	dev-python/networkx[${PYTHON_USEDEP}]
+	dev-python/pefile[${PYTHON_USEDEP}]
+	dev-python/protobuf[${PYTHON_USEDEP}]
+	dev-python/pydantic[${PYTHON_USEDEP}]
+	dev-python/pyelftools[${PYTHON_USEDEP}]
+	dev-python/pyyaml[${PYTHON_USEDEP}]
+	dev-python/ruamel-yaml[${PYTHON_USEDEP}]
+	dev-python/tabulate[${PYTHON_USEDEP}]
+	dev-python/termcolor[${PYTHON_USEDEP}]
+	dev-python/tqdm[${PYTHON_USEDEP}]
+	dev-python/viv-utils[${PYTHON_USEDEP}]
+	dev-util/vivisect[${PYTHON_USEDEP}]
+	dev-python/wcwidth[${PYTHON_USEDEP}]"
 
 python_prepare_all() {
 	sed -r \
