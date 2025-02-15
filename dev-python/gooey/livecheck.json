@@ -1,5 +1,0 @@
-{
-  "regex": "archive/refs/tags/([0-9\\.]+)\\.tar\\.gz",
-  "type": "regex",
-  "url": "https://github.com/chriskiehl/Gooey/tags"
-}
