@@ -1,0 +1,13 @@
+diff --git a/Source/WebKitLegacy/qt/Api/qwebfullscreenrequest.h b/Source/WebKitLegacy/qt/Api/qwebfullscreenrequest.h
+index 280e89caa4..32f818416f 100644
+--- a/Source/WebKitLegacy/qt/Api/qwebfullscreenrequest.h
++++ b/Source/WebKitLegacy/qt/Api/qwebfullscreenrequest.h
+@@ -26,7 +26,7 @@
+ #ifndef QWEBFULLSCREENREQUEST_H
+ #define QWEBFULLSCREENREQUEST_H
+ 
+-#include <QtWebKit/qwebkitglobal.h>
++#include "qwebkitglobal.h"
+ #include <QtCore/qmetatype.h>
+ #include <QtCore/qscopedpointer.h>
+ #include <QtCore/qurl.h>

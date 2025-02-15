@@ -33,6 +33,7 @@ DEPEND="dev-libs/hyphen
 RDEPEND="${DEPEND}"
 
 PATCHES=(
+	"${FILESDIR}/${PN}-fix-header.patch"
 	"${FILESDIR}/${PN}-size.patch"
 )
 
