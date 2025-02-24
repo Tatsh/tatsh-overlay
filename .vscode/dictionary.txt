@@ -121,6 +121,7 @@ batak
 bbolt
 bcanalyzer
 bdepend
+bdepends
 beautifulsoup
 becheran
 behaviour
@@ -263,6 +264,7 @@ codem
 codeman
 codeql
 cohttp
+coinhsl
 colorama
 colorchoice
 colord
@@ -303,6 +305,7 @@ cpufeatures
 cpuguy
 cpuid
 cpus
+cpylint
 cpython
 crashpad
 crashplan
@@ -365,6 +368,7 @@ dchest
 dcitra
 dcli
 dcmake
+dconfig
 dcpp
 dcrc
 ddaemon
@@ -557,6 +561,7 @@ envoyproxy
 envpprof
 eprefix
 epreifx
+epytest
 epython
 eqawarn
 eroot
@@ -784,6 +789,7 @@ happycube
 harfbuzz
 harfbuzzsharp
 harrypm
+harwell
 hashbrown
 hasher
 hashstructure
@@ -887,6 +893,7 @@ jakcron
 janestreet
 jbenet
 jcmturner
+jcrist
 jedib
 jessevdk
 jimevins
@@ -1025,6 +1032,7 @@ libglvnd
 libgudev
 libgusb
 libheif
+libhsl
 libhttps
 libidn
 libimobiledevice
@@ -1046,6 +1054,7 @@ libpit
 libplist
 libpulse
 libpumpkin
+libr
 libraw
 libreal
 librealcugan
@@ -1138,6 +1147,7 @@ loong
 lrelease
 lsdvd
 lssecret
+lstdc
 luajit
 lucasb
 lugaresi
@@ -1251,6 +1261,7 @@ msal
 mschoch
 msgp
 msgpack
+msgspec
 msiemens
 msmoosh
 mssqldb
@@ -1554,6 +1565,7 @@ pypy
 pyqt
 pyqtwebengine
 pyrescene
+pyright
 pyserial
 pyside
 pysocks
@@ -1786,6 +1798,7 @@ snesrev
 sockaddr
 socketfile
 softfloat
+softmmu
 sompeng
 sorasompeng
 sortedcontainers
@@ -1848,6 +1861,7 @@ subdir
 subfile
 sublicensable
 subosito
+subprojects
 subshell
 subtag
 sudachi
@@ -2024,6 +2038,7 @@ vimrc
 vite
 vitejs
 vmmigration
+volk
 vorbis
 vosf
 vpnc
