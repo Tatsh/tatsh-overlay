@@ -1,19 +1,19 @@
-From b30507d163114d41b81b1a19910323cc68ca5269 Mon Sep 17 00:00:00 2001
+From d13daca044b26655b5ba8ff116094667394be7b6 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 7 Oct 2021 07:12:59 -0400
-Subject: [PATCH 5/7] allow use of system xxHash header
+Subject: [PATCH 5/8] allow use of system xxHash header
 
 ---
- configure         | 16 ++++++++++++++++
+ configure         | 17 ++++++++++++++++-
  meson.build       | 16 ++++++++++++++++
  meson_options.txt |  3 +++
- 3 files changed, 35 insertions(+)
+ 3 files changed, 35 insertions(+), 1 deletion(-)
 
 diff --git a/configure b/configure
-index e2a3ca0a67..859ca59713 100755
+index cfa02e463d..d4ea467fb7 100755
 --- a/configure
 +++ b/configure
-@@ -803,6 +803,10 @@ for opt do
+@@ -752,6 +752,10 @@ for opt do
    ;;
    --enable-fortify-source) fortify_source="yes"
    ;;
@@ -22,18 +22,21 @@ index e2a3ca0a67..859ca59713 100755
 +  --with-xxhash=system) meson_option_add -Dxxhash=system
 +  ;;
    --disable-tcg) tcg="disabled"
-                  plugins="no"
    ;;
-@@ -1042,6 +1046,8 @@ Advanced options (experts only):
-   --enable-tsan            enable thread sanitizer
-   --disable-werror         disable compilation abort on warning
-   --disable-stack-protector disable compiler-provided stack protection
+   --enable-tcg) tcg="enabled"
+@@ -938,9 +942,10 @@ Advanced options (experts only):
+                            desired devices in configs/devices/)
+   --with-devices-ARCH=NAME override default configs/devices
+   --enable-debug           enable common debug build options
 +  --with-xxhash=internal   use internal version of xxHash
 +  --with-xxhash=system     link against system xxHash
    --cpu=CPU                Build for host CPU [$cpu]
-   --with-coroutine=BACKEND coroutine backend. Supported options:
-                            ucontext, sigaltstack, windows
-@@ -2214,6 +2220,16 @@ write_target_makefile() {
+   --disable-containers     don't use containers for cross-building
+-  --container-engine=TYPE  which container engine to use [$container_engine]
+   --disable-tests          disable tests
+   --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
+ EOF
+@@ -1718,6 +1723,16 @@ write_target_makefile() {
    fi
  }
  
@@ -47,21 +50,21 @@ index e2a3ca0a67..859ca59713 100755
 +    ;;
 +esac
 +
- ##########################################
- # check for vfio_user_server
+ #######################################
+ # cross-compiled firmware targets
  
 diff --git a/meson.build b/meson.build
-index 6f98a3de8b..7d5b5f7e4e 100644
+index 355fd1b90b..4e94ec2069 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -2769,6 +2769,19 @@ if have_system and vfio_user_server_allowed
-   libvfio_user_dep = declare_dependency(dependencies: [libvfio_user_lib])
+@@ -3518,6 +3518,19 @@ if host_os == 'linux' and have_vhost_user
+   vhost_user = libvhost_user.get_variable('vhost_user_dep')
  endif
  
 +xxhash = not_found
 +xxhash_opt = get_option('xxhash')
 +if xxhash_opt == 'system'
-+  xxhash = dependency('libxxhash', kwargs: static_kwargs,
++  xxhash = dependency('libxxhash',
 +                       method: 'pkg-config',
 +                       required: xxhash_opt == 'system')
 +  if xxhash.found()
@@ -71,30 +74,30 @@ index 6f98a3de8b..7d5b5f7e4e 100644
 +  endif
 +endif
 +
- fdt = not_found
- if have_system
-   fdt_opt = get_option('fdt')
-@@ -3479,6 +3492,9 @@ foreach target : target_dirs
+ libvduse = not_found
+ if have_libvduse
+   libvduse_proj = subproject('libvduse')
+@@ -4280,6 +4293,9 @@ foreach target : target_dirs
+   link_args = emulator_link_args
  
-   config_target += config_host
    target_inc = [include_directories('target' / config_target['TARGET_BASE_ARCH'])]
 +  if xxhash_opt == 'internal' and target == 'xemu'
 +    target_inc += include_directories('hw/xbox/nv2a/xxHash')
 +  endif
-   if targetos == 'linux'
+   if host_os == 'linux'
      target_inc += include_directories('linux-headers', is_system: true)
    endif
 diff --git a/meson_options.txt b/meson_options.txt
-index 6d353d4130..2ebb58200a 100644
+index d9195289f0..c60223b223 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -328,3 +328,6 @@ option('slirp_smbd', type : 'feature', value : 'auto',
- 
- option('renderdoc', type: 'feature', value: 'auto',
-        description: 'improved RenderDoc frame capture support')
+@@ -388,3 +388,6 @@ option('rust', type: 'feature', value: 'disabled',
+        description: 'Rust support')
+ option('strict_rust_lints', type: 'boolean', value: false,
+        description: 'Enable stricter set of Rust warnings')
 +option('xxhash', type: 'combo', value: 'internal',
 +       choices: ['internal', 'system'],
 +       description: 'Whether and how to find the xxHash library')
 -- 
-2.41.0
+2.48.1
 

@@ -1,27 +1,17 @@
-From 0d8594db3a42577fc338d20fe154b1459b9d6e40 Mon Sep 17 00:00:00 2001
+From 96133e610aa6ab436ed13c0451bdc07f78992567 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 6 Oct 2021 02:26:40 -0400
-Subject: [PATCH 1/7] Make --target-list=xemu work, with bin name set to xemu
+Subject: [PATCH 1/8] Make --target-list=xemu work, with bin name set to xemu
 
 ---
- configs/devices/i386-softmmu/default.mak |  1 -
- configs/devices/xemu/default.mak         | 32 +++++++++++++++
- configs/targets/xemu.mak                 |  3 ++
- configure                                | 30 +++++++++-----
- meson.build                              | 50 ++++++++++++++++++------
- 5 files changed, 95 insertions(+), 21 deletions(-)
+ configs/devices/xemu/default.mak | 32 ++++++++++++++++++++++++++
+ configs/targets/xemu.mak         |  3 +++
+ configure                        | 11 +++++++++
+ meson.build                      | 39 +++++++++++++++++++++++++++-----
+ 4 files changed, 79 insertions(+), 6 deletions(-)
  create mode 100644 configs/devices/xemu/default.mak
  create mode 100644 configs/targets/xemu.mak
 
-diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
-index b4c920b531..23d2ed38af 100644
---- a/configs/devices/i386-softmmu/default.mak
-+++ b/configs/devices/i386-softmmu/default.mak
-@@ -30,4 +30,3 @@
- # CONFIG_I440FX=y
- # CONFIG_Q35=y
- # CONFIG_MICROVM=y
--CONFIG_XBOX=y
 diff --git a/configs/devices/xemu/default.mak b/configs/devices/xemu/default.mak
 new file mode 100644
 index 0000000000..94e947653c
@@ -70,11 +60,11 @@ index 0000000000..5babf71895
 +TARGET_SUPPORTS_MTTCG=y
 +TARGET_XML_FILES= gdb-xml/i386-32bit.xml
 diff --git a/configure b/configure
-index 761cd5e431..d3eb98e6d6 100755
+index c660bcfbe4..d79043187f 100755
 --- a/configure
 +++ b/configure
-@@ -969,6 +969,11 @@ fi
- if [ "$softmmu" = "yes" ]; then
+@@ -876,6 +876,17 @@ fi
+ if [ "$system" = "yes" ]; then
      mak_wilds="${mak_wilds} $source_path/configs/targets/*-softmmu.mak"
  fi
 +case $target_list in
@@ -82,46 +72,20 @@ index 761cd5e431..d3eb98e6d6 100755
 +        mak_wilds="${mak_wilds} $source_path/configs/targets/xemu.mak"
 +        ;;
 +esac
- if [ "$linux_user" = "yes" ]; then
-     mak_wilds="${mak_wilds} $source_path/configs/targets/*-linux-user.mak"
- fi
-@@ -2471,15 +2476,22 @@ if test "$linux" = "yes" ; then
-     fi
- fi
++if [ "$linux_user" = "yes" ]; then
++    mak_wilds="${mak_wilds} $source_path/configs/targets/*-linux-user.mak"
++fi
++if [ "$bsd_user" = "yes" ]; then
++    mak_wilds="${mak_wilds} $source_path/configs/targets/*-bsd-user.mak"
++fi
  
--for target in $target_list; do
--    target_dir="$target"
--    target_name=$(echo $target | cut -d '-' -f 1)$EXESUF
--    mkdir -p "$target_dir"
--    case $target in
--        *-user) symlink "../qemu-$target_name" "$target_dir/qemu-$target_name" ;;
--        *) symlink "../qemu-system-$target_name" "$target_dir/qemu-system-$target_name" ;;
--    esac
--done
-+case $target_list in
-+    *xemu*)
-+        ;;
-+
-+    *)
-+    for target in $target_list; do
-+        target_dir="$target"
-+        target_name=$(echo $target | cut -d '-' -f 1)$EXESUF
-+        mkdir -p $target_dir
-+        case $target in
-+            *-user) symlink "../qemu-$target_name" "$target_dir/qemu-$target_name" ;;
-+            *) symlink "../qemu-system-$target_name" "$target_dir/qemu-system-$target_name" ;;
-+        esac
-+    done
-+    ;;
-+esac
- 
- if test "$default_targets" = "yes"; then
-   echo "CONFIG_DEFAULT_TARGETS=y" >> $config_host_mak
+ for config in $mak_wilds; do
+     target="$(basename "$config" .mak)"
 diff --git a/meson.build b/meson.build
-index 0ae9c6f8a1..4f336420b3 100644
+index 61eb1fef01..ec0d183b77 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -67,7 +67,7 @@ have_system = false
+@@ -60,7 +60,7 @@ have_system = false
  foreach target : target_dirs
    have_linux_user = have_linux_user or target.endswith('linux-user')
    have_bsd_user = have_bsd_user or target.endswith('bsd-user')
@@ -129,45 +93,8 @@ index 0ae9c6f8a1..4f336420b3 100644
 +  have_system = have_system or target.endswith('-softmmu') or target == 'xemu'
  endforeach
  have_user = have_linux_user or have_bsd_user
- have_tools = get_option('tools') \
-@@ -93,7 +93,7 @@ else
- endif
  
- if cpu in ['x86', 'x86_64']
--  kvm_targets = ['i386-softmmu', 'x86_64-softmmu']
-+  kvm_targets = ['xemu', 'i386-softmmu', 'x86_64-softmmu']
- elif cpu == 'aarch64'
-   kvm_targets = ['aarch64-softmmu']
- elif cpu == 's390x'
-@@ -125,22 +125,22 @@ endif
- if cpu in ['x86', 'x86_64', 'arm', 'aarch64']
-   # i386 emulator provides xenpv machine type for multiple architectures
-   accelerator_targets += {
--    'CONFIG_XEN': ['i386-softmmu', 'x86_64-softmmu'],
-+    'CONFIG_XEN': ['xemu', 'i386-softmmu', 'x86_64-softmmu'],
-   }
- endif
- if cpu in ['x86', 'x86_64']
-   accelerator_targets += {
--    'CONFIG_HAX': ['i386-softmmu', 'x86_64-softmmu'],
-+    'CONFIG_HAX': ['xemu', 'i386-softmmu', 'x86_64-softmmu'],
-     'CONFIG_HVF': ['x86_64-softmmu'],
--    'CONFIG_NVMM': ['i386-softmmu', 'x86_64-softmmu'],
--    'CONFIG_WHPX': ['i386-softmmu', 'x86_64-softmmu'],
-+    'CONFIG_NVMM': ['xemu','i386-softmmu', 'x86_64-softmmu'],
-+    'CONFIG_WHPX': ['xemu', 'i386-softmmu', 'x86_64-softmmu'],
-   }
- endif
- 
- modular_tcg = []
- # Darwin does not support references to thread-local variables in modules
- if targetos != 'darwin'
--  modular_tcg = ['i386-softmmu', 'x86_64-softmmu']
-+  modular_tcg = ['xemu', 'i386-softmmu', 'x86_64-softmmu']
- endif
- 
- edk2_targets = [ 'arm-softmmu', 'aarch64-softmmu', 'i386-softmmu', 'x86_64-softmmu' ]
-@@ -2522,6 +2522,7 @@ disassemblers = {
+@@ -3304,6 +3304,7 @@ disassemblers = {
    'hexagon' : ['CONFIG_HEXAGON_DIS'],
    'hppa' : ['CONFIG_HPPA_DIS'],
    'i386' : ['CONFIG_I386_DIS'],
@@ -175,43 +102,45 @@ index 0ae9c6f8a1..4f336420b3 100644
    'x86_64' : ['CONFIG_I386_DIS'],
    'm68k' : ['CONFIG_M68K_DIS'],
    'microblaze' : ['CONFIG_MICROBLAZE_DIS'],
-@@ -2583,7 +2584,7 @@ foreach target : target_dirs
+@@ -3364,9 +3365,8 @@ foreach target : target_dirs
        error('Target @0@ is only available on a BSD host'.format(target))
      endif
      config_target += { 'CONFIG_BSD_USER': 'y' }
 -  elif target.endswith('softmmu')
 +  elif target.endswith('softmmu') or target == 'xemu'
-     config_target += { 'CONFIG_SOFTMMU': 'y' }
+     config_target += { 'CONFIG_SYSTEM_ONLY': 'y' }
+-    config_target += { 'CONFIG_SOFTMMU': 'y' }
    endif
    if target.endswith('-user')
-@@ -2670,7 +2671,7 @@ foreach target : target_dirs
+     config_target += {
+@@ -3455,7 +3455,7 @@ foreach target : target_dirs
    config_target_h += {target: configure_file(output: target + '-config-target.h',
                                                 configuration: config_target_data)}
  
 -  if target.endswith('-softmmu')
 +  if target.endswith('-softmmu') or target == 'xemu'
-     config_input = meson.get_external_property(target, 'default')
-     config_devices_mak = target + '-config-devices.mak'
-     config_devices_mak = configure_file(
-@@ -3285,7 +3286,7 @@ foreach d, list : target_modules
-   foreach m, module_ss : list
-     if enable_modules and targetos != 'windows'
+     target_kconfig += 'CONFIG_' + config_target['TARGET_ARCH'].to_upper() + '=y'
+     target_kconfig += 'CONFIG_TARGET_BIG_ENDIAN=' + config_target['TARGET_BIG_ENDIAN']
+ 
+@@ -4024,7 +4024,7 @@ foreach d, list : target_modules
+     if enable_modules
+       module_ss.add(modulecommon)
        foreach target : target_dirs
 -        if target.endswith('-softmmu')
 +        if target.endswith('-softmmu') or target == 'xemu'
            config_target = config_target_mak[target]
-           config_target += config_host
            target_inc = [include_directories('target' / config_target['TARGET_BASE_ARCH'])]
-@@ -3479,7 +3480,7 @@ foreach target : target_dirs
-   if targetos == 'linux'
+           c_args = ['-DCOMPILING_PER_TARGET',
+@@ -4281,7 +4281,7 @@ foreach target : target_dirs
+   if host_os == 'linux'
      target_inc += include_directories('linux-headers', is_system: true)
    endif
 -  if target.endswith('-softmmu')
 +  if target.endswith('-softmmu') or target == 'xemu'
      target_type='system'
-     t = target_softmmu_arch[target_base_arch].apply(config_target, strict: false)
+     t = target_system_arch[target_base_arch].apply(config_target, strict: false)
      arch_srcs += t.sources()
-@@ -3580,6 +3581,33 @@ foreach target : target_dirs
+@@ -4413,6 +4413,33 @@ foreach target : target_dirs
          'dependencies': specific_fuzz.dependencies(),
        }]
      endif
@@ -246,5 +175,5 @@ index 0ae9c6f8a1..4f336420b3 100644
      execs = [{
        'name': 'qemu-' + target_name,
 -- 
-2.41.0
+2.48.1
 

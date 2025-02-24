@@ -10,30 +10,36 @@ inherit flag-o-matic pax-utils python-r1 toolchain-funcs xdg-utils
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/xemu-project/xemu"
-GENCONFIG_SHA="44bab849ce87fceafd74703bfcf2b61a1a1b738f"
+GENCONFIG_SHA="42f85f9a2457e61d7e32542c07723565a284fcd6"
+GLSLANG_SHA="vulkan-sdk-1.4.304.0"
 HTTPLIB_SHA="0f1b62c2b3d0898cbab7aa685c2593303ffdc1a2"
-IMGUI_SHA="fceff3210b9ecfa8fc66710a00f4cabc2447460f"
-IMPLOT_SHA="cc5e1daa5c7f2335a9460ae79c829011dc5cef2d"
-KEYCODEMAPDB_SHA="d21009b1c9f94b740ea66be8e48a1d8ad8124023"
-NV2A_VSH_CPU_SHA="d5a7308809a80e1b01b5c016127d4f1b91c8673b"
+IMGUI_SHA="80cbdab5ecd70db79917c448c333163995e605a5"
+IMPLOT_SHA="006a1c23e5706bbe816968163b4d589162257a57"
+KEYCODEMAPDB_SHA="f5772a62ec52591ff6870b7e8ef32482371f22c6"
+NV2A_VSH_CPU_SHA="561fe80da57a881f89000256b459440c0178a7ce"
 SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
-TESTFLOAT_SHA="5a59dcec19327396a011a17fd924aed4fec416b3"
+SPIRV_REFLECT_SHA="vulkan-sdk-1.4.304.0"
 TOMLPLUSPLUS_SHA="c635f218c0aefc801d9748841930365e54fe3089"
+VMA_SHA="3.2.1"
+VOLK_SHA="1.4.304"
 SRC_URI="https://github.com/xemu-project/xemu/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://gitlab.com/qemu-project/keycodemapdb/-/archive/${KEYCODEMAPDB_SHA}/keycodemapdb-${KEYCODEMAPDB_SHA}.tar.bz2 -> ${PN}-keycodemapdb-${KEYCODEMAPDB_SHA:0:7}.tar.bz2
 	https://github.com/abaire/nv2a_vsh_cpu/archive/${NV2A_VSH_CPU_SHA}.tar.gz -> ${PN}-nv2a_vsh_cpu-${NV2A_VSH_CPU_SHA:0:7}.tar.gz
 	https://github.com/xemu-project/imgui/archive/${IMGUI_SHA}.tar.gz -> ${PN}-imgui-${IMGUI_SHA:0:7}.tar.gz
 	https://github.com/epezent/implot/archive/${IMPLOT_SHA}.tar.gz -> ${PN}-implot-${IMPLOT_SHA:0:7}.tar.gz
-	https://gitlab.com/qemu-project/berkeley-softfloat-3/-/archive/${SOFTFLOAT_SHA}/berkeley-softfloat-3-${SOFTFLOAT_SHA}.tar.bz2 -> ${PN}-softfloat-${SOFTFLOAT_SHA:0:7}.tar.bz2
-	https://gitlab.com/qemu-project/berkeley-testfloat-3/-/archive/${TESTFLOAT_SHA}/berkeley-testfloat-3-${TESTFLOAT_SHA}.tar.bz2 -> ${PN}-testfloat-${TESTFLOAT_SHA:0:7}.tar.bz2
-	https://github.com/mborgerson/genconfig/archive/${GENCONFIG_SHA}.tar.gz -> ${PN}-genconfig-${GENCONFIG_SHA:0:7}.tar.gz
 	https://github.com/marzer/tomlplusplus/archive/${TOMLPLUSPLUS_SHA}.tar.gz -> ${PN}-tomlplusplus-${TOMLPLUSPLUS_SHA:0:7}.tar.gz
-	https://github.com/yhirose/cpp-httplib/archive/${HTTPLIB_SHA}.tar.gz -> ${PN}-httplib-${HTTPLIB_SHA}.tar.gz"
+	https://github.com/mborgerson/genconfig/archive/${GENCONFIG_SHA}.tar.gz -> ${PN}-genconfig-${GENCONFIG_SHA:0:7}.tar.gz
+	https://github.com/yhirose/cpp-httplib/archive/${HTTPLIB_SHA}.tar.gz -> ${PN}-httplib-${HTTPLIB_SHA}.tar.gz
+	https://github.com/KhronosGroup/glslang/archive/refs/tags/${GLSLANG_SHA}.tar.gz -> ${PN}-glslang-${GLSLANG_SHA}.tar.gz
+	https://github.com/zeux/volk/archive/refs/tags/${VOLK_SHA}.tar.gz -> ${PN}-volk-${VOLK_SHA}.tar.gz
+	https://github.com/KhronosGroup/SPIRV-Reflect/archive/refs/tags/${SPIRV_REFLECT_SHA}.tar.gz -> ${PN}-spirv-reflect-${SPIRV_REFLECT_SHA}.tar.gz
+	https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/refs/tags/v${VMA_SHA}.tar.gz -> ${PN}-vulkanmemoryallocator-${VMA_SHA}.tar.gz
+"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-IUSE="xattr aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack malloc-trim membarrier doc pulseaudio test"
+IUSE="xattr aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack malloc-trim membarrier pulseaudio test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RESTRICT="!test? ( test )"
 
@@ -65,13 +71,9 @@ BDEPEND="dev-lang/perl
 	virtual/pkgconfig
 	$(python_gen_impl_dep)
 	$(python_gen_any_dep 'dev-python/pyyaml[${PYTHON_USEDEP}]')
-	doc? (
-			dev-python/sphinx
-			dev-python/sphinx-rtd-theme
-	)
 	test? (
-			dev-libs/glib[utils]
-			sys-devel/bc
+		dev-libs/glib[utils]
+		sys-devel/bc
 	)"
 
 PATCHES=(
@@ -82,19 +84,22 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0005-allow-use-of-system-xxhash-h.patch"
 	"${FILESDIR}/${PN}-0006-not-for-upstream-remove-trac.patch"
 	"${FILESDIR}/${PN}-0007-not-for-upstream-remove-keym.patch"
+	"${FILESDIR}/${PN}-0008-not-for-upstream-misc-update.patch"
 )
 DOCS=( README.md )
 
 src_prepare() {
-	{ rmdir genconfig && mv "${WORKDIR}/genconfig-${GENCONFIG_SHA}" genconfig; } || die
-	{ rmdir hw/xbox/nv2a/thirdparty/nv2a_vsh_cpu && mv "${WORKDIR}/nv2a_vsh_cpu-${NV2A_VSH_CPU_SHA}" hw/xbox/nv2a/thirdparty/nv2a_vsh_cpu; } || die
-	{ rmdir tests/fp/berkeley-softfloat-3 && mv "${WORKDIR}/berkeley-softfloat-3-${SOFTFLOAT_SHA}" tests/fp/berkeley-softfloat-3; } || die
-	{ rmdir tests/fp/berkeley-testfloat-3 && mv "${WORKDIR}/berkeley-testfloat-3-${TESTFLOAT_SHA}" tests/fp/berkeley-testfloat-3; } || die
-	{ rmdir tomlplusplus && mv "${WORKDIR}/tomlplusplus-${TOMLPLUSPLUS_SHA}" tomlplusplus; } || die
-	{ rmdir ui/keycodemapdb && mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" ui/keycodemapdb; } || die
-	{ rmdir ui/thirdparty/httplib && mv "${WORKDIR}/cpp-httplib-${HTTPLIB_SHA}" ui/thirdparty/httplib; } || die
-	{ rmdir ui/thirdparty/imgui && mv "${WORKDIR}/imgui-${IMGUI_SHA}" ui/thirdparty/imgui; } || die
-	{ rmdir ui/thirdparty/implot && mv "${WORKDIR}/implot-${IMPLOT_SHA}" ui/thirdparty/implot; } || die
+	mv "${WORKDIR}/genconfig-${GENCONFIG_SHA}" subprojects/genconfig || die
+	mv "${WORKDIR}/cpp-httplib-${HTTPLIB_SHA}" subprojects/cpp-httplib || die
+	mv "${WORKDIR}/nv2a_vsh_cpu-${NV2A_VSH_CPU_SHA}" subprojects/nv2a_vsh_cpu || die
+	mv "${WORKDIR}/tomlplusplus-${TOMLPLUSPLUS_SHA}" subprojects/tomlplusplus || die
+	mv "${WORKDIR}/keycodemapdb-${KEYCODEMAPDB_SHA}" subprojects//keycodemapdb || die
+	mv "${WORKDIR}/imgui-${IMGUI_SHA}" subprojects/imgui || die
+	mv "${WORKDIR}/implot-${IMPLOT_SHA}" subprojects/implot || die
+	mv "${WORKDIR}/glslang-${GLSLANG_SHA}" subprojects/glslang || die
+	mv "${WORKDIR}/volk-${VOLK_SHA}" subprojects/volk || die
+	mv "${WORKDIR}/SPIRV-Reflect-${SPIRV_REFLECT_SHA}" subprojects/SPIRV-Reflect || die
+	mv "${WORKDIR}/VulkanMemoryAllocator-${VMA_SHA}" subprojects/VulkanMemoryAllocator || die
 	echo "${PV}" > XEMU_VERSION || die
 	echo master > XEMU_BRANCH || die
 	touch XEMU_COMMIT || die
@@ -117,7 +122,6 @@ src_configure() {
 		"$(use_enable alsa)"
 		"$(use_enable debug debug-info)"
 		"$(use_enable debug debug-tcg)"
-		"$(use_enable doc docs)"
 		"$(use_enable jack)"
 		--disable-gettext
 		"$(use_enable pulseaudio pa)"
@@ -128,7 +132,6 @@ src_configure() {
 		--disable-containers # bug #732972
 		--disable-guest-agent
 		--disable-tcg-interpreter
-		"--docdir=/usr/share/doc/${PF}/html"
 		--host-cc="$(tc-getBUILD_CC)"
 		"--libdir=/usr/$(get_libdir)"
 		# From qemu ebuild
@@ -147,20 +150,17 @@ src_configure() {
 	econf \
 		"$(use_enable aio linux-aio)" \
 		"$(use_enable cpu_flags_x86_avx2 avx2)" \
-		"$(use_enable cpu_flags_x86_avx512f avx512f)" \
 		${debug_flag} \
 		"$(use_enable io-uring linux-io-uring)" \
 		"$(use_enable malloc-trim)" \
 		"$(use_enable membarrier)" \
 		"$(use_enable test tests)" \
 		"--audio-drv-list=[${audio_drv_list_str}]" \
-		--disable-blobs \
 		--disable-qom-cast-debug \
 		--disable-strip \
 		--disable-werror \
-		"--extra-cflags=-DXBOX=1 ${build_cflags[*]} -Wno-error=redundant-decls ${CFLAGS}" \
+		"--extra-cflags=-DXBOX=1 -DCONFIG_SOFTMMU ${build_cflags[*]} -Wno-error=redundant-decls ${CFLAGS}" \
 		--target-list=xemu \
-		--with-git-submodules=ignore \
 		--with-xxhash=system \
 		"${other_opts[@]}"
 }
@@ -168,6 +168,11 @@ src_configure() {
 src_compile() {
 	MAKEOPTS+=" V=1"
 	emake
+}
+
+src_install() {
+	default
+	rm -fR "${D}/usr/"{include,lib,lib64} "${D}/usr/share/"{pkgconfig,qemu} "${D}/usr/bin/"{glslang,spirv}* || die
 }
 
 src_test() {

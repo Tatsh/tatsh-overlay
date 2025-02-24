@@ -1,0 +1,51 @@
+From 09b3d153472e19584594a71a1e6ca5912f3160be Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 24 Feb 2025 01:51:53 -0500
+Subject: [PATCH 8/8] Not for upstream: misc updates
+
+---
+ meson.build | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 4e94ec2069..0f71bf444f 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3540,9 +3540,6 @@ endif
+ tomlplusplus_proj = subproject('tomlplusplus', default_options: ['default_library=static'])
+ tomlplusplus = tomlplusplus_proj.get_variable('tomlplusplus_dep')
+ 
+-xxhash_proj = subproject('xxhash', default_options: ['default_library=static'])
+-xxhash = xxhash_proj.get_variable('xxhash_dep')
+-
+ #####################
+ # Generated sources #
+ #####################
+@@ -4435,20 +4432,20 @@ foreach target : target_dirs
+     execs = [{
+       'name': 'xemu',
+       'gui': false,
+-      'sources': files('softmmu/main.c'),
++      'sources': files('system/main.c'),
+       'dependencies': [],
+       'win_subsystem': 'console'
+     }]
+-    if targetos == 'windows' and (sdl.found() or gtk.found())
++    if host_os == 'windows' and (sdl.found() or gtk.found())
+       execs += [{
+         'name': 'xemuw',
+         'gui': true,
+-        'sources': files('softmmu/main.c'),
++        'sources': files('system/main.c'),
+         'dependencies': [],
+         'win_subsystem': 'console'
+       }]
+     endif
+-    if config_host.has_key('CONFIG_FUZZ')
++    if get_option('fuzzing')
+       specific_fuzz = specific_fuzz_ss.apply(config_target, strict: false)
+       execs += [{
+         'name': 'xemu-fuzz',
+-- 
+2.48.1
+
