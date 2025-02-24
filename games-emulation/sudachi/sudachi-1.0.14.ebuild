@@ -81,8 +81,8 @@ src_unpack() {
 	rm .gitmodules || die
 	dos2unix dist/*.desktop || die
 	mkdir "${P}" || die
-	mv "${WORKDIR}"/{dist,externals,CMakeLists.txt,patches,src,tools,CMakeModules,vcpkg.json} "${S}" || die
-	mv "${WORKDIR}"/{LICENSES,LICENSE.md,hooks,Doxyfile,README.md} "${S}" || die
+	mv "${WORKDIR}"/{dist,externals,CMakeLists.txt,src,CMakeModules,vcpkg.json} "${S}" || die
+	mv "${WORKDIR}"/{LICENSES,LICENSE.md,hooks,README.md} "${S}" || die
 }
 
 src_prepare() {
@@ -110,7 +110,7 @@ src_prepare() {
 	sed -re 's/set\(CAN_BUILD_NX_TZDB.*/set(CAN_BUILD_NX_TZDB false)/' \
 		-i externals/nx_tzdb/CMakeLists.txt || die
 	sed -re '/add_subdirectory\(externals\)/d' -i CMakeLists.txt || die
-	sed -re '704s/.*/add_subdirectory(externals)/' -i CMakeLists.txt || die
+	sed -re '705s/.*/add_subdirectory(externals)/' -i CMakeLists.txt || die
 	sed -re '/-Werror=.*/d' -i src/CMakeLists.txt || die
 	sed -re 's/@GIT_BRANCH@/sudachi/' -e "s/@GIT_DESC@/${PV}/" -i src/common/scm_rev.cpp.in || die
 	cmake_src_prepare
