@@ -1,5 +1,9 @@
 {
+  "name": "node-asar",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
   "dependencies": {
-    "@electron/asar": "^3.2.18"
+    "@electron/asar": "^3.3.1"
   }
 }
