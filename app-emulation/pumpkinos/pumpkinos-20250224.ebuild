@@ -5,9 +5,9 @@ EAPI=8
 
 inherit desktop wrapper
 
-DESCRIPTION=""
+DESCRIPTION="PumpkinOS is a re-implementation of PalmOS."
 HOMEPAGE="https://github.com/migueletto/PumpkinOS https://pmig96.wordpress.com/category/palmos/"
-SHA="b8c7c0c66c9664e8b8ae837b327dae823708cac3"
+SHA="c892e282d154d2598fc5c6185403ca1b11132bd9"
 MY_PN="PumpkinOS"
 SRC_URI="https://github.com/migueletto/${MY_PN}/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 
