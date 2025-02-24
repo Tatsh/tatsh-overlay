@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "node-gyp": "^11.0.0"
+    "node-gyp": "^11.1.0"
   },
   "license": "MIT",
   "main": "index.js",
