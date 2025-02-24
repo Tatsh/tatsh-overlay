@@ -5,14 +5,14 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_1{0,1,2} )
 DISTUTILS_USE_PEP517=setuptools
-inherit distutils-r1 pypi
+inherit distutils-r1
 
 DESCRIPTION="High-level file-system operations."
 HOMEPAGE="https://pypi.org/project/python-fsutil/"
-SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
+SRC_URI="https://github.com/fabiocaccamo/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-S="${WORKDIR}/${P}"
+distutils_enable_tests pytest
