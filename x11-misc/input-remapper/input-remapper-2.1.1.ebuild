@@ -9,7 +9,7 @@ inherit desktop distutils-r1 systemd udev xdg
 
 DESCRIPTION="An easy to use tool to change the behaviour of your input devices."
 HOMEPAGE="https://github.com/sezanzeb/input-remapper"
-SRC_URI="https://github.com/sezanzeb/${PN}/archive/refs/tags/2.0.1.tar.gz"
+SRC_URI="https://github.com/sezanzeb/${PN}/archive/refs/tags/${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"

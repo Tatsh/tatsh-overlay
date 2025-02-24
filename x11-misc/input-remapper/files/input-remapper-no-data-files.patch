@@ -2,7 +2,7 @@ diff --git a/setup.py b/setup.py
 index 20c7d3c..b0d0f8e 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -110,27 +110,5 @@ setup(
+@@ -110,28 +110,5 @@ setup(
      license="GPL-3.0",
      packages=get_packages(),
      include_package_data=True,
@@ -15,9 +15,10 @@ index 20c7d3c..b0d0f8e 100644
 -            "/usr/share/metainfo/",
 -            ["data/io.github.sezanzeb.input_remapper.metainfo.xml"],
 -        ),
+-        ("/usr/share/icons/hicolor/scalable/apps/", ["data/input-remapper.svg"]),
 -        ("/usr/share/polkit-1/actions/", ["data/input-remapper.policy"]),
 -        ("/usr/lib/systemd/system", ["data/input-remapper.service"]),
--        ("/etc/dbus-1/system.d/", ["data/inputremapper.Control.conf"]),
+-        ("/usr/share/dbus-1/system.d/", ["data/inputremapper.Control.conf"]),
 -        ("/etc/xdg/autostart/", ["data/input-remapper-autoload.desktop"]),
 -        ("/usr/lib/udev/rules.d", ["data/99-input-remapper.rules"]),
 -        ("/usr/bin/", ["bin/input-remapper-gtk"]),
