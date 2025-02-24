@@ -14,9 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="dev-qt/qtbase:6
-	dev-qt/qtwidgets:6
-	dev-qt/qtsvg:6
-	dev-qt/qtnetwork:6"
+	dev-qt/qtsvg:6"
 RDEPEND="${DEPEND}
 	>=media-video/video2x-${PV}"
 
