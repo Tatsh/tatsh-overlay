@@ -8,7 +8,7 @@ inherit mpv-plugin
 
 DESCRIPTION="mpv plugin for automatic reloading of slow/stuck video streams"
 HOMEPAGE="https://github.com/4e6/mpv-reload"
-SHA="1a6a9383ba1774708fddbd976e7a9b72c3eec938"
+SHA="60e6fb1c578aa9af80d725857dac8e439095b033"
 SRC_URI="https://github.com/4e6/mpv-reload/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="all-rights-reserved"
