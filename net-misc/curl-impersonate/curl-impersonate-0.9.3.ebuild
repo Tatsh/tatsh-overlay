@@ -7,7 +7,7 @@ inherit autotools cmake flag-o-matic multiprocessing
 
 DESCRIPTION="An active fork of curl-impersonate with more versions and build targets."
 HOMEPAGE="https://github.com/lexiforest/curl-impersonate"
-BORINGSSL_SHA="cd95210465496ac2337b313cf49f607762abe286"
+BORINGSSL_SHA="23768dca563c4e62d48bb3675e49e34955dced12"
 CURL_VERSION="curl-8_7_1"
 SRC_URI="https://github.com/lexiforest/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/google/boringssl/archive/${BORINGSSL_SHA}.tar.gz -> boringssl-${BORINGSSL_SHA}.tar.gz
@@ -34,17 +34,17 @@ DOCS=( README.md )
 
 src_prepare() {
 	mv "${WORKDIR}/boringssl-${BORINGSSL_SHA}" "${S}/" || die
-	pushd "boringssl-${BORINGSSL_SHA}" || die
+	pushd "boringssl-${BORINGSSL_SHA}" &>/dev/null || die
 	eapply ../chrome/patches/boringssl.patch
 	touch .patched || die
 	cmake_src_prepare
-	popd || die
+	popd &>/dev/null || die
 	mv "${WORKDIR}/curl-${CURL_VERSION}" "${S}/${CURL_VERSION}" || die
-	pushd "${CURL_VERSION}" || die
+	pushd "${CURL_VERSION}" &>/dev/null || die
 	eapply ../chrome/patches/curl-impersonate.patch
 	eautoreconf
 	touch .patched-chrome || die
-	popd || die
+	popd &>/dev/null || die
 	default
 }
 
@@ -65,8 +65,8 @@ src_compile() {
 	cp "boringssl-${BORINGSSL_SHA}_build"/*.a "boringssl-${BORINGSSL_SHA}/lib" || die
 	pushd "${CURL_VERSION}" || die
 	# This configure has to be here to see the libraries just built
-	append-cxxflags -stdlib=libc++
-	append-ldflags -lc++
+	append-cxxflags -stdlib=libstdc++
+	append-ldflags -lstdc++
 	econf \
 		"--with-brotli=${EPREFIX}/usr/$(get_libdir)" \
 		"--with-ca-bundle=${EPREFIX}/etc/ssl/certs/ca-certificates.crt" \
@@ -78,7 +78,7 @@ src_compile() {
 		--enable-ipv6 \
 		--disable-static \
 		--enable-websockets \
-		LIBS="-pthread -lbrotlidec -lc++" \
+		LIBS="-pthread -lbrotlidec -lstdc++" \
 		USE_CURL_SSLKEYLOGFILE=true
 	emake
 	popd || die
