@@ -6,8 +6,7 @@ inherit linux-mod-r1 udev
 
 DESCRIPTION="Magewell Pro Capture driver."
 HOMEPAGE="https://www.magewell.com/downloads/pro-capture#/driver/linux-x86"
-SUFFIX="${PV##*.}"
-SRC_URI="http://www.magewell.com/files/drivers/ProCaptureForLinux_${SUFFIX}.tar.gz"
+SRC_URI="https://www.magewell.com/files/drivers/ProCaptureForLinux_${PV/.0}.tar.gz"
 
 LICENSE="Magewell-Pro-Capture"
 SLOT="0"
@@ -16,7 +15,7 @@ IUSE="doc weave"
 
 RDEPENDS="media-libs/alsa-lib"
 
-S="${WORKDIR}/ProCaptureForLinux_${SUFFIX}"
+S="${WORKDIR}/ProCaptureForLinux_${PV/.0}"
 
 DOCS=(quick_start.txt docs/Readme.txt docs/ProCaptureSeriesCardUserGuideforLinux.{eng,chs}.pdf)
 
