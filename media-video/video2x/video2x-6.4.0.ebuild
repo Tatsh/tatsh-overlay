@@ -7,9 +7,9 @@ inherit cmake
 
 DESCRIPTION="A lossless video/GIF/image upscaler."
 HOMEPAGE="https://video2x.org/ https://github.com/k4yt3x/video2x"
-LIBREAL_ESRGAN_NCNN_VULKAN_SHA="cd68df6f98f036fcc9e7d63597ea6faa427c2d2d"
-LIBRIFE_NCNN_VULKAN_SHA="f2edda49a5fd817a7137509e54e70d2e30d9b684"
-LIBREALCUGAN_NCNN_VULKAN_SHA="52f598265a973fc8b17eb5e13cddc0e71c0a79dc"
+LIBREAL_ESRGAN_NCNN_VULKAN_SHA="c1f255524f79566c40866b38e5e65b40adf77eee"
+LIBRIFE_NCNN_VULKAN_SHA="3f7bcb44f38b2acda6fa5e575a6d12517ac16b94"
+LIBREALCUGAN_NCNN_VULKAN_SHA="d9c5a7eb4c8475af6110496c27c3d1f702f9b96a"
 SRC_URI="https://github.com/k4yt3x/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/k4yt3x/libreal-esrgan-ncnn-vulkan/archive/${LIBREAL_ESRGAN_NCNN_VULKAN_SHA}.tar.gz -> ${PN}-libreal-esrgan-ncnn-vulkan-${LIBREAL_ESRGAN_NCNN_VULKAN_SHA}.tar.gz
 	https://github.com/k4yt3x/librife-ncnn-vulkan/archive/${LIBRIFE_NCNN_VULKAN_SHA}.tar.gz -> ${PN}-librife-ncnn-vulkan-${LIBRIFE_NCNN_VULKAN_SHA}.tar.gz
@@ -31,21 +31,18 @@ PATCHES=( "${FILESDIR}/${PN}-0001-build-system-fix.patch" )
 
 src_prepare() {
 	rmdir "${S}/third_party/lib"{realesrgan,realcugan,rife}_ncnn_vulkan || die
-	mv "${WORKDIR}/librealcugan-ncnn-vulkan-${LIBREALCUGAN_NCNN_VULKAN_SHA}/src" "${S}/third_party/realcugan" || die
-	mv "${WORKDIR}/librealesrgan-ncnn-vulkan-${LIBREAL_ESRGAN_NCNN_VULKAN_SHA}/src" "${S}/third_party/realesrgan" || die
-	mv "${WORKDIR}/librife-ncnn-vulkan-${LIBRIFE_NCNN_VULKAN_SHA}/src" "${S}/third_party/rife" || die
-	sed -re 's/(LIBRARY|ARCHIVE) DESTINATION lib/\1 DESTINATION lib64/' -i third_party/{realesrgan,realcugan,rife}/CMakeLists.txt || die
-	sed -re 's/generate-spirv/generate-spirv2/g' -i third_party/rife/CMakeLists.txt || die
-	sed -re 's/generate-spirv/generate-spirv3/g' -i third_party/realcugan/CMakeLists.txt || die
+	mv "${WORKDIR}/librealcugan-ncnn-vulkan-${LIBREALCUGAN_NCNN_VULKAN_SHA}" "${S}/third_party/librealcugan_ncnn_vulkan" || die
+	mv "${WORKDIR}/librealesrgan-ncnn-vulkan-${LIBREAL_ESRGAN_NCNN_VULKAN_SHA}" "${S}/third_party/librealesrgan_ncnn_vulkan" || die
+	mv "${WORKDIR}/librife-ncnn-vulkan-${LIBRIFE_NCNN_VULKAN_SHA}" "${S}/third_party/librife_ncnn_vulkan" || die
+	sed -re 's/(LIBRARY|ARCHIVE) DESTINATION lib/\1 DESTINATION lib64/' -i third_party/libr*/src/CMakeLists.txt || die
+	sed -re 's/generate-spirv/generate-spirv2/g' -i third_party/librife_ncnn_vulkan/src/CMakeLists.txt || die
+	sed -re 's/generate-spirv/generate-spirv3/g' -i third_party/librealcugan_ncnn_vulkan/src/CMakeLists.txt || die
 	cmake_src_prepare
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-DBUILD_SHARED_LIBS=OFF
-		-DUSE_SYSTEM_BOOST=ON
 		-DUSE_SYSTEM_NCNN=ON
-		-DUSE_SYSTEM_SPDLOG=ON
 		-Wno-dev
 	)
 	cmake_src_configure
