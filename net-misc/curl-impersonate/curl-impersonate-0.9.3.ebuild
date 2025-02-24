@@ -87,7 +87,8 @@ src_compile() {
 src_install() {
 	pushd "${CURL_VERSION}" || die
 	emake DESTDIR="${D}" install
-	rm -fR "${D}/usr/share/man" "${D}/usr/share/aclocal" "${D}/usr/include" || die
+	rm -fR "${D}/usr/share/man" "${D}/usr/share/aclocal" "${D}/usr/include" \
+		"${D}/usr/$(get_libdir)/lib${PN}-chrome.la" || die
 	popd || die
 	if use clients; then
 		local bn i
