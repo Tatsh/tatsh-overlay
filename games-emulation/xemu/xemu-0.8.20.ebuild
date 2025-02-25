@@ -172,7 +172,11 @@ src_compile() {
 
 src_install() {
 	default
-	rm -fR "${D}/usr/"{include,lib,lib64} "${D}/usr/share/"{pkgconfig,qemu} "${D}/usr/bin/"{glslang,spirv}* || die
+	rm -R \
+		"${D}/usr/"{include,lib,lib64} \
+		"${D}/usr/bin/"{glslang,spirv}* \
+		"${D}/usr/share/"{man,pkgconfig,qemu} \
+		"${D}/usr/share/doc/${P}/qemu" || die
 }
 
 src_test() {
