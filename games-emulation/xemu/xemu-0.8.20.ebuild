@@ -156,6 +156,7 @@ src_configure() {
 		"$(use_enable membarrier)" \
 		"$(use_enable test tests)" \
 		"--audio-drv-list=[${audio_drv_list_str}]" \
+		 --disable-docs \
 		--disable-qom-cast-debug \
 		--disable-strip \
 		--disable-werror \
@@ -175,8 +176,7 @@ src_install() {
 	rm -R \
 		"${D}/usr/"{include,lib,lib64} \
 		"${D}/usr/bin/"{glslang,spirv}* \
-		"${D}/usr/share/"{man,pkgconfig,qemu} \
-		"${D}/usr/share/doc/${P}/qemu" || die
+		"${D}/usr/share/"{pkgconfig,qemu} || die
 }
 
 src_test() {
