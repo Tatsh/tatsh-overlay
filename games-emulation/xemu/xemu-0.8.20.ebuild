@@ -39,7 +39,7 @@ SRC_URI="https://github.com/xemu-project/xemu/archive/v${PV}.tar.gz -> ${P}.tar.
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-IUSE="xattr aio alsa cpu_flags_x86_avx2 cpu_flags_x86_avx512f debug io-uring jack malloc-trim membarrier pulseaudio test"
+IUSE="xattr aio alsa cpu_flags_x86_avx2 debug io-uring jack malloc-trim membarrier pulseaudio test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RESTRICT="!test? ( test )"
 
