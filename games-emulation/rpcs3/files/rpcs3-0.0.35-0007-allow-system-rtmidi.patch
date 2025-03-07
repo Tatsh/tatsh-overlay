@@ -1,0 +1,37 @@
+From 6fa2afcd94bcc0764de9b4b90d86debbe5800bd0 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 4 Jun 2023 01:50:57 -0400
+Subject: [PATCH 07/10] Allow system rtmidi
+
+---
+ 3rdparty/CMakeLists.txt | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
+index 3fcf4cc5e..c5f596f4c 100644
+--- a/3rdparty/CMakeLists.txt
++++ b/3rdparty/CMakeLists.txt
+@@ -341,7 +341,11 @@ else()
+ endif()
+ 
+ # RTMIDI
+-add_subdirectory(rtmidi EXCLUDE_FROM_ALL)
++if (NOT USE_SYSTEM_RTMIDI)
++  add_subdirectory(rtmidi EXCLUDE_FROM_ALL)
++else()
++  pkg_check_modules(PC_RTMIDI REQUIRED IMPORTED_TARGET GLOBAL rtmidi)
++endif()
+ 
+ # OPENCV
+ add_subdirectory(opencv EXCLUDE_FROM_ALL)
+@@ -378,6 +382,6 @@ add_library(3rdparty::libcurl ALIAS 3rdparty_libcurl)
+ add_library(3rdparty::soundtouch ALIAS soundtouch)
+ add_library(3rdparty::sdl2 ALIAS ${SDL2_TARGET})
+ add_library(3rdparty::miniupnpc ALIAS PkgConfig::PC_MINIUNPNPC)
+-add_library(3rdparty::rtmidi ALIAS rtmidi)
++add_library(3rdparty::rtmidi ALIAS PkgConfig::PC_RTMIDI)
+ add_library(3rdparty::opencv ALIAS ${OPENCV_TARGET})
+ add_library(3rdparty::fusion ALIAS Fusion)
+-- 
+2.48.1
+

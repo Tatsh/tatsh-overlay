@@ -1,0 +1,31 @@
+From efdc5c28cfbed081c52a83c26a5833ef05ca8742 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 8 Oct 2021 09:08:30 -0400
+Subject: [PATCH 01/10] versioning
+
+---
+ rpcs3/rpcs3_version.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/rpcs3/rpcs3_version.cpp b/rpcs3/rpcs3_version.cpp
+index 57bac63f2..71d338389 100644
+--- a/rpcs3/rpcs3_version.cpp
++++ b/rpcs3/rpcs3_version.cpp
+@@ -7,12 +7,12 @@ namespace rpcs3
+ {
+ 	std::string_view get_branch()
+ 	{
+-		return RPCS3_GIT_BRANCH;
++		return "local_build";
+ 	}
+ 
+ 	std::string_view get_full_branch()
+ 	{
+-		return RPCS3_GIT_FULL_BRANCH;
++		return "RPCS3/rpcs3/master";
+ 	}
+ 
+ 	std::pair<std::string, std::string> get_commit_and_hash()
+-- 
+2.48.1
+
