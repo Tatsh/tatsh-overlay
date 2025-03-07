@@ -57,7 +57,7 @@ go-module_set_globals
 
 DESCRIPTION="Tool that uses Gmail in order to mimic sendmail for 'git send-email'."
 HOMEPAGE="https://github.com/google/gmail-oauth2-tools/tree/master/go/sendgmail"
-SHA="81ced795c11ed0adb2fdbbd66a54a4f6af2586aa"
+SHA="85c6b4f07e637683cc5e0ec6a66ce8e4397a4b18"
 SRC_URI="https://github.com/google/gmail-oauth2-tools/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz
 	${EGO_SUM_SRC_URI}"
 
