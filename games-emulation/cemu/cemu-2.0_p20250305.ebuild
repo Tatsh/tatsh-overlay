@@ -7,7 +7,7 @@ inherit cmake desktop xdg
 
 DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
-SHA="ebb5ab53e23b94961d2340d359fb04d8416b1d1d"
+SHA="31d2db6f78a72feda9e3804060eb4364188c8553"
 MY_PN="Cemu"
 GLSLANG_SHA="36d08c0d940cf307a23928299ef52c7970d8cee6"
 IMGUI_PV="1.88"
