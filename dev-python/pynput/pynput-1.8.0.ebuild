@@ -10,7 +10,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="Control and monitor input devices."
 HOMEPAGE="https://pypi.org/project/pynput/"
-SRC_URI="https://github.com/moses-palmer/pynput/archive/refs/tags/v1.7.7.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/moses-palmer/pynput/archive/refs/tags/v1.8.0.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
