@@ -11,7 +11,7 @@ DESCRIPTION="Open source tool for debugging, testing and building with HTTP requ
 HOMEPAGE="https://github.com/httptoolkit/httptoolkit-desktop https://httptoolkit.com/"
 MY_PN="HttpToolkit"
 MY_PN_LOWER="${MY_PN,,}"
-SRC_URI="https://github.com/${MY_PN_LOWER}/${MY_PN_LOWER}-desktop/releases/download/v${PV}/$MY_PN-linux-x64-${PV}.zip -> ${P}.zip
+SRC_URI="https://github.com/${MY_PN_LOWER}/${MY_PN_LOWER}-desktop/releases/download/v${PV}/${MY_PN}-${PV}-linux-x64.zip -> ${P}.zip
 	https://raw.githubusercontent.com/${MY_PN_LOWER}/${MY_PN_LOWER}-desktop/main/src/icons/icon.svg
 	https://raw.githubusercontent.com/${MY_PN_LOWER}/${MY_PN_LOWER}-desktop/main/src/icons/icon.png"
 
