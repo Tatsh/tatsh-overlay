@@ -46,6 +46,7 @@ DEPEND="X? ( x11-libs/libX11 )
 PATCHES=(
 	"${FILESDIR}/${PN}-add-ppc64-detection.patch"
 	"${FILESDIR}/${PN}-ffmpeg-6.patch"
+	"${FILESDIR}/${PN}-ffmpeg-7.patch"
 )
 
 S="${WORKDIR}/${PN}-${SHA}"

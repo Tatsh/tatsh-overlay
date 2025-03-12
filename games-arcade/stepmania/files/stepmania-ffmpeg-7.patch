@@ -1,0 +1,25 @@
+From 8f32e8a0d90c5d791440ddfbab497b7d8027a983 Mon Sep 17 00:00:00 2001
+From: Piotr Zalewski <bardzoglodnypiotrek@gmail.com>
+Date: Sun, 10 Nov 2024 20:58:42 +0100
+Subject: [PATCH] fix: frame_num or frame_number
+
+endif
+---
+ src/arch/MovieTexture/MovieTexture_FFMpeg.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/arch/MovieTexture/MovieTexture_FFMpeg.cpp b/src/arch/MovieTexture/MovieTexture_FFMpeg.cpp
+index a74e003193..85f4a44bb9 100644
+--- a/src/arch/MovieTexture/MovieTexture_FFMpeg.cpp
++++ b/src/arch/MovieTexture/MovieTexture_FFMpeg.cpp
+@@ -9,6 +9,10 @@
+
+ #include <cerrno>
+
++#if LIBAVCODEC_VERSION_MAJOR > 59
++#define frame_number frame_num
++#endif
++
+ static void FixLilEndian()
+ {
+ #if defined(ENDIAN_LITTLE)
