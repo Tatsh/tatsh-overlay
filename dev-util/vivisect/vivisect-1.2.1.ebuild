@@ -15,12 +15,12 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-python/pyasn1
-	dev-python/pyasn1-modules
-	>=dev-python/cxxfilt-0.3.0
-	>=dev-python/msgpack-1.0.8
-	>=dev-python/pycparser-2.22
-	>=dev-python/pyqt5-5.15.7
-	>=dev-python/pyqtwebengine-5.15.6"
+RDEPEND="dev-python/pyasn1[${PYTHON_USEDEP}]
+	dev-python/pyasn1-modules[${PYTHON_USEDEP}]
+	>=dev-python/cxxfilt-0.3.0[${PYTHON_USEDEP}]
+	>=dev-python/msgpack-1.0.8[${PYTHON_USEDEP}]
+	>=dev-python/pycparser-2.22[${PYTHON_USEDEP}]
+	>=dev-python/pyqt5-5.15.7[${PYTHON_USEDEP}]
+	>=dev-python/pyqtwebengine-5.15.6[${PYTHON_USEDEP}]"
 
 distutils_enable_tests unittest
