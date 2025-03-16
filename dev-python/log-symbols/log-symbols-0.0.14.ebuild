@@ -15,4 +15,4 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=dev-python/colorama-0.3.9"
+RDEPEND=">=dev-python/colorama-0.3.9[${PYTHON_USEDEP}]"
