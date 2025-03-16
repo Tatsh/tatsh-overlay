@@ -16,11 +16,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	>=dev-python/log-symbols-0.0.14
-	>=dev-python/spinners-0.0.24
-	>=dev-python/termcolor-1.1.0
-	>=dev-python/colorama-0.3.9
-	>=dev-python/six-1.12.0
+	>=dev-python/log-symbols-0.0.14[${PYTHON_USEDEP}]
+	>=dev-python/spinners-0.0.24[${PYTHON_USEDEP}]
+	>=dev-python/termcolor-1.1.0[${PYTHON_USEDEP}]
+	>=dev-python/colorama-0.3.9[${PYTHON_USEDEP}]
+	>=dev-python/six-1.12.0[${PYTHON_USEDEP}]
 "
 
 distutils_enable_tests pytest
