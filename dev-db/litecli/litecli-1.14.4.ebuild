@@ -14,13 +14,13 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-RDEPEND=">=dev-python/click-4.1
-	>=dev-python/pygments-2.0
-	>=dev-python/prompt-toolkit-3.0.3
-	<dev-python/prompt-toolkit-4.0.0
-	dev-python/sqlparse
-	>=dev-python/configobj-5.0.6
-	>=dev-python/cli-helpers-1.0.1"
+RDEPEND=">=dev-python/click-4.1[${PYTHON_USEDEP}]
+	>=dev-python/pygments-2.0[${PYTHON_USEDEP}]
+	>=dev-python/prompt-toolkit-3.0.3[${PYTHON_USEDEP}]
+	<dev-python/prompt-toolkit-4.0.0[${PYTHON_USEDEP}]
+	dev-python/sqlparse[${PYTHON_USEDEP}]
+	>=dev-python/configobj-5.0.6[${PYTHON_USEDEP}]
+	>=dev-python/cli-helpers-1.0.1[${PYTHON_USEDEP}]"
 
 python_prepare_all() {
 	export SETUPTOOLS_SCM_PRETEND_VERSION="${PV}"
