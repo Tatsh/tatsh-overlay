@@ -34,7 +34,7 @@ DEPEND="${RDEPEND}
 		dev-libs/libxml2
 	)"
 BDEPEND="test? (
-		dev-python/python-dbusmock
+		$(python_gen_cond_dep 'dev-python/python-dbusmock[${PYTHON_USEDEP}]')
 		pam? ( sys-libs/pam_wrapper )
 	)"
 
