@@ -14,4 +14,4 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="media-video/vapoursynth"
+RDEPEND="media-video/vapoursynth[${PYTHON_USEDEP}]"
