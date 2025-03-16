@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-RDEPEND="media-video/vapoursynth
+RDEPEND="media-video/vapoursynth[${PYTHON_USEDEP}]
 	${PYTHON_DEPS}
 	media-video/vapoursynth-fluxsmooth
 	media-video/vapoursynth-minideen
