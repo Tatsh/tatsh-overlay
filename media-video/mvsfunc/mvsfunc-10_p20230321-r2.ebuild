@@ -16,7 +16,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=media-video/vapoursynth-37
+RDEPEND=">=media-video/vapoursynth-37[${PYTHON_USEDEP}]
 	media-video/fmtconv
 	media-video/vapoursynth-bm3d"
 
