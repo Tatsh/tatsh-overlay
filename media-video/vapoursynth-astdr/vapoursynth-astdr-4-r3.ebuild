@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-RDEPEND="media-video/vapoursynth
+RDEPEND="media-video/vapoursynth[${PYTHON_USEDEP}]
 	media-video/vapoursynth-hqdn3d
 	media-video/vapoursynth-mvtools
 	media-video/vs-removegrain
