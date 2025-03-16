@@ -14,10 +14,10 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-RDEPEND="dev-python/gitpython
-	dev-python/binaryornot
-	dev-python/click
-	dev-python/platformdirs"
+RDEPEND="dev-python/gitpython[${PYTHON_USEDEP}]
+	dev-python/binaryornot[${PYTHON_USEDEP}]
+	dev-python/click[${PYTHON_USEDEP}]
+	dev-python/platformdirs[${PYTHON_USEDEP}]"
 
 pkg_postinst() {
 	einfo
