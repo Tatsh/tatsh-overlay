@@ -17,6 +17,7 @@ RDEPEND="dev-python/appdirs[${PYTHON_USEDEP}]
 	dev-python/babelfish[${PYTHON_USEDEP}]
 	dev-python/guessit[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
+	dev-python/requests-cache[${PYTHON_USEDEP}]
 	dev-python/teletype[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 
