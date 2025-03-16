@@ -270,7 +270,7 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="test? ( dev-python/pytest-sugar dev-python/pytest-instafail )"
+RDEPEND="test? ( dev-python/pytest-sugar[${PYTHON_USEDEP}] dev-python/pytest-instafail[${PYTHON_USEDEP}] )"
 
 S="${WORKDIR}/lancelot-${PV}/pyflirt"
 
