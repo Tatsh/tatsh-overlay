@@ -17,14 +17,14 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	dev-python/funcy
-	dev-python/intervaltree
-	dev-python/python-flirt
-	dev-python/typing-extensions
-	dev-util/vivisect
+	dev-python/funcy[${PYTHON_USEDEP}]
+	dev-python/intervaltree[${PYTHON_USEDEP}]
+	dev-python/python-flirt[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]
+	dev-util/vivisect[${PYTHON_USEDEP}]
 	test? (
-		dev-python/pytest-sugar
-		dev-python/pytest-instafail
+		dev-python/pytest-sugar[${PYTHON_USEDEP}]
+		dev-python/pytest-instafail[${PYTHON_USEDEP}]
 	)
 "
 
