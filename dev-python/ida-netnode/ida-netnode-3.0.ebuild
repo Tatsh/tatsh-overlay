@@ -17,6 +17,6 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="test"
 
-RDEPEND="dev-python/six"
+RDEPEND="dev-python/six[${PYTHON_USEDEP}]"
 
 S="${WORKDIR}/${P}"
