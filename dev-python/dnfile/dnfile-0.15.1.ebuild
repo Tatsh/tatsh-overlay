@@ -15,6 +15,6 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=dev-python/pefile-2019.4.18"
+RDEPEND=">=dev-python/pefile-2019.4.18[${PYTHON_USEDEP}]"
 
 distutils_enable_tests pytest
