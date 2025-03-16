@@ -17,6 +17,6 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="test"
 
-RDEPEND="dev-python/ida-netnode"
+RDEPEND="dev-python/ida-netnode[${PYTHON_USEDEP}]"
 
 S="${WORKDIR}/${P}"
