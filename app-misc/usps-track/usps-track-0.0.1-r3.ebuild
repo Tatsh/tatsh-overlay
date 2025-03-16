@@ -14,5 +14,5 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-RDEPEND="dev-python/aiohttp
-	dev-python/argcomplete"
+RDEPEND="dev-python/aiohttp[${PYTHON_USEDEP}]
+	dev-python/argcomplete[${PYTHON_USEDEP}]"
