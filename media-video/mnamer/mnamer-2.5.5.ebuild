@@ -9,7 +9,7 @@ inherit distutils-r1 pypi
 DESCRIPTION="Media file renaming and organising tool."
 HOMEPAGE="https://github.com/jkwill87/mnamer"
 
-LICENSE=""
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
