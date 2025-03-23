@@ -4,7 +4,6 @@ aatl
 abloop
 accesscontrol
 aclocal
-adal
 adbsync
 addpredict
 adlam
@@ -38,6 +37,7 @@ amodding
 ampproject
 anacrolix
 analyse
+andrewbranch
 andreyvit
 andybalholm
 anmitsu
@@ -72,6 +72,7 @@ arun
 asan
 asar
 asaskevich
+asio
 asmflags
 asmjit
 assimp
@@ -87,6 +88,7 @@ atotto
 atrac
 audiofile
 authorisation
+authorised
 authorware
 autocfg
 autodetection
@@ -106,6 +108,7 @@ aymanbagabas
 azcore
 azidentity
 azkeys
+babelfish
 backgroundremover
 backoff
 bamum
@@ -177,8 +180,6 @@ buginese
 bugpoint
 buhid
 buildfiles
-buildservices
-builtins
 bulkedit
 bumpalo
 bwesterb
@@ -200,6 +201,7 @@ caniuse
 capa
 carian
 cascadia
+catus
 ccache
 ccgo
 ccmd
@@ -278,11 +280,9 @@ commandlines
 commitizen
 commondir
 compat
-componentmodel
 concat
 cond
 configfile
-configobj
 configor
 configura
 conflicter
@@ -313,6 +313,7 @@ creack
 creds
 crosscompiling
 cryptopp
+cscs
 cspotcode
 cssesc
 cssmin
@@ -332,6 +333,7 @@ cxxdump
 cxxfilt
 cxxflags
 cxxmap
+cxxopts
 cyphar
 cython
 czkawka
@@ -345,7 +347,6 @@ dargs
 dashjs
 dashmap
 datafusion
-datagrid
 dataloaden
 dataserv
 datasize
@@ -356,7 +357,6 @@ dateutil
 davecgh
 davidmz
 dbapi
-dbcli
 dbeaver
 dbfile
 dbuild
@@ -409,11 +409,11 @@ dffi
 dfilter
 dfluidsynth
 dfmderainbow
-dfmt
 dgit
 dglslang
 dgryski
 dgtk
+didcot
 difflib
 dinstall
 diropts
@@ -423,6 +423,7 @@ discarder
 discordrpc
 displaydoc
 displaynames
+disruptorplus
 distdir
 distfile
 distfiles
@@ -482,7 +483,6 @@ dotio
 dotize
 dounit
 downscaler
-doxyfile
 doxygen
 dpackage
 dpdb
@@ -519,8 +519,6 @@ dxbox
 dxemu
 dylib
 dynaconf
-dynamicdata
-dynamicexpresso
 dynarec
 dynarmic
 dynrec
@@ -556,7 +554,6 @@ encodeurl
 enet
 enumn
 envify
-envinfo
 envoyproxy
 envpprof
 eprefix
@@ -581,7 +578,6 @@ esrgan
 estraverse
 estree
 esutils
-eutils
 evdev
 eventemitter
 ewarn
@@ -606,6 +602,7 @@ fbjs
 fcaps
 fdeflate
 fecha
+felis
 felixge
 fflate
 ffms
@@ -668,7 +665,6 @@ funcy
 fuser
 gamecube
 gandarez
-gccdir
 gcfg
 gcflags
 gcrypt
@@ -731,6 +727,7 @@ gofrs
 gofuzz
 gogen
 gogs
+gohugoio
 goidentity
 goimagehash
 goja
@@ -776,6 +773,7 @@ gstreamer
 gsymutil
 gtest
 gtksourceview
+guessit
 guidefor
 guidocella
 guregu
@@ -787,13 +785,13 @@ hanunoo
 hanunó'o
 happycube
 harfbuzz
-harfbuzzsharp
 harrypm
 harwell
 hashbrown
 hasher
 hashstructure
 hasown
+hasura
 hatran
 havsfunc
 hclog
@@ -830,7 +828,6 @@ huandu
 humansize
 humanwhocodes
 hwmon
-hyperquest
 hyperscript
 iancoleman
 ianlancetaylor
@@ -839,7 +836,6 @@ idna
 ilspy
 imageio
 imagepipe
-imagesharp
 imath
 imds
 imgui
@@ -896,10 +892,14 @@ jcmturner
 jcrist
 jedib
 jessevdk
+jetpack
+jetpytools
 jimevins
+jinliu
 jinzhu
 jiti
 jitlink
+jkwill
 jmespath
 jmoiron
 joho
@@ -935,6 +935,7 @@ kcompletion
 kcoreaddons
 kdenlive
 kdir
+kdotool
 keepdir
 kelf
 kelftool
@@ -942,7 +943,6 @@ kermieisinthehouse
 kerneldir
 kethsar
 kevinburke
-kevinmbeaulieu
 kevinpollet
 keycodemapdb
 keym
@@ -960,7 +960,6 @@ kisielk
 kitgen
 kiyamou
 klauspost
-kleur
 knadh
 knownhosts
 koanf
@@ -1106,12 +1105,12 @@ libz
 libzip
 libzrif
 libzvbi
+licence
 lide
 lifecycles
 lighttpd
 limbu
 linkify
-linq
 lipgloss
 lipo
 listformat
@@ -1178,12 +1177,12 @@ matchall
 mathml
 mathutil
 matishsiao
-matryer
 mattn
 matttproud
 maturin
 mawen
 maxmin
+maxperfwiz
 mbedcrypto
 mbedtls
 mborgerson
@@ -1214,7 +1213,6 @@ mgba
 mgree
 miao
 michaeldfallen
-microcom
 micromark
 microtask
 miekg
@@ -1242,6 +1240,7 @@ mknod
 mkorenkov
 mlabbe
 mmap
+mnamer
 mobilephone
 modargs
 modernc
@@ -1297,7 +1296,6 @@ narqo
 naskh
 nasm
 natefinch
-nativeassets
 nativefiledialog
 ncnn
 ncruces
@@ -1308,7 +1306,6 @@ nestext
 netlink
 netnode
 netrc
-netstandard
 networkx
 newa
 newar
@@ -1365,9 +1362,7 @@ nullthrows
 numba
 numberformat
 numpy
-nupkg
 nurio
-nvcc
 nvmedit
 objc
 objcopy
@@ -1410,6 +1405,7 @@ optimise
 optionator
 opusfile
 organiser
+organising
 orisano
 oslogin
 osmanya
@@ -1444,6 +1440,7 @@ pascaldekloe
 patchelf
 patchset
 pathdiff
+pathe
 pathspec
 pathstr
 patrickmn
@@ -1613,6 +1610,7 @@ quse
 randomstring
 ranlib
 raphnet
+rapidcsv
 rapidjson
 ratelimit
 raviqqe
@@ -1621,7 +1619,6 @@ rawloader
 rdepend
 rdepends
 rdparty
-reactiveui
 readdir
 readdirp
 readelf
@@ -1632,6 +1629,7 @@ realesrgan
 realfft
 realpath
 realsr
+recognised
 recommonmark
 recompiler
 redent
@@ -1669,8 +1667,6 @@ revc
 revord
 rewx
 rfdc
-rgsf
-rgvs
 rhnvrm
 rimraf
 ripdb
@@ -1697,13 +1693,13 @@ rpcs
 rsrc
 rssh
 rstcheck
+rtaudio
 rtdyld
 rtmidi
 rtmp
 rtti
 ruamel
 runewidth
-runtimeinformation
 runtimes
 russross
 rustc
@@ -1779,13 +1775,10 @@ sindresorhus
 sinhala
 sirit
 sirupsen
-sisteransi
 sitedir
-sixlabors
 sizedwaitgroup
 skeema
 skia
-skiasharp
 slirp
 slongfield
 smallvec
@@ -1824,7 +1817,6 @@ sqlalchemy
 sqlexp
 sqlfluff
 sqlmock
-sqlparse
 sqlserver
 sqlx
 squashfs
@@ -1840,6 +1832,8 @@ stdc
 stdlib
 stdr
 stepmania
+stfc
+stfc's
 stgpytools
 stiefel
 stix
@@ -1881,7 +1875,6 @@ sylotinagri
 symbolizer
 synstructure
 syscall
-systemevents
 systemjs
 systemunitdir
 systray
@@ -1922,7 +1915,6 @@ termcolor
 termenv
 terminfo
 testdata
-testfloat
 texinfo
 textextensions
 textutils
@@ -1945,7 +1937,6 @@ tinyvec
 tinyxml
 tirhuta
 titleize
-tmds
 tmpdir
 tomcrypt
 tomli
@@ -1985,6 +1976,7 @@ udpa
 udvare
 uips
 unalz
+unauthorised
 undici
 undname
 unecm
@@ -1998,7 +1990,9 @@ unitless
 unittests
 universalify
 unixify
+unpreferred
 unscopables
+untar
 untildify
 upconv
 updatecheck
@@ -2020,6 +2014,7 @@ useragent
 userspace
 usev
 usex
+utfcpp
 valyala
 vanced
 vapoursynth
@@ -2075,7 +2070,6 @@ weakmap
 weakref
 weakset
 webapps
-webassembly
 webcomponents
 webcrypto
 webengine
@@ -2099,6 +2093,7 @@ willf
 winapi
 wincon
 windres
+wineasio
 wingetty
 winio
 wireshark
@@ -2125,7 +2120,6 @@ xcrun
 xcursor
 xdamage
 xdist
-xdocument
 xemu
 xerrors
 xext
@@ -2145,7 +2139,6 @@ xrandr
 xrash
 xregexp
 xrender
-xstate
 xstrings
 xtend
 xtst
