@@ -59,26 +59,23 @@ EGO_SUM=(
 	"dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod"
 	"filippo.io/edwards25519 v1.1.0"
 	"filippo.io/edwards25519 v1.1.0/go.mod"
-	"github.com/99designs/gqlgen v0.17.2/go.mod"
-	"github.com/99designs/gqlgen v0.17.49"
-	"github.com/99designs/gqlgen v0.17.49/go.mod"
+	"github.com/99designs/gqlgen v0.17.55"
+	"github.com/99designs/gqlgen v0.17.55/go.mod"
 	"github.com/BurntSushi/toml v0.3.1/go.mod"
 	"github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod"
 	"github.com/DATA-DOG/go-sqlmock v1.5.0"
 	"github.com/DATA-DOG/go-sqlmock v1.5.0/go.mod"
 	"github.com/DataDog/datadog-go v3.2.0+incompatible/go.mod"
 	"github.com/OneOfOne/xxhash v1.2.2/go.mod"
-	"github.com/PuerkitoBio/goquery v1.9.2"
-	"github.com/PuerkitoBio/goquery v1.9.2/go.mod"
+	"github.com/PuerkitoBio/goquery v1.9.3"
+	"github.com/PuerkitoBio/goquery v1.9.3/go.mod"
 	"github.com/RoaringBitmap/roaring v0.4.7/go.mod"
 	"github.com/WithoutPants/sortorder v0.0.0-20230616003020-921c9ef69552"
 	"github.com/WithoutPants/sortorder v0.0.0-20230616003020-921c9ef69552/go.mod"
-	"github.com/Yamashou/gqlgenc v0.0.6"
-	"github.com/Yamashou/gqlgenc v0.0.6/go.mod"
-	"github.com/agnivade/levenshtein v1.0.1/go.mod"
-	"github.com/agnivade/levenshtein v1.1.0/go.mod"
-	"github.com/agnivade/levenshtein v1.1.1"
-	"github.com/agnivade/levenshtein v1.1.1/go.mod"
+	"github.com/Yamashou/gqlgenc v0.25.3"
+	"github.com/Yamashou/gqlgenc v0.25.3/go.mod"
+	"github.com/agnivade/levenshtein v1.2.0"
+	"github.com/agnivade/levenshtein v1.2.0/go.mod"
 	"github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod"
 	"github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751/go.mod"
 	"github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf/go.mod"
@@ -164,23 +161,24 @@ EGO_SUM=(
 	"github.com/cncf/xds/go v0.0.0-20211001041855-01bcc9b48dfe/go.mod"
 	"github.com/cncf/xds/go v0.0.0-20211011173535-cb28da3451f1/go.mod"
 	"github.com/cncf/xds/go v0.0.0-20211130200136-a8f946100490/go.mod"
+	"github.com/coder/websocket v1.8.12"
+	"github.com/coder/websocket v1.8.12/go.mod"
 	"github.com/coreos/go-semver v0.3.0/go.mod"
 	"github.com/coreos/go-systemd/v22 v22.3.2/go.mod"
 	"github.com/coreos/go-systemd/v22 v22.5.0/go.mod"
 	"github.com/corona10/goimagehash v1.1.0"
 	"github.com/corona10/goimagehash v1.1.0/go.mod"
-	"github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d/go.mod"
 	"github.com/cpuguy83/go-md2man/v2 v2.0.1/go.mod"
 	"github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod"
-	"github.com/cpuguy83/go-md2man/v2 v2.0.4"
-	"github.com/cpuguy83/go-md2man/v2 v2.0.4/go.mod"
+	"github.com/cpuguy83/go-md2man/v2 v2.0.5"
+	"github.com/cpuguy83/go-md2man/v2 v2.0.5/go.mod"
 	"github.com/creack/pty v1.1.9/go.mod"
 	"github.com/davecgh/go-spew v1.1.0/go.mod"
 	"github.com/davecgh/go-spew v1.1.1"
 	"github.com/davecgh/go-spew v1.1.1/go.mod"
 	"github.com/denisenkom/go-mssqldb v0.10.0/go.mod"
-	"github.com/dgryski/trifles v0.0.0-20200323201526-dd97f9abfb48"
-	"github.com/dgryski/trifles v0.0.0-20200323201526-dd97f9abfb48/go.mod"
+	"github.com/dgryski/trifles v0.0.0-20230903005119-f50d829f2e54"
+	"github.com/dgryski/trifles v0.0.0-20230903005119-f50d829f2e54/go.mod"
 	"github.com/disintegration/imaging v1.6.2"
 	"github.com/disintegration/imaging v1.6.2/go.mod"
 	"github.com/dlclark/regexp2 v1.4.1-0.20201116162257-a2a8dda75c91/go.mod"
@@ -254,12 +252,10 @@ EGO_SUM=(
 	"github.com/gobwas/ws v1.3.0"
 	"github.com/gobwas/ws v1.3.0/go.mod"
 	"github.com/godbus/dbus/v5 v5.0.4/go.mod"
-	"github.com/gofrs/uuid/v5 v5.1.0"
-	"github.com/gofrs/uuid/v5 v5.1.0/go.mod"
 	"github.com/gogo/protobuf v1.1.1/go.mod"
 	"github.com/gogo/protobuf v1.3.2/go.mod"
-	"github.com/golang-jwt/jwt/v4 v4.5.0"
-	"github.com/golang-jwt/jwt/v4 v4.5.0/go.mod"
+	"github.com/golang-jwt/jwt/v4 v4.5.1"
+	"github.com/golang-jwt/jwt/v4 v4.5.1/go.mod"
 	"github.com/golang-migrate/migrate/v4 v4.16.2"
 	"github.com/golang-migrate/migrate/v4 v4.16.2/go.mod"
 	"github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe/go.mod"
@@ -352,7 +348,6 @@ EGO_SUM=(
 	"github.com/gorilla/securecookie v1.1.1/go.mod"
 	"github.com/gorilla/sessions v1.2.1"
 	"github.com/gorilla/sessions v1.2.1/go.mod"
-	"github.com/gorilla/websocket v1.4.2/go.mod"
 	"github.com/gorilla/websocket v1.5.0"
 	"github.com/gorilla/websocket v1.5.0/go.mod"
 	"github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0/go.mod"
@@ -407,6 +402,8 @@ EGO_SUM=(
 	"github.com/hashicorp/vault/sdk v0.1.13/go.mod"
 	"github.com/hashicorp/yamux v0.0.0-20180604194846-3520598351bb/go.mod"
 	"github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d/go.mod"
+	"github.com/hasura/go-graphql-client v0.13.1"
+	"github.com/hasura/go-graphql-client v0.13.1/go.mod"
 	"github.com/hjson/hjson-go/v4 v4.0.0"
 	"github.com/hjson/hjson-go/v4 v4.0.0/go.mod"
 	"github.com/huandu/xstrings v1.0.0/go.mod"
@@ -443,7 +440,6 @@ EGO_SUM=(
 	"github.com/kermieisinthehouse/gosx-notifier v0.1.2/go.mod"
 	"github.com/kermieisinthehouse/systray v1.2.4"
 	"github.com/kermieisinthehouse/systray v1.2.4/go.mod"
-	"github.com/kevinmbeaulieu/eq-go v1.0.0/go.mod"
 	"github.com/kisielk/errcheck v1.5.0/go.mod"
 	"github.com/kisielk/gotool v1.0.0/go.mod"
 	"github.com/knadh/koanf v1.5.0"
@@ -467,7 +463,6 @@ EGO_SUM=(
 	"github.com/lib/pq v1.10.1/go.mod"
 	"github.com/lib/pq v1.10.9"
 	"github.com/lib/pq v1.10.9/go.mod"
-	"github.com/logrusorgru/aurora/v3 v3.0.0/go.mod"
 	"github.com/lucasb-eyer/go-colorful v1.2.0"
 	"github.com/lucasb-eyer/go-colorful v1.2.0/go.mod"
 	"github.com/lyft/protoc-gen-star v0.5.3/go.mod"
@@ -476,7 +471,6 @@ EGO_SUM=(
 	"github.com/magiconair/properties v1.8.7/go.mod"
 	"github.com/mailru/easyjson v0.7.7"
 	"github.com/mailru/easyjson v0.7.7/go.mod"
-	"github.com/matryer/moq v0.2.3/go.mod"
 	"github.com/mattn/go-colorable v0.0.9/go.mod"
 	"github.com/mattn/go-colorable v0.1.4/go.mod"
 	"github.com/mattn/go-colorable v0.1.6/go.mod"
@@ -513,7 +507,6 @@ EGO_SUM=(
 	"github.com/mitchellh/go-wordwrap v1.0.0/go.mod"
 	"github.com/mitchellh/mapstructure v0.0.0-20160808181253-ca63d7c062ee/go.mod"
 	"github.com/mitchellh/mapstructure v1.1.2/go.mod"
-	"github.com/mitchellh/mapstructure v1.2.3/go.mod"
 	"github.com/mitchellh/mapstructure v1.4.3/go.mod"
 	"github.com/mitchellh/mapstructure v1.5.0"
 	"github.com/mitchellh/mapstructure v1.5.0/go.mod"
@@ -595,7 +588,6 @@ EGO_SUM=(
 	"github.com/rs/zerolog v1.29.1/go.mod"
 	"github.com/rs/zerolog v1.30.0"
 	"github.com/rs/zerolog v1.30.0/go.mod"
-	"github.com/russross/blackfriday/v2 v2.0.1/go.mod"
 	"github.com/russross/blackfriday/v2 v2.1.0"
 	"github.com/russross/blackfriday/v2 v2.1.0/go.mod"
 	"github.com/rwcarlsen/goexif v0.0.0-20190401172101-9e8deecbddbd"
@@ -607,12 +599,8 @@ EGO_SUM=(
 	"github.com/sagikazarmark/crypt v0.3.0/go.mod"
 	"github.com/sagikazarmark/crypt v0.4.0/go.mod"
 	"github.com/sean-/seed v0.0.0-20170313163322-e2103e2c3529/go.mod"
-	"github.com/sergi/go-diff v1.1.0/go.mod"
 	"github.com/sergi/go-diff v1.3.1"
 	"github.com/sergi/go-diff v1.3.1/go.mod"
-	"github.com/shurcooL/graphql v0.0.0-20181231061246-d48a9a75455f"
-	"github.com/shurcooL/graphql v0.0.0-20181231061246-d48a9a75455f/go.mod"
-	"github.com/shurcooL/sanitized_anchor_name v1.0.0/go.mod"
 	"github.com/sirupsen/logrus v1.2.0/go.mod"
 	"github.com/sirupsen/logrus v1.4.2/go.mod"
 	"github.com/sirupsen/logrus v1.6.0/go.mod"
@@ -672,24 +660,21 @@ EGO_SUM=(
 	"github.com/tidwall/pretty v1.2.1/go.mod"
 	"github.com/tinylib/msgp v1.0.2/go.mod"
 	"github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod"
-	"github.com/urfave/cli/v2 v2.3.0/go.mod"
-	"github.com/urfave/cli/v2 v2.27.2"
-	"github.com/urfave/cli/v2 v2.27.2/go.mod"
+	"github.com/urfave/cli/v2 v2.27.5"
+	"github.com/urfave/cli/v2 v2.27.5/go.mod"
 	"github.com/vearutop/statigz v1.4.0"
 	"github.com/vearutop/statigz v1.4.0/go.mod"
 	"github.com/vektah/dataloaden v0.3.0"
 	"github.com/vektah/dataloaden v0.3.0/go.mod"
-	"github.com/vektah/gqlparser/v2 v2.4.0/go.mod"
-	"github.com/vektah/gqlparser/v2 v2.4.1/go.mod"
-	"github.com/vektah/gqlparser/v2 v2.5.16"
-	"github.com/vektah/gqlparser/v2 v2.5.16/go.mod"
+	"github.com/vektah/gqlparser/v2 v2.5.18"
+	"github.com/vektah/gqlparser/v2 v2.5.18/go.mod"
 	"github.com/vektra/mockery/v2 v2.10.0"
 	"github.com/vektra/mockery/v2 v2.10.0/go.mod"
 	"github.com/willf/bitset v1.1.9/go.mod"
 	"github.com/xWTF/chardet v0.0.0-20230208095535-c780f2ac244e"
 	"github.com/xWTF/chardet v0.0.0-20230208095535-c780f2ac244e/go.mod"
-	"github.com/xrash/smetrics v0.0.0-20240312152122-5f08fbb34913"
-	"github.com/xrash/smetrics v0.0.0-20240312152122-5f08fbb34913/go.mod"
+	"github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1"
+	"github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1/go.mod"
 	"github.com/yuin/goldmark v1.1.25/go.mod"
 	"github.com/yuin/goldmark v1.1.27/go.mod"
 	"github.com/yuin/goldmark v1.1.32/go.mod"
@@ -736,8 +721,8 @@ EGO_SUM=(
 	"golang.org/x/crypto v0.0.0-20211215165025-cf75a172585e/go.mod"
 	"golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce/go.mod"
 	"golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa/go.mod"
-	"golang.org/x/crypto v0.24.0"
-	"golang.org/x/crypto v0.24.0/go.mod"
+	"golang.org/x/crypto v0.31.0"
+	"golang.org/x/crypto v0.31.0/go.mod"
 	"golang.org/x/exp v0.0.0-20190121172915-509febef88a4/go.mod"
 	"golang.org/x/exp v0.0.0-20190306152737-a1d7652674e8/go.mod"
 	"golang.org/x/exp v0.0.0-20190510132918-efd6b22b2522/go.mod"
@@ -778,10 +763,9 @@ EGO_SUM=(
 	"golang.org/x/mod v0.4.2/go.mod"
 	"golang.org/x/mod v0.5.0/go.mod"
 	"golang.org/x/mod v0.5.1/go.mod"
-	"golang.org/x/mod v0.6.0-dev.0.20220106191415-9b9b3d81d5e3/go.mod"
 	"golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4/go.mod"
-	"golang.org/x/mod v0.18.0"
-	"golang.org/x/mod v0.18.0/go.mod"
+	"golang.org/x/mod v0.21.0"
+	"golang.org/x/mod v0.21.0/go.mod"
 	"golang.org/x/net v0.0.0-20180724234803-3673e40ba225/go.mod"
 	"golang.org/x/net v0.0.0-20180826012351-8a410e7b638d/go.mod"
 	"golang.org/x/net v0.0.0-20181023162649-9b4f9f5ad519/go.mod"
@@ -831,8 +815,8 @@ EGO_SUM=(
 	"golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2/go.mod"
 	"golang.org/x/net v0.0.0-20220722155237-a158d28d115b/go.mod"
 	"golang.org/x/net v0.5.0/go.mod"
-	"golang.org/x/net v0.26.0"
-	"golang.org/x/net v0.26.0/go.mod"
+	"golang.org/x/net v0.33.0"
+	"golang.org/x/net v0.33.0/go.mod"
 	"golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod"
 	"golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421/go.mod"
 	"golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45/go.mod"
@@ -862,8 +846,8 @@ EGO_SUM=(
 	"golang.org/x/sync v0.0.0-20201207232520-09787c993a3a/go.mod"
 	"golang.org/x/sync v0.0.0-20210220032951-036812b2e83c/go.mod"
 	"golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4/go.mod"
-	"golang.org/x/sync v0.7.0"
-	"golang.org/x/sync v0.7.0/go.mod"
+	"golang.org/x/sync v0.10.0"
+	"golang.org/x/sync v0.10.0/go.mod"
 	"golang.org/x/sys v0.0.0-20180823144017-11551d06cbcc/go.mod"
 	"golang.org/x/sys v0.0.0-20180830151530-49385e6e1522/go.mod"
 	"golang.org/x/sys v0.0.0-20180905080454-ebe1bf3edb33/go.mod"
@@ -946,7 +930,6 @@ EGO_SUM=(
 	"golang.org/x/sys v0.0.0-20211210111614-af8b64212486/go.mod"
 	"golang.org/x/sys v0.0.0-20220114195835-da31bd327af9/go.mod"
 	"golang.org/x/sys v0.0.0-20220310020820-b874c991c1a5/go.mod"
-	"golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8/go.mod"
 	"golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a/go.mod"
 	"golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8/go.mod"
 	"golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f/go.mod"
@@ -955,13 +938,13 @@ EGO_SUM=(
 	"golang.org/x/sys v0.4.0/go.mod"
 	"golang.org/x/sys v0.6.0/go.mod"
 	"golang.org/x/sys v0.10.0/go.mod"
-	"golang.org/x/sys v0.21.0"
-	"golang.org/x/sys v0.21.0/go.mod"
+	"golang.org/x/sys v0.28.0"
+	"golang.org/x/sys v0.28.0/go.mod"
 	"golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod"
 	"golang.org/x/term v0.0.0-20210927222741-03fcf44c2211/go.mod"
 	"golang.org/x/term v0.4.0/go.mod"
-	"golang.org/x/term v0.21.0"
-	"golang.org/x/term v0.21.0/go.mod"
+	"golang.org/x/term v0.27.0"
+	"golang.org/x/term v0.27.0/go.mod"
 	"golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c/go.mod"
 	"golang.org/x/text v0.3.0/go.mod"
 	"golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2/go.mod"
@@ -974,8 +957,8 @@ EGO_SUM=(
 	"golang.org/x/text v0.3.7/go.mod"
 	"golang.org/x/text v0.3.8/go.mod"
 	"golang.org/x/text v0.6.0/go.mod"
-	"golang.org/x/text v0.16.0"
-	"golang.org/x/text v0.16.0/go.mod"
+	"golang.org/x/text v0.21.0"
+	"golang.org/x/text v0.21.0/go.mod"
 	"golang.org/x/time v0.0.0-20181108054448-85acf8d2951c/go.mod"
 	"golang.org/x/time v0.0.0-20190308202827-9d24e82272b4/go.mod"
 	"golang.org/x/time v0.0.0-20191024005414-555d28b269f0/go.mod"
@@ -1021,7 +1004,6 @@ EGO_SUM=(
 	"golang.org/x/tools v0.0.0-20200619180055-7c47624df98f/go.mod"
 	"golang.org/x/tools v0.0.0-20200729194436-6467de6f59a7/go.mod"
 	"golang.org/x/tools v0.0.0-20200804011535-6c149bb5ef0d/go.mod"
-	"golang.org/x/tools v0.0.0-20200815165600-90abf76919f3/go.mod"
 	"golang.org/x/tools v0.0.0-20200825202427-b303f430e36d/go.mod"
 	"golang.org/x/tools v0.0.0-20200904185747-39188db58858/go.mod"
 	"golang.org/x/tools v0.0.0-20201110124207-079ba7bd75cd/go.mod"
@@ -1038,11 +1020,9 @@ EGO_SUM=(
 	"golang.org/x/tools v0.1.5/go.mod"
 	"golang.org/x/tools v0.1.7/go.mod"
 	"golang.org/x/tools v0.1.8/go.mod"
-	"golang.org/x/tools v0.1.9/go.mod"
-	"golang.org/x/tools v0.1.10/go.mod"
 	"golang.org/x/tools v0.1.12/go.mod"
-	"golang.org/x/tools v0.22.0"
-	"golang.org/x/tools v0.22.0/go.mod"
+	"golang.org/x/tools v0.26.0"
+	"golang.org/x/tools v0.26.0/go.mod"
 	"golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod"
 	"golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898/go.mod"
 	"golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod"
@@ -1495,6 +1475,7 @@ YARN_PKGS=(
 	@types/babel__template-7.4.1
 	@types/babel__traverse-7.18.3
 	@types/cookie-0.3.3
+	@types/crypto-js-4.2.2
 	@types/extract-files-13.0.1
 	@types/fs-extra-9.0.13
 	@types/history-4.7.11
@@ -1675,7 +1656,8 @@ YARN_PKGS=(
 	create-require-1.1.1
 	cross-fetch-3.1.5
 	cross-inspect-1.0.0
-	cross-spawn-7.0.3
+	cross-spawn-7.0.6
+	crypto-js-4.2.0
 	css-functions-list-3.1.0
 	css-tree-2.3.1
 	cssesc-3.0.0
@@ -1707,7 +1689,7 @@ YARN_PKGS=(
 	dom-walk-0.1.2
 	dot-case-3.0.4
 	dotenv-16.0.3
-	dset-3.1.2
+	dset-3.1.4
 	electron-to-chromium-1.4.648
 	emoji-regex-8.0.0
 	emoji-regex-9.2.2
@@ -1998,6 +1980,7 @@ YARN_PKGS=(
 	minimist-options-4.1.0
 	mkdirp-1.0.4
 	moment-2.29.4
+	moment-2.30.1
 	mousetrap-1.6.5
 	mousetrap-pause-1.0.0
 	mpd-parser-0.22.1
@@ -2005,7 +1988,7 @@ YARN_PKGS=(
 	ms-2.1.3
 	mute-stream-0.0.8
 	mux.js-6.0.1
-	nanoid-3.3.6
+	nanoid-3.3.8
 	natural-compare-1.4.0
 	natural-compare-lite-1.4.0
 	no-case-3.0.4
@@ -2055,7 +2038,7 @@ YARN_PKGS=(
 	path-parse-1.0.7
 	path-root-0.1.1
 	path-root-regex-0.1.2
-	path-to-regexp-1.8.0
+	path-to-regexp-1.9.0
 	path-type-4.0.0
 	picocolors-1.0.0
 	picomatch-2.3.1
@@ -2147,7 +2130,7 @@ YARN_PKGS=(
 	reusify-1.0.4
 	rfdc-1.3.0
 	rimraf-3.0.2
-	rollup-3.29.4
+	rollup-3.29.5
 	run-async-2.4.1
 	run-parallel-1.2.0
 	rust-result-1.0.0
@@ -2307,7 +2290,7 @@ YARN_PKGS=(
 	videojs-seek-buttons-3.0.1
 	videojs-vr-1.8.0
 	videojs-vtt.js-0.15.4
-	vite-4.5.3
+	vite-4.5.6
 	vite-plugin-compression-0.5.1
 	vite-tsconfig-paths-4.0.5
 	warning-4.0.3
