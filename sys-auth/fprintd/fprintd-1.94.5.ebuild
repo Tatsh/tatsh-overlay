@@ -33,6 +33,7 @@ DEPEND="${RDEPEND}
 		dev-util/gtk-doc-am
 		dev-libs/libxml2
 	)"
+# shellcheck disable=SC2016
 BDEPEND="test? (
 		$(python_gen_cond_dep 'dev-python/python-dbusmock[${PYTHON_USEDEP}]')
 		pam? ( sys-libs/pam_wrapper )
