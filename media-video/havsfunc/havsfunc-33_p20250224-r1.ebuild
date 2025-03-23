@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1
 
 DESCRIPTION="Holy's ported AviSynth functions for VapourSynth"
-HOMEPAGE="http://forum.doom9.org/showthread.php?t=166582"
+HOMEPAGE="https://github.com/HomeOfVapourSynthEvolution/havsfunc"
 SHA="e06ee8a42269945d5fa0495539b1c13798390287"
 SRC_URI="https://github.com/HomeOfVapourSynthEvolution/havsfunc/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 RESTRICT="mirror"
@@ -25,7 +25,7 @@ RDEPEND=">=media-video/ffms2-2.23.1
 	>=media-video/vapoursynth-mvtools-17
 	>=media-video/vapoursynth-nnedi3-11
 	dev-python/vsutil[${PYTHON_USEDEP}]
-	media-libs/vs-denoise[${PYTHON_USEDEP}]
+	media-video/vs-jetpack[${PYTHON_USEDEP}]
 	media-video/vapoursynth-eedi3
 	media-video/vapoursynth-fft3dfilter
 	media-video/vs-miscfilters-obsolete
