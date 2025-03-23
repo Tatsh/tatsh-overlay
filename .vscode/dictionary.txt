@@ -438,6 +438,7 @@ dllvm
 dlmalloc
 dman
 dminitrace
+dmitry
 dmunt
 dmupenplusapi
 dnaeon
