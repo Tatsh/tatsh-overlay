@@ -1,0 +1,8 @@
+move media-libs/vs-denoise media-video/vs-jetpack
+move media-libs/vsaa media-video/vs-jetpack
+move media-libs/vsexprtools media-video/vs-jetpack
+move media-libs/vskernels media-video/vs-jetpack
+move media-libs/vsmasktools media-video/vs-jetpack
+move media-libs/vsrgtools media-video/vs-jetpack
+move media-libs/vsscale media-video/vs-jetpack
+move media-libs/vstools media-video/vs-jetpack
