@@ -1,0 +1,156 @@
+From 40cdd91a3aaacc5c6793ed640cb7090acc828757 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 30 Oct 2022 22:55:31 -0400
+Subject: [PATCH 1/2] System libraries
+
+---
+ CMakeLists.txt                 | 16 ++++++++++++++++
+ externals/CMakeLists.txt       | 22 ++++++++++++----------
+ src/audio_core/CMakeLists.txt  |  2 +-
+ src/common/CMakeLists.txt      | 13 +++++++------
+ src/common/logging/backend.cpp |  3 +--
+ 5 files changed, 37 insertions(+), 19 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index eaa5ca118..8ada4e674 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -92,6 +92,22 @@ CMAKE_DEPENDENT_OPTION(CITRA_ENABLE_BUNDLE_TARGET "Enable the distribution bundl
+ CMAKE_DEPENDENT_OPTION(COMPILE_WITH_DWARF "Add DWARF debugging information" ${IS_DEBUG_BUILD} "MINGW" OFF)
+ option(ENABLE_LTO "Enable link time optimization" ${DEFAULT_ENABLE_LTO})
+ option(CITRA_USE_PRECOMPILED_HEADERS "Use precompiled headers" ON)
++
++option(USE_SYSTEM_BOOST "Use the system Boost libs (instead of the bundled ones)" OFF)
++option(USE_SYSTEM_CUBEB "Use system cubeb libs" OFF)
++option(USE_SYSTEM_ENET "Use system enet libs" OFF)
++option(USE_SYSTEM_FMT "Use system fmt libs" OFF)
++option(USE_SYSTEM_INIH "Use system inih" OFF)
++option(USE_SYSTEM_TEAKRA "Use system Teakra libs" OFF)
++option(USE_SYSTEM_XBYAK "Use system xbyak" OFF)
++option(USE_SYSTEM_ZSTD "Use system zstd libs" OFF)
++option(DISABLE_SUBMODULE_CHECK "Disable check for submodules" OFF)
++
++
++CMAKE_DEPENDENT_OPTION(CITRA_USE_BUNDLED_MOLTENVK "Download the bundled MoltenVK" ON "APPLE" OFF)
++
++CMAKE_DEPENDENT_OPTION(CITRA_BUNDLE_LIBRARIES "Bundle dependent libraries with the output executables" ON "APPLE" OFF)
++
+ option(CITRA_WARNINGS_AS_ERRORS "Enable warnings as errors" ON)
+
+ include(CitraHandleSystemLibs)
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index 2f7bdde71..49b05e3c7 100644
+--- a/externals/CMakeLists.txt
++++ b/externals/CMakeLists.txt
+@@ -54,8 +54,6 @@ target_link_libraries(catch2 INTERFACE Catch2::Catch2WithMain)
+ # Crypto++
+ if(USE_SYSTEM_CRYPTOPP)
+     find_package(cryptopp REQUIRED)
+-    add_library(cryptopp INTERFACE)
+-    target_link_libraries(cryptopp INTERFACE cryptopp::cryptopp)
+ else()
+     set(CRYPTOPP_BUILD_DOCUMENTATION OFF CACHE BOOL "")
+     set(CRYPTOPP_BUILD_TESTING OFF CACHE BOOL "")
+@@ -145,7 +143,12 @@ endif()
+ add_subdirectory(open_source_archives)
+
+ # faad2
+-add_subdirectory(faad2 EXCLUDE_FROM_ALL)
++if(USE_SYSTEM_FAAD2)
++    include(FindPkgConfig)
++    pkg_check_modules(PC_FAAD2 faad2 REQUIRED IMPORTED_TARGET GLOBAL)
++else()
++    add_subdirectory(faad2 EXCLUDE_FROM_ALL)
++endif()
+
+ # Dynamic library headers
+ add_library(library-headers INTERFACE)
+@@ -175,7 +178,11 @@ if(NOT USE_SYSTEM_SOUNDTOUCH)
+
+ # Teakra
+ set(BUILD_TESTING OFF CACHE BOOL "")
+-add_subdirectory(teakra EXCLUDE_FROM_ALL)
++if (NOT USE_SYSTEM_TEAKRA)
++    add_subdirectory(teakra EXCLUDE_FROM_ALL)
++else()
++    find_library(TEAKRA_LIBS teakra REQUIRED)
++endif()
+
+ # SDL2
+ if (ENABLE_SDL2 AND NOT USE_SYSTEM_SDL2)
+@@ -191,12 +198,7 @@ endif()
+
+ # Zstandard
+ if(USE_SYSTEM_ZSTD)
+-    find_package(zstd REQUIRED)
+-    add_library(zstd INTERFACE)
+-    if(TARGET zstd::libzstd_shared)
+-        message(STATUS "Found system Zstandard")
+-    endif()
+-    target_link_libraries(zstd INTERFACE zstd::libzstd_shared)
++    find_library(ZSTD_LIBS zstd REQUIRED)
+ else()
+     set(ZSTD_LEGACY_SUPPORT OFF)
+     set(ZSTD_BUILD_PROGRAMS OFF)
+diff --git a/src/audio_core/CMakeLists.txt b/src/audio_core/CMakeLists.txt
+index a000e1fc1..a8d14f643 100644
+--- a/src/audio_core/CMakeLists.txt
++++ b/src/audio_core/CMakeLists.txt
+@@ -44,7 +44,7 @@ add_library(audio_core STATIC
+ create_target_directory_groups(audio_core)
+
+ target_link_libraries(audio_core PUBLIC citra_common citra_core)
+-target_link_libraries(audio_core PRIVATE faad2 SoundTouch teakra)
++target_link_libraries(audio_core PRIVATE faad SoundTouch teakra)
+
+ if(ENABLE_SDL2)
+     target_link_libraries(audio_core PRIVATE SDL2::SDL2)
+diff --git a/src/common/CMakeLists.txt b/src/common/CMakeLists.txt
+index f8c953a60..94539913f 100644
+--- a/src/common/CMakeLists.txt
++++ b/src/common/CMakeLists.txt
+@@ -181,11 +181,14 @@ else()
+     $<$<CXX_COMPILER_ID:Clang>:-fsized-deallocation>
+   )
+ endif()
+-
+ create_target_directory_groups(citra_common)
+
+ target_link_libraries(citra_common PUBLIC fmt library-headers microprofile Boost::boost Boost::serialization Boost::iostreams)
+-target_link_libraries(citra_common PRIVATE cryptopp zstd)
++if (NOT USE_SYSTEM_ZSTD)
++    target_link_libraries(citra_common PRIVATE cryptopp libzstd_static)
++else()
++    target_link_libraries(citra_common PUBLIC cryptopp zstd)
++endif()
+
+ if ("x86_64" IN_LIST ARCHITECTURE)
+     target_link_libraries(citra_common PRIVATE xbyak)
+@@ -199,8 +202,6 @@ if (CITRA_USE_PRECOMPILED_HEADERS)
+     target_precompile_headers(citra_common PRIVATE precompiled_headers.h)
+ endif()
+
+-find_library(BACKTRACE_LIBRARY backtrace)
+-if (BACKTRACE_LIBRARY AND ${CMAKE_SYSTEM_NAME} STREQUAL "Linux" AND CMAKE_CXX_COMPILER_ID STREQUAL GNU)
+-    target_link_libraries(citra_common PRIVATE ${BACKTRACE_LIBRARY} dl)
+-    target_compile_definitions(citra_common PRIVATE CITRA_LINUX_GCC_BACKTRACE)
++if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux" AND CMAKE_CXX_COMPILER_ID STREQUAL GNU)
++  target_link_libraries(citra_common PRIVATE dl)
+ endif()
+diff --git a/src/common/logging/backend.cpp b/src/common/logging/backend.cpp
+index 1ea126eaa..f54fad439 100644
+--- a/src/common/logging/backend.cpp
++++ b/src/common/logging/backend.cpp
+@@ -13,8 +13,7 @@
+ #define _SH_DENYWR 0
+ #endif
+
+-#ifdef CITRA_LINUX_GCC_BACKTRACE
+-#define BOOST_STACKTRACE_USE_BACKTRACE
++#if defined(__linux__) && defined(__GNUG__) && !defined(__clang__)
+ #include <boost/stacktrace.hpp>
+ #undef BOOST_STACKTRACE_USE_BACKTRACE
+ #include <signal.h>
+--
+2.43.0
+
