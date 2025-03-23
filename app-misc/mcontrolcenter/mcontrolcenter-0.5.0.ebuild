@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake desktop
 
 DESCRIPTION="Allows you to change the settings of MSI laptops."
 HOMEPAGE="https://github.com/dmitry-s93/MControlCenter"
@@ -21,4 +21,16 @@ S="${WORKDIR}/MControlCenter-${PV}"
 src_prepare() {
 	sed -re "s|PATHS /lib/qt6/bin/|PATHS /usr/$(get_libdir)/qt6/bin|g" -i CMakeLists.txt || die
 	cmake_src_prepare
+}
+
+src_install() {
+	cmake_src_install
+	mkdir -p "${D}/usr/libexec" || die
+	mv "${D}/usr/bin/${PN}-helper" "${D}/usr/libexec" || die
+	domenu "resources/${PN}.desktop"
+	doicon -s scalable "resources/${PN}.svg"
+	insinto /usr/share/dbus-1/system.d
+	doins "src/helper/${PN}-helper.conf"
+	insinto /usr/share/dbus-1/system-services
+	doins "src/helper/${PN}.helper.service"
 }
