@@ -7,8 +7,8 @@ PYTHON_COMPAT=( python3_1{0,1,2} )
 inherit meson python-single-r1 systemd
 
 DESCRIPTION="D-Bus service to access fingerprint readers"
-HOMEPAGE="https://cgit.freedesktop.org/libfprint/fprintd/"
-SHA="a1ce7322372cb848f7cd6c3f499b757edd709dd2"
+HOMEPAGE="https://gitlab.freedesktop.org/libfprint/fprintd"
+SHA="b54a007ccf58ac0ae074c7151b223f35cbd17306"
 SRC_URI="https://gitlab.freedesktop.org/libfprint/fprintd/-/archive/v${PV}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
