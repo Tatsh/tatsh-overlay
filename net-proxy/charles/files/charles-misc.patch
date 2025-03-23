@@ -32,8 +32,8 @@
  if [ -x /usr/bin/gsettings ]; then
      GDK_SCALE=$(/usr/bin/gsettings get org.gnome.desktop.interface scaling-factor | awk '{print $2}')
 @@ -44,4 +51,4 @@
-     -Dcharles.config="~/.charles.config" \
-     -Djava.library.path="$CHARLES_LIB" \
-     -jar $CHARLES_LIB/charles.jar \
+     --add-modules com.jthemedetector,com.formdev.flatlaf \
+     --module-path "$CHARLES_LIB" \
+     -m com.charlesproxy \
 -    $*
 +    "$@"

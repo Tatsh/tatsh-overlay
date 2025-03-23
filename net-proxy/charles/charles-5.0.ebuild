@@ -6,7 +6,7 @@ inherit desktop xdg
 
 DESCRIPTION="Web debugging proxy application."
 HOMEPAGE="https://www.charlesproxy.com/"
-SRC_URI="https://www.charlesproxy.com/assets/release/${PV}/${PN}-proxy-${PV}_amd64.tar.gz"
+SRC_URI="https://www.charlesproxy.com/assets/release/${PV}/${PN}-proxy-${PV}_x86_64.tar.gz"
 
 LICENSE="Charles Apache-2.0 MIT GPL-2"
 SLOT="0"
@@ -22,7 +22,7 @@ src_prepare() {
 	# Collides with Wireshark
 	find . -name application-vnd.tcpdump.pcap.png -delete
 	rm -R lib/jdk || die
-	sed -e "s/^Icon=.*/Icon=${PN}-proxy/" -i "etc/${PN}-proxy.desktop" || die
+	sed -e "s/^Icon=.*/Icon=${PN}-proxy/" -i "etc/${PN}-proxy5.desktop" || die
 	default
 	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i "bin/${PN}"
 }
