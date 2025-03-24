@@ -34,7 +34,7 @@ RDEPEND="$(python_gen_cond_dep 'dev-python/pysocks[${PYTHON_USEDEP}]
 		dev-python/six[${PYTHON_USEDEP}]
 		dev-python/tqdm[${PYTHON_USEDEP}]
 		dev-python/urllib3[${PYTHON_USEDEP}]
-		sci-ml/pytorch[${PYTHON_USEDEP}]
 		dev-python/waitress[${PYTHON_USEDEP}]')
 	sci-ml/torchvision[${PYTHON_SINGLE_USEDEP}]
+	sci-ml/pytorch[${PYTHON_SINGLE_USEDEP}]
 	${PYTHON_DEPS}"
