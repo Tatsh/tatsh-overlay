@@ -105,6 +105,7 @@ awscli
 awslabs
 axobject
 aymanbagabas
+azahar
 azcore
 azidentity
 azkeys
@@ -1017,6 +1018,7 @@ libdrm
 libedit
 libepoxy
 libevdev
+libexec
 libexecdir
 libfat
 libffms
@@ -1365,6 +1367,7 @@ numberformat
 numpy
 nurio
 nvmedit
+oaknut
 objc
 objcopy
 objdump
@@ -2185,3 +2188,4 @@ zwave
 zwitch
 zyan
 zycore
+zydis
