@@ -214,6 +214,7 @@ cdpatch
 cdproto
 cdrecord
 cemu
+cenkalti
 certbot
 certifi
 cespare
@@ -240,6 +241,7 @@ chromecast
 chromedp
 chrono
 chzyer
+cidranger
 circbuf
 circl
 circonus
@@ -382,6 +384,7 @@ deark
 deband
 debuginfod
 decamelize
+deckarep
 decli
 decompilation
 decompile
@@ -591,6 +594,7 @@ extglob
 exzap
 faad
 faccessat
+facebookgo
 fakecrc
 fakegem
 fastcgi
@@ -623,6 +627,7 @@ firestore
 fireweapon
 firmwares
 flac
+flagenv
 flashplayer
 flatbuffers
 flate
@@ -1743,6 +1748,7 @@ scuid
 sdist
 sdsl
 seatools
+sebest
 seccomp
 securecookie
 securejoin
@@ -1913,11 +1919,13 @@ tcpdump
 tdosym
 teakra
 teatest
+techaro
 teex
 telematic
 temasek
 temoto
 tempfile
+templ
 termcolor
 termenv
 terminfo
