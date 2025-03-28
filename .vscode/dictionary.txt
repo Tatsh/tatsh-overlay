@@ -1579,6 +1579,7 @@ pyyaml
 qarmin
 qatom
 qcustomplot
+qdbus
 qfile
 qlist
 qmake
@@ -1604,6 +1605,7 @@ qtsensors
 qtserialport
 qtsql
 qtsvg
+qttools
 qtwebengine
 qtwebkit
 qtwebsockets
