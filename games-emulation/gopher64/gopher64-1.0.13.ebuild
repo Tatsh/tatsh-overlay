@@ -547,9 +547,9 @@ inherit cargo
 DESCRIPTION="N64 emulator written in Rust."
 HOMEPAGE="https://github.com/gopher64/gopher64"
 PARALLEL_RDP_STANDALONE_SHA="388d70f5835b352d841d9d9e5a08c5de01470f41"
-SRC_URI="${CARGO_CRATE_URIS}
+SRC_URI="https://github.com/${PN}/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Themaister/parallel-rdp-standalone/archive/${PARALLEL_RDP_STANDALONE_SHA}.tar.gz -> ${PN}-parallel-rdp-standalone-${PARALLEL_RDP_STANDALONE_SHA:0:7}.tar.gz
-	https://github.com/${PN}/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+	${CARGO_CRATE_URIS}"
 
 LICENSE="GPL-3"
 # Dependent crate licenses
