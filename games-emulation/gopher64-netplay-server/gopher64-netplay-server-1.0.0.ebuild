@@ -47,8 +47,8 @@ go-module_set_globals
 
 DESCRIPTION="Netplay server for N64 emulators."
 HOMEPAGE="https://github.com/gopher64/gopher64-netplay-server"
-SRC_URI="${EGO_SUM_SRC_URI}
-	https://github.com/gopher64/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/gopher64/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
+	${EGO_SUM_SRC_URI}
 "
 
 LICENSE="GPL-3"
