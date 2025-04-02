@@ -35,7 +35,7 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	>=media-video/ffmpeg-4.3
 	app-arch/lz4
 	cubeb? ( media-libs/cubeb )
-	web-service? ( dev-cpp/cpp-httplib:= )
+	web-service? ( <dev-cpp/cpp-httplib-0.20.0 )
 	dev-libs/boost:=[context]
 	>=dev-libs/libfmt-9.1.0:=
 	dev-libs/libzip
