@@ -87,6 +87,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0003-fmt-10-fixes.patch"
 	"${FILESDIR}/${PN}-0004-header-fixes.patch"
 	"${FILESDIR}/${PN}-0005-boost-1.87.patch"
+	"${FILESDIR}/${PN}-sdl-pipewire.patch"
 )
 
 src_prepare() {
