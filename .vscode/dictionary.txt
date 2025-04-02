@@ -167,6 +167,7 @@ boolbase
 boringssl
 bradfitz
 bradleyjkemp
+breakpad
 broot
 brotli
 browserify
