@@ -6,23 +6,25 @@ inherit cmake flag-o-matic xdg
 
 DESCRIPTION="Nintendo Switch emulator."
 HOMEPAGE="https://sudachi.emuplace.app/"
+BREAKPAD_SHA="bf1260ddb8d405e95cd5c4507ddaca45d10dd842"
 CPP_JWT_SHA="4a970bc302d671476122cbc6b43cc89fbf4a96ec"
 _DYNARMIC_SHA="efa2ebefe1f502fc886cbbcebabed2506121eb24"
 FFMPEG_SHA="cc6fb1643d7e14c6f76a48e0cffad96394cb197c"
 NX_TZDB_VERSION="221202"
 MBEDTLS_SHA="86ed7bfaa80079a97c763a651d0b2cd8d9d59100"
-SDL_SHA="e1e36d213bea3a0b56d91b454c53a2c94312a5be"
+SDL_SHA="87d6beb89539b03ea08255adb410a809ca5b41e9"
 SIMPLEINI_SHA="f7862c3dd7ad35becc2741f268e3402e89a37666"
 SIRIT_SHA="795ef4d8318c7d344da99c076dd60e5580d3d5ac"
-XBYAK_SHA="aabb091ae37068498751fd58202a9854408ecb0e"
+XBYAK_VERSION="7.05"
 SRC_URI="https://github.com/emuplace/sudachi.emuplace.app/releases/download/v${PV}/latest.zip -> ${P}.zip
+	https://github.com/sudachi-emu/breakpad/archive/${BREAKPAD_SHA}.tar.gz -> ${P}-breakpad-${BREAKPAD_SHA:0:7}.tar.gz
 	https://github.com/sudachi-emu/mbedtls/archive/${MBEDTLS_SHA}.tar.gz -> ${PN}-mbedtls-${MBEDTLS_SHA:0:7}.tar.gz
 	https://github.com/sudachi-emu/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/sudachi-emu/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/lat9nq/tzdb_to_nx/releases/download/${NX_TZDB_VERSION}/${NX_TZDB_VERSION}.zip -> ${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip
 	https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz
 	https://github.com/brofield/simpleini/archive/${SIMPLEINI_SHA}.tar.gz -> ${PN}-simpleini-${SIMPLEINI_SHA:0:7}.tar.gz
-	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz -> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz
+	https://github.com/herumi/xbyak/archive/refs/tags/v${XBYAK_VERSION}.tar.gz -> ${PN}-${XBYAK_VERSION}.tar.gz
 	https://github.com/FFmpeg/FFmpeg/archive/${FFMPEG_SHA}.tar.gz -> ${PN}-ffmpeg-${FFMPEG_SHA:0:7}.tar.gz"
 
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
@@ -31,8 +33,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+cubeb llvm-libunwind +web-service +webengine"
 
 DEPEND=">=app-arch/zstd-1.5.0:=
-	>=dev-libs/xbyak-6.03:=
-	>=media-video/ffmpeg-4.3
 	app-arch/lz4
 	cubeb? ( media-libs/cubeb )
 	web-service? ( <dev-cpp/cpp-httplib-0.20.0 )
@@ -68,12 +68,9 @@ BDEPEND="app-arch/unzip
 	app-text/dos2unix"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-add-missing-header.patch"
-	"${FILESDIR}/${PN}-0002-system-libs.patch"
-	"${FILESDIR}/${PN}-0003-boost-fix.patch"
-	"${FILESDIR}/${PN}-0004-fmt-10-fixes.patch"
-	"${FILESDIR}/${PN}-0006-header-fixes.patch"
-	"${FILESDIR}/${PN}-0007-boost-1.87-changes.patch"
+	"${FILESDIR}/${PN}-0001-re-apply-patches.patch"
+	"${FILESDIR}/${PN}-0002-fix-call-to-add-externals.patch"
+	"${FILESDIR}/${PN}-0003-fix-undefined-var.patch"
 )
 
 src_unpack() {
@@ -86,15 +83,16 @@ src_unpack() {
 }
 
 src_prepare() {
-	rmdir "${S}/externals/"{dynarmic,mbedtls,simpleini,sirit,SDL,xbyak} || die
+	rmdir "${S}/externals/"{SDL3,breakpad,dynarmic,mbedtls,simpleini,sirit,xbyak} || die
 	rmdir "${S}/externals/ffmpeg/ffmpeg" || die
+	mv "${WORKDIR}/breakpad-${BREAKPAD_SHA}" "externals/breakpad" || die
 	mv "${WORKDIR}/dynarmic-${_DYNARMIC_SHA}" "${S}/externals/dynarmic" || die
 	mv "${WORKDIR}/sirit-${SIRIT_SHA}" "${S}/externals/sirit" || die
-	mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL" || die
+	mv "${WORKDIR}/SDL-${SDL_SHA}" "${S}/externals/SDL3" || die
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_SHA}" "${S}/externals/mbedtls" || die
 	mv "${WORKDIR}/FFmpeg-${FFMPEG_SHA}" "${S}/externals/ffmpeg/ffmpeg" || die
 	mv "${WORKDIR}/simpleini-${SIMPLEINI_SHA}" "${S}/externals/simpleini" || die
-	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/externals/xbyak" || die
+	mv "${WORKDIR}/xbyak-${XBYAK_VERSION}" "${S}/externals/xbyak" || die
 	mkdir -v -p "${WORKDIR}/${P}_build/externals/nx_tzdb/nx_tzdb" || die
 	cp "${DISTDIR}/${PN}-nx_tzdb-${NX_TZDB_VERSION}.zip" \
 		"${WORKDIR}/${P}_build/externals/nx_tzdb/${NX_TZDB_VERSION}.zip" || die
@@ -109,8 +107,6 @@ src_prepare() {
 		-e 's/VulkanMemoryAllocator/VulkanMemoryAllocator REQUIRED/' -i CMakeLists.txt || die
 	sed -re 's/set\(CAN_BUILD_NX_TZDB.*/set(CAN_BUILD_NX_TZDB false)/' \
 		-i externals/nx_tzdb/CMakeLists.txt || die
-	sed -re '/add_subdirectory\(externals\)/d' -i CMakeLists.txt || die
-	sed -re '705s/.*/add_subdirectory(externals)/' -i CMakeLists.txt || die
 	sed -re '/-Werror=.*/d' -i src/CMakeLists.txt || die
 	sed -re 's/@GIT_BRANCH@/sudachi/' -e "s/@GIT_DESC@/${PV}/" -i src/common/scm_rev.cpp.in || die
 	cmake_src_prepare
@@ -128,6 +124,7 @@ src_configure() {
 	append-cxxflags -Wno-switch
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
+		-DCMAKE_DISABLE_FIND_PACKAGE_xbyak=ON
 		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF  # FIXME
 		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=OFF
 		-DENABLE_QT6=ON
@@ -135,11 +132,12 @@ src_configure() {
 		"-DENABLE_WEB_SERVICE=$(usex web-service)"
 		-DSIRIT_USE_SYSTEM_SPIRV_HEADERS=ON
 		-DUSE_DISCORD_PRESENCE=OFF
+		-DSUDACHI_CRASH_DUMPS=ON
 		-DSUDACHI_DOWNLOAD_TIME_ZONE_DATA=OFF
 		-DSUDACHI_ENABLE_PORTABLE=OFF
+		-DSUDACHI_ROOM=ON
 		-DSUDACHI_TESTS=OFF
 		-DSUDACHI_USE_BUNDLED_FFMPEG=ON
-		-DSUDACHI_USE_EXTERNAL_SDL2=ON
 		-DSUDACHI_USE_EXTERNAL_VULKAN_HEADERS=OFF
 		-DSUDACHI_USE_EXTERNAL_VULKAN_UTILITY_LIBRARIES=OFF
 		-DSUDACHI_USE_PRECOMPILED_HEADERS=OFF

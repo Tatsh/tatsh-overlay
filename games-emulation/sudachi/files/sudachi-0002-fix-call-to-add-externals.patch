@@ -1,0 +1,33 @@
+From 1542964d0cc79b8a53ea05409950a21c916807c2 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 2 Apr 2025 18:19:53 -0400
+Subject: [PATCH 2/3] Fix call to add externals
+
+---
+ CMakeLists.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index cf83550..099c068 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -304,8 +304,6 @@ set(FFmpeg_COMPONENTS
+     avutil
+     swscale)
+ 
+-add_subdirectory(externals)
+-
+ # Enforce the search mode of non-required packages for better and shorter failure messages
+ find_package(Boost 1.79.0 REQUIRED context)
+ find_package(enet 1.3 MODULE)
+@@ -708,6 +706,7 @@ if (SUDACHI_USE_FASTER_LD AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+     endif()
+ endif()
+ 
++add_subdirectory(externals)
+ add_subdirectory(src)
+ 
+ # Set sudachi project or sudachi-cmd project as default StartUp Project in Visual Studio depending on whether QT is enabled or not
+-- 
+2.49.0
+
