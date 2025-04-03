@@ -35,7 +35,7 @@ IUSE="+cubeb llvm-libunwind +web-service +webengine"
 DEPEND=">=app-arch/zstd-1.5.0:=
 	app-arch/lz4
 	cubeb? ( media-libs/cubeb )
-	web-service? ( <dev-cpp/cpp-httplib-0.20.0 )
+	web-service? ( dev-cpp/cpp-httplib )
 	dev-libs/boost:=[context]
 	>=dev-libs/libfmt-9.1.0:=
 	dev-libs/libzip
