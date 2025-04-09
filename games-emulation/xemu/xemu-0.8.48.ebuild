@@ -88,6 +88,7 @@ PATCHES=(
 )
 DOCS=( README.md )
 
+# shellcheck disable=SC2054
 FILECAPS=( cap_net_raw,cap_net_admin=eip "usr/bin/${PN}" )
 
 src_prepare() {
