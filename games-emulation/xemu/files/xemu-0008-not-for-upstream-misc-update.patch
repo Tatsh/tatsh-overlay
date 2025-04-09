@@ -11,16 +11,6 @@ diff --git a/meson.build b/meson.build
 index 4e94ec2069..0f71bf444f 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -3540,9 +3540,6 @@ endif
- tomlplusplus_proj = subproject('tomlplusplus', default_options: ['default_library=static'])
- tomlplusplus = tomlplusplus_proj.get_variable('tomlplusplus_dep')
- 
--xxhash_proj = subproject('xxhash', default_options: ['default_library=static'])
--xxhash = xxhash_proj.get_variable('xxhash_dep')
--
- #####################
- # Generated sources #
- #####################
 @@ -4435,20 +4432,20 @@ foreach target : target_dirs
      execs = [{
        'name': 'xemu',
@@ -46,6 +36,6 @@ index 4e94ec2069..0f71bf444f 100644
        specific_fuzz = specific_fuzz_ss.apply(config_target, strict: false)
        execs += [{
          'name': 'xemu-fuzz',
--- 
+--
 2.48.1
 

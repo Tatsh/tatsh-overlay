@@ -6,7 +6,7 @@ EAPI=8
 PYTHON_COMPAT=( python3_1{0,1,2} )
 PYTHON_REQ_USE="ncurses,readline"
 
-inherit flag-o-matic pax-utils python-r1 toolchain-funcs xdg-utils
+inherit fcaps flag-o-matic pax-utils python-r1 toolchain-funcs xdg-utils
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/xemu-project/xemu"
@@ -87,6 +87,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0008-not-for-upstream-misc-update.patch"
 )
 DOCS=( README.md )
+
+FILECAPS=( cap_net_raw,cap_net_admin=eip "usr/bin/${PN}" )
 
 src_prepare() {
 	mv "${WORKDIR}/genconfig-${GENCONFIG_SHA}" subprojects/genconfig || die
@@ -174,9 +176,9 @@ src_compile() {
 src_install() {
 	default
 	rm -R \
-		"${D}/usr/"{include,lib,lib64} \
+		"${D}/usr/"{lib,lib64} \
 		"${D}/usr/bin/"{glslang,spirv}* \
-		"${D}/usr/share/"{pkgconfig,qemu} || die
+		"${D}/usr/share/qemu" || die
 }
 
 src_test() {
@@ -186,6 +188,7 @@ src_test() {
 }
 
 pkg_postinst() {
+	fcaps_pkg_postinst
 	xdg_desktop_database_update
 	xdg_icon_cache_update
 }
