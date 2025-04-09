@@ -227,6 +227,7 @@ chakma
 chardet
 charmbracelet
 checkpath
+checkreqs
 chertsey
 cheshirekow
 chksums
@@ -676,6 +677,7 @@ gandarez
 gcfg
 gcflags
 gcrypt
+gdkchan
 genconfig
 genproto
 gensync
@@ -990,6 +992,7 @@ kylemanna
 labbe's
 langid
 langneg
+launchervar
 lbrotlidec
 ldconfig
 ldflags
@@ -1671,6 +1674,7 @@ renderutil
 repeaterjs
 replaceall
 repr
+reqs
 respawn
 responselike
 retryablehttp
@@ -1724,6 +1728,7 @@ rustversion
 rwcarlsen
 ryanuber
 ryszard
+ryubing
 ryujinx
 sagikazarmark
 sahilm
