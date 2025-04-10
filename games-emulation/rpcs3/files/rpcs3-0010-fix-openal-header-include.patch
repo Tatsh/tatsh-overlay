@@ -1,39 +1,43 @@
-From fa0fed17fe67c6a1695902f7249f133d4f345bc2 Mon Sep 17 00:00:00 2001
+From a5a1c4d280fbee894767bd36e4e4c0ee6c7f3158 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 16 Sep 2024 03:51:16 -0400
 Subject: [PATCH 10/10] Fix OpenAL header include
 
 ---
- rpcs3/Emu/Cell/Modules/cellMic.h     | 2 +-
- rpcs3/rpcs3qt/microphone_creator.cpp | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ rpcs3/Emu/Cell/Modules/cellMic.h     | 3 ++-
+ rpcs3/rpcs3qt/microphone_creator.cpp | 3 +--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/rpcs3/Emu/Cell/Modules/cellMic.h b/rpcs3/Emu/Cell/Modules/cellMic.h
-index 3fbe5fba1..c71340c8d 100644
+index f17b95427..2d1f2a853 100644
 --- a/rpcs3/Emu/Cell/Modules/cellMic.h
 +++ b/rpcs3/Emu/Cell/Modules/cellMic.h
-@@ -3,7 +3,7 @@
+@@ -1,9 +1,10 @@
+ #pragma once
+ 
  #include "Utilities/Thread.h"
- #include "Emu/Cell/timers.hpp"
+-#include "3rdparty/OpenAL/openal-soft/include/AL/alc.h"
+ #include "Utilities/mutex.h"
  
--#include "3rdparty/OpenAL/openal-soft/include/AL/alext.h"
 +#include <AL/alext.h>
- 
++
  // Error Codes
  enum CellMicInError : u32
+ {
 diff --git a/rpcs3/rpcs3qt/microphone_creator.cpp b/rpcs3/rpcs3qt/microphone_creator.cpp
-index 8f56bcae4..0a5df5a83 100644
+index a0e63a5d5..3f586f10e 100644
 --- a/rpcs3/rpcs3qt/microphone_creator.cpp
 +++ b/rpcs3/rpcs3qt/microphone_creator.cpp
-@@ -4,7 +4,7 @@
- #include "Utilities/StrFmt.h"
+@@ -3,8 +3,7 @@
+ 
  #include "Utilities/StrUtil.h"
  
--#include "3rdparty/OpenAL/openal-soft/include/AL/alext.h"
+-#include "3rdparty/OpenAL/openal-soft/include/AL/al.h"
+-#include "3rdparty/OpenAL/openal-soft/include/AL/alc.h"
 +#include <AL/alext.h>
  
  LOG_CHANNEL(cfg_log, "CFG");
  
 -- 
-2.47.0
+2.49.0
 

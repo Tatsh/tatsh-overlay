@@ -1,4 +1,4 @@
-From 217b9d0d2ed178fcfbb222bfa0c256e5fe0c9dcd Mon Sep 17 00:00:00 2001
+From ea1584c22a8f0e56d226f7dd9787bee9cc0f22db Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 4 Jun 2023 01:50:57 -0400
 Subject: [PATCH 07/10] Allow system rtmidi
@@ -8,10 +8,10 @@ Subject: [PATCH 07/10] Allow system rtmidi
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index 4f2948f61..8229539a9 100644
+index 3ce331764..27afe86b0 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
-@@ -352,7 +352,11 @@ else()
+@@ -356,7 +356,11 @@ else()
  endif()
  
  # RTMIDI
@@ -22,14 +22,16 @@ index 4f2948f61..8229539a9 100644
 +  pkg_check_modules(PC_RTMIDI REQUIRED IMPORTED_TARGET GLOBAL rtmidi)
 +endif()
  
- # add nice ALIAS targets for ease of use
- if(USE_SYSTEM_LIBUSB)
-@@ -383,4 +387,4 @@ add_library(3rdparty::libcurl ALIAS 3rdparty_libcurl)
+ # OPENCV
+ add_subdirectory(opencv EXCLUDE_FROM_ALL)
+@@ -393,6 +397,6 @@ add_library(3rdparty::libcurl ALIAS 3rdparty_libcurl)
  add_library(3rdparty::soundtouch ALIAS soundtouch)
- add_library(3rdparty::sdl2 ALIAS ${SDL2_TARGET})
+ add_library(3rdparty::sdl3 ALIAS ${SDL3_TARGET})
  add_library(3rdparty::miniupnpc ALIAS PkgConfig::PC_MINIUNPNPC)
 -add_library(3rdparty::rtmidi ALIAS rtmidi)
 +add_library(3rdparty::rtmidi ALIAS PkgConfig::PC_RTMIDI)
+ add_library(3rdparty::opencv ALIAS ${OPENCV_TARGET})
+ add_library(3rdparty::fusion ALIAS Fusion)
 -- 
-2.47.0
+2.49.0
 

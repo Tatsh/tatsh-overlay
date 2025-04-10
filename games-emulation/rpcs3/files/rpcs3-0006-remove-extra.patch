@@ -1,4 +1,4 @@
-From 23d7fda63de7a63290a950351b7d075f5a467fb8 Mon Sep 17 00:00:00 2001
+From 154d638a6672ae908433cff6c2649eefaff7215f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 21:46:38 -0500
 Subject: [PATCH 06/10] Remove extra
@@ -8,18 +8,19 @@ Subject: [PATCH 06/10] Remove extra
  1 file changed, 4 deletions(-)
 
 diff --git a/rpcs3/CMakeLists.txt b/rpcs3/CMakeLists.txt
-index edd9dcf59..19dc35929 100644
+index b6d4baecc..1101eedfa 100644
 --- a/rpcs3/CMakeLists.txt
 +++ b/rpcs3/CMakeLists.txt
-@@ -175,8 +175,4 @@ if(UNIX AND NOT APPLE)
-         DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
-     install(DIRECTORY ../bin/GuiConfigs
-         DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
--    install(DIRECTORY ../bin/git
--        DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
--    install(DIRECTORY ../bin/test
--        DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
+@@ -195,9 +195,5 @@ if (NOT ANDROID)
+             DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
+         install(DIRECTORY ../bin/GuiConfigs
+             DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
+-        install(DIRECTORY ../bin/git
+-            DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
+-        install(DIRECTORY ../bin/test
+-            DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
+     endif()
  endif()
 -- 
-2.47.0
+2.49.0
 

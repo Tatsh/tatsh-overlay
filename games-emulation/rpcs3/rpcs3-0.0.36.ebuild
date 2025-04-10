@@ -30,7 +30,7 @@ IUSE="faudio joystick +llvm system-ffmpeg vulkan wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
 DEPEND=">=dev-libs/flatbuffers-2.0.6
-	dev-libs/pugixml
+	>=dev-libs/pugixml-1.15
 	>=dev-libs/wolfssl-4.7.0[writedup]
 	media-libs/cubeb
 	dev-libs/xxhash
