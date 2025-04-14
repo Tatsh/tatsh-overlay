@@ -868,6 +868,7 @@ inputremapper
 insinto
 instafail
 installdir
+installkernel
 intelli
 interconverter
 interprocedural
@@ -2128,6 +2129,7 @@ wrappy
 writedup
 writeedits
 writename
+wslconfig
 wweula
 wxpython
 wxwidgets
