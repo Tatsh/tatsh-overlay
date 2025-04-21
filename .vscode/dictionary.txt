@@ -609,6 +609,7 @@ faudio
 fbjs
 fcaps
 fdeflate
+fdir
 fecha
 felis
 felixge
@@ -1377,6 +1378,7 @@ numba
 numberformat
 numpy
 nurio
+nvme
 nvmedit
 oaknut
 objc
@@ -1953,6 +1955,7 @@ tifinagh
 tihmstar
 tink
 tinkup
+tinyglobby
 tinylib
 tinystr
 tinyvec
