@@ -38,18 +38,22 @@ BDEPEND="kde? ( dev-qt/qtbase )"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-seccomp-add-faccessat2.patch"
 	"${FILESDIR}/${PN}-0002-qt6.patch"
+	"${FILESDIR}/${PN}-0003-ique-player-fix.patch"
 )
 
 DOCS=( README.md NEWS.md )
 
 src_configure() {
+	# Enable below flags only if compilation fails due to seccomp issue. amiiboc is usually the one
+	# to fail.
+	# append-cflags -DENABLE_SECCOMP_DEBUG=1
+	# append-cxxflags -DENABLE_SECCOMP_DEBUG=1
 	local mycmakeargs=(
 		-DBUILD_KF5=NO
 		-DENABLE_JPEG=ON
 		-DINSTALL_APPARMOR=OFF
 		-DINSTALL_DOC=OFF
 		-DSPLIT_DEBUG=NO
-		-DTRACKER_INSTALL_API_VERSION=3
 		-DUSE_INTERNAL_JPEG=NO
 		-DUSE_INTERNAL_LZ4=NO
 		-DUSE_INTERNAL_LZO=NO

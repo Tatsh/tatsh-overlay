@@ -15,10 +15,10 @@ index 4a2e11c54..f842bb6f2 100644
  		SCMP_SYS(brk),
  		SCMP_SYS(exit),
  		SCMP_SYS(exit_group),
-+		SCMP_SYS(faccessat2),
++		SCMP_SYS(faccessat2), SCMP_SYS(readlink),
  		SCMP_SYS(read),
  		SCMP_SYS(rt_sigreturn),
  		SCMP_SYS(write),
--- 
+--
 2.44.0
 
