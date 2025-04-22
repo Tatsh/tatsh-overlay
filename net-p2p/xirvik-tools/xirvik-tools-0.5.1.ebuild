@@ -35,6 +35,6 @@ RDEPEND="
 distutils_enable_tests pytest
 
 src_install() {
-	doman man/xirvik.1
+	doman "man/${PN}.1"
 	distutils-r1_src_install
 }
