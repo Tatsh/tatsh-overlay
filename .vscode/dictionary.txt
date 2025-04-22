@@ -32,6 +32,7 @@ alpn
 alsa
 altserver
 altsign
+amiiboc
 amiri
 amodding
 ampproject
@@ -875,6 +876,7 @@ interconverter
 interprocedural
 intervaltree
 intltool
+ique
 irecovery
 iregex
 isaacs
