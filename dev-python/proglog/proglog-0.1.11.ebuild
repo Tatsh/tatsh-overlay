@@ -16,6 +16,13 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
+RDEPEND="dev-python/tqdm[${PYTHON_USEDEP}]"
+
 S="${WORKDIR}/${PN^}-${PV}"
 
 distutils_enable_tests pytest
+
+src_prepare() {
+	sed -re 's/exclude =.*/exclude = ["docs", "examples", "tests"]/g' -i pyproject.toml || die
+	distutils-r1_src_prepare
+}
