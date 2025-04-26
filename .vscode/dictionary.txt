@@ -1571,6 +1571,7 @@ pygments
 pygobject
 pygtrie
 pyjwt
+pykakasi
 pymatting
 pynput
 pyopenssl
