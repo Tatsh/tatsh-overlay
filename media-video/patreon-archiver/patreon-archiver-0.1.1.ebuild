@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=poetry
-PYTHON_COMPAT=( python3_1{0,1,2} )
+PYTHON_COMPAT=( python3_1{0,1,2,3} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Tool to download data from Patreon."
@@ -17,8 +17,8 @@ KEYWORDS="~amd64"
 RDEPEND="dev-python/click[${PYTHON_USEDEP}]
 	dev-python/loguru[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
-	media-libs/mutagen[${PYTHON_USEDEP}]
-	net-misc/yt-dlp[${PYTHON_USEDEP}]"
+	dev-python/yt-dlp-utils[${PYTHON_USEDEP}]
+	media-libs/mutagen[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 
 distutils_enable_tests pytest
