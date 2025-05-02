@@ -1,9 +1,9 @@
-# Copyright 2020-2022 Gentoo Authors
+# Copyright 2020-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2} )
+PYTHON_COMPAT=( python3_1{0..3} )
 inherit python-single-r1
 
 DESCRIPTION="A code-completion engine for Vim."
