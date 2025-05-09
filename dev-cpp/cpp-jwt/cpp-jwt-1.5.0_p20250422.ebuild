@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="JSON Web Token library for C++"
 HOMEPAGE="https://github.com/arun11299/cpp-jwt"
-SHA="4a970bc302d671476122cbc6b43cc89fbf4a96ec"
+SHA="a54fa08a3bc929ce16cd84264bb0653e548955f9"
 SRC_URI="https://github.com/arun11299/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
