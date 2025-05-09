@@ -34,7 +34,7 @@ src_prepare() {
   "path": "${EPREFIX}/usr/bin/open-in-mpv",
   "type": "stdio",
   "allowed_origins": [
-    "chrome-extension://ggijpepdpiehgbiknmfpfbhcalffjlbj/"
+    "chrome-extension://jlhcojdohadhkchjpjefbmagpiaedpgc/"
   ]
 }
 EOF
