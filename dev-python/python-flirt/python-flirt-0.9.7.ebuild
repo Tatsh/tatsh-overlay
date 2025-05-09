@@ -257,7 +257,7 @@ CRATES="
 "
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=maturin
-PYTHON_COMPAT=( python3_1{0,1,2} )
+PYTHON_COMPAT=( python3_1{0,1,2,3} )
 
 inherit cargo distutils-r1
 
