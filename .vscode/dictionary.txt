@@ -1975,6 +1975,7 @@ zeroconf
 zerocopy
 zerofill
 zerolog
+zeux
 zimg
 zint
 znedi
