@@ -25,7 +25,7 @@ RESTRICT="!test? ( test )"
 
 src_configure() {
 	local mycmakeargs=(
-		-D${PN^^}_BUILD_TESTS=$(usex test ON OFF)
+		"-D${PN^^}_BUILD_TESTS=$(usex test ON OFF)"
 	)
 	cmake_src_configure
 }
