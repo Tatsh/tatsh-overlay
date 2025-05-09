@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=poetry
-PYTHON_COMPAT=( python3_1{1,2} )
+PYTHON_COMPAT=( python3_1{1,2,3} )
 inherit distutils-r1
 
 DESCRIPTION="CLI tool and library for managing the Motorola MB8611 modem and other devices."
