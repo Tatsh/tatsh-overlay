@@ -40,6 +40,7 @@ antchfx
 antihax
 antonmedv
 anymatch
+apimachinery
 appconfig
 appdirs
 appengine
@@ -1783,6 +1784,7 @@ tunables
 tweenjs
 twemoji
 typedarray
+typeparams
 typer
 tzdb
 udalov
