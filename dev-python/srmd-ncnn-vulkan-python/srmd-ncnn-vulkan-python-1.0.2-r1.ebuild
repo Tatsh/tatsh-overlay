@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2} )
+PYTHON_COMPAT=( python3_1{0,1,2,3} )
 
 inherit cmake pypi python-r1
 
