@@ -41,3 +41,16 @@ index a0e63a5d5..3f586f10e 100644
 -- 
 2.49.0
 
+diff --git a/rpcs3/Emu/Cell/Modules/cellMic.cpp b/rpcs3/Emu/Cell/Modules/cellMic.cpp
+index cb8724f96..1318e8ee2 100644
+--- a/rpcs3/Emu/Cell/Modules/cellMic.cpp
++++ b/rpcs3/Emu/Cell/Modules/cellMic.cpp
+@@ -11,7 +11,7 @@
+ #include <cmath>
+ 
+ #ifndef WITHOUT_OPENAL
+-#include "3rdparty/OpenAL/openal-soft/include/AL/alext.h"
++#include <AL/alext.h>
+ #endif
+ 
+ LOG_CHANNEL(cellMic);

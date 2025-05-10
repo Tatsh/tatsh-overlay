@@ -8,10 +8,12 @@ DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
 ASMJIT_SHA="416f7356967c1f66784dc1580fe157f9406d8bff"
 FFMPEG_SHA="10d0ebc0b8c7c4f0b242c9998c8bdc4e55bb5067"
+FUSION_SHA="066d4a63b2c714b20b0a8073a01fda7c5c6763f6"
 GLSLANG_SHA="36d08c0d940cf307a23928299ef52c7970d8cee6"
 HIDAPI_SHA="8b43a97a9330f8b0035439ce9e255e4be202deca"
 ITTAPI_VERSION="3.18.12"
 SOUNDTOUCH_SHA="394e1f58b23dc80599214d2e9b6a5e0dfd0bbe07"
+VULKAN_MEMORY_ALLOCATOR_SHA="37064843398c69cc0ca7f8cf5b33128c03a2bd74"
 YAML_CPP_SHA="456c68f452da09d8ca84b375faa2b1397713eaba"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/ffmpeg-core/archive/${FFMPEG_SHA}.tar.gz -> ${PN}-ffmpeg-${FFMPEG_SHA:0:7}.tar.gz
@@ -20,7 +22,9 @@ SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/yaml-cpp/archive/${YAML_CPP_SHA}.tar.gz -> ${PN}-yaml-cpp-${YAML_CPP_SHA:0:7}.tar.gz
 	https://github.com/intel/ittapi/archive/refs/tags/v${ITTAPI_VERSION}.tar.gz -> ${PN}-ittapi-${ITTAPI_VERSION}.tar.gz
 	https://github.com/RPCS3/soundtouch/archive/${SOUNDTOUCH_SHA}.tar.gz -> ${PN}-${SOUNDTOUCH_SHA:0:7}.tar.gz
-	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> glslang-${GLSLANG_SHA:0:7}.tar.gz"
+	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> glslang-${GLSLANG_SHA:0:7}.tar.gz
+	https://github.com/xioTechnologies/Fusion/archive/${FUSION_SHA}.tar.gz -> fusion-${FUSION_SHA:0:7}.tar.gz
+	https://github.com/Megamouse/VulkanMemoryAllocator/archive/${VULKAN_MEMORY_ALLOCATOR_SHA}.tar.gz -> megamouse-vulkan-memory-allocator-${VULKAN_MEMORY_ALLOCATOR_SHA:0:7}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -88,6 +92,10 @@ src_prepare() {
 	mv "${WORKDIR}/asmjit-${ASMJIT_SHA}" "${S}/3rdparty/asmjit/asmjit" || die
 	rmdir "${S}/3rdparty/glslang/glslang" || die
 	mv "${WORKDIR}/glslang-${GLSLANG_SHA}" "${S}/3rdparty/glslang/glslang" || die
+	rmdir "${S}/3rdparty/fusion/fusion" || die
+	mv "${WORKDIR}/Fusion-${FUSION_SHA}" "${S}/3rdparty/fusion/fusion" || die
+	rmdir "${S}/3rdparty/GPUOpen/VulkanMemoryAllocator" || die
+	mv "${WORKDIR}/VulkanMemoryAllocator-${VULKAN_MEMORY_ALLOCATOR_SHA}" "${S}/3rdparty/GPUOpen/VulkanMemoryAllocator" || die
 	{ echo "#define RPCS3_GIT_VERSION \"0000-v${PV}\""
 		echo '#define RPCS3_GIT_BRANCH "master"'
 		echo '#define RPCS3_GIT_FULL_BRANCH "RPCS3/rpcs3/master"'
