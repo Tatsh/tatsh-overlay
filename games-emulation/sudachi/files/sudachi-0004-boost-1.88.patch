@@ -1,0 +1,22 @@
+diff --git a/src/core/debugger/debugger.cpp b/src/core/debugger/debugger.cpp
+index c887046..645f09d 100644
+--- a/src/core/debugger/debugger.cpp
++++ b/src/core/debugger/debugger.cpp
+@@ -6,7 +6,7 @@
+ #include <thread>
+ 
+ #include <boost/asio.hpp>
+-#include <boost/process/async_pipe.hpp>
++#include <boost/process/v1/async_pipe.hpp>
+ 
+ #include "common/logging/log.h"
+ #include "common/polyfill_thread.h"
+@@ -326,7 +326,7 @@ private:
+ 
+     struct ConnectionState {
+         boost::asio::ip::tcp::socket client_socket;
+-        boost::process::async_pipe signal_pipe;
++        boost::process::v1::async_pipe signal_pipe;
+ 
+         SignalInfo info;
+         Kernel::KScopedAutoObject<Kernel::KThread> active_thread;

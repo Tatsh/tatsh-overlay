@@ -71,6 +71,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0001-re-apply-patches.patch"
 	"${FILESDIR}/${PN}-0002-fix-call-to-add-externals.patch"
 	"${FILESDIR}/${PN}-0003-fix-undefined-var.patch"
+	"${FILESDIR}/${PN}-0004-boost-1.88.patch"
 )
 
 src_unpack() {
