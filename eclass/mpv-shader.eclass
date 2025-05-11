@@ -22,12 +22,12 @@ EXPORT_FUNCTIONS src_install pkg_postinst
 # @PRE_INHERIT
 # @DESCRIPTION:
 # The list of USE flags required to be enabled on mpv, formed as a
-# USE-dependency string. Default is MPV_REQ_USE="opengl"
+# USE-dependency string. Default is MPV_REQ_USE=""
 #
 # Example:
 # @CODE@
 #
-# MPV_REQ_USE="opengl,vulkan"
+# MPV_REQ_USE="vulkan"
 #
 # @CODE@
 
@@ -41,8 +41,6 @@ if [[ -z ${_MPV_SHADER_ECLASS} ]]; then
 		mpv_pkg_dep="media-video/mpv"
 		if [ "${MPV_REQ_USE}" ]; then
 			mpv_pkg_dep+="[${MPV_REQ_USE}]"
-		else
-			mpv_pkg_dep+="[opengl]"
 		fi
 		# shellcheck disable=SC2034
 		SLOT="0"
