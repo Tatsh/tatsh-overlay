@@ -26,3 +26,8 @@ RDEPEND="dev-python/beautifulsoup4[${PYTHON_USEDEP}]
 DEPEND="${RDEPEND}"
 
 distutils_enable_tests pytest
+
+src_install() {
+	distutils-r1_src_install
+	doman "man/${PN}.1"
+}
