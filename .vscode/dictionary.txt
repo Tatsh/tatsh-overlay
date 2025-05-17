@@ -237,6 +237,7 @@ coinhsl
 colorama
 colord
 colorette
+colorlog
 colorspace
 colorstring
 colour
