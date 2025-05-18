@@ -597,6 +597,7 @@ gcflags
 gcrypt
 gdkchan
 genconfig
+gendisc
 genproto
 gensync
 gentoolkit
@@ -791,6 +792,7 @@ jbenet
 jcmturner
 jcrist
 jedib
+jeepney
 jessevdk
 jetpack
 jetpytools
@@ -1867,6 +1869,8 @@ waivable
 waka
 wakapi
 wakatime
+wakelock
+wakepy
 warang
 warangciti
 warnflags
