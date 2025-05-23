@@ -1690,6 +1690,7 @@ subshell
 subtag
 sudachi
 suidsgid
+summarise
 sunos
 suntec
 superdrive
