@@ -1,5 +1,0 @@
-{
-  "regex": "<td><a href=\"([^/]+)/\"",
-  "type": "regex",
-  "url": "https://download.qt.io/official_releases/qt/5.15/"
-}
