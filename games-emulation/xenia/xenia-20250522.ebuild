@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Xbox 360 emulator research project (Canary version)."
 HOMEPAGE="https://github.com/xenia-canary/xenia-canary https://xenia.jp/"
-SHA="60318a5db66516614295146e5d455e4b6fda1be7"
+SHA="de10b9ef911b6e0abff615315421d72fb787ef85"
 SRC_URI="https://github.com/xenia-canary/xenia-canary/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
 
 LICENSE="MIT"
