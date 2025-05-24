@@ -18,10 +18,4 @@ KEYWORDS="~amd64"
 RDEPEND="
 	>=dev-python/jeepney-0.7.1[${PYTHON_USEDEP}]
 "
-#BDEPEND="
-#	test? (
-#
-#	)
-#"
-
 distutils_enable_tests pytest
