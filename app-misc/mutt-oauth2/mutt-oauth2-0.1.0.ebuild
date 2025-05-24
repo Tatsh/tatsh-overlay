@@ -16,3 +16,10 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 RDEPEND="dev-python/click[${PYTHON_USEDEP}]
 	dev-python/keyring[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]"
+
+src_install() {
+	distutils-r1_src_install
+	doman "man/${PN}.1"
+}
+
+distutils_enable_tests pytest
