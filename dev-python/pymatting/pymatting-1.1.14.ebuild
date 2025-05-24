@@ -10,8 +10,6 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="A Python library for alpha matting."
 HOMEPAGE="https://pypi.org/project/PyMatting/"
-SHA="afd2dec073cb08b8119300feec18c179a9d436f3"
-SRC_URI="https://github.com/${PN}/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -21,7 +19,5 @@ RDEPEND="dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/pillow[${PYTHON_USEDEP}]
 	dev-python/numba[${PYTHON_USEDEP}]
 	dev-python/scipy[${PYTHON_USEDEP}]"
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 distutils_enable_tests pytest
