@@ -7,7 +7,7 @@ inherit udev
 
 DESCRIPTION="Fine tune write cache and impose buffer limits when USB storage device is plugged."
 HOMEPAGE="https://gitlab.manjaro.org/fhdk/udev-usb-sync"
-SRC_URI="https://gitlab.manjaro.org/fhdk/${PN}/-/archive/v${PV}/${PN}-v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://gitlab.manjaro.org/fhdk/${PN}/-/archive/${PV}/${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
@@ -17,8 +17,6 @@ RDEPEND="sys-apps/hdparm
 	virtual/udev"
 
 DOCS=( README.md )
-
-S="${WORKDIR}/${PN}-v${PV}"
 
 src_install() {
 	dobin "${PN}"
