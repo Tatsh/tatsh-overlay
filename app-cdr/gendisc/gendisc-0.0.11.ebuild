@@ -17,6 +17,7 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 RDEPEND="dev-python/python-fsutil[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
 	dev-python/colorlog[${PYTHON_USEDEP}]
+	dev-python/jinja2[${PYTHON_USEDEP}]
 	dev-python/tqdm[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	dev-python/wakepy[${PYTHON_USEDEP}]"
