@@ -51,6 +51,7 @@ src_prepare() {
 #define SIMPLIER_MISSIONS
 #define VC_PED_PORTS
 #define XDG_ROOT
+#define USE_DEBUG_SCRIPT_LOADER
 EOF
 }
 
