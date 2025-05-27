@@ -10,9 +10,9 @@ inherit cmake desktop distutils-r1
 
 DESCRIPTION="Software defined VHS decoder."
 HOMEPAGE="https://github.com/oyvindln/vhs-decode"
-LD_DECODE_TESTDATA_SHA="dd9569daee212dd3fea413c97372d2bf55aceba2"
+LD_DECODE_TESTDATA_REV="dd9569daee212dd3fea413c97372d2bf55aceba2"
 SRC_URI="https://github.com/oyvindln/vhs-decode/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-	test? ( https://github.com/happycube/ld-decode-testdata/archive/${LD_DECODE_TESTDATA_SHA}.tar.gz -> ld-decode-testdata-${LD_DECODE_TESTDATA_SHA:0:7}.tar.gz )"
+	test? ( https://github.com/happycube/ld-decode-testdata/archive/${LD_DECODE_TESTDATA_REV}.tar.gz -> ld-decode-testdata-${LD_DECODE_TESTDATA_REV:0:7}.tar.gz )"
 IUSE="gtk test"
 RESTRICT="!test? ( test )"
 
@@ -43,7 +43,7 @@ BDEPEND="dev-python/cython:0[${PYTHON_USEDEP}]
 	dev-python/wheel[${PYTHON_USEDEP}]
 	dev-python/setuptools-scm[${PYTHON_USEDEP}]"
 
-# S="${WORKDIR}/${PN}-${SHA}"
+# S="${WORKDIR}/${PN}-${REV}"
 
 src_prepare() {
 	cmake_src_prepare
@@ -82,7 +82,7 @@ src_install() {
 }
 
 src_test() {
-	ln -sf "../ld-decode-testdata-${LD_DECODE_TESTDATA_SHA}" testdata || die
+	ln -sf "../ld-decode-testdata-${LD_DECODE_TESTDATA_REV}" testdata || die
 	local myctestargs=(-j 1)
 	cmake_src_test
 }
