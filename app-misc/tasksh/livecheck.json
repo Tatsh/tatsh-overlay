@@ -1,0 +1,1 @@
+{ "pattern_version": "^v(\\d+\\.\\d+\\.\\d+)", "replace_version": "\\1" }
