@@ -17,7 +17,7 @@ KEYWORDS="~amd64"
 
 RDEPEND="dev-python/cffi[${PYTHON_USEDEP}]
 	dev-python/certifi[${PYTHON_USEDEP}]
-	net-misc/curl-impersonate"
+	>=net-misc/curl-impersonate-1.0.0"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-system-libs.patch" )
 
