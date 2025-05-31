@@ -23,7 +23,7 @@ DEPEND="dev-libs/glib
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
 	x11-libs/pango
-	x11-libs/wxGTK:3.0-gtk3"
+	x11-libs/wxGTK:3.2-gtk3"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/gcn64tools-${PV}"
