@@ -155,25 +155,25 @@
   resolved "https://registry.yarnpkg.com/@types/triple-beam/-/triple-beam-1.3.5.tgz#74fef9ffbaa198eb8b588be029f38b00299caa2c"
   integrity sha512-6WaYesThRMCl19iryMYP7/x2OVgCtbIVflDGFpWnb9irXI3UjYE4AzmYuiUKY1AJstGijoY+MgUszMgRxIYTYw==
 
-"@zwave-js/cc@15.0.2":
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/@zwave-js/cc/-/cc-15.0.2.tgz#a06def2ffe4732f668d6c5001e902c0389a15b4c"
-  integrity sha512-4iN+7iaYECRBgZSQIi+e5cR6LcnH7aSlg5CXeqdALlL3hks69a9cNZGdP3wxQjZlnQJ0PFsQwyKqm5jkwHhE8A==
+"@zwave-js/cc@15.6.0":
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/@zwave-js/cc/-/cc-15.6.0.tgz#2e27053f611b53f41cd11f04b2fc357e41b97b55"
+  integrity sha512-rkOaxdF4h6iAA7FYhLEsKXUlIigoPRUinF+K3gzw1OtX6Oy8WJBMOnbNOTDOe8fxnoarepeDc36rjU4trnVpHQ==
   dependencies:
-    "@zwave-js/core" "15.0.0"
-    "@zwave-js/host" "15.0.1"
-    "@zwave-js/shared" "15.0.0"
+    "@zwave-js/core" "15.6.0"
+    "@zwave-js/host" "15.6.0"
+    "@zwave-js/shared" "15.4.0"
     alcalzone-shared "^5.0.0"
     ansi-colors "^4.1.3"
     reflect-metadata "^0.2.2"
 
-"@zwave-js/config@15.0.1":
-  version "15.0.1"
-  resolved "https://registry.yarnpkg.com/@zwave-js/config/-/config-15.0.1.tgz#df2e135f789e2a8272679f163253e381fe6ff5d8"
-  integrity sha512-v+nV33B9gv1/8ErPHYvvLUA+s9ysQTfzWleQTVMIVxzkACc503odXrN0sAzHzVZWUfZEWymLVQlRhBCkRDgeTg==
+"@zwave-js/config@15.6.0":
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/@zwave-js/config/-/config-15.6.0.tgz#e20b8da8073f095f0dd9fc05de8a8017198c2448"
+  integrity sha512-fArbKXZDA99e1nCq0HqOpRP0ZRv5ZYOlRO4fpC1IZLLSg0lPwXXcASaCMptuGjr4tC6pv/jJz4gFs8hOynnB3A==
   dependencies:
-    "@zwave-js/core" "15.0.0"
-    "@zwave-js/shared" "15.0.0"
+    "@zwave-js/core" "15.6.0"
+    "@zwave-js/shared" "15.4.0"
     alcalzone-shared "^5.0.0"
     ansi-colors "^4.1.3"
     json-logic-js "^2.0.5"
@@ -182,13 +182,13 @@
     semver "^7.6.3"
     winston "^3.17.0"
 
-"@zwave-js/core@15.0.0":
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/@zwave-js/core/-/core-15.0.0.tgz#3a248aaa982946c0e23681ed3b58c5a24b9b150b"
-  integrity sha512-+J4tuy5m6MlisEv3p0zMYi0kc30WxsdZ0RtIRIjLempo3VzxzV5b6bqLAGRJ/ZwmXZQE+IgZnXhqcJSMRefc/A==
+"@zwave-js/core@15.6.0":
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/@zwave-js/core/-/core-15.6.0.tgz#17dc7583185021575cb415794463b507cdbf085d"
+  integrity sha512-Ze9ay2yqeJ6WW0n7OnSPYn0smnUqDjezrAWO/aDK3Ql6XAPXIMi7k94GDEYdGfikSHPrZ3ZClFyut+/WZ7X59w==
   dependencies:
     "@alcalzone/jsonl-db" "^3.1.1"
-    "@zwave-js/shared" "15.0.0"
+    "@zwave-js/shared" "15.4.0"
     alcalzone-shared "^5.0.0"
     ansi-colors "^4.1.3"
     dayjs "^1.11.13"
@@ -203,70 +203,77 @@
     winston-daily-rotate-file "^5.0.0"
     winston-transport "^4.9.0"
 
-"@zwave-js/host@15.0.1":
-  version "15.0.1"
-  resolved "https://registry.yarnpkg.com/@zwave-js/host/-/host-15.0.1.tgz#372d5cfe922b8a287aa7ecaf4929d79682848adc"
-  integrity sha512-7Spmb6MNMcSIkI+Eccn9vKcZGKaUKk5n3TfOtfqDDqosA8O8xPRtHxo0yrKhOqG62ChabUTojjlhke12aJMdnA==
+"@zwave-js/host@15.6.0":
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/@zwave-js/host/-/host-15.6.0.tgz#56993990052822afc65f88d1dc4016d153406ff5"
+  integrity sha512-BjhGaPT3cXMlrwoZv3CsLeYwEf6nomhNPyB9teFgEirskj5xSEhermwfewCp6+4TjKuocplZJ5eWpioxGPvBNA==
   dependencies:
-    "@zwave-js/config" "15.0.1"
-    "@zwave-js/core" "15.0.0"
-    "@zwave-js/shared" "15.0.0"
+    "@zwave-js/config" "15.6.0"
+    "@zwave-js/core" "15.6.0"
+    "@zwave-js/shared" "15.4.0"
     alcalzone-shared "^5.0.0"
 
-"@zwave-js/nvmedit@15.0.0":
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/@zwave-js/nvmedit/-/nvmedit-15.0.0.tgz#a6d35a9f434dc102a069ff44ef20be59b90a8231"
-  integrity sha512-d8bjDOqcv/lAYoqFlR1XTk4d1LGgr3ubg95wuDrk8xUkXycPdrm0dsaFiczw/ifJTkd6p7YUc37D9uPuYso3cw==
+"@zwave-js/nvmedit@15.6.0":
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/@zwave-js/nvmedit/-/nvmedit-15.6.0.tgz#e0aa8aaebf3675cf192911742302707c9fa10b5f"
+  integrity sha512-v5VNFkc/WF+6Az+l2raYZdfLNBHOYmCgW64bpa45QvpOzmO3IHew0ujxudEhTJyEnAu4aZxZvOosWUD3jR0gPg==
   dependencies:
-    "@zwave-js/core" "15.0.0"
-    "@zwave-js/shared" "15.0.0"
+    "@zwave-js/core" "15.6.0"
+    "@zwave-js/shared" "15.4.0"
     alcalzone-shared "^5.0.0"
     reflect-metadata "^0.2.2"
     semver "^7.6.3"
     yargs "^17.7.2"
 
-"@zwave-js/serial@15.0.2":
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/@zwave-js/serial/-/serial-15.0.2.tgz#69c6fba117f31fd268a4e33e04ee80fe804ec6c0"
-  integrity sha512-6ZfLdJgWDnZ/EEA9AD2weUrQj/UKRQhvE3d0zk08HzlyHn7kWc94SCy/gAE66ZfZsPBCTPQ55/5AatEBlnNEng==
+"@zwave-js/serial@15.6.0":
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/@zwave-js/serial/-/serial-15.6.0.tgz#86955411a339bc74ca99d318e7880d1540034a92"
+  integrity sha512-oQkrKDdiwRzkxRLY0WWGeN8tMHdhd/Uwh0PYdBPGX74VIugxdRqreVwydkbH5eCdQvYoq/azKCa8jCiNcZRdfg==
   dependencies:
     "@serialport/stream" "^13.0.0"
-    "@zwave-js/cc" "15.0.2"
-    "@zwave-js/core" "15.0.0"
-    "@zwave-js/host" "15.0.1"
-    "@zwave-js/shared" "15.0.0"
+    "@zwave-js/cc" "15.6.0"
+    "@zwave-js/core" "15.6.0"
+    "@zwave-js/host" "15.6.0"
+    "@zwave-js/shared" "15.4.0"
     alcalzone-shared "^5.0.0"
     serialport "^13.0.0"
     winston "^3.17.0"
 
-"@zwave-js/server@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@zwave-js/server/-/server-3.0.0.tgz#95077d9776dc588666f570823b94654a0e202a28"
-  integrity sha512-1IKnG9ssAr4lsffxAKgEpLB3rqkJqb4XUhpCavmncbu4YNuk5kAnMupqBTpo3l0ajUwxfF43HAWODOHoUQb2Zg==
+"@zwave-js/server@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@zwave-js/server/-/server-3.0.2.tgz#b0a28aac61c852e09f3b99a0f09054bb836d1e3c"
+  integrity sha512-+JOhW86CCHCMRPMka0mE48H2ZLNATmQxOfShN1NFnJWC0TKzM0Ww0QPsOIra7WaeGpjPDuryJusVCTHmNWMAnA==
   dependencies:
     "@homebridge/ciao" "^1.1.7"
     minimist "^1.2.8"
     ws "^8.18.0"
 
-"@zwave-js/shared@15.0.0":
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/@zwave-js/shared/-/shared-15.0.0.tgz#8f3e2b5b193c85efb011b0970fa511c093597d81"
-  integrity sha512-qFtPesVA7nlIm5rxHFKS/ORgKOAc6uoppCn87o3Xp9mHB67yjXmu7LkEO7DBF7j2CglGF62LUbAB3dx7LWsy7Q==
+"@zwave-js/shared@15.4.0":
+  version "15.4.0"
+  resolved "https://registry.yarnpkg.com/@zwave-js/shared/-/shared-15.4.0.tgz#ccf7984f7994554c4a1b266a09039fd95cee665a"
+  integrity sha512-bv6zelc04CYQ2+m8wzVG/1ejJ/R2PoPBZMu3ZwvgJ0uk3t7oHwS/xlLJlqI1F2O8krN+riilQtD7bMDQ06tiOw==
   dependencies:
     alcalzone-shared "^5.0.0"
     pathe "^2.0.1"
 
-"@zwave-js/testing@15.0.2":
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/@zwave-js/testing/-/testing-15.0.2.tgz#f8a09bc3c949252b711d0129d79fadb8943d4ae1"
-  integrity sha512-kT/pAvJfGq5ZB/Cqw5tEKza566JjruF/TOwJZC1b6w/IqRQTK+M9hCQRUfoj+vXzrsNwXvc6CYJRe1JUFnUFdA==
+"@zwave-js/testing@15.6.0":
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/@zwave-js/testing/-/testing-15.6.0.tgz#ae8ab88bc87afb72f737367af37b5f08407d0731"
+  integrity sha512-+76ISmfk2Pq/3YuoX5EfYcd+nH20cPKXnbG9GAL98ycuO2pfRDWYB+Si0uwtAEg/9IxWRipFR2Vh3b6R1BwTNA==
   dependencies:
-    "@zwave-js/core" "15.0.0"
-    "@zwave-js/host" "15.0.1"
-    "@zwave-js/serial" "15.0.2"
-    "@zwave-js/shared" "15.0.0"
+    "@zwave-js/core" "15.6.0"
+    "@zwave-js/host" "15.6.0"
+    "@zwave-js/serial" "15.6.0"
+    "@zwave-js/shared" "15.4.0"
     alcalzone-shared "^5.0.0"
     ansi-colors "^4.1.3"
+
+"@zwave-js/waddle@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@zwave-js/waddle/-/waddle-1.0.0.tgz#035aa42c8e820d13289f88497b0b20c4f11f07d1"
+  integrity sha512-unaSmBBGuvaT1IH8MFB3hvDuzaAIQmMQvtRkSgCSVurxyOz8aY5EaUsXQYRtJWlogn42aQbgPry1s2/USTJFQA==
+  dependencies:
+    alcalzone-shared "^5.0.0"
 
 alcalzone-shared@^4.0.8:
   version "4.0.8"
@@ -369,10 +376,17 @@ dayjs@^1.11.13:
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.13.tgz#92430b0139055c3ebb60150aa13e860a4b5a366c"
   integrity sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==
 
-debug@4.4.0, debug@^4.3.3, debug@^4.3.4, debug@^4.3.6:
+debug@4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.4.0.tgz#2b3f2aea2ffeb776477460267377dc8710faba8a"
   integrity sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==
+  dependencies:
+    ms "^2.1.3"
+
+debug@^4.3.3, debug@^4.3.4, debug@^4.3.6:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.4.1.tgz#e5a8bc6cbc4c6cd3e64308b0693a3d4fa550189b"
+  integrity sha512-KcKCqiftBJcZr++7ykoDIEwSa3XWowTfNPo92BYxjXiyYEVrUQh2aLyhxBCwww+heortUFxEJYcRzosstTEBYQ==
   dependencies:
     ms "^2.1.3"
 
@@ -494,9 +508,9 @@ kuler@^2.0.0:
   integrity sha512-Xq9nH7KlWZmXAtodXDDRE7vs6DU1gTU8zYDHDiWLSip45Egwq3plLHzPn27NgvzL2r1LMPC1vdqh98sQxtqj4A==
 
 ky@^1.7.2:
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/ky/-/ky-1.7.5.tgz#69c9b70ff818fd6108fc04a89c1454412c11dfce"
-  integrity sha512-HzhziW6sc5m0pwi5M196+7cEBtbt0lCYi67wNsiwMUmz833wloE0gbzJPWKs1gliFKQb34huItDQX97LyOdPdA==
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/ky/-/ky-1.8.1.tgz#b1adaa473bc30aced2bab4c408ec177b78d198f0"
+  integrity sha512-7Bp3TpsE+L+TARSnnDpk3xg8Idi8RwSLdj6CMbNWoOARIrGrbuLGusV0dYwbZOm4bB3jHNxSw8Wk/ByDqJEnDw==
 
 logform@^2.7.0:
   version "2.7.0"
@@ -559,7 +573,7 @@ one-time@^1.0.0:
   dependencies:
     fn.name "1.x.x"
 
-p-queue@^8.0.1:
+p-queue@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/p-queue/-/p-queue-8.1.0.tgz#d71929249868b10b16f885d8a82beeaf35d32279"
   integrity sha512-mxLDbbGIBEXTJL0zEx8JIylaj3xQ7Z/7eEVjcF9fJX4DBiH9oqe+oahYnlKKxm0Ci9TlWTyhSHgygxMxjIB2jw==
@@ -612,9 +626,9 @@ safe-stable-stringify@^2.3.1:
   integrity sha512-b3rppTKm9T+PsVCBEOUR46GWI7fdOs00VKZ1+9c1EWDaDMvjQc6tUwuFyIprgGgTcWoVHSKrU8H31ZHA2e0RHA==
 
 semver@^7.6.3:
-  version "7.7.1"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.1.tgz#abd5098d82b18c6c81f6074ff2647fd3e7220c9f"
-  integrity sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==
+  version "7.7.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.2.tgz#67d99fdcd35cec21e6f8b87a7fd515a33f982b58"
+  integrity sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==
 
 serialport@^13.0.0:
   version "13.0.0"
@@ -760,9 +774,9 @@ wrap-ansi@^7.0.0:
     strip-ansi "^6.0.0"
 
 ws@^8.18.0:
-  version "8.18.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.18.1.tgz#ea131d3784e1dfdff91adb0a4a116b127515e3cb"
-  integrity sha512-RKW2aJZMXeMxVpnZ6bck+RswznaxmzdULiBr6KY7XkTnW8uvt0iT9H5DkHUChXrc+uurzwa0rVI16n/Xzjdz1w==
+  version "8.18.2"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.18.2.tgz#42738b2be57ced85f46154320aabb51ab003705a"
+  integrity sha512-DMricUmwGZUVr++AEAe2uiVM7UoO9MAVZMDu05UQOaUII0lp+zOzLLU4Xqh/JvTqklB1T4uELaaPBKyjE1r4fQ==
 
 y18n@^5.0.5:
   version "5.0.8"
@@ -787,27 +801,28 @@ yargs@^17.7.2:
     y18n "^5.0.5"
     yargs-parser "^21.1.1"
 
-zwave-js@^15.0.2:
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/zwave-js/-/zwave-js-15.0.2.tgz#f6f76246746b81709dc43f17e108af7e2cd9f034"
-  integrity sha512-PM7D+68RMQGV2l0/n3Mri8jk7SbZ3TnpTL81KT8y3GzGyCp1Jia/rS6SJiMVWOB4sXsyNWEA0O8VF7kO650Ccg==
+zwave-js@^15.6.0:
+  version "15.6.0"
+  resolved "https://registry.yarnpkg.com/zwave-js/-/zwave-js-15.6.0.tgz#032bd32bebbf39dea754a436105123d9503359e2"
+  integrity sha512-j5t+z1v8VZTbw5DaIQ/Gz/2MsG79uhgg4rvpyogcpeNNn2/0qYa+ID4U30Vtj9EoC5P6EPlRK7HMvcbfUNz5Yg==
   dependencies:
     "@alcalzone/jsonl-db" "^3.1.1"
     "@andrewbranch/untar.js" "^1.0.3"
     "@homebridge/ciao" "^1.3.1"
-    "@zwave-js/cc" "15.0.2"
-    "@zwave-js/config" "15.0.1"
-    "@zwave-js/core" "15.0.0"
-    "@zwave-js/host" "15.0.1"
-    "@zwave-js/nvmedit" "15.0.0"
-    "@zwave-js/serial" "15.0.2"
-    "@zwave-js/shared" "15.0.0"
-    "@zwave-js/testing" "15.0.2"
+    "@zwave-js/cc" "15.6.0"
+    "@zwave-js/config" "15.6.0"
+    "@zwave-js/core" "15.6.0"
+    "@zwave-js/host" "15.6.0"
+    "@zwave-js/nvmedit" "15.6.0"
+    "@zwave-js/serial" "15.6.0"
+    "@zwave-js/shared" "15.4.0"
+    "@zwave-js/testing" "15.6.0"
+    "@zwave-js/waddle" "^1.0.0"
     alcalzone-shared "^5.0.0"
     ansi-colors "^4.1.3"
     ky "^1.7.2"
     mdns-server "^1.0.11"
-    p-queue "^8.0.1"
+    p-queue "^8.1.0"
     pathe "^2.0.1"
     reflect-metadata "^0.2.2"
     semver "^7.6.3"
