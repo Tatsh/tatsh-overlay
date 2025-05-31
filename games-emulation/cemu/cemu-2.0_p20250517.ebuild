@@ -71,8 +71,7 @@ src_configure() {
 		-DENABLE_VCPKG=OFF
 		"-DENABLE_VULKAN=$(usex vulkan)"
 		-DENABLE_WXWIDGETS=ON
-		-DPORTABLE=OFF
-		"-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2-gtk3"
+		"-DwxWidgets_CONFIG_EXECUTABLE=/usr/$(get_libdir)/wx/config/gtk3-unicode-3.2"
 		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF
 		-DALLOW_EXTERNAL_SPIRV_TOOLS=ON
 		-Wno-dev
