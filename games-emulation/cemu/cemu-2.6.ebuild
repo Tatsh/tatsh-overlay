@@ -7,11 +7,10 @@ inherit cmake desktop xdg
 
 DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
-SHA="783d88a892204d0570d0720d3749d01b685bdc31"
 MY_PN="Cemu"
 GLSLANG_SHA="7200bc12a8979d13b22cd52de80ffb7d41939615"
 IMGUI_PV="1.88"
-SRC_URI="https://github.com/cemu-project/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/cemu-project/Cemu/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/ocornut/imgui/archive/refs/tags/v${IMGUI_PV}.tar.gz -> ${PN}-imgui-${IMGUI_PV}.tar.gz
 	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> glslang-${GLSLANG_SHA:0:7}.tar.gz"
 
@@ -44,11 +43,11 @@ DEPEND="app-arch/zarchive
 RDEPEND="${DEPEND}"
 BDEPEND="media-libs/glm"
 
-S="${WORKDIR}/${MY_PN}-${SHA}"
-
 PATCHES=(
 	"${FILESDIR}/${PN}-0002-remove-default-from-system-g.patch"
 )
+
+S="${WORKDIR}/${MY_PN}-${PV}"
 
 src_prepare() {
 	sed -re \
