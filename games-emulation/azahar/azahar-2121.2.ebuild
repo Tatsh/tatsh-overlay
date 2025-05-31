@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit cmake xdg
+inherit cmake flag-o-matic xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://github.com/azahar-emu/azahar https://azahar-emu.org/"
@@ -42,8 +42,8 @@ SRC_URI="https://github.com/azahar-emu/${PN}/archive/refs/tags/${PV}.tar.gz -> $
 
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
-# KEYWORDS="~amd64"
-IUSE="openal +qt6 scripting web-service"
+KEYWORDS="~amd64"
+IUSE="openal +qt6 +scripting +web-service"
 
 # System xbyak is still used by Dynarmic, but not Citra itself
 DEPEND="app-arch/zstd
@@ -75,6 +75,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0002-inih-fix.patch"
 	"${FILESDIR}/${PN}-0003-boost-fix.patch"
 	"${FILESDIR}/${PN}-0004-boost-1.87.patch"
+	"${FILESDIR}/${PN}-0005-ffmpeg.patch"
 )
 
 src_prepare() {
@@ -118,14 +119,17 @@ src_prepare() {
 }
 
 src_configure() {
+	filter-lto
 	local mycmakeargs=(
 		"-DENABLE_OPENAL=$(usex openal)"
 		"-DENABLE_QT=$(usex qt6)"
 		"-DENABLE_SCRIPTING=$(usex scripting)"
 		"-DENABLE_WEB_SERVICE=$(usex web-service)"
 		-DBUILD_SHARED_LIBS=OFF
+		-DCITRA_USE_PRECOMPILED_HEADERS=OFF
 		-DCITRA_WARNINGS_AS_ERRORS=OFF
 		-DDISABLE_SUBMODULE_CHECK=ON
+		-DDYNARMIC_USE_BUNDLED_EXTERNALS=ON
 		-DENABLE_TESTS=OFF
 		-DUSE_SYSTEM_BOOST=ON
 		-DUSE_SYSTEM_CATCH2=ON
@@ -139,6 +143,7 @@ src_configure() {
 		-DUSE_SYSTEM_LIBUSB=ON
 		-DUSE_SYSTEM_OPENAL=ON
 		-DUSE_SYSTEM_OPENSSL=ON
+		-DUSE_SYSTEM_QT=ON
 		-DUSE_SYSTEM_SDL2=ON
 		-DUSE_SYSTEM_TEAKRA=ON
 		-DUSE_SYSTEM_XBYAK=OFF
