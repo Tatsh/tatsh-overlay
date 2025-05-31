@@ -7,8 +7,8 @@ inherit autotools cmake flag-o-matic multiprocessing
 
 DESCRIPTION="An active fork of curl-impersonate with more versions and build targets."
 HOMEPAGE="https://github.com/lexiforest/curl-impersonate"
-BORINGSSL_SHA="23768dca563c4e62d48bb3675e49e34955dced12"
-CURL_VERSION="curl-8_7_1"
+BORINGSSL_SHA="673e61fc215b178a90c0e67858bbf162c8158993"
+CURL_VERSION="curl-8_13_0"
 SRC_URI="https://github.com/lexiforest/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/google/boringssl/archive/${BORINGSSL_SHA}.tar.gz -> boringssl-${BORINGSSL_SHA}.tar.gz
 	https://github.com/curl/curl/archive/${CURL_VERSION}.tar.gz -> ${CURL_VERSION//_/.}.tar.gz"
@@ -35,13 +35,13 @@ DOCS=( README.md )
 src_prepare() {
 	mv "${WORKDIR}/boringssl-${BORINGSSL_SHA}" "${S}/" || die
 	pushd "boringssl-${BORINGSSL_SHA}" &>/dev/null || die
-	eapply ../chrome/patches/boringssl.patch
+	eapply ../patches/boringssl.patch
 	touch .patched || die
 	cmake_src_prepare
 	popd &>/dev/null || die
 	mv "${WORKDIR}/curl-${CURL_VERSION}" "${S}/${CURL_VERSION}" || die
 	pushd "${CURL_VERSION}" &>/dev/null || die
-	eapply ../chrome/patches/curl-impersonate.patch
+	eapply ../patches/curl.patch
 	eautoreconf
 	touch .patched-chrome || die
 	popd &>/dev/null || die
@@ -50,9 +50,11 @@ src_prepare() {
 
 src_configure() {
 	pushd "boringssl-${BORINGSSL_SHA}" || die
-	append-cxxflags -Wno-error=maybe-uninitialized -Wno-unknown-warning-option
-	filter-lto
-	local mycmakeargs=( -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON )
+	sed -re 's|-Werror||g' -i CMakeLists.txt || die
+	local mycmakeargs=(
+		-DBUILD_SHARED_LIBS=OFF
+		-DCMAKE_POSITION_INDEPENDENT_CODE=ON
+	)
 	cmake_src_configure
 	popd || die
 }
