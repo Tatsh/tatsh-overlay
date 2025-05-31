@@ -146,7 +146,7 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 			npm_config_verbose=true \
 			npm_config_release=true \
 			"npm_config_nodedir=${EPREFIX}/usr/include/node" \
-			yarn install "${args[*]}"
+			yarn install "${args[@]}"
 		# Delete known pre-built binaries
 		rm -fR \
 			node_modules/@serialport/bindings-cpp/prebuilds/{darwin,android,win32,linux-arm}* \
