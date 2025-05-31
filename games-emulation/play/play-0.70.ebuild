@@ -7,13 +7,13 @@ inherit cmake flag-o-matic xdg
 DESCRIPTION="PlayStation 2 emulator."
 HOMEPAGE="http://purei.org/ https://github.com/jpd002/Play-"
 MY_PV="${PV:0:4}"
-CODEGEN_SHA="087e8b5ba111c5b8127554b2a80df0a0fe086d16"
-DEPS_SHA="7d8bfd36fa609355e4087f7d661fc512bf77754c"
+CODEGEN_SHA="49f8e7fcab6a1d2af936f6fa6b0beb52b25abcf0"
+DEPS_SHA="cfb65c6dc2648ca3ef0a947053b1d55f7133f0a6"
 GHC_FILESYSTEM="2a8b380f8d4e77b389c42a194ab9c70d8e3a0f1e"
-FRAMEWORK_SHA="69aaa2910124b24758859da034425565085377f2"
-LIBCHDR_SHA="fec8ab94212cc65d9d9a62cb3da924f5830c04b0"
+FRAMEWORK_SHA="2fb527e71f5c86bb982bf2c627f328d83397a02a"
 NUANCEUR_SHA="d5280b700d9da9ab9a61cdf0da29a87ffb6898f6"
-ZSTD_SHA="1e09cffd9b15b39379810a39ffae182b4a7e7b78"
+LIBCHDR_SHA="fec8ab94212cc65d9d9a62cb3da924f5830c04b0"
+ZSTD_SHA="f8745da6ff1ad1e7bab384bd1f9d742439278e99"
 XXHASH_SHA="2de0fd6d9b3fd8bbb35ebd52152ecd11fc1ebbfc"
 SRC_URI="https://github.com/jpd002/Play-/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/jpd002/Play--CodeGen/archive/${CODEGEN_SHA}.tar.gz -> ${PN}-codegen-${CODEGEN_SHA:0:7}.tar.gz
@@ -60,7 +60,7 @@ src_prepare() {
 	rmdir deps/{CodeGen,Dependencies,Framework,Nuanceur} || die
 	mv "${WORKDIR}/${MY_PN}-CodeGen-${CODEGEN_SHA}" deps/CodeGen || die
 	mv "${WORKDIR}/${MY_PN}Dependencies-${DEPS_SHA}" deps/Dependencies || die
-	rmdir deps/Dependencies/{ghc_filesystem,zstd} || die
+	rmdir deps/Dependencies/{ghc_filesystem,xxHash,zstd} || die
 	mv "${WORKDIR}/filesystem-${GHC_FILESYSTEM}" deps/Dependencies/ghc_filesystem || die
 	mv "${WORKDIR}/${MY_PN}-Framework-${FRAMEWORK_SHA}" deps/Framework || die
 	mv "${WORKDIR}/Nuanceur-${NUANCEUR_SHA}" deps/Nuanceur || die

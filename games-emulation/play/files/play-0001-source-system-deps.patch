@@ -1,20 +1,20 @@
-From 76bec10737498904e2b85ac3bafa79a4d85d4062 Mon Sep 17 00:00:00 2001
+From 1a6ce3f86f1b87681f2d5a6bb17d65fd38433b40 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 7 Aug 2022 16:14:54 -0400
 Subject: [PATCH] Source: system deps
 
 ---
- Source/CMakeLists.txt           |  4 ++--
- Source/hdd/ApaDefs.h            |  1 +
- Source/ui_qt/CMakeLists.txt     | 14 +++++++-------
- Source/ui_shared/CMakeLists.txt |  2 +-
- 4 files changed, 11 insertions(+), 10 deletions(-)
+ Source/CMakeLists.txt           | 4 ++--
+ Source/hdd/ApaDefs.h            | 1 +
+ Source/ui_qt/CMakeLists.txt     | 8 ++++----
+ Source/ui_shared/CMakeLists.txt | 2 +-
+ 4 files changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/Source/CMakeLists.txt b/Source/CMakeLists.txt
-index df3903bf..fbbaa0d7 100644
+index 78fcc509..e08103c5 100644
 --- a/Source/CMakeLists.txt
 +++ b/Source/CMakeLists.txt
-@@ -79,7 +79,7 @@ if(NOT TARGET CodeGen)
+@@ -88,7 +88,7 @@ if(NOT TARGET CodeGen)
  endif()
  list(APPEND PROJECT_LIBS CodeGen)
  
@@ -23,7 +23,7 @@ index df3903bf..fbbaa0d7 100644
  if(NOT BZIP2_FOUND)
  	MESSAGE("-- Using Provided BZip2 source")
  	if(NOT TARGET BZip2::BZip2)
-@@ -116,7 +116,7 @@ endif()
+@@ -125,7 +125,7 @@ endif()
  LIST(APPEND PROJECT_LIBS xxHash::xxhash)
  
  # If ICU is available, add its libraries because Framework might need its functions
@@ -43,7 +43,7 @@ index 8dfbe04c..4f35291c 100644
  #include <cstdint>
  
 diff --git a/Source/ui_qt/CMakeLists.txt b/Source/ui_qt/CMakeLists.txt
-index 27e8f818..5de59a5b 100644
+index 0ec70ead..95a4866a 100644
 --- a/Source/ui_qt/CMakeLists.txt
 +++ b/Source/ui_qt/CMakeLists.txt
 @@ -10,9 +10,9 @@ project(PlayUI)
@@ -58,39 +58,18 @@ index 27e8f818..5de59a5b 100644
  	set(USE_GSH_VULKAN ON)
  	message("Building with Vulkan support.")
  else()
-@@ -169,13 +169,13 @@ if(TARGET_PLATFORM_WIN32)
- 		)
- 	endif()
- 	list(APPEND PROJECT_LIBS Framework_Win32)
--	
-+
- 	set(QT_SOURCES
- 		${QT_SOURCES}
- 		../../tools/PsfPlayer/Source/ui_win32/SH_WaveOut.cpp
- 	)
- 	list(APPEND PROJECT_LIBS winmm)
--	
-+
- 	if(TARGET_PLATFORM_WIN32_X86)
- 		set(MANIFEST win32/Play-x86.manifest)
- 	else()
-@@ -190,11 +190,11 @@ if(TARGET_PLATFORM_WIN32)
- 		${RESOURCE_FILE}
- 		${MANIFEST}
- 	)
--	
-+
- 	list(APPEND PROJECT_LIBS dinput8)
- 	list(APPEND PROJECT_LIBS xinput)
+@@ -196,7 +196,7 @@ if(TARGET_PLATFORM_WIN32)
+ 	list(APPEND UI_QT_PROJECT_LIBS dinput8)
+ 	list(APPEND UI_QT_PROJECT_LIBS xinput)
  endif()
 -	
 +
  if(DEBUGGER_INCLUDED)
  	if(NOT TARGET PlayDebugSupport)
  		add_subdirectory(
-@@ -204,7 +204,7 @@ if(DEBUGGER_INCLUDED)
+@@ -206,7 +206,7 @@ if(DEBUGGER_INCLUDED)
  	endif()
- 	list(APPEND PROJECT_LIBS PlayDebugSupport)
+ 	list(APPEND UI_QT_PROJECT_LIBS PlayDebugSupport)
  endif()
 -	
 +
@@ -98,7 +77,7 @@ index 27e8f818..5de59a5b 100644
  	BootableModel.h
  	BootableModelProxy.h
 diff --git a/Source/ui_shared/CMakeLists.txt b/Source/ui_shared/CMakeLists.txt
-index 4cf00732..f71e36ff 100644
+index be101de7..58550772 100644
 --- a/Source/ui_shared/CMakeLists.txt
 +++ b/Source/ui_shared/CMakeLists.txt
 @@ -23,7 +23,7 @@ if(NOT TARGET Framework_Http)
@@ -111,5 +90,5 @@ index 4cf00732..f71e36ff 100644
  	MESSAGE("-- Using Provided nlohmann_json source")
  	if(NOT TARGET nlohmann_json)
 -- 
-2.45.2
+2.49.0
 
