@@ -187,6 +187,7 @@ cdecrypt
 cdpatch
 cdproto
 cdrecord
+cellbuf
 cemu
 cenkalti
 certifi
@@ -241,6 +242,7 @@ colorama
 colord
 colorette
 colorlog
+colorprofile
 colorspace
 colorstring
 colour
@@ -252,6 +254,7 @@ configfile
 configor
 configura
 conflicter
+coninput
 conntrack
 containerd
 cookiecutter
@@ -331,6 +334,7 @@ ddeveloper
 ddisable
 ddrivers
 ddynarec
+ddynarmic
 deark
 deband
 debuginfod
@@ -502,6 +506,7 @@ epreifx
 epytest
 epython
 eqawarn
+erikgeiser
 eroot
 errcheck
 errgo
