@@ -60,6 +60,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0003-boost-fix.patch"
 	"${FILESDIR}/${PN}-0004-boost-1.87.patch"
 	"${FILESDIR}/${PN}-0005-azahar-vulkan-1.4.304.patch"
+	"${FILESDIR}/${PN}-0006-azahar-mcl-fix.patch"
 )
 
 S="${WORKDIR}/${PN}-${SHA}"
