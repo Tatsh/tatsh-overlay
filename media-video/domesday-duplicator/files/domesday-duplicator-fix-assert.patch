@@ -1,0 +1,23 @@
+From 65885be6d4444ae02b5f2358f88d8eeaf270027c Mon Sep 17 00:00:00 2001
+From: tzaeli <40756030+tzaeli@users.noreply.github.com>
+Date: Tue, 4 Mar 2025 20:19:52 -0600
+Subject: [PATCH] Update UsbDeviceBase.cpp
+
+Hack fix to prevent "Use of undeclared identifier 'bufferCount'" while building on macOS
+---
+ Linux-Application/DomesdayDuplicator/UsbDeviceBase.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Linux-Application/DomesdayDuplicator/UsbDeviceBase.cpp b/Linux-Application/DomesdayDuplicator/UsbDeviceBase.cpp
+index 30380f6..c7f905b 100644
+--- a/DomesdayDuplicator/UsbDeviceBase.cpp
++++ b/DomesdayDuplicator/UsbDeviceBase.cpp
+@@ -507,7 +507,7 @@ bool UsbDeviceBase::UsbTransferStopRequested() const
+ //----------------------------------------------------------------------------------------------------------------------
+ UsbDeviceBase::DiskBufferEntry& UsbDeviceBase::GetDiskBuffer(size_t bufferNo)
+ {
+-    assert(bufferNo < bufferCount);
++    assert(bufferNo < totalDiskBufferEntryCount);
+     return diskBufferEntries[bufferNo];
+ }
+
