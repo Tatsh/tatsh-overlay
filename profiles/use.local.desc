@@ -1,6 +1,14 @@
 app-cdr/qpxtool: internal-wt - Use internal CD/DVD writing implementation instead of cdrecord.
 app-cdr/qpxtool: liteon-probe - Enable device probing in Lite-On plugin.
 app-emulation/basiliskii: jit-debug - Enable JIT debugger
+app-misc/deltona: admin - Administrative utilities like smv and reset-tpm-enrollments
+app-misc/deltona: desktop - Desktop utilities like umpv and mpv-sbs
+app-misc/deltona: git - Git utilities like git-open and merge-dependabot-prs
+app-misc/deltona: media - Media utilities like wait-for-disc and add-info-json
+app-misc/deltona: misc - Miscellaneous utilities like gogextract and adp
+app-misc/deltona: string - String utilities like is-ascii and ucwords
+app-misc/deltona: wine - Utilities for Wine like mkwineprefix and wineshell
+app-misc/deltona: www - Internet-related utilities like where-from and chrome-bisect-flags
 app-office/glabels: barcode - Enable barcode support with app-text/barcode
 app-office/glabels: qrcode - Enables QR code support with media-gfx/qrencode
 dev-libs/bincookie: tools - Install extra tools
@@ -8,6 +16,8 @@ dev-libs/wolfssl: debug - Debug support
 dev-libs/wolfssl: sniffer - Enable sniffer via libpcap
 dev-libs/wolfssl: writedup - Enable write duplication of WOLFSSL objects
 dev-python/numba: tbb - Build with TBB support
+dev-python/snowflake-connector-python: pandas - 
+dev-python/snowflake-connector-python: secure-local-storage - 
 games-action/re3: sanitizer - Build with address sanitiser for better crash logs
 games-action/relcs: sanitizer - Build with address sanitiser for better crash logs
 games-action/revc: sanitizer - Build with address sanitiser for better crash logs
@@ -28,16 +38,14 @@ games-emulation/86box: dynrec - Enable dynamic recompiler
 games-emulation/86box: fluidsynth - Use media-sound/fluidsynth for MIDI emulation
 games-emulation/86box: mt-32 - Use media-libs/munt-mt32emu for MT-32 emulation
 games-emulation/86box: new-dynrec - Use the PCem v15 ("new") dynamic recompiler
+games-emulation/azahar: scripting - Enable RPC server for scripting
+games-emulation/azahar: web-service - Enable web services (telemetry, etc.)
 games-emulation/bsnes-hd: libretro - Build libretro core
 games-emulation/cemu: cubeb - Enable cubeb audio support
 games-emulation/cemu: discord - Enable rich Discord presence
 games-emulation/cemu: vulkan - Enable Vulkan graphics support
 games-emulation/citra: scripting - Enable RPC server for scripting
 games-emulation/citra: web-service - Enable web services (telemetry, etc.)
-games-emulation/dolphin: discord-presence - Enables Discord Rich Presence, show the current game on Discord
-games-emulation/dolphin: evdev - Enable evdev input support
-games-emulation/dolphin: log - Increase logging output
-games-emulation/dolphin: mgba - Enables GBA controllers emulation using libmgba.
 games-emulation/dosbox-x: core-inline - Enable memory-increasing inlines for better performance but requiring more build time
 games-emulation/dosbox-x: dynrec - Use recompiling cpu core instead of dynamic x86/x64 specific cpu core
 games-emulation/dosbox-x: fluidsynth - Use media-sound/fluidsynth for MIDI emulation
@@ -56,10 +64,10 @@ games-emulation/rpcs3: faudio - Enable audio rendering with app-emulation/faudio
 games-emulation/rpcs3: joystick - Enable support for input devices with evdev
 games-emulation/rpcs3: llvm - LLVM recompiler support
 games-emulation/rpcs3: vulkan - Enable Vulkan graphics library support
-games-emulation/suyu: compatibility-reporting - Enable compatibility reporting
-games-emulation/suyu: cubeb - Build with cubeb audio backend
-games-emulation/suyu: webengine - Use  for embedded web browser
-games-emulation/suyu: web-service - Enable web-services
+games-emulation/sudachi: compatibility-reporting - 
+games-emulation/sudachi: cubeb - 
+games-emulation/sudachi: webengine - 
+games-emulation/sudachi: web-service - 
 games-emulation/xemu: aio - Add support for AIO
 games-emulation/xemu: io-uring - Enable efficient I/O via sys-libs/liburing
 games-emulation/xemu: malloc-trim - Enable malloc_trim() support
@@ -77,6 +85,14 @@ games-misc/render96ex: texture-fix - Enable texture bug fixes
 games-misc/render96ex: textures - Install high quality texture replacements
 games-misc/render96ex: us - Use the North American ROM
 games-util/raphnet-tech-adapter-manager: firmware - Install firmware
+llvm-core/llvm: binutils-plugin - Build the binutils plugin
+llvm-core/llvm: doc - Build and install the HTML documentation and regenerate the man pages
+llvm-core/llvm: exegesis - Enable performance counter support for llvm-exegesis tool
+llvm-core/llvm: ncurses - Support querying terminal properties using ncurses' terminfo
+llvm-core/llvm: 			that can be used to measure host machine instruction characteristics
+llvm-core/llvm: 			(uses )
+llvm-core/llvm: xar - Support dumping LLVM bitcode sections in Mach-O files
+llvm-core/llvm: z3 - Enable support for  constraint solver
 media-fonts/noto: ancient - Install fonts for historical scripts
 media-fonts/noto: brahmi - Install font for Brahmi script
 media-fonts/noto: coptic - Install Coptic font
@@ -155,7 +171,7 @@ mpv-plugin/shutup: autoload - Auto-load the plugin
 mpv-plugin/writeedits: autoload - Auto-load the plugin
 mpv-plugin/writename: autoload - Auto-load the plugin
 net-dns/pihole: cron - Installs cron job
-sci-libs/torchvision: cuda - 
+net-misc/curl-impersonate: clients - Install the curl wrapper scripts
 sys-apps/kylemanna-systemd-utils: amazon - Install Amazon Cloud Drive service
 sys-apps/kylemanna-systemd-utils: btrfs - Install units for btrfs
 sys-apps/kylemanna-systemd-utils: cmsis-dap - Unknown
@@ -166,16 +182,6 @@ sys-apps/kylemanna-systemd-utils: rssh - Install rssh service
 sys-apps/kylemanna-systemd-utils: storj - Install storj-dataserv-client.service
 sys-apps/kylemanna-systemd-utils: tahoe - Install Tahoe-related services
 sys-apps/kylemanna-systemd-utils: youtube - Install YouTube TV service
-sys-devel/llvm: binutils-plugin - Build the binutils plugin
-sys-devel/llvm: doc - Build and install the HTML documentation and regenerate the man pages
-sys-devel/llvm: exegesis - Enable performance counter support for llvm-exegesis tool
-sys-devel/llvm: ncurses - Support querying terminal properties using ncurses' terminfo
-sys-devel/llvm: 			that can be used to measure host machine instruction characteristics
-sys-devel/llvm: 			(uses )
-sys-devel/llvm: xar - Support dumping LLVM bitcode sections in Mach-O files
-sys-devel/llvm: z3 - Enable support for  constraint solver
-www-plugins/bypass-paywalls: chrome - Install file for Chrome and Chrome Beta
-www-plugins/bypass-paywalls: chromium - Install file for Chromium-based browsers
 x11-misc/rom-properties: achievements - Enable achievement pop-ups.
 x11-misc/rom-properties: astc - Enable ASTC texture support
 x11-misc/rom-properties: cli - Build rpcli command.

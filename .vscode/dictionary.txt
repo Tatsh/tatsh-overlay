@@ -655,6 +655,7 @@ goexif
 gofork
 gofrs
 gofuzz
+gogextract
 gogs
 gohugoio
 goidentity
@@ -1134,6 +1135,7 @@ mizo
 mkdirp
 mknod
 mkorenkov
+mkwineprefix
 mlabbe
 mnamer
 mobilephone
@@ -1318,6 +1320,7 @@ pahawhhmong
 palmyrene
 pango
 papertrail
+paramiko
 parany
 parrado
 parseargs
@@ -1420,6 +1423,7 @@ pydbus
 pyelftools
 pyflirt
 pyfmt
+pygithub
 pygments
 pygobject
 pygtrie
@@ -1429,6 +1433,7 @@ pymatting
 pynput
 pyopenssl
 pypamtest
+pyperclip
 pypi
 pyproject
 pypy
@@ -1801,6 +1806,7 @@ typedarray
 typeparams
 typer
 tzdb
+ucwords
 udalov
 udevadm
 udevdir
@@ -1808,8 +1814,10 @@ udiff
 udpa
 udvare
 uips
+umpv
 unalz
 unauthorised
+uncategorised
 undici
 undname
 unecm
@@ -1913,6 +1921,7 @@ willf
 winapi
 windres
 wineasio
+wineshell
 wingetty
 winio
 wireshark
