@@ -119,7 +119,7 @@ src_prepare() {
 }
 
 src_configure() {
-	filter-lto
+	append-flags -fPIC
 	local mycmakeargs=(
 		"-DENABLE_OPENAL=$(usex openal)"
 		"-DENABLE_QT=$(usex qt6)"
@@ -130,6 +130,7 @@ src_configure() {
 		-DCITRA_WARNINGS_AS_ERRORS=OFF
 		-DDISABLE_SUBMODULE_CHECK=ON
 		-DDYNARMIC_USE_BUNDLED_EXTERNALS=ON
+		-DENABLE_LTO=OFF # Do not enable their way of doing this.
 		-DENABLE_TESTS=OFF
 		-DUSE_SYSTEM_BOOST=ON
 		-DUSE_SYSTEM_CATCH2=ON
