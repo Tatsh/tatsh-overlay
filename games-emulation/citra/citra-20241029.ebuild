@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-inherit cmake xdg
+inherit cmake flag-o-matic xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://github.com/PabloMK7/citra https://web.archive.org/web/20240301162216/https://citra-emu.org/"
@@ -95,6 +95,7 @@ src_prepare() {
 }
 
 src_configure() {
+	append-flags -fPIC
 	local mycmakeargs=(
 		"-DENABLE_OPENAL=$(usex openal)"
 		"-DENABLE_QT=$(usex qt6)"
@@ -102,6 +103,8 @@ src_configure() {
 		"-DENABLE_WEB_SERVICE=$(usex web-service)"
 		-DBUILD_SHARED_LIBS=OFF
 		-DCITRA_WARNINGS_AS_ERRORS=OFF
+		-DCITRA_USE_PRECOMPILED_HEADERS=OFF
+		-DENABLE_LTO=OFF # Do not enable their way of doing this.
 		-DDISABLE_SUBMODULE_CHECK=ON
 		-DENABLE_QT_UPDATER=OFF
 		-DENABLE_TESTS=OFF
