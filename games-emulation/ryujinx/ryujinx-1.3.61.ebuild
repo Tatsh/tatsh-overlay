@@ -98,7 +98,6 @@ NUGETS="avalonia@11.0.0
 	humanizer.core.zh-hans@2.14.1
 	humanizer.core.zh-hant@2.14.1
 	jetbrains.annotations@2023.2.0
-	libhac@0.19.0
 	microcom.codegenerator.msbuild@0.11.0
 	microcom.runtime@0.11.0
 	microsoft.codeanalysis.analyzers@3.0.0
@@ -261,10 +260,10 @@ KEYWORDS="~amd64"
 LICENSE="MIT"
 SLOT="0"
 SRC_URI="https://git.ryujinx.app/ryubing/${PN}/-/archive/Canary-${PV}/${PN}-Canary-${PV}.tar.gz -> ${P}.tar.gz
+	https://git.ryujinx.app/ryubing/libhac/-/package_files/172/download -> ${PN}.libhac.0.20.0-alpha.103+af879d1b.nupkg
 	${NUGET_URIS}"
 
-RDEPEND="
-	app-arch/brotli
+RDEPEND="app-arch/brotli
 	dev-libs/expat
 	dev-libs/icu
 	dev-libs/libxml2
@@ -281,8 +280,7 @@ RDEPEND="
 	media-libs/libsdl2
 	media-video/pipewire
 	x11-libs/gtk+:3
-	x11-libs/libX11
-"
+	x11-libs/libX11"
 
 CHECKREQS_DISK_BUILD="3G"
 DOTNET_PKG_BUILD_EXTRA_ARGS=( -p:ExtraDefineConstants=DISABLE_UPDATER )
@@ -303,7 +301,6 @@ pkg_setup() {
 
 src_unpack() {
 	dotnet-pkg_src_unpack
-
 	if [[ -n "${EGIT_REPO_URI}" ]] ; then
 		git-r3_src_unpack
 	fi
@@ -311,7 +308,6 @@ src_unpack() {
 
 src_prepare() {
 	sed "s|1.0.0-dirty|${PV}|g" -i src/*/*.csproj || die
-
 	dotnet-pkg_src_prepare
 }
 
@@ -323,9 +319,7 @@ src_install() {
 	# Bug https://bugs.gentoo.org/933075
 	# and bug https://github.com/Ryujinx/Ryujinx/issues/5566
 	dotnet-pkg-base_append-launchervar "GDK_BACKEND=x11"
-
 	dotnet-pkg-base_install
-
 	# "Ryujinx.sh" launcher script is only copied for "linux-x64" RID,
 	# let's copy it unconditionally. Bug: https://bugs.gentoo.org/923817
 	exeinto "/usr/share/${P}"
@@ -334,9 +328,7 @@ src_install() {
 
 	newicon distribution/misc/Logo.svg "${PN^}.svg"
 	domenu "distribution/linux/${PN^}.desktop"
-
 	insinto /usr/share/mime/packages
 	doins "distribution/linux/mime/${PN^}.xml"
-
 	einstalldocs
 }
