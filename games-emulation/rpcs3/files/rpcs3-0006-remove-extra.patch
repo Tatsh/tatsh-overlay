@@ -1,26 +1,25 @@
-From 154d638a6672ae908433cff6c2649eefaff7215f Mon Sep 17 00:00:00 2001
+From 3d3a3e726bbd788c89b310b230108084ebc15001 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 21:46:38 -0500
 Subject: [PATCH 06/10] Remove extra
 
 ---
- rpcs3/CMakeLists.txt | 4 ----
- 1 file changed, 4 deletions(-)
+ rpcs3/CMakeLists.txt | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/rpcs3/CMakeLists.txt b/rpcs3/CMakeLists.txt
-index b6d4baecc..1101eedfa 100644
+index 150d667af..bcc52346d 100644
 --- a/rpcs3/CMakeLists.txt
 +++ b/rpcs3/CMakeLists.txt
-@@ -195,9 +195,5 @@ if (NOT ANDROID)
+@@ -181,8 +181,6 @@ if (NOT ANDROID)
              DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
          install(DIRECTORY ../bin/GuiConfigs
              DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
--        install(DIRECTORY ../bin/git
--            DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
 -        install(DIRECTORY ../bin/test
 -            DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
      endif()
  endif()
+ 
 -- 
 2.49.0
 

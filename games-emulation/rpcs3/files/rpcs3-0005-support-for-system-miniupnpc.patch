@@ -1,4 +1,4 @@
-From 0cb7cdc840d5667a84188ad822430590b83b60cb Mon Sep 17 00:00:00 2001
+From 672392df308a6d725464f5a559a7844c6ee3e1df Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 20:38:09 -0500
 Subject: [PATCH 05/10] Support for system miniupnpc
@@ -10,11 +10,11 @@ Subject: [PATCH 05/10] Support for system miniupnpc
  3 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index 1e981e77d..3ce331764 100644
+index ba0b35086..281cdcd8b 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
-@@ -349,7 +349,11 @@ if(USE_SDL)
- endif()
+@@ -349,7 +349,11 @@ add_subdirectory(wolfssl EXCLUDE_FROM_ALL)
+ add_subdirectory(curl EXCLUDE_FROM_ALL)
  
  # MINIUPNP
 -add_subdirectory(miniupnp EXCLUDE_FROM_ALL)

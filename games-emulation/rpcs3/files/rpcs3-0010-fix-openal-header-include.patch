@@ -1,4 +1,4 @@
-From a5a1c4d280fbee894767bd36e4e4c0ee6c7f3158 Mon Sep 17 00:00:00 2001
+From 4f9a96868936ee4aa48beee8addcef0d21728851 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 16 Sep 2024 03:51:16 -0400
 Subject: [PATCH 10/10] Fix OpenAL header include
@@ -9,7 +9,7 @@ Subject: [PATCH 10/10] Fix OpenAL header include
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/rpcs3/Emu/Cell/Modules/cellMic.h b/rpcs3/Emu/Cell/Modules/cellMic.h
-index f17b95427..2d1f2a853 100644
+index e4b416fa6..5380044f7 100644
 --- a/rpcs3/Emu/Cell/Modules/cellMic.h
 +++ b/rpcs3/Emu/Cell/Modules/cellMic.h
 @@ -1,9 +1,10 @@
@@ -25,7 +25,7 @@ index f17b95427..2d1f2a853 100644
  enum CellMicInError : u32
  {
 diff --git a/rpcs3/rpcs3qt/microphone_creator.cpp b/rpcs3/rpcs3qt/microphone_creator.cpp
-index a0e63a5d5..3f586f10e 100644
+index 9ea04defd..460a57a53 100644
 --- a/rpcs3/rpcs3qt/microphone_creator.cpp
 +++ b/rpcs3/rpcs3qt/microphone_creator.cpp
 @@ -3,8 +3,7 @@

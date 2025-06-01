@@ -1,4 +1,4 @@
-From 37a277baf95fbb4a6ebcd4b50cc7628e4e0ecd8d Mon Sep 17 00:00:00 2001
+From dccd889283fe789d5610ff3c8bc1ddad6e71d2b5 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 09:09:18 -0400
 Subject: [PATCH 02/10] Add USE_WAYLAND
@@ -8,10 +8,10 @@ Subject: [PATCH 02/10] Add USE_WAYLAND
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index cb0909e97..4ad5f2783 100644
+index 6c49a889b..d0c2c048c 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
-@@ -188,7 +188,7 @@ if(USE_VULKAN)
+@@ -195,7 +195,7 @@ if(USE_VULKAN)
  		target_compile_definitions(3rdparty_vulkan INTERFACE -DHAVE_VULKAN)
  		target_link_libraries(3rdparty_vulkan INTERFACE Vulkan::Vulkan)
  

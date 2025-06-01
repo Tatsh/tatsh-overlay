@@ -7,13 +7,13 @@ inherit cmake flag-o-matic xdg
 DESCRIPTION="PS3 emulator and debugger."
 HOMEPAGE="https://rpcs3.net/ https://github.com/RPCS3/rpcs3"
 ASMJIT_SHA="416f7356967c1f66784dc1580fe157f9406d8bff"
-FFMPEG_SHA="10d0ebc0b8c7c4f0b242c9998c8bdc4e55bb5067"
+FFMPEG_SHA="ec6367d3ba9d0d57b9d22d4b87da8144acaf428f"
 FUSION_SHA="066d4a63b2c714b20b0a8073a01fda7c5c6763f6"
-GLSLANG_SHA="36d08c0d940cf307a23928299ef52c7970d8cee6"
-HIDAPI_SHA="8b43a97a9330f8b0035439ce9e255e4be202deca"
+GLSLANG_SHA="fc9889c889561c5882e83819dcaffef5ed45529b"
+HIDAPI_SHA="f42423643ec9011c98cccc0bb790722bbbd3f30b"
 ITTAPI_VERSION="3.18.12"
-SOUNDTOUCH_SHA="394e1f58b23dc80599214d2e9b6a5e0dfd0bbe07"
-VULKAN_MEMORY_ALLOCATOR_SHA="37064843398c69cc0ca7f8cf5b33128c03a2bd74"
+SOUNDTOUCH_SHA="3982730833b6daefe77dcfb32b5c282851640c17"
+VULKAN_MEMORY_ALLOCATOR_SHA="1d8f600fd424278486eade7ed3e877c99f0846b1"
 YAML_CPP_SHA="456c68f452da09d8ca84b375faa2b1397713eaba"
 SRC_URI="https://github.com/RPCS3/rpcs3/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/RPCS3/ffmpeg-core/archive/${FFMPEG_SHA}.tar.gz -> ${PN}-ffmpeg-${FFMPEG_SHA:0:7}.tar.gz
@@ -72,7 +72,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0001-versioning.patch"
 	"${FILESDIR}/${PN}-0002-add-use_wayland.patch"
 	"${FILESDIR}/${PN}-0003-allow-use-of-system-spirv-an.patch"
-	"${FILESDIR}/${PN}-0004-allow-system-cubeb.patch"
 	"${FILESDIR}/${PN}-0005-support-for-system-miniupnpc.patch"
 	"${FILESDIR}/${PN}-0006-remove-extra.patch"
 	"${FILESDIR}/${PN}-0007-allow-system-rtmidi.patch"
@@ -133,7 +132,6 @@ src_configure() {
 		-DUSE_SYSTEM_PUGIXML=ON
 		-DUSE_SYSTEM_RTMIDI=ON
 		-DUSE_SYSTEM_WOLFSSL=ON
-		-DUSE_SYSTEM_XXHASH=ON
 		-DUSE_SYSTEM_ZLIB=ON
 		-DUSE_SYSTEM_ZSTD=ON
 		"-DUSE_VULKAN=$(usex vulkan)"

@@ -1,4 +1,4 @@
-From 71492259ebf26abb25f3b66c3e66e8c8299a4410 Mon Sep 17 00:00:00 2001
+From 907322906be03edf4094c8ee135624ded16d7652 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 11:37:19 -0400
 Subject: [PATCH 03/10] Allow use of system SPIRV and glslang
@@ -8,7 +8,7 @@ Subject: [PATCH 03/10] Allow use of system SPIRV and glslang
  1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index 4ad5f2783..8e6aeb474 100644
+index d0c2c048c..ba0b35086 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
 @@ -91,9 +91,12 @@ endif()

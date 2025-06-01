@@ -1,4 +1,4 @@
-From ea1584c22a8f0e56d226f7dd9787bee9cc0f22db Mon Sep 17 00:00:00 2001
+From 1e1947b4a387a71af3d5bc9d87938e72dd86be30 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 4 Jun 2023 01:50:57 -0400
 Subject: [PATCH 07/10] Allow system rtmidi
@@ -8,7 +8,7 @@ Subject: [PATCH 07/10] Allow system rtmidi
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index 3ce331764..27afe86b0 100644
+index 281cdcd8b..cdf3c9ea9 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
 @@ -356,7 +356,11 @@ else()

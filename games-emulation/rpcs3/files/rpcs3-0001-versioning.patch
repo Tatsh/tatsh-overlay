@@ -1,4 +1,4 @@
-From e6678c6e7cae579f54bc4972e79ea12b7c1f5e96 Mon Sep 17 00:00:00 2001
+From 33261cad4a554d216f4f0406397a7f5b88ab0a97 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 09:08:30 -0400
 Subject: [PATCH 01/10] versioning
@@ -8,7 +8,7 @@ Subject: [PATCH 01/10] versioning
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/rpcs3/rpcs3_version.cpp b/rpcs3/rpcs3_version.cpp
-index df428e93d..bba6328e6 100644
+index f78cec923..a2777b9bb 100644
 --- a/rpcs3/rpcs3_version.cpp
 +++ b/rpcs3/rpcs3_version.cpp
 @@ -7,12 +7,12 @@ namespace rpcs3

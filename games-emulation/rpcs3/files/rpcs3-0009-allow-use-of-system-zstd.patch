@@ -1,4 +1,4 @@
-From edd949fb092cf5c0f3565cc5c014e18b7508f312 Mon Sep 17 00:00:00 2001
+From 84d4c924fb1cc9f73bb6d6088ea8d4b3ed0b6a34 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 16 Sep 2024 03:44:30 -0400
 Subject: [PATCH 09/10] Allow use of system zstd
@@ -9,7 +9,7 @@ Subject: [PATCH 09/10] Allow use of system zstd
  2 files changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index 27afe86b0..07eaa98b1 100644
+index cdf3c9ea9..ec3dd7153 100644
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
 @@ -375,7 +375,9 @@ else()
