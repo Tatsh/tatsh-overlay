@@ -936,6 +936,7 @@ libgeneral
 libglvnd
 libgudev
 libgusb
+libhac
 libheif
 libhsl
 libhttps
