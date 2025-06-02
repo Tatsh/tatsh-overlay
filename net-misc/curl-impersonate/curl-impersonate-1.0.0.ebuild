@@ -90,11 +90,11 @@ src_install() {
 	pushd "${CURL_VERSION}" || die
 	emake DESTDIR="${D}" install
 	rm -fR "${D}/usr/share/man" "${D}/usr/share/aclocal" "${D}/usr/include" \
-		"${D}/usr/$(get_libdir)/lib${PN}-chrome.la" || die
+		"${D}/usr/$(get_libdir)/lib${PN}.la" || die
 	popd || die
 	if use clients; then
 		local bn i
-		for i in chrome/curl_*; do
+		for i in bin/curl_*; do
 			bn=$(basename "$i")
 			newbin "$i" "${bn//_/-}"
 		done
