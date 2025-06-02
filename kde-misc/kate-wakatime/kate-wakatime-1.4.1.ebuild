@@ -25,10 +25,3 @@ DEPEND=">=kde-frameworks/ktexteditor-${KFMIN}:6
 	>=kde-frameworks/kxmlgui-${KFMIN}:6
 	dev-qt/qtbase:6"
 RDEPEND="${DEPEND}"
-
-src_install() {
-	ecm_src_install
-	mkdir -p "${ED}/usr/$(get_libdir)/qt6/plugins/kf6/ktexteditor" || die
-	mv "${ED}/ktexteditor/ktexteditor_wakatime.so" \
-		"${ED}/usr/$(get_libdir)/qt6/plugins/kf6/ktexteditor/" || die
-}
