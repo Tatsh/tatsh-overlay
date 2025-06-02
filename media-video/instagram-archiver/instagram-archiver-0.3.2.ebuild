@@ -21,6 +21,7 @@ RDEPEND="dev-python/beautifulsoup4[${PYTHON_USEDEP}]
 	dev-python/ratelimit[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]
+	dev-python/yt-dlp-utils[${PYTHON_USEDEP}]
 	media-libs/mutagen[${PYTHON_USEDEP}]
 	net-misc/yt-dlp[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
