@@ -42,7 +42,6 @@ antihax
 antonmedv
 anyio
 anymatch
-apimachinery
 appconfig
 appdirs
 appengine
@@ -66,7 +65,6 @@ asaskevich
 asio
 asmflags
 asmjit
-assimp
 astc
 astdr
 asticode
@@ -109,7 +107,6 @@ bassa
 bassavah
 batak
 bbolt
-bcanalyzer
 bdepend
 bdepends
 beautifulsoup
@@ -149,7 +146,6 @@ boringssl
 bradfitz
 bradleyjkemp
 breakpad
-broot
 browserify
 browserslist
 brrrip
@@ -159,7 +155,6 @@ btrfs
 btzy
 bubbletea
 buginese
-bugpoint
 buhid
 buildfiles
 bulkedit
@@ -189,7 +184,6 @@ cdproto
 cdrecord
 cellbuf
 cemu
-cenkalti
 certifi
 cespare
 cffi
@@ -200,11 +194,9 @@ charmbracelet
 checkpath
 checkreqs
 chertsey
-cheshirekow
 chksums
 choco
 chokidar
-chost
 chownr
 chriskiehl
 chrissimpkins
@@ -212,7 +204,6 @@ chromecast
 chromedp
 chrono
 chzyer
-cidranger
 circbuf
 circl
 circonus
@@ -226,7 +217,6 @@ classnames
 cleanhttp
 cliui
 clonehero
-cmakelang
 cmakerc
 cmdpack
 cmocka
@@ -256,7 +246,6 @@ configura
 conflicter
 coninput
 conntrack
-containerd
 cookiecutter
 cooperspencer
 copystructure
@@ -277,7 +266,6 @@ crashpad
 crashplan
 creack
 creds
-crosscompiling
 cryptopp
 cscs
 cspotcode
@@ -285,18 +273,14 @@ cssesc
 csstools
 csstype
 csvlens
-cuda
 cugan
 cunet
 cupaloy
 cuse
-cvtres
 cxadc
 cxleveladj
-cxxdump
 cxxfilt
 cxxflags
-cxxmap
 cxxopts
 cyphar
 cython
@@ -337,9 +321,7 @@ ddynarec
 ddynarmic
 deark
 deband
-debuginfod
 decamelize
-deckarep
 decli
 decompilation
 decompiled
@@ -361,7 +343,6 @@ destdir
 devel
 devname
 devtype
-dffi
 dfilter
 dfluidsynth
 dfmderainbow
@@ -384,11 +365,10 @@ distfiles
 distname
 distro
 distutils
+djedditt
 dlclark
 dlenski
 dlibrw
-dlltool
-dllvm
 dlmalloc
 dman
 dminitrace
@@ -407,9 +387,7 @@ dnssec
 dnsutils
 dobashcomp
 dobin
-docamlfind
 docdir
-docompress
 docopt
 dodoc
 doenvd
@@ -429,6 +407,7 @@ dopenal
 dorules
 dosbin
 dosbox
+doscript
 dosym
 dotall
 dotenv
@@ -437,7 +416,6 @@ dotize
 dounit
 dpdb
 dport
-dportable
 dproject
 dpulseaudio
 dracut
@@ -448,10 +426,8 @@ dset
 dsirit
 dslackw
 dslirp
-dsphinx
 dsplit
 dsudachi
-dsymutil
 dsystemd
 dubhater
 dudev
@@ -461,7 +437,6 @@ dvcpkg
 dvec
 dvita
 dvnc
-dwarfdump
 dwith
 dxbox
 dxemu
@@ -505,9 +480,7 @@ eprefix
 epreifx
 epytest
 epython
-eqawarn
 erikgeiser
-eroot
 errcheck
 errgo
 errwrap
@@ -532,7 +505,6 @@ extglob
 exzap
 faad
 faccessat
-facebookgo
 fakecrc
 fakegem
 fastcgi
@@ -562,7 +534,6 @@ firestore
 fireweapon
 firmwares
 flac
-flagenv
 flashplayer
 flatbuffers
 flatmap
@@ -639,7 +610,6 @@ glsl
 glslang
 gmailctl
 gnomovision
-gnuconfig
 gnuflag
 gnutls
 goautoneg
@@ -698,7 +668,6 @@ graphviz
 gravitydb
 groupcache
 gstreamer
-gsymutil
 gtest
 gtksourceview
 guessit
@@ -762,7 +731,6 @@ imobiledevice
 implemnting
 implot
 imsc
-incdir
 includedir
 inconshreveable
 inih
@@ -773,10 +741,8 @@ instafail
 installdir
 installkernel
 interconverter
-interprocedural
 intervaltree
 intltool
-ique
 irecovery
 iregex
 isaacs
@@ -809,7 +775,6 @@ jimevins
 jinliu
 jinzhu
 jiti
-jitlink
 jkwill
 jlhcojdohadhkchjpjefbmagpiaedpgc
 jmespath
@@ -894,13 +859,10 @@ lbrotlidec
 ldconfig
 ldflags
 ldlibs
-ldpath
-ldpaths
 leandro
 leasetime
 ledongthuc
 leichtgewicht
-leodido
 lepcha
 leveladj
 levn
@@ -918,7 +880,6 @@ libcrypt
 libcxx
 libcxxabi
 libdrm
-libedit
 libepoxy
 libevdev
 libexec
@@ -945,7 +906,6 @@ libimobiledevice
 libjpeg
 liblsdl
 libmad
-libmgba
 libmpv
 libmspack
 libnnedi
@@ -953,7 +913,6 @@ libogg
 libos
 libpcap
 libpcre
-libpfm
 libpietendo
 libpit
 libplist
@@ -1002,7 +961,6 @@ libvk
 libvorbis
 libvulkan
 libwebp
-libxar
 libxcb
 libxkbcommon
 libxkbfile
@@ -1018,13 +976,11 @@ lighttpd
 limbu
 linkify
 lipgloss
-lipo
 listformat
 listr
 lisu
 liteon
 livecheck
-llvmgold
 llvmlite
 lmod
 locafero
@@ -1067,7 +1023,6 @@ makeopts
 malloc
 mandaic
 mandiant
-mandir
 manichaean
 maniuplate
 manpages
@@ -1089,7 +1044,6 @@ mbedcrypto
 mbedtls
 mborgerson
 mbrt
-mcjit
 mcuadros
 mdast
 mdns
@@ -1110,7 +1064,6 @@ messageformat
 metainfo
 metaprogramming
 metavuln
-mgba
 mgree
 miao
 michaeldfallen
@@ -1142,7 +1095,6 @@ mnamer
 mobilephone
 modargs
 modernc
-modextract
 modlist
 modocache
 modpost
@@ -1183,7 +1135,6 @@ myeconfargs
 myfeatures
 mygoargs
 mypy
-myqmakeargs
 nadermx
 nall
 nandinagari
@@ -1209,11 +1160,11 @@ newar
 newbashcomp
 newbin
 newdoc
-newenvd
 newexe
 newicon
 newins
 newjar
+newrules
 newscript
 newunit
 nextick
@@ -1262,10 +1213,8 @@ nurio
 nvme
 nvmedit
 oaknut
-objcopy
 objdump
 objx
-ocamldoc
 ocamlopt
 occivink
 oklog
@@ -1282,6 +1231,7 @@ onedev
 oneshot
 onmomo
 onsi
+ontroller
 openal
 opencensus
 opencl
@@ -1305,7 +1255,6 @@ ossp
 osspd
 otelhttp
 otio
-otool
 oversand
 oxffaa
 oyvindln
@@ -1327,15 +1276,12 @@ parrado
 parseargs
 pascaldekloe
 patchelf
-patchset
 pathe
 pathspec
 pathstr
 patrickmn
 paucinhau
 pcre
-pdbutil
-pdepend
 pefile
 permic
 pexpect
@@ -1393,8 +1339,6 @@ prebuilds
 preinst
 procapture
 procatpure
-profdata
-profgen
 proggy
 proglog
 programfileslinux
@@ -1425,7 +1369,6 @@ pyelftools
 pyflirt
 pyfmt
 pygithub
-pygments
 pygobject
 pygtrie
 pyjwt
@@ -1448,6 +1391,7 @@ pysocks
 pytest
 pytz
 pyudev
+pyusb
 pyxdg
 pyyaml
 qarmin
@@ -1485,7 +1429,6 @@ qtxml
 quicktest
 quse
 randomstring
-ranlib
 raphnet
 rapidcsv
 rapidjson
@@ -1495,13 +1438,10 @@ rdepend
 rdepends
 rdparty
 readdirp
-readelf
-readobj
 realcugan
 realesrgan
 realsr
 recognised
-recommonmark
 recompiler
 redent
 redumper
@@ -1532,7 +1472,6 @@ retryablehttp
 reusify
 revanced
 revc
-revord
 rewx
 rfdc
 rhnvrm
@@ -1558,10 +1497,8 @@ rsrc
 rssh
 rstcheck
 rtaudio
-rtdyld
 rtmidi
 rtmp
-rtti
 ruamel
 runewidth
 russross
@@ -1575,9 +1512,7 @@ sagikazarmark
 sahilm
 samber
 samplerate
-sancov
 sanitiser
-sanstats
 saraiki
 sasl
 saurashtra
@@ -1594,7 +1529,6 @@ scuid
 sdist
 sdsl
 seatools
-sebest
 seccomp
 securecookie
 securejoin
@@ -1659,7 +1593,6 @@ soundfont
 soundtouch
 sourcegraph
 sourcehut
-soversion
 spacepacket
 spaolacci
 spirv
@@ -1709,14 +1642,12 @@ sunos
 suntec
 superdrive
 superg
-suyu
 svcname
 svpn
 swaggo
 swiftshader
 sylheti
 sylotinagri
-symbolizer
 synchronise
 synstructure
 syscall
@@ -1725,7 +1656,6 @@ systemunitdir
 systray
 sysutil
 szmarczak
-tablegen
 tablewriter
 tagbanawa
 tagbanwa
@@ -1735,14 +1665,12 @@ taitham
 taiviet
 taketalk
 takri
-tapi
 taplo
 tasksh
 taskshell
 taskwarrior
 tatsh
 tatsu
-tblgen
 tblib
 tclkit
 tcltk
@@ -1750,12 +1678,10 @@ tcpdump
 tdosym
 teakra
 teatest
-techaro
 teex
 telematic
 temasek
 temoto
-templ
 termcolor
 termenv
 terminfo
@@ -1804,7 +1730,6 @@ tunables
 tweenjs
 twemoji
 typedarray
-typeparams
 typer
 tzdb
 ucwords
@@ -1820,14 +1745,12 @@ unalz
 unauthorised
 uncategorised
 undici
-undname
 unecm
 unice
 unidecode
 uniseg
 unistd
 unitless
-unittests
 universalify
 unixify
 unpreferred
@@ -1835,7 +1758,6 @@ unscopables
 untar
 untildify
 upconv
-uptodate
 urandom
 urfave
 uring
@@ -1844,7 +1766,6 @@ urlpattern
 usbkill
 usbmuxd
 usedep
-uselistorder
 useragent
 userspace
 usev
@@ -1920,7 +1841,6 @@ wiimms
 wildmatch
 willf
 winapi
-windres
 wineasio
 wineshell
 wingetty
@@ -1945,7 +1865,6 @@ xbmc
 xbrz
 xbyak
 xcomposite
-xcrun
 xcursor
 xdamage
 xdist
@@ -2001,7 +1920,6 @@ zeroconf
 zerocopy
 zerofill
 zerolog
-zeux
 zimg
 zint
 znedi
