@@ -16,7 +16,7 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 DEPEND="virtual/libusb:1"
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${PN}-${SHA}"
+S="${WORKDIR}/${PN/-/_}-${SHA}"
 
 src_prepare() {
 	# shellcheck disable=SC2016
@@ -26,6 +26,6 @@ src_prepare() {
 
 src_install() {
 	dobin ipad_charge
-	udev_dorules "95-${PN}.rules"
+	udev_newrules "95-${PN/-/_}.rules" "95-${PN}.rules"
 	einstalldocs
 }
