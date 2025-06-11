@@ -1,0 +1,33 @@
+diff --git a/nsw2usb-con.py b/nsw2usb-con.py
+index 9f8465a..e7898c0 100755
+--- a/nsw2usb-con.py
++++ b/nsw2usb-con.py
+@@ -46,22 +46,14 @@ def main():
+         sys.exit("error: bulk-out endpoint not found")
+ 
+     ep_out.write(INIT_REPORT)
+-    print("init report sent..")
++    print("init report sent..", file=sys.stderr)
+     time.sleep(0.05)
+     ep_out.write(PLED_REPORT)
+-    print("player 1 led set..")
+-    print("press ctrl-c to exit")
+-    try:
+-        while True:
+-            time.sleep(1)
+-    except KeyboardInterrupt:
+-        pass
+-    finally:
+-        usb.util.release_interface(dev, INTERFACE)
+-        try:
+-            dev.attach_kernel_driver(INTERFACE)
+-        except:
+-            pass
++    print("player 1 led set..", file=sys.stderr)
++    time.sleep(1)
++    usb.util.release_interface(dev, INTERFACE)
++    with contextlib.suppress(usb.core.USBError):
++        dev.attach_kernel_driver(INTERFACE)
+ 
+ if __name__ == "__main__":
+     main()

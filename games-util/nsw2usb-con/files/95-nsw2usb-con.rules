@@ -1,0 +1,4 @@
+# NS2 Pro ontroller
+ACTION=="add", ENV{ID_VENDOR_ID}=="057e", ENV{ID_MODEL_ID}=="2069", RUN+="/usr/bin/nsw2usb-con.py"
+# NSO GameCube controller
+ACTION=="add", ENV{ID_VENDOR_ID}=="057e", ENV{ID_MODEL_ID}=="2073", RUN+="/usr/bin/nsw2usb-con.py"

@@ -1,0 +1,32 @@
+From b4910c58125c9605d5f673ae81ae895a21fd6475 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 10 Jun 2025 22:30:38 -0400
+Subject: [PATCH] Ignore set_configuration() failure
+
+---
+ nsw2usb-con.py | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/nsw2usb-con.py b/nsw2usb-con.py
+index 1c993b0..9f8465a 100755
+--- a/nsw2usb-con.py
++++ b/nsw2usb-con.py
+@@ -3,7 +3,7 @@
+ # SPDX-License-Identifier: BSD-1-Clause
+ # Copyright (c) 2025 djedditt
+ 
+-import sys, time
++import contextlib, sys, time
+ import usb.core, usb.util
+ 
+ VID_NINTENDO   = 0x057E
+@@ -28,7 +28,8 @@ def main():
+         sys.exit("error: controller not found")
+ 
+     # configure + claim
+-    dev.set_configuration()
++    with contextlib.suppress(usb.core.USBError):
++        dev.set_configuration()
+     if dev.is_kernel_driver_active(INTERFACE):
+         try:
+             dev.detach_kernel_driver(INTERFACE)
