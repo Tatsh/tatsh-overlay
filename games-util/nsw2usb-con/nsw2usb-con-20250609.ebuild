@@ -17,7 +17,7 @@ KEYWORDS="~amd64"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RDEPEND="${PYTHON_DEPS}
 	dev-python/pyusb[${PYTHON_USEDEP}]"
-BDEPEND="${DEPEND}"
+BDEPEND="${RDEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-ignore-set-conf-fail.patch"
