@@ -1,2 +1,1 @@
-move sys-devel/llvm llvm-core/llvm
 move app-pda/ipad_charge app-pda/ipd-charge
