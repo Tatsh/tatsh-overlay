@@ -15,7 +15,8 @@ SLOT="6/${PV%%_*}"
 KEYWORDS="~amd64"
 IUSE="X"
 
-DEPEND="dev-libs/hyphen
+DEPEND="dev-lang/ruby
+	dev-libs/hyphen
 	dev-libs/icu:=
 	dev-libs/libgcrypt
 	dev-libs/libtasn1
