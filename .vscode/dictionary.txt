@@ -284,7 +284,6 @@ cxxflags
 cxxopts
 cyphar
 cython
-czkawka
 dabh
 dallow
 dalsa
@@ -842,7 +841,6 @@ konsorten
 koun
 kparts
 krig
-krokiet
 ktexteditor
 ktrysmt
 kubun
@@ -898,7 +896,6 @@ libglvnd
 libgudev
 libgusb
 libhac
-libheif
 libhsl
 libhttps
 libidn
@@ -919,7 +916,6 @@ libplist
 libpulse
 libpumpkin
 libr
-libraw
 libreal
 librealcugan
 librealcugannv
@@ -1198,6 +1194,7 @@ noto
 notpeter
 npapi
 npillmayer
+npipe
 npmcli
 npmlog
 nspr
@@ -1394,7 +1391,6 @@ pyudev
 pyusb
 pyxdg
 pyyaml
-qarmin
 qatom
 qcustomplot
 qdbus
@@ -1768,7 +1764,6 @@ usbmuxd
 usedep
 useragent
 userspace
-usev
 usex
 utfcpp
 valyala
@@ -1913,6 +1908,7 @@ yuzu
 zapr
 zarchive
 zaufi
+zeebo
 zeid
 zencoder
 zenyd
