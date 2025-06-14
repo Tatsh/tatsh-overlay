@@ -1,18 +1,3 @@
-diff --git a/ffi/cdef.c b/ffi/cdef.c
-index 9c22ce7..e8c8a1f 100644
---- a/ffi/cdef.c
-+++ b/ffi/cdef.c
-@@ -56,8 +56,8 @@ struct curl_ws_frame {
-   ...;
- };
- 
--int curl_ws_recv(void *curl, void *buffer, int buflen, int *recv, struct curl_ws_frame **meta);
--int curl_ws_send(void *curl, void *buffer, int buflen, int *sent, int fragsize, unsigned int sendflags);
-+int curl_ws_recv(void *curl, void *buffer, int buflen, size_t *recv, const struct curl_ws_frame **meta);
-+int curl_ws_send(void *curl, void *buffer, int buflen, size_t *sent, int fragsize, unsigned int sendflags);
- 
- // mime
- void *curl_mime_init(void* curl);  // -> form
 diff --git a/libs.json b/libs.json
 index 3825dfe..0e1b619 100644
 --- a/libs.json
