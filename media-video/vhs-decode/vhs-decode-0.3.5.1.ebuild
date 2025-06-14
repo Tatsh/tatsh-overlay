@@ -11,7 +11,7 @@ inherit cmake desktop distutils-r1
 DESCRIPTION="Software defined VHS decoder."
 HOMEPAGE="https://github.com/oyvindln/vhs-decode"
 LD_DECODE_TESTDATA_REV="dd9569daee212dd3fea413c97372d2bf55aceba2"
-SRC_URI="https://github.com/oyvindln/vhs-decode/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/oyvindln/vhs-decode/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
 	test? ( https://github.com/happycube/ld-decode-testdata/archive/${LD_DECODE_TESTDATA_REV}.tar.gz -> ld-decode-testdata-${LD_DECODE_TESTDATA_REV:0:7}.tar.gz )"
 IUSE="gtk test"
 RESTRICT="!test? ( test )"
