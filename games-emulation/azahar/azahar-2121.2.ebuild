@@ -47,6 +47,7 @@ IUSE="openal +qt6 +scripting +web-service"
 
 # System xbyak is still used by Dynarmic, but not Citra itself
 DEPEND="app-arch/zstd
+	web-service? ( dev-cpp/cpp-jwt )
 	dev-cpp/robin-map
 	dev-libs/boost:0[nls]
 	dev-libs/crypto++:=
