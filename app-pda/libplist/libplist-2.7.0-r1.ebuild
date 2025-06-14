@@ -18,10 +18,6 @@ BDEPEND="virtual/pkgconfig"
 
 DOCS=( AUTHORS NEWS README.md )
 
-PATCHES=(
-	"${FILESDIR}/${PN}-2.2.0-pkgconfig-lib.patch"
-)
-
 src_prepare() {
 	default
 	RELEASE_VERSION=${PV} eautoreconf
@@ -47,6 +43,6 @@ src_install() {
 	# CURRENT : REVISION : AGE
 	# LIBPLIST_SO_VERSION=8:0:4
 	# 2.0.so.4 + AGE + REVISION
-	dosym ./libplist++-2.0.so.4.6.0 "/usr/$(get_libdir)/libplist++.so"
-	dosym ./libplist-2.0.so.4.6.0 "/usr/$(get_libdir)/libplist.so"
+	dosym ./libplist++-2.0.so.4.7.0 "/usr/$(get_libdir)/libplist++.so"
+	dosym ./libplist-2.0.so.4.7.0 "/usr/$(get_libdir)/libplist.so"
 }
