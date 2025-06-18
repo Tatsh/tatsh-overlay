@@ -388,6 +388,7 @@ dobashcomp
 dobin
 docdir
 docopt
+docsonnet
 dodoc
 doenvd
 doexe
@@ -935,6 +936,7 @@ libshell
 libslirp
 libsndfile
 libsodium
+libsonnet
 libspng
 libstdc
 libtasn
