@@ -24,7 +24,7 @@ def is_elf(exe: str) -> bool:
     try:
         with open(exe, 'rb') as f:
             return f.read(4).endswith(b'ELF')
-    except (FileNotFoundError, PermissionError):
+    except (IsADirectoryError, FileNotFoundError, PermissionError):
         return False
 
 
