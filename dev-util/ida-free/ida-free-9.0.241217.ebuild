@@ -13,9 +13,18 @@ LICENSE="EULA"
 SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="fetch strip splitdebug"
+IUSE="wayland"
 
 RDEPEND="app-crypt/mit-krb5
 	dev-libs/glib
+	dev-qt/qtcore:5
+	dev-qt/qtdbus:5
+	dev-qt/qtgui:5
+	dev-qt/qtnetwork:5
+	dev-qt/qtprintsupport:5
+	dev-qt/qtsql:5
+	dev-qt/qtsvg:5
+	dev-qt/qtwidgets:5
 	media-libs/fontconfig
 	media-libs/freetype
 	media-libs/libglvnd
@@ -28,14 +37,17 @@ RDEPEND="app-crypt/mit-krb5
 	x11-libs/libSM
 	x11-libs/libX11
 	x11-libs/libXau
+	x11-libs/libXcomposite
 	x11-libs/libXext
 	x11-libs/libdrm
+	x11-libs/libxcb
 	x11-libs/libxkbcommon
 	x11-libs/pango
 	x11-libs/xcb-util-image
 	x11-libs/xcb-util-keysyms
 	x11-libs/xcb-util-renderutil
-	x11-libs/xcb-util-wm"
+	x11-libs/xcb-util-wm
+	wayland? ( dev-libs/wayland dev-qt/qtwayland )"
 BDEPEND="app-arch/bitrock-unpacker"
 
 S="${WORKDIR}/ida/programfiles"
