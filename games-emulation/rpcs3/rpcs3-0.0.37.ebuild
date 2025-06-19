@@ -33,7 +33,8 @@ KEYWORDS="~amd64"
 IUSE="faudio joystick +llvm system-ffmpeg vulkan wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
-DEPEND=">=dev-libs/flatbuffers-2.0.6
+DEPEND="app-arch/zstd
+	>=dev-libs/flatbuffers-2.0.6
 	>=dev-libs/pugixml-1.15
 	>=dev-libs/wolfssl-4.7.0[writedup]
 	media-libs/cubeb
@@ -49,6 +50,7 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	media-libs/libglvnd[X]
 	media-libs/libpng:*
 	media-libs/openal
+	media-libs/opencv
 	media-libs/rtmidi
 	media-video/ffmpeg
 	net-libs/miniupnpc
