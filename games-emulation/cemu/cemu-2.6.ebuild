@@ -34,6 +34,7 @@ DEPEND="app-arch/zarchive
 	media-libs/libglvnd
 	media-libs/libsdl2[haptic,joystick]
 	net-misc/curl
+	net-wireless/bluez
 	sys-libs/zlib
 	vulkan? ( dev-util/vulkan-headers )
 	x11-libs/gtk+:3[wayland]
