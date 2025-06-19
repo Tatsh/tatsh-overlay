@@ -21,7 +21,8 @@ LICENSE="EPL-2.0 HSL-Academic-Licence"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 
-BDEPENDS="virtual/fortran"
+DEPEND="sci-libs/lapack"
+BDEPEND="virtual/fortran"
 
 pkg_nofetch() {
 	einfo "You must obtain coinhsl-archive-2024.05.15.tar.gz from"
