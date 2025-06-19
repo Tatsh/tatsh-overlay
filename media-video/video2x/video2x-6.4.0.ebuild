@@ -25,7 +25,9 @@ DEPEND="dev-libs/boost:=
 	dev-libs/spdlog:=
 	media-gfx/realesrgan-ncnn-vulkan:=
 	media-libs/opencv:=
-	media-video/ffmpeg:="
+	media-video/ffmpeg:=
+	dev-libs/libfmt
+	media-libs/vulkan-loader"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-build-system-fix.patch" )
 
