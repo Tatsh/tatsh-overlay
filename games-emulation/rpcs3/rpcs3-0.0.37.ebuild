@@ -44,7 +44,7 @@ DEPEND=">=dev-libs/flatbuffers-2.0.6
 	dev-qt/qtmultimedia:6
 	dev-qt/qtnetworkauth:6
 	dev-qt/qtsvg:6
-	llvm-core/llvm:17
+	llvm-core/llvm
 	media-libs/glew:0
 	media-libs/libglvnd[X]
 	media-libs/libpng:*
