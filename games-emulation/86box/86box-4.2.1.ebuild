@@ -20,6 +20,7 @@ DEPEND="app-emulation/faudio
 	media-libs/libpng
 	media-libs/libsdl2[X,opengl]
 	openal? ( media-libs/openal )
+	media-libs/libsndfile
 	>media-libs/rtmidi-4.1.0
 	net-libs/libslirp
 	dev-libs/libevdev
