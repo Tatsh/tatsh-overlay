@@ -278,6 +278,7 @@ RDEPEND="app-arch/brotli
 	media-libs/libpng
 	media-libs/libpulse
 	media-libs/libsdl2
+	media-video/ffmpeg-compat
 	media-video/pipewire
 	x11-libs/gtk+:3
 	x11-libs/libX11"
