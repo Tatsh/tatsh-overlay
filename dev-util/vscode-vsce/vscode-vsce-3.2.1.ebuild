@@ -219,6 +219,7 @@ YARN_PKGS=(
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
 
+DEPEND="sys-libs/zlib"
 BDEPEND="dev-libs/glib"
 LICENSE="BSD-2 MIT Apache-2 ISC MIT PSF-2"
 KEYWORDS="~amd64"
