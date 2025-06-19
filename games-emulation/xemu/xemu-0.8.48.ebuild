@@ -50,6 +50,7 @@ DEPEND="dev-libs/glib
 	media-libs/libglvnd[X]
 	media-libs/libsamplerate
 	media-libs/libsdl2
+	net-misc/curl
 	net-libs/libpcap
 	net-libs/libslirp
 	sys-apps/dtc
