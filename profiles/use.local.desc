@@ -85,14 +85,6 @@ games-misc/render96ex: texture-fix - Enable texture bug fixes
 games-misc/render96ex: textures - Install high quality texture replacements
 games-misc/render96ex: us - Use the North American ROM
 games-util/raphnet-tech-adapter-manager: firmware - Install firmware
-llvm-core/llvm: binutils-plugin - Build the binutils plugin
-llvm-core/llvm: doc - Build and install the HTML documentation and regenerate the man pages
-llvm-core/llvm: exegesis - Enable performance counter support for llvm-exegesis tool
-llvm-core/llvm: ncurses - Support querying terminal properties using ncurses' terminfo
-llvm-core/llvm: 			that can be used to measure host machine instruction characteristics
-llvm-core/llvm: 			(uses )
-llvm-core/llvm: xar - Support dumping LLVM bitcode sections in Mach-O files
-llvm-core/llvm: z3 - Enable support for  constraint solver
 media-fonts/noto: ancient - Install fonts for historical scripts
 media-fonts/noto: brahmi - Install font for Brahmi script
 media-fonts/noto: coptic - Install Coptic font
