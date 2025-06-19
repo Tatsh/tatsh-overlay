@@ -853,6 +853,7 @@ kxmlgui
 kylelemons
 kylemanna
 labbe's
+lapack
 launchervar
 lbrotlidec
 ldconfig
@@ -914,6 +915,7 @@ libpcre
 libpietendo
 libpit
 libplist
+libpsl
 libpulse
 libpumpkin
 libr
@@ -1419,6 +1421,7 @@ qtserialport
 qtsql
 qtsvg
 qttools
+qtwayland
 qtwebengine
 qtwebkit
 qtwebsockets
