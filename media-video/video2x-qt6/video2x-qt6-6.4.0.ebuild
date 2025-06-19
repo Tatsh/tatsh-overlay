@@ -14,7 +14,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="dev-qt/qtbase:6
-	dev-qt/qtsvg:6"
+	dev-qt/qtsvg:6
+	dev-libs/libfmt
+	dev-libs/spdlog
+	media-libs/vulkan-loader
+	media-video/ffmpeg"
 RDEPEND="${DEPEND}
 	>=media-video/video2x-${PV}"
 
