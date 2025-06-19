@@ -17,8 +17,9 @@ REQUIRED_USE="pvr? ( astc )
 	|| ( cli gtk kde xfce )"
 RESTRICT="!test? ( test )"
 
-DEPEND="
+DEPEND="dev-libs/libfmt
 	dev-libs/nettle
+	dev-libs/pugixml
 	media-libs/libjpeg-turbo
 	media-libs/libpng
 	net-misc/curl
