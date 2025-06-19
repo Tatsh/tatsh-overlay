@@ -177,11 +177,11 @@ DESCRIPTION="lumen is a command-line tool that uses AI to generate commit messag
 HOMEPAGE=""
 SRC_URI="
 	${CARGO_CRATE_URIS}
-	https://github.com/jnsahaj/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-"
+	https://github.com/jnsahaj/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 # Dependent crate licenses
 LICENSE+=" Apache-2.0 BSD MIT MPL-2.0 Unicode-DFS-2016"
 SLOT="0"
 KEYWORDS="~amd64"
+DEPEND="dev-libs/openssl"
