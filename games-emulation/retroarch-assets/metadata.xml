@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>dmenelkir@gmail.com</email>
+		<name>Daniel Menelkir</name>
+	</maintainer>
+	<use>
+		<flag name="materialui">Enable materialui assets</flag>
+		<flag name="ozone">Emable ozone assets</flag>
+		<flag name="rgui">Enable rgui assets</flag>
+		<flag name="xmb">Enable xmb assets</flag>
+	</use>
+	<longdescription lang="en">
+	</longdescription>
+</pkgmetadata>
