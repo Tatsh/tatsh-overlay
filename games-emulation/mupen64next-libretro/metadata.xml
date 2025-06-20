@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>dmenelkir@gmail.com</email>
+		<name>Daniel Menelkir</name>
+	</maintainer>
+	<use>
+		<flag name="gles2">Enable GLES2 support</flag>
+		<flag name="vulkan">Enable vulkan support</flag>
+	</use>
+	<longdescription lang="en">
+	</longdescription>
+</pkgmetadata>

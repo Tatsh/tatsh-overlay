@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>dmenelkir@gmail.com</email>
+		<name>Daniel Menelkir</name>
+	</maintainer>
+	<longdescription lang="en">Versatile Commodore 8-bit Emulator as a libretro core
+	</longdescription>
+</pkgmetadata>
