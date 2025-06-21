@@ -31,7 +31,7 @@ RETROARCH_DATA_DIR="${EROOT}usr/share/retroarch"
 
 # @ECLASS-VARIABLE: LIBRETRO_REPO_NAME
 # @DESCRIPTION:
-# Contains the real repo name of the core formatted as "repouser/reponame".
+# Contains the real repo name of the core formatted as "repo_user/repo_name".
 # Needs to be set before inherit. Otherwise defaults to "libretro/${PN}"
 : "${LIBRETRO_REPO_NAME:=libretro/${PN}}"
 
@@ -51,7 +51,7 @@ fi
 # Workaround for ebuilds needing submodules
 if [[ ${PN} = ppsspp-libretro ]] || [[ ${PN} = psp1-libretro ]]  || [[ ${PN} = citra-libretro ]] && [[ ! ${PV} = 9999 ]]; then
 	inherit git-r3
-	
+
 	SRC_URI=""
 	EGIT_REPO_URI="https://github.com/${LIBRETRO_REPO_NAME}.git"
 	[ "${LIBRETRO_COMMIT_SHA}" = die ] && die "LIBRETRO_COMMIT_SHA must be set before inherit."
