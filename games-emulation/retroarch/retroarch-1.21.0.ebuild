@@ -109,7 +109,7 @@ src_prepare() {
 		's#\(''\))\( : ;;\)#\1|--infodir=*|--datadir=*|--localstatedir=*|--libdir=*)\2#g' \
 		qb/qb.params.sh || die
 
-	local LIBRETRO_LIB_DIR="${EPREFIX}/usr/$(get_libdir)/libretro"
+	local -r LIBRETRO_LIB_DIR="${EPREFIX}/usr/$(get_libdir)/libretro"
 	local LIBRETRO_DATA_DIR="${EPREFIX}/usr/share/libretro"
 	local RETROARCH_DATA_DIR="${EPREFIX}/usr/share/${PN}"
 	sed -i \
@@ -127,7 +127,7 @@ src_prepare() {
 
 src_configure() {
 	if use cg; then
-		append-ldflags -L/opt/nvidia-cg-toolkit/$(get_libdir)
+		append-ldflags "-L/opt/nvidia-cg-toolkit/$(get_libdir)"
 		append-cppflags -I/opt/nvidia-cg-toolkit/include
 	fi
 
