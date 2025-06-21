@@ -30,5 +30,5 @@ src_compile() {
 
 src_install() {
 	insinto "/usr/share/retroarch/overlay"
-	doins -r *
+	doins -r ./*
 }
