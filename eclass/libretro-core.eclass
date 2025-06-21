@@ -73,19 +73,20 @@ libretro-core_src_prepare() {
 		for makefile in "${S}"/?akefile* "${S}"/target-libretro/?akefile*; do
 			# * Convert CRLF to LF
 			# * Expand *FLAGS to prevent potential self-references
-			# * Where LDFLAGS directly define the link version 
+			# * Where LDFLAGS directly define the link version
 			#   script append LDFLAGS and LIBS
 			# * Where SHARED is used to provide shared linking
 			#   flags ensure final link command includes LDFLAGS
 			#   and LIBS
 			# * Always use $(CFLAGS) when calling $(CC)
+			# shellcheck disable=SC2016
 			sed \
 				-e 's/\r$//g' \
 				-e "/flags.*=/s/-O[[:digit:]]/${CFLAGS}/g" \
 				-e "/CFLAGS.*=/s/-O[[:digit:]]/${CFLAGS}/g" \
 				-e "/.*,--version-script=.*/s/$/ ${LDFLAGS} ${LIBS}/g" \
 				-e "/\$(CC)/s/\(\$(SHARED)\)/\1 ${LDFLAGS} ${LIBS}/" \
-				-e "s/\(\$(CC)\)/\1 \$(CFLAGS)/g" \
+				-e 's/\(\$(CC)\)/\1 \$(CFLAGS)/g' \
 				-i "${makefile}" \
 				&> /dev/null && flags_modified=1
 		done
