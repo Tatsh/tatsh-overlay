@@ -27,7 +27,7 @@ src_prepare() {
 
 	sed -i -e "s/libretro/retroarch/g" Makefile || die
 
-	declare -A FLAGS=( [materialui]=glui [ozone]= [rgui]= [xmb]= )
+	declare -A FLAGS=( [materialui]=glui [ozone]="" [rgui]="" [xmb]="" )
 	for flag in "${!FLAGS[@]}"; do
 		if ! use "${flag}"; then
 			local folder="${FLAGS[$flag]:-$flag}"
