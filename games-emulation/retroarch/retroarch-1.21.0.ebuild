@@ -104,7 +104,7 @@ src_prepare() {
 	default
 
 	# RetroArch's configure is shell script, not autoconf one
-	# However it tryes to mimic autoconf configure options
+	# However it tries to mimic autoconf configure options
 	sed -i -e \
 		's#\(''\))\( : ;;\)#\1|--infodir=*|--datadir=*|--localstatedir=*|--libdir=*)\2#g' \
 		qb/qb.params.sh || die
