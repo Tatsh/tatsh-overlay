@@ -24,11 +24,12 @@ SLOT="0"
 #	thepowdertoy tyrquake uzem vba-next vbam vecx vemulator vice-x128 vice-x64 vice-x64sc vice-xcbm2 vice-xcbm5x0 \
 #	vice-xpet vice-xplus4 vice-xscpu64 vice-xvic virtualjaguar vitaquake2 vitaquake3 x1 xrick yabause"
 
-IUSE="dosbox flycast fmsx fuse mednafen-psx mednafen-psx-hw mupen64 pcsx-rearmed ppsspp puae puae2021 snes9x swanstation tyrquake vice-x64 vice-x64sc"
+IUSE="dolphin dosbox flycast fmsx fuse mednafen-psx mednafen-psx-hw mupen64 pcsx-rearmed ppsspp puae puae2021 snes9x swanstation tyrquake vice-x64 vice-x64sc"
 
 KEYWORDS="~amd64 ~x86 ~arm64"
 
 RDEPEND="
+	dolphin? ( games-emulation/dolphin-libretro )
 	dosbox? ( games-emulation/libretro-dosbox )
 	flycast? ( games-emulation/flycast-libretro )
 	fmsx? ( games-emulation/fmsx-libretro )
