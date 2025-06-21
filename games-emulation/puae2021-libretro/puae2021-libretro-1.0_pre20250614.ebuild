@@ -16,6 +16,4 @@ KEYWORDS="~amd64 ~x86 ~arm64"
 LICENSE="GPL-2"
 SLOT="0"
 
-DEPEND=""
-RDEPEND="${DEPEND}
-		games-emulation/libretro-info"
+RDEPEND="games-emulation/libretro-info"
