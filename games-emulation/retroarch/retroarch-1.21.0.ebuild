@@ -146,41 +146,41 @@ src_configure() {
 		--disable-roar \
 		--disable-rsound \
 		--disable-videocore \
-		$(use_enable alsa) \
-		$(use_enable cg) \
-		$(use_enable cpu_flags_x86_sse sse) \
-		$(use_enable dbus) \
-		$(use_enable egl) \
-		$(use_enable freetype) \
-		$(use_enable flac) \
-		$(use_enable ffmpeg) \
-		$(use_enable gles opengles) \
-		$(use_enable gles3 opengles3) \
-		$(use_enable kms) \
-		$(use_enable libcaca caca) \
-		$(use_enable libusb) \
-		$(use_enable libusb hid) \
-		$(use_enable materialui) \
-		$(use_enable openal al) \
-		$(use_enable opengl) \
-		$(use_enable opengl_core) \
-		$(use_enable ozone) \
-		$(use_enable parport) \
-		$(use_enable plain_drm) \
-		$(use_enable pulseaudio pulse) \
-		$(use_enable qt5 qt) \
-		$(use_enable sdl) \
-		$(use_enable sdl2) \
-		$(use_enable sixel) \
-		$(use_enable subtitles ssa) \
-		$(use_enable ssl) \
-		$(use_enable systemd) \
-		$(use_enable tinyalsa) \
-		$(use_enable udev) \
-		$(use_enable vulkan) \
-		$(use_enable wayland) \
-		$(use_enable X x11) \
-		$(use_enable xrandr) \
-		$(use_enable xv xvideo) \
-		$(use_enable zlib)
+		"$(use_enable alsa)" \
+		"$(use_enable cg)" \
+		"$(use_enable cpu_flags_x86_sse sse)" \
+		"$(use_enable dbus)" \
+		"$(use_enable egl)" \
+		"$(use_enable freetype)" \
+		"$(use_enable flac)" \
+		"$(use_enable ffmpeg)" \
+		"$(use_enable gles opengles)" \
+		"$(use_enable gles3 opengles3)" \
+		"$(use_enable kms)" \
+		"$(use_enable libcaca caca)" \
+		"$(use_enable libusb)" \
+		"$(use_enable libusb hid)" \
+		"$(use_enable materialui)" \
+		"$(use_enable openal al)" \
+		"$(use_enable opengl)" \
+		"$(use_enable opengl_core)" \
+		"$(use_enable ozone)" \
+		"$(use_enable parport)" \
+		"$(use_enable plain_drm)" \
+		"$(use_enable pulseaudio pulse)" \
+		"$(use_enable qt5 qt)" \
+		"$(use_enable sdl)" \
+		"$(use_enable sdl2)" \
+		"$(use_enable sixel)" \
+		"$(use_enable subtitles ssa)" \
+		"$(use_enable ssl)" \
+		"$(use_enable systemd)" \
+		"$(use_enable tinyalsa)" \
+		"$(use_enable udev)" \
+		"$(use_enable vulkan)" \
+		"$(use_enable wayland)" \
+		"$(use_enable X x11)" \
+		"$(use_enable xrandr)" \
+		"$(use_enable xv xvideo)" \
+		"$(use_enable zlib)"
 }
