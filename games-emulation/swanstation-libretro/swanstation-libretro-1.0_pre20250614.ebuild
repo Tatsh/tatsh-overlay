@@ -34,7 +34,7 @@ src_configure() {
 }
 
 src_install() {
-		LIBRETRO_LIB_DIR="${EROOT%/}/usr/$(get_libdir)/libretro"
+		LIBRETRO_LIB_DIR="/usr/$(get_libdir)/libretro"
 		insinto "${LIBRETRO_LIB_DIR}"
 		doins "${WORKDIR}/${PF}_build/${LIBRETRO_CORE_NAME}_libretro.so"
 }
