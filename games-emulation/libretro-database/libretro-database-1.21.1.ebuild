@@ -4,7 +4,7 @@
 EAPI=8
 
 
-DESCRIPTION="Repository containing cheatcode files, content data files, etc."
+DESCRIPTION="Repository containing cheat code files, content data files, etc."
 HOMEPAGE="https://github.com/libretro/libretro-database"
 
 if [[ "${PV}" == *9999* ]] ; then
@@ -17,6 +17,3 @@ fi
 
 LICENSE="CC-BY-SA-4.0"
 SLOT="0"
-
-DEPEND=""
-RDEPEND="${DEPEND}"
