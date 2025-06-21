@@ -42,7 +42,7 @@ RDEPEND="
 	puae? ( games-emulation/puae-libretro )
 	puae2021? ( games-emulation/puae2021-libretro )
 	snes9x? ( games-emulation/libretro-snes9x )
-	swanstation? ( games-emulation/swanstation-libretro ) 
+	swanstation? ( games-emulation/swanstation-libretro )
 	tyrquake? ( games-emulation/tyrquake-libretro )
 	vice-x64? ( games-emulation/vice-x64-libretro )
 	vice-x64sc? ( games-emulation/vice-x64sc-libretro )"

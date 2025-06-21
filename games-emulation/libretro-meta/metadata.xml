@@ -34,7 +34,7 @@
 		<flag name="fbneo">Arcade (FBNeo)</flag>
 		<flag name="fceu-next">Nintendo - NES / Famicom(FCEUmm/FCEUX)</flag>
 		<flag name="fceumm">Nintendo - NES / Famicom (FCEUmm)</flag>
-		<flag name="fceu-next">Nintendo - NES / Famicon (fceu-next)</flag>
+		<flag name="fceu-next">Nintendo - NES / Famicom (fceu-next)</flag>
 		<flag name="ffmpeg">FFMpeg (ffmpeg)</flag>
 		<flag name="flycast">Sega - Dreamcast/NAOMI (Flycast)</flag>
 		<flag name="fmsx">Microsoft - MSX (fMSX)</flag>
@@ -84,7 +84,7 @@
 		<flag name="mrboom">Mr.Boom (Bomberman)</flag>
 		<flag name="mu">PalmOS (mu)</flag>
 		<flag name="mupen64">Nintendo 64 (mupen64-next)</flag>
-		<flag name="nestopia">Nintendo - NES / Famicom (Nestopia UE)</flag> 
+		<flag name="nestopia">Nintendo - NES / Famicom (Nestopia UE)</flag>
 		<flag name="neocd">SNK NeoGeo CD (neocd)</flag>
 		<flag name="np2kai">PC-98 (np2kai)</flag>
 		<flag name="nxengine">Cave Story (NXEngine)</flag>
@@ -100,7 +100,7 @@
 		<flag name="potator">Watara SuperVision (potator)</flag>
 		<flag name="ppsspp">Sony PSP (ppsspp)</flag>
 		<flag name="prboom">Doom (PrBoom)</flag>
-		<flag name="prosystem">Atari - 7800 (ProSystem)</flag> 
+		<flag name="prosystem">Atari - 7800 (ProSystem)</flag>
 		<flag name="puae">Commodore - Amiga (P-UAE)</flag>
 		<flag name="px68k">Sharp - X68000 (PX68k)</flag>
 		<flag name="quasi88">NEC - PC-8000 / PC-8800 series (QUASI88)</flag>
