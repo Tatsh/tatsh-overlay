@@ -52,11 +52,11 @@ PATCHES=(
 
 src_prepare() {
 	if ! use system-ffmpeg; then
-		pushd ffmpeg
+		pushd ffmpeg >/dev/null || die
 		[[ "${ARCH}" != "amd64" ]] || ./linux_x86-64.sh
 		[[ "${ARCH}" != "x86" ]] || ./linux_x86.sh
 		[[ "${ARCH}" != "arm64" ]] || ./linux_arm64_native.sh
-		popd
+		popd >/dev/null || die
 	fi
 	cmake_src_prepare
 }
@@ -69,13 +69,13 @@ src_configure() {
 		-DCMAKE_SKIP_RPATH=ON
 		-DHEADLESS=false
 		-DUSE_MINIUPNPC=OFF
-		-DUSE_SYSTEM_FFMPEG=$(usex system-ffmpeg)
+		-DUSE_SYSTEM_FFMPEG="$(usex system-ffmpeg)"
 		-DUSE_SYSTEM_LIBZIP=ON
 		-DUSE_SYSTEM_SNAPPY=ON
 		-DUSE_SYSTEM_ZSTD=ON
 		-DUSE_DISCORD=OFF
 		-DUSING_QT_UI=OFF
-		-DUSING_GLES2=$(usex gles2)
+		-DUSING_GLES2="$(usex gles2)"
 		-DLIBRETRO=ON
 	)
 
@@ -88,7 +88,7 @@ src_configure() {
 		if use gbm; then
 			mycmakeargs+=( -DUSE_VULKAN_DISPLAY_KHR=ON )
 		fi
-		mycmakeargs+=( -DUSING_X11_VULKAN=$(usex X) )
+		mycmakeargs+=( -DUSING_X11_VULKAN="$(usex X)" )
 	fi
 
 	cmake_src_configure

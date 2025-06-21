@@ -21,16 +21,16 @@ RDEPEND="${DEPEND}
 IUSE="opengl vulkan cdrom"
 
 src_compile() {
-	myemakeargs=(
-		$(usex cdrom "HAVE_CDROM=1" "HAVE_CDROM=0")
+	MYEMAKEARGS=(
+		"$(usex cdrom 'HAVE_CDROM=1' 'HAVE_CDROM=0')"
 		HAVE_LIGHTREC=1
 	)
 	if  use opengl && use vulkan; then
-		myemakeargs+=( "HAVE_HW=1" )
+		MYEMAKEARGS+=( "HAVE_HW=1" )
 	else
-		myemakeargs+=(
-			$(usex opengl "HAVE_OPENGL=1" "")
-			$(usex vulkan "HAVE_VULKAN=1" "")
+		MYEMAKEARGS+=(
+			"$(usex opengl 'HAVE_OPENGL=1' '')"
+			"$(usex vulkan 'HAVE_VULKAN=1' '')"
 		)
 	fi
 	libretro-core_src_compile

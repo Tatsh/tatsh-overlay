@@ -27,13 +27,13 @@ RETROARCH_DATA_DIR="${EROOT}usr/share/retroarch"
 # @DESCRIPTION:
 # Commit SHA used for SRC_URI will die if not set in <9999 ebuilds.
 # Needs to be set before inherit.
-: ${LIBRETRO_COMMIT_SHA:=die}}
+: "${LIBRETRO_COMMIT_SHA:=die}"
 
 # @ECLASS-VARIABLE: LIBRETRO_REPO_NAME
 # @DESCRIPTION:
 # Contains the real repo name of the core formatted as "repouser/reponame".
 # Needs to be set before inherit. Otherwise defaults to "libretro/${PN}"
-: ${LIBRETRO_REPO_NAME:="libretro/${PN}"}
+: "${LIBRETRO_REPO_NAME:=libretro/${PN}}"
 
 # Offload EGIT_REPO_URI and SRC_URI to eclass only in supported ebuilds
 if [[ ${PV} = 9999 ]]; then
@@ -42,7 +42,7 @@ if [[ ${PV} = 9999 ]]; then
 fi
 
 if [[ ! ${PV} = 9999 ]] && [[ ! ${PN} = retroarch ]] && [[ ! ${PN} = ppsspp-libretro ]] && [[ ! ${PN} = psp1-libretro ]] && [[ ! ${PN} = psp-assets ]] && [[ ! ${PN} = citra-libretro ]]; then
-	[ ${LIBRETRO_COMMIT_SHA} = die ] && die "LIBRETRO_COMMIT_SHA must be set before inherit."
+	[ "${LIBRETRO_COMMIT_SHA}" = die ] && die "LIBRETRO_COMMIT_SHA must be set before inherit."
 	SRC_URI="https://github.com/${LIBRETRO_REPO_NAME}/archive/${LIBRETRO_COMMIT_SHA}.tar.gz -> ${P}.tar.gz"
 	RESTRICT="primaryuri"
 	S="${WORKDIR}/${LIBRETRO_REPO_NAME##*/}-${LIBRETRO_COMMIT_SHA}"
@@ -54,6 +54,6 @@ if [[ ${PN} = ppsspp-libretro ]] || [[ ${PN} = psp1-libretro ]]  || [[ ${PN} = c
 	
 	SRC_URI=""
 	EGIT_REPO_URI="https://github.com/${LIBRETRO_REPO_NAME}.git"
-	[ ${LIBRETRO_COMMIT_SHA} = die ] && die "LIBRETRO_COMMIT_SHA must be set before inherit."
+	[ "${LIBRETRO_COMMIT_SHA}" = die ] && die "LIBRETRO_COMMIT_SHA must be set before inherit."
 	EGIT_COMMIT="${LIBRETRO_COMMIT_SHA}"
 fi

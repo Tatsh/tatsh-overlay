@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit multiprocessing
+inherit ninja-utils
 
 DESCRIPTION="Multiplatform Sega Dreamcast emulator"
 HOMEPAGE="https://github.com/flyinghead/flycast"
@@ -42,7 +42,7 @@ S="${WORKDIR}/flycast-${PV}"
 BUILD_DIR="${WORKDIR}/${P}_build"
 
 src_unpack() {
-	unpack ${P}.tar.gz
+	unpack "${P}.tar.gz"
 
 	cd "${S}" || die
 	local list=(
@@ -65,36 +65,33 @@ src_unpack() {
 
 src_configure() {
 	mkdir "${BUILD_DIR}"
-	pushd  "${BUILD_DIR}"
+	pushd  "${BUILD_DIR}" >/dev/null || die
 
 	local mycmakeargs=(
 		-DLIBRETRO=ON
 		-DUSE_OPENMP=OFF
-		-DUSE_GLES2=$(usex gles)
-		-DUSE_VULKAN=$(usex vulkan)
-		$(usex arm "-DARMv7=ON" "")
-		$(usex arm64 "-DARM64=ON" "")
+		-DUSE_GLES2="$(usex gles)"
+		-DUSE_VULKAN="$(usex vulkan)"
+		"$(usex arm '-DARMv7=ON' '')"
+		"$(usex arm64 '-DARM64=ON' '')"
 		-DCMAKE_BUILD_TYPE=Release
 	)
 
 	cmake "${mycmakeargs[@]}" -GNinja "${S}"
 
-	find . -name flags.make -exec sed -i "s:isystem :I:g" \{} \;
-	find . -name build.ninja -exec sed -i "s:isystem :I:g" \{} \;
+	find . -name flags.make -exec sed -i "s:isystem :I:g" {} \;
+	find . -name build.ninja -exec sed -i "s:isystem :I:g" {} \;
 
-	popd
+	popd >/dev/null || die
 }
 
 src_compile() {
-	pushd "${BUILD_DIR}"
-
-	ninja -v ${makeopts_jobs}
-
-	popd
+	eninja -C "${BUILD_DIR}"
 }
 
 src_install() {
-	local libretro_lib_dir="/usr/$(get_libdir)/libretro"
+	local libretro_lib_dir
+	libretro_lib_dir="/usr/$(get_libdir)/libretro"
 	exeinto "${libretro_lib_dir}"
 	doexe "${BUILD_DIR}"/flycast_libretro.so
 }
