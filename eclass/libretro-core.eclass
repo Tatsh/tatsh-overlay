@@ -24,7 +24,7 @@ IUSE+="custom-cflags debug"
 # "-libretro" suffix and replacing dashes by underlines (e.g., "foo_bar" for
 # the package "foo-bar-libretro").
 PN_UNDERLINES=${PN//-/_}
-: ${LIBRETRO_CORE_NAME:=${PN_UNDERLINES%_libretro}}
+: "${LIBRETRO_CORE_NAME:=${PN_UNDERLINES%_libretro}}"
 
 # @ECLASS-VARIABLE: LIBRETRO_CORE_LIB_FILE
 # @DESCRIPTION:
@@ -85,11 +85,11 @@ libretro-core_src_prepare() {
 				-e "/CFLAGS.*=/s/-O[[:digit:]]/${CFLAGS}/g" \
 				-e "/.*,--version-script=.*/s/$/ ${LDFLAGS} ${LIBS}/g" \
 				-e "/\$(CC)/s/\(\$(SHARED)\)/\1 ${LDFLAGS} ${LIBS}/" \
-				-e 's/\(\$(CC)\)/\1 \$(CFLAGS)/g' \
+				-e "s/\(\$(CC)\)/\1 \$(CFLAGS)/g" \
 				-i "${makefile}" \
 				&> /dev/null && flags_modified=1
 		done
-		[[ ${flags_modified} == 1 ]] && true || false
+		[[ ${flags_modified} == 1 ]]
 		eend $?
 		export OPTFLAGS="${CFLAGS}"
 	fi
@@ -116,10 +116,10 @@ libretro-core_src_prepare() {
 # This function compiles the shared library for this Libretro core.
 libretro-core_src_compile() {
 	use custom-cflags || filter-flags -O*
-	emake CC=$(tc-getCC) CXX=$(tc-getCXX) \
-		$(usex debug "DEBUG=1" "") "${myemakeargs[@]}" \
-		$([ -f makefile.libretro ] && echo '-f makefile.libretro') \
-		$([ -f Makefile.libretro ] && echo '-f Makefile.libretro')
+	emake CC="$(tc-getCC)" CXX="$(tc-getCXX)" \
+		"$(usex debug 'DEBUG=1' '')" "${MYEMAKEARGS[@]}" \
+		"$([ -f makefile.libretro ] && echo '-f makefile.libretro')" \
+		"$([ -f Makefile.libretro ] && echo '-f Makefile.libretro')"
 }
 
 # @FUNCTION: libretro-core_src_install

@@ -55,7 +55,7 @@ src_configure() {
 		-DUSE_SHARED_ENET=ON
 		-DCMAKE_BUILD_TYPE=Release
 		-DCMAKE_INSTALL_PREFIX=/usr
-		-DENABLE_X11=$(usex X)
+		-DENABLE_X11="$(usex X)"
 	)
 	cmake_src_configure
 }

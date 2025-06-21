@@ -23,8 +23,8 @@ src_compile() {
 	# Extracting the EMUTYPE from PN (e.g. vice-x64-libretro -> x64)
 	EMUTYPE=${PN#vice-}
 	EMUTYPE=${EMUTYPE%-libretro}
-	myemakeargs=(
-		EMUTYPE=${EMUTYPE}
+	MYEMAKEARGS=(
+		EMUTYPE="${EMUTYPE}"
 	)
 	libretro-core_src_compile
 }
