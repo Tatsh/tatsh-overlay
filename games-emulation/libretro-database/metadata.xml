@@ -2,8 +2,8 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
-		<email>dmenelkir@gmail.com</email>
-		<name>Daniel Menelkir</name>
+		<email>amverweij@gmail.com</email>
+		<name>Bram Verweij</name>
 	</maintainer>
 	<longdescription lang="en">Cheatcode files, content data files and etc. stuff for RetroArch
 	</longdescription>
