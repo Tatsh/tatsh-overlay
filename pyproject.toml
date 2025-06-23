@@ -10,7 +10,7 @@ version = "0.0.1"
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^1.16.0"
+mypy = "^1.16.1"
 portage = { git = "https://github.com/gentoo/portage.git" }
 portage-types = "^0.0.2"
 pyyaml = "^6.0.2"
