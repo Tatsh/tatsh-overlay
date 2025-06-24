@@ -25,18 +25,34 @@ DEPEND="${RDEPEND}
 
 src_compile() {
 	MYEMAKEARGS=(
-		"$(usex amd64 'ARCH=x86_64 WITH_DYNAREC=x86_64 HAVE_PARALLEL_RDP=1 HAVE_PARALLEL_RSP=1 HAVE_THR_AL=1 HAVE_LLE=1' '')"
-		"$(usex x86 'ARCH=x86 WITH_DYNAREC=x86 HAVE_PARALLEL_RDP=1 HAVE_PARALLEL_RSP=1 HAVE_THR_AL=1 HAVE_LLE=1' '')"
-		"$(usex arm 'ARCH=arm WITH_DYNAREC=arm' '')"
-		"$(usex arm64 'ARCH=aarch64 WITH_DYNAREC=aarch64' '')"
 		"$(usex rpi 'platform=rpi' '')"
 		"$(usex rpi2 'platform=rpi2' '')"
 		"$(usex rpi3 'platform=rpi3' '')"
 		"$(usex rpi3_64 'platform=rpi3_64' '')"
 		"$(usex rpi4 'platform=rpi4' '')"
 		"$(usex rpi4_64 'platform=rpi4_64' '')"
-		"$(usex gles2 'GLES=1 FORCE_GLES=1' 'GLES=0 FORCE_GLES=0')"
-		"$(usex gles3 'GLES3=1 FORCE_GLES3=1' 'GLES3=0 FORCE_GLES3=0')"
 	)
+
+	if use gles2; then
+		MYEMAKEARGS+=( "GLES=1" "FORCE_GLES=1" )
+	else
+		MYEMAKEARGS+=( "GLES=0" "FORCE_GLES=0" )
+	fi
+
+	if use gles3; then
+		MYEMAKEARGS+=( "GLES3=1" "FORCE_GLES3=1" )
+	else
+		MYEMAKEARGS+=( "GLES3=0" "FORCE_GLES3=0" )
+	fi
+
+	if use amd64; then
+		MYEMAKEARGS+=( ARCH=x86_64 WITH_DYNAREC=x86_64 HAVE_PARALLEL_RDP=1 HAVE_PARALLEL_RSP=1 HAVE_THR_AL=1 HAVE_LLE=1 )
+	elif use x86; then
+		MYEMAKEARGS+=( ARCH=x86 WITH_DYNAREC=x86 HAVE_PARALLEL_RDP=1 HAVE_PARALLEL_RSP=1 HAVE_THR_AL=1 HAVE_LLE=1 )
+	elif use arm; then
+		MYEMAKEARGS+=( ARCH=arm WITH_DYNAREC=arm )
+	elif use arm64; then
+		MYEMAKEARGS+=( ARCH=aarch64 WITH_DYNAREC=aarch64 )
+	fi
 	libretro-core_src_compile
 }
