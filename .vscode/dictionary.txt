@@ -782,6 +782,7 @@ iancoleman
 ianlancetaylor
 ideviceinstaller
 idna
+ifup
 imageio
 imath
 imds
@@ -1332,6 +1333,7 @@ openal
 opencensus
 opencl
 opencv
+openfortivpn
 opengl
 opengles
 openlara
