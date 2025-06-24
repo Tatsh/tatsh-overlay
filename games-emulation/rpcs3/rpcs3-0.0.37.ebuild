@@ -50,7 +50,7 @@ DEPEND="app-arch/zstd
 	media-libs/libglvnd[X]
 	media-libs/libpng:*
 	media-libs/openal
-	media-libs/opencv
+	media-libs/opencv:=
 	media-libs/rtmidi
 	media-video/ffmpeg
 	net-libs/miniupnpc
