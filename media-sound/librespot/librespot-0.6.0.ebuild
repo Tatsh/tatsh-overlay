@@ -479,19 +479,19 @@ IUSE="alsa pulseaudio portaudio jack sdl"
 get_features() {
 	local out=( )
 	if use alsa; then
-   		out+=( alsa-backend )
+   		out+=( "alsa-backend" )
 	fi
 	if use pulseaudio; then
-		out+=( pulseaudio-backend )
+		out+=( "pulseaudio-backend" )
 	fi
 	if use portaudio; then
-		out+=( portaudio-backend )
+		out+=( "portaudio-backend" )
 	fi
 	if use jack; then
-		out+=( jackaudio-backend )
+		out+=( "jackaudio-backend" )
 	fi
 	if use sdl; then
-		out+=( sdl-backend )
+		out+=( "sdl-backend" )
 	fi
 
 	printf "%s," "${out[@]}" | sed 's/,$//g'
