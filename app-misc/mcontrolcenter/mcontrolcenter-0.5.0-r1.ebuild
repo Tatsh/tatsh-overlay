@@ -20,6 +20,9 @@ S="${WORKDIR}/MControlCenter-${PV}"
 
 src_prepare() {
 	sed -re "s|PATHS /lib/qt6/bin/|PATHS /usr/$(get_libdir)/qt6/bin|g" -i CMakeLists.txt || die
+	# Remove spammy messages.
+	sed -re '/.*(ec_sys|acpi_ec) kernel module is loaded".*/d' -i src/helper/msi-ec.cpp \
+		src/helper/helper.cpp || die
 	cmake_src_prepare
 }
 
