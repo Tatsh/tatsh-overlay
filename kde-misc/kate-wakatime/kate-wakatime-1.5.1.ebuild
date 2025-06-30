@@ -23,5 +23,5 @@ DEPEND=">=kde-frameworks/ktexteditor-${KFMIN}:6
 	>=kde-frameworks/kparts-${KFMIN}:6
 	>=kde-frameworks/kwidgetsaddons-${KFMIN}:6
 	>=kde-frameworks/kxmlgui-${KFMIN}:6
-	dev-qt/qtbase:6"
+	dev-qt/qtbase:6[dbus,gui,widgets,xml]"
 RDEPEND="${DEPEND} dev-util/wakatime-cli"
