@@ -16,7 +16,8 @@ IGNORE = {
         'virtual/libusb',
     },
     'games-arcade/stepmania': {'media-video/pipewire'},
-    'games-emulation/xemu': {'media-video/pipewire'}
+    'games-emulation/xemu': {'media-video/pipewire'},
+    'kde-misc/kate-wakatime': {'media-libs/libglvnd'},
 }
 
 
