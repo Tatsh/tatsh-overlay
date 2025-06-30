@@ -2,6 +2,7 @@ aashutoshrathi
 aatl
 abloop
 aclocal
+acpi
 adbsync
 adlam
 aescts
@@ -113,7 +114,6 @@ bassavah
 batak
 bbolt
 bdepend
-bdepends
 beautifulsoup
 becheran
 behaviour
@@ -136,9 +136,7 @@ bincue
 bindir
 bindist
 binja
-binutils
 binv
-bitcode
 bitflags
 bitrock
 bitwidth
@@ -822,6 +820,7 @@ itertools
 itoa
 ittapi
 iuse
+jackaudio
 jackc
 jackspeak
 jaconv
@@ -991,6 +990,7 @@ libreal
 librealcugan
 librealcugannv
 librealesrgan
+librespot
 libretro
 libretrodb
 librife
@@ -1222,7 +1222,6 @@ mwitkow
 mycmakeargs
 myctestargs
 myeconfargs
-myeconfenv
 myemakeargs
 myfeatures
 mygoargs
@@ -1286,6 +1285,7 @@ nontransferability
 nopasswd
 nopt
 noreturn
+normalisation
 nosetests
 nosleep
 nosniff
@@ -1433,6 +1433,7 @@ pocketcdg
 pokemini
 polkit
 popperjs
+portaudio
 portfile
 porttree
 posener
@@ -1641,7 +1642,6 @@ schollz
 scikit
 scipy
 scires
-scph
 screamf
 scriptable
 scrn
@@ -1719,6 +1719,7 @@ soundtouch
 sourcegraph
 sourcehut
 spacepacket
+spammy
 spaolacci
 spirv
 splitdebug
@@ -1814,7 +1815,6 @@ temoto
 terak
 termcolor
 termenv
-terminfo
 testdata
 texinfo
 textextensions
@@ -1875,7 +1875,6 @@ udpa
 udvare
 uips
 umpv
-unai
 unalz
 unauthorised
 uncategorised
@@ -1991,7 +1990,6 @@ wineshell
 wingetty
 winio
 wireshark
-wmclass
 wolfenstein
 wolfpld
 wolfssl
