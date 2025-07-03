@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-WX_GTK_VER="3.0-gtk3"
+WX_GTK_VER="3.2-gtk3"
 inherit desktop wrapper wxwidgets xdg
 
 DESCRIPTION="Clone of Guitar Hero and similar games."
