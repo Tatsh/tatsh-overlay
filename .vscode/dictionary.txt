@@ -150,6 +150,7 @@ boltdb
 bomberman
 boolbase
 boringssl
+boto
 bradfitz
 bradleyjkemp
 bram
