@@ -2,17 +2,17 @@
 # yarn lockfile v1
 
 
-"@taplo/core@^0.1.0":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@taplo/core/-/core-0.1.1.tgz#28a301d6ea141249ff712f8a2b9fce6d4e813d41"
-  integrity sha512-BG/zLGf5wiNXGEVPvUAAX/4ilB3PwDUY2o0MV0y47mZbDZ9ad9UK/cIQsILat3bqbPJsALVbU6k3cskNZ3vAQg==
+"@taplo/core@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@taplo/core/-/core-0.2.0.tgz#a256aef743307c853de08e2199e295fa3266122f"
+  integrity sha512-r8bl54Zj1In3QLkiW/ex694bVzpPJ9EhwqT9xkcUVODnVUGirdB1JTsmiIv0o1uwqZiwhi8xNnTOQBRQCpizrQ==
 
-"@taplo/lib@^0.4.0-alpha.2":
-  version "0.4.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@taplo/lib/-/lib-0.4.0-alpha.2.tgz#6a2fcdeb947c34ada51a15797c69c673f8a62a2c"
-  integrity sha512-DV/Re3DPVY+BhBtLZ3dmP4mP6YMLSsgq9qGLXwOV38lvNF/fBlgvQswzlXmzCEefL/3q2eMoefZpOI/+GLuCNA==
+"@taplo/lib@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@taplo/lib/-/lib-0.5.0.tgz#0d98cf5c1fa676148fcb29846a84aaba76535e8a"
+  integrity sha512-+xIqpQXJco3T+VGaTTwmhxLa51qpkQxCjRwezjFZgr+l21ExlywJFcDfTrNmL6lG6tqb0h8GyJKO3UPGPtSCWg==
   dependencies:
-    "@taplo/core" "^0.1.0"
+    "@taplo/core" "^0.2.0"
 
 prettier-plugin-ini@^1.3.0:
   version "1.3.0"
@@ -26,14 +26,19 @@ prettier-plugin-sort-json@^4.1.1:
   resolved "https://registry.yarnpkg.com/prettier-plugin-sort-json/-/prettier-plugin-sort-json-4.1.1.tgz#2cf2e71c5a2174440330b3c72e3bc69112df3ffb"
   integrity sha512-uJ49wCzwJ/foKKV4tIPxqi4jFFvwUzw4oACMRG2dcmDhBKrxBv0L2wSKkAqHCmxKCvj0xcCZS4jO2kSJO/tRJw==
 
-prettier-plugin-toml@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-toml/-/prettier-plugin-toml-2.0.2.tgz#2e6cb2717a5e508fd38668aa06c561f3f1ef74cb"
-  integrity sha512-tUIIhyfdVX5DMsLGKX/2qaEwi3W48OkUSR7XC91PRI5jFzhexmaYWkrSP1Xh/eWUcEc0TVMQenM3lB09xLQstQ==
+prettier-plugin-toml@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-toml/-/prettier-plugin-toml-2.0.6.tgz#d581512a585143975efebf89303272a359c3124a"
+  integrity sha512-12N/wBuHa9jd/KVy9pRP20NMKxQfQLMseQCt66lIbLaPLItvGUcSIryE1eZZMJ7loSws6Ig3M2Elc2EreNh76w==
   dependencies:
-    "@taplo/lib" "^0.4.0-alpha.2"
+    "@taplo/lib" "^0.5.0"
 
-prettier@>=3.0.0-alpha.3, prettier@^3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.5.3.tgz#4fc2ce0d657e7a02e602549f053b239cb7dfe1b5"
-  integrity sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==
+prettier@>=3.0.0-alpha.3:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.4.1.tgz#e211d451d6452db0a291672ca9154bc8c2579f7b"
+  integrity sha512-G+YdqtITVZmOJje6QkXQWzl3fSfMxFwm1tjTyo9exhkmWSqC4Yhd1+lug++IlR2mvRVAxEDDWYkQdeSztajqgg==
+
+prettier@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.6.2.tgz#ccda02a1003ebbb2bfda6f83a074978f608b9393"
+  integrity sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==
