@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="dev-python/gitpython[${PYTHON_USEDEP}]
-	dev-python/commitizen[${PYTHON_USEDEP}]
+	dev-util/commitizen[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 BDEPEND="test? (
 	dev-python/mock
