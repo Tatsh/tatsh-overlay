@@ -6,8 +6,14 @@
 		<name>Bram Verweij</name>
 	</maintainer>
 	<use>
-		<flag name="gles2">Enable GLES2 support</flag>
+		<flag name="gbm">Use the Graphics Buffer Manager for EGL on KMS.</flag>
+		<flag name="gles2">Enable GLES2 support.</flag>
+		<flag name="system-ffmpeg">Use system ffmpeg.</flag>
 	</use>
 	<longdescription lang="en">
+	RetroArch core of PPSSPP, which is a PSP emulator for Android, Windows, Mac and Linux, written in C++.
 	</longdescription>
+	<upstream>
+		<remote-id type="github">hrydgard/ppsspp</remote-id>
+	</upstream>
 </pkgmetadata>
