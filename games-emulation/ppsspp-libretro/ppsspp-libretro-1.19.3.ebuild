@@ -3,18 +3,19 @@
 
 EAPI=8
 
-LIBRETRO_COMMIT_SHA="2d1f8f03fac5f6f8322d83ec838f3a4a003bf334"
+LIBRETRO_COMMIT_SHA="dummy"
 LIBRETRO_REPO_NAME="hrydgard/ppsspp"
 
-inherit cmake libretro-core
+inherit cmake libretro libretro-core
 
 DESCRIPTION="Libretro port of PPSSPP"
 HOMEPAGE="https://www.ppsspp.org/"
 SRC_URI="https://github.com/hrydgard/ppsspp/releases/download/v${PV}/ppsspp-${PV}.tar.xz -> ${P}.tar.xz"
 
+S="${WORKDIR}"/ppsspp-${PV}
 LICENSE="Apache-2.0 BSD BSD-2 GPL-2 JSON MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86 ~arm64"
+KEYWORDS="~amd64 ~arm64 ~x86"
 IUSE="opengl +gles2 vulkan X wayland gbm system-ffmpeg"
 RESTRICT="test"
 REQUIRED_USE="
@@ -29,7 +30,7 @@ RDEPEND="
 	dev-libs/libzip:=
 	media-libs/libpng:=
 	media-libs/libsdl2[joystick]
-	system-ffmpeg? ( media-video/ffmpeg:0/58.60.60[pic] )
+	system-ffmpeg? ( media-video/ffmpeg:0/58.60.60 )
 	sys-libs/zlib:=
 	opengl? (
 		virtual/opengl
@@ -43,7 +44,6 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 ASSETS_DIR="${LIBRETRO_DATA_DIR}"/PPSSPP
-S="${WORKDIR}"/ppsspp-${PV}
 
 PATCHES=(
 	"${FILESDIR}/ppsspp-1.17.1-SpvBuilder-cstdint.patch"
@@ -52,11 +52,11 @@ PATCHES=(
 
 src_prepare() {
 	if ! use system-ffmpeg; then
-		pushd ffmpeg >/dev/null || die
+		pushd ffmpeg > /dev/null || die
 		[[ "${ARCH}" != "amd64" ]] || ./linux_x86-64.sh
 		[[ "${ARCH}" != "x86" ]] || ./linux_x86.sh
 		[[ "${ARCH}" != "arm64" ]] || ./linux_arm64_native.sh
-		popd >/dev/null || die
+		popd > /dev/null || die
 	fi
 	cmake_src_prepare
 }
