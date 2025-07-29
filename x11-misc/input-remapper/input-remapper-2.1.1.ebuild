@@ -19,6 +19,7 @@ DEPEND="dev-python/pydantic[${PYTHON_USEDEP}]
 	dev-python/pydbus[${PYTHON_USEDEP}]
 	dev-python/pygobject[${PYTHON_USEDEP}]
 	dev-python/evdev[${PYTHON_USEDEP}]
+	dev-python/psutil[${PYTHON_USEDEP}]
 	x11-libs/gtksourceview:4"
 RDEPEND="${DEPEND}"
 
