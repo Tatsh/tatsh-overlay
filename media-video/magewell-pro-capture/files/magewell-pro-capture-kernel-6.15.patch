@@ -1,0 +1,14 @@
+--- a/src/sources/avstream/v4l2.c	2025-07-03 03:11:33.000000000 -0400
++++ b/src/sources/avstream/v4l2.c	2025-08-02 18:36:15.538175838 -0400
+@@ -1603,9 +1603,11 @@
+ 	.vidioc_g_parm            = vidioc_g_parm,
+ 	.vidioc_s_parm            = vidioc_s_parm,
+ 
++#if (LINUX_VERSION_CODE < KERNEL_VERSION(6,15,0))
+ 	.vidioc_queryctrl         = vidioc_queryctrl,
+ 	.vidioc_g_ctrl            = vidioc_g_ctrl,
+ 	.vidioc_s_ctrl            = vidioc_s_ctrl,
++#endif
+ 	.vidioc_enum_framesizes   = vidioc_enum_framesizes,
+ 	.vidioc_enum_frameintervals = vidioc_enum_frameintervals,
+ 

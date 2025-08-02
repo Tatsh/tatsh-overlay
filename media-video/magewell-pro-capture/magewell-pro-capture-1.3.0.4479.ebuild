@@ -6,7 +6,7 @@ inherit linux-mod-r1 udev
 
 DESCRIPTION="Magewell Pro Capture driver."
 HOMEPAGE="https://www.magewell.com/downloads/pro-capture#/driver/linux-x86"
-SRC_URI="https://www.magewell.com/files/drivers/ProCaptureForLinux_${PV/.0}.tar.gz"
+SRC_URI="https://www.magewell.com/files/drivers/ProCaptureForLinuxPUBLIC_${PV/.0}.tar.gz"
 
 LICENSE="Magewell-Pro-Capture"
 SLOT="0"
@@ -15,9 +15,12 @@ IUSE="doc weave"
 
 RDEPENDS="media-libs/alsa-lib"
 
-S="${WORKDIR}/ProCaptureForLinux_${PV/.0}"
-
+S="${WORKDIR}/ProCaptureForLinuxPUBLIC_${PV/.0}"
+PATCHES=( "${FILESDIR}/${PN}-kernel-6.15.patch" )
 DOCS=(quick_start.txt docs/Readme.txt docs/ProCaptureSeriesCardUserGuideforLinux.{eng,chs}.pdf)
+
+CONFIG_CHECK="VIDEOBUF2_DMA_SG"
+RESTRICT="strip"
 
 src_prepare() {
 	sed -e 's:/local::g' -e 's:/src::g' -i scripts/ProCapture.conf || die 'Failed to patch!'
@@ -26,6 +29,8 @@ src_prepare() {
 		sed -r -e '263s/(.*)/MWCAP_VIDEO_DEINTERLACE_WEAVE,/' -i src/sources/avstream/v4l2.c || die 'Failed to patch!'
 	fi
 	touch src/.ProCaptureLib.o.cmd # modpost looks for this file but it does not get created
+	sed -re 's/^EXTRA_CFLAGS/ccflags-y/' -i src/Makefile || die
+	sed -re 's/del_timer/timer_delete/g' -i src/sources/ospi/ospi-linux.c || die
 	default
 }
 
