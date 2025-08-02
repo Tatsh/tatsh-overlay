@@ -17,8 +17,6 @@ LICENSE="MIT"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
 
-DOCS=( CHANGES.md README.md docs )
-
 python_test() {
 	"${EPYTHON}" tests/test_hex_1.py || die
 	"${EPYTHON}" tests/test_hex_2.py || die
