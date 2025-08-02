@@ -7,8 +7,8 @@ inherit font
 DESCRIPTION="Google's font family that aims to support all the world's languages"
 HOMEPAGE="https://www.google.com/get/noto/ https://github.com/notofonts/notofonts.github.io"
 
-SHA="3f196938f0797d3c91531b0b78ba7863b0ca6101"
-SRC_URI="https://github.com/notofonts/notofonts.github.io/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+SHA="noto-monthly-release-2025.08.01"
+SRC_URI="https://github.com/notofonts/notofonts.github.io/archive/refs/tags/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="OFL-1.1"
 SLOT="0"
