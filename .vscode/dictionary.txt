@@ -186,6 +186,7 @@ carian
 cascadia
 catus
 ccache
+ccflags
 ccgo
 ccmd
 ccount
@@ -583,6 +584,7 @@ flashplayer
 flatbuffers
 flatmap
 flexbin
+flto
 fluidsynth
 fluxsmooth
 flycast
@@ -1351,6 +1353,7 @@ organising
 orisano
 osmanya
 osname
+ospi
 ossemul
 ossp
 osspd
@@ -1920,6 +1923,7 @@ vemulator
 vercmp
 verweij
 vhosts
+videobuf
 videocore
 videojs
 videopac
