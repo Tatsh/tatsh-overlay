@@ -1,0 +1,39 @@
+diff '--color=auto' -ur a b
+--- a/Source/WebKitLegacy/PlatformQt.cmake
++++ b/Source/WebKitLegacy/PlatformQt.cmake
+@@ -530,5 +530,7 @@
+     qt/WidgetSupport/QWidgetPluginImpl.cpp
+     qt/WidgetSupport/QtFallbackWebPopup.cpp
+     qt/WidgetSupport/QtWebComboBox.cpp
++
++    qt/WebCoreSupport/InitWebCoreQt.cpp
+ )
+ 
+diff '--color=auto' -ur a b
+--- a/Source/cmake/WebKitCompilerFlags.cmake
++++ b/Source/cmake/WebKitCompilerFlags.cmake
+@@ -325,5 +325,4 @@
+
+ if (UNIX AND NOT APPLE AND NOT ENABLED_COMPILER_SANITIZERS)
+-    set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined ${CMAKE_SHARED_LINKER_FLAGS}")
+ endif ()
+ 
+diff '--color=auto' -ur a b
+--- a/Source/cmake/OptionsQt.cmake
++++ b/Source/cmake/OptionsQt.cmake
+@@ -663,6 +663,4 @@
+
+     if (NOT SHARED_CORE)
+-        set(CMAKE_C_FLAGS "-fvisibility=hidden ${CMAKE_C_FLAGS}")
+-        set(CMAKE_CXX_FLAGS "-fvisibility=hidden -fvisibility-inlines-hidden ${CMAKE_CXX_FLAGS}")
+     endif ()
+ endif ()
+diff '--color=auto' -ur a b
+--- a/Tools/QtTestBrowser/CMakeLists.txt
++++ b/Tools/QtTestBrowser/CMakeLists.txt
+@@ -51,4 +51,5 @@
+     ${Qt6StateMachine_LIBRARIES}
+     WebKitWidgets
++    WebKitLegacy
+     ${STATIC_LIB_DEPENDENCIES}
+ )
