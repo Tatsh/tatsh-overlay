@@ -1,0 +1,20 @@
+diff '--color=auto' -ur a b
+--- a/Source/WebKitLegacy/PlatformQt.cmake
++++ b/Source/WebKitLegacy/PlatformQt.cmake
+@@ -530,5 +530,6 @@
+     qt/WidgetSupport/QWidgetPluginImpl.cpp
+     qt/WidgetSupport/QtFallbackWebPopup.cpp
+     qt/WidgetSupport/QtWebComboBox.cpp
++    qt/WebCoreSupport/InitWebCoreQt.cpp
+ )
+ 
+diff '--color=auto' -ur a b
+--- a/Source/cmake/OptionsQt.cmake
++++ b/Source/cmake/OptionsQt.cmake
+@@ -663,6 +663,4 @@
+
+     if (NOT SHARED_CORE)
+-        set(CMAKE_C_FLAGS "-fvisibility=hidden ${CMAKE_C_FLAGS}")
+-        set(CMAKE_CXX_FLAGS "-fvisibility=hidden -fvisibility-inlines-hidden ${CMAKE_CXX_FLAGS}")
+     endif ()
+ endif ()
