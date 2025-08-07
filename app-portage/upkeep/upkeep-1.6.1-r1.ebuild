@@ -25,7 +25,7 @@ BDEPEND="test? (
 RDEPEND="app-portage/eix
 	app-portage/gentoolkit
 	dev-python/click[${PYTHON_USEDEP}]
-	dev-python/loguru[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	sys-kernel/dracut"
 
 src_install() {
