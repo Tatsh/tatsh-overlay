@@ -16,14 +16,14 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="dev-python/click[${PYTHON_USEDEP}]
-	dev-python/loguru[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
-	test? (
-		dev-python/mock[${PYTHON_USEDEP}]
-		dev-python/pytest[${PYTHON_USEDEP}]
-		dev-python/pytest-mock[${PYTHON_USEDEP}]
-		dev-python/requests-mock[${PYTHON_USEDEP}]
-	)"
+	dev-python/typing-extensions[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pytest[${PYTHON_USEDEP}]
+	dev-python/pytest-mock[${PYTHON_USEDEP}]
+	dev-python/requests-mock[${PYTHON_USEDEP}]
+)"
 
 distutils_enable_tests pytest
 
