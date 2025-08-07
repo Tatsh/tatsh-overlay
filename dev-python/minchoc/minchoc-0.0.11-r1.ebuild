@@ -17,5 +17,12 @@ KEYWORDS="~amd64"
 RDEPEND="dev-python/defusedxml[${PYTHON_USEDEP}]
 	dev-python/django-stubs-ext[${PYTHON_USEDEP}]
 	dev-python/django[${PYTHON_USEDEP}]
-	dev-python/loguru[${PYTHON_USEDEP}]
 	dev-python/ply[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pytest[${PYTHON_USEDEP}]
+	dev-python/pytest-django[${PYTHON_USEDEP}]
+	dev-python/requests-mock[${PYTHON_USEDEP}]
+)"
+
+distutils_enable_tests pytest
