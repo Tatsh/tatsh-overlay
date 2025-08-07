@@ -295,6 +295,7 @@ csstools
 csstype
 cstdint
 csvlens
+ctest
 cugan
 cunet
 cupaloy
@@ -751,7 +752,6 @@ hclog
 helpfiles
 helpuri
 hephaest
-herumi
 hexops
 hinterwaeldlers
 hjson
@@ -843,6 +843,7 @@ jinzhu
 jiti
 jkwill
 jlhcojdohadhkchjpjefbmagpiaedpgc
+jlip
 jmespath
 jmoiron
 joho
@@ -943,6 +944,7 @@ libb
 libbz
 libc
 libcaca
+libcdio
 libchdr
 libclang
 libco
@@ -1073,7 +1075,6 @@ loggo
 logr
 logrus
 logrusorgru
-loguru
 logutils
 longdescription
 loong
@@ -1126,7 +1127,6 @@ mbedtls
 mborgerson
 mbrt
 mcuadros
-mdast
 mdns
 mdurl
 mednafen
@@ -1486,6 +1486,7 @@ pydbus
 pyelftools
 pyflirt
 pyfmt
+pyftdi
 pygithub
 pygobject
 pygtrie
@@ -1501,12 +1502,14 @@ pyproject
 pypy
 pyqt
 pyqtwebengine
+pyrate
 pyrescene
 pyright
 pyserial
 pyside
 pysocks
 pytest
+pytimeparse
 pytz
 pyudev
 pyusb
@@ -1632,7 +1635,6 @@ ryszard
 ryubing
 ryujinx
 sagikazarmark
-sahilm
 samber
 sameboy
 samplerate
@@ -1893,6 +1895,7 @@ universalify
 unixify
 unpreferred
 unscopables
+unshield
 untar
 untildify
 upconv
@@ -1914,6 +1917,7 @@ vanced
 vapoursynth
 vbam
 vcpkg
+vcrtool
 vearutop
 vectrex
 vecx
