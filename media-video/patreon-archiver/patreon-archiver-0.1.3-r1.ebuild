@@ -15,15 +15,16 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="dev-python/click[${PYTHON_USEDEP}]
-	dev-python/loguru[${PYTHON_USEDEP}]
+	dev-python/colorlog[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	dev-python/yt-dlp-utils[${PYTHON_USEDEP}]
 	media-libs/mutagen[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 
 src_install() {
-        distutils-r1_src_install
-        doman "man/${PN}.1"
+	distutils-r1_src_install
+	doman "man/${PN}.1"
 }
 
 distutils_enable_tests pytest
