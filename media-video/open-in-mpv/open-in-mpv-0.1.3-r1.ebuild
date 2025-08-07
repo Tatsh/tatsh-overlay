@@ -18,10 +18,10 @@ KEYWORDS="~amd64"
 RESTRICT="test"
 
 RDEPEND="${PYTHON_DEPS}
-	dev-python/loguru[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
-	dev-python/psutil[${PYTHON_USEDEP}]
-	dev-python/pyxdg[${PYTHON_USEDEP}]
+	dev-python/colorlog[${PYTHON_USEDEP}]
+	dev-python/platformdirs[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	media-video/mpv
 	net-misc/yt-dlp"
 
