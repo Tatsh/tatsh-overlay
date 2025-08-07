@@ -23,7 +23,7 @@ BDEPEND="test? (
 
 src_configure() {
 	local mycmakeargs=(
-		-DBUILD_TESTS=$(usex test)
+		"-DBUILD_TESTS=$(usex test)"
 	)
 	cmake_src_configure
 }
