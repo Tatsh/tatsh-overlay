@@ -22,9 +22,8 @@ DEPEND="dev-db/sqlite
 	dev-libs/libtasn1
 	dev-libs/libxml2
 	dev-libs/libxslt
-	dev-qt/qtbase:6[X?,gui,network]
+	dev-qt/qtbase:6[X?,gui,network,widgets]
 	dev-qt/qtpositioning:6
-	dev-qt/qtprintsupport:6
 	dev-qt/qtsensors:6
 	media-libs/harfbuzz
 	media-libs/libjpeg-turbo
