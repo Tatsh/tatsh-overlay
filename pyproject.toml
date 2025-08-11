@@ -18,7 +18,7 @@ requests = "^2.32.4"
 types-pyyaml = "^6.0.12.20250516"
 types-requests = "^2.32.4.20250611"
 yapf = "^0.43.0"
-ruff = "^0.12.7"
+ruff = "^0.12.8"
 
 [build-system]
 requires = ["poetry-core"]
