@@ -8,7 +8,7 @@ inherit cmake flag-o-matic
 
 DESCRIPTION="Low level CD dumper utility"
 HOMEPAGE="https://github.com/superg/redumper"
-SRC_URI="https://github.com/superg/redumper/archive/refs/tags/build_${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/superg/redumper/archive/refs/tags/b${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -21,7 +21,7 @@ BDEPEND=">=llvm-core/clang-16.0.6
 DEPEND=">=llvm-runtimes/libcxx-16[static-libs]
 	>=llvm-runtimes/libcxxabi-16[static-libs]"
 
-S="${WORKDIR}/${PN}-build_${PV}"
+S="${WORKDIR}/${PN}-b${PV}"
 
 src_configure() {
 	filter-flags -O*
