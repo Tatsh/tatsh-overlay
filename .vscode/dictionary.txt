@@ -155,6 +155,7 @@ bradfitz
 bradleyjkemp
 bram
 breakpad
+breml
 browserify
 browserslist
 brrrip
@@ -1970,6 +1971,7 @@ wasi
 watara
 wayback
 wchar
+wcurl
 wcwidth
 weakmap
 weakref
