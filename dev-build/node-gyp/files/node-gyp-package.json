@@ -1,5 +1,9 @@
 {
+  "name": "node-gyp-yarn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
   "dependencies": {
-    "node-gyp": "^11.2.0"
+    "node-gyp": "^11.4.2"
   }
 }
