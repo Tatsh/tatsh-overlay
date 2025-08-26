@@ -27,7 +27,7 @@ DEPEND="app-arch/snappy
 	dev-libs/rapidjson
 	dev-libs/tabulate
 	dev-libs/utfcpp
-	dev-libs/vulkan-memory-allocator
+	media-libs/VulkanMemoryAllocator
 	dev-libs/xbyak
 	dev-libs/xxhash
 	dev-util/DirectXShaderCompiler
