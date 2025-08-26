@@ -16,7 +16,6 @@ IUSE="doc weave"
 RDEPENDS="media-libs/alsa-lib"
 
 S="${WORKDIR}/ProCaptureForLinuxPUBLIC_${PV/.0}"
-PATCHES=( "${FILESDIR}/${PN}-kernel-6.15.patch" )
 DOCS=(quick_start.txt docs/Readme.txt docs/ProCaptureSeriesCardUserGuideforLinux.{eng,chs}.pdf)
 
 CONFIG_CHECK="VIDEOBUF2_DMA_SG"
