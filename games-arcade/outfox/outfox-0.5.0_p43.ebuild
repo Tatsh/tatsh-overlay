@@ -10,10 +10,10 @@ HOMEPAGE="https://projectoutfox.com/"
 
 UPPER_PN="${PN^^}"
 MY_PN="${UPPER_PN:0:1}${PN:1:1}${PN:2:1}${UPPER_PN:3:1}${PN:4}"
-DATE="20231224"
-MAJOR="${PV:2:3}"
+DATE="20250804"
+MAJOR="${PV:0:5}"
 PRE="${PV:7}"
-SRC_URI="https://github.com/TeamRizu/${MY_PN}/releases/download/OF${MAJOR}.0-0${PRE}/OutFox-alpha-0.${MAJOR}-pre0${PRE}-Linux-22.04-amd64-current-date-${DATE}.tar.gz"
+SRC_URI="${MY_PN}-alpha-${MAJOR}-pre0${PRE}-a40-24.04-amd64-current-date-${DATE}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -30,18 +30,19 @@ RDEPEND="app-arch/bzip2
 	media-libs/libvorbis
 	media-libs/vulkan-loader
 	media-libs/libpulse
+	net-nds/openldap
 	virtual/glu
 	virtual/jack
 	virtual/udev
 	media-video/ffmpeg
 	virtual/libusb"
-RESTRICT="splitdebug strip"
+RESTRICT="fetch splitdebug strip"
 
 S="${WORKDIR}"
 
 src_prepare() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-0.${MAJOR}-pre0${PRE}-22.04-amd64-current-date-${DATE}" || die
+		cd "${MY_PN}-alpha-${MAJOR}-pre0${PRE}-a40-24.04-amd64-current-date-${DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
@@ -60,11 +61,7 @@ src_prepare() {
 }
 
 src_install() {
-	if use amd64; then
-		cd "${MY_PN}-alpha-0.${MAJOR}-pre0${PRE}-22.04-amd64-current-date-${DATE}" || die
-	else
-		die 'Unsupported architecture'
-	fi
+	cd "${MY_PN}-alpha-${MAJOR}-pre0${PRE}-a40-24.04-amd64-current-date-${DATE}" || die
 	local inst="${EPREFIX}/opt/${PN}"
 	patchelf --set-rpath "\$ORIGIN:${EPREFIX}/lib64:${EPREIFX}/usr/lib64" \
 		OutFox || die 'Failed to patch ELFs'
