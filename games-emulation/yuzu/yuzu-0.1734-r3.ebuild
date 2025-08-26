@@ -42,7 +42,7 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	>=dev-libs/libfmt-9.1.0:=
 	dev-libs/libzip
 	dev-libs/openssl:=
-	dev-libs/vulkan-memory-allocator:=
+	media-libs/VulkanMemoryAllocator:=
 	dev-util/vulkan-utility-libraries
 	dev-util/glslang
 	qt5? (
