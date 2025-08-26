@@ -40,7 +40,7 @@ DEPEND="app-arch/zstd
 	dev-libs/libfmt
 	dev-libs/mp
 	dev-libs/teakra
-	dev-libs/vulkan-memory-allocator
+	media-libs/VulkanMemoryAllocator
 	>=dev-libs/xbyak-5.941
 	qt6? ( dev-qt/qtbase:6 dev-qt/qtmultimedia:6 )
 	dev-util/nihstro
