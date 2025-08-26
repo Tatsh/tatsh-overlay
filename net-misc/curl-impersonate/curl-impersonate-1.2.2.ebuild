@@ -92,6 +92,9 @@ src_compile() {
 src_install() {
 	pushd "${CURL_VERSION}" || die
 	emake DESTDIR="${D}" install
+	if [ -f "${D}/usr/bin/wcurl" ]; then
+		mv "${D}/usr/bin/wcurl" "${D}/usr/bin/w${PN}" || die
+	fi
 	rm -fR "${D}/usr/share/man" "${D}/usr/share/aclocal" "${D}/usr/include" \
 		"${D}/usr/$(get_libdir)/lib${PN}.la" || die
 	popd || die
