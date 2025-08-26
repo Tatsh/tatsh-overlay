@@ -63,7 +63,7 @@ DEPEND="dev-cpp/cli11
 	dev-libs/nativefiledialog-extended
 	dev-libs/openssl
 	dev-libs/pugixml
-	dev-libs/vulkan-memory-allocator
+	media-libs/VulkanMemoryAllocator
 	dev-libs/xxhash
 	media-libs/cubeb
 	media-libs/libsdl2
