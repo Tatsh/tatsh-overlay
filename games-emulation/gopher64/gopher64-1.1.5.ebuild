@@ -697,7 +697,7 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.
         https://github.com/Themaister/parallel-rdp-standalone/archive/${PARALLEL_RDP_STANDALONE_SHA}.tar.gz -> ${PN}-parallel-rdp-standalone-${PARALLEL_RDP_STANDALONE_SHA:0:7}.tar.gz
         ${CARGO_CRATE_URIS}"
 
-RUST_MIN_VER="1.85.0"
+RUST_MIN_VER="1.89.0"
 LICENSE="GPL-3"
 # Dependent crate licenses
 LICENSE+="Apache-2.0 BSD Boost-1.0 CC0-1.0 ISC MIT MPL-2.0 Unicode-3.0 ZLIB"
