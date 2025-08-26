@@ -9,7 +9,6 @@ inherit systemd yarn
 DESCRIPTION="Small server wrapper around Z-Wave JS to access it via a WebSocket."
 HOMEPAGE="https://github.com/zwave-js/zwave-js-server"
 YARN_PKGS=(
-	@zwave-js/server-3.1.0
 	@alcalzone/jsonl-db-3.1.1
 	@alcalzone/proper-lockfile-4.1.3-0
 	@andrewbranch/untar.js-1.0.3
@@ -34,14 +33,15 @@ YARN_PKGS=(
 	@serialport/parser-spacepacket-13.0.0
 	@serialport/stream-13.0.0
 	@types/triple-beam-1.3.5
-	@zwave-js/cc-15.9.0
-	@zwave-js/config-15.9.0
-	@zwave-js/core-15.9.0
-	@zwave-js/host-15.9.0
-	@zwave-js/nvmedit-15.9.0
-	@zwave-js/serial-15.9.0
-	@zwave-js/shared-15.9.0
-	@zwave-js/testing-15.9.0
+	@zwave-js/cc-15.12.0
+	@zwave-js/config-15.12.0
+	@zwave-js/core-15.11.0
+	@zwave-js/host-15.12.0
+	@zwave-js/nvmedit-15.11.0
+	@zwave-js/serial-15.12.0
+	@zwave-js/server-3.2.1
+	@zwave-js/shared-15.11.0
+	@zwave-js/testing-15.12.0
 	@zwave-js/waddle-1.2.1
 	alcalzone-shared-4.0.8
 	alcalzone-shared-5.0.0
@@ -123,7 +123,7 @@ YARN_PKGS=(
 	y18n-5.0.8
 	yargs-18.0.0
 	yargs-parser-22.0.0
-	zwave-js-15.9.0
+	zwave-js-15.12.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
