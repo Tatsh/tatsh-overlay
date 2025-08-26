@@ -8,7 +8,7 @@ inherit autotools cmake flag-o-matic multiprocessing
 DESCRIPTION="An active fork of curl-impersonate with more versions and build targets."
 HOMEPAGE="https://github.com/lexiforest/curl-impersonate"
 BORINGSSL_SHA="673e61fc215b178a90c0e67858bbf162c8158993"
-CURL_VERSION="curl-8_13_0"
+CURL_VERSION="curl-8_15_0"
 SRC_URI="https://github.com/lexiforest/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/google/boringssl/archive/${BORINGSSL_SHA}.tar.gz -> boringssl-${BORINGSSL_SHA}.tar.gz
 	https://github.com/curl/curl/archive/${CURL_VERSION}.tar.gz -> ${CURL_VERSION//_/.}.tar.gz"
