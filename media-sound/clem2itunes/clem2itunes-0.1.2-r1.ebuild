@@ -20,7 +20,11 @@ RDEPEND="dev-python/aiosqlite[${PYTHON_USEDEP}]
 	dev-python/click-aliases[${PYTHON_USEDEP}]
 	dev-python/colorlog[${PYTHON_USEDEP}]
 	dev-python/platformdirs[${PYTHON_USEDEP}]
-	dev-python/typing-extensions[${PYTHON_USEDEP}]"
+	dev-python/typing-extensions[${PYTHON_USEDEP}]
+	media-sound/id3ted
+	media-sound/mp3check
+	media-sound/mp3splt
+	media-video/atomicparsley"
 BDEPEND="test? (
 	dev-python/mock[${PYTHON_USEDEP}]
 	dev-python/asyncio[${PYTHON_USEDEP}]
