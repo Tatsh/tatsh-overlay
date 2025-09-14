@@ -4,6 +4,8 @@ abloop
 aclocal
 acpi
 adbsync
+addpredict
+addwrite
 adlam
 aescts
 aesni
@@ -784,6 +786,7 @@ hwmon
 hyperscript
 iancoleman
 ianlancetaylor
+icudt
 ideviceinstaller
 idna
 ifup
