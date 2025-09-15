@@ -16,9 +16,16 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 RESTRICT="strip"
 
-BDEPEND=">=dev-games/godot-${GODOT_VERSION}"
+BDEPEND=">=dev-games/godot-${GODOT_VERSION}[tools]"
 
 S="${WORKDIR}/Super-Mario-Bros.-Remastered-Public-${PV}"
+
+pkg_setup() {
+	if has_version -b ">=dev-games/godot-${GODOT_VERSION}[double-precision]"; then
+		ewarn 'dev-games/godot is known to fail to with USE=double-precision for this build.'
+		ewarn 'If this build fails, re-build dev-games/godot with USE=-double-precision.'
+	fi
+}
 
 src_unpack() {
 	default
