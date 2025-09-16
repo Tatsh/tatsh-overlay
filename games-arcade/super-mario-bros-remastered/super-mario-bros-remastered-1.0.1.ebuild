@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit wrapper
+inherit desktop wrapper
 
 DESCRIPTION="Unofficial remaster of the original game."
 HOMEPAGE="https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public"
@@ -17,6 +17,8 @@ KEYWORDS="~amd64 ~arm64"
 RESTRICT="strip"
 
 BDEPEND=">=dev-games/godot-${GODOT_VERSION}[tools]"
+
+PATCHES=( "${FILESDIR}/${PN}-no-discord.patch" )
 
 S="${WORKDIR}/Super-Mario-Bros.-Remastered-Public-${PV}"
 
@@ -60,9 +62,11 @@ src_compile() {
 
 src_install() {
 	exeinto "/usr/share/${PN}"
-	doexe build/SMB1R build/*.so
+	doexe build/SMB1R build/libgodot*.so
 	insinto "/usr/share/${PN}"
 	doins build/SMB1R.pck
 	make_wrapper SMB1R ./SMB1R "/usr/share/${PN}"
+	newicon -s 256 icon.png "${PN}.png"
+	make_desktop_entry SMB1R 'Super Mario Bros. Remastered' "${PN}"
 	einstalldocs
 }
