@@ -973,6 +973,7 @@ libfragmentzip
 libgcrypt
 libgeneral
 libglvnd
+libgodot
 libgudev
 libgusb
 libhac
