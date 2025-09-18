@@ -6,8 +6,8 @@ inherit cmake xdg
 
 DESCRIPTION="glabels label designer (now in Qt)."
 HOMEPAGE="https://github.com/jimevins/glabels-qt"
-MY_PV="${PV%_*}-master564"
-SRC_URI="https://github.com/jimevins/${PN}-qt/archive/refs/tags/${PN}-${MY_PV}.tar.gz -> ${P}.tar.gz"
+SHA="e5be07101b0f14285b08038f6f2bad0f79bc9a27"
+SRC_URI="https://github.com/j-evins/${PN}-qt/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -16,16 +16,12 @@ IUSE="barcode qrcode zlib"
 
 DEPEND="zlib? ( sys-libs/zlib )
 	barcode? ( app-text/barcode )
-	dev-qt/qtcore:5
-	dev-qt/qtwidgets:5
-	dev-qt/qtprintsupport:5
-	dev-qt/qtxml:5
-	dev-qt/qtsvg:5
-	dev-qt/qtgui:5"
+	dev-qt/qtbase:6[cups,gui,widgets,xml]
+	dev-qt/qtsvg:6"
 RDEPEND="${DEPEND}"
-BDEPEND="dev-qt/linguist-tools:5"
+BDEPEND="dev-qt/qttools:6[linguist]"
 
-S="${WORKDIR}/${PN}-qt-${PN}-${MY_PV}"
+S="${WORKDIR}/${PN}-qt-${SHA}"
 
 src_prepare() {
 	sed -r -e '/find_package \(Qt5Test.*/d' \
