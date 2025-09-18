@@ -26,7 +26,11 @@ DEPEND="dev-libs/libfmt
 	sys-libs/libseccomp
 	sys-libs/zlib
 	gtk? ( x11-libs/gtk+:3 )
-	kde? ( dev-qt/qtcore dev-qt/qtdbus dev-qt/qtgui dev-qt/qtwidgets )
+	kde? ( dev-qt/qtbase:6[dbus,network]
+		kde-frameworks/kcoreaddons
+		kde-frameworks/kio
+		kde-frameworks/kfilemetadata
+		kde-frameworks/kwidgetsaddons )
 	lz4? ( app-arch/lz4 )
 	lzo? ( dev-libs/lzo )
 	nls? ( sys-devel/gettext )
@@ -34,7 +38,6 @@ DEPEND="dev-libs/libfmt
 	xml? ( dev-libs/tinyxml2 )
 	zstd? ( app-arch/zstd )"
 RDEPEND="${DEPEND}"
-BDEPEND="kde? ( dev-qt/qtbase )"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-seccomp-add-faccessat2.patch"
