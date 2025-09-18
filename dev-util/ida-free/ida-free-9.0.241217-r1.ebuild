@@ -17,14 +17,6 @@ IUSE="wayland"
 
 RDEPEND="app-crypt/mit-krb5
 	dev-libs/glib
-	dev-qt/qtcore:5
-	dev-qt/qtdbus:5
-	dev-qt/qtgui:5
-	dev-qt/qtnetwork:5
-	dev-qt/qtprintsupport:5
-	dev-qt/qtsql:5
-	dev-qt/qtsvg:5
-	dev-qt/qtwidgets:5
 	media-libs/fontconfig
 	media-libs/freetype
 	media-libs/libglvnd
