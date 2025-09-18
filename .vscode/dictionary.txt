@@ -930,6 +930,7 @@ keym
 keysyms
 keytar
 keyv
+kfilemetadata
 kfmin
 kharoshthi
 khudawadi
