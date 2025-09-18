@@ -25,10 +25,7 @@ DEPEND="app-emulation/faudio
 	net-libs/libslirp
 	dev-libs/libevdev
 	dev-libs/wayland
-	dev-qt/qtcore:5
-	dev-qt/qtgui:5
-	dev-qt/qtnetwork:5
-	dev-qt/qtwidgets:5
+	dev-qt/qtbase:6[gui,network,widgets]
 	x11-libs/libxkbcommon
 	x11-libs/libX11
 	x11-libs/libXi"
@@ -46,9 +43,9 @@ src_configure() {
 		"-DNEW_DYNAREC=$(usex new-dynrec)"
 		"-DOPENAL=$(usex openal)"
 		-DRELEASE=ON
-		-DSLIRP_EXTERNAL=ON
 		# Does not work on non-Windows. Attempts to link with ws2_32
 		-DVNC=OFF
+		-DUSE_QT6=ON
 	)
 	cmake_src_configure
 }
