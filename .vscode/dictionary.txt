@@ -5,6 +5,7 @@ aclocal
 acpi
 adbsync
 addpredict
+addrs
 addwrite
 adlam
 aescts
@@ -42,6 +43,8 @@ andreyvit
 andybalholm
 anmitsu
 ansiterm
+anstream
+anstyle
 antchfx
 antihax
 antonmedv
@@ -61,6 +64,7 @@ argparse
 armon
 arraybuffer
 arrayish
+arrayvec
 arrify
 artifex
 arun
@@ -137,6 +141,7 @@ binchecks
 bincomp
 bincookie
 bincue
+bindgen
 bindir
 bindist
 binja
@@ -175,7 +180,9 @@ builtinflac
 builtinmbedtls
 builtinzlib
 bulkedit
+bumpalo
 bytebufferpool
+bytemuck
 byteorder
 byteshuf
 byteswap
@@ -206,8 +213,10 @@ cellbuf
 cemu
 certifi
 cespare
+cesu
 cffi
 cflags
+chacha
 chailove
 chakma
 chardet
@@ -252,6 +261,7 @@ cohttp
 coinhsl
 coleco
 colorama
+colorchoice
 colord
 colorette
 colorlog
@@ -269,10 +279,12 @@ configura
 conflicter
 coninput
 conntrack
+conv
 cookiecutter
 cooperspencer
 copystructure
 copytime
+corasick
 coreaudio
 corecrypto
 corejs
@@ -282,6 +294,7 @@ cosmiconfig
 cplugins
 cppflags
 cpprestsdk
+cpufeatures
 cpuguy
 cpuid
 cpylint
@@ -321,6 +334,7 @@ dannav
 danwakefield
 darm
 dashjs
+dasp
 dataloaden
 dataserv
 dateformat
@@ -348,7 +362,6 @@ ddeveloper
 ddisable
 ddrivers
 ddynarec
-ddynarmic
 deark
 deband
 decamelize
@@ -391,6 +404,7 @@ diropts
 disabl
 discarder
 discordrpc
+displaydoc
 displaynames
 disruptorplus
 distdir
@@ -464,7 +478,6 @@ dsirit
 dslackw
 dslirp
 dsplit
-dsudachi
 dsystemd
 dubhater
 duckstation
@@ -515,8 +528,10 @@ emesonargs
 emirpasic
 emutype
 encodeurl
+endi
 enet
 eninja
+enumflags
 envify
 envoyproxy
 envpprof
@@ -528,6 +543,7 @@ erikgeiser
 eroot
 errcheck
 errgo
+errno
 errwrap
 esbuild
 eselect
@@ -557,6 +573,7 @@ famicom
 fastcgi
 fasthttp
 fastq
+fastrand
 fastuuid
 fatih
 faudio
@@ -585,9 +602,11 @@ findname
 firestore
 fireweapon
 firmwares
+fixedbitset
 flac
 flashplayer
 flatbuffers
+flate
 flatmap
 flexbin
 flto
@@ -597,6 +616,7 @@ flycast
 fmsx
 fmtconv
 fnmatch
+foldhash
 fomit
 fontawesome
 fontconfig
@@ -644,11 +664,14 @@ gentoolkit
 geoip
 geolocation
 getcanonicallocales
+getrandom
 getsentry
 ghodss
 gickup
 gifs
 gileshuang
+gimli
+gitcl
 gitea
 githubv
 gitmodules
@@ -673,6 +696,7 @@ glui
 gmailctl
 gnomovision
 gnuflag
+gnullvm
 gnutls
 goautoneg
 gobject
@@ -747,6 +771,7 @@ happycube
 harfbuzz
 harrypm
 harwell
+hashbrown
 hashstructure
 hasown
 hasura
@@ -760,6 +785,7 @@ hephaest
 hexops
 hinterwaeldlers
 hjson
+hmac
 homebridge
 honnef
 hppa
@@ -769,6 +795,8 @@ htdocs
 htdocsdir
 htmlparser
 htmlquery
+httparse
+httpdate
 httphead
 httplib
 httplog
@@ -800,9 +828,11 @@ implot
 imsc
 includedir
 inconshreveable
+indexmap
 infodir
 inih
 inlines
+inout
 inputremapper
 insinto
 instafail
@@ -916,6 +946,7 @@ konsorten
 koun
 kparts
 krig
+kstring
 ktexteditor
 ktrysmt
 kubun
@@ -982,8 +1013,11 @@ libhttps
 libidn
 libimobiledevice
 libjpeg
+libloading
 liblsdl
+libm
 libmad
+libmdns
 libmpv
 libmspack
 libnnedi
@@ -1037,7 +1071,6 @@ libusb
 libusbmuxd
 libva
 libvapoursynth
-libvdpau
 libvk
 libvorbis
 libvulkan
@@ -1061,6 +1094,7 @@ lipgloss
 listformat
 listr
 lisu
+litemap
 liteon
 livecheck
 llvmlite
@@ -1145,6 +1179,7 @@ melonds
 membarrier
 memberlist
 memchr
+memoffset
 mende
 menelkir
 meowpc
@@ -1177,6 +1212,7 @@ minimist
 minipass
 miniupnp
 miniupnpc
+miniz
 minizlib
 mipsdisasm
 miscfilters
@@ -1215,10 +1251,12 @@ mssqldb
 msvc
 muety
 muffet
+muldiv
 multani
 multierr
 multierror
 multilib
+multimap
 multimatch
 multiplatform
 munnerz
@@ -1308,6 +1346,7 @@ npmcli
 npmlog
 nspr
 nstool
+ntapi
 ntlmssp
 nuanceur
 nugets
@@ -1319,7 +1358,7 @@ nurio
 nvme
 nvmedit
 nxengine
-oaknut
+objc
 objdump
 objx
 ocamlopt
@@ -1388,6 +1427,7 @@ parrado
 parseargs
 pascaldekloe
 patchelf
+pathdiff
 pathe
 pathspec
 pathstr
@@ -1397,7 +1437,9 @@ pcfx
 pcre
 pcsx
 pefile
+pemfile
 permic
+petgraph
 pexpect
 pflag
 pgpassfile
@@ -1451,6 +1493,7 @@ posener
 postinst
 postrm
 potator
+powerfmt
 pprof
 ppsspp
 prboom
@@ -1574,6 +1617,7 @@ recognised
 recompiler
 redent
 redumper
+refcell
 referer
 reflectwalk
 refractoring
@@ -1596,6 +1640,7 @@ repeaterjs
 replaceall
 repr
 reqs
+reqwest
 responselike
 retroarch
 retrodream
@@ -1618,6 +1663,7 @@ roarr
 robfig
 robotstxt
 robpike
+rodio
 rogpeppe
 rollup
 romaji
@@ -1635,7 +1681,11 @@ rtmp
 ruamel
 runewidth
 russross
+rustc
 rustflags
+rustix
+rustls
+rustversion
 rwcarlsen
 ryanuber
 ryszard
@@ -1651,10 +1701,12 @@ sasl
 saurashtra
 scandir
 scenechange
+schannel
 schollz
 scikit
 scipy
 scires
+scopeguard
 screamf
 scriptable
 scrn
@@ -1735,6 +1787,7 @@ spacepacket
 spammy
 spaolacci
 spirv
+spki
 splitdebug
 splt
 sprintf
@@ -1795,6 +1848,7 @@ sylotinagri
 synchronise
 synstructure
 syscall
+sysinfo
 systemjs
 systemunitdir
 systray
@@ -1842,6 +1896,7 @@ thehandy
 thepowdertoy
 thilojaeggi
 thirdparty
+thiserror
 tidwall
 tifinagh
 tihmstar
@@ -1850,6 +1905,8 @@ tinkup
 tinyalsa
 tinyglobby
 tinylib
+tinystr
+tinyvec
 tinyxml
 tirhuta
 titleize
@@ -1874,11 +1931,14 @@ tsschecker
 tsutils
 tufjs
 tunables
+tungstenite
 tweenjs
 twemoji
 typedarray
+typenum
 typer
 tyrquake
+tzdata
 tzdb
 ucwords
 udalov
@@ -1933,6 +1993,7 @@ vektah
 vektra
 vemulator
 vercmp
+vergen
 verweij
 vhosts
 videobuf
@@ -1947,6 +2008,7 @@ vitaquake
 vite
 vitejs
 volk
+vorbis
 vosf
 vpnc
 vsaa
@@ -1971,6 +2033,7 @@ wakapi
 wakatime
 wakelock
 wakepy
+walkdir
 warang
 warangciti
 warnflags
@@ -1990,6 +2053,7 @@ webengine
 webidl
 webp
 webpassword
+webpki
 websocketpp
 webtheme
 webuiboxedlayout
@@ -2003,6 +2067,7 @@ wiimms
 wildmatch
 willf
 winapi
+wincon
 wineasio
 wineshell
 wingetty
@@ -2038,6 +2103,7 @@ xext
 xfixes
 xhit
 xinerama
+xiph
 xirvik
 xkbcommon
 xlib
@@ -2083,6 +2149,7 @@ yuzu
 zapr
 zarchive
 zaufi
+zbus
 zeebo
 zeid
 zencoder
@@ -2090,15 +2157,19 @@ zenyd
 zeroconf
 zerocopy
 zerofill
+zerofrom
+zeroize
 zerolog
+zerotrie
+zerovec
 zimg
 zint
 znedi
 zoneinfo
 zstd
+zvariant
 zvbi
 zwave
 zwitch
 zyan
 zycore
-zydis
