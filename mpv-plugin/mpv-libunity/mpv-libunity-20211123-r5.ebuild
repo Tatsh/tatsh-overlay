@@ -16,14 +16,23 @@ LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
 
-BDEPEND="dev-qt/qtcore:5
-	dev-qt/qtdbus:5"
+DEPEND="dev-qt/qtbase:6[dbus]"
+RDEPEND+="${DEPEND}"
 
 MY_PN="${PN#*-}"
 
 MPV_PLUGIN_FILES=( "${MY_PN}.so" )
 
 S="${WORKDIR}/${PN}-${SHA}"
+
+src_prepare() {
+	default
+	mv libunity.c libunity.cpp || die
+	sed -re 's/Qt5/Qt6/g' -e 's/std=c\+\+11/std=c\+\+17/g' -e 's/-O3//' \
+		-e 's/CC =/CC ?=/' -e 's/PKG_CONFIG =/PKG_CONFIG ?=/' \
+		-e 's/libunity\.c/libunity.cpp/' \
+		-i Makefile || die
+}
 
 src_compile() {
 	emake "CC=$(tc-getCXX)" "PKG_CONFIG=$(tc-getPKG_CONFIG)"
