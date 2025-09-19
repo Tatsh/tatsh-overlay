@@ -13,6 +13,8 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
+PATCHES=( "${FILESDIR}/${PN}-dc26f2c.patch" )
+
 DEPEND="dev-libs/qcoro
 	dev-libs/qtkeychain
 	dev-qt/qtbase:6[dbus,gui,network,widgets,xml]

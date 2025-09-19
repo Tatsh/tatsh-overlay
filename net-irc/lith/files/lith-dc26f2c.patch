@@ -1,0 +1,240 @@
+From dc26f2c18ebc20a795afddd2dbcc06b8952151c9 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Martin=20B=C5=99=C3=ADza?= <m@rtinbriza.cz>
+Date: Thu, 10 Oct 2024 19:55:41 +0200
+Subject: [PATCH] Enforce usage of Lith.Style instead of QtQuick.Controls
+
+This helps with testing in qhot, doesn't change behavior of released app
+---
+ modules/Lith/UI/ChannelTextInput.qml          |  5 -----
+ modules/Lith/UI/SearchBar.qml                 |  2 +-
+ modules/Lith/UI/SettingsFields/Base.qml       |  8 ++++----
+ modules/Lith/UI/SettingsFields/Boolean.qml    |  2 +-
+ modules/Lith/UI/SettingsFields/Button.qml     |  4 ++--
+ modules/Lith/UI/SettingsFields/Header.qml     |  3 ++-
+ modules/Lith/UI/SettingsFields/IntSpinBox.qml |  3 ++-
+ modules/Lith/UI/SettingsFields/RadioList.qml  |  8 +++++---
+ modules/Lith/UI/SettingsFields/String.qml     |  3 ++-
+ modules/Lith/UI/SettingsInterface.qml         | 17 +++++++++--------
+ 10 files changed, 28 insertions(+), 27 deletions(-)
+
+diff --git a/modules/Lith/UI/ChannelTextInput.qml b/modules/Lith/UI/ChannelTextInput.qml
+index df0885f1..0c269a39 100644
+--- a/modules/Lith/UI/ChannelTextInput.qml
++++ b/modules/Lith/UI/ChannelTextInput.qml
+@@ -16,7 +16,6 @@
+ 
+ import QtQuick
+ import QtQuick.Layouts
+-import QtQuick.Controls
+ 
+ import Lith.Core
+ import Lith.Style
+@@ -35,10 +34,6 @@ TextField {
+     bottomPadding: contentHeight > font.pixelSize * 2 ? 6 : 0 // if it's twice the size of the font - add a margin
+     wrapMode: TextField.WordWrap
+ 
+-    Connections {
+-        target: Qt.inputMethod
+-    }
+-
+     onAccepted: {
+         inputField.input()
+     }
+diff --git a/modules/Lith/UI/SearchBar.qml b/modules/Lith/UI/SearchBar.qml
+index 30f403af..edaec49d 100644
+--- a/modules/Lith/UI/SearchBar.qml
++++ b/modules/Lith/UI/SearchBar.qml
+@@ -58,7 +58,7 @@ Rectangle {
+             ToolTip.visible: searchModeButton.hovered
+             ToolTip.delay: 800
+             // Looks meh
+-            IconImage {
++            Image {
+                 mipmap: true
+                 width: parent.width / 3.5
+                 height: width
+diff --git a/modules/Lith/UI/SettingsFields/Base.qml b/modules/Lith/UI/SettingsFields/Base.qml
+index 9b68ffa7..fb07c01e 100644
+--- a/modules/Lith/UI/SettingsFields/Base.qml
++++ b/modules/Lith/UI/SettingsFields/Base.qml
+@@ -1,5 +1,5 @@
+ import QtQuick
+-import QtQuick.Controls
++import QtQuick.Controls as QQC2
+ import QtQuick.Layouts
+ 
+ import Lith.Core
+@@ -60,9 +60,9 @@ Rectangle {
+                         anchors.fill: parent
+                         hoverEnabled: true
+ 
+-                        ToolTip.text: summary.text + (details.text.length > 0 ? "\n" + details.text : "")
+-                        ToolTip.visible: LithPlatform.mobile ? baseMouse.containsPress : baseMouse.containsMouse
+-                        ToolTip.delay: LithPlatform.mobile ? 0 : 800
++                        QQC2.ToolTip.text: summary.text + (details.text.length > 0 ? "\n" + details.text : "")
++                        QQC2.ToolTip.visible: LithPlatform.mobile ? baseMouse.containsPress : baseMouse.containsMouse
++                        QQC2.ToolTip.delay: LithPlatform.mobile ? 0 : 800
+                     }
+                 }
+                 Label {
+diff --git a/modules/Lith/UI/SettingsFields/Boolean.qml b/modules/Lith/UI/SettingsFields/Boolean.qml
+index bc74e1db..bf0e0f4e 100644
+--- a/modules/Lith/UI/SettingsFields/Boolean.qml
++++ b/modules/Lith/UI/SettingsFields/Boolean.qml
+@@ -1,5 +1,5 @@
+ import QtQuick
+-import QtQuick.Controls
++import Lith.Style
+ 
+ Base {
+     property alias checked: checkBox.checked
+diff --git a/modules/Lith/UI/SettingsFields/Button.qml b/modules/Lith/UI/SettingsFields/Button.qml
+index ceb06514..bd37b9c5 100644
+--- a/modules/Lith/UI/SettingsFields/Button.qml
++++ b/modules/Lith/UI/SettingsFields/Button.qml
+@@ -1,14 +1,14 @@
+ import QtQuick
+-import QtQuick.Controls as QQC
+ import QtQuick.Layouts
+ 
++import Lith.Style as LithStyle
+ Base {
+     id: root
+     property alias text: button.text
+     property alias font: button.font
+     signal clicked
+ 
+-    rowComponent: QQC.Button {
++    rowComponent: LithStyle.Button {
+         id: button
+         onClicked: root.clicked()
+     }
+diff --git a/modules/Lith/UI/SettingsFields/Header.qml b/modules/Lith/UI/SettingsFields/Header.qml
+index 3d87b49f..d394b6b1 100644
+--- a/modules/Lith/UI/SettingsFields/Header.qml
++++ b/modules/Lith/UI/SettingsFields/Header.qml
+@@ -1,7 +1,8 @@
+ import QtQuick
+-import QtQuick.Controls
+ import QtQuick.Layouts
+ 
++import Lith.Style
++
+ Item {
+     id: root
+ 
+diff --git a/modules/Lith/UI/SettingsFields/IntSpinBox.qml b/modules/Lith/UI/SettingsFields/IntSpinBox.qml
+index ba2bb4e8..917c26d6 100644
+--- a/modules/Lith/UI/SettingsFields/IntSpinBox.qml
++++ b/modules/Lith/UI/SettingsFields/IntSpinBox.qml
+@@ -1,6 +1,6 @@
+ import QtQuick
+-import QtQuick.Controls
+ import QtQuick.Layouts
++import Lith.Style
+ 
+ Base {
+     id: root
+@@ -15,5 +15,6 @@ Base {
+         id: spinBox
+         Layout.fillWidth: true
+         Layout.maximumWidth: root.halfWidth
++        Layout.minimumWidth: spinBox.implicitWidth
+     }
+ }
+diff --git a/modules/Lith/UI/SettingsFields/RadioList.qml b/modules/Lith/UI/SettingsFields/RadioList.qml
+index c713a869..dc9f8bd7 100644
+--- a/modules/Lith/UI/SettingsFields/RadioList.qml
++++ b/modules/Lith/UI/SettingsFields/RadioList.qml
+@@ -1,7 +1,9 @@
+ import QtQuick
+-import QtQuick.Controls
++import QtQuick.Controls as QQC2
+ import QtQuick.Layouts
+ 
++import Lith.Style
++
+ Base {
+     id: root
+     property alias model: repeater.model
+@@ -22,7 +24,7 @@ Base {
+         }
+     }
+ 
+-    ButtonGroup {
++    QQC2.ButtonGroup {
+         id: buttonGroup
+         onCheckedButtonChanged: root.currentIndex = checkedButton.index
+     }
+@@ -45,7 +47,7 @@ Base {
+                 }
+ 
+                 RadioButton {
+-                    ButtonGroup.group: buttonGroup
++                    QQC2.ButtonGroup.group: buttonGroup
+                     checked: false
+                     readonly property int index: radioDelegateLayout.index
+                     padding: 0
+diff --git a/modules/Lith/UI/SettingsFields/String.qml b/modules/Lith/UI/SettingsFields/String.qml
+index e0be5085..840131fa 100644
+--- a/modules/Lith/UI/SettingsFields/String.qml
++++ b/modules/Lith/UI/SettingsFields/String.qml
+@@ -1,7 +1,8 @@
+ import QtQuick
+-import QtQuick.Controls
+ import QtQuick.Layouts
+ 
++import Lith.Style
++
+ Base {
+     id: root
+     property alias text: textField.text
+diff --git a/modules/Lith/UI/SettingsInterface.qml b/modules/Lith/UI/SettingsInterface.qml
+index 09456d7f..5e821f3f 100644
+--- a/modules/Lith/UI/SettingsInterface.qml
++++ b/modules/Lith/UI/SettingsInterface.qml
+@@ -15,15 +15,16 @@
+ // along with this program; If not, see <http://www.gnu.org/licenses/>.
+ 
+ import QtQuick
+-import QtQuick.Controls
++import QtQuick.Controls as QQC2
+ import QtQuick.Layouts
+ import QtQuick.Dialogs
+ 
+ import "SettingsFields" as Fields
+ import Lith.Core
+ import Lith.Style
++import Lith.UI
+ 
+-ScrollView {
++QQC2.ScrollView {
+     id: root
+     ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+ 
+@@ -448,9 +449,9 @@ ScrollView {
+                                 anchors.fill: parent
+                                 hoverEnabled: true
+ 
+-                                ToolTip.text: insideLithLabel.text
+-                                ToolTip.visible: LithPlatform.mobile ? insideLithMouse.containsPress : insideLithMouse.containsMouse
+-                                ToolTip.delay: LithPlatform.mobile ? 0 : 800
++                                QQC2.ToolTip.text: insideLithLabel.text
++                                QQC2.ToolTip.visible: LithPlatform.mobile ? insideLithMouse.containsPress : insideLithMouse.containsMouse
++                                QQC2.ToolTip.delay: LithPlatform.mobile ? 0 : 800
+                             }
+                         }
+                     }
+@@ -478,9 +479,9 @@ ScrollView {
+                                 anchors.fill: parent
+                                 hoverEnabled: true
+ 
+-                                ToolTip.text: inBrowserLabel.text
+-                                ToolTip.visible: LithPlatform.mobile ? inBrowserMouse.containsPress : inBrowserMouse.containsMouse
+-                                ToolTip.delay: LithPlatform.mobile ? 0 : 800
++                                QQC2.ToolTip.text: inBrowserLabel.text
++                                QQC2.ToolTip.visible: LithPlatform.mobile ? inBrowserMouse.containsPress : inBrowserMouse.containsMouse
++                                QQC2.ToolTip.delay: LithPlatform.mobile ? 0 : 800
+                             }
+                         }
+                     }
