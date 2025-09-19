@@ -418,6 +418,7 @@ dlclark
 dlenski
 dlibretro
 dlibrw
+dlith
 dlmalloc
 dman
 dminitrace
@@ -487,6 +488,7 @@ dusing
 dvapoursynth
 dvcpkg
 dvec
+dversion
 dvita
 dvnc
 dvulkan
@@ -1567,6 +1569,7 @@ pyusb
 pyxdg
 pyyaml
 qatom
+qcoro
 qcustomplot
 qdbus
 qfile
@@ -1580,6 +1583,7 @@ qtcore
 qtdbus
 qtdeclarative
 qtgui
+qtkeychain
 qtmin
 qtmultimedia
 qtnetwork
