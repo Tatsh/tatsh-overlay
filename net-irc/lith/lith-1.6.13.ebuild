@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Emulator of x86-based machines based on PCem."
+DESCRIPTION="Multiplatform, mobile-focused WeeChat relay client."
 HOMEPAGE="https://github.com/LithApp/lith"
 SRC_URI="https://github.com/LithApp/lith/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
@@ -13,7 +13,10 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-PATCHES=( "${FILESDIR}/${PN}-dc26f2c.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-dc26f2c.patch"
+	"${FILESDIR}/${PN}-171614a.patch"
+)
 
 DEPEND="dev-libs/qcoro
 	dev-libs/qtkeychain

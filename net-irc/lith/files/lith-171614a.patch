@@ -1,0 +1,69 @@
+From 171614a8ba2f5f6b1c5f06f7a2bfd5650dd5850b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Martin=20B=C5=99=C3=ADza?= <m@rtinbriza.cz>
+Date: Fri, 6 Jun 2025 19:36:07 +0200
+Subject: [PATCH] Disable QML->C++ compilation because it makes Lith crash
+
+---
+ app/CMakeLists.txt                | 1 +
+ modules/Lith/Core/CMakeLists.txt  | 4 ++++
+ modules/Lith/Style/CMakeLists.txt | 4 ++++
+ modules/Lith/UI/CMakeLists.txt    | 4 ++++
+ 4 files changed, 13 insertions(+)
+
+diff --git a/app/CMakeLists.txt b/app/CMakeLists.txt
+index 563c4dc..fb33d81 100644
+--- a/app/CMakeLists.txt
++++ b/app/CMakeLists.txt
+@@ -15,6 +15,7 @@ qt_add_executable(Lith
+     ${LITH_SOURCES}
+ )
+ set_target_properties(Lith PROPERTIES
++    QT_QMLCACHEGEN_ARGUMENTS "--only-bytecode"
+     QT_QML_IMPORT_PATH "${CMAKE_BINARY_DIR}/modules"
+     QT_QML_ROOT_PATH "${CMAKE_SOURCE_DIR}"
+     QT_ANDROID_EXTRA_LIBS "${ANDROID_OPENSSL_PATH}/${ANDROID_ABI}/libssl_3.so;${ANDROID_OPENSSL_PATH}/${ANDROID_ABI}/libcrypto_3.so"
+diff --git a/modules/Lith/Core/CMakeLists.txt b/modules/Lith/Core/CMakeLists.txt
+index 1e6366a..4319ea2 100644
+--- a/modules/Lith/Core/CMakeLists.txt
++++ b/modules/Lith/Core/CMakeLists.txt
+@@ -66,6 +66,10 @@ qt_add_qml_module(LithCore
+ )
+ qt_import_qml_plugins(LithCore)
+ 
++set_target_properties(LithCore PROPERTIES
++    QT_QMLCACHEGEN_ARGUMENTS "--only-bytecode"
++)
++
+ generate_export_header(LithCore)
+ 
+ target_link_libraries(LithCore PRIVATE
+diff --git a/modules/Lith/Style/CMakeLists.txt b/modules/Lith/Style/CMakeLists.txt
+index f01c889..8a53c00 100644
+--- a/modules/Lith/Style/CMakeLists.txt
++++ b/modules/Lith/Style/CMakeLists.txt
+@@ -39,6 +39,10 @@ qt_add_qml_module(LithStyle
+ )
+ qt_import_qml_plugins(LithStyle)
+ 
++set_target_properties(LithStyle PROPERTIES
++    QT_QMLCACHEGEN_ARGUMENTS "--only-bytecode"
++)
++
+ target_link_libraries(LithStyle PRIVATE
+     LithCore
+     QCoro6::Coro
+diff --git a/modules/Lith/UI/CMakeLists.txt b/modules/Lith/UI/CMakeLists.txt
+index 120c735..d37f1ec 100644
+--- a/modules/Lith/UI/CMakeLists.txt
++++ b/modules/Lith/UI/CMakeLists.txt
+@@ -51,6 +51,10 @@ qt_add_qml_module(LithUI
+ )
+ qt_import_qml_plugins(LithUI)
+ 
++set_target_properties(LithUI PROPERTIES
++    QT_QMLCACHEGEN_ARGUMENTS "--only-bytecode"
++)
++
+ target_link_libraries(LithUI PRIVATE
+     LithCore
+     LithAssets
