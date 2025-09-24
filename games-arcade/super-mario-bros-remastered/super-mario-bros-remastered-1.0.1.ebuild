@@ -7,7 +7,7 @@ inherit desktop wrapper
 
 DESCRIPTION="Unofficial remaster of the original game."
 HOMEPAGE="https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public"
-GODOT_VERSION=4.4.1
+GODOT_VERSION=4.5
 SRC_URI="https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
 
@@ -46,7 +46,7 @@ src_prepare() {
 	default
 	addwrite /dev/input
 	local i
-	for i in /dev/video*; do
+	for i in /dev/video* /dev/bus/usb/*/*; do
 		addpredict "$i"
 	done
 }
