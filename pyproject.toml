@@ -13,7 +13,7 @@ python = "^3.10"
 mypy = "^1.18.2"
 portage = { git = "https://github.com/gentoo/portage.git" }
 portage-types = "^0.0.2"
-pyyaml = "^6.0.2"
+pyyaml = "^6.0.3"
 requests = "^2.32.5"
 types-pyyaml = "^6.0.12.20250915"
 types-requests = "^2.32.4.20250913"
