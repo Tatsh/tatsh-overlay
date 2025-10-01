@@ -11,11 +11,19 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="app-arch/lz4 net-libs/mbedtls dev-libs/libfmt dev-libs/libtoolchain dev-libs/libpietendo"
+DEPEND="app-arch/lz4
+	net-libs/mbedtls:3
+	dev-libs/libfmt
+	dev-libs/libtoolchain
+	dev-libs/libpietendo"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	sed -re 's/^(PROJECT_DEPEND.*)/\1 mbedcrypto/' -i makefile || die
+	# shellcheck disable=SC2016
+	sed -re 's/^(PROJECT_DEPEND.*)/\1 mbedcrypto-3/' \
+		-e 's/@\$\(CXX\)/$(CXX)/g' \
+		-e '/\t@echo .*/d' \
+		-i makefile || die
 	default
 }
 
