@@ -145,6 +145,7 @@ bindgen
 bindir
 bindist
 binja
+binutils
 binv
 bitflags
 bitrock
@@ -756,6 +757,7 @@ grantha
 graphengine
 graphviz
 gravitydb
+grive
 groupcache
 gstreamer
 gtest
@@ -2132,6 +2134,7 @@ xvideo
 xxhash
 xyproto
 yabause
+yajl
 yallist
 yamashou
 yamux
