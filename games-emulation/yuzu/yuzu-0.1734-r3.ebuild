@@ -88,6 +88,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0004-header-fixes.patch"
 	"${FILESDIR}/${PN}-0005-boost-1.87.patch"
 	"${FILESDIR}/${PN}-0006-boost-1.88.patch"
+	"${FILESDIR}/${PN}-0006-fix-use-of-nullptr-with-std-.patch"
 	"${FILESDIR}/${PN}-sdl-pipewire.patch"
 )
 
