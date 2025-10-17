@@ -20,7 +20,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
 
-DEPEND=">=dev-libs/libfmt-10.1.0:="
+DEPEND="dev-libs/libfmt:0/11.2.0"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-util/cmakerc"
 
@@ -29,6 +29,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 src_configure() {
 	local mycmakeargs=(
 		"-DBUILD_TESTING=$(usex test)"
+		"-DVCPKG_ARTIFACTS_SHA=775c0b327487c04180e43f61813caf097da9a1f223030a486425e2ffbea255c48ba22e4add10401c8aa6e1e9bd53f182d694f363942ce99d7dd5dfafe9cc07fb"
 		"-DVCPKG_STANDALONE_BUNDLE_SHA=$(grep -E 'VCPKG_STANDALONE_BUNDLE_SHA"' CMakePresets.json | cut '-d"' -f4)"
 		-DCMAKE_POLICY_VERSION_MINIMUM=3.5
 		-DBUILD_SHARED_LIBS=OFF
