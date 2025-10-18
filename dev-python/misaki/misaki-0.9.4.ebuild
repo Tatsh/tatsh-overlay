@@ -14,11 +14,7 @@ HOMEPAGE="https://pypi.org/project/misaki/"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+l10n_en"
-IUSE_IL10N=( ja ko zh vi he )
-for lang in "${IUSE_IL10N[@]}"; do
-	IUSE="${IUSE} l10n_${lang}"
-done
+IUSE="+l10n_en l10n_he l10n_ja l10n_ko l10n_vi l10n_zh"
 
 RDEPEND="l10n_en? (
 		dev-python/num2words[${PYTHON_USEDEP}]
@@ -55,5 +51,4 @@ RDEPEND="l10n_en? (
 	dev-python/addict[${PYTHON_USEDEP}]
 	dev-python/regex[${PYTHON_USEDEP}]"
 
-EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
