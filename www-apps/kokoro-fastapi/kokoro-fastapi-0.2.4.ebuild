@@ -55,7 +55,7 @@ BDEPEND="test? (
 		dev-python/pytest-asyncio[${PYTHON_USEDEP}]
 		dev-python/pytest-cov[${PYTHON_USEDEP}]
 		>=dev-python/tomli-2.0.1[${PYTHON_USEDEP}]
-)"
+  )"
 
 
 S="${WORKDIR}/Kokoro-FastAPI-${PV}"
