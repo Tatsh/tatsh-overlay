@@ -7,7 +7,7 @@ import subprocess as sp
 import sys
 
 GLOBAL_CACHE: Dict[str, bool] = {}
-TEMPLATE = '''<?xml version="1.0" encoding="UTF-8"?>
+TEMPLATE = '''<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 \t<maintainer type="person">

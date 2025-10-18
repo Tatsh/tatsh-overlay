@@ -14,9 +14,7 @@
       "*": true
     },
     "enableGlobDot": true,
-    "files": [
-      "*"
-    ],
+    "files": ["*"],
     "ignorePaths": [
       "*.1",
       "*.har",
@@ -30,9 +28,7 @@
     "language": "en-GB",
     "languageSettings": [
       {
-        "dictionaries": [
-          "main"
-        ],
+        "dictionaries": ["main"],
         "languageId": "*"
       }
     ],
@@ -50,22 +46,14 @@
     "pyright": "^1.1.406",
     "yarn-audit-fix": "^10.1.1"
   },
-  "files": [
-    "LICENSE",
-    "README.md"
-  ],
+  "files": ["LICENSE", "README.md"],
   "homepage": "https://tatsh.github.io/tatsh-overlay/",
-  "keywords": [
-    "gentoo",
-    "overlay"
-  ],
+  "keywords": ["gentoo", "overlay"],
   "license": "MIT",
   "markdownlint-cli2": {
     "config": {
       "MD033": {
-        "allowed_elements": [
-          "kbd"
-        ]
+        "allowed_elements": ["kbd"]
       },
       "default": true,
       "line-length": {
@@ -76,17 +64,22 @@
     }
   },
   "name": "tatsh-overlay",
+  "packageManager": "yarn@4.10.3",
   "prettier": {
     "endOfLine": "lf",
     "iniSpaceAroundEquals": true,
     "jsonRecursiveSort": true,
     "overrides": [
       {
-        "files": [
-          "package.json"
-        ],
+        "files": ["package.json"],
         "options": {
           "parser": "json"
+        }
+      },
+      {
+        "files": ["*.xml"],
+        "options": {
+          "useTabs": true
         }
       }
     ],
@@ -110,6 +103,5 @@
     "ruff": "poetry run ruff check",
     "shellcheck": "shellcheck scripts/*.sh eclass/*.eclass ./*/*/*.ebuild net-dns/pihole-ftl/files/pihole-FTL x11-misc/mimeo/files/mimeo-completion.sh"
   },
-  "version": "0.0.0",
-  "packageManager": "yarn@4.10.3"
+  "version": "0.0.0"
 }

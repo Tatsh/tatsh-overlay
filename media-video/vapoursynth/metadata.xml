@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
@@ -8,7 +8,9 @@
 		<remote-id type="github">vapoursynth/vapoursynth</remote-id>
 	</upstream>
 	<use>
-		<flag name="guard-pattern">Adds 32 bytes on the left and the right sides of each frame, fills them with a certain value, and checks their integrity after each filter. It can be used to detect buggy filters that write a little outside the frame.</flag>
+		<flag
+			name="guard-pattern"
+		>Adds 32 bytes on the left and the right sides of each frame, fills them with a certain value, and checks their integrity after each filter. It can be used to detect buggy filters that write a little outside the frame.</flag>
 		<flag name="x86-asm">Enable assembler code for x86 CPUs (requires <pkg>dev-lang/yasm</pkg>).
 		</flag>
 		<flag name="vsscript">Enable VSScript.</flag>

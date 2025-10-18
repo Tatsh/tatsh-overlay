@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
@@ -9,9 +9,9 @@
 		<remote-id type="github">LithApp/lith</remote-id>
 	</upstream>
 	<use>
-		<flag name="dynrec"></flag>
-		<flag name="fluidsynth"></flag>
-		<flag name="mt-32"></flag>
-		<flag name="new-dynrec"></flag>
+		<flag name="dynrec" />
+		<flag name="fluidsynth" />
+		<flag name="mt-32" />
+		<flag name="new-dynrec" />
 	</use>
 </pkgmetadata>

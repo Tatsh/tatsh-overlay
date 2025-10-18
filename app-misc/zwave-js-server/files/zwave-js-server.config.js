@@ -10,4 +10,4 @@ module.exports = {
     deviceConfigPriorityDir: '/var/lib/zwave-js-server',
   },
   securityKeys: require('./zwave-js-server.keys.js'),
-}
+};

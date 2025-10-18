@@ -136,7 +136,8 @@ class EbuildParser:
         expand: bool = False,
         integer_to_bool: bool = False,
         str_to_bool: bool = False
-    ) -> str | list[str] | bool | dict[str, str] | dict[str, set[str]] | dict[str, set[Dependency]] | None:
+    ) -> str | list[str] | bool | dict[str, str] | dict[str, set[str]] | dict[
+            str, set[Dependency]] | None:
         """Get a variable value by name.
 
         Parameters
@@ -228,11 +229,7 @@ class EbuildParser:
         self._parse_dep_tokens(tokens, 0, len(tokens), '', result)
         return result
 
-    def _parse_dep_tokens(self,
-                          tokens: list[str],
-                          start: int,
-                          end: int,
-                          use_context: str,
+    def _parse_dep_tokens(self, tokens: list[str], start: int, end: int, use_context: str,
                           result: dict[str, set[Dependency]]) -> int:
         """Recursively parse dependency tokens with USE flag context."""
         i = start

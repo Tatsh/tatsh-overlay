@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
@@ -6,6 +6,8 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<use>
-		<flag name="weave">Do not enable deinterlacing. Warning: this stops &quot;mwcap-control --video-output-deinterlace ...&quot; from working.</flag>
+		<flag
+			name="weave"
+		>Do not enable deinterlacing. Warning: this stops &quot;mwcap-control --video-output-deinterlace ...&quot; from working.</flag>
 	</use>
 </pkgmetadata>

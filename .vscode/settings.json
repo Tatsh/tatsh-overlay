@@ -16,6 +16,10 @@
     "editor.tabSize": 2,
     "editor.useTabStops": true
   },
+  "[xml]": {
+    "editor.renderWhitespace": "boundary",
+    "editor.useTabStops": true
+  },
   "cSpell.enabled": true,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
