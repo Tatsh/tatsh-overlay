@@ -1,7 +1,9 @@
 !/metadata/layout.conf
 !/metadata/pkgcheck.conf
 .*~
+.cspellcache
 .directory
 .ruff_cache/
+/.yarn/install-state.gz
 /metadata/*
 /node_modules/
