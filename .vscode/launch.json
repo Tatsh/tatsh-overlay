@@ -4,10 +4,10 @@
       "args": ["-a", "-d", "xemu"],
       "console": "integratedTerminal",
       "justMyCode": true,
-      "name": "livecheck",
-      "program": "${workspaceFolder}/scripts/livecheck.py",
+      "name": "metadata",
+      "program": "${workspaceFolder}/scripts/metadata.py",
       "request": "launch",
-      "type": "python"
+      "type": "debugpy"
     }
   ],
   "version": "0.2.0"
