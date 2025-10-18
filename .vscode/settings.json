@@ -31,5 +31,6 @@
     "*.ebuild": "shellscript",
     "*.eclass": "shellscript"
   },
+  "files.insertFinalNewline": true,
   "shellformat.flag": "-i,0,-kp,-s,-sr"
 }
