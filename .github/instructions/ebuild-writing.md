@@ -11,6 +11,7 @@ applyTo: '**/*.ebuild'
 - Use `EAPI=8` for new ebuilds.
 - Use tabs for indentation, never spaces.
 - Follow Gentoo ebuild conventions and PMS (Package Manager Specification).
+- Always create `metadata.xml`. Use the `./scripts/metadata.py` command to automatically start one.
 
 ## Patching and configuration
 
