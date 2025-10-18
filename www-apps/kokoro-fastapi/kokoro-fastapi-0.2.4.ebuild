@@ -29,7 +29,6 @@ RDEPEND="$(python_gen_cond_dep '
 		dev-python/kokoro[${PYTHON_USEDEP}]
 		dev-python/loguru[${PYTHON_USEDEP}]
 		>=dev-python/matplotlib-3.10.0[${PYTHON_USEDEP}]
-		dev-python/misaki[l10n_en,l10n_ja,l10n_ko,l10n_zh,${PYTHON_USEDEP}]
 		dev-python/munch[${PYTHON_USEDEP}]
 		>=media-libs/mutagen-1.47.0[${PYTHON_USEDEP}]
 		>=dev-python/numpy-1.26.0[${PYTHON_USEDEP}]
@@ -50,6 +49,7 @@ RDEPEND="$(python_gen_cond_dep '
 		dev-python/tiktoken[${PYTHON_USEDEP}]
 		dev-python/tqdm[${PYTHON_USEDEP}]
 	')
+	dev-python/misaki[l10n_en,l10n_ja,l10n_ko,l10n_zh,${PYTHON_SINGLE_USEDEP}]
 	standalone? ( $(python_gen_cond_dep '
 			dev-python/uvicorn[${PYTHON_USEDEP}]
 		')
