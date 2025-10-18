@@ -20,9 +20,9 @@ jobs:
       - name: Lint with Shellcheck
         run: yarn shellcheck
       - name: Lint with mypy
-        run: yarn mypy
+        run: yarn mypy scripts
       - name: Lint with ruff
-        run: yarn ruff
+        run: yarn ruff scripts
       - name: Check spelling
         run: yarn check-spelling
       - name: Check formatting
