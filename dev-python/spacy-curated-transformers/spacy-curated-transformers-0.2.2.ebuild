@@ -11,6 +11,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="Curated transformer models for spaCy pipelines."
 HOMEPAGE="https://github.com/explosion/spacy-curated-transformers"
+SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
 
 LICENSE="MIT"
 SLOT="0"
@@ -18,12 +19,11 @@ KEYWORDS="~amd64"
 
 # shellcheck disable=SC2016
 RDEPEND="$(python_gen_cond_dep '
-		<dev-python/curated-tokenizers-3.0.0[${PYTHON_USEDEP}]
-		>=dev-python/curated-tokenizers-2.0.0[${PYTHON_USEDEP}]
-		>=dev-python/fsspec-2023.5.0[${PYTHON_USEDEP}]
-		<dev-python/thinc-9.2.0[${PYTHON_USEDEP}]
-		>=dev-python/thinc-9.0.0_pre4[${PYTHON_USEDEP}]
+		<dev-python/curated-tokenizers-0.1.0[${PYTHON_USEDEP}]
+		>=dev-python/curated-tokenizers-0.0.9[${PYTHON_USEDEP}]
+		<dev-python/thinc-9.1.0[${PYTHON_USEDEP}]
+		>=dev-python/thinc-8.1.6[${PYTHON_USEDEP}]
 	')
-  >=dev-python/curated-transformers-2.0.0[${PYTHON_SINGLE_USEDEP}]
-  <dev-python/curated-transformers-3.0.0[${PYTHON_SINGLE_USEDEP}]
+  >=dev-python/curated-transformers-0.1.0[${PYTHON_SINGLE_USEDEP}]
+  <dev-python/curated-transformers-0.2.0[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/pytorch-1.12.0[${PYTHON_SINGLE_USEDEP}]"
