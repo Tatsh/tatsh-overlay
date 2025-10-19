@@ -9,7 +9,7 @@ Environment="USE_ONNX=false"
 Environment="MODEL_DIR=/var/lib/kokoro-fastapi/models"
 Environment="VOICES_DIR=/var/lib/kokoro-fastapi/voices/v1_0"
 Environment="WEB_PLAYER_PATH=/var/lib/kokoro-fastapi/web"
-ExecStart=/usr/bin/uvicorn kokoro_fastapi.main:app --host 0.0.0.0 --port 8880
+ExecStart=/usr/bin/uvicorn kokoro_fastapi.main:app --host 127.0.0.1 --port 8880
 Restart=on-failure
 User=kokoro-fastapi
 Group=kokoro-fastapi

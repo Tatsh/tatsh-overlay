@@ -3,7 +3,7 @@
 description="Kokoro FastAPI (CPU)"
 
 command="/usr/bin/uvicorn"
-command_args="kokoro_fastapi.main:app --host 0.0.0.0 --port 8880"
+command_args="kokoro_fastapi.main:app --host 127.0.0.1 --port 8880"
 command_user="kokoro-fastapi:kokoro-fastapi"
 command_background=true
 pidfile="/run/${RC_SVCNAME}.pid"
