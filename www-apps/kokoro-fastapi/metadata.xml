@@ -9,6 +9,6 @@
 		<remote-id type="github">remsky/Kokoro-FastAPI</remote-id>
 	</upstream>
 	<use>
-		<flag name="standalone"></flag>
+		<flag name="standalone" />
 	</use>
 </pkgmetadata>
