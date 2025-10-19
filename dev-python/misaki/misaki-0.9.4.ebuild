@@ -15,7 +15,7 @@ HOMEPAGE="https://pypi.org/project/misaki/"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+l10n_en l10n_he l10n_ja l10n_ko l10n_vi l10n_zh"
+IUSE="+l10n_en l10n_ja l10n_ko l10n_vi l10n_zh"
 
 # shellcheck disable=SC2016
 RDEPEND="$(python_gen_cond_dep '
@@ -48,7 +48,6 @@ RDEPEND="$(python_gen_cond_dep '
 			dev-python/spacy[${PYTHON_USEDEP}]
 			dev-python/underthesea[${PYTHON_USEDEP}]
 		)
-		l10n_he? ( dev-python/mishkal-hebrew[${PYTHON_USEDEP}] )
 		dev-python/addict[${PYTHON_USEDEP}]
 		dev-python/regex[${PYTHON_USEDEP}]
 	')
