@@ -1,0 +1,9 @@
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -82,5 +82,5 @@ build-backend = "setuptools.build_meta"
+ 
+ [tool.setuptools]
+-package-dir = {"" = "api/src"}
+-packages.find = {where = ["api/src"], namespaces = true}
++packages = ["kokoro_fastapi"]
+ 

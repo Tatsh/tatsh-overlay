@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_{10..13} )
 DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_USE_PEP517=setuptools
 
-inherit distutils-r1
+inherit distutils-r1 systemd
 
 DESCRIPTION="FastAPI wrapper for Kokoro-82M text-to-speech model"
 HOMEPAGE="https://github.com/remsky/Kokoro-FastAPI"
@@ -19,7 +19,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 # shellcheck disable=SC2016
-RDEPEND="$(python_gen_cond_dep '
+RDEPEND="standalone? (
+		acct-group/kokoro-fastapi
+		acct-user/kokoro-fastapi
+	)
+	$(python_gen_cond_dep '
 		>=dev-python/aiofiles-23.2.1[${PYTHON_USEDEP}]
 		>=dev-python/av-14.2.0[${PYTHON_USEDEP}]
 		>=dev-python/click-8.0.0[${PYTHON_USEDEP}]
@@ -63,9 +67,34 @@ BDEPEND="test? (
 			>=dev-python/tomli-2.0.1[${PYTHON_USEDEP}]
 		')
   )"
-
+  
+PATCHES=( "${FILESDIR}/${PN}-rename-package.patch" )
 
 S="${WORKDIR}/Kokoro-FastAPI-${PV}"
+
+src_prepare() {
+	mv api/src kokoro_fastapi || die
+	distutils-r1_src_prepare
+}
+
+src_install() {
+	distutils-r1_src_install
+  keepdirs "/var/lib/${PN}/models" "/var/lib/${PN}/voices/v1_0"
+  insinto "/var/lib/${PN}/web"
+  doins -r web/*
+	if use standalone; then
+		systemd_dounit "${FILESDIR}/${PN}-cpu.service"
+		systemd_dounit "${FILESDIR}/${PN}-gpu.service"
+		newinitd "${FILESDIR}/${PN}-cpu.initd" "${PN}-cpu"
+		newinitd "${FILESDIR}/${PN}-gpu.initd" "${PN}-gpu"
+	fi
+}
+
+pkg_postinst() {
+	if use standalone; then
+		chown -R "${PN}:${PN}" "/var/lib/${PN}" || die
+	fi
+}
 
 EPYTEST_PLUGINS=( pytest-{asyncio,cov} )
 distutils_enable_tests pytest
