@@ -1,12 +1,12 @@
 aashutoshrathi
 aatl
 abloop
+absl
 abspath
 absval
 accel
 accesscontrol
 aclocal
-acpi
 adbsync
 addcont
 addn
@@ -25,6 +25,8 @@ afero
 agnivade
 ahash
 ahom
+ailln
+aiofiles
 aiohttp
 aiosqlite
 ajstarks
@@ -33,7 +35,6 @@ akefile
 alcalzone
 alcaro
 alecthomas
-alessandro
 alessio
 alexedwards
 alext
@@ -48,11 +49,8 @@ altsign
 alzbzlib
 amiiboc
 amiri
-amodding
 ampproject
-amstrad
 anacrolix
-analyse
 analyzer
 analyzers
 andrewbranch
@@ -79,10 +77,10 @@ applesmc
 aprip
 arboard
 arbovm
-archiver
 archlinux
 archutils
 ardatan
+arenastring
 argcomplete
 argmax
 argparse
@@ -96,12 +94,12 @@ arrayref
 arrayvec
 arrify
 artifex
-arun
 asan
 asar
 asaskevich
 ashpd
 asio
+asio's
 asmflags
 asmjit
 assoc
@@ -122,12 +120,9 @@ attn
 atty
 audiofile
 audioio
-authorisation
-authorised
 authorware
 autocfg
 autoconfig
-autoloading
 automodule
 autotools
 avahi
@@ -168,7 +163,6 @@ bdynamic
 beautifulsoup
 becheran
 behavior
-behaviour
 benbjohnson
 benc
 bencoder
@@ -200,7 +194,9 @@ bitvec
 bitwidth
 blackbox
 blackfriday
+blas
 blastem
+blis
 blocksort
 bluemsx
 bluez
@@ -217,7 +213,6 @@ boxen
 bradfitz
 bradleyjkemp
 brahmi
-bram
 branchname
 breakpad
 breml
@@ -226,6 +221,7 @@ browserslist
 brrrip
 bser
 bsnes
+bstr
 btime
 btrfs
 btzy
@@ -246,12 +242,14 @@ bytebufferpool
 bytemuck
 byteorder
 byteshuf
+bytestream
 byteswap
 byteswapped
 bzlib
 caca
 cacache
 cacerts
+calloc
 calloop
 callsites
 calpin
@@ -306,7 +304,6 @@ chdir
 checkpath
 checkreqs
 cheevos
-chertsey
 chksums
 choco
 chokidar
@@ -317,6 +314,7 @@ chromecast
 chromedp
 chrono
 chzyer
+cimport
 circbuf
 circl
 circonus
@@ -328,11 +326,13 @@ cksum
 clandg
 clangd
 classnames
+cldf
 cleanhttp
 clem
 climits
 cliui
 clonehero
+cloudpathlib
 clru
 cmakerc
 cmath
@@ -351,6 +351,7 @@ codem
 codeman
 codemap
 codepages
+codspeed
 cohttp
 coinhsl
 coleco
@@ -370,10 +371,9 @@ colors
 colorsaurus
 colorspace
 colorstring
-colour
 coltable
-columnize
 comby
+commandlineflag
 commandlineparser
 commandlines
 commer
@@ -416,6 +416,7 @@ coro
 cosmiconfig
 countme
 cplugins
+cppclass
 cppflags
 cpprest
 cpprestsdk
@@ -430,6 +431,7 @@ crashplan
 crctable
 creack
 creds
+crfsuite
 croco
 crocods
 crossterm
@@ -446,6 +448,7 @@ cstdlib
 cstool
 cstring
 csvlens
+csvw
 ctest
 ctypes
 cugan
@@ -515,9 +518,6 @@ debugpy
 decamelize
 decli
 decltype
-decompilation
-decompiled
-decompiler
 deconvolutiondepthwise
 decrypter
 deepcopy
@@ -563,7 +563,6 @@ dhcpstaticconfig
 dheadless
 dialog
 dialogs
-didcot
 difflib
 dinothawr
 dinput
@@ -571,7 +570,6 @@ dinstall
 diropts
 disabl
 disasm
-discarder
 discordrichpresence
 discordrpc
 displaydoc
@@ -582,7 +580,6 @@ distfile
 distfiles
 distname
 distr
-distro
 distutils
 djedditt
 dlclark
@@ -597,7 +594,6 @@ dllvmlite
 dlmalloc
 dman
 dminitrace
-dmitry
 dmnt
 dmunt
 dmupenplusapi
@@ -613,7 +609,6 @@ dnsmasq
 dnsmasqconfig
 dnspython
 dnssd
-dnssec
 dnsutils
 dobashcomp
 dobin
@@ -654,18 +649,17 @@ dplay
 dport
 dproject
 dpulseaudio
-dracut
 draic
 dreamcast
 drelcs
 drelease
 drevc
+drivendataorg
 drun
 dset
 dshader
 dsirit
 dslackw
-dslirp
 dsplit
 dsun
 dsystemd
@@ -686,6 +680,7 @@ dwrote
 dxbox
 dxemu
 dxxhash
+dyld
 dylib
 dynaconf
 dynamicdata
@@ -752,6 +747,7 @@ eprefix
 epreifx
 epytest
 epython
+erfgoed
 erikgeiser
 eroot
 errcheck
@@ -763,6 +759,7 @@ errwrap
 esac
 esbuild
 eselect
+espeak
 espeakng
 espen
 espree
@@ -794,7 +791,6 @@ faccessat
 faescts
 fafero
 fagnivade
-fairchild
 fajstarks
 fakavel
 fakecrc
@@ -824,6 +820,7 @@ fasaskevich
 fasn
 fassert
 fassertions
+fastapi
 fastcgi
 fasthttp
 fasticode
@@ -841,6 +838,7 @@ fauth
 fauto
 favast
 favatars
+favorite
 faws
 faymanbagabas
 fazcore
@@ -1130,7 +1128,6 @@ fintern
 finternal
 firestore
 fireweapon
-firmwares
 fiter
 fixedbitset
 fjackc
@@ -1168,7 +1165,6 @@ fkong
 fkonsorten
 fktrysmt
 fkylelemons
-flac
 flaldf
 flancet
 flashplayer
@@ -1309,6 +1305,7 @@ fpflag
 fpgpassfile
 fpgservicefile
 fpgx
+fphammerle
 fphilhofer
 fpie
 fpierrec
@@ -1553,7 +1550,6 @@ genproto
 gensync
 gentoolkit
 geoip
-geolocation
 getcanonicallocales
 getchar
 getcwd
@@ -1566,7 +1562,6 @@ getrandom
 getsentry
 ghodss
 gickup
-gifs
 gileshuang
 gimli
 gitcl
@@ -1680,9 +1675,10 @@ guessit
 guidefor
 guidocella
 guregu
-gurmukhi
 gvim
 hactool
+hangul
+hankaku
 hanunoo
 hanunó'o
 happycube
@@ -1692,7 +1688,6 @@ hardswish
 harfbuzz
 harfbuzzsharp
 harrypm
-harwell
 hasattr
 hashbrown
 hashstructure
@@ -1702,8 +1697,8 @@ hatari
 hatran
 havsfunc
 hclog
+hdfs
 heapless
-helpfiles
 helpuri
 hephaest
 hexops
@@ -1787,7 +1782,6 @@ infof
 inftrees
 inih
 inkflushing
-inlines
 innerproduct
 inout
 inputremapper
@@ -1821,6 +1815,7 @@ isfile
 isinteger
 isnumber
 isoboxer
+isodate
 isplainobject
 isset
 isystem
@@ -1844,8 +1839,8 @@ jcrist
 jedib
 jeepney
 jessevdk
-jetpack
 jetpytools
+jiaaro
 jieba
 jimevins
 jinja
@@ -1863,7 +1858,6 @@ jobserver
 joho
 joncampbell
 josharian
-joypad
 joystickwake
 jpillora
 jridgewell
@@ -1876,6 +1870,7 @@ jsonnet
 jsonparse
 jsonpointer
 jsonreference
+jsonschema
 jsonwebtoken
 jsonwebtokens
 jstemmer
@@ -1965,7 +1960,6 @@ ldadd
 ldconfig
 ldflags
 ldlibs
-leandro
 leasefile
 leasesfile
 leasetime
@@ -1998,8 +1992,10 @@ libcdio
 libchdr
 libclang
 libco
+libcpp
 libcrypt
 libcrypto
+libc's
 libcxx
 libcxxabi
 libd
@@ -2119,15 +2115,12 @@ libzip
 libzrif
 libzstd
 libzvbi
-licence
 liconv
 lide
-lifecycles
 lightrec
 lighttpd
 limbu
 linereader
-linkify
 linq
 linuxkms
 lipgloss
@@ -2193,13 +2186,11 @@ mahajani
 mailru
 mainpid
 mainte
-makefiles
 makeopts
 malloc
 mame
 mandaic
 mandiant
-manichaean
 maniuplate
 manpages
 manprefix
@@ -2216,9 +2207,9 @@ mathml
 mathutil
 matishsiao
 matmul
+matplotlib
 mattn
 matttproud
-maturin
 mawen
 maxperfwiz
 mbedcrypto
@@ -2230,6 +2221,7 @@ mcuadros
 mday
 mdns
 mdurl
+mecab
 mediatype
 mednafen
 meetei
@@ -2271,7 +2263,6 @@ microblaze
 microcom
 micromark
 microprofile
-microtask
 microvm
 middot
 miekg
@@ -2295,7 +2286,6 @@ mipsdisasm
 misaki
 miscfilters
 mish
-mishkal
 missinggo
 mitchellh
 mizo
@@ -2348,7 +2338,6 @@ multiheadattention
 multilib
 multimap
 multimatch
-multiplatform
 munnerz
 munt
 mupen
@@ -2384,7 +2373,6 @@ ncap
 ncnn
 ncruces
 nego
-neill
 neko
 neobrain
 neocd
@@ -2409,6 +2397,7 @@ newbin
 newdoc
 newexe
 newicon
+newinitd
 newins
 newjar
 newrules
@@ -2420,7 +2409,6 @@ nfnt
 nftables
 nghttp
 nids
-niemeyer
 nihcode
 nihongo
 nihstro
@@ -2438,7 +2426,6 @@ nofetch
 noflush
 nolegacy
 nomail
-nomi
 noncached
 noncommercial
 nonrenewal
@@ -2448,7 +2435,6 @@ noopener
 nopasswd
 nopt
 noreturn
-normalisation
 normpath
 nosetests
 nosleep
@@ -2504,6 +2490,8 @@ onedev
 oneshot
 onetime
 onmomo
+onnx
+onroerend
 onsi
 ontroller
 oorandom
@@ -2522,12 +2510,9 @@ opentimelineio
 opentk
 optarg
 optflags
-optimise
 optionator
 opusfile
 orbclient
-organiser
-organising
 orisano
 osdef
 osmanya
@@ -2562,7 +2547,6 @@ parseargs
 pascaldekloe
 patchelf
 pathdiff
-pathe
 pathlib
 pathspec
 pathstr
@@ -2577,7 +2561,6 @@ peekuser
 pefile
 pelletier
 pemfile
-permic
 persistentlogin
 petgraph
 pexpect
@@ -2592,7 +2575,6 @@ phasher
 philhofer
 phonemizer
 phpstan
-pico
 picocolors
 picodrive
 picomatch
@@ -2607,6 +2589,7 @@ pingcap
 pipefail
 pipewire
 pipx
+piskvorky
 pitmairen
 pixbuf
 pixdesc
@@ -2614,7 +2597,6 @@ pixelmatch
 pixelshuffle
 pixman
 pjbgf
-pkcs
 pkgcheck
 pkgdev
 pkgjs
@@ -2634,6 +2616,7 @@ pocketcdg
 pokemini
 polib
 polkit
+polm
 popperjs
 portaudio
 portelem
@@ -2654,14 +2637,12 @@ ppsspp
 prboom
 prcbuild
 prdownloads
-prebuild
-prebuilds
 pred
 preinst
 prelu
 preproc
 prereq
-preshred
+preshed
 prestart
 prettyplease
 primaryuri
@@ -2670,6 +2651,7 @@ priv
 proc
 procapture
 procatpure
+proces
 procmacros
 proggy
 proglog
@@ -2710,6 +2692,7 @@ pychoco
 pycparser
 pydantic
 pydbus
+pydub
 pyelftools
 pyflirt
 pyfmt
@@ -2785,7 +2768,6 @@ qtwebengine
 qtwebkit
 qtwebsockets
 qtwidgets
-qtxml
 quicknes
 quicktest
 quot
@@ -2805,6 +2787,7 @@ raviqqe
 rawio
 rdepend
 rdepends
+rdflib
 rdonly
 rdparty
 readdirp
@@ -2816,7 +2799,6 @@ realpath
 realsr
 realsrnv
 recept
-recognised
 recompiler
 recyclablememorystream
 redent
@@ -2830,7 +2812,6 @@ regexpu
 regjsgen
 regjsparser
 rehype
-reimplementation
 rejang
 relcs
 releasesd
@@ -2840,6 +2821,7 @@ relwithdebinfo
 remapper
 remeh
 removegrain
+remsky
 remyoudompheng
 renderutil
 repeaterjs
@@ -2919,7 +2901,6 @@ sameboy
 samplerate
 sampman
 samus
-sanitiser
 saraiki
 sasl
 sass
@@ -2927,6 +2908,7 @@ saurashtra
 saveimage
 savesettings
 savestatus
+savoirfairelinux
 scandir
 scenechange
 schannel
@@ -2938,7 +2920,6 @@ scires
 scmp
 scopeguard
 screamf
-scriptable
 scrn
 sctk
 scuid
@@ -2955,6 +2936,7 @@ securifybv
 sekrit
 selu
 sendgmail
+sentencepiece
 serde
 sergi
 serialport
@@ -3080,7 +3062,6 @@ ssim
 sslkeylogfile
 sslvpn
 ssprintf
-ssri
 sstream
 stackexchange
 stacklevel
@@ -3092,6 +3073,7 @@ statefile
 staticdhcpleases
 statigz
 statisticspooling
+statusor
 statvfs
 stdafx
 stdc
@@ -3117,6 +3099,7 @@ strftime
 stricmp
 strikethrough
 strincmp
+stringprintf
 strncasecmp
 strncat
 strncmp
@@ -3131,14 +3114,11 @@ subdirs
 sublicensable
 submod
 subosito
-subprojects
-subshell
 subslot
 subtag
 suchs
 sudachi
 suidsgid
-summarise
 sunos
 suntec
 supafaust
@@ -3158,9 +3138,7 @@ swscale
 sylheti
 sylotinagri
 symphonia
-synchronise
 synstructure
-syscall
 sysinfo
 sysname
 systemjs
@@ -3191,10 +3169,10 @@ tclkit
 tcltk
 tcpdump
 tdosym
+teagle
 teakra
 teatest
 teex
-telematic
 temasek
 temoto
 terak
@@ -3204,6 +3182,7 @@ termenv
 testadapter
 testdata
 testhost
+testpaths
 testplatform
 texinfo
 textextensions
@@ -3215,6 +3194,7 @@ thaana
 tham
 thehandy
 thepowdertoy
+thewh
 thilojaeggi
 thinc
 thirdparty
@@ -3223,6 +3203,7 @@ tiangha
 tidwall
 tifinagh
 tihmstar
+tiktoken
 timezone
 tink
 tinkup
@@ -3286,8 +3267,6 @@ uips
 umpv
 unalz
 unaryop
-unauthorised
-uncategorised
 underthesea
 undici
 unecm
@@ -3295,6 +3274,7 @@ unice
 unicornengine
 unidecode
 unidic
+unigram
 uniseg
 unistd
 unitless
@@ -3320,6 +3300,7 @@ upnpcommands
 urandom
 urfave
 uring
+uritemplate
 urlencoding
 urllib
 urlpattern
@@ -3334,6 +3315,7 @@ usse
 usvg
 utfcpp
 utilsfile
+uvicorn
 uzem
 valyala
 vanced
@@ -3361,7 +3343,6 @@ videobuf
 videocore
 videojs
 videopac
-viet
 vimfiles
 vimrc
 virtualjaguar
@@ -3373,7 +3354,6 @@ vkapi
 vkutil
 vnni
 volk
-vorbis
 vosf
 vpnc
 vsaa
@@ -3395,19 +3375,19 @@ vulkanmemoryallocator
 waifu
 waitable
 waivable
-waka
 wakapi
 wakatime
 wakelock
 wakepy
 waker
 walkdir
+walltime
 warang
 warangciti
 warnflags
 wasi
+wasip
 watara
-wayback
 wchar
 wcurl
 wcwidth
@@ -3453,13 +3433,13 @@ winreg
 winresource
 winsock
 wireshark
-wolfenstein
 wolfpld
 wolfssl
 wordadd
 wordwrap
 wrapdb
 wrappy
+wrapt
 writedup
 writeedits
 writename
@@ -3538,7 +3518,6 @@ yookoala
 yosay
 youcompleteme
 yourname
-yoyodyne
 ytarchive
 yuin
 yuzu
@@ -3550,12 +3529,12 @@ zbus
 zeebo
 zeid
 zencoder
+zenkaku
 zenyd
 zeroconf
 zerocopy
 zerofill
 zerofrom
-zeroize
 zerolog
 zerotrie
 zerovec
