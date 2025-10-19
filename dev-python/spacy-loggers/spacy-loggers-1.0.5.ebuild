@@ -15,3 +15,5 @@ SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+S="${WORKDIR}/${PN}-${PV}"
