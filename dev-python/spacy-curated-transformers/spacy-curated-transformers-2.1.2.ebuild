@@ -20,10 +20,10 @@ KEYWORDS="~amd64"
 RDEPEND="$(python_gen_cond_dep '
 		<dev-python/curated-tokenizers-3.0.0[${PYTHON_USEDEP}]
 		>=dev-python/curated-tokenizers-2.0.0[${PYTHON_USEDEP}]
-		<dev-python/curated-transformers-3.0.0[${PYTHON_USEDEP}]
-		>=dev-python/curated-transformers-2.0.0[${PYTHON_USEDEP}]
 		>=dev-python/fsspec-2023.5.0[${PYTHON_USEDEP}]
 		<dev-python/thinc-9.2.0[${PYTHON_USEDEP}]
 		>=dev-python/thinc-9.0.0_pre4[${PYTHON_USEDEP}]
 	')
+  >=dev-python/curated-transformers-2.0.0[${PYTHON_SINGLE_USEDEP}]
+  <dev-python/curated-transformers-3.0.0[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/pytorch-1.12.0[${PYTHON_SINGLE_USEDEP}]"
