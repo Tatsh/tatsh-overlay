@@ -15,8 +15,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="<dev-python/blis-1.1.0[${PYTHON_USEDEP}]
-	>=dev-python/blis-1.0.0[${PYTHON_USEDEP}]
+RDEPEND="<dev-python/blis-1.4.0[${PYTHON_USEDEP}]
+	>=dev-python/blis-1.3.0[${PYTHON_USEDEP}]
 	<dev-python/catalogue-2.1.0[${PYTHON_USEDEP}]
 	>=dev-python/catalogue-2.0.4[${PYTHON_USEDEP}]
 	<dev-python/confection-1.0.0[${PYTHON_USEDEP}]
@@ -30,10 +30,8 @@ RDEPEND="<dev-python/blis-1.1.0[${PYTHON_USEDEP}]
 	>=dev-python/packaging-20.0[${PYTHON_USEDEP}]
 	<dev-python/preshed-3.1.0[${PYTHON_USEDEP}]
 	>=dev-python/preshed-3.0.2[${PYTHON_USEDEP}]
-	!=dev-python/pydantic-1.8.1[${PYTHON_USEDEP}]
-	!=dev-python/pydantic-1.8[${PYTHON_USEDEP}]
 	<dev-python/pydantic-3.0.0[${PYTHON_USEDEP}]
-	>=dev-python/pydantic-1.7.4[${PYTHON_USEDEP}]
+	>=dev-python/pydantic-2.0.0[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	<dev-python/srsly-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/srsly-2.4.0[${PYTHON_USEDEP}]
