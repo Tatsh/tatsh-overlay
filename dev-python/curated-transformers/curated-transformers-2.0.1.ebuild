@@ -18,8 +18,7 @@ KEYWORDS="~amd64"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 	# shellcheck disable=SC2016
-RDEPEND="${PYTHON_DEPS}
-	$(python_gen_cond_dep '
+RDEPEND="$(python_gen_cond_dep '
 		<dev-python/catalogue-2.1.0[${PYTHON_USEDEP}]
 		>=dev-python/catalogue-2.0.4[${PYTHON_USEDEP}]
 		<dev-python/curated-tokenizers-3.0.0[${PYTHON_USEDEP}]
@@ -28,5 +27,3 @@ RDEPEND="${PYTHON_DEPS}
 	')
 	>=sci-ml/huggingface_hub-0.14[${PYTHON_SINGLE_USEDEP}]
 	sci-libs/pytorch[${PYTHON_SINGLE_USEDEP}]"
-DEPEND="${RDEPEND}"
-BDEPEND="${PYTHON_DEPS}"
