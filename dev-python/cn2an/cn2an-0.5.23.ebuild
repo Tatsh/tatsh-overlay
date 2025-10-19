@@ -14,3 +14,5 @@ HOMEPAGE="https://pypi.org/project/cn2an/"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+RDEPEND=">=dev-python/proces-0.1.7[${PYTHON_USEDEP}]"
