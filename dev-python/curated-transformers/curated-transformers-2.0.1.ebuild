@@ -24,9 +24,9 @@ RDEPEND="${PYTHON_DEPS}
 		>=dev-python/catalogue-2.0.4[${PYTHON_USEDEP}]
 		<dev-python/curated-tokenizers-3.0.0[${PYTHON_USEDEP}]
 		>=dev-python/curated-tokenizers-2.0.0[${PYTHON_USEDEP}]
-		>=dev-python/huggingface-hub-0.14[${PYTHON_USEDEP}]
 		>=dev-python/tokenizers-0.13.3[${PYTHON_USEDEP}]
 	')
+	>=sci-ml/huggingface_hub-0.14[${PYTHON_SINGLE_USEDEP}]
 	sci-libs/pytorch[${PYTHON_SINGLE_USEDEP}]"
 DEPEND="${RDEPEND}"
 BDEPEND="${PYTHON_DEPS}"
