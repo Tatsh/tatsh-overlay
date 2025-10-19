@@ -37,5 +37,3 @@ RDEPEND="<dev-python/blis-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/srsly-2.4.0[${PYTHON_USEDEP}]
 	<dev-python/wasabi-1.2.0[${PYTHON_USEDEP}]
 	>=dev-python/wasabi-0.8.1[${PYTHON_USEDEP}]"
-
-PATCHES=( "${FILESDIR}/${PN}-3_13-gh-958.patch" )
