@@ -11,6 +11,8 @@ inherit distutils-r1 pypi
 DESCRIPTION="Lightweight piece tokenization library."
 HOMEPAGE="https://github.com/explosion/curated-tokenizers"
 
+PATCHES=( "${FILESDIR}/${PN}-fix-comma.patch" )
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
