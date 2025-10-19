@@ -6,15 +6,22 @@ EAPI=8
 PYTHON_COMPAT=( python3_{10..13} )
 DISTUTILS_USE_PEP517=setuptools
 
-inherit distutils-r1 pypi
+inherit distutils-r1
 
 DESCRIPTION="Lightweight piece tokenization library."
 HOMEPAGE="https://github.com/explosion/curated-tokenizers"
+SRC_URI="https://github.com/explosion/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
-PATCHES=( "${FILESDIR}/${PN}-fix-comma.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-system-deps.patch"
+	"${FILESDIR}/${PN}-system-headers.patch"
+)
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=dev-python/regex-2022[${PYTHON_USEDEP}]"
+RDEPEND=">=dev-python/regex-2022[${PYTHON_USEDEP}]
+	dev-cpp/abseil-cpp
+	dev-libs/protobuf
+	sci-ml/sentencepiece"

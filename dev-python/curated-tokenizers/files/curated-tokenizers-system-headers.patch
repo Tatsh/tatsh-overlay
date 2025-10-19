@@ -1,0 +1,11 @@
+--- a/curated_tokenizers/_spp.pxd
++++ b/curated_tokenizers/_spp.pxd
+@@ -4,7 +4,7 @@ from libcpp.string cimport string
+ from libcpp.vector cimport vector
+ from libcpp cimport bool
+ 
+-cdef extern from "builtin_pb/sentencepiece.pb.h" namespace "sentencepiece":
++cdef extern from "sentencepiece.pb.h" namespace "sentencepiece":
+     cdef cppclass SentencePieceText_SentencePiece:
+         string piece()
+         int id()
