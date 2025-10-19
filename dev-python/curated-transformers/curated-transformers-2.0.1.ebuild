@@ -23,7 +23,7 @@ RDEPEND="$(python_gen_cond_dep '
 		>=dev-python/catalogue-2.0.4[${PYTHON_USEDEP}]
 		<dev-python/curated-tokenizers-3.0.0[${PYTHON_USEDEP}]
 		>=dev-python/curated-tokenizers-2.0.0[${PYTHON_USEDEP}]
-		>=dev-python/tokenizers-0.13.3[${PYTHON_USEDEP}]
 	')
+  >=sci-ml/tokenizers-0.13.3[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/huggingface_hub-0.14[${PYTHON_SINGLE_USEDEP}]
-	sci-libs/pytorch[${PYTHON_SINGLE_USEDEP}]"
+	sci-ml/pytorch[${PYTHON_SINGLE_USEDEP}]"
