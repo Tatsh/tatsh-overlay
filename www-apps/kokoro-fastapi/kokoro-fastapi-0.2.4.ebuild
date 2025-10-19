@@ -26,7 +26,6 @@ RDEPEND="$(python_gen_cond_dep '
 		dev-python/espeakng-loader[${PYTHON_USEDEP}]
 		dev-python/fastapi[${PYTHON_USEDEP}]
 		>=dev-python/inflect-7.5.0[${PYTHON_USEDEP}]
-		dev-python/kokoro[${PYTHON_USEDEP}]
 		dev-python/loguru[${PYTHON_USEDEP}]
 		>=dev-python/matplotlib-3.10.0[${PYTHON_USEDEP}]
 		dev-python/munch[${PYTHON_USEDEP}]
@@ -48,12 +47,10 @@ RDEPEND="$(python_gen_cond_dep '
 		>=dev-python/text2num-2.5.1[${PYTHON_USEDEP}]
 		dev-python/tiktoken[${PYTHON_USEDEP}]
 		dev-python/tqdm[${PYTHON_USEDEP}]
+    standalone? ( dev-python/uvicorn[${PYTHON_USEDEP}] )
 	')
 	dev-python/misaki[l10n_en,l10n_ja,l10n_ko,l10n_zh,${PYTHON_SINGLE_USEDEP}]
-	standalone? ( $(python_gen_cond_dep '
-			dev-python/uvicorn[${PYTHON_USEDEP}]
-		')
-	)
+  dev-python/kokoro[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/pytorch-2.8.0[${PYTHON_SINGLE_USEDEP}]"
 DEPEND="${RDEPEND}"
 # shellcheck disable=SC2016
