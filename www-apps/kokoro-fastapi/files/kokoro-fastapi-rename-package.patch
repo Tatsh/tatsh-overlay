@@ -1,9 +1,12 @@
---- a/pyproject.toml
-+++ b/pyproject.toml
-@@ -82,5 +82,5 @@ build-backend = "setuptools.build_meta"
+--- a/pyproject.toml	2025-10-18 23:32:47.188529524 -0400
++++ b/pyproject.toml	2025-10-18 23:33:10.252060081 -0400
+@@ -87,8 +87,7 @@
+ build-backend = "setuptools.build_meta"
  
  [tool.setuptools]
 -package-dir = {"" = "api/src"}
 -packages.find = {where = ["api/src"], namespaces = true}
-+packages = ["kokoro_fastapi"]
++packages = ["kokoro_fastapi", "kokoro_fastapi.core", "kokoro_fastapi.inference", "kokoro_fastapi.routers", "kokoro_fastapi.services", "kokoro_fastapi.services.text_processing", "kokoro_fastapi.structures"]
  
+ [tool.pytest.ini_options]
+ testpaths = ["api/tests", "ui/tests"]

@@ -11,7 +11,9 @@ inherit distutils-r1 systemd
 
 DESCRIPTION="FastAPI wrapper for Kokoro-82M text-to-speech model"
 HOMEPAGE="https://github.com/remsky/Kokoro-FastAPI"
-SRC_URI="https://github.com/remsky/Kokoro-FastAPI/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/remsky/Kokoro-FastAPI/archive/v${PV}.tar.gz -> ${P}.tar.gz
+	https://github.com/remsky/Kokoro-FastAPI/releases/download/v0.1.4/kokoro-v1_0.pth -> ${P}-kokoro-v1_0.pth
+  https://github.com/remsky/Kokoro-FastAPI/releases/download/v0.1.4/config.json -> ${P}-kokoro-v1_0-config.json"
 IUSE="standalone test"
 
 LICENSE="Apache-2.0"
@@ -79,9 +81,16 @@ src_prepare() {
 
 src_install() {
 	distutils-r1_src_install
-  keepdirs "/var/lib/${PN}/models" "/var/lib/${PN}/voices/v1_0"
-  insinto "/var/lib/${PN}/web"
-  doins -r web/*
+	insinto "/var/lib/${PN}/web"
+	doins -r web/*
+	local item
+	for item in models voices; do
+		insinto "/var/lib/${PN}/${item}"
+		doins -r kokoro_fastapi/${item}/*
+	done
+  insinto "/var/lib/${PN}/models/v1_0"
+  newins "${DISTDIR}/${P}-kokoro-v1_0.pth" "kokoro-v1_0.pth"
+  newins "${DISTDIR}/${P}-kokoro-v1_0-config.json" "config.json"
 	if use standalone; then
 		systemd_dounit "${FILESDIR}/${PN}-cpu.service"
 		systemd_dounit "${FILESDIR}/${PN}-gpu.service"
