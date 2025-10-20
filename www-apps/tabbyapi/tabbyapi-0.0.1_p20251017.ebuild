@@ -79,6 +79,7 @@ src_prepare() {
 		-e 's|^import common\b|import tabbyapi.common|g' \
 		-e 's|^import endpoints\b|import tabbyapi.endpoints|g' \
 		-e 's|^import backends\b|import tabbyapi.backends|g' \
+		-e 's|^    from backends\b|    from tabbyapi.backends|g' \
 		{} + || die
 	distutils-r1_src_prepare
 }
