@@ -20,6 +20,7 @@ IUSE="+l10n_en l10n_ja l10n_ko l10n_vi l10n_zh"
 # shellcheck disable=SC2016
 RDEPEND="$(python_gen_cond_dep '
 		l10n_en? (
+			dev-python/en-core-web-sm[${PYTHON_USEDEP}]
 			dev-python/num2words[${PYTHON_USEDEP}]
 			dev-python/spacy[${PYTHON_USEDEP}]
 			dev-python/phonemizer-fork[${PYTHON_USEDEP}]
