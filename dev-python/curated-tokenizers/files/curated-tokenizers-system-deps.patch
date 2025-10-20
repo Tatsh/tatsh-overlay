@@ -1,10 +1,12 @@
---- a/setup.py	2025-10-18 21:46:39.050159151 -0400
-+++ b/setup.py	2025-10-18 21:48:03.401025750 -0400
-@@ -16,61 +16,6 @@
+--- a/setup.py
++++ b/setup.py
+@@ -16,61 +16,6 @@ def prefix_path(prefix, files):
      return list(map(lambda f: f"{prefix}/{f}", files))
  
  
--ABSL_SRC = prefix_path("sentencepiece/third_party/absl", ["flags/flag.cc"])
+-ABSL_SRC = prefix_path(
+-    "sentencepiece/third_party/absl", ["flags/flag.cc", "strings/string_view.cc"]
+-)
 -
 -PROTOBUF_LIGHT_SRC = prefix_path(
 -    "sentencepiece/third_party/protobuf-lite",
@@ -62,16 +64,18 @@
  PACKAGES = find_packages()
  MOD_NAMES = [
      "curated_tokenizers.sp",
-@@ -86,7 +31,7 @@
+@@ -84,8 +29,8 @@ COMPILE_OPTIONS = {
+         "/wd4514",
      ],
      "other": [
-         "--std=c++17",
+-        "--std=c++14",
 -        "-Wno-sign-compare" "-Wno-strict-prototypes",
++        "--std=c++17",
 +        "-Wno-sign-compare", "-Wno-strict-prototypes",
          "-Wno-unused-function",
+         "-D_USE_INTERNAL_STRING_VIEW",
          "-pthread",
-         "-DHAVE_PTHREAD=1",
-@@ -139,18 +84,8 @@
+@@ -143,16 +88,8 @@ def setup_package():
      ext_modules = [
          Extension(
              "curated_tokenizers._spp",
