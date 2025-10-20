@@ -7,7 +7,6 @@ DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_EXT=1
 PYTHON_COMPAT=( python3_{10..13} )
 DISTUTILS_USE_PEP517=setuptools
-CUDA_VERBOSE=true
 
 inherit cuda distutils-r1 pypi
 
@@ -35,7 +34,7 @@ BDEPEND="${PYTHON_DEPS}
 src_compile() {
 	use cuda && cuda_add_sandbox
 	export FLASH_ATTENTION_FORCE_BUILD=TRUE \
-		MAX_JOBS=$(makeopts_jobs) \
+		"MAX_JOBS=$(bc <<< "scale=0;$(makeopts_jobs)/2")" \
 		NVCC_THREADS=1  # Stop machine from hanging.
 	use cuda && export BUILD_TARGET=cuda
 	use rocm && export BUILD_TARGET=rocm
