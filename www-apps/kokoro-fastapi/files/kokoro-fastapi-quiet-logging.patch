@@ -1,0 +1,19 @@
+--- a/api/src/main.py	2025-10-20 00:56:13.277693594 -0400
++++ b/api/src/main.py	2025-10-20 00:57:52.820314517 -0400
+@@ -25,13 +25,9 @@
+     config = {
+         "handlers": [
+             {
+-                "sink": sys.stdout,
+-                "format": "<fg #2E8B57>{time:hh:mm:ss A}</fg #2E8B57> | "
+-                "{level: <8} | "
+-                "<fg #4169E1>{module}:{line}</fg #4169E1> | "
+-                "{message}",
+-                "colorize": True,
+-                "level": "DEBUG",
++                "sink": sys.stderr,
++                "format": "{module}:{line} | {message}",
++                "level": "WARNING",
+             },
+         ],
+     }

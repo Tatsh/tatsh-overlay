@@ -70,13 +70,16 @@ BDEPEND="test? (
 		')
   )"
   
-PATCHES=( "${FILESDIR}/${PN}-rename-package.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-rename-package.patch"
+	"${FILESDIR}/${PN}-quiet-logging.patch"
+)
 
 S="${WORKDIR}/Kokoro-FastAPI-${PV}"
 
 src_prepare() {
-	mv api/src kokoro_fastapi || die
 	distutils-r1_src_prepare
+	mv api/src kokoro_fastapi || die
 }
 
 src_install() {
@@ -97,12 +100,19 @@ src_install() {
 		newinitd "${FILESDIR}/${PN}-cpu.initd" "${PN}-cpu"
 		newinitd "${FILESDIR}/${PN}-gpu.initd" "${PN}-gpu"
 	fi
+	insinto "$(python_get_sitedir)/kokoro_fastapi/core"
+	doins kokoro_fastapi/core/openai_mappings.json
 }
 
 pkg_postinst() {
 	if use standalone; then
 		chown -R "${PN}:${PN}" "/var/lib/${PN}" || die
 	fi
+	elog
+	elog "For CUDA support, add the kokoro-fastapi user to the video group:"
+	elog
+	elog "  gpasswd -a kokoro-fastapi video"
+	elog
 }
 
 EPYTEST_PLUGINS=( pytest-{asyncio,cov} )
