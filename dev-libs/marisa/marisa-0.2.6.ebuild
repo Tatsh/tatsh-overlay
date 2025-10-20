@@ -59,6 +59,7 @@ src_prepare() {
 }
 
 src_configure() {
+	# shellcheck disable=SC2153
 	local -x CPPFLAGS="${CPPFLAGS} ${CXXFLAGS}"
 
 	cpu_instructions_option() {
@@ -67,7 +68,8 @@ src_configure() {
 		local result="--enable-${option}"
 		local macro
 		for macro in ${macros}; do
-			if ! $(tc-getCC) ${CPPFLAGS} ${CFLAGS} -E -P -dM - < /dev/null 2> /dev/null | grep -Eq "^#define ${macro}([[:space:]]|$)"; then
+			# shellcheck disable=SC2153
+			if ! "$(tc-getCC)" "${CPPFLAGS}" "${CFLAGS}" -E -P -dM - < /dev/null 2> /dev/null | grep -Eq "^#define ${macro}([[:space:]]|$)"; then
 				result="--disable-${option}"
 			fi
 		done
@@ -75,17 +77,17 @@ src_configure() {
 	}
 
 	local options=(
-		$(cpu_instructions_option sse2 __SSE2__)
-		$(cpu_instructions_option sse3 __SSE3__)
-		$(cpu_instructions_option ssse3 __SSSE3__)
-		$(cpu_instructions_option sse4.1 __SSE4_1__)
-		$(cpu_instructions_option sse4.2 __SSE4_2__)
-		$(cpu_instructions_option sse4 __POPCNT__ __SSE4_2__)
-		$(cpu_instructions_option sse4a __SSE4A__)
-		$(cpu_instructions_option popcnt __POPCNT__)
-		$(cpu_instructions_option bmi __BMI__)
-		$(cpu_instructions_option bmi2 __BMI2__)
-		$(use_enable static-libs static)
+		"$(cpu_instructions_option sse2 __SSE2__)"
+		"$(cpu_instructions_option sse3 __SSE3__)"
+		"$(cpu_instructions_option ssse3 __SSSE3__)"
+		"$(cpu_instructions_option sse4.1 __SSE4_1__)"
+		"$(cpu_instructions_option sse4.2 __SSE4_2__)"
+		"$(cpu_instructions_option sse4 __POPCNT__ __SSE4_2__)"
+		"$(cpu_instructions_option sse4a __SSE4A__)"
+		"$(cpu_instructions_option popcnt __POPCNT__)"
+		"$(cpu_instructions_option bmi __BMI__)"
+		"$(cpu_instructions_option bmi2 __BMI2__)"
+		"$(use_enable static-libs static)"
 	)
 
 	econf "${options[@]}"
