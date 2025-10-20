@@ -12,6 +12,7 @@
       "source.fixAll.shellcheck": "explicit"
     },
     "editor.detectIndentation": false,
+    "editor.insertSpaces": false,
     "editor.renderWhitespace": "boundary",
     "editor.tabSize": 2,
     "editor.useTabStops": true
