@@ -15,4 +15,5 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="media-video/ffmpeg"
+RDEPEND="media-video/ffmpeg
+	dev-python/audioop-lts[${PYTHON_USEDEP}]"
