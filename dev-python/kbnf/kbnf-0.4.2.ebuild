@@ -7,14 +7,17 @@ DISTUTILS_EXT=1
 PYTHON_COMPAT=( python3_{10..13} )
 DISTUTILS_USE_PEP517=maturin
 
-CRATES="ahash-0.8.12
+CRATES="
+	ahash-0.8.12
 	aho-corasick-1.1.3
 	anes-0.1.6
 	anstyle-1.0.10
+	arc-swap-1.7.1
 	autocfg-1.4.0
 	bitflags-2.9.1
 	bumpalo-3.17.0
 	cast-0.3.0
+	cc-1.2.23
 	cfg-if-1.0.0
 	ciborium-0.2.2
 	ciborium-io-0.2.2
@@ -43,7 +46,9 @@ CRATES="ahash-0.8.12
 	heck-0.5.0
 	hermit-abi-0.5.1
 	html-escape-0.2.13
+	indoc-2.0.6
 	insta-1.43.1
+	inventory-0.3.20
 	is-terminal-0.4.16
 	itertools-0.10.5
 	itoa-1.0.15
@@ -52,8 +57,11 @@ CRATES="ahash-0.8.12
 	kbnf-regex-automata-0.4.10
 	kbnf-syntax-0.5.3
 	libc-0.2.172
+	libmimalloc-sys-0.1.42
 	log-0.4.27
 	memchr-2.7.4
+	memoffset-0.9.1
+	mimalloc-0.1.46
 	minimal-lexical-0.2.1
 	nom-7.1.3
 	nonmax-0.5.5
@@ -71,11 +79,18 @@ CRATES="ahash-0.8.12
 	plotters-0.3.7
 	plotters-backend-0.3.7
 	plotters-svg-0.3.7
+	portable-atomic-1.11.0
 	proc-macro2-1.0.95
+	pyo3-0.24.2
+	pyo3-build-config-0.24.2
+	pyo3-ffi-0.24.2
+	pyo3-log-0.12.4
+	pyo3-macros-0.24.2
+	pyo3-macros-backend-0.24.2
 	quote-1.0.40
-	r-efi-5.2.0
 	rayon-1.10.0
 	rayon-core-1.12.1
+	r-efi-5.2.0
 	regex-1.11.1
 	regex-automata-0.4.9
 	regex-lite-0.1.6
@@ -87,11 +102,14 @@ CRATES="ahash-0.8.12
 	serde-1.0.219
 	serde_derive-1.0.219
 	serde_json-1.0.140
+	serde-wasm-bindgen-0.6.5
+	shlex-1.3.0
 	similar-2.7.0
 	string-interner-0.18.0
 	strum-0.26.3
 	strum_macros-0.26.4
 	syn-2.0.101
+	target-lexicon-0.13.2
 	thiserror-1.0.69
 	thiserror-2.0.12
 	thiserror-impl-1.0.69
@@ -101,6 +119,7 @@ CRATES="ahash-0.8.12
 	typenum-1.18.0
 	unescaper-0.1.6
 	unicode-ident-1.0.18
+	unindent-0.2.4
 	utf8-width-0.1.7
 	version_check-0.9.5
 	walkdir-2.5.0
@@ -113,25 +132,26 @@ CRATES="ahash-0.8.12
 	wasm-bindgen-shared-0.2.100
 	web-sys-0.3.77
 	winapi-util-0.1.9
-	windows-sys-0.59.0
-	windows-targets-0.52.6
 	windows_aarch64_gnullvm-0.52.6
 	windows_aarch64_msvc-0.52.6
 	windows_i686_gnu-0.52.6
 	windows_i686_gnullvm-0.52.6
 	windows_i686_msvc-0.52.6
+	windows-sys-0.59.0
+	windows-targets-0.52.6
 	windows_x86_64_gnu-0.52.6
 	windows_x86_64_gnullvm-0.52.6
 	windows_x86_64_msvc-0.52.6
 	wit-bindgen-rt-0.39.0
 	zerocopy-0.8.25
-	zerocopy-derive-0.8.25"
+	zerocopy-derive-0.8.25
+"
 
 inherit cargo distutils-r1 pypi
 
 DESCRIPTION="A fast constrained decoding engine based on context free grammar."
 HOMEPAGE="https://pypi.org/project/kbnf/"
-SRC_URI="${CARGO_CRATE_URIS}"
+SRC_URI+=" ${CARGO_CRATE_URIS}"
 
 LICENSE="MIT Apache-2.0"
 SLOT="0"
