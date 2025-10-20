@@ -50,6 +50,8 @@ RDEPEND="${PYTHON_DEPS}
 		dev-python/uvloop[${PYTHON_USEDEP}]
 	')
 	sci-ml/pytorch[${PYTHON_SINGLE_USEDEP}]
+	sci-ml/exllamav2[${PYTHON_SINGLE_USEDEP}]
+	sci-ml/exllamav3[${PYTHON_SINGLE_USEDEP}]
 	sci-ml/huggingface_hub[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/tokenizers-0.21.0[${PYTHON_SINGLE_USEDEP}]"
 DEPEND="${RDEPEND}"
