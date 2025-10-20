@@ -451,6 +451,7 @@ csvlens
 csvw
 ctest
 ctypes
+cuda
 cugan
 cunet
 cupaloy
@@ -613,6 +614,7 @@ dnsutils
 dobashcomp
 dobin
 docdir
+docinto
 docopt
 docsonnet
 docstrings
@@ -1550,6 +1552,7 @@ genproto
 gensync
 gentoolkit
 geoip
+georgkrause
 getcanonicallocales
 getchar
 getcwd
@@ -1652,6 +1655,7 @@ gotool
 gouuid
 govalidator
 gover
+gpasswd
 gpsp
 gqlgen
 gqlgenc
@@ -1945,6 +1949,7 @@ kxmlgui
 kylelemons
 kylemanna
 labbe's
+langcodes
 lapack
 largefile
 launchervar
@@ -2002,6 +2007,7 @@ libd
 libdbus
 libdrm
 libepoxy
+libespeak
 libevdev
 libexec
 libexecdir
@@ -2159,6 +2165,7 @@ logutils
 longdescription
 lookatme
 loong
+loongarch
 lowresnx
 lpthread
 lrelease
@@ -2617,6 +2624,7 @@ pokemini
 polib
 polkit
 polm
+popcnt
 popperjs
 portaudio
 portelem
@@ -3062,6 +3070,7 @@ ssim
 sslkeylogfile
 sslvpn
 ssprintf
+ssse
 sstream
 stackexchange
 stacklevel
@@ -3436,6 +3445,7 @@ wireshark
 wolfpld
 wolfssl
 wordadd
+wordpiece
 wordwrap
 wrapdb
 wrappy
@@ -3471,6 +3481,7 @@ xiph
 xirvik
 xkbcommon
 xkeysym
+xlen
 xlib
 xmlbuilder
 xmldom
@@ -3505,6 +3516,7 @@ yamux
 yapf
 yargs
 yasm
+yata
 yauzl
 yazl
 ycmd
