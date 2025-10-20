@@ -20,4 +20,12 @@ KEYWORDS="~amd64"
 
 RDEPEND="app-accessibility/espeak-ng"
 
+PATCHES=( "${FILESDIR}/${PN}-fix-paths.patch" )
+
 S="${WORKDIR}/${PN}-${COMMIT}"
+
+src_prepare() {
+	distutils-r1_src_prepare
+	sed -re "s/@EPREFIX@/${EPREFIX}/g" -e "s/@LIB_DIR@/$(get_libdir)/g" \
+		-i src/espeakng_loader/__init__.py || die
+}

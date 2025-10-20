@@ -1,0 +1,20 @@
+--- a/src/espeakng_loader/__init__.py	2025-10-20 00:17:16.438421423 -0400
++++ b/src/espeakng_loader/__init__.py	2025-10-20 00:19:39.436006806 -0400
+@@ -4,15 +4,10 @@
+ import os
+ 
+ def get_library_path():
+-    ext = ".dll" if platform.system() == "Windows" else ".so" if platform.system() == "Linux" else ".dylib"
+-    lib_name = "espeak-ng" + ext if platform.system() == "Windows" else 'libespeak-ng' + ext
+-    return str(Path(__file__).parent / lib_name)
++    return '@EPREFIX@/usr/@LIB_DIR@/libespeak-ng.so'
+ 
+ def get_data_path():
+-    data_path = Path(__file__).parent / 'espeak-ng-data'
+-    if not data_path.exists():
+-        raise RuntimeError(f'data path not exists at {data_path}')
+-    return str(data_path)
++    return '@EPREFIX@/usr/share/espeak-ng-data'
+ 
+ def load_library():
+     """
