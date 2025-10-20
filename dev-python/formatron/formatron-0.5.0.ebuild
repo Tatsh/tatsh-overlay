@@ -25,3 +25,12 @@ RDEPEND="<dev-python/frozendict-3[${PYTHON_USEDEP}]
 	>=dev-python/kbnf-0.4.0[${PYTHON_USEDEP}]
 	<dev-python/pydantic-3[${PYTHON_USEDEP}]
 	>=dev-python/pydantic-2[${PYTHON_USEDEP}]"
+
+src_prepare() {
+	sed -re 's/typing\.Type/Type/g' \
+		-e 's/typing\.Any/Any/g' \
+		-i src/formatron/schemas/dict_inference.py || die
+	sed -re 's/^from pydantic import typing$/import typing/' \
+		-i src/formatron/schemas/json_schema.py || die
+	distutils-r1_src_prepare
+}
