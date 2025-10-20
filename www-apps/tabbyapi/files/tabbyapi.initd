@@ -1,0 +1,14 @@
+#!/sbin/openrc-run
+
+description="TabbyAPI"
+
+command="/usr/bin/python"
+command_args="-m tabbyapi.main"
+command_user="tabbyapi:tabbyapi"
+command_background=true
+pidfile="/run/${RC_SVCNAME}.pid"
+directory="/var/lib/tabbyapi"
+
+depend() {
+	need net
+}

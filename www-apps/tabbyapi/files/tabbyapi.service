@@ -1,0 +1,14 @@
+[Unit]
+Description=TabbyAPI
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python -m tabbyapi.main
+Restart=on-failure
+User=tabbyapi
+Group=tabbyapi
+WorkingDirectory=/var/lib/tabbyapi
+
+[Install]
+WantedBy=multi-user.target

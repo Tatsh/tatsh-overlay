@@ -1,0 +1,20 @@
+--- a/tabbyapi/common/auth.py
++++ b/tabbyapi/common/auth.py
+@@ -56,7 +56,7 @@ async def load_auth_keys(disable_from_config: bool):
+ 
+     yaml = YAML(typ=["rt", "safe"])
+     try:
+-        async with aiofiles.open("api_tokens.yml", "r", encoding="utf8") as auth_file:
++        async with aiofiles.open("/var/lib/tabbyapi/api_tokens.yml", "r", encoding="utf8") as auth_file:
+             contents = await auth_file.read()
+             auth_keys_dict = yaml.load(contents)
+             AUTH_KEYS = AuthKeys.model_validate(auth_keys_dict)
+@@ -66,7 +66,7 @@ async def load_auth_keys(disable_from_config: bool):
+         )
+         AUTH_KEYS = new_auth_keys
+ 
+-        async with aiofiles.open("api_tokens.yml", "w", encoding="utf8") as auth_file:
++        async with aiofiles.open("/var/lib/tabbyapi/api_tokens.yml", "w", encoding="utf8") as auth_file:
+             string_stream = io.StringIO()
+             yaml.dump(AUTH_KEYS.model_dump(), string_stream)
+ 

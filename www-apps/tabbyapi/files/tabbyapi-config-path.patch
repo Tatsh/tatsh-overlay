@@ -1,0 +1,11 @@
+--- a/tabbyapi/common/tabby_config.py
++++ b/tabbyapi/common/tabby_config.py
+@@ -31,7 +31,7 @@ class TabbyConfig(TabbyConfigModel):
+         # If actions aren't present, also look from the file
+         # TODO: Change logic if file loading requires actions in the future
+         if not arguments_dict.get("actions"):
+-            configs.insert(0, self._from_file(pathlib.Path("config.yml")))
++            configs.insert(0, self._from_file(pathlib.Path("/etc/tabbyapi/config.yml")))
+ 
+         # Remove None (aka unset) values from the configs and merge them together
+         # This should be less expensive than pruning the entire merged dictionary
