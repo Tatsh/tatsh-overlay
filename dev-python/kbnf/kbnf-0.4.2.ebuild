@@ -3,13 +3,135 @@
 
 EAPI=8
 
+DISTUTILS_EXT=1
 PYTHON_COMPAT=( python3_{10..13} )
-DISTUTILS_USE_PEP517=setuptools
+DISTUTILS_USE_PEP517=maturin
 
-inherit distutils-r1 pypi
+CRATES="ahash-0.8.12
+	aho-corasick-1.1.3
+	anes-0.1.6
+	anstyle-1.0.10
+	autocfg-1.4.0
+	bitflags-2.9.1
+	bumpalo-3.17.0
+	cast-0.3.0
+	cfg-if-1.0.0
+	ciborium-0.2.2
+	ciborium-io-0.2.2
+	ciborium-ll-0.2.2
+	clap-4.5.38
+	clap_builder-4.5.38
+	clap_lex-0.7.4
+	console-0.15.11
+	criterion-0.5.1
+	criterion-plot-0.5.0
+	crossbeam-deque-0.8.6
+	crossbeam-epoch-0.9.18
+	crossbeam-utils-0.8.21
+	crunchy-0.2.3
+	displaydoc-0.2.5
+	either-1.15.0
+	encode_unicode-1.0.0
+	fixedbitset-stack-0.5.7
+	foldhash-0.1.5
+	general-sam-1.0.1
+	generic-array-1.2.0
+	getrandom-0.2.16
+	getrandom-0.3.3
+	half-2.6.0
+	hashbrown-0.15.3
+	heck-0.5.0
+	hermit-abi-0.5.1
+	html-escape-0.2.13
+	insta-1.43.1
+	is-terminal-0.4.16
+	itertools-0.10.5
+	itoa-1.0.15
+	jaggedarray-0.2.11
+	js-sys-0.3.77
+	kbnf-regex-automata-0.4.10
+	kbnf-syntax-0.5.3
+	libc-0.2.172
+	log-0.4.27
+	memchr-2.7.4
+	minimal-lexical-0.2.1
+	nom-7.1.3
+	nonmax-0.5.5
+	num-0.4.3
+	num-bigint-0.4.6
+	num-complex-0.4.6
+	num-integer-0.1.46
+	num-iter-0.1.45
+	num-rational-0.4.2
+	num-traits-0.2.19
+	once_cell-1.21.3
+	oorandom-11.1.5
+	parse-hyperlinks-0.27.2
+	percent-encoding-2.3.1
+	plotters-0.3.7
+	plotters-backend-0.3.7
+	plotters-svg-0.3.7
+	proc-macro2-1.0.95
+	quote-1.0.40
+	r-efi-5.2.0
+	rayon-1.10.0
+	rayon-core-1.12.1
+	regex-1.11.1
+	regex-automata-0.4.9
+	regex-lite-0.1.6
+	regex-syntax-0.8.5
+	rustc-hash-2.1.1
+	rustversion-1.0.20
+	ryu-1.0.20
+	same-file-1.0.6
+	serde-1.0.219
+	serde_derive-1.0.219
+	serde_json-1.0.140
+	similar-2.7.0
+	string-interner-0.18.0
+	strum-0.26.3
+	strum_macros-0.26.4
+	syn-2.0.101
+	thiserror-1.0.69
+	thiserror-2.0.12
+	thiserror-impl-1.0.69
+	thiserror-impl-2.0.12
+	tinytemplate-1.2.1
+	tinyvec-1.9.0
+	typenum-1.18.0
+	unescaper-0.1.6
+	unicode-ident-1.0.18
+	utf8-width-0.1.7
+	version_check-0.9.5
+	walkdir-2.5.0
+	wasi-0.11.0+wasi-snapshot-preview1
+	wasi-0.14.2+wasi-0.2.4
+	wasm-bindgen-0.2.100
+	wasm-bindgen-backend-0.2.100
+	wasm-bindgen-macro-0.2.100
+	wasm-bindgen-macro-support-0.2.100
+	wasm-bindgen-shared-0.2.100
+	web-sys-0.3.77
+	winapi-util-0.1.9
+	windows-sys-0.59.0
+	windows-targets-0.52.6
+	windows_aarch64_gnullvm-0.52.6
+	windows_aarch64_msvc-0.52.6
+	windows_i686_gnu-0.52.6
+	windows_i686_gnullvm-0.52.6
+	windows_i686_msvc-0.52.6
+	windows_x86_64_gnu-0.52.6
+	windows_x86_64_gnullvm-0.52.6
+	windows_x86_64_msvc-0.52.6
+	wit-bindgen-rt-0.39.0
+	zerocopy-0.8.25
+	zerocopy-derive-0.8.25"
+
+inherit cargo distutils-r1 pypi
 
 DESCRIPTION="A fast constrained decoding engine based on context free grammar."
 HOMEPAGE="https://pypi.org/project/kbnf/"
+SRC_URI="${CARGO_CRATE_URIS}"
 
 LICENSE="MIT Apache-2.0"
 SLOT="0"
