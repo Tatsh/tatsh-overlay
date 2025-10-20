@@ -25,10 +25,10 @@ RDEPEND="${PYTHON_DEPS}
 		>=dev-python/numpy-2.1.0[${PYTHON_USEDEP}]
 		dev-python/pyyaml[${PYTHON_USEDEP}]
 		dev-python/rich[${PYTHON_USEDEP}]
-		>=dev-python/safetensors-0.3.2[${PYTHON_USEDEP}]
+		>=sci-ml/safetensors-0.3.2[${PYTHON_USEDEP}]
 		dev-python/typing-extensions[${PYTHON_USEDEP}]
+		dev-libs/marisa[${PYTHON_USEDEP}]
 	')
-	dev-libs/marisa[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/pytorch-2.6.0[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/flash-attn-2.7.4_p1[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/tokenizers-0.21.1[${PYTHON_SINGLE_USEDEP}]"
