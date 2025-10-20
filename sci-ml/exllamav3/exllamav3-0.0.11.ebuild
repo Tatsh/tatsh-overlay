@@ -31,6 +31,7 @@ RDEPEND="${PYTHON_DEPS}
 	')
 	>=sci-ml/pytorch-2.6.0[${PYTHON_SINGLE_USEDEP}]
 	sci-ml/caffe2[flash,${PYTHON_SINGLE_USEDEP}]
+	sci-ml/flash-attn[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/tokenizers-0.21.1[${PYTHON_SINGLE_USEDEP}]"
 DEPEND="${RDEPEND}"
 BDEPEND="${PYTHON_DEPS}
