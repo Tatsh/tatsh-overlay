@@ -1,6 +1,6 @@
---- a/setup.py
-+++ b/setup.py
-@@ -16,61 +16,6 @@ def prefix_path(prefix, files):
+--- a/setup.py	2025-10-20 00:01:06.755586101 -0400
++++ b/setup.py	2025-10-20 00:07:55.019945759 -0400
+@@ -16,63 +16,6 @@
      return list(map(lambda f: f"{prefix}/{f}", files))
  
  
@@ -64,7 +64,7 @@
  PACKAGES = find_packages()
  MOD_NAMES = [
      "curated_tokenizers.sp",
-@@ -84,8 +29,8 @@ COMPILE_OPTIONS = {
+@@ -87,8 +30,8 @@
          "/wd4514",
      ],
      "other": [
@@ -75,7 +75,7 @@
          "-Wno-unused-function",
          "-D_USE_INTERNAL_STRING_VIEW",
          "-pthread",
-@@ -143,16 +88,8 @@ def setup_package():
+@@ -142,19 +85,9 @@
      ext_modules = [
          Extension(
              "curated_tokenizers._spp",
@@ -92,7 +92,8 @@
 -                "sentencepiece/third_party/protobuf-lite",
 -            ],
 +            ["curated_tokenizers/_spp.pyx"],
-+            libraries=["sentencepiece", "protobuf", "absl_flags_commandlineflag", "absl_flags_config", "absl_flags_internal", "absl_flags_reflection", "absl_strings",],
              language="c++",
++            libraries=["sentencepiece", "protobuf", "absl_flags_commandlineflag", "absl_flags_config", "absl_flags_internal", "absl_flags_reflection", "absl_strings",],
          ),
          Extension(
+             "curated_tokenizers._wordpiece",
