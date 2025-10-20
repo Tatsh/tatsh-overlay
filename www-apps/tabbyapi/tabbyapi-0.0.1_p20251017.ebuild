@@ -47,6 +47,7 @@ RDEPEND="${PYTHON_DEPS}
 		dev-python/ruamel-yaml[${PYTHON_USEDEP}]
 		>=dev-python/sse-starlette-2.2.0[${PYTHON_USEDEP}]
 		>=dev-python/uvicorn-0.28.1[${PYTHON_USEDEP}]
+		dev-python/uvloop[${PYTHON_USEDEP}]
 	')
 	sci-ml/pytorch[${PYTHON_SINGLE_USEDEP}]
 	sci-ml/huggingface_hub[${PYTHON_SINGLE_USEDEP}]
@@ -67,7 +68,9 @@ DOCS=( README.md )
 src_prepare() {
 	mkdir tabbyapi || die
 	mv backends common endpoints main.py tabbyapi/ || die
+	find tabbyapi -type d -exec touch {}/__init__.py \; || die
 	find tabbyapi -name '*.py' -type f -exec sed -i \
+		-e 's|^from common |from tabbyapi.common |g' \
 		-e 's|^from common\.|from tabbyapi.common.|g' \
 		-e 's|^from endpoints\.|from tabbyapi.endpoints.|g' \
 		-e 's|^from backends\.|from tabbyapi.backends.|g' \
@@ -83,9 +86,10 @@ src_install() {
 	keepdir /var/lib/tabbyapi/loras
 	keepdir /var/lib/tabbyapi/models
 	insinto /var/lib/tabbyapi
+	rm templates/place_your_templates_here.txt || die
 	doins -r sampler_overrides templates
 	insinto /etc/tabbyapi
-	newins config_sample.yml config.yml
+	doins config_sample.yml
 	if use standalone; then
 		systemd_dounit "${FILESDIR}/${PN}.service"
 		newinitd "${FILESDIR}/${PN}.initd" "${PN}"

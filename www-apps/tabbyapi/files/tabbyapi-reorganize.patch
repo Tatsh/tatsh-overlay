@@ -6,6 +6,6 @@
 -# We're not building the project itself
  [tool.setuptools]
 -py-modules = []
-+packages = ["tabbyapi"]
++packages = ["tabbyapi", "tabbyapi.backends", "tabbyapi.common", "tabbyapi.backends.exllamav2", "tabbyapi.backends.exllamav3", "tabbyapi.backends.infinity", "tabbyapi.endpoints", "tabbyapi.endpoints.Kobold", "tabbyapi.endpoints.Kobold.types", "tabbyapi.endpoints.Kobold.utils", "tabbyapi.endpoints.OAI", "tabbyapi.endpoints.OAI.types", "tabbyapi.endpoints.OAI.utils", "tabbyapi.endpoints.core", "tabbyapi.endpoints.core.types", "tabbyapi.endpoints.core.utils"]
  
  [project]
