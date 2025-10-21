@@ -65,7 +65,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-auth-path.patch"
 )
 
-DOCS=( README.md )
+DOCS=( README.md config_sample.yml )
 
 src_prepare() {
 	mkdir tabbyapi || die
@@ -91,8 +91,6 @@ src_install() {
 	insinto /var/lib/tabbyapi
 	rm templates/place_your_templates_here.txt || die
 	doins -r sampler_overrides templates
-	insinto /etc/tabbyapi
-	doins config_sample.yml
 	if use standalone; then
 		systemd_dounit "${FILESDIR}/${PN}.service"
 		newinitd "${FILESDIR}/${PN}.initd" "${PN}"
@@ -103,4 +101,5 @@ pkg_postinst() {
 	if use standalone; then
 		chown -R tabbyapi:tabbyapi /var/lib/tabbyapi || die
 	fi
+	# elog message about how to set up config.yml
 }
