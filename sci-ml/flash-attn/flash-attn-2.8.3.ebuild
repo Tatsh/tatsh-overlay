@@ -31,12 +31,22 @@ DEPEND="${RDEPEND}"
 BDEPEND="${PYTHON_DEPS}
 	dev-build/ninja"
 
+PATCHES=( "${FILESDIR}/${P}-respect-flags.patch" )
+
+src_prepare() {
+	cuda_src_prepare
+	distutils-r1_src_prepare
+}
+
 src_compile() {
 	use cuda && cuda_add_sandbox
-	export FLASH_ATTENTION_FORCE_BUILD=TRUE \
+	export CXXFLAGS FLASH_ATTENTION_FORCE_BUILD=TRUE \
 		"MAX_JOBS=$(bc <<< "scale=0;$(makeopts_jobs)/2")" \
-		NVCC_THREADS=1  # Stop machine from hanging.
-	use cuda && export BUILD_TARGET=cuda
+		"NVCC_THREADS=${NVCC_THREADS:-1}"  # Anything above 1 requires a lot of RAM.
+	if use cuda; then
+		cuda_add_sandbox
+		export BUILD_TARGET=cuda
+	fi
 	use rocm && export BUILD_TARGET=rocm
 	distutils-r1_src_compile
 }
