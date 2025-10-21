@@ -101,5 +101,7 @@ pkg_postinst() {
 	if use standalone; then
 		chown -R tabbyapi:tabbyapi /var/lib/tabbyapi || die
 	fi
-	# elog message about how to set up config.yml
+	elog
+	elog "Please copy config_sample.yml to /etc/tabbyapi/config.yml and modify it as needed."
+	elog
 }

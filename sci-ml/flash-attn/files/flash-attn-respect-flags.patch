@@ -1,0 +1,179 @@
+diff --git a/csrc/fused_dense_lib/setup.py b/csrc/fused_dense_lib/setup.py
+index d068746..d5722a6 100755
+--- a/csrc/fused_dense_lib/setup.py
++++ b/csrc/fused_dense_lib/setup.py
+@@ -1,4 +1,5 @@
+ import os
++import shlex
+ import subprocess
+ from packaging.version import parse, Version
+ 
+@@ -31,8 +32,8 @@ setup(
+             name='fused_dense_lib',
+             sources=['fused_dense.cpp', 'fused_dense_cuda.cu'],
+             extra_compile_args={
+-                               'cxx': ['-O3',],
+-                               'nvcc': append_nvcc_threads(['-O3'])
++                               'cxx': shlex.split(os.environ.get("CXXFLAGS", "")),
++                               'nvcc': []
+                                }
+             )
+     ],
+diff --git a/csrc/layer_norm/setup.py b/csrc/layer_norm/setup.py
+index 6579301..d2e11ea 100644
+--- a/csrc/layer_norm/setup.py
++++ b/csrc/layer_norm/setup.py
+@@ -2,6 +2,7 @@
+ import sys
+ import warnings
+ import os
++import shlex
+ from packaging.version import parse, Version
+ 
+ import torch
+@@ -174,10 +175,8 @@ ext_modules.append(
+             "ln_parallel_bwd_8192.cu",
+         ],
+         extra_compile_args={
+-            "cxx": ["-O3"] + generator_flag,
+-            "nvcc": append_nvcc_threads(
+-                [
+-                    "-O3",
++            "cxx": [*shlex.split(os.environ.get("CXXFLAGS", "")), *generator_flag],
++            "nvcc":[
+                     "-U__CUDA_NO_HALF_OPERATORS__",
+                     "-U__CUDA_NO_HALF_CONVERSIONS__",
+                     "-U__CUDA_NO_BFLOAT16_OPERATORS__",
+@@ -190,7 +189,6 @@ ext_modules.append(
+                 ]
+                 + generator_flag
+                 + cc_flag
+-            ),
+         },
+         include_dirs=[this_dir],
+     )
+diff --git a/hopper/setup.py b/hopper/setup.py
+index c15c438..23af144 100644
+--- a/hopper/setup.py
++++ b/hopper/setup.py
+@@ -10,6 +10,7 @@ import ast
+ from pathlib import Path
+ from packaging.version import parse, Version
+ import platform
++import shlex
+ import sysconfig
+ import tarfile
+ import itertools
+@@ -511,7 +512,6 @@ if not SKIP_CUDA_BUILD:
+         sources += ["flash_fwd_combine.cu"]
+     sources += ["flash_prepare_scheduler.cu"]
+     nvcc_flags = [
+-        "-O3",
+         "-std=c++17",
+         "--ftemplate-backtrace-limit=0",  # To debug template code
+         "--use_fast_math",
+@@ -542,8 +542,8 @@ if not SKIP_CUDA_BUILD:
+             name=f"{PACKAGE_NAME}._C",
+             sources=sources,
+             extra_compile_args={
+-                "cxx": ["-O3", "-std=c++17", "-DPy_LIMITED_API=0x03090000"] + feature_args,
+-                "nvcc": nvcc_threads_args() + nvcc_flags + cc_flag + feature_args,
++                "cxx": [*shlex.split(os.environ.get("CXXFLAGS", "")), "-std=c++17", "-DPy_LIMITED_API=0x03090000"] + feature_args,
++                "nvcc": nvcc_flags + cc_flag + feature_args
+             },
+             include_dirs=include_dirs,
+             py_limited_api=True,
+diff --git a/setup.py b/setup.py
+index a108c41..cad002e 100644
+--- a/setup.py
++++ b/setup.py
+@@ -7,6 +7,7 @@ import os
+ import re
+ import ast
+ import glob
++import shlex
+ import shutil
+ from pathlib import Path
+ from packaging.version import parse, Version
+@@ -176,20 +177,6 @@ if not SKIP_CUDA_BUILD and not IS_ROCM:
+                 "Note: make sure nvcc has a supported version by running nvcc -V."
+             )
+ 
+-    if "80" in cuda_archs():
+-        cc_flag.append("-gencode")
+-        cc_flag.append("arch=compute_80,code=sm_80")
+-    if CUDA_HOME is not None:
+-        if bare_metal_version >= Version("11.8") and "90" in cuda_archs():
+-            cc_flag.append("-gencode")
+-            cc_flag.append("arch=compute_90,code=sm_90")
+-        if bare_metal_version >= Version("12.8") and "100" in cuda_archs():
+-            cc_flag.append("-gencode")
+-            cc_flag.append("arch=compute_100,code=sm_100")
+-        if bare_metal_version >= Version("12.8") and "120" in cuda_archs():
+-            cc_flag.append("-gencode")
+-            cc_flag.append("arch=compute_120,code=sm_120")
+-
+     # HACK: The compiler flag -D_GLIBCXX_USE_CXX11_ABI is set to be the same as
+     # torch._C._GLIBCXX_USE_CXX11_ABI
+     # https://github.com/pytorch/pytorch/blob/8472c24e3b5b60150096486616d98b7bea01500b/torch/utils/cpp_extension.py#L920
+@@ -197,7 +184,6 @@ if not SKIP_CUDA_BUILD and not IS_ROCM:
+         torch._C._GLIBCXX_USE_CXX11_ABI = True
+ 
+     nvcc_flags = [
+-    "-O3",
+     "-std=c++17",
+     "-U__CUDA_NO_HALF_OPERATORS__",
+     "-U__CUDA_NO_HALF_CONVERSIONS__",
+@@ -216,12 +202,15 @@ if not SKIP_CUDA_BUILD and not IS_ROCM:
+     # "-DFLASHATTENTION_DISABLE_UNEVEN_K",
+     # "-DFLASHATTENTION_DISABLE_LOCAL",
+     ]
++    for arch in os.environ.get("CUDAARCHS", "").split(";"):
++        if arch:
++            nvcc_flags.extend(["-gencode", f"arch=compute_{arch},code=sm_{arch}"])
+ 
+-    compiler_c17_flag=["-O3", "-std=c++17"]
++    compiler_c17_flag=[*shlex.split(os.environ.get("CXXFLAGS", "")), "-std=c++17"]
+     # Add Windows-specific flags
+     if sys.platform == "win32" and os.getenv('DISTUTILS_USE_SDK') == '1':
+         nvcc_flags.extend(["-Xcompiler", "/Zc:__cplusplus"])
+-        compiler_c17_flag=["-O2", "/std:c++17", "/Zc:__cplusplus"]
++        compiler_c17_flag=[*shlex.split(os.environ.get("CXXFLAGS", "")), "/std:c++17", "/Zc:__cplusplus"]
+ 
+     ext_modules.append(
+         CUDAExtension(
+@@ -303,12 +292,12 @@ if not SKIP_CUDA_BUILD and not IS_ROCM:
+             ],
+             extra_compile_args={
+                 "cxx": compiler_c17_flag,
+-                "nvcc": append_nvcc_threads(nvcc_flags + cc_flag),
++                "nvcc": nvcc_flags + cc_flag,
+             },
+             include_dirs=[
+                 Path(this_dir) / "csrc" / "flash_attn",
+                 Path(this_dir) / "csrc" / "flash_attn" / "src",
+-                Path(this_dir) / "csrc" / "cutlass" / "include",
++                Path("/usr/include/cutlass"),
+             ],
+         )
+     )
+@@ -374,7 +363,7 @@ elif not SKIP_CUDA_BUILD and IS_ROCM:
+                         "csrc/flash_attn_ck/mha_varlen_bwd.cu",
+                         "csrc/flash_attn_ck/mha_varlen_fwd.cu"] + glob.glob(f"build/fmha_*wd*.cu")
+ 
+-        cc_flag += ["-O3","-std=c++17",
++        cc_flag += ["-std=c++17",
+                     "-DCK_TILE_FMHA_FWD_FAST_EXP2=1",
+                     "-fgpu-flush-denormals-to-zero",
+                     "-DCK_ENABLE_BF16",
+@@ -406,8 +395,8 @@ elif not SKIP_CUDA_BUILD and IS_ROCM:
+             cc_flag += ["-mllvm", "-amdgpu-coerce-illegal-types=1"]
+ 
+         extra_compile_args = {
+-            "cxx": ["-O3", "-std=c++17"] + generator_flag,
+-            "nvcc": cc_flag + generator_flag,
++            "cxx": [*shlex.split(os.environ.get("CXXFLAGS", "")), "-std=c++17"] + generator_flag,
++            "nvcc": shlex.split(os.environ.get("CXXFLAGS", "")) + cc_flag + generator_flag,
+         }
+ 
+         include_dirs = [

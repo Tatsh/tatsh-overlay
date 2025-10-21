@@ -19,6 +19,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
+DEPEND="dev-libs/cutlass"
 # shellcheck disable=SC2016
 RDEPEND="${PYTHON_DEPS}
 	$(python_gen_cond_dep '
@@ -28,10 +29,32 @@ RDEPEND="${PYTHON_DEPS}
 	rocm? ( sci-ml/caffe2[rocm] )
 	sci-ml/pytorch[${PYTHON_SINGLE_USEDEP}]"
 DEPEND="${RDEPEND}"
+# shellcheck disable=SC2016
 BDEPEND="${PYTHON_DEPS}
-	dev-build/ninja"
+	dev-build/ninja
+	$(python_gen_cond_dep '
+		dev-python/psutil[${PYTHON_USEDEP}]
+	')"
 
-PATCHES=( "${FILESDIR}/${P}-respect-flags.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-respect-flags.patch"
+)
+
+pkg_setup() {
+	if use cuda; then
+		if [[ -z "${NVCC_PREPEND_FLAGS}" ]] || ! grep -q -- "--threads" <<< "${NVCC_PREPEND_FLAGS}"; then
+			ewarn
+			ewarn "If this hangs your system, try adding '--threads 1' to NVCC_PREPEND_FLAGS. Or try"
+			ewarn "lowering the number of make jobs. Example:"
+			ewarn
+			ewarn "  mkdir -p /etc/portage/env /etc/portage/package.env"
+			ewarn "  echo 'NVCC_PREPEND_FLAGS=\"--threads 1\"' > /etc/portage/env/flash-attn"
+			ewarn "  echo 'sci-ml/flash-attn flash-attn' >> /etc/portage/package.env/flash-attn"
+			ewarn
+		fi
+	fi
+	python-single-r1_pkg_setup
+}
 
 src_prepare() {
 	cuda_src_prepare
@@ -39,10 +62,7 @@ src_prepare() {
 }
 
 src_compile() {
-	use cuda && cuda_add_sandbox
-	export CXXFLAGS FLASH_ATTENTION_FORCE_BUILD=TRUE \
-		"MAX_JOBS=$(bc <<< "scale=0;$(makeopts_jobs)/2")" \
-		"NVCC_THREADS=${NVCC_THREADS:-1}"  # Anything above 1 requires a lot of RAM.
+	export FLASH_ATTENTION_FORCE_BUILD=TRUE "MAX_JOBS=$(makeopts_jobs)"
 	if use cuda; then
 		cuda_add_sandbox
 		export BUILD_TARGET=cuda
