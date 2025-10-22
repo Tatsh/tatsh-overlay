@@ -2344,6 +2344,7 @@ SRC_URI="https://github.com/stashapp/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${
 	${EGO_SUM_SRC_URI}
 	${YARN_SRC_URI}"
 UI_PV="2.5"
+RESTRICT="mirror"
 
 LICENSE="AGPL-3 MIT 0BSD Apache-2.0 Apache-2.0 WITH LLVM-exception BSD-2-Clause BSD-3-Clause CC-BY-3.0 CC-BY-4.0 CC0-1.0 GPL-3 ISC MIT-0 MPL-2.0 Public Domain Python-2.0"
 SLOT="0"
