@@ -725,6 +725,7 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
+RESTRICT="mirror"
 
 LICENSE="BSD-2 MIT Apache-2 CC0-1.0 0BSD BlueOak-1.0.0 CC-BY-3.0 ISC WTFPL"
 KEYWORDS="~amd64"
