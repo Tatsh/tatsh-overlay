@@ -238,6 +238,7 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
+RESTRICT="mirror"
 
 LICENSE="MIT AGPL-3+ Apache-2.0 BSD-2 BSD ISC"
 KEYWORDS="~amd64"
