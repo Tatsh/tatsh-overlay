@@ -106,7 +106,6 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 		fi
 		mkdir "${WORKDIR}/lib" "${WORKDIR}/packages" || die
 		local file bn
-		echo "${_YARN_DISTFILES[@]}"
 		for file in "${_YARN_DISTFILES[@]}"; do
 			bn=$(basename "$file")
 			ln -s "${DISTDIR}/${file}" "${WORKDIR}/packages/${bn:5}" || die
