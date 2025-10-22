@@ -218,6 +218,7 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
+RESTRICT="mirror"
 
 DEPEND="sys-libs/zlib"
 BDEPEND="dev-libs/glib"
