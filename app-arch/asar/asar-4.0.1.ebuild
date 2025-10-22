@@ -47,6 +47,7 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
+RESTRICT="mirror"
 
 LICENSE="ISC MIT"
 KEYWORDS="~amd64"
