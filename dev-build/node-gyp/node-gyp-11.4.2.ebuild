@@ -110,6 +110,7 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
+RESTRICT="mirror"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 LICENSE="Apache-2 BSD-2 ISC MIT"
