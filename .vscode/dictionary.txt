@@ -22,6 +22,7 @@ aeslib
 aesni
 aesx
 afero
+agentkeepalive
 agnivade
 ahash
 ahom
@@ -47,6 +48,7 @@ alsa
 altserver
 altsign
 alzbzlib
+amdgpu
 amiiboc
 amiri
 ampproject
@@ -68,6 +70,7 @@ antonmedv
 anyio
 anymatch
 anymore
+apikey
 appconfig
 appdirs
 appengine
@@ -75,9 +78,11 @@ appico
 appimage
 applesmc
 aprip
+aproba
 arboard
 arbovm
 archlinux
+archs
 archutils
 ardatan
 arenastring
@@ -87,6 +92,7 @@ argparse
 arith
 armon
 armv
+arogozhnikov
 arpflush
 arraybuffer
 arrayish
@@ -102,6 +108,7 @@ asio
 asio's
 asmflags
 asmjit
+aspromise
 assoc
 astc
 astdr
@@ -120,9 +127,11 @@ attn
 atty
 audiofile
 audioio
+audioop
 authorware
 autocfg
 autoconfig
+autogen
 automodule
 autotools
 avahi
@@ -137,6 +146,7 @@ avutil
 avutils
 awscli
 awslabs
+axios
 axobject
 aymanbagabas
 azahar
@@ -149,9 +159,12 @@ bamum
 bandai
 barbieri
 bascom
+baseiteratee
 basenames
 basepack
 baserom
+basetostring
+baseuniq
 basiliskii
 bassa
 bassavah
@@ -167,11 +180,13 @@ benbjohnson
 benc
 bencoder
 beorn
+bfloat
 bgentry
 bhaiksuki
 bidi
 bigfft
 bigints
+bignum
 bigobj
 binarycookies
 binaryextensions
@@ -215,12 +230,14 @@ bradleyjkemp
 brahmi
 branchname
 breakpad
+breejs
 breml
 browserify
 browserslist
 brrrip
 bser
 bsnes
+bson
 bstr
 btime
 btrfs
@@ -238,6 +255,7 @@ bulkedit
 bumpalo
 bundl
 busboy
+bytea
 bytebufferpool
 bytemuck
 byteorder
@@ -249,6 +267,7 @@ bzlib
 caca
 cacache
 cacerts
+caffe
 calloc
 calloop
 callsites
@@ -258,6 +277,7 @@ canadianaboriginal
 cancelable
 cancelreader
 capa
+carambat
 carian
 cascadia
 cassert
@@ -298,6 +318,7 @@ chailove
 chakma
 cham
 chardet
+charenc
 charlesproxy
 charmbracelet
 chdir
@@ -310,6 +331,7 @@ chokidar
 chownr
 chriskiehl
 chrissimpkins
+chromadb
 chromecast
 chromedp
 chrono
@@ -331,6 +353,7 @@ cleanhttp
 clem
 climits
 cliui
+clonedeep
 clonehero
 cloudpathlib
 clru
@@ -416,6 +439,7 @@ coro
 cosmiconfig
 countme
 cplugins
+cplusplus
 cppclass
 cppflags
 cpprest
@@ -426,10 +450,12 @@ cpuid
 cpuopt
 cpylint
 cpython
+cramjam
 crashpad
 crashplan
 crctable
 creack
+createset
 creds
 crfsuite
 croco
@@ -452,6 +478,7 @@ csvw
 ctest
 ctypes
 cuda
+cudaarchs
 cugan
 cunet
 cupaloy
@@ -484,6 +511,7 @@ datagrid
 dataloaden
 datarootdir
 dataserv
+datastax
 datatrans
 dateformat
 datepicker
@@ -534,7 +562,10 @@ dengine
 denisenkom
 denoise
 denoising
+denormals
+denque
 denywr
+depd
 dependencymodel
 dequal
 dequantize
@@ -549,6 +580,7 @@ devel
 devname
 devtype
 dfilter
+dflashattention
 dfluidsynth
 dfmderainbow
 dgit
@@ -629,6 +661,7 @@ dolib
 doman
 domelementtype
 domenu
+domexception
 domhandler
 domodule
 domutils
@@ -668,6 +701,8 @@ dsystemd
 dubhater
 duckstation
 dudev
+dunder
+duplexpair
 duployan
 dusing
 dvapoursynth
@@ -713,11 +748,13 @@ eerror
 eeyore
 egit
 einfo
+einops
 einstalldocs
 elazarl
 elbasan
 elem
 eleonore
+elevenlabs
 elif
 elog
 eltwise
@@ -775,6 +812,8 @@ esyscmd
 etes
 evdev
 eventemitter
+eventsource
+eventstream
 ewarn
 excss
 execa
@@ -782,6 +821,7 @@ execall
 exeinto
 exes
 existance
+exllamav
 exlude
 expanddims
 extern
@@ -826,7 +866,9 @@ fastapi
 fastcgi
 fasthttp
 fasticode
+fastify
 fastmem
+fastparquet
 fastq
 fastrand
 fastuuid
@@ -1121,7 +1163,10 @@ filt
 fimage
 fimaging
 fimds
+finalhandler
+finalizationregistry
 finconshreveable
+findlast
 findname
 finflection
 fini
@@ -1220,6 +1265,7 @@ fmergo
 fmetadata
 fmetric
 fmgo
+fmha
 fmicrosoft
 fmiekg
 fmigrate
@@ -1285,6 +1331,8 @@ foreachasync
 foresto
 forisano
 formatjs
+formatron
+formdata
 formdev
 formik
 fortawesome
@@ -1365,6 +1413,7 @@ frobotstxt
 frogpeppe
 fromentries
 frootcerts
+frozendict
 frpc
 frsrc
 frun
@@ -1430,6 +1479,7 @@ fsrcnn
 fsrcnnx
 fssh
 fsso
+fsspec
 fstack
 fstackexchange
 fstatigz
@@ -1546,6 +1596,7 @@ gdkchan
 gearboy
 gearsystem
 gelu
+gencode
 genconfig
 gendisc
 genproto
@@ -1561,6 +1612,7 @@ getenv
 getenvvar
 gethostname
 getopts
+getprototypeof
 getrandom
 getsentry
 ghodss
@@ -1662,6 +1714,7 @@ gqlgenc
 gqlparser
 grafx
 grantha
+graphemer
 graphengine
 graphi
 graphicslibraryframework
@@ -1685,6 +1738,7 @@ hangul
 hankaku
 hanunoo
 hanunó'o
+hapi
 happycube
 hardfloat
 hardsigmoid
@@ -1713,6 +1767,7 @@ hjson
 hlsl
 hmac
 hmong
+hoek
 homebridge
 honnef
 hpet
@@ -1735,6 +1790,7 @@ httprouter
 httpsig
 httpsnoop
 httptoolkit
+httptools
 httpunix
 httpx
 huandu
@@ -1791,12 +1847,14 @@ inout
 inputremapper
 inputslot
 insinto
+insta
 instafail
 installdir
 installkernel
 instancenorm
 intellivision
 interconverter
+interner
 interopservices
 interp
 intervaltree
@@ -1833,6 +1891,7 @@ jackaudio
 jackc
 jackspeak
 jaconv
+jaggedarray
 jakcron
 jamo
 janestreet
@@ -1859,12 +1918,14 @@ jmespath
 jmoiron
 joblib
 jobserver
+joda
 joho
 joncampbell
 josharian
 joystickwake
 jpillora
 jridgewell
+jsbi
 jsbn
 jsesc
 jsoncpp
@@ -1874,6 +1935,7 @@ jsonnet
 jsonparse
 jsonpointer
 jsonreference
+jsonrepair
 jsonschema
 jsonwebtoken
 jsonwebtokens
@@ -1893,6 +1955,7 @@ kanjitalk
 kateschema
 kayah
 kayahli
+kbnf
 kcompletion
 kconfig
 kcoreaddons
@@ -1949,7 +2012,12 @@ kxmlgui
 kylelemons
 kylemanna
 labbe's
+ladjs
+lancedb
+langchain
+langchainhub
 langcodes
+langsmith
 lapack
 largefile
 launchervar
@@ -1992,6 +2060,7 @@ libb
 libbar
 libbz
 libc
+libc's
 libcaca
 libcdio
 libchdr
@@ -2000,7 +2069,6 @@ libco
 libcpp
 libcrypt
 libcrypto
-libc's
 libcxx
 libcxxabi
 libd
@@ -2166,6 +2234,7 @@ longdescription
 lookatme
 loong
 loongarch
+loras
 lowresnx
 lpthread
 lrelease
@@ -2210,6 +2279,7 @@ masterzen
 matchall
 materialdesign
 materialui
+math
 mathml
 mathutil
 matishsiao
@@ -2276,6 +2346,7 @@ miekg
 migueletto
 mikle
 mileusna
+milvus
 mimalloc
 minchoc
 minideen
@@ -2289,6 +2360,7 @@ miniupnpc
 miniwget
 miniz
 minizlib
+mintplex
 mipsdisasm
 misaki
 miscfilters
@@ -2301,10 +2373,12 @@ mknod
 mkorenkov
 mkwineprefix
 mlabbe
+mllvm
 mmap
 mnamer
 mobilephone
 modargs
+modelcontextprotocol
 modernc
 modlist
 modocache
@@ -2339,6 +2413,7 @@ muety
 muffet
 muldiv
 multani
+multer
 multierr
 multierror
 multiheadattention
@@ -2350,6 +2425,7 @@ munt
 mupen
 murmour
 murmurhash
+mustache
 mvsfunc
 mvtools
 mvvm
@@ -2368,6 +2444,7 @@ nadermx
 nall
 namedtuples
 nandinagari
+nanoclone
 nanoid
 napi
 narqo
@@ -2428,6 +2505,7 @@ noaccess
 noatime
 nodedir
 nodelib
+nodemon
 noextract
 nofetch
 noflush
@@ -2435,6 +2513,7 @@ nolegacy
 nomail
 noncached
 noncommercial
+nonmax
 nonrenewal
 nontransferability
 nonzero
@@ -2468,6 +2547,7 @@ numberformat
 numpy
 nunit
 nurio
+nvcc
 nvdec
 nvme
 nvmedit
@@ -2491,6 +2571,7 @@ oldpermic
 oldpersian
 oldturkic
 olekukonko
+ollama
 omnisharp
 onclickoutside
 onedev
@@ -2498,6 +2579,7 @@ oneshot
 onetime
 onmomo
 onnx
+onnxruntime
 onroerend
 onsi
 ontroller
@@ -2551,6 +2633,7 @@ parany
 parport
 parrado
 parseargs
+parseurl
 pascaldekloe
 patchelf
 pathdiff
@@ -2569,9 +2652,11 @@ pefile
 pelletier
 pemfile
 persistentlogin
+petamoriken
 petgraph
 pexpect
 pflag
+pgpass
 pgpassfile
 pgservicefile
 phags
@@ -2592,6 +2677,7 @@ piftl
 pify
 pihole
 pilrc
+pinecone
 pingcap
 pipefail
 pipewire
@@ -2604,10 +2690,12 @@ pixelmatch
 pixelshuffle
 pixman
 pjbgf
+pkce
 pkgcheck
 pkgdev
 pkgjs
 pkgmetadata
+pkgr
 pkgs
 platformabstractions
 platformdirs
@@ -2631,6 +2719,7 @@ portelem
 portfile
 porttree
 posener
+posthog
 postinst
 postproc
 postrm
@@ -2670,9 +2759,11 @@ projektanker
 propertystore
 prost
 prosystem
+protobufjs
 protoc
 psalterpahlavi
 psroipooling
+pstree
 psutil
 psvpfs
 psvpfsparser
@@ -2706,6 +2797,7 @@ pyflirt
 pyfmt
 pyftdi
 pygithub
+pygments
 pygobject
 pygtrie
 pyjwt
@@ -2741,6 +2833,7 @@ qatom
 qcoro
 qcustomplot
 qdbus
+qdrant
 qfile
 qhot
 qlist
@@ -2793,6 +2886,7 @@ ratatui
 ravif
 raviqqe
 rawio
+rawlist
 rdepend
 rdepends
 rdflib
@@ -2865,6 +2959,7 @@ roarr
 robfig
 robotstxt
 robpike
+rocm
 rodio
 rogpeppe
 roialign
@@ -2889,6 +2984,7 @@ rtti
 ruamel
 runewidth
 rusb
+rusha
 russross
 rustc
 rustflags
@@ -2903,6 +2999,7 @@ ryanuber
 ryszard
 ryubing
 ryujinx
+safetensors
 sagikazarmark
 samber
 sameboy
@@ -2952,10 +3049,12 @@ setfcap
 setgid
 setimmediate
 setpcap
+setprototypeof
 setuid
 setuptools
 setupvars
 sevenz
+sevinf
 sexp
 sezanzeb
 shaderc
@@ -2978,6 +3077,7 @@ shurcoo
 shutil
 shutup
 siac
+sideway
 signedsource
 sigreturn
 sigstore
@@ -3057,6 +3157,7 @@ sqlalchemy
 sqlexp
 sqlfluff
 sqlmock
+sqlstring
 sqlx
 squashfs
 squirreljme
@@ -3075,6 +3176,7 @@ sstream
 stackexchange
 stacklevel
 starkits
+starlette
 startswith
 stashapp
 stashapp's
@@ -3109,10 +3211,12 @@ stricmp
 strikethrough
 strincmp
 stringprintf
+stringtopath
 strncasecmp
 strncat
 strncmp
 strncpy
+strnum
 strptime
 strsim
 strutil
@@ -3147,7 +3251,9 @@ swscale
 sylheti
 sylotinagri
 symphonia
+synckit
 synstructure
+sysconfig
 sysinfo
 sysname
 systemjs
@@ -3155,6 +3261,7 @@ systemunitdir
 systray
 sysutil
 szmarczak
+tabbyapi
 tablewriter
 tabtab
 tagbanawa
@@ -3181,6 +3288,7 @@ tdosym
 teagle
 teakra
 teatest
+tediousjs
 teex
 temasek
 temoto
@@ -3195,6 +3303,7 @@ testpaths
 testplatform
 texinfo
 textextensions
+textsplitters
 textutils
 textwrap
 tfperms
@@ -3203,6 +3312,7 @@ thaana
 tham
 thehandy
 thepowdertoy
+theroyallab
 thewh
 thilojaeggi
 thinc
@@ -3227,13 +3337,16 @@ tinyxml
 tirhuta
 titleize
 tmds
+toidentifier
 tomcrypt
 tomli
 tomlkit
 tomlplusplus
 tommath
+topo
 toposort
 torchvision
+toreversed
 tosorted
 tostringtag
 tqdm
@@ -3250,10 +3363,12 @@ tsutils
 tufjs
 tunables
 tungstenite
+turboderp
 tweenjs
 twemoji
 twox
 typdefs
+typebox
 typedarray
 typeextensions
 typelist
@@ -3276,14 +3391,18 @@ uips
 umpv
 unalz
 unaryop
+undefsafe
 underthesea
 undici
 unecm
+unescaper
+ungap
 unice
 unicornengine
 unidecode
 unidic
 unigram
+uniqby
 uniseg
 unistd
 unitless
@@ -3291,6 +3410,7 @@ universalify
 unixify
 unmarshal
 unnecesary
+unpipe
 unpreferred
 unref
 unscopables
@@ -3325,10 +3445,12 @@ usvg
 utfcpp
 utilsfile
 uvicorn
+uvloop
 uzem
 valyala
 vanced
 vapoursynth
+varlen
 vars
 vbam
 vcpkg
@@ -3364,6 +3486,7 @@ vkutil
 vnni
 volk
 vosf
+voyageai
 vpnc
 vsaa
 vsexprtools
@@ -3447,6 +3570,7 @@ wolfssl
 wordadd
 wordpiece
 wordwrap
+wordwrapjs
 wrapdb
 wrappy
 wrapt
@@ -3466,12 +3590,14 @@ xbrz
 xbyak
 xcbm
 xchar
+xcompiler
 xcomposite
 xcursor
 xdamage
 xdist
 xemu
 xemuw
+xenova
 xerrors
 xext
 xfixes
@@ -3550,6 +3676,7 @@ zerofrom
 zerolog
 zerotrie
 zerovec
+zilliz
 zimg
 zint
 znedi
