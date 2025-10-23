@@ -2126,6 +2126,7 @@ libpsl
 libpulse
 libpumpkin
 libqos
+libquery
 libr
 libreadline
 libreal
