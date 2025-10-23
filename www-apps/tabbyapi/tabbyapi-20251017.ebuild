@@ -13,7 +13,7 @@ COMMIT="996bc8dbe141d5c233978ef7cc50cb6351498bb9"
 
 DESCRIPTION="An OAI compatible exllamav2 API that's both lightweight and fast."
 HOMEPAGE="https://github.com/theroyallab/tabbyAPI"
-SRC_URI="https://github.com/theroyallab/tabbyAPI/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/theroyallab/tabbyAPI/archive/${COMMIT}.tar.gz -> ${P}-${COMMIT:0:7}.tar.gz"
 
 LICENSE="AGPL-3"
 SLOT="0"
@@ -92,7 +92,7 @@ src_install() {
 	rm templates/place_your_templates_here.txt || die
 	doins -r sampler_overrides templates
 	if use standalone; then
-		systemd_dounit "${FILESDIR}/${PN}.service"
+		systemd_dounit "${FILESDIR}/${PN}."{socket,service} "${FILESDIR}/${PN}-proxy.service"
 		newinitd "${FILESDIR}/${PN}.initd" "${PN}"
 	fi
 }
@@ -100,6 +100,19 @@ src_install() {
 pkg_postinst() {
 	if use standalone; then
 		chown -R tabbyapi:tabbyapi /var/lib/tabbyapi || die
+		elog
+		elog "If you want the API to run forever, enable the tabbyapi.service. If you want the"
+		elog "service to be on-demand and shut down when not in use (after 5 minutes of inactivity),"
+		elog "enable tabbyapi.socket instead."
+		elog
+		elog "In the latter case, configure TabbyAPI to run on 127.0.0.1:4800. Ensure port 5000 is open"
+		elog "in your firewall settings. It is normal for the first request to fail while the service"
+		elog "is starting up."
+		elog
+		elog "If you do not like the default ports, you can use systemd drop-in files to override them."
+		elog "See https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html#id-1.14.3"
+		elog "for details."
+		elog
 	fi
 	elog
 	elog "Please copy config_sample.yml to /etc/tabbyapi/config.yml and modify it as needed."

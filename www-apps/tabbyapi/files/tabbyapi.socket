@@ -1,0 +1,7 @@
+[Socket]
+Accept=false
+ListenStream=5000
+Service=tabbyapi-proxy.service
+
+[Install]
+WantedBy=sockets.target
