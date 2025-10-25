@@ -3,14 +3,14 @@
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=setuptools
+DISTUTILS_USE_PEP517=uv-build
 PYTHON_COMPAT=( python3_1{0,1,2,3} )
 
-inherit distutils-r1 pypi
+inherit distutils-r1
 
 DESCRIPTION="Fetch and set configuration values in IDA Pro IDAPython scripts."
 HOMEPAGE="https://pypi.org/project/ida-settings/"
-SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
+SRC_URI="https://github.com/williballenthin/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
