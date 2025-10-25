@@ -184,6 +184,7 @@ bfloat
 bgentry
 bhaiksuki
 bidi
+bigdecimal
 bigfft
 bigints
 bignum
@@ -257,6 +258,7 @@ bundl
 busboy
 bytea
 bytebufferpool
+bytecheck
 bytemuck
 byteorder
 byteshuf
@@ -282,6 +284,7 @@ carian
 cascadia
 cassert
 catus
+cbindgen
 cbtd
 ccache
 ccflags
@@ -444,6 +447,7 @@ cppclass
 cppflags
 cpprest
 cpprestsdk
+cprng
 cpufeatures
 cpuguy
 cpuid
@@ -480,6 +484,7 @@ ctypes
 cuda
 cudaarchs
 cugan
+cuid
 cunet
 cupaloy
 curdir
@@ -539,6 +544,7 @@ ddev
 ddeveloper
 ddisable
 ddrivers
+ddsketch
 ddynarec
 deark
 deband
@@ -1417,6 +1423,7 @@ frozendict
 frpc
 frsrc
 frun
+frunk
 frussross
 frwcarlsen
 fryanuber
@@ -1639,6 +1646,7 @@ globalthis
 globby
 globjoin
 globrex
+globset
 glog
 gloo
 glsl
@@ -1748,6 +1756,7 @@ harfbuzzsharp
 harrypm
 hasattr
 hashbrown
+hashlink
 hashstructure
 hasown
 hasura
@@ -1808,6 +1817,7 @@ iconerror
 icudt
 icuuc
 identitymodel
+idents
 idevice
 ideviceinstaller
 idna
@@ -2154,6 +2164,7 @@ libsndfile
 libsodium
 libsonnet
 libspng
+libsqlite
 libstdc
 libswresample
 libswscale
@@ -2219,6 +2230,7 @@ localforage
 localmount
 localstatedir
 localversions
+locid
 locutus
 lodepng
 logex
@@ -2377,6 +2389,7 @@ mlabbe
 mllvm
 mmap
 mnamer
+mobc
 mobilephone
 modargs
 modelcontextprotocol
@@ -2598,6 +2611,7 @@ openocd
 openrc
 opentimelineio
 opentk
+opentls
 optarg
 optflags
 optionator
@@ -2894,6 +2908,7 @@ rdepends
 rdflib
 rdonly
 rdparty
+rdrand
 readdirp
 readimage
 readlink
@@ -2956,6 +2971,7 @@ riscv
 riverwalk
 rivo
 rizu
+rkyv
 rmull
 roarr
 robfig
@@ -2987,6 +3003,7 @@ ruamel
 runewidth
 rusb
 rusha
+rusqlite
 russross
 rustc
 rustflags
@@ -3035,6 +3052,7 @@ scummvm
 sdist
 sdldraw
 sdsl
+seahash
 seatools
 seccomp
 securecookie
@@ -3158,7 +3176,9 @@ sprintf
 sqlalchemy
 sqlexp
 sqlfluff
+sqlformat
 sqlmock
+sqlparser
 sqlstring
 sqlx
 squashfs
@@ -3212,6 +3232,7 @@ strftime
 stricmp
 strikethrough
 strincmp
+stringprep
 stringprintf
 stringtopath
 strncasecmp
@@ -3221,6 +3242,7 @@ strncpy
 strnum
 strptime
 strsim
+structopt
 strutil
 strval
 stylis
@@ -3360,6 +3382,7 @@ trimstart
 trng
 trytoreconnect
 tsconfck
+tsify
 tsschecker
 tsutils
 tufjs
@@ -3521,6 +3544,7 @@ warangciti
 warnflags
 wasi
 wasip
+wasite
 watara
 wchar
 wcurl
@@ -3556,6 +3580,7 @@ wiimms
 wildmatch
 willf
 winapi
+winauth
 wincon
 windres
 wineasio
@@ -3641,6 +3666,7 @@ yajl
 yallist
 yamashou
 yamux
+yansi
 yapf
 yargs
 yasm
