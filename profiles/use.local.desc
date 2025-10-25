@@ -15,6 +15,7 @@ dev-libs/bincookie: tools - Install extra tools
 dev-libs/wolfssl: debug - Debug support
 dev-libs/wolfssl: sniffer - Enable sniffer via libpcap
 dev-libs/wolfssl: writedup - Enable write duplication of WOLFSSL objects
+dev-python/misaki: l10n_en - 
 dev-python/numba: tbb - Build with TBB support
 dev-python/snowflake-connector-python: pandas - 
 dev-python/snowflake-connector-python: secure-local-storage - 
@@ -38,8 +39,6 @@ games-emulation/86box: dynrec - Enable dynamic recompiler
 games-emulation/86box: fluidsynth - Use media-sound/fluidsynth for MIDI emulation
 games-emulation/86box: mt-32 - Use media-libs/munt-mt32emu for MT-32 emulation
 games-emulation/86box: new-dynrec - Use the PCem v15 ("new") dynamic recompiler
-games-emulation/azahar: scripting - Enable RPC server for scripting
-games-emulation/azahar: web-service - Enable web services (telemetry, etc.)
 games-emulation/bsnes-hd: libretro - Build libretro core
 games-emulation/cemu: cubeb - Enable cubeb audio support
 games-emulation/cemu: discord - Enable rich Discord presence
@@ -58,16 +57,178 @@ games-emulation/dosbox-x: screenshots - Screenshots and movie recording
 games-emulation/dosbox-x: slirp - Enable libslirp support
 games-emulation/dosbox-x: unaligned - Enable unaligned memory access
 games-emulation/dosbox-x: xbrz - Enable support for xBRZ pixel scaler
+games-emulation/libretro-meta: 2048 - 2048 Game Clone
+games-emulation/libretro-meta: 3dengine - Test Core - 3D Engine
+games-emulation/libretro-meta: 81 - Sinclair - ZX 81 (EightyOne)
+games-emulation/libretro-meta: atari800 - Atari - 5200 (Atari800)
+games-emulation/libretro-meta: bk - BK-0010/0011/Terak 8510a (bk)
+games-emulation/libretro-meta: blastem - Sega Genesis (blastem)
+games-emulation/libretro-meta: bluemsx - MSX/SVI/ColecoVision/SG-1000 (blueMSX)
+games-emulation/libretro-meta: bnes - Nintendo - NES / Famicom (bnes)
+games-emulation/libretro-meta: bsnes-mercury - Nintendo - SNES / SFC (bsnes-mercury)
+games-emulation/libretro-meta: bsnes - Nintendo - SNES / SFC (bsnes)
+games-emulation/libretro-meta: cannonball - OutRun Engine
+games-emulation/libretro-meta: cap32 - Amstrad - CPC (Caprice32)
+games-emulation/libretro-meta: chailove - 2D Game Framework (chailove)
+games-emulation/libretro-meta: citra - Nintendo - 3DS (Citra)
+games-emulation/libretro-meta: craft - Minecraft (Craft)
+games-emulation/libretro-meta: crocods - Amstrad - CPC (CrocoDS)
+games-emulation/libretro-meta: desmume - Nintendo - DS (DeSmuME)
+games-emulation/libretro-meta: dinothawr - Dinothawr
+games-emulation/libretro-meta: dolphin - Nintendo Gamecube/Wii (dolphin)
+games-emulation/libretro-meta: dosbox - DOS (DOSBox)
+games-emulation/libretro-meta: dosbox-svn - DOS (DOSBox TRUNK)
+games-emulation/libretro-meta: duckstation - Sony Playstation (duckstation)
+games-emulation/libretro-meta: ecwolf - Wolfenstein 3D (ecwolf)
+games-emulation/libretro-meta: fbalpha2012 - Arcade (FB Alpha 2012)
+games-emulation/libretro-meta: fbalpha - Arcade (FB Alpha)
+games-emulation/libretro-meta: fbneo - Arcade (FBNeo)
+games-emulation/libretro-meta: fceumm - Nintendo - NES / Famicom (FCEUmm)
+games-emulation/libretro-meta: fceu-next - Nintendo - NES / Famicom(FCEUmm/FCEUX)
+games-emulation/libretro-meta: fceu-next - Nintendo - NES / Famicom (fceu-next)
+games-emulation/libretro-meta: ffmpeg - FFMpeg (ffmpeg)
+games-emulation/libretro-meta: flycast - Sega - Dreamcast/NAOMI (Flycast)
+games-emulation/libretro-meta: fmsx - Microsoft - MSX (fMSX)
+games-emulation/libretro-meta: freechaf - Fairchild Channel F / Video Entertainment System (freechaf)
+games-emulation/libretro-meta: freeintv - Mattel - Intellivision (FreeIntv)
+games-emulation/libretro-meta: frodo - Commodore 64 (frodo)
+games-emulation/libretro-meta: fuse - ZX Spectrum (Fuse)
+games-emulation/libretro-meta: gambatte - Nintendo - Game Boy / Color (Gambatte)
+games-emulation/libretro-meta: gearboy - Nintendo Game Boy / Color (gearboy)
+games-emulation/libretro-meta: gearsystem - Sega consoles (gearsystem)
+games-emulation/libretro-meta: genesis_plus_gx - Sega Genesis / Megadrive (genesis_plus_gx)
+games-emulation/libretro-meta: genesis_plus_gx_wide - Sega Genesis / Megadrive (genesis_plus_gx)
+games-emulation/libretro-meta: gme - Game Music Emu (gme)
+games-emulation/libretro-meta: gong - Pong (gong)
+games-emulation/libretro-meta: gpsp - Nintendo - Game Boy Advance (gpSP)
+games-emulation/libretro-meta: gw - Handheld Electronic (GW)
+games-emulation/libretro-meta: handy - Atari - Lynx (Handy)
+games-emulation/libretro-meta: hatari - Atari ST/STE/TT/Falcon (hatari)
+games-emulation/libretro-meta: lowresnx - Simulated retro console (lowresnx)
+games-emulation/libretro-meta: lutro - Lua Engine (Lutro)
+games-emulation/libretro-meta: mame2000 - Arcade (MAME 2000)
+games-emulation/libretro-meta: mame2003 - Arcade (MAME 2003)
+games-emulation/libretro-meta: mame2003_plus-libretro - Arcade (MAME 2003 Plus)
+games-emulation/libretro-meta: mame2010 - Arcade (MAME 2010)
+games-emulation/libretro-meta: mame2015 - Arcade (MAME 2015)
+games-emulation/libretro-meta: mednafen-bsnes - Nintendo - SNES / SFC (Beetle bsnes)
+games-emulation/libretro-meta: mednafen-gba - Nintendo - Game Boy Advance (Beetle GBA)
+games-emulation/libretro-meta: mednafen-lynx - Atari - Lynx (Beetle Handy)
+games-emulation/libretro-meta: mednafen-ngp - SNK - Neo Geo Pocket / Color (Beetle NeoPop)
+games-emulation/libretro-meta: mednafen-pce-fast - NEC - PC Engine / CD (Beetle PCE FAST)
+games-emulation/libretro-meta: mednafen-pce - NEC - PC Engine / CD (Beetle PCE)
+games-emulation/libretro-meta: mednafen-pcfx - NEC - PC-FX (Beetle PC-FX)
+games-emulation/libretro-meta: mednafen-psx-hw - Sony - Playstation (Beetle PSX HW)
+games-emulation/libretro-meta: mednafen-psx - Sony - PlayStation (Beetle PSX)
+games-emulation/libretro-meta: mednafen-saturn - Sega - Saturn (Beetle Saturn)
+games-emulation/libretro-meta: mednafen-supafaust - Nintendo Super NES (Beetle Supafaust)
+games-emulation/libretro-meta: mednafen-supergrafx - NEC - PC Engine SuperGrafx (Beetle SuperGrafx)
+games-emulation/libretro-meta: mednafen-vb - Nintendo - Virtual Boy (Beetle VB)
+games-emulation/libretro-meta: mednafen-wswan - Bandai - WonderSwan/Color (Beetle Cygne)
+games-emulation/libretro-meta: melonds - Nintendo - DS (melonDS)
+games-emulation/libretro-meta: meowpc98 - NEC - PC-98 (Neko Project II)
+games-emulation/libretro-meta: mesen - Nintendo Super NES (mesen)
+games-emulation/libretro-meta: mesens - Nintendo Super NES (mesen S)
+games-emulation/libretro-meta: mess2015 - Multi systems (MESS 2015)
+games-emulation/libretro-meta: meteor - Nintendo - Game Boy Advance (Meteor)
+games-emulation/libretro-meta: mgba - Nintendo - Game Boy Advance (mGBA)
+games-emulation/libretro-meta: mrboom - Mr.Boom (Bomberman)
+games-emulation/libretro-meta: mu - PalmOS (mu)
+games-emulation/libretro-meta: mupen64 - Nintendo 64 (mupen64-next)
+games-emulation/libretro-meta: neocd - SNK NeoGeo CD (neocd)
+games-emulation/libretro-meta: nestopia - Nintendo - NES / Famicom (Nestopia UE)
+games-emulation/libretro-meta: np2kai - PC-98 (np2kai)
+games-emulation/libretro-meta: nxengine - Cave Story (NXEngine)
+games-emulation/libretro-meta: o2em - Magnavox - Odyssey2 / Phillips Videopac+ (O2EM)
+games-emulation/libretro-meta: oberon - Oberon (oberon)
+games-emulation/libretro-meta: openlara - Tomb Raider (OpenLara)
+games-emulation/libretro-meta: opera - Panasonic 3DO (opera)
+games-emulation/libretro-meta: parallel_n64 - Nintendo - Nintendo 64 (ParaLLEl N64)
+games-emulation/libretro-meta: pcsx-rearmed - Sony - PlayStation (PCSX ReARMed)
+games-emulation/libretro-meta: picodrive - Sega - MS/MD/CD/32X (PicoDrive)
+games-emulation/libretro-meta: pocketcdg - PocketCDG
+games-emulation/libretro-meta: pokemini - Nintendo - Pokemon Mini (PokeMini)
+games-emulation/libretro-meta: potator - Watara SuperVision (potator)
+games-emulation/libretro-meta: ppsspp - Sony PSP (ppsspp)
+games-emulation/libretro-meta: prboom - Doom (PrBoom)
+games-emulation/libretro-meta: prosystem - Atari - 7800 (ProSystem)
+games-emulation/libretro-meta: puae - Commodore - Amiga (P-UAE)
+games-emulation/libretro-meta: px68k - Sharp - X68000 (PX68k)
+games-emulation/libretro-meta: quasi88 - NEC - PC-8000 / PC-8800 series (QUASI88)
+games-emulation/libretro-meta: quicknes - Nintendo - NES / Famicom (QuickNES)
+games-emulation/libretro-meta: race - SNK NeoGeo Pocket Color (race)
+games-emulation/libretro-meta: reminiscence - Flashback (REminiscence)
+games-emulation/libretro-meta: retro8 - PICO-8 (retro8)
+games-emulation/libretro-meta: retrodream - Sega Dreamcast (retrodream)
+games-emulation/libretro-meta: sameboy - Nintendo - Game Boy / Color (SameBoy)
+games-emulation/libretro-meta: scummvm - ScummVM (scummvm)
+games-emulation/libretro-meta: smsplus - Sega Master System (smsplus)
+games-emulation/libretro-meta: snes9x2002 - Nintendo - SNES / SFC (Snes9x 2002)
+games-emulation/libretro-meta: snes9x2005 - Nintendo - SNES / SFC (Snes9x 2005)
+games-emulation/libretro-meta: snes9x2010 - Nintendo - SNES / SFC (Snes9x 2010)
+games-emulation/libretro-meta: snes9x - Nintendo - SNES / SFC (Snes9x - Current)
+games-emulation/libretro-meta: squirreljme - Java ME 8 (squirreljme)
+games-emulation/libretro-meta: stella2014 - Atari - 2600 (Stella 2014)
+games-emulation/libretro-meta: tgbdual - Nintendo - Game Boy / Color (TGB Dual)
+games-emulation/libretro-meta: theodore - Thomson - MO/TO (Theodore)
+games-emulation/libretro-meta: thepowdertoy - PowderToy (thepowdertoy)
+games-emulation/libretro-meta: tic80 - Custom Game library (tic80)
+games-emulation/libretro-meta: tyrquake - Quake (TyrQuake)
+games-emulation/libretro-meta: uzem - Development Machine (uzem)
+games-emulation/libretro-meta: vbam - Nintendo - Game Boy Advance (VBA-M)
+games-emulation/libretro-meta: vba-next - Nintendo - Game Boy Advance (VBA Next)
+games-emulation/libretro-meta: vecx - GCE - Vectrex (vecx)
+games-emulation/libretro-meta: vemulator - Sega VMU (vemulator)
+games-emulation/libretro-meta: vice-x128 - Commodore 8-bit (vice)
+games-emulation/libretro-meta: vice-x64 - Commodore 8-bit (vice)
+games-emulation/libretro-meta: vice-x64sc - Commodore 8-bit (vice)
+games-emulation/libretro-meta: vice-xcbm2 - Commodore 8-bit (vice)
+games-emulation/libretro-meta: vice-xcbm5x0 - Commodore 8-bit (vice)
+games-emulation/libretro-meta: vice-xpet - Commodore 8-bit (vice)
+games-emulation/libretro-meta: vice-xplus4 - Commodore 8-bit (vice)
+games-emulation/libretro-meta: vice-xscpu64 - Commodore 8-bit (vice)
+games-emulation/libretro-meta: vice-xvic - Commodore 8-bit (vice)
+games-emulation/libretro-meta: virtualjaguar - Atari - Jaguar (Virtual Jaguar)
+games-emulation/libretro-meta: vitaquake2 - Quake II (vitaquake2)
+games-emulation/libretro-meta: vitaquake3 - Quake III (vitaquake3)
+games-emulation/libretro-meta: x1 - Sharp X1 (x1)
+games-emulation/libretro-meta: xrick - Rick Dangerous (XRick)
+games-emulation/libretro-meta: yabause - Sega - Saturn (Yabause)"
+games-emulation/mupen64next-libretro: gles2 - Enable GLES2 support
+games-emulation/mupen64next-libretro: vulkan - Enable vulkan support
 games-emulation/play: libretro - Build libretro core
 games-emulation/play: vulkan - Enable Vulkan graphics library support
+games-emulation/ppsspp-libretro: gbm - Use the Graphics Buffer Manager for EGL on KMS.
+games-emulation/ppsspp-libretro: gles2 - Enable GLES2 support.
+games-emulation/ppsspp-libretro: system-ffmpeg - Use system ffmpeg.
+games-emulation/retroarch-assets: materialui - Enable materialui assets
+games-emulation/retroarch-assets: ozone - Emable ozone assets
+games-emulation/retroarch-assets: rgui - Enable rgui assets
+games-emulation/retroarch-assets: xmb - Enable xmb assets
+games-emulation/retroarch: cg - Enable Cg shader support
+games-emulation/retroarch: egl - Enable EGL context support
+games-emulation/retroarch: freetype - Enable FreeType support
+games-emulation/retroarch: gles3 - Enable GLES3 support
+games-emulation/retroarch: gles - Enable GLES support
+games-emulation/retroarch: kms - Enable KMS context support
+games-emulation/retroarch: libusb - Enable LibUSB HID support
+games-emulation/retroarch: materialui - Enable MaterialUI menu
+games-emulation/retroarch: miniupnpc - Enable Mini UPnP client library (for NAT traversal)
+games-emulation/retroarch: ozone - Enable ozone menu
+games-emulation/retroarch: qt - Enable QT support
+games-emulation/retroarch: rgui - Enable rgui menu
+games-emulation/retroarch: sdl2 - Enable SDL2 backend (disables SDL 1.x)
+games-emulation/retroarch: sixel - Enable libsixel support
+games-emulation/retroarch: stripes - Enable stripes menu
+games-emulation/retroarch: subtitles - Enable subtitles support
+games-emulation/retroarch: tinyalsa - Enable TinyALSA support
+games-emulation/retroarch: vulkan - Enable vulkan support
+games-emulation/retroarch: xmb - Enable XMB menu
+games-emulation/retroarch: xrandr - Enable xrandr support
 games-emulation/rpcs3: faudio - Enable audio rendering with app-emulation/faudio
 games-emulation/rpcs3: joystick - Enable support for input devices with evdev
 games-emulation/rpcs3: llvm - LLVM recompiler support
 games-emulation/rpcs3: vulkan - Enable Vulkan graphics library support
-games-emulation/sudachi: compatibility-reporting - 
-games-emulation/sudachi: cubeb - 
-games-emulation/sudachi: webengine - 
-games-emulation/sudachi: web-service - 
 games-emulation/xemu: aio - Add support for AIO
 games-emulation/xemu: io-uring - Enable efficient I/O via sys-libs/liburing
 games-emulation/xemu: malloc-trim - Enable malloc_trim() support
@@ -163,6 +324,10 @@ mpv-plugin/shutup: autoload - Auto-load the plugin
 mpv-plugin/writeedits: autoload - Auto-load the plugin
 mpv-plugin/writename: autoload - Auto-load the plugin
 net-dns/pihole: cron - Installs cron job
+net-irc/lith: dynrec - 
+net-irc/lith: fluidsynth - 
+net-irc/lith: mt-32 - 
+net-irc/lith: new-dynrec - 
 net-misc/curl-impersonate: clients - Install the curl wrapper scripts
 sys-apps/kylemanna-systemd-utils: amazon - Install Amazon Cloud Drive service
 sys-apps/kylemanna-systemd-utils: btrfs - Install units for btrfs
@@ -174,6 +339,7 @@ sys-apps/kylemanna-systemd-utils: rssh - Install rssh service
 sys-apps/kylemanna-systemd-utils: storj - Install storj-dataserv-client.service
 sys-apps/kylemanna-systemd-utils: tahoe - Install Tahoe-related services
 sys-apps/kylemanna-systemd-utils: youtube - Install YouTube TV service
+www-apps/kokoro-fastapi: standalone - 
 x11-misc/rom-properties: achievements - Enable achievement pop-ups.
 x11-misc/rom-properties: astc - Enable ASTC texture support
 x11-misc/rom-properties: cli - Build rpcli command.
