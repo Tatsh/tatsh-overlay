@@ -7,7 +7,8 @@ inherit autotools
 
 DESCRIPTION="Cross-platform DOS emulation package."
 HOMEPAGE="https://dosbox-x.com/"
-SRC_URI="https://github.com/joncampbell123/dosbox-x/archive/refs/tags/${PN}-v${PV}.tar.gz"
+MY_PV="2025.10.07"
+SRC_URI="https://github.com/joncampbell123/${PN}/archive/refs/tags/${PN}-v${MY_PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -44,7 +45,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-invert-1624f04.patch"
 )
 
-S="${WORKDIR}/${PN}-${PN}-v${PV}"
+S="${WORKDIR}/${PN}-${PN}-v${MY_PV}"
 
 src_prepare() {
 	default
