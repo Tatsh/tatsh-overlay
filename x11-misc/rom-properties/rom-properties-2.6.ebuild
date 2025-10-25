@@ -41,7 +41,6 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-seccomp-add-faccessat2.patch"
-	"${FILESDIR}/${PN}-0002-qt6.patch"
 )
 
 DOCS=( README.md NEWS.md )
