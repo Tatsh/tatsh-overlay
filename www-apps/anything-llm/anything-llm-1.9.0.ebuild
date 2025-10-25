@@ -1109,7 +1109,7 @@ RESTRICT="mirror"
 LICENSE="0BSD Apache-2.0 BSD BSD-2 CC0-1.0 ISC MIT Python-2.0 Unlicense WTFPL"
 # KEYWORDS="~amd64"
 
-DEPEND="media-libs/vips"
+DEPEND="dev-db/prisma-engines media-libs/vips"
 
 #PREBUILT_IGNORE=(
 #	./node_modules/@prisma/engines/libquery_engine-debian-openssl-1.0.x.so.node
