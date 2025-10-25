@@ -5,4 +5,7 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+	<use>
+		<flag name="video">Enable video playback support</flag>
+	</use>
 </pkgmetadata>

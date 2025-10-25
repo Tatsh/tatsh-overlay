@@ -7,13 +7,13 @@ inherit cmake flag-o-matic
 
 DESCRIPTION="Community fork of QtWebKit."
 HOMEPAGE="https://github.com/movableink/webkit"
-SHA="88e74762f8e6ffe8046facc88949bf21237f8f31"
+SHA="1ab4d21d082e89fe1837c0279467a6da18c78cf0"
 SRC_URI="https://github.com/movableink/webkit/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
 
 LICENSE="LGPL-2 BSD-2"
 SLOT="6/${PV%%_*}"
 KEYWORDS="~amd64"
-IUSE="X"
+IUSE="X video"
 
 DEPEND="dev-db/sqlite
 	dev-libs/hyphen
@@ -48,6 +48,7 @@ src_configure() {
 	filter-lto # LTO causes bin/jsc to fail to compile.
 	local mycmakeargs=(
 		"-DENABLE_X11_TARGET=$(usex X)"
+		"-DENABLE_VIDEO=$(usex video)"
 		-DCMAKE_POLICY_VERSION_MINIMUM=3.5
 		-DDEVELOPER_MODE_FATAL_WARNINGS=OFF
 		-DENABLE_PRINT_SUPPORT=ON
