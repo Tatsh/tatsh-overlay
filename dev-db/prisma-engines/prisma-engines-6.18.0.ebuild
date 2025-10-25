@@ -637,7 +637,6 @@ src_prepare() {
 }
 
 src_install() {
-	into "/usr/$(get_libdir)/${PN}"
-	dolib.so target/release/*.so
 	dobin target/release/{prisma-fmt,query-compiler-playground,query-engine,schema-engine}
+	dolib.so target/release/*.so
 }
