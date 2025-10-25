@@ -608,6 +608,7 @@ declare -A GIT_CRATES=(
 	[tiberius]='https://github.com/prisma/tiberius;59db57960a14b422fb3a1309aa4aa47880896ff8;tiberius-%commit%'
 	[tokio-postgres]='https://github.com/prisma/rust-postgres;278641fa1a08b7e7d35841342ab4426c5b063d9a;rust-postgres-%commit%/tokio-postgres'
 )
+RUST_MIN_VER="1.85.0"
 
 inherit cargo
 
@@ -632,11 +633,12 @@ QA_FLAGS_IGNORED="usr/bin/.*"
 
 src_prepare() {
 	default
-	export GIT_HASH="0000000"
+	export GIT_HASH="${PV}"
 	find . -name build.rs -exec sed -re '/.*build_utils::store_git.*;$/d' -i {} ';'
 }
 
 src_install() {
 	dobin target/release/{prisma-fmt,query-compiler-playground,query-engine,schema-engine}
-	dolib.so target/release/*.so
+	mkdir -p "${D}/usr/$(get_libdir)/${PN}" || die
+	cp target/release/*.so "${D}/usr/$(get_libdir)/${PN}/" || die
 }
