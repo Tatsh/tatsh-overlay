@@ -13,7 +13,7 @@ SRC_URI="https://github.com/joncampbell123/${PN}/archive/refs/tags/${PN}-v${MY_P
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-IUSE="X +core-inline debug dynrec ffmpeg +fluidsynth +freetype +fpu hardened midi mt-32 opengl printer +screenshots slirp unaligned +xbrz"
+IUSE="X debug dynrec ffmpeg +fluidsynth +freetype +fpu hardened midi mt-32 opengl printer +screenshots slirp unaligned +xbrz"
 REQUIRED_USE="hardened? ( !dynrec )"
 
 DEPEND="debug? ( sys-libs/ncurses:0= )
@@ -56,9 +56,9 @@ src_configure() {
 	local fpu_arg='--disable-fpu-x86 --disable-fpu-x64'
 	if use fpu; then
 		if use x86; then
-			fpu_arg=--enable-fpu-x86
+			fpu_arg=fpu-x86
 		elif use amd64; then
-			fpu_arg=--enable-fpu-x64
+			fpu_arg=fpu-x64
 		fi
 	fi
 	ac_cv_lib_X11_main=$(usex X yes no) \
@@ -66,7 +66,6 @@ src_configure() {
 		"$(use_enable !hardened dynamic-core)" \
 		"$(use_enable !hardened dynamic-x86)" \
 		"$(use_enable X x11)" \
-		"$(use_enable core-inline)" \
 		"$(use_enable debug)" \
 		"$(use_enable dynrec)" \
 		"$(use_enable ffmpeg avcodec)" \

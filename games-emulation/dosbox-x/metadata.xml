@@ -9,9 +9,6 @@
 		<remote-id type="github">joncampbell123/dosbox-x</remote-id>
 	</upstream>
 	<use>
-		<flag
-			name="core-inline"
-		>Enable memory-increasing inlines for better performance but requiring more build time</flag>
 		<flag name="dynrec">Use recompiling cpu core instead of dynamic x86/x64 specific cpu core</flag>
 		<flag name="fluidsynth">Use media-sound/fluidsynth for MIDI emulation</flag>
 		<flag name="fpu">Enable FPU emulation</flag>
