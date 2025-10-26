@@ -54,6 +54,7 @@ HOMEPAGE="https://github.com/gopher64/gopher64-netplay-server"
 SRC_URI="https://github.com/gopher64/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	${EGO_SUM_SRC_URI}
 "
+RESTRICT="mirror"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -62,7 +63,7 @@ KEYWORDS="~amd64"
 DOCS=( README.md )
 
 src_compile() {
-	env CGO_ENABLED=0 go build -a -o "${PN}"
+	env CGO_ENABLED=0 go build -a -o "${PN}" || die
 }
 
 src_install() {
