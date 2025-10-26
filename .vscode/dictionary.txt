@@ -974,6 +974,7 @@ fconfigor
 fconinput
 fconsul
 fcontrib
+fconv
 fcooperspencer
 fcopier
 fcopystructure
@@ -1054,6 +1055,7 @@ ffilepath
 ffiles
 ffileutil
 ffirestore
+ffixtures
 fflate
 ffms
 ffnmatch
@@ -1082,6 +1084,7 @@ fglog
 fgls
 fglycerine
 fgnuflag
+fgoabi
 fgoautoneg
 fgobwas
 fgoccy
@@ -1195,8 +1198,10 @@ fjoho
 fjosharian
 fjpillora
 fjson
+fjsonname
 fjsonpointer
 fjsonreference
+fjsonutils
 fjstemmer
 fjtolds
 fjuju
@@ -1233,6 +1238,7 @@ flexbin
 flib
 flibc
 flipgloss
+floading
 flocafero
 flogex
 flogfmt
@@ -1283,6 +1289,7 @@ fmitchellh
 fmobile
 fmock
 fmockery
+fmockoidc
 fmod
 fmodern
 fmodocache
@@ -1497,6 +1504,7 @@ fstrcase
 fstream
 fstretchr
 fstrfmt
+fstringutils
 fstripe
 fstructs
 fstrutil
@@ -1539,6 +1547,7 @@ ftools
 ftrace
 ftrifles
 ftruncate
+ftypeutils
 fudpa
 fugashi
 fullwidth
@@ -1581,6 +1590,7 @@ fxxh
 fxxhash
 fxyproto
 fyaml
+fyamlutils
 fyamux
 fyhat
 fyookoala
@@ -1662,6 +1672,7 @@ gnuflag
 gnug
 gnullvm
 gnutls
+goabi
 goautoneg
 gobject
 gobwas
@@ -1804,6 +1815,7 @@ httpunix
 httpx
 huandu
 huggingface
+humanfs
 humantime
 humanwhocodes
 hwmon
@@ -1941,12 +1953,14 @@ jsesc
 jsoncpp
 jsonfile
 jsonify
+jsonname
 jsonnet
 jsonparse
 jsonpointer
 jsonreference
 jsonrepair
 jsonschema
+jsonutils
 jsonwebtoken
 jsonwebtokens
 jstemmer
@@ -2391,6 +2405,7 @@ mmap
 mnamer
 mobc
 mobilephone
+mockoidc
 modargs
 modelcontextprotocol
 modernc
@@ -3235,6 +3250,7 @@ strincmp
 stringprep
 stringprintf
 stringtopath
+stringutils
 strncasecmp
 strncat
 strncmp
@@ -3353,6 +3369,7 @@ tinkup
 tino
 tinyalsa
 tinyglobby
+tinygltf
 tinylib
 tinystr
 tinytemplate
@@ -3399,6 +3416,7 @@ typeextensions
 typelist
 typenum
 typer
+typeutils
 tyrquake
 tzaeli
 tzdata
@@ -3665,6 +3683,7 @@ yabause
 yajl
 yallist
 yamashou
+yamlutils
 yamux
 yansi
 yapf
