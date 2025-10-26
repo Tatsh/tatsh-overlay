@@ -1,0 +1,53 @@
+From 1d22f6204759354b343dc31838a0f5179a59b4bd Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 26 Oct 2025 06:03:28 -0400
+Subject: [PATCH 12/12] System gamemode
+
+---
+ 3rdparty/CMakeLists.txt    | 12 ++++++++++--
+ rpcs3/gamemode_control.cpp |  2 +-
+ 2 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
+index 5737d1f5e..8b9b8ee99 100644
+--- a/3rdparty/CMakeLists.txt
++++ b/3rdparty/CMakeLists.txt
+@@ -375,7 +375,11 @@ add_subdirectory(opencv EXCLUDE_FROM_ALL)
+ add_subdirectory(fusion EXCLUDE_FROM_ALL)
+ 
+ # FERAL INTERACTIVE
+-add_subdirectory(feralinteractive EXCLUDE_FROM_ALL)
++if (NOT USE_SYSTEM_GAMEMODE)
++  add_subdirectory(feralinteractive EXCLUDE_FROM_ALL)
++else()
++  pkg_check_modules(PC_GAMEMODE REQUIRED IMPORTED_TARGET GLOBAL gamemode)
++endif()
+ 
+ # add nice ALIAS targets for ease of use
+ if(USE_SYSTEM_LIBUSB)
+@@ -409,4 +413,8 @@ add_library(3rdparty::miniupnpc ALIAS PkgConfig::PC_MINIUNPNPC)
+ add_library(3rdparty::rtmidi ALIAS PkgConfig::PC_RTMIDI)
+ add_library(3rdparty::opencv ALIAS ${OPENCV_TARGET})
+ add_library(3rdparty::fusion ALIAS Fusion)
+-add_library(3rdparty::feralinteractive ALIAS 3rdparty_feralinteractive)
++if (NOT USE_SYSTEM_GAMEMODE)
++  add_library(3rdparty::feralinteractive ALIAS 3rdparty_feralinteractive)
++else()
++  add_library(3rdparty::feralinteractive ALIAS PkgConfig::PC_GAMEMODE)
++endif()
+diff --git a/rpcs3/gamemode_control.cpp b/rpcs3/gamemode_control.cpp
+index 3879ebacc..12c961979 100644
+--- a/rpcs3/gamemode_control.cpp
++++ b/rpcs3/gamemode_control.cpp
+@@ -3,7 +3,7 @@
+ #ifdef GAMEMODE_AVAILABLE
+ #pragma GCC diagnostic ignored "-Wold-style-cast"
+ extern "C" {
+-	#include "3rdparty/feralinteractive/feralinteractive/lib/gamemode_client.h"
++	#include <gamemode_client.h>
+ }
+ #endif
+ 
+-- 
+2.51.1
+

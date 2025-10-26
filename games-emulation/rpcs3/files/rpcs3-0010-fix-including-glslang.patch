@@ -1,0 +1,24 @@
+From da9e4b753db2d7cfaa33667ef19124b9ebb1903d Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 26 Oct 2025 05:41:31 -0400
+Subject: [PATCH 10/12] Fix including glslang
+
+---
+ 3rdparty/CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
+index 6c1892760..b467b80c3 100644
+--- a/3rdparty/CMakeLists.txt
++++ b/3rdparty/CMakeLists.txt
+@@ -101,7 +101,6 @@ add_subdirectory(hidapi)
+ # glslang
+ if(NOT USE_SYSTEM_GLSLANG)
+   add_subdirectory(glslang EXCLUDE_FROM_ALL)
+-  add_library(3rdparty_glslang INTERFACE)
+   target_link_libraries(3rdparty_glslang INTERFACE SPIRV)
+ endif()
+ #add_subdirectory(SPIRV EXCLUDE_FROM_ALL)
+-- 
+2.51.1
+

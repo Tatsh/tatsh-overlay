@@ -1,0 +1,40 @@
+From 3c87444a7f35148b3be4c4ce8a4dd3759c000dab Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 16 Sep 2024 03:44:30 -0400
+Subject: [PATCH 08/12] Allow use of system zstd
+
+---
+ 3rdparty/CMakeLists.txt      | 4 +++-
+ 3rdparty/zstd/CMakeLists.txt | 1 -
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
+index c7538053e..6c1892760 100644
+--- a/3rdparty/CMakeLists.txt
++++ b/3rdparty/CMakeLists.txt
+@@ -385,7 +385,9 @@ else()
+ 	add_library(3rdparty::libusb ALIAS usb-1.0-static)
+ endif()
+ add_library(3rdparty::zlib ALIAS 3rdparty_zlib)
+-add_library(3rdparty::zstd ALIAS 3rdparty_zstd)
++if (NOT USE_SYSTEM_ZSTD)
++  add_library(3rdparty::zstd ALIAS 3rdparty_zstd)
++endif()
+ add_library(3rdparty::7zip ALIAS 3rdparty_7zip)
+ add_library(3rdparty::flatbuffers ALIAS 3rdparty_flatbuffers)
+ add_library(3rdparty::pugixml ALIAS pugixml)
+diff --git a/3rdparty/zstd/CMakeLists.txt b/3rdparty/zstd/CMakeLists.txt
+index f4c97d3ee..c5c8dd66f 100644
+--- a/3rdparty/zstd/CMakeLists.txt
++++ b/3rdparty/zstd/CMakeLists.txt
+@@ -9,7 +9,6 @@ else()
+   option(ZSTD_BUILD_SHARED "BUILD SHARED LIBRARIES" OFF)
+   option(ZSTD_BUILD_STATIC "BUILD STATIC LIBRARIES" ON)
+   option(ZSTD_BUILD_TESTS "BUILD TESTS" OFF)
+-
+   add_subdirectory(zstd/build/cmake EXLUDE_FROM_ALL)
+   add_library(3rdparty_zstd INTERFACE)
+   target_link_libraries(3rdparty_zstd INTERFACE libzstd_static)
+-- 
+2.51.1
+

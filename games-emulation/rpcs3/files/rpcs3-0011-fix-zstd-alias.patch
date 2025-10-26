@@ -1,0 +1,27 @@
+From 998b8b2b279c624d65e3254ab7fd807eb2f3fd19 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 26 Oct 2025 05:45:10 -0400
+Subject: [PATCH 11/12] Fix zstd alias
+
+---
+ 3rdparty/CMakeLists.txt | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
+index b467b80c3..5737d1f5e 100644
+--- a/3rdparty/CMakeLists.txt
++++ b/3rdparty/CMakeLists.txt
+@@ -384,9 +384,7 @@ else()
+ 	add_library(3rdparty::libusb ALIAS usb-1.0-static)
+ endif()
+ add_library(3rdparty::zlib ALIAS 3rdparty_zlib)
+-if (NOT USE_SYSTEM_ZSTD)
+-  add_library(3rdparty::zstd ALIAS 3rdparty_zstd)
+-endif()
++add_library(3rdparty::zstd ALIAS 3rdparty_zstd)
+ add_library(3rdparty::7zip ALIAS 3rdparty_7zip)
+ add_library(3rdparty::flatbuffers ALIAS 3rdparty_flatbuffers)
+ add_library(3rdparty::pugixml ALIAS pugixml)
+-- 
+2.51.1
+

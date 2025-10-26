@@ -45,6 +45,7 @@ DEPEND="app-arch/zstd
 	dev-qt/qtmultimedia:6
 	dev-qt/qtnetworkauth:6
 	dev-qt/qtsvg:6
+	games-util/gamemode
 	llvm-core/llvm
 	media-libs/glew:0
 	media-libs/libglvnd[X]
@@ -74,12 +75,16 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0001-versioning.patch"
 	"${FILESDIR}/${PN}-0002-add-use_wayland.patch"
 	"${FILESDIR}/${PN}-0003-allow-use-of-system-spirv-an.patch"
-	"${FILESDIR}/${PN}-0005-support-for-system-miniupnpc.patch"
-	"${FILESDIR}/${PN}-0006-remove-extra.patch"
-	"${FILESDIR}/${PN}-0007-allow-system-rtmidi.patch"
-	"${FILESDIR}/${PN}-0008-add-missing-headers.patch"
-	"${FILESDIR}/${PN}-0009-allow-use-of-system-zstd.patch"
-	"${FILESDIR}/${PN}-0010-fix-openal-header-include.patch"
+	"${FILESDIR}/${PN}-0004-support-for-system-miniupnpc.patch"
+	"${FILESDIR}/${PN}-0005-remove-extra.patch"
+	"${FILESDIR}/${PN}-0006-allow-system-rtmidi.patch"
+	"${FILESDIR}/${PN}-0007-add-missing-headers.patch"
+	"${FILESDIR}/${PN}-0008-allow-use-of-system-zstd.patch"
+	"${FILESDIR}/${PN}-0009-fix-openal-header-include.patch"
+	"${FILESDIR}/${PN}-0010-fix-including-glslang.patch"
+	"${FILESDIR}/${PN}-0011-fix-zstd-alias.patch"
+	"${FILESDIR}/${PN}-0012-system-gamemode.patch"
+	"${FILESDIR}/${PN}-41a122a-newer-llvm.patch"
 )
 
 src_prepare() {

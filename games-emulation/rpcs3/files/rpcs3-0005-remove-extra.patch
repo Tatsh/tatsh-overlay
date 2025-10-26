@@ -1,0 +1,25 @@
+From 65c644302847f93488e3eef52dc86d50089ed0fa Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 5 Mar 2023 21:46:38 -0500
+Subject: [PATCH 05/12] Remove extra
+
+---
+ rpcs3/CMakeLists.txt | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/rpcs3/CMakeLists.txt b/rpcs3/CMakeLists.txt
+index b1d10d38e..31904acd1 100644
+--- a/rpcs3/CMakeLists.txt
++++ b/rpcs3/CMakeLists.txt
+@@ -181,8 +181,6 @@ if (NOT ANDROID)
+             DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
+         install(DIRECTORY ../bin/GuiConfigs
+             DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
+-        install(DIRECTORY ../bin/test
+-            DESTINATION ${CMAKE_INSTALL_DATADIR}/rpcs3)
+     endif()
+ endif()
+ 
+-- 
+2.51.1
+
