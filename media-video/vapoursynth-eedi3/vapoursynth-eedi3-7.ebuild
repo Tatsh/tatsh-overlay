@@ -7,8 +7,7 @@ inherit meson
 
 DESCRIPTION="A very slow edge directed interpolation filter (renewed)."
 HOMEPAGE="https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI3"
-SHA="d11bdb37c7a7118cd095b53d9f8fbbac02a06ac0"
-SRC_URI="https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI3/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/HomeOfVapourSynthEvolution/VapourSynth-EEDI3/archive/refs/tags/r${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -19,4 +18,4 @@ DEPEND="media-video/vapoursynth
 	virtual/opencl"
 RDEPEND="dev-libs/opencl-icd-loader"
 
-S="${WORKDIR}/VapourSynth-EEDI3-${SHA}"
+S="${WORKDIR}/VapourSynth-EEDI3-r${PV}"
