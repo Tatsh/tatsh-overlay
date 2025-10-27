@@ -20,8 +20,9 @@
       "*.har",
       "*.lock",
       ".git/**",
-      ".yarn/**/*.cjs",
       ".vscode/extensions.json",
+      ".yarn/**/*.cjs",
+      "Manifest",
       "dist/**",
       "man/**"
     ],
