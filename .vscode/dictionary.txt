@@ -1351,6 +1351,7 @@ libb
 libbar
 libbz
 libc
+libc's
 libcaca
 libcdio
 libchdr
@@ -1358,7 +1359,6 @@ libclang
 libco
 libcpp
 libcrypt
-libc's
 libcxx
 libcxxabi
 libd
@@ -1740,6 +1740,7 @@ nestopia
 netdb
 netinet
 netlink
+netmuxd
 netnode
 netplay
 netrc
@@ -1889,6 +1890,7 @@ pahawh
 pahawhhmong
 palmyrene
 pango
+paparam
 papertrail
 paramiko
 parany
