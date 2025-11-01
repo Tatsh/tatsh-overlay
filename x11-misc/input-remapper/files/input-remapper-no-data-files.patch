@@ -1,8 +1,8 @@
 diff --git a/setup.py b/setup.py
-index 20c7d3c..b0d0f8e 100644
+index bf9094b..43a3643 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -110,28 +110,5 @@ setup(
+@@ -109,26 +109,6 @@ setup(
      license="GPL-3.0",
      packages=get_packages(),
      include_package_data=True,
@@ -26,7 +26,13 @@ index 20c7d3c..b0d0f8e 100644
 -        ("/usr/bin/", ["bin/input-remapper-control"]),
 -        ("/usr/bin/", ["bin/input-remapper-reader-service"]),
 -    ],
-     install_requires=["setuptools", "evdev", "pydbus", "pygobject", "pydantic"],
+     install_requires=[
+         "setuptools",
+         "evdev",
+@@ -137,7 +117,4 @@ setup(
+         "pygobject",
+         "pydantic",
+     ],
 -    cmdclass={
 -        "install": Install,
 -    },
