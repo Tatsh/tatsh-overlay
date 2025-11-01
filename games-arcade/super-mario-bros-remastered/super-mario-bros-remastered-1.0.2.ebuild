@@ -7,7 +7,7 @@ inherit desktop wrapper
 
 DESCRIPTION="Unofficial remaster of the original game."
 HOMEPAGE="https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public"
-GODOT_VERSION=4.5
+GODOT_VERSION=4.5.1
 SRC_URI="https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
 
@@ -18,13 +18,11 @@ RESTRICT="strip"
 
 BDEPEND=">=dev-games/godot-${GODOT_VERSION}[tools]"
 
-PATCHES=( "${FILESDIR}/${PN}-no-discord.patch" )
-
 S="${WORKDIR}/Super-Mario-Bros.-Remastered-Public-${PV}"
 
 pkg_setup() {
 	if has_version -b ">=dev-games/godot-${GODOT_VERSION}[double-precision]"; then
-		ewarn 'dev-games/godot is known to fail to with USE=double-precision for this build.'
+		ewarn 'dev-games/godot is known to fail to with USE=double-precision for this package.'
 		ewarn 'If this build fails, re-build dev-games/godot with USE=-double-precision.'
 	fi
 }
