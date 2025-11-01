@@ -14,7 +14,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-python/beautifulsoup4[${PYTHON_USEDEP}]
+RDEPEND="dev-python/bascom[${PYTHON_USEDEP}]
+	dev-python/beautifulsoup4[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
 	dev-python/colorlog[${PYTHON_USEDEP}]
 	dev-python/defusedxml[${PYTHON_USEDEP}]
