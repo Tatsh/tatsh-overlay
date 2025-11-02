@@ -1,8 +1,2 @@
 move app-pda/ipad_charge app-pda/ipad-charge
 move dev-libs/vulkan-memory-allocator media-libs/VulkanMemoryAllocator
-move dev-util/nihstro dev-libs/nihstro
-move app-pda/ipad-charge app-mobilephone/ipad-charge
-move app-pda/altserver app-mobilephone/altserver
-move app-pda/libplist app-mobilephone/libplist
-move app-pda/libtatsu app-mobilephone/libtatsu
-move app-pda/netmuxd app-mobilephone/netmuxd
