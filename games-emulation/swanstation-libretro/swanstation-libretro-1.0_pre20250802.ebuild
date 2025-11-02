@@ -1,10 +1,10 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/swanstation"
-LIBRETRO_COMMIT_SHA="05cee5f56c37eaa3a243e0906d2082b025598056"
+LIBRETRO_COMMIT_SHA="4d309c05fd7bdc503d91d267bd542edb8d192b09"
 
 inherit libretro-core cmake flag-o-matic
 
@@ -36,5 +36,5 @@ src_configure() {
 src_install() {
 		LIBRETRO_LIB_DIR="/usr/$(get_libdir)/libretro"
 		insinto "${LIBRETRO_LIB_DIR}"
-		doins "${WORKDIR}/${PF}_build/${LIBRETRO_CORE_NAME}_libretro.so"
+		doins "${S}_build/${LIBRETRO_CORE_NAME}_libretro.so"
 }
