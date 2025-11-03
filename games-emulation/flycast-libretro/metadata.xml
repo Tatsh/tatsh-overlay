@@ -5,6 +5,10 @@
 		<email>amverweij@gmail.com</email>
 		<name>Bram Verweij</name>
 	</maintainer>
-	<longdescription lang="en">Multiplatform Sega Dreamcast emulator
-	</longdescription>
+	<use>
+		<flag name="gles">Use simplified OpenGLES instead of full-scale OpenGL</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">flyinghead/flycast</remote-id>
+	</upstream>
 </pkgmetadata>
