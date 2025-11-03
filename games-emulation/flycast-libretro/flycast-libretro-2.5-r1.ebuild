@@ -1,7 +1,7 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit ninja-utils
 
@@ -18,9 +18,10 @@ SRC_URI="
 	https://github.com/vinniefalco/LuaBridge/archive/5d21e35633a1f87ed08af115b07d3386096f792b.tar.gz -> ${P}-core_deps_luabridge.tar.gz
 	https://github.com/flyinghead/asio/archive/d3402006e84efb6114ff93e4f2b8508412ed80d5.tar.gz -> ${P}-core_deps_asio.tar.gz
 "
+S="${WORKDIR}/flycast-${PV}"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86 ~arm64"
+KEYWORDS="~amd64 ~arm64 ~x86 "
 IUSE="gles +opengl vulkan"
 
 REQUIRED_USE="
@@ -38,7 +39,6 @@ BDEPEND="
 	dev-build/cmake
 "
 
-S="${WORKDIR}/flycast-${PV}"
 BUILD_DIR="${WORKDIR}/${P}_build"
 
 src_unpack() {
