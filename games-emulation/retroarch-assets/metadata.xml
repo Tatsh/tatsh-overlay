@@ -11,6 +11,7 @@
 		<flag name="rgui">Enable rgui assets</flag>
 		<flag name="xmb">Enable xmb assets</flag>
 	</use>
-	<longdescription lang="en">
-	</longdescription>
+	<upstream>
+		<remote-id type="github">libretro/retroarch-assets</remote-id>
+	</upstream>
 </pkgmetadata>
