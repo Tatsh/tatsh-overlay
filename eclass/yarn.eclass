@@ -161,7 +161,7 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	# Installs the package into /usr/$(get_libdir)/${PN}/node_modules and installs docs.
 	yarn_src_install() {
 		find . -type f -iregex '.*/license\(\.\(md\|rtf\|txt\)\)?' -delete || die
-		insinto "/usr/$(get_libdir)/${PN}/node_modules"
+		insinto "/usr/$(get_libdir)/node_modules/${PN}/node_modules"
 		doins -r lib/node_modules/*
 		einstalldocs
 	}
