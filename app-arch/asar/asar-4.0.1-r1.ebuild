@@ -56,6 +56,6 @@ S="${WORKDIR}"
 
 src_install() {
 	yarn_src_install
-	fperms 0755 "/usr/$(get_libdir)/${PN}/node_modules/@electron/asar/bin/${PN}.mjs"
-	dosym "../$(get_libdir)/${PN}/node_modules/@electron/asar/bin/${PN}.mjs" "/usr/bin/${PN}"
+	fperms 0755 "/usr/$(get_libdir)/node_modules/${PN}/node_modules/@electron/asar/bin/${PN}.mjs"
+	dosym "../$(get_libdir)/node_modules/${PN}/node_modules/@electron/asar/bin/${PN}.mjs" "/usr/bin/${PN}"
 }
