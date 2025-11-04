@@ -4,7 +4,7 @@
 EAPI=8
 
 WANT_GYP=1
-inherit systemd yarn
+inherit cmake systemd yarn
 
 DESCRIPTION="Server endpoints to process or create content for chatting"
 HOMEPAGE="https://www.npmjs.com/package/anything-llm-server"
@@ -381,11 +381,41 @@ YARN_PKGS=(
 	axios-1.6.8
 	b4a-1.6.6
 	balanced-match-1.0.2
+	bare-env-3.0.0
 	bare-events-2.2.2
+	bare-events-2.8.1
 	bare-fs-2.3.0
+	bare-fs-4.5.0
+	bare-hrtime-2.1.1
+	bare-make-1.6.3
+	bare-module-resolve-1.11.2
 	bare-os-2.3.0
+	bare-os-3.6.2
 	bare-path-2.1.2
+	bare-path-3.0.0
+	bare-pipe-4.1.0
+	bare-process-4.2.2
+	bare-runtime-1.23.6
+	bare-runtime-android-arm-1.23.6
+	bare-runtime-android-arm64-1.23.6
+	bare-runtime-android-ia32-1.23.6
+	bare-runtime-android-x64-1.23.6
+	bare-runtime-darwin-arm64-1.23.6
+	bare-runtime-darwin-x64-1.23.6
+	bare-runtime-ios-arm64-1.23.6
+	bare-runtime-ios-arm64-simulator-1.23.6
+	bare-runtime-ios-x64-simulator-1.23.6
+	bare-runtime-linux-arm64-1.23.6
+	bare-runtime-linux-x64-1.23.6
+	bare-runtime-win32-arm64-1.23.6
+	bare-runtime-win32-x64-1.23.6
+	bare-semver-1.0.2
+	bare-signals-4.1.0
 	bare-stream-1.0.0
+	bare-stream-2.7.0
+	bare-subprocess-5.1.4
+	bare-tty-5.0.3
+	bare-url-2.3.1
 	base-64-0.1.0
 	base64-js-1.5.1
 	bcrypt-5.1.1
@@ -427,6 +457,13 @@ YARN_PKGS=(
 	cli-spinners-2.9.2
 	cli-width-4.1.0
 	cliui-8.0.1
+	cmake-runtime-4.1.1
+	cmake-runtime-darwin-universal-4.1.1
+	cmake-runtime-linux-arm64-4.1.1
+	cmake-runtime-linux-x64-4.1.1
+	cmake-runtime-win32-arm64-4.1.1
+	cmake-runtime-win32-x64-4.1.1
+	cmake-toolchains-1.8.5
 	cohere-ai-7.19.0
 	cohere-ai-7.9.5
 	color-3.2.1
@@ -548,6 +585,7 @@ YARN_PKGS=(
 	event-target-shim-5.0.1
 	eventemitter3-4.0.7
 	events-3.3.0
+	events-universal-1.0.1
 	eventsource-3.0.5
 	eventsource-parser-3.0.0
 	execa-5.1.1
@@ -818,6 +856,12 @@ YARN_PKGS=(
 	natural-compare-1.4.0
 	negotiator-0.6.3
 	negotiator-1.0.0
+	ninja-runtime-1.13.1
+	ninja-runtime-darwin-universal-1.13.1
+	ninja-runtime-linux-arm64-1.13.1
+	ninja-runtime-linux-x64-1.13.1
+	ninja-runtime-win32-arm64-1.13.1
+	ninja-runtime-win32-x64-1.13.1
 	node-abi-3.62.0
 	node-abort-controller-3.1.1
 	node-addon-api-5.1.0
@@ -869,6 +913,7 @@ YARN_PKGS=(
 	p-retry-4.6.2
 	p-timeout-3.2.0
 	p-wait-for-3.2.0
+	paparam-1.8.6
 	parent-module-1.0.1
 	parse5-7.2.1
 	parse5-htmlparser2-tree-adapter-7.1.0
@@ -936,6 +981,7 @@ YARN_PKGS=(
 	reflect.getprototypeof-1.0.6
 	regenerator-runtime-0.14.1
 	regexp.prototype.flags-1.5.2
+	require-asset-1.1.0
 	require-directory-2.1.1
 	require-from-string-2.0.2
 	resolve-2.0.0-next.5
@@ -991,6 +1037,7 @@ YARN_PKGS=(
 	stream-read-all-3.0.1
 	streamsearch-1.1.0
 	streamx-2.16.1
+	streamx-2.23.0
 	string-natural-compare-3.0.1
 	string-width-4.2.3
 	string.prototype.matchall-4.0.11
@@ -1021,6 +1068,7 @@ YARN_PKGS=(
 	tar-stream-3.1.7
 	tarn-3.0.2
 	tedious-16.7.1
+	text-decoder-1.2.3
 	text-hex-1.0.0
 	text-table-0.2.0
 	tmp-0.0.33
@@ -1103,27 +1151,41 @@ YARN_PKGS=(
 	zod-to-json-schema-3.24.5
 )
 yarn_set_globals
+CMAKE_BARE_TAG="1.6.5"
+CMAKE_NPM_TAG="1.1.0"
 SRC_URI="${YARN_SRC_URI}
 	https://github.com/Mintplex-Labs/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 RESTRICT="mirror"
 LICENSE="0BSD Apache-2.0 BSD BSD-2 CC0-1.0 ISC MIT Python-2.0 Unlicense WTFPL"
 # KEYWORDS="~amd64"
 
-DEPEND="dev-db/prisma-engines media-libs/vips"
+DEPEND="dev-db/prisma-engines
+	dev-libs/glib
+	media-libs/vips
+	sci-ml/onnxruntime[nodejs]"
 
 #PREBUILT_IGNORE=(
+#	./node_modules/@lancedb/lancedb-linux-x64-gnu/lancedb.linux-x64-gnu.node
 #	./node_modules/@prisma/engines/libquery_engine-debian-openssl-1.0.x.so.node
 #	./node_modules/@prisma/engines/schema-engine-debian-openssl-1.0.x
 #	./node_modules/bare-fs/prebuilds/linux-arm64/bare-fs.bare
 #	./node_modules/bare-os/prebuilds/linux-arm64/bare-os.bare
+#	./node_modules/onnxruntime-node/bin/napi-v3/linux/x64/onnxruntime_binding.node
 #)
 
 # Binaries
 # - bcrypt/lib/binding/napi-v3/bcrypt_lib.node: this will not build when using the ebuild command
-#   but it will when under emerge due to the network sandbox
-# - sharp/build/Release/sharp-linux-x64.node: this will build because of vips being installed
+#   but it will when under emerge due to the network sandbox.
+# - sharp/build/Release/sharp-linux-x64.node: this will build because of vips being installed. Also
+#   requires glib.
 
 S="${WORKDIR}"
+
+src_compile() {
+	yarn_src_compile
+	rm -fR node_modules/bare-{fs,os}/prebuilds \
+		node_modules/tar-fs/node_modules/bare-{fs,os}/prebuilds || die
+}
 
 src_install() {
 	yarn_src_install

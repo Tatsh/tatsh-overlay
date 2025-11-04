@@ -68,6 +68,8 @@
   "description": "Server endpoints to process or create content for chatting",
   "devDependencies": {
     "@inquirer/prompts": "^4.3.1",
+    "bare-make": "^1.6.3",
+    "bare-runtime": "^1.23.6",
     "cross-env": "^7.0.3",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",

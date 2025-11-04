@@ -3894,10 +3894,22 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
+bare-env@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/bare-env/-/bare-env-3.0.0.tgz#d61bf1fd7d1b590120f936d429a6c062db761882"
+  integrity sha512-0u964P5ZLAxTi+lW4Kjp7YRJQ5gZr9ycYOtjLxsSrupgMz3sn5Z9n4SH/JIifHwvadsf1brA2JAjP+9IOWwTiw==
+  dependencies:
+    bare-os "^3.0.1"
+
 bare-events@^2.0.0, bare-events@^2.2.0:
   version "2.2.2"
   resolved "https://registry.npmjs.org/bare-events/-/bare-events-2.2.2.tgz"
   integrity sha512-h7z00dWdG0PYOQEvChhOSWvOfkIKsdZGkWr083FgN/HyoQuebSew/cgirYqh9SCuy/hRvxc5Vy6Fw8xAmYHLkQ==
+
+bare-events@^2.3.1, bare-events@^2.5.3, bare-events@^2.5.4, bare-events@^2.7.0:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/bare-events/-/bare-events-2.8.1.tgz#121afaeee9e9a8eb92e71d125bc85753d39913d0"
+  integrity sha512-oxSAxTS1hRfnyit2CL5QpAOS5ixfBjj6ex3yTNvXyY/kE719jQ/IjuESJBK2w5v4wwQRAHGseVJXx9QBYOtFGQ==
 
 bare-fs@^2.1.1:
   version "2.3.0"
@@ -3908,10 +3920,53 @@ bare-fs@^2.1.1:
     bare-path "^2.0.0"
     bare-stream "^1.0.0"
 
+bare-fs@^4.4.4:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/bare-fs/-/bare-fs-4.5.0.tgz#f3227b4bc79a65ca7e91a1c05be5919c7c7d8340"
+  integrity sha512-GljgCjeupKZJNetTqxKaQArLK10vpmK28or0+RwWjEl5Rk+/xG3wkpmkv+WrcBm3q1BwHKlnhXzR8O37kcvkXQ==
+  dependencies:
+    bare-events "^2.5.4"
+    bare-path "^3.0.0"
+    bare-stream "^2.6.4"
+    bare-url "^2.2.2"
+    fast-fifo "^1.3.2"
+
+bare-hrtime@^2.0.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/bare-hrtime/-/bare-hrtime-2.1.1.tgz#dcda2b03e71e34838ea28a8a1de51d850ffa981a"
+  integrity sha512-VMb3tHo05gsnbu3OXTmkDiwTjMlOsbQmKoysKqKEyR09m77TuDrYFbj3Q5GGk10dAKsUHrnXmwCaeJqzVpB5ZA==
+
+bare-make@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/bare-make/-/bare-make-1.6.3.tgz#2c26226eeafc07f9cf2cd40c871af7103a40bdb5"
+  integrity sha512-HYkxX4urzeX/HuKEWNusdefbMRLXw33f5kARb81aLL+iJIjuMEm08EXhYh39a6qhbRpEZ9pDlw60804gaZQ31Q==
+  dependencies:
+    bare-env "^3.0.0"
+    bare-fs "^4.4.4"
+    bare-os "^3.2.0"
+    bare-path "^3.0.0"
+    bare-process "^4.0.0"
+    cmake-runtime "^4.1.1"
+    cmake-toolchains "^1.0.1"
+    ninja-runtime "^1.13.1"
+    paparam "^1.5.0"
+
+bare-module-resolve@^1.6.2:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/bare-module-resolve/-/bare-module-resolve-1.11.2.tgz#ba255d0636ebb86355735aad7a0a76352cafeb1e"
+  integrity sha512-HIBu9WacMejg3Dz4X1v6lJjp7ECnwpujvuLub+8I7JJLRwJaGxWMzGYvieOoS9R1n5iRByvTmLtIdPbwjfRgiQ==
+  dependencies:
+    bare-semver "^1.0.0"
+
 bare-os@^2.1.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/bare-os/-/bare-os-2.3.0.tgz"
   integrity sha512-oPb8oMM1xZbhRQBngTgpcQ5gXw6kjOaRsSWsIeNyRxGed2w/ARyP7ScBYpWR1qfX2E5rS3gBw6OWcSQo+s+kUg==
+
+bare-os@^3.0.1, bare-os@^3.2.0, bare-os@^3.3.1, bare-os@^3.5.0:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/bare-os/-/bare-os-3.6.2.tgz#b3c4f5ad5e322c0fd0f3c29fc97d19009e2796e5"
+  integrity sha512-T+V1+1srU2qYNBmJCXZkUY5vQ0B4FSlL3QDROnKQYOqeiQR8UbjNHlPa+TIbM4cuidiN9GaTaOZgSEgsvPbh5A==
 
 bare-path@^2.0.0, bare-path@^2.1.0:
   version "2.1.2"
@@ -3920,12 +3975,204 @@ bare-path@^2.0.0, bare-path@^2.1.0:
   dependencies:
     bare-os "^2.1.0"
 
+bare-path@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/bare-path/-/bare-path-3.0.0.tgz#b59d18130ba52a6af9276db3e96a2e3d3ea52178"
+  integrity sha512-tyfW2cQcB5NN8Saijrhqn0Zh7AnFNsnczRcuWODH0eYAXBsJ5gVxAUuNr7tsHSC6IZ77cA0SitzT+s47kot8Mw==
+  dependencies:
+    bare-os "^3.0.1"
+
+bare-pipe@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/bare-pipe/-/bare-pipe-4.1.0.tgz#b9e4b1269193eea0959c7ac2ce722aec5b459a2c"
+  integrity sha512-0TD3NUIhh7KgPMRLyEBqSXlTZ8X/jcw1ulAjmErDWwoLdIF9FdVXvbpbzyKIl45sr9ZQ4k5AKThAOlrrtZcrXg==
+  dependencies:
+    bare-events "^2.0.0"
+    bare-stream "^2.0.0"
+
+bare-process@^4.0.0, bare-process@^4.2.1:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/bare-process/-/bare-process-4.2.2.tgz#06bebb01e4998bec4991c18f44942ce1dba49ff0"
+  integrity sha512-ikzEw+HGLB+2lS/WLVEsqi8BXBwzleG3n7DYI0v6/YNklvNabOIGlLd1dof+7Jw5ob4jsBRPtyflweVahY7rFA==
+  dependencies:
+    bare-env "^3.0.0"
+    bare-events "^2.3.1"
+    bare-hrtime "^2.0.0"
+    bare-os "^3.5.0"
+    bare-pipe "^4.0.0"
+    bare-signals "^4.0.0"
+    bare-tty "^5.0.0"
+
+bare-runtime-android-arm64@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-android-arm64/-/bare-runtime-android-arm64-1.23.6.tgz#ed586a120b1ad7e5ac5893b1f7b726e8a1b7675b"
+  integrity sha512-1+mjQVPPAG8a3h54WIGz490aqC+5hdKVT9xn3wGRH6RVQs1gjVVxrEpMsUqakrjBWZAfNSsIq44va3o2J6zp0w==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-android-arm@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-android-arm/-/bare-runtime-android-arm-1.23.6.tgz#1f58f340006898dca0a4e3ad13ae99739093b0ed"
+  integrity sha512-tXLH8mZVks8572E/AEPMYdjaOzWME2+YDPthX6uYqzn+HmnWjDPUNtZx/y/J2iyI0FqR5M91t8SPVmaNlhOqhA==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-android-ia32@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-android-ia32/-/bare-runtime-android-ia32-1.23.6.tgz#ccb0c20030480f5d3cc7f694d598972a180097e5"
+  integrity sha512-VKaHvWaA00KHuYjFRrjRQRAe9bG3dKzt3h8VB85KX4jsKAYlSRVz407ZytUMNGqjat43ggZ3FH/ub9MC6QbelQ==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-android-x64@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-android-x64/-/bare-runtime-android-x64-1.23.6.tgz#6cc9d5bbe13105d80f7b7a7d27ac81a68d89e131"
+  integrity sha512-BTYlYg7qrrFcVJ1ol4DHcbOemvJgK2KvYQN6GuFosvpEswj/IZ+Np+XXwYsyRyYCjGGGa/6nRDSGPGKukiFbWg==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-darwin-arm64@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-darwin-arm64/-/bare-runtime-darwin-arm64-1.23.6.tgz#b767036b06c04fa23dbc972d954d879c27d0f02d"
+  integrity sha512-BFC/cuSoZZs4lc7guAJoTmq3youd8AzaUOrJC8KrRVvJ5tB8/dS4d+/lJtac6Z1OHyXTqWoIRJUIitvLasy7sA==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-darwin-x64@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-darwin-x64/-/bare-runtime-darwin-x64-1.23.6.tgz#749cf6613d69786627612617afe0c1b1e2a13ae3"
+  integrity sha512-MMAY69Cyaj4Djo7S9wR21bGY7Id/ZubM60ZJjuj/o3nfzA+SJQFUSdtpSrGKnfJh90dg9VxuNY7EXnS+SKEIjQ==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-ios-arm64-simulator@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-ios-arm64-simulator/-/bare-runtime-ios-arm64-simulator-1.23.6.tgz#98a838ee8d82ce09db182a4c58105f3c2e530ac6"
+  integrity sha512-Qb2L+r6Up3u3+xgtYbAR0MqkpgfBbMfpwnGU11y0qA56zOJYi17aTTvmWY7oV4xFsIO+eaoSBi1lEU5QEIIsig==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-ios-arm64@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-ios-arm64/-/bare-runtime-ios-arm64-1.23.6.tgz#fbecdc57f9c8eee400b7695abc737b899c5c2a61"
+  integrity sha512-jkhuQyrqs4ePTQx9bLipOQLyZypmhrYyYu6nb2zwjpmvBHu8PXqFkOMuUjd8V8cCVav9Jjm+xpvzB167n5dFDQ==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-ios-x64-simulator@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-ios-x64-simulator/-/bare-runtime-ios-x64-simulator-1.23.6.tgz#0a85fe73742e83794e8cb873efc0e020ca0ed768"
+  integrity sha512-pK4DtwcWQR//dkmhaV2v2/e0o+S8fTm65BkNO6FVhtgSpP6eFS4Q4+r0/kZpy5NebhzjBMjmxReqdZj2eZ/z2g==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-linux-arm64@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-linux-arm64/-/bare-runtime-linux-arm64-1.23.6.tgz#df5d94a187dd0dc399cc342c7618cc010b15dd6b"
+  integrity sha512-b1nABTyCl5mF7217cXw3ig/rUXGeaEFWtuA9x1sZ9oB2vfRCRzooK/AnYAILLvZELlh9sB7ivi74Y7UKwNyTTA==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-linux-x64@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-linux-x64/-/bare-runtime-linux-x64-1.23.6.tgz#a88191ab28247586bfe7a49e0c9508389c36867b"
+  integrity sha512-GcUjdDmb5CHbKgEZqCFMVf/yhic/NttLyb3vBda0P8O5fBWmVJMo8u6YKAqnY4zGgF5ryAgf5UvBf0OS35Jxwg==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-win32-arm64@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-win32-arm64/-/bare-runtime-win32-arm64-1.23.6.tgz#916241b53e3f5de123acef6968116d28f19b2c93"
+  integrity sha512-bpubm8fwexR7xRgbRpvV+TqrSCps8KY/eHVnM8qMYzr0t0y4FwthpCxrivXAmOPqr9vLkICiKCp+UNdJb7YZmg==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime-win32-x64@1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime-win32-x64/-/bare-runtime-win32-x64-1.23.6.tgz#b8f48cf30d8440e5849d9760eae9df3fc4248ff8"
+  integrity sha512-Qp9iy5NziQ/HGPZj2ah3n70xDDxTPwO93DkShpLx7EG5qbDrmmpgQBAwsDoKZa29J0RvOFgz4kJQ+54SKRGNog==
+  dependencies:
+    require-asset "^1.0.2"
+
+bare-runtime@^1.23.6:
+  version "1.23.6"
+  resolved "https://registry.yarnpkg.com/bare-runtime/-/bare-runtime-1.23.6.tgz#fbc45fe8070f99ce9b5bbd306518c3c28a6f69e0"
+  integrity sha512-e2Xr/s5rSuTnHvhu1w1GA3ZPB2iQaKesUoAXlKDLlp+q5lASa6Ao6+SpY6+QkZ8LtmiQAXVcBI1jFUm+2ZZTyg==
+  dependencies:
+    bare-fs "^4.4.4"
+    bare-os "^3.0.1"
+    bare-path "^3.0.0"
+    bare-process "^4.2.1"
+    bare-subprocess "^5.0.0"
+  optionalDependencies:
+    bare-runtime-android-arm "1.23.6"
+    bare-runtime-android-arm64 "1.23.6"
+    bare-runtime-android-ia32 "1.23.6"
+    bare-runtime-android-x64 "1.23.6"
+    bare-runtime-darwin-arm64 "1.23.6"
+    bare-runtime-darwin-x64 "1.23.6"
+    bare-runtime-ios-arm64 "1.23.6"
+    bare-runtime-ios-arm64-simulator "1.23.6"
+    bare-runtime-ios-x64-simulator "1.23.6"
+    bare-runtime-linux-arm64 "1.23.6"
+    bare-runtime-linux-x64 "1.23.6"
+    bare-runtime-win32-arm64 "1.23.6"
+    bare-runtime-win32-x64 "1.23.6"
+
+bare-semver@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/bare-semver/-/bare-semver-1.0.2.tgz#3cfc47ed5d3e809b369daec534ce916b70b83b8c"
+  integrity sha512-ESVaN2nzWhcI5tf3Zzcq9aqCZ676VWzqw07eEZ0qxAcEOAFYBa0pWq8sK34OQeHLY3JsfKXZS9mDyzyxGjeLzA==
+
+bare-signals@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/bare-signals/-/bare-signals-4.1.0.tgz#08bbf3322b9f0d5b4e237a0376a340206722b548"
+  integrity sha512-KTEy3ihxHvAt9O07uJ8RL82GBfrkUwjypLkXFpID+eYfGasGQ7WlRkcNjhRL6krmOBhDHUNLBkbV3JvDC2Yk5g==
+  dependencies:
+    bare-events "^2.5.3"
+    bare-os "^3.3.1"
+
 bare-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/bare-stream/-/bare-stream-1.0.0.tgz"
   integrity sha512-KhNUoDL40iP4gFaLSsoGE479t0jHijfYdIcxRn/XtezA2BaUD0NRf/JGRpsMq6dMNM+SrCrB0YSSo/5wBY4rOQ==
   dependencies:
     streamx "^2.16.1"
+
+bare-stream@^2.0.0, bare-stream@^2.6.4:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/bare-stream/-/bare-stream-2.7.0.tgz#5b9e7dd0a354d06e82d6460c426728536c35d789"
+  integrity sha512-oyXQNicV1y8nc2aKffH+BUHFRXmx6VrPzlnaEvMhram0nPBrKcEdcyBg5r08D0i8VxngHFAiVyn1QKXpSG0B8A==
+  dependencies:
+    streamx "^2.21.0"
+
+bare-subprocess@^5.0.0:
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/bare-subprocess/-/bare-subprocess-5.1.4.tgz#211b4a1df2fbe791e4933dfbf67ed2e523a8abb3"
+  integrity sha512-CkZZr2R4mpRu2+WlTs2YZVlOKJ9t2D3SLIwhYBJxnRvtoygPTnMsdc92N6/E8YXY/uhZvbM6ZhEZTt1ubU6xlw==
+  dependencies:
+    bare-env "^3.0.0"
+    bare-events "^2.5.4"
+    bare-os "^3.0.1"
+    bare-path "^3.0.0"
+    bare-pipe "^4.0.0"
+    bare-url "^2.2.2"
+
+bare-tty@^5.0.0:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/bare-tty/-/bare-tty-5.0.3.tgz#dd8a6fdb517e8d2d8e43941f879773e814d82d5a"
+  integrity sha512-jW24RBWRZOMHuSEWC9mh8wUKO5WUNl0UWUTNPn3yZ8qkOqwa8vaV2dR3a+BvblONPk7V35wuvK9P8508+judAg==
+  dependencies:
+    bare-events "^2.2.0"
+    bare-signals "^4.0.0"
+    bare-stream "^2.0.0"
+
+bare-url@^2.1.0, bare-url@^2.2.2:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/bare-url/-/bare-url-2.3.1.tgz#95e33e99bdc768766ca94246fdc397e88675ec9c"
+  integrity sha512-v2yl0TnaZTdEnelkKtXZGnotiV6qATBlnNuUMrHl6v9Lmmrh9mw9RYyImPU7/4RahumSwQS1k2oKXcRfXcbjJw==
+  dependencies:
+    bare-path "^3.0.0"
 
 base-64@^0.1.0:
   version "0.1.0"
@@ -4245,6 +4492,64 @@ cliui@^8.0.1:
     string-width "^4.2.0"
     strip-ansi "^6.0.1"
     wrap-ansi "^7.0.0"
+
+cmake-runtime-darwin-universal@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/cmake-runtime-darwin-universal/-/cmake-runtime-darwin-universal-4.1.1.tgz#87b699e6909ce6c99b2820ab9ac26f4ab943c0cd"
+  integrity sha512-Ruzmye9C4R/MclaHUvRPQpAGxbeTK/iUpWpc5cRN5L1/H47SoWhgf/vbCQYkwehmgpVOyS9i6HZxKrqPsQ+QMQ==
+  dependencies:
+    require-asset "^1.0.2"
+
+cmake-runtime-linux-arm64@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/cmake-runtime-linux-arm64/-/cmake-runtime-linux-arm64-4.1.1.tgz#5e616201d148a5c56d2f5978ad17b8bcef0d19c8"
+  integrity sha512-0li5+WDjRHL0djyB/O4r4Lk8OWVP1YfmF9W+MnvGy+hap7pKsnA50Zq8UEJFcKka3pq0VXroMkZPYeY2A4OCdw==
+  dependencies:
+    require-asset "^1.0.2"
+
+cmake-runtime-linux-x64@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/cmake-runtime-linux-x64/-/cmake-runtime-linux-x64-4.1.1.tgz#998e9a0c44b7b2c73f0504283746617eab32f24e"
+  integrity sha512-t1IpdCNeBUWHt9k34J//T3QViRf2+srSOxS+wNCD6rhgfR3r1klsz2zwPqW310TcSwtn8hJUz/P6L9MyXsBp3g==
+  dependencies:
+    require-asset "^1.0.2"
+
+cmake-runtime-win32-arm64@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/cmake-runtime-win32-arm64/-/cmake-runtime-win32-arm64-4.1.1.tgz#1b8598074e9b7e408ee02e62f16261e8b06e3c7f"
+  integrity sha512-JLxw9x/BIllIS2NhO3Se/0tEOjYwhuhChbIyst/3Wpml0sqG8CZIAIHChg8iz5XM55+l/e+BAv0ekFyVpz5Q+g==
+  dependencies:
+    require-asset "^1.0.2"
+
+cmake-runtime-win32-x64@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/cmake-runtime-win32-x64/-/cmake-runtime-win32-x64-4.1.1.tgz#57bbc41c548c70663033f24154b70f9b76105d70"
+  integrity sha512-Xnpm7NprEmZkqQld+97iDcIAP060kM0t7TmT1GtMijna5+dyxGGkBF38Vu1fVrHAX5O3znrhTCVfCGZgIj9mfQ==
+  dependencies:
+    require-asset "^1.0.2"
+
+cmake-runtime@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/cmake-runtime/-/cmake-runtime-4.1.1.tgz#5432809711542c2e298b5ef199a8b8247bf69c41"
+  integrity sha512-gwDPKXFVNAtfOG7lGn5VVQsOLoo2T3aiP9k/cRoAotNCF9XzgboIFpXW25ClSZiUA5toim/ZNBMbXsEvV0rOPA==
+  dependencies:
+    bare-fs "^4.4.4"
+    bare-os "^3.0.1"
+    bare-path "^3.0.0"
+    bare-subprocess "^5.0.0"
+  optionalDependencies:
+    cmake-runtime-darwin-universal "4.1.1"
+    cmake-runtime-linux-arm64 "4.1.1"
+    cmake-runtime-linux-x64 "4.1.1"
+    cmake-runtime-win32-arm64 "4.1.1"
+    cmake-runtime-win32-x64 "4.1.1"
+
+cmake-toolchains@^1.0.1:
+  version "1.8.5"
+  resolved "https://registry.yarnpkg.com/cmake-toolchains/-/cmake-toolchains-1.8.5.tgz#5b129b4ca9b1e441eb904c7a34b9591b571a5ee7"
+  integrity sha512-a4EdCKxtppDkWWXilg8upTBItWXmkcV4jWAX2d4+tLxfC2+nMttpUB2RV+TGvO0nvTBKAiKkVUXMrOj66jhzhw==
+  dependencies:
+    require-asset "^1.0.2"
 
 cohere-ai@^7.0.0:
   version "7.9.5"
@@ -5177,6 +5482,13 @@ eventemitter3@^4.0.4:
   resolved "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.7.tgz"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
+events-universal@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/events-universal/-/events-universal-1.0.1.tgz#b56a84fd611b6610e0a2d0f09f80fdf931e2dfe6"
+  integrity sha512-LUd5euvbMLpwOF8m6ivPCbhQeSiYVNb8Vs0fQ8QjXo0JTkEHpz8pxdQf0gStltaPpw0Cca8b39KxvK9cfKRiAw==
+  dependencies:
+    bare-events "^2.7.0"
+
 events@^3.0.0, events@^3.3.0:
   version "3.3.0"
   resolved "https://registry.npmjs.org/events/-/events-3.3.0.tgz"
@@ -5328,7 +5640,7 @@ fast-diff@^1.1.2:
   resolved "https://registry.npmjs.org/fast-diff/-/fast-diff-1.3.0.tgz"
   integrity sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==
 
-fast-fifo@^1.1.0, fast-fifo@^1.2.0:
+fast-fifo@^1.1.0, fast-fifo@^1.2.0, fast-fifo@^1.3.2:
   version "1.3.2"
   resolved "https://registry.npmjs.org/fast-fifo/-/fast-fifo-1.3.2.tgz"
   integrity sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==
@@ -7009,6 +7321,57 @@ negotiator@^1.0.0:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-1.0.0.tgz#b6c91bb47172d69f93cfd7c357bbb529019b5f6a"
   integrity sha512-8Ofs/AUQh8MaEcrlq5xOX0CQ9ypTF5dl78mjlMNfOK08fzpgTHQRQPBxcPlEtIw0yRpws+Zo/3r+5WRby7u3Gg==
 
+ninja-runtime-darwin-universal@1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/ninja-runtime-darwin-universal/-/ninja-runtime-darwin-universal-1.13.1.tgz#16d1a9a6df73e8ffbda2371a5b6f5f2dab313e27"
+  integrity sha512-21OLuJ6WdUmOum23i71ttikLAiW/4+118GhcMmS0xTaUS73UOerCSzMSabkZfyYevIavHNMFjXkKAWIS3XrdTg==
+  dependencies:
+    require-asset "^1.0.2"
+
+ninja-runtime-linux-arm64@1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/ninja-runtime-linux-arm64/-/ninja-runtime-linux-arm64-1.13.1.tgz#f330a062d170cf5f16f51adaa31396a9c5f323dd"
+  integrity sha512-pL9M/MHhviVWOf1Tgh0c0QiXVu1mvteePezXaaAJkaLXgqpNRAQX/jInThDbXAw4Ha6NPyq9+LsuLC8YzSEH9w==
+  dependencies:
+    require-asset "^1.0.2"
+
+ninja-runtime-linux-x64@1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/ninja-runtime-linux-x64/-/ninja-runtime-linux-x64-1.13.1.tgz#7caf797e8114b86efb4afc73b0d157582454f272"
+  integrity sha512-r+S+pMXIwzIVSfWUB63y+He6eYUgAqdp7R+/WHxQf3w8mocbw5hSW5AY5KH+U5LTYutWuSjpvoXoWDiQoAlqTg==
+  dependencies:
+    require-asset "^1.0.2"
+
+ninja-runtime-win32-arm64@1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/ninja-runtime-win32-arm64/-/ninja-runtime-win32-arm64-1.13.1.tgz#64ff689bf80e515338756303bf1abc2c86cb16fe"
+  integrity sha512-9kFV9a+UN9HJng/8Z5PU59VSyGu8bOXmwzcp9h91jRoE+r4I7ZmiJfbatT688ZkOt4/BwrDKh9oimEevvb3B+g==
+  dependencies:
+    require-asset "^1.0.2"
+
+ninja-runtime-win32-x64@1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/ninja-runtime-win32-x64/-/ninja-runtime-win32-x64-1.13.1.tgz#58741ba2cf7b0e080090b2c10ada637f3450704c"
+  integrity sha512-amVKTjyePrHOoabjo2cgxQMh7xNliAxDtg7tJ3Qs+6IODYSvoDuEQwTkEt2NyRUxJdDO+uTMgJPfSYSSvxjSIA==
+  dependencies:
+    require-asset "^1.0.2"
+
+ninja-runtime@^1.13.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/ninja-runtime/-/ninja-runtime-1.13.1.tgz#4e12e15957a2bf8566f88833b3bd6acaefeb585f"
+  integrity sha512-FEGFzCVLgVTPCfidVCDo9+tufMBTMUyVU1XJ/NbYJP4vt79IILt08Ru/Fk8r6/RBXIBEX0pDgZVWioeNqpY7qg==
+  dependencies:
+    bare-fs "^4.4.4"
+    bare-os "^3.0.1"
+    bare-path "^3.0.0"
+    bare-subprocess "^5.0.0"
+  optionalDependencies:
+    ninja-runtime-darwin-universal "1.13.1"
+    ninja-runtime-linux-arm64 "1.13.1"
+    ninja-runtime-linux-x64 "1.13.1"
+    ninja-runtime-win32-arm64 "1.13.1"
+    ninja-runtime-win32-x64 "1.13.1"
+
 node-abi@^3.3.0:
   version "3.62.0"
   resolved "https://registry.npmjs.org/node-abi/-/node-abi-3.62.0.tgz"
@@ -7390,6 +7753,11 @@ p-wait-for@3:
   integrity sha512-wpgERjNkLrBiFmkMEjuZJEWKKDrNfHCKA1OhyN1wg1FrLkULbviEy6py1AyJUgZ72YWFbZ38FIpnqvVqAlDUwA==
   dependencies:
     p-timeout "^3.0.0"
+
+paparam@^1.5.0:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/paparam/-/paparam-1.8.6.tgz#a4faad665b69647f8a68f4d30334981e8d757258"
+  integrity sha512-M9YxYv8LkotNkXdFDd2GPwa9jspLkcTZn9yjBzAPkAF0ngq755KtmoQyVWb0+6eIZuW7WtTPWycelNDhkkgOog==
 
 parent-module@^1.0.0:
   version "1.0.1"
@@ -7876,6 +8244,14 @@ regexp.prototype.flags@^1.5.2:
     es-errors "^1.3.0"
     set-function-name "^2.0.1"
 
+require-asset@^1.0.2:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/require-asset/-/require-asset-1.1.0.tgz#cf320497fd0baa8452778100dda42771e7ef25ee"
+  integrity sha512-X4MXkttYxIEAWr74QsHnGAhUStqCmKPi86OMzh9fnGyPPjduD8qSHEw5N2iApFrs82DBuQ+yesDxajDl/yxT3Q==
+  dependencies:
+    bare-module-resolve "^1.6.2"
+    bare-url "^2.1.0"
+
 require-directory@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz"
@@ -8272,6 +8648,15 @@ streamx@^2.15.0, streamx@^2.16.1:
   optionalDependencies:
     bare-events "^2.2.0"
 
+streamx@^2.21.0:
+  version "2.23.0"
+  resolved "https://registry.yarnpkg.com/streamx/-/streamx-2.23.0.tgz#7d0f3d00d4a6c5de5728aecd6422b4008d66fd0b"
+  integrity sha512-kn+e44esVfn2Fa/O0CPFcex27fjIL6MkVae0Mm6q+E6f0hWv578YCERbv+4m02cjxvDsPKLnmxral/rR6lBMAg==
+  dependencies:
+    events-universal "^1.0.0"
+    fast-fifo "^1.3.2"
+    text-decoder "^1.1.0"
+
 string-natural-compare@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmjs.org/string-natural-compare/-/string-natural-compare-3.0.1.tgz"
@@ -8522,6 +8907,13 @@ tedious@^16.4.0:
     native-duplexpair "^1.0.0"
     node-abort-controller "^3.1.1"
     sprintf-js "^1.1.2"
+
+text-decoder@^1.1.0:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/text-decoder/-/text-decoder-1.2.3.tgz#b19da364d981b2326d5f43099c310cc80d770c65"
+  integrity sha512-3/o9z3X0X0fTupwsYvR03pJ/DjWuqqrfwBgTQzdWDiQSm9KitAyz/9WqsT2JQW7KV2m+bC2ol/zqpW37NHxLaA==
+  dependencies:
+    b4a "^1.6.4"
 
 text-hex@1.0.x:
   version "1.0.0"
