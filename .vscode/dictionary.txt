@@ -83,6 +83,7 @@ arenastring
 argcomplete
 argmax
 argparse
+armeabi
 armon
 armv
 arogozhnikov
@@ -257,6 +258,7 @@ canadianaboriginal
 cancelable
 cancelreader
 capa
+capi
 carambat
 carian
 cascadia
@@ -355,6 +357,7 @@ colorama
 colorchoice
 colord
 colored
+coloredlogs
 colorette
 colorful
 colorlog
@@ -533,6 +536,7 @@ detectionoutput
 devel
 devname
 devtype
+dfetchcontent
 dfilter
 dflashattention
 dfluidsynth
@@ -577,6 +581,7 @@ dlinfo
 dlith
 dllvmlite
 dlmalloc
+dlpack
 dman
 dminitrace
 dmnt
@@ -617,6 +622,7 @@ domexception
 domhandler
 domodule
 domutils
+donnxruntime
 dont't
 dopenal
 dorules
@@ -695,6 +701,7 @@ eend
 eerror
 eeyore
 egit
+eigen
 einfo
 einops
 einstalldocs
@@ -711,6 +718,7 @@ emake
 emea
 emesonargs
 emirpasic
+emscripten
 emuenv
 emutype
 enableval
@@ -806,6 +814,7 @@ fecha
 felis
 felixge
 feralinteractive
+fetchcontent
 ffibuilder
 fflate
 ffms
@@ -837,6 +846,7 @@ fluidsynth
 flushtables
 fluxsmooth
 flycast
+flyinghead
 fmha
 fmsx
 fmtconv
@@ -894,6 +904,7 @@ funcy
 fuser
 fvisibility
 fwrite
+fxdiv
 gambatte
 gamecube
 gamemode
@@ -993,6 +1004,7 @@ gompa
 gonetz
 googlei
 googletest
+googlexnnpack
 gookit
 goos
 gopd
@@ -1403,6 +1415,7 @@ libmspack
 libmusl
 libnnedi
 libogg
+libonnxruntime
 libos
 libpcap
 libpcre
@@ -1519,6 +1532,7 @@ longdescription
 lookatme
 loong
 loongarch
+lora
 loras
 lowresnx
 lpthread
@@ -1546,6 +1560,7 @@ mahajani
 mailru
 mainpid
 mainte
+makeavailable
 makeopts
 malloc
 mame
@@ -1654,6 +1669,7 @@ mkorenkov
 mkwineprefix
 mlabbe
 mllvm
+mlops
 mmap
 mnamer
 mobilephone
@@ -1776,6 +1792,7 @@ noatime
 nodedir
 nodelib
 nodemon
+noexecstack
 noextract
 nofetch
 noflush
@@ -1844,6 +1861,7 @@ oneshot
 onetime
 onmomo
 onnx
+onnxrunt
 onnxruntime
 onroerend
 onsi
@@ -2026,6 +2044,7 @@ psvpfs
 psvpfsparser
 psvpfstools
 pthread
+pthreadpool
 pthreads
 puae
 puerkito
@@ -2039,6 +2058,7 @@ pvutils
 pvxe
 pwhash
 pyaaf
+pyargs
 pyarrow
 pyasn
 pybind
@@ -2240,6 +2260,7 @@ ryanuber
 ryszard
 ryubing
 ryujinx
+safeint
 safetensors
 sagikazarmark
 samber
@@ -2342,12 +2363,14 @@ sndh
 snes
 snesrev
 sniffio
+sobolev
 sockaddr
 socketfile
 softfloat
 softmax
 softmmu
 softplus
+softsign
 sompeng
 sopt
 sorasompeng
@@ -2471,6 +2494,7 @@ swscale
 sylheti
 sylotinagri
 symphonia
+sympy
 synckit
 synstructure
 sysconfig
@@ -2811,6 +2835,7 @@ xlib
 xmlbuilder
 xmldom
 xmlpath
+xnnpack
 xnvk
 xorg
 xpet
