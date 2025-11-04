@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-from datetime import date
-from os.path import dirname, join as path_join
+from datetime import UTC, datetime
+from pathlib import Path
 from typing import Set
 import argparse
 import glob
@@ -47,13 +47,15 @@ def main() -> int:
     parser.add_argument('-r',
                         '--root',
                         action='store_true',
-                        help='Package is at root and is not a dependency.')
+                        help='Package is at root and is not a dependency (for CLI tools usually).')
     args = dict(parser.parse_args()._get_kwargs())
     yarn_lock = args['yarn.lock']
     package = args['package']
-    root_dir = dirname(yarn_lock)
-    path_join_args = ((root_dir, 'node_modules', package, 'package.json') if not args['root'] else
-                      (root_dir, 'package.json'))
+    root_dir = Path(yarn_lock).parent
+    package_json = (root_dir / 'node_modules' / package /
+                    'package.json' if not args['root'] else root_dir / 'package.json')
+    if args['root'] and not package_json.exists():
+        package_json = root_dir / f'{package}-package.json'
     licenses: Set[str] = set()
     with open(yarn_lock) as f:
         yarn_pkgs: Set[str] = set()
@@ -64,12 +66,12 @@ def main() -> int:
             name = m.groups()[0]
             if (m := re.match(r'^version "([^"]+)"', lines[i + 1].strip())):
                 yarn_pkgs.add(f'\t{name}-{m.groups()[0]}')
-        with open(path_join(*path_join_args)) as j:
+        with package_json.open() as j:
             data = json.load(j)
             if lic := data.get('license'):
                 licenses.add(lic)
         for item in glob.iglob('./**/package.json', root_dir=root_dir, recursive=True):
-            with open(path_join(root_dir, item)) as j:
+            with (root_dir / item).open() as j:
                 try:
                     dep_data = json.load(j)
                     if lic := dep_data.get('license'):
@@ -79,7 +81,7 @@ def main() -> int:
                 except json.decoder.JSONDecodeError:
                     pass
         print(
-            EBUILD_TEMPLATE.format(year=date.today().year,
+            EBUILD_TEMPLATE.format(year=datetime.now(UTC).year,
                                    description=data.get('description', 'FIXME'),
                                    homepage=data.get('homepage',
                                                      f'https://www.npmjs.com/package/{package}'),
