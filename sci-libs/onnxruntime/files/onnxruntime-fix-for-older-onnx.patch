@@ -1,0 +1,35 @@
+diff --git a/onnxruntime/core/graph/contrib_ops/bert_defs.cc b/onnxruntime/core/graph/contrib_ops/bert_defs.cc
+index e2b17aa84d..41a5986f6e 100644
+--- a/onnxruntime/core/graph/contrib_ops/bert_defs.cc
++++ b/onnxruntime/core/graph/contrib_ops/bert_defs.cc
+@@ -342,7 +342,7 @@ void BaseGroupQueryAttentionTypeAndShapeInference(ONNX_NAMESPACE::InferenceConte
+       }
+ 
+       if (output_qk_index >= 0) {
+-        const bool did_supply_qk_buffer = ctx.hasOutput(output_qk_index);
++        const bool did_supply_qk_buffer = static_cast<size_t>(output_qk_index) < ctx.getNumOutputs() && (ctx.getOutputType(output_qk_index) != nullptr);
+         const int64_t qk_output_type = getAttribute(ctx, "qk_output", static_cast<int64_t>(QKOutputType::NO_OUTPUT));
+ 
+         if (qk_output_type == static_cast<int64_t>(QKOutputType::NO_OUTPUT) && did_supply_qk_buffer) {
+diff --git a/onnxruntime/core/optimizer/transformer_memcpy.cc b/onnxruntime/core/optimizer/transformer_memcpy.cc
+index 9d49c16391..5b6f8b64ac 100644
+--- a/onnxruntime/core/optimizer/transformer_memcpy.cc
++++ b/onnxruntime/core/optimizer/transformer_memcpy.cc
+@@ -16,7 +16,7 @@ namespace onnxruntime {
+ static ProviderTypeToProviderMap GetProvidersByType(
+     const InlinedVector<gsl::not_null<const IExecutionProvider*>>& providers) {
+   ProviderTypeToProviderMap providers_by_type{};
+-  for (const auto provider : providers) {
++  for (const auto &provider : providers) {
+     providers_by_type.emplace(provider->Type(), provider);
+   }
+   return providers_by_type;
+@@ -100,7 +100,7 @@ static const onnx::TensorProto* GetInitializer(const Graph& graph, const std::st
+ // and mainly provides the subgraph recursion functionality
+ Status MemcpyTransformer::ApplyImpl(Graph& graph, bool& modified, int graph_level,
+                                     const logging::Logger& logger) const {
+-  for (const auto provider : providers_) {
++  for (const auto &provider : providers_) {
+     const auto& provider_type = provider->Type();
+     if (!utils::ProviderIsCpuBased(*provider)) {
+       TransformerMemcpyImpl copy_impl(graph, *provider, providers_by_type_);
