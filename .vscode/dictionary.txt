@@ -371,6 +371,7 @@ commandlines
 commer
 commitizen
 commondir
+compreply
 comserv
 conc
 confdir
@@ -447,6 +448,7 @@ curdir
 cuse
 cutscenedirsize
 cwchar
+cword
 cxadc
 cxleveladj
 cxxfilt
@@ -1570,6 +1572,7 @@ maniuplate
 manpages
 manprefix
 mapbox
+mapfile
 mapstructure
 marchen
 markreidvfx
