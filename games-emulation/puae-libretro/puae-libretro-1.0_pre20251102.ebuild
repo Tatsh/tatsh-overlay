@@ -12,7 +12,6 @@ DESCRIPTION="WIP libretro port of UAE (P-UAE and libco), a Commodore Amiga Emula
 HOMEPAGE="https://github.com/libretro/libretro-uae"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~x86 "
+KEYWORDS="~amd64 ~arm64 ~x86"
 
-RDEPEND="${DEPEND}
-		games-emulation/libretro-info"
+RDEPEND="games-emulation/libretro-info"
