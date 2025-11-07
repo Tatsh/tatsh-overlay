@@ -13,7 +13,7 @@ SLOT="0"
 
 #IUSE="2048 3dengine 81 atari800 bk blastem bluemsx bnes boom3 bsnes bsnes-mercury cannonball cap32 chailove citra \
 #	craft crocods desmume dinothawr dolphin dosbox dosbox-svn swanstation ecwolf fbalpha fbalpha2012 fbneo fceumm \
-#	fceu-next ffmpeg flycast fmsx freechaf freeintv frodo fuse gambatte gearboy gearsystem genesis_plus_gx \
+#	fceu-next ffmpeg flycast fmsx freechaf freeintv frodo fuse gambatte gearboy gearsystem \
 #	genesis_plus_gx_wide gme gong gpsp gw handy hatari lowresnx lutro mame2000 mame2003 mame2003_plus-libretro \
 #	mame2010 mame2015 mess2015 mednafen-bsnes mednafen-gba mednafen-lynx mednafen-ngp mednafen-pce \
 #	mednafen-pce-fast mednafen-pcfx mednafen-psx mednafen-psx-hw mednafen-saturn mednafen-supafaust \
@@ -24,9 +24,9 @@ SLOT="0"
 #	thepowdertoy tyrquake uzem vba-next vbam vecx vemulator vice-x128 vice-x64 vice-x64sc vice-xcbm2 vice-xcbm5x0 \
 #	vice-xpet vice-xplus4 vice-xscpu64 vice-xvic virtualjaguar vitaquake2 vitaquake3 x1 xrick yabause"
 
-IUSE="dolphin dosbox flycast fmsx fuse mednafen-psx mednafen-psx-hw mupen64 pcsx-rearmed ppsspp puae puae2021 snes9x swanstation tyrquake vice-x64 vice-x64sc"
+IUSE="dolphin dosbox flycast fmsx fuse genesis_plus_gx mednafen-psx mednafen-psx-hw mupen64 pcsx-rearmed ppsspp puae puae2021 snes9x swanstation tyrquake vice-x64 vice-x64sc"
 
-KEYWORDS="~amd64 ~x86 ~arm64"
+KEYWORDS="~amd64 ~arm64 ~x86"
 
 RDEPEND="
 	dolphin? ( games-emulation/dolphin-libretro )
@@ -34,6 +34,7 @@ RDEPEND="
 	flycast? ( games-emulation/flycast-libretro )
 	fmsx? ( games-emulation/fmsx-libretro )
 	fuse? ( games-emulation/fuse-libretro )
+	genesis_plus_gx? ( games-emulation/genesis_plus_gx-libretro )
 	mednafen-psx? ( games-emulation/mednafen-psx-libretro )
 	mednafen-psx-hw? ( games-emulation/mednafen-psx-hw-libretro )
 	mupen64? ( games-emulation/mupen64next-libretro )
@@ -46,4 +47,3 @@ RDEPEND="
 	tyrquake? ( games-emulation/tyrquake-libretro )
 	vice-x64? ( games-emulation/vice-x64-libretro )
 	vice-x64sc? ( games-emulation/vice-x64sc-libretro )"
-DEPEND=""
