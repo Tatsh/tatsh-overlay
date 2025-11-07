@@ -5,6 +5,7 @@
 		<email>amverweij@gmail.com</email>
 		<name>Bram Verweij</name>
 	</maintainer>
-	<longdescription lang="en">
-	</longdescription>
+	<upstream>
+		<remote-id type="github">libretro/tyrquake</remote-id>
+	</upstream>
 </pkgmetadata>
