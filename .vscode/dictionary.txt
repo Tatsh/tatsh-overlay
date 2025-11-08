@@ -305,6 +305,7 @@ chdir
 checkpath
 checkreqs
 cheevos
+chishm
 chksums
 choco
 chokidar
@@ -557,6 +558,7 @@ dheadless
 dialog
 dialogs
 difflib
+dilger
 dinothawr
 dinput
 dinstall
@@ -735,6 +737,7 @@ enet
 eninja
 enisum
 enrollments
+entuwii
 enumflags
 envify
 envoyproxy
@@ -879,6 +882,7 @@ fread
 freechaf
 freeintv
 freetype
+frob
 fromentries
 frozendict
 fsetid
@@ -900,6 +904,7 @@ ftlconffile
 ftlpid
 ftruncate
 fugashi
+fulfill
 fullwidth
 funcs
 funcy
@@ -907,6 +912,7 @@ fuser
 fvisibility
 fwrite
 fxdiv
+gailly
 gambatte
 gamecube
 gamemode
@@ -1028,6 +1034,7 @@ gouuid
 govalidator
 gover
 gpasswd
+gpgx
 gpsp
 gqlgen
 gqlgenc
@@ -1353,6 +1360,7 @@ lgomp
 lgtest
 libaio
 libao
+libasnd
 libass
 libatrac
 libav
@@ -1416,6 +1424,7 @@ libmpv
 libmspack
 libmusl
 libnnedi
+libogc
 libogg
 libonnxruntime
 libos
@@ -1551,6 +1560,7 @@ lugaresi
 lunixbochs
 lutro
 luuid
+lzma
 macemu
 machienhum
 macvendor
@@ -1934,6 +1944,7 @@ pcsx
 peds
 peekuser
 pefile
+pehrson
 pelletier
 pemfile
 persistentlogin
@@ -2152,6 +2163,7 @@ qurl
 quse
 qwebfullscreenrequest
 qwebkitglobal
+randers
 randomstring
 randtable
 raphnet
@@ -2234,6 +2246,7 @@ rogpeppe
 roialign
 roipooling
 rollup
+romain
 romaji
 roni
 rootcerts
@@ -2266,6 +2279,7 @@ ryujinx
 safeint
 safetensors
 sagikazarmark
+salmoria
 samber
 sameboy
 samplerate
@@ -2281,6 +2295,7 @@ savestatus
 savoirfairelinux
 scandir
 scenechange
+schalnat
 schannel
 scheibler
 schollz
@@ -2319,6 +2334,7 @@ setupvars
 sevinf
 sexp
 sezanzeb
+shagkur
 sharada
 shellcheck
 shellescape
@@ -2579,6 +2595,7 @@ tinytemplate
 tinyvec
 tinyxml
 tirhuta
+tisserand
 titleize
 toidentifier
 tomcrypt
@@ -2779,6 +2796,7 @@ webxr
 werror
 wextra
 whatwg
+wiedenbauer
 wiimm
 wiimms
 wildmatch
