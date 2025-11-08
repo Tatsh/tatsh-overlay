@@ -45,8 +45,8 @@
 		<flag name="gambatte">Nintendo - Game Boy / Color (Gambatte)</flag>
 		<flag name="gearboy">Nintendo Game Boy / Color (gearboy)</flag>
 		<flag name="gearsystem">Sega consoles (gearsystem)</flag>
-		<flag name="genesis_plus_gx">Sega Genesis / Megadrive (genesis_plus_gx)</flag>
-		<flag name="genesis_plus_gx_wide">Sega Genesis / Megadrive (genesis_plus_gx)</flag>
+		<flag name="genesis-plus-gx">Sega Genesis / Megadrive (genesis_plus_gx)</flag>
+		<flag name="genesis-plus-gx-wide">Sega Genesis / Megadrive (genesis_plus_gx)</flag>
 		<flag name="gme">Game Music Emu (gme)</flag>
 		<flag name="gong">Pong (gong)</flag>
 		<flag name="gpsp">Nintendo - Game Boy Advance (gpSP)</flag>
@@ -57,7 +57,7 @@
 		<flag name="lutro">Lua Engine (Lutro)</flag>
 		<flag name="mame2000">Arcade (MAME 2000)</flag>
 		<flag name="mame2003">Arcade (MAME 2003)</flag>
-		<flag name="mame2003_plus-libretro">Arcade (MAME 2003 Plus)</flag>
+		<flag name="mame2003-plus-libretro">Arcade (MAME 2003 Plus)</flag>
 		<flag name="mame2010">Arcade (MAME 2010)</flag>
 		<flag name="mame2015">Arcade (MAME 2015)</flag>
 		<flag name="mess2015">Multi systems (MESS 2015)</flag>
