@@ -714,6 +714,7 @@ elbasan
 elem
 eleonore
 elevenlabs
+elgato
 elif
 elog
 eltwise
