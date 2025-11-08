@@ -1084,6 +1084,7 @@ hdfs
 helpuri
 hephaest
 hexops
+higan
 hinterwaeldlers
 hiro
 hjson
@@ -1744,6 +1745,7 @@ myeconfargs
 myemakeargs
 myfeof
 mygoargs
+mymakeargs
 mypy
 nabataean
 nadermx
@@ -2650,6 +2652,7 @@ uips
 umpv
 unalz
 unaryop
+uncompromisable
 undefsafe
 underthesea
 undici
