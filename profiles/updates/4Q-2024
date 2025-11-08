@@ -1,2 +1,3 @@
 move app-pda/ipad_charge app-pda/ipad-charge
 move dev-libs/vulkan-memory-allocator media-libs/VulkanMemoryAllocator
+move games-emulation/genesis_plus_gx-libretro games-emulation/genesis-plus-gx-libretro
