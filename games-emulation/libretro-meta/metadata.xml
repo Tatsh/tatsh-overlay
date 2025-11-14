@@ -27,14 +27,11 @@
 		<flag name="dolphin">Nintendo Gamecube/Wii (dolphin)</flag>
 		<flag name="dosbox">DOS (DOSBox)</flag>
 		<flag name="dosbox-svn">DOS (DOSBox TRUNK)</flag>
-		<flag name="duckstation">Sony Playstation (duckstation)</flag>
 		<flag name="ecwolf">Wolfenstein 3D (ecwolf)</flag>
 		<flag name="fbalpha">Arcade (FB Alpha)</flag>
 		<flag name="fbalpha2012">Arcade (FB Alpha 2012)</flag>
 		<flag name="fbneo">Arcade (FBNeo)</flag>
-		<flag name="fceu-next">Nintendo - NES / Famicom(FCEUmm/FCEUX)</flag>
 		<flag name="fceumm">Nintendo - NES / Famicom (FCEUmm)</flag>
-		<flag name="fceu-next">Nintendo - NES / Famicom (fceu-next)</flag>
 		<flag name="ffmpeg">FFMpeg (ffmpeg)</flag>
 		<flag name="flycast">Sega - Dreamcast/NAOMI (Flycast)</flag>
 		<flag name="fmsx">Microsoft - MSX (fMSX)</flag>
@@ -102,6 +99,7 @@
 		<flag name="prboom">Doom (PrBoom)</flag>
 		<flag name="prosystem">Atari - 7800 (ProSystem)</flag>
 		<flag name="puae">Commodore - Amiga (P-UAE)</flag>
+		<flag name="puae2021">Commodore - Amiga (P-UAE)</flag>
 		<flag name="px68k">Sharp - X68000 (PX68k)</flag>
 		<flag name="quasi88">NEC - PC-8000 / PC-8800 series (QUASI88)</flag>
 		<flag name="quicknes">Nintendo - NES / Famicom (QuickNES)</flag>
@@ -117,6 +115,7 @@
 		<flag name="snes9x2005">Nintendo - SNES / SFC (Snes9x 2005)</flag>
 		<flag name="snes9x2010">Nintendo - SNES / SFC (Snes9x 2010)</flag>
 		<flag name="squirreljme">Java ME 8 (squirreljme)</flag>
+		<flag name="swanstation">Sony Playstation (swanstation)</flag>
 		<flag name="stella2014">Atari - 2600 (Stella 2014)</flag>
 		<flag name="tgbdual">Nintendo - Game Boy / Color (TGB Dual)</flag>
 		<flag name="tic80">Custom Game library (tic80)</flag>
@@ -144,5 +143,4 @@
 		<flag name="xrick">Rick Dangerous (XRick)</flag>
 		<flag name="yabause">Sega - Saturn (Yabause)"</flag>
 	</use>
-	<longdescription lang="en">Meta Package for Libretro cores</longdescription>
 </pkgmetadata>
