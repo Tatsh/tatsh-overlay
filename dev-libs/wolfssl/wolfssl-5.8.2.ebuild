@@ -11,7 +11,7 @@ SRC_URI="https://github.com/wolfSSL/${PN}/archive/refs/tags/v${PV}-stable.tar.gz
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-IUSE="debug cpu_flags_x86_aes sniffer +writedup"
+IUSE="debug cpu_flags_x86_aes jni sniffer +writedup"
 
 DEPEND="sniffer? ( net-libs/libpcap )"
 RDEPEND="${DEPEND}"
@@ -30,5 +30,6 @@ src_configure() {
 		"$(use_enable sniffer)" \
 		"$(use_enable debug)" \
 		--enable-distro \
+		"$(use_enable jni)" \
 		"$(use_enable writedup)"
 }
