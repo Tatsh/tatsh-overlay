@@ -1933,6 +1933,7 @@ parrado
 parseargs
 parseurl
 pascaldekloe
+pastey
 patchelf
 pathdiff
 pathlib
@@ -2773,6 +2774,7 @@ warang
 warangciti
 warnflags
 wasi
+wasip
 watara
 wchar
 wcurl
