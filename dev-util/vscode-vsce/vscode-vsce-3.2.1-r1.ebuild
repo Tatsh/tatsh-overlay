@@ -222,7 +222,7 @@ RESTRICT="mirror"
 
 DEPEND="sys-libs/zlib"
 BDEPEND="dev-libs/glib"
-LICENSE="BSD-2 MIT Apache-2 ISC MIT PSF-2"
+LICENSE="BSD-2 MIT Apache-2.0 ISC MIT PSF-2"
 KEYWORDS="~amd64"
 
 S="${WORKDIR}"

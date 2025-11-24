@@ -8,7 +8,7 @@ HOMEPAGE="https://github.com/MerryMage/mp"
 SHA="b50053cef50385419c59fb3aebb78974547318bc"
 SRC_URI="https://github.com/MerryMage/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="BSD-0"
+LICENSE="0BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
