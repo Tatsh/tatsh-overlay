@@ -12,7 +12,7 @@ inherit distutils-r1 pypi
 DESCRIPTION="Snowflake database connector for Python."
 HOMEPAGE="https://pypi.org/project/snowflake-connector-python/"
 
-LICENSE="Apache-2"
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+secure-local-storage pandas"

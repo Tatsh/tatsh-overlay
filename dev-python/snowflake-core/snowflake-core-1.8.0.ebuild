@@ -11,7 +11,7 @@ inherit distutils-r1 pypi
 DESCRIPTION="Python access to Snowflake entity metadata."
 HOMEPAGE="https://pypi.org/project/snowflake-core/"
 
-LICENSE="Apache-2"
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 

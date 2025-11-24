@@ -61,7 +61,7 @@ SHA="85c6b4f07e637683cc5e0ec6a66ce8e4397a4b18"
 SRC_URI="https://github.com/google/gmail-oauth2-tools/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz
 	${EGO_SUM_SRC_URI}"
 
-LICENSE="Apache-2"
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
