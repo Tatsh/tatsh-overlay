@@ -3,6 +3,6 @@
     "referer": "https://developer.apple.com/security/"
   },
   "params": { "agree": "Yes", "file": "security" },
-  "type": "location+hash-check",
+  "type": "checksum",
   "url": "https://developer.apple.com/file/"
 }
