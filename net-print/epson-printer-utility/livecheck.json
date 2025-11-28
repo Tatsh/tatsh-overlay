@@ -1,0 +1,13 @@
+{
+  "url": "https://download.ebz.epson.net/dsc/search/01/search/searchModule",
+  "method": "POST",
+  "data": {
+    "countryCode": "",
+    "productName": "xp-7100",
+    "osCode": "LX",
+    "languageEnglishName": "EN"
+    },
+  "type": "regex",
+  "regex": "<td nowrap>\\d+\\.\\d+\\.\\d+</td>\\n\\s+<td><bdo dir=\"ltr\">Epson Printer Utility for Linux</bdo>",
+  "multiline": true
+}

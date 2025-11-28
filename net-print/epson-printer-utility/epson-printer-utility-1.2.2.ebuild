@@ -3,11 +3,11 @@
 
 EAPI=8
 
-inherit desktop rpm systemd udev
+inherit desktop systemd udev unpacker
 
 DESCRIPTION="Epson printer utility for USB only."
-HOMEPAGE="http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX"
-SRC_URI="https://download3.ebz.epson.net/dsc/f/03/00/16/74/31/d573ccb040f3e36459f633c5df719999d0fe81ac/${P}-1.x86_64.rpm"
+HOMEPAGE="https://download-center.epson.com/softwares/?device_id=XP-7100+Series&region=US&os=DEBX64&language=en"
+SRC_URI="https://download-center.epson.com/f/module/3a44298f-8898-4a4d-8928-48211a1a9657/${PN}_${PV}-1_amd64.deb"
 
 LICENSE="GPL-2"
 SLOT="0"
