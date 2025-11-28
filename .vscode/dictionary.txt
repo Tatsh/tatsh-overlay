@@ -1830,6 +1830,7 @@ nosleep
 nosniff
 noto
 notpeter
+nowrap
 nozzlecheck
 npad
 npapi
