@@ -1,0 +1,8 @@
+{
+  "headers": {
+    "referer": "https://developer.apple.com/security/"
+  },
+  "params": { "agree": "Yes", "file": "security" },
+  "type": "location+hash-check",
+  "url": "https://developer.apple.com/file/"
+}
