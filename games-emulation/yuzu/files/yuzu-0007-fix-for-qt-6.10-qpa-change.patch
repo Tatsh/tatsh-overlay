@@ -1,0 +1,43 @@
+From bb431bc371fe8bcffd97e205d46ba0b4f63fab51 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sat, 29 Nov 2025 12:54:53 -0500
+Subject: [PATCH 7/7] Fix for Qt 6.10 qpa change
+
+---
+ CMakeLists.txt          | 2 +-
+ src/yuzu/CMakeLists.txt | 6 +++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 68ee358ba..f45bbc256 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -370,7 +370,7 @@ if(ENABLE_QT)
+
+     set_yuzu_qt_components()
+     if (ENABLE_QT6)
+-        find_package(Qt6 ${QT6_VERSION} COMPONENTS ${YUZU_QT_COMPONENTS})
++        find_package(Qt6 ${QT6_VERSION} COMPONENTS ${YUZU_QT_COMPONENTS} OPTIONAL_COMPONENTS GuiPrivate)
+     endif()
+     if (Qt6_FOUND)
+         message(STATUS "yuzu/CMakeLists.txt: Qt6Widgets_VERSION ${Qt6Widgets_VERSION}, setting QT_VERSION")
+diff --git a/src/yuzu/CMakeLists.txt b/src/yuzu/CMakeLists.txt
+index 90278052a..2be00b2d6 100644
+--- a/src/yuzu/CMakeLists.txt
++++ b/src/yuzu/CMakeLists.txt
+@@ -383,7 +383,11 @@ target_link_libraries(yuzu PRIVATE ${PLATFORM_LIBRARIES} Threads::Threads)
+
+ target_link_libraries(yuzu PRIVATE Vulkan::Headers)
+ if (NOT WIN32)
+-    target_include_directories(yuzu PRIVATE ${Qt${QT_MAJOR_VERSION}Gui_PRIVATE_INCLUDE_DIRS})
++    if (DEFINED Qt${QT_MAJOR_VERSION}Gui_PRIVATE_INCLUDE_DIRS)
++        target_include_directories(yuzu PRIVATE ${Qt${QT_MAJOR_VERSION}Gui_PRIVATE_INCLUDE_DIRS})
++    else()
++        target_link_libraries(yuzu PRIVATE Qt${QT_MAJOR_VERSION}::GuiPrivate)
++    endif()
+ endif()
+ if (UNIX AND NOT APPLE)
+     target_link_libraries(yuzu PRIVATE Qt${QT_MAJOR_VERSION}::DBus)
+--
+2.52.0
+
