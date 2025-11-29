@@ -2,19 +2,19 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit linux-mod-r1 systemd udev
 
 DESCRIPTION="CX2388x direct ADC capture driver."
 HOMEPAGE="https://github.com/happycube/cxadc-linux3"
 SHA="f1569ab64b4817400e561956896f9bfba492e594"
 SRC_URI="https://github.com/happycube/cxadc-linux3/archive/${SHA}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/${PN}-linux3-${SHA}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
 MAKEOPTS+=" -j1"
-S="${WORKDIR}/${PN}-linux3-${SHA}"
 
 DOCS=( README.md "Tips-&-Notes.md" )
 

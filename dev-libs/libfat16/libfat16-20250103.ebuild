@@ -9,12 +9,11 @@ DESCRIPTION="C++ FAT16 read library."
 HOMEPAGE="https://github.com/Vita3K/libfat16"
 SHA="d9a890b712dcdb46d3d33230997efc59f5ad8d62"
 SRC_URI="https://github.com/Vita3K/libfat16/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
+S="${WORKDIR}/${PN}-${SHA}"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 src_prepare() {
 	echo 'include(GNUInstallDirs)' > new || die

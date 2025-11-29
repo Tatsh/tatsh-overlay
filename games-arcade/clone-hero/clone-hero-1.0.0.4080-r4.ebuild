@@ -8,7 +8,7 @@ inherit desktop wrapper wxwidgets xdg
 DESCRIPTION="Clone of Guitar Hero and similar games."
 HOMEPAGE="https://clonehero.net/"
 SRC_URI="https://pubdl.clonehero.net/clonehero-v${PV}-final/clonehero-linux.tar.xz -> ${P}.tar.xz"
-
+S="${WORKDIR}/clonehero-linux"
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -17,13 +17,11 @@ RESTRICT="strip"
 RDEPEND="dev-libs/glib
 	media-libs/alsa-lib
 	media-libs/libglvnd
-	sys-libs/zlib
+	virtual/zlib
 	virtual/udev
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3"
 DEPEND="${RDEPEND}"
-
-S="${WORKDIR}/clonehero-linux"
 
 src_install() {
 	find . -name '*.so*' -exec chmod 0755 {} \; || die

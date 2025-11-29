@@ -7,11 +7,11 @@ DESCRIPTION="libretro-db tools from RetroArch."
 HOMEPAGE="https://github.com/libretro/RetroArch/tree/master/libretro-db"
 SRC_URI="https://github.com/libretro/RetroArch/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/RetroArch-${PV}/${PN}"
+
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
-
-S="${WORKDIR}/RetroArch-${PV}/${PN}"
 
 src_configure() {
 	:

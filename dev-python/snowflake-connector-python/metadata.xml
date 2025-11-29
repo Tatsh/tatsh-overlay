@@ -9,7 +9,7 @@
 		<remote-id type="pypi">snowflake-connector-python</remote-id>
 	</upstream>
 	<use>
-		<flag name="pandas" />
-		<flag name="secure-local-storage" />
+		<flag name="pandas">Enable pandas support</flag>
+		<flag name="secure-local-storage">Enable secure local storage</flag>
 	</use>
 </pkgmetadata>

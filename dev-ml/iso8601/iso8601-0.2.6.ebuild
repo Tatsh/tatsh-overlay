@@ -6,15 +6,15 @@ EAPI=8
 inherit dune
 
 DESCRIPTION="Parser and printer for date-times in ISO8601."
-HOMEPAGE="https://ocaml-community.github.io/ISO8601.ml"
+HOMEPAGE="https://ocaml-community.github.io/ISO8601.ml/"
 SRC_URI="https://github.com/ocaml-community/ISO8601.ml/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
-LICENSE=""
+S="${WORKDIR}/ISO8601.ml-${PV}"
+
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+ocamlopt"
-
-S="${WORKDIR}/ISO8601.ml-${PV}"
 
 src_prepare() {
 	default

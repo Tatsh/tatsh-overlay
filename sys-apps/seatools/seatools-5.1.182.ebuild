@@ -9,8 +9,8 @@ DESCRIPTION="Quick diagnostic tool that checks the health of your drive."
 HOMEPAGE="https://www.seagate.com/support/downloads/seatools/"
 SRC_URI="https://www.seagate.com/content/dam/seagate/migrated-assets/www-content/support-content/downloads/${PN}/_shared/downloads/SeaToolsLinuxX64Installer.zip -> ${P}.zip
 	https://www.seagate.com/content/dam/seagate/migrated-assets/www-content/support-content/_shared/images/${PN}-icon.png"
-
-LICENSE="EULA"
+S="${WORKDIR}/${P}/default/programfileslinux"
+LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="strip splitdebug"
@@ -20,15 +20,14 @@ RDEPEND="dev-libs/glib
 	media-libs/freetype
 	media-libs/libglvnd
 	sys-apps/dbus
-	sys-libs/zlib
+	virtual/zlib
 	x11-libs/libX11
 	x11-libs/libxcb
 	x11-libs/libXext
 	x11-libs/libxkbcommon
 	x11-libs/libXrender"
-BDEPEND="app-arch/bitrock-unpacker"
-
-S="${WORKDIR}/${P}/default/programfileslinux"
+BDEPEND="app-arch/bitrock-unpacker
+	app-arch/unzip"
 
 HTML_DOCS=( help/SeaTools.README-US.html )
 

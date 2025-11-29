@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 
 inherit cmake python-r1 pypi
 
@@ -11,17 +11,18 @@ DESCRIPTION="A Python FFI of nihui/waifu2x-ncnn-vulkan achieved with SWIG."
 HOMEPAGE="https://pypi.org/project/waifu2x-ncnn-vulkan-python/"
 SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
 
+MY_PN_U="${PN//-/_}"
+S="${WORKDIR}/${P}/${MY_PN_U}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 DEPEND="dev-libs/ncnn[vulkan]"
+RDEPEND="${PYTHON_DEPS}"
 BDEPEND="dev-lang/swig
 	dev-util/glslang"
 
-MY_PN_U="${PN//-/_}"
-S="${WORKDIR}/${P}/${MY_PN_U}"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-fix-for-newer-glslang.patch"
 )

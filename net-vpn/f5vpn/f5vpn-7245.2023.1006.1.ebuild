@@ -5,16 +5,14 @@ EAPI=8
 
 inherit desktop fcaps rpm xdg
 
-DESCRIPTION="This software can establish SSL VPN network access connection with F5 BIG-IP APM."
-HOMEPAGE="https://f5.com"
+DESCRIPTION="Establish SSL VPN network access connection with F5 BIG-IP APM."
+HOMEPAGE="https://www.f5.com/"
 SRC_URI="https://vpn.f5.com/public/download/linux_${PN}.x86_64.rpm -> ${P}.x86_64.rpm"
-RESTRICT="strip"
-
+S="${WORKDIR}"
 LICENSE="F5-VPN"
 SLOT="0"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}"
+RESTRICT="strip"
 
 src_prepare() {
 	rm opt/f5/vpn/.rpm || die

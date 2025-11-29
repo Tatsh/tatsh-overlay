@@ -14,7 +14,7 @@ LICENSE="GPGX"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="sys-libs/zlib"
+DEPEND="virtual/zlib"
 RDEPEND="${DEPEND}
 		games-emulation/libretro-info"
 

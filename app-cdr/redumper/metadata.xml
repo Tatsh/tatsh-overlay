@@ -4,4 +4,7 @@
 	<upstream>
 		<remote-id type="github">superg/redumper</remote-id>
 	</upstream>
+	<use>
+		<flag name="clang">Use Clang compiler (workaround).</flag>
+	</use>
 </pkgmetadata>

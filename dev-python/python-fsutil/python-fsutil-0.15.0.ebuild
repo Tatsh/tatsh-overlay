@@ -3,13 +3,13 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 DISTUTILS_USE_PEP517=setuptools
 inherit distutils-r1
 
 DESCRIPTION="High-level file-system operations."
 HOMEPAGE="https://pypi.org/project/python-fsutil/"
-SRC_URI="https://github.com/fabiocaccamo/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/fabiocaccamo/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"

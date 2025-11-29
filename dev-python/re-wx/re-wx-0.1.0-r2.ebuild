@@ -4,22 +4,19 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="A library for building modern declarative desktop applications in WX."
 HOMEPAGE="https://pypi.org/project/re-wx/"
 SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
-
+S="${WORKDIR}/${P}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-
 RDEPEND=">=dev-python/wxpython-4.1.0[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]
-	dev-python/mypy_extensions[${PYTHON_USEDEP}]"
-
-S="${WORKDIR}/${P}"
+	dev-python/mypy-extensions[${PYTHON_USEDEP}]"
 
 python_prepare_all() {
 	rm -R tests || die

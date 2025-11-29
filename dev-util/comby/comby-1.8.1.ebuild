@@ -5,7 +5,7 @@ EAPI=8
 
 inherit dune
 
-DESCRIPTION="A code rewrite tool for structural search and replace that supports ~every language."
+DESCRIPTION="Code rewrite tool for structural search and replace."
 HOMEPAGE="https://comby.dev/"
 SRC_URI="https://github.com/comby-tools/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 

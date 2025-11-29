@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit cmake
 
 DESCRIPTION="GTA Liberty City Stories decompiled and re-built."
@@ -10,7 +11,7 @@ SHA="33abd1b4e7a7b19e2d09c796c481c3325c1e2902"
 LIBRW_SHA="5501c4fdc7425ff926be59369a13593bb6c81b54"
 SRC_URI="https://web.archive.org/web/20210903220219/https://github.com/GTAmodding/re3/archive/${SHA}.zip -> ${P}.zip
 	https://github.com/aap/librw/archive/${LIBRW_SHA}.tar.gz -> ${PN}-librw-${LIBRW_SHA}.tar.gz"
-
+S="${WORKDIR}/re3-${SHA}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
@@ -27,8 +28,6 @@ RDEPEND="${DEPEND}"
 BDEPEND="app-arch/unzip"
 
 PATCHES=( "${FILESDIR}/${PN}-link-x11.patch" )
-
-S="${WORKDIR}/re3-${SHA}"
 
 src_unpack() {
 	default

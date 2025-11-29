@@ -2,12 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit bash-completion-r1 systemd
 
 DESCRIPTION="Network-wide ad blocking (core)."
 HOMEPAGE="https://pi-hole.net/"
 SRC_URI="https://github.com/pi-hole/pi-hole/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/pi-hole-${PV}"
 LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
@@ -20,8 +21,6 @@ RDEPEND="${DEPEND}
 	>=net-dns/${PN}-ftl-${FTL_VERSION}
 	app-admin/sudo
 	sys-apps/iproute2"
-
-S="${WORKDIR}/pi-hole-${PV}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-gentoo-fixes.patch"

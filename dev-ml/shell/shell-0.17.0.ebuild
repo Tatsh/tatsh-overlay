@@ -9,7 +9,7 @@ DESCRIPTION="Yet another implementation of fork and exec and related functionali
 HOMEPAGE="https://github.com/janestreet/shell"
 SRC_URI="https://github.com/janestreet/shell/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="LGPL-3.0"
+LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+ocamlopt"

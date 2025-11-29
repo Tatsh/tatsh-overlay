@@ -36,7 +36,15 @@ if [[ -z ${_YARN_ECLASS} ]]; then
 	# different than the basename taken off the URI.
 	_YARN_DISTFILES=()
 
+	# @ECLASS_VARIABLE: WANT_GYP
+	# @DESCRIPTION:
+	# If set to non-zero, adds dev-build/node-gyp to BDEPEND. Default is 0.
 	WANT_GYP=${WANT_GYP:-0}
+
+	# @ECLASS_VARIABLE: YARN_PRODUCTION
+	# @DESCRIPTION:
+	# If set to non-zero, passes --production to yarn install to skip
+	# installing devDependencies. Default is 1.
 	YARN_PRODUCTION=${YARN_PRODUCTION:-1}
 
 	# @FUNCTION: yarn_set_globals

@@ -9,8 +9,8 @@ DESCRIPTION="Scriptable headless browser (forked and supports Qt 6)."
 HOMEPAGE="https://github.com/Tatsh/phantomjs"
 SHA="b72a23fa390163ee7b54564ea3bd08c493c4ca8b"
 SRC_URI="https://github.com/Tatsh/phantomjs/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
-
-LICENSE="BSD-3"
+S="${WORKDIR}/${PN}-${SHA}"
+LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
@@ -18,5 +18,3 @@ DEPEND="dev-qt/qtwebkit:6
 	dev-qt/qtbase:6
 	dev-qt/qt5compat:6"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/${PN}-${SHA}"

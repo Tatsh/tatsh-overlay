@@ -5,6 +5,7 @@
 		<email>amverweij@gmail.com</email>
 		<name>Bram Verweij</name>
 	</maintainer>
-	<longdescription lang="en">A port of the Fuse Unix Spectrum Emulator to libretro
-	</longdescription>
+	<upstream>
+		<remote-id type="github">libretro/fuse-libretro</remote-id>
+	</upstream>
 </pkgmetadata>

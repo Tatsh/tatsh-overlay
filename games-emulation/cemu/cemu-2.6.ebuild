@@ -14,6 +14,8 @@ SRC_URI="https://github.com/cemu-project/Cemu/archive/refs/tags/v${PV}.tar.gz ->
 	https://github.com/ocornut/imgui/archive/refs/tags/v${IMGUI_PV}.tar.gz -> ${PN}-imgui-${IMGUI_PV}.tar.gz
 	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> glslang-${GLSLANG_SHA:0:7}.tar.gz"
 
+S="${WORKDIR}/${MY_PN}-${PV}"
+
 LICENSE="MPL-2.0 ISC"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -35,7 +37,7 @@ DEPEND="app-arch/zarchive
 	media-libs/libsdl2[haptic,joystick]
 	net-misc/curl
 	net-wireless/bluez
-	sys-libs/zlib
+	virtual/zlib
 	vulkan? ( dev-util/vulkan-headers )
 	x11-libs/gtk+:3[wayland]
 	x11-libs/libX11
@@ -47,8 +49,6 @@ BDEPEND="media-libs/glm"
 PATCHES=(
 	"${FILESDIR}/${PN}-0002-remove-default-from-system-g.patch"
 )
-
-S="${WORKDIR}/${MY_PN}-${PV}"
 
 src_prepare() {
 	sed -re \

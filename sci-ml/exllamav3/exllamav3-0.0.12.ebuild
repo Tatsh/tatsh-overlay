@@ -8,7 +8,7 @@ DISTUTILS_EXT=1
 PYTHON_COMPAT=( python3_{10..13} )
 DISTUTILS_USE_PEP517=setuptools
 
-inherit distutils-r1 pypi python-single-r1
+inherit distutils-r1 pypi
 
 DESCRIPTION="Inference library for running local LLMs on consumer hardware."
 HOMEPAGE="https://github.com/turboderp/exllamav3"

@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">jiaaro/pydub</remote-id>
+		<remote-id type="pypi">pydub</remote-id>
 	</upstream>
 </pkgmetadata>

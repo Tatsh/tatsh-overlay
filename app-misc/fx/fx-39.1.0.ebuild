@@ -95,13 +95,12 @@ DESCRIPTION="Terminal JSON viewer."
 HOMEPAGE="https://fx.wtf"
 SRC_URI="https://github.com/antonmedv/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
 	${EGO_SUM_SRC_URI}"
-RESTRICT="mirror"
 
+S="${WORKDIR}/${PN}-${MY_PV}"
 LICENSE="Apache-2.0 BSD-2 BSD MIT MPL-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
-
-S="${WORKDIR}/${PN}-${MY_PV}"
+RESTRICT="mirror"
 
 src_compile() {
 	go build . || die

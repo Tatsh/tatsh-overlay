@@ -2,17 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 WEBAPP_MANUAL_SLOT="yes"
 inherit webapp
 
-MY_P="AdminLTE"
-S="${WORKDIR}/${MY_P}-${PV}"
-
 DESCRIPTION="Pi-hole Dashboard for stats and more"
-HOMEPAGE="https://github.com/pi-hole/AdminLTE"
-SRC_URI="https://github.com/pi-hole/AdminLTE/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
-
+HOMEPAGE="https://github.com/pi-hole/web"
+SRC_URI="https://github.com/pi-hole/web/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/web-${PV}"
 LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
@@ -30,13 +26,11 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0003-footer-remove-update-message.patch"
 )
 
-S="${WORKDIR}/web-${PV}"
-
 pkg_setup() {
 	webapp_pkg_setup
 	local -r ph_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/pi-hole/releases/latest' || die; } |
 		jq -r .tag_name)
-	local -r web_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/AdminLTE/releases/latest' || die; } |
+	local -r web_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/web/releases/latest' || die; } |
 		jq -r .tag_name)
 	local -r ftl_ver=$({ curl -s 'https://api.github.com/repos/pi-hole/FTL/releases/latest' || die; } |
 		jq -r .tag_name)

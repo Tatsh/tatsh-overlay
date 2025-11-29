@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<maintainer type="person">
-		<email>audvare@gmail.com</email>
-		<name>Andrew Udvare</name>
-	</maintainer>
-	<upstream>
-		<remote-id type="github">Tatsh/deltona</remote-id>
-		<remote-id type="pypi">deltona</remote-id>
-	</upstream>
-	<use>
-		<flag name="admin">Administrative utilities like smv and reset-tpm-enrollments</flag>
-		<flag name="desktop">Desktop utilities like umpv and mpv-sbs</flag>
-		<flag name="git">Git utilities like git-open and merge-dependabot-prs</flag>
-		<flag name="media">Media utilities like wait-for-disc and add-info-json</flag>
-		<flag name="misc">Miscellaneous utilities like gogextract and adp</flag>
-		<flag name="string">String utilities like is-ascii and ucwords</flag>
-		<flag name="wine">Utilities for Wine like mkwineprefix and wineshell</flag>
-		<flag name="www">Internet-related utilities like where-from and chrome-bisect-flags</flag>
-	</use>
+  <maintainer type="person">
+    <email>audvare@gmail.com</email>
+    <name>Andrew Udvare</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="github">Tatsh/deltona</remote-id>
+    <remote-id type="pypi">deltona</remote-id>
+  </upstream>
+  <use>
+    <flag name="admin">Administrative utilities like smv and reset-tpm-enrollments</flag>
+    <flag name="desktop">Desktop utilities like umpv and mpv-sbs</flag>
+    <flag name="git">Git utilities like git-open and merge-dependabot-prs</flag>
+    <flag name="media">Media utilities like wait-for-disc and add-info-json</flag>
+    <flag name="string">String utilities like is-ascii and ucwords</flag>
+    <flag name="wine">Utilities for Wine like mkwineprefix and wineshell</flag>
+    <flag name="www">Internet-related utilities like where-from and chrome-bisect-flags</flag>
+  </use>
 </pkgmetadata>

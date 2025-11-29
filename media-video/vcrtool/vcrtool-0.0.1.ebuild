@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=poetry
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Control a JLIP device such as a VCR."
@@ -20,7 +20,7 @@ RDEPEND="dev-python/click[${PYTHON_USEDEP}]
 	dev-python/pyftdi[${PYTHON_USEDEP}]
 	dev-python/pyrate-limiter[${PYTHON_USEDEP}]
 	dev-python/pyserial[${PYTHON_USEDEP}]
-	dev-python/pytimeparse2[${PYTHON_USEDEP}]
+	dev-python/pytimeparse[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 

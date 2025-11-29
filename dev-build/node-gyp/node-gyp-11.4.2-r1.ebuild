@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 inherit python-r1 yarn
 
 DESCRIPTION="Node.js native addon build tool."
@@ -110,17 +110,15 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
-RESTRICT="mirror"
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
-
+S="${WORKDIR}"
 LICENSE="Apache-2.0 BSD-2 ISC MIT"
 KEYWORDS="~amd64"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+RESTRICT="mirror"
 
 BDEPEND="sys-apps/yarn"
 RDEPEND="net-libs/nodejs:= ${PYTHON_DEPS}"
 DEPEND="${RDEPEND}"
-
-S="${WORKDIR}"
 
 src_install() {
 	yarn_src_install

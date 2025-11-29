@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit cmake
 
 DESCRIPTION="GTA Vice City decompiled and re-built."
@@ -10,7 +11,7 @@ SHA="a16fcd8d6a79e433c1c6e73d540f1bbe27e14164"
 LIBRW_SHA="5501c4fdc7425ff926be59369a13593bb6c81b54"
 SRC_URI="https://web.archive.org/web/20210905122315/https://github.com/GTAmodding/re3/archive/${SHA}.zip -> ${P}.zip
 	https://github.com/aap/librw/archive/${LIBRW_SHA}.tar.gz -> ${PN}-librw-${LIBRW_SHA}.tar.gz"
-
+S="${WORKDIR}/re3-${SHA}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
@@ -25,8 +26,6 @@ DEPEND="media-libs/libsndfile
 	sndfile? ( media-libs/libsndfile )"
 RDEPEND="${DEPEND}"
 BDEPEND="app-arch/unzip"
-
-S="${WORKDIR}/re3-${SHA}"
 
 PATCHES=( "${FILESDIR}/relcs-link-x11.patch" )
 

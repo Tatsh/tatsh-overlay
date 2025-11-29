@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="github">fabiocaccamo/python-fsutil</remote-id>
 		<remote-id type="pypi">python-fsutil</remote-id>
 	</upstream>
 </pkgmetadata>

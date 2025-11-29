@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">georgkrause/language_data</remote-id>
+		<remote-id type="pypi">language-data</remote-id>
 	</upstream>
 </pkgmetadata>

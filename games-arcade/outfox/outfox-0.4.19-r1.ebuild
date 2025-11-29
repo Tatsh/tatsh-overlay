@@ -16,6 +16,7 @@ DATE="20230415"
 SRC_URI="
 amd64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${PV:2}.0/${MY_PN}-${PV}-LTS-Linux-amd64-.20.04+.-modern-date-${DATE}.tar.gz -> ${P}-amd64.tar.gz )
 	arm64? ( https://github.com/TeamRizu/OutFox/releases/download/OF${PV:2}.0/${MY_PN}-${PV}-LTS-Linux-Rpi64bit-arm64v8-modern-date-${DATE}.tar.gz )"
+S="${WORKDIR}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -35,12 +36,10 @@ RDEPEND="app-arch/bzip2
 	media-libs/libpulse
 	virtual/glu
 	virtual/jack
-	virtual/udev
+virtual/udev
 	media-video/ffmpeg
 	virtual/libusb"
-RESTRICT="split-debug strip"
-
-S="${WORKDIR}"
+RESTRICT="splitdebug strip"
 
 src_prepare() {
 	if use amd64; then

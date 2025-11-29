@@ -10,7 +10,7 @@ HOMEPAGE="https://www.adobe.com/support/flashplayer/debug_downloads.html"
 AF_URI="https://web.archive.org/web/20210126102538if_/https://fpdownload.adobe.com/pub/flashplayer/pdc/${PV}"
 SRC_URI="https://fpdownload.macromedia.com/pub/flashplayer/updaters/32/flash_player_sa_linux.x86_64.tar.gz -> ${P}.tar.gz
 	${AF_URI}/flash_player_npapi_linux.x86_64.tar.gz -> ${P}-assets.tar.gz"
-
+S="${WORKDIR}"
 LICENSE="AdobeFlash-11.x"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -29,7 +29,6 @@ RDEPEND="dev-libs/glib
 	x11-libs/pango"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}"
 QA_PREBUILT="/usr/bin/flashplayer"
 
 src_install() {

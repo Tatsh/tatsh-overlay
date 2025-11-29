@@ -10,6 +10,8 @@ HOMEPAGE="https://dosbox-x.com/"
 MY_PV="2025.10.07"
 SRC_URI="https://github.com/joncampbell123/${PN}/archive/refs/tags/${PN}-v${MY_PV}.tar.gz"
 
+S="${WORKDIR}/${PN}-${PN}-v${MY_PV}"
+
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
@@ -36,7 +38,7 @@ DEPEND="debug? ( sys-libs/ncurses:0= )
 	media-libs/libsdl2[X?]
 	media-libs/sdl2-net
 	net-libs/libpcap
-	sys-libs/zlib"
+	virtual/zlib"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-lang/nasm"
 
@@ -44,8 +46,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-fix-rpath.patch"
 	"${FILESDIR}/${PN}-invert-1624f04.patch"
 )
-
-S="${WORKDIR}/${PN}-${PN}-v${MY_PV}"
 
 src_prepare() {
 	default

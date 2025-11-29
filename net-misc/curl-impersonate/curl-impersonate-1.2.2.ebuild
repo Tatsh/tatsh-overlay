@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit autotools cmake flag-o-matic multiprocessing
+inherit autotools cmake flag-o-matic
 
 DESCRIPTION="An active fork of curl-impersonate with more versions and build targets."
 HOMEPAGE="https://github.com/lexiforest/curl-impersonate"
@@ -24,7 +24,7 @@ DEPEND="app-arch/brotli:=
 	net-libs/nghttp2:=
 	app-arch/zstd
 	net-libs/libpsl
-	sys-libs/zlib"
+	virtual/zlib"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-build/ninja
 	dev-build/cmake"

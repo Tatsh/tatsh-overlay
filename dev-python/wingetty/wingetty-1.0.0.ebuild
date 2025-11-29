@@ -4,13 +4,16 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 
 inherit python-r1
 
 DESCRIPTION="WinGet repository server (REST API only)."
 HOMEPAGE="https://github.com/thilojaeggi/WinGetty"
 SRC_URI="https://github.com/thilojaeggi/WinGetty/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+
+S="${WORKDIR}/WinGetty-${PV}"
 
 LICENSE="AGPL-3"
 SLOT="0"
@@ -27,8 +30,6 @@ RDEPEND="${PYTHON_DEPS}
 	dev-python/flask-sqlalchemy[${PYTHON_USEDEP}]
 	dev-python/sqlalchemy[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
-
-S="${WORKDIR}/WinGetty-${PV}"
 
 src_install() {
 	python_moduleinto wingetty

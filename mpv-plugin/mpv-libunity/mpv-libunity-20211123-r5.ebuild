@@ -4,14 +4,16 @@
 EAPI=8
 
 MPV_REQ_USE="cplugins(+),libmpv"
+
 USE_MPV="rdepend"
+
 inherit mpv-plugin toolchain-funcs
 
 DESCRIPTION="Shows progress on a panel following libunity specification."
 HOMEPAGE="https://github.com/mrlotfi/mpv-libunity"
 SHA="e111b49e7d4ace2c6b19baf5ff0a70353aa28776"
 SRC_URI="https://github.com/mrlotfi/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
@@ -22,8 +24,6 @@ RDEPEND+="${DEPEND}"
 MY_PN="${PN#*-}"
 
 MPV_PLUGIN_FILES=( "${MY_PN}.so" )
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 src_prepare() {
 	default

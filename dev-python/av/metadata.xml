@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="github">PyAV-Org/PyAV</remote-id>
 		<remote-id type="pypi">av</remote-id>
 	</upstream>
 </pkgmetadata>

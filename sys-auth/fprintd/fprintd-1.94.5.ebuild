@@ -2,22 +2,22 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 inherit meson python-single-r1 systemd
 
 DESCRIPTION="D-Bus service to access fingerprint readers"
 HOMEPAGE="https://gitlab.freedesktop.org/libfprint/fprintd"
-SHA="b54a007ccf58ac0ae074c7151b223f35cbd17306"
 SRC_URI="https://gitlab.freedesktop.org/libfprint/fprintd/-/archive/v${PV}/${P}.tar.bz2"
-
+SHA="b54a007ccf58ac0ae074c7151b223f35cbd17306"
+S="${WORKDIR}/${PN}-v${PV}-${SHA}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="gtk-doc +pam static-libs systemd test"
+RESTRICT="!test? ( test )"
+
 REQUIRED_USE="systemd? ( pam )
 	test? ( ${PYTHON_REQUIRED_USE} )"
-RESTRICT="!test? ( test )"
 
 RDEPEND="${PYTHON_DEPS}
 	dev-libs/dbus-glib
@@ -30,7 +30,7 @@ DEPEND="${RDEPEND}
 	dev-util/intltool
 	gtk-doc? (
 		dev-util/gtk-doc
-		dev-util/gtk-doc-am
+		dev-build/gtk-doc-am
 		dev-libs/libxml2
 	)"
 # shellcheck disable=SC2016
@@ -38,8 +38,6 @@ BDEPEND="test? (
 		$(python_gen_cond_dep 'dev-python/python-dbusmock[${PYTHON_USEDEP}]')
 		pam? ( sys-libs/pam_wrapper )
 	)"
-
-S="${WORKDIR}/${PN}-v${PV}-${SHA}"
 
 DOCS=( pam/README )
 

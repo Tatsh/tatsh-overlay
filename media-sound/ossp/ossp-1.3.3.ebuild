@@ -9,8 +9,8 @@ DESCRIPTION="Emulate OSS devices using CUSE."
 HOMEPAGE="https://github.com/OpenMandrivaSoftware/ossp"
 SHA="72f82cc7b98f026c6827743d8f48bd43f6b49b32"
 SRC_URI="https://github.com/OpenMandrivaSoftware/${PN}/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
-
-LICENSE=""
+S="${WORKDIR}/${PN}-${SHA}"
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="alsa pulseaudio"
@@ -19,8 +19,6 @@ DEPEND="sys-fs/fuse
 	alsa? ( media-libs/alsa-lib )
 	pulseaudio? ( media-libs/libpulse )"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 CONFIG_CHECK="!SND_OSSEMUL
 	!SND_MIXER_OSS

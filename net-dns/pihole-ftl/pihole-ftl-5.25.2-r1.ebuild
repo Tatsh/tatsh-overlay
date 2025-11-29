@@ -2,12 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit cmake fcaps systemd
 
 DESCRIPTION="The Pi-hole FTL engine"
 HOMEPAGE="https://github.com/pi-hole/FTL"
 SRC_URI="https://github.com/pi-hole/FTL/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/FTL-${PV}"
 LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
@@ -19,8 +20,6 @@ DEPEND="dev-libs/gmp
 	sys-libs/libtermcap-compat"
 RDEPEND="${DEPEND}"
 BDEPEND="app-editors/vim-core" # needed for xxd
-
-S="${WORKDIR}/FTL-${PV}"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-fixes.patch" )
 

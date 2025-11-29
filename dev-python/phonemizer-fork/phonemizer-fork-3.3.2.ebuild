@@ -4,14 +4,14 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
-PYTHON_COMPAT=( python3_1{0..4} )
+PYTHON_COMPAT=( python3_1{0..3} )
 
 inherit distutils-r1 pypi
 
 DESCRIPTION="Simple text to phones converter for multiple languages."
 HOMEPAGE="https://pypi.org/project/phonemizer-fork/"
 
-LICENSE="GPL-3.0"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 

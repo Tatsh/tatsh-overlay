@@ -9,17 +9,18 @@ inherit desktop multilib-build pax-utils xdg
 
 DESCRIPTION="Open source tool for debugging, testing and building with HTTP requests."
 HOMEPAGE="https://github.com/httptoolkit/httptoolkit-desktop https://httptoolkit.com/"
-MY_PN="HttpToolkit"
-MY_PN_LOWER="${MY_PN,,}"
 SRC_URI="https://github.com/${MY_PN_LOWER}/${MY_PN_LOWER}-desktop/releases/download/v${PV}/${MY_PN}-${PV}-linux-x64.zip -> ${P}.zip
 	https://raw.githubusercontent.com/${MY_PN_LOWER}/${MY_PN_LOWER}-desktop/main/src/icons/icon.svg
 	https://raw.githubusercontent.com/${MY_PN_LOWER}/${MY_PN_LOWER}-desktop/main/src/icons/icon.png"
-
+S="${WORKDIR}"
 LICENSE="AGPL-3"
 SLOT="0"
 KEYWORDS="-* ~amd64"
 IUSE="suid"
 RESTRICT="strip"
+
+MY_PN="HttpToolkit"
+MY_PN_LOWER="${MY_PN,,}"
 
 RDEPEND="app-accessibility/at-spi2-core:2[${MULTILIB_USEDEP}]
 	dev-libs/expat:0[${MULTILIB_USEDEP}]
@@ -31,7 +32,7 @@ RDEPEND="app-accessibility/at-spi2-core:2[${MULTILIB_USEDEP}]
 	media-libs/mesa:0[${MULTILIB_USEDEP}]
 	net-print/cups:0[${MULTILIB_USEDEP}]
 	sys-apps/dbus:0[${MULTILIB_USEDEP}]
-	sys-libs/zlib[${MULTILIB_USEDEP}]
+	virtual/zlib[${MULTILIB_USEDEP}]
 	x11-libs/cairo:0[${MULTILIB_USEDEP}]
 	x11-libs/gdk-pixbuf:2[${MULTILIB_USEDEP}]
 	x11-libs/gtk+:3[${MULTILIB_USEDEP}]
@@ -46,6 +47,7 @@ RDEPEND="app-accessibility/at-spi2-core:2[${MULTILIB_USEDEP}]
 	x11-libs/libxkbfile:0[${MULTILIB_USEDEP}]
 	x11-libs/libXrandr:0[${MULTILIB_USEDEP}]
 	x11-libs/pango:0[${MULTILIB_USEDEP}]"
+BDEPEND="app-arch/unzip"
 
 QA_PREBUILT="opt/${MY_PN_LOWER}/chrome-sandbox
 	opt/${MY_PN_LOWER}/chrome_crashpad_handler
@@ -60,8 +62,6 @@ QA_PREBUILT="opt/${MY_PN_LOWER}/chrome-sandbox
 	opt/${MY_PN_LOWER}/${MY_PN_LOWER}
 	opt/${MY_PN_LOWER}/swiftshader/libEGL.so
 	opt/${MY_PN_LOWER}/swiftshader/libGLESv2.so"
-
-S="${WORKDIR}"
 
 src_install() {
 	local ext

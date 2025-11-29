@@ -8,7 +8,8 @@ HOMEPAGE="https://github.com/gileshuang/lssecret"
 SHA="7f63780a8621305a8cc5e0455a603654e472fd30"
 SRC_URI="https://github.com/gileshuang/lssecret/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 
-LICENSE="Unlicensed"
+S="${WORKDIR}/${PN}-${SHA}"
+LICENSE="Unlicense"
 SLOT="0"
 KEYWORDS="~amd64"
 
@@ -16,8 +17,6 @@ DEPEND="app-crypt/libsecret dev-libs/glib"
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}/${PN}-makefile-changes.patch" )
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 src_compile() {
 	emake CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}"

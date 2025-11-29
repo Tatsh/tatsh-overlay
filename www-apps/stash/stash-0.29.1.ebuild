@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit go-module yarn
+inherit edo go-module multiprocessing yarn
 
 EGO_SUM=(
 	"cloud.google.com/go v0.26.0/go.mod"
@@ -2351,12 +2351,11 @@ HOMEPAGE="https://github.com/stashapp/stash https://docs.stashapp.cc/"
 SRC_URI="https://github.com/stashapp/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	${EGO_SUM_SRC_URI}
 	${YARN_SRC_URI}"
-UI_PV="2.5"
-RESTRICT="mirror"
-
-LICENSE="AGPL-3 MIT 0BSD Apache-2.0 Apache-2.0 WITH LLVM-exception BSD-2-Clause BSD-3-Clause CC-BY-3.0 CC-BY-4.0 CC0-1.0 GPL-3 ISC MIT-0 MPL-2.0 Public Domain Python-2.0"
+LICENSE="AGPL-3 MIT 0BSD Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD-2 BSD CC-BY-3.0 CC-BY-4.0 CC0-1.0 GPL-3 ISC MIT-0 MPL-2.0 public-domain PSF-2"
 SLOT="0"
 KEYWORDS="~amd64"
+RESTRICT="mirror"
+UI_PV="2.5"
 
 RDEPEND="media-video/ffmpeg"
 

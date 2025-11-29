@@ -4,13 +4,14 @@
 EAPI=8
 
 MPV_REQ_USE="cplugins(+),libmpv"
+
 inherit mpv-plugin toolchain-funcs
 
 DESCRIPTION="Set mpv to quiet when stdout/stdout is not a TTY."
 HOMEPAGE="https://github.com/AN3223/dotfiles"
 SHA="779e9295f6f98165daaa10d1602523ac40c1512b"
 SRC_URI="https://github.com/AN3223/dotfiles/archive/${SHA}.tar.gz -> AN3223-dotfiles-${SHA:0:7}.tar.gz"
-
+S="${WORKDIR}/dotfiles-${SHA}/.config/mpv/scripts"
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
@@ -18,8 +19,6 @@ KEYWORDS="~amd64 ~ppc64"
 BDEPEND="dev-qt/qtdbus:5"
 
 MPV_PLUGIN_FILES=( "${PN}.so" )
-
-S="${WORKDIR}/dotfiles-${SHA}/.config/mpv/scripts"
 
 src_compile() {
 	read -ra cflags <<< "${CFLAGS-}"

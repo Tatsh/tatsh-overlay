@@ -2,7 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 DOTNET_PKG_COMPAT=9.0
 NUGETS="avalonia@11.0.0
 	avalonia@11.0.10
@@ -251,17 +250,17 @@ NUGETS="avalonia@11.0.0
 	system.threading.tasks.extensions@4.5.4
 	tmds.dbus.protocol@0.15.0
 	unicornengine.unicorn@2.0.2-rc1-fb78016"
-
 inherit check-reqs desktop dotnet-pkg xdg
 
 DESCRIPTION="Experimental Nintendo Switch Emulator written in C#"
 HOMEPAGE="https://ryujinx.app/ https://git.ryujinx.app/ryubing/ryujinx/"
-KEYWORDS="~amd64"
-LICENSE="MIT"
-SLOT="0"
 SRC_URI="https://git.ryujinx.app/ryubing/${PN}/-/archive/Canary-${PV}/${PN}-Canary-${PV}.tar.gz -> ${P}.tar.gz
 	https://git.ryujinx.app/ryubing/libhac/-/package_files/172/download -> ${PN}.libhac.0.20.0-alpha.103+af879d1b.nupkg
 	${NUGET_URIS}"
+S="${WORKDIR}/${PN}-Canary-${PV}"
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="~amd64"
 
 RDEPEND="app-arch/brotli
 	dev-libs/expat
@@ -292,8 +291,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-better-defaults.patch"
 )
 DOCS=( README.md distribution/legal/THIRDPARTY.md )
-
-S="${WORKDIR}/${PN}-Canary-${PV}"
 
 pkg_setup() {
 	check-reqs_pkg_setup

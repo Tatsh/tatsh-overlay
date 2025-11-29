@@ -173,8 +173,8 @@ CRATES="
 
 inherit cargo
 
-DESCRIPTION="lumen is a command-line tool that uses AI to generate commit messages, summarise git diffs or past commits, and more without requiring an API key."
-HOMEPAGE=""
+DESCRIPTION="AI tool to generate commit messages and summarise git diffs."
+HOMEPAGE="https://github.com/jnsahaj/lumen"
 SRC_URI="
 	${CARGO_CRATE_URIS}
 	https://github.com/jnsahaj/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"

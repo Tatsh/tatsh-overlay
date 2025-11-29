@@ -10,18 +10,16 @@ MY_PN="kitgen"
 TCL_VERSION="8.6.11"
 TK_VERSION="8.6.11.1"
 SRC_URI="https://github.com/stiefel40k/kitgen/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
-	https://prdownloads.sourceforge.net/tcl/tk${TK_VERSION}-src.tar.gz -> ${PN}-tk-${TK_VERSION}.tar.gz
-	https://prdownloads.sourceforge.net/tcl/tcl${TCL_VERSION}-src.tar.gz -> ${PN}-tcl-${TCL_VERSION}.tar.gz"
+	https://downloads.sourceforge.net/project/tcl/Tcl/8.6.11/tk${TK_VERSION}-src.tar.gz -> ${PN}-tk-${TK_VERSION}.tar.gz
+	https://downloads.sourceforge.net/project/tcl/Tcl/8.6.11/tcl${TCL_VERSION}-src.tar.gz -> ${PN}-tcl-${TCL_VERSION}.tar.gz"
 
+S="${WORKDIR}/${MY_PN}-${MY_PV}"
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
-
 BDEPEND="x11-base/xorg-proto
 	x11-libs/libX11
 	dev-libs/ucl"
-
-S="${WORKDIR}/${MY_PN}-${MY_PV}"
 RESTRICT="strip"
 
 src_prepare() {

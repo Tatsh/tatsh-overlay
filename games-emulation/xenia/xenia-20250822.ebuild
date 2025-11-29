@@ -34,6 +34,5 @@ DEPEND="app-arch/snappy
 	dev-util/vulkan-headers
 	media-libs/libsdl2
 	media-video/ffmpeg:=
-	sys-libs/zlib"
+	virtual/zlib"
 RDEPEND="${DEPEND}"
-BDEPEND=""

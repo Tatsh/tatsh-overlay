@@ -5,6 +5,10 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+	<upstream>
+		<remote-id type="github">microsoft/onnxruntime</remote-id>
+		<remote-id type="gitlab">libeigen/eigen</remote-id>
+	</upstream>
 	<use>
 		<flag name="nodejs">Build Node.js library.</flag>
 	</use>

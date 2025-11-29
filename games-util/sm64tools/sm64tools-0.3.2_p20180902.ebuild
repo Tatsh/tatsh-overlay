@@ -7,18 +7,16 @@ DESCRIPTION="Collection of tools for Super Mario 64 ROM hacking (and others)."
 HOMEPAGE="https://github.com/queueRAM/sm64tools"
 SHA="81de9e5a8f0fa96686a16441d5b9f25742f4d17d"
 SRC_URI="https://github.com/queueRAM/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="dev-libs/capstone
 	dev-libs/libyaml
-	sys-libs/zlib"
+	virtual/zlib"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-libs/stb"
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 DOCS=( release/sm64extend.README.txt release/n64split.README.txt README.md TODO )
 

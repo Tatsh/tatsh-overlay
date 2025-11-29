@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit cmake
 
 DESCRIPTION="Shell command that wraps Taskwarrior commands"
@@ -10,14 +11,14 @@ LIBSHARED_SHA="f1a3cd6bfabfb083fe3c26f580a15c0d60a92ee9"
 SRC_URI="https://github.com/GothenburgBitFactory/taskshell/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/GothenburgBitFactory/libshared/archive/${LIBSHARED_SHA}.tar.gz -> ${PN}-libshared-${LIBSHARED_SHA:0:7}.tar.gz"
 
+S="${WORKDIR}/${PN}ell-${PV}"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
 DEPEND="sys-libs/readline"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/${PN}ell-${PV}"
 
 src_prepare() {
 	sed -e "s|TASKSH_DOCDIR\\s\\+share/doc/tasksh|TASKSH_DOCDIR share/doc/${P}|" \

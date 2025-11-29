@@ -8,11 +8,12 @@ inherit meson udev
 DESCRIPTION="Library to add support for consumer fingerprint readers"
 HOMEPAGE="https://gitlab.freedesktop.org/libfprint/libfprint"
 SRC_URI="https://gitlab.freedesktop.org/${PN}/${PN}/-/archive/v${PV}/${PN}-v${PV}.tar.bz2 -> ${P}.tar.bz2"
-
+S="${WORKDIR}/${PN}-v${PV}"
 LICENSE="LGPL-2.1+"
 SLOT="2"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="examples gtk-doc +introspection test"
+RESTRICT="!test? ( test )"
 
 RDEPEND="virtual/libusb:1=
 	x11-libs/gtk+:3
@@ -25,14 +26,9 @@ DEPEND="${RDEPEND}
 	dev-libs/nss
 	x11-libs/pixman
 	test? ( x11-libs/cairo )"
-
-RESTRICT="!test? ( test )"
-
 BDEPEND="virtual/pkgconfig
 	gtk-doc? ( dev-util/gtk-doc )
 	introspection? ( dev-libs/gobject-introspection )"
-
-S="${WORKDIR}/${PN}-v${PV}"
 
 PATCHES=( "${FILESDIR}/${PN}-0.8.2-fix-implicit-declaration.patch" )
 

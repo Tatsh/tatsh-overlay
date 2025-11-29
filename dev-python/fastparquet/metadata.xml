@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">fastparquet/</remote-id>
+		<remote-id type="github">dask/fastparquet</remote-id>
+		<remote-id type="pypi">fastparquet</remote-id>
 	</upstream>
 </pkgmetadata>

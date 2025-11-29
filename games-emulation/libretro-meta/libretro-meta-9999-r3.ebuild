@@ -4,7 +4,7 @@
 EAPI=8
 
 DESCRIPTION="Meta package for various libretro implementations"
-HOMEPAGE="http://www.libretro.com/"
+HOMEPAGE="https://www.libretro.com/"
 LICENSE="metapackage"
 SLOT="0"
 

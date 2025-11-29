@@ -9,18 +9,16 @@ DESCRIPTION="Waifu2x filter for VapourSynth"
 HOMEPAGE="https://github.com/nlzy/vapoursynth-waifu2x-ncnn-vulkan"
 SRC_URI="https://github.com/nlzy/${PN}/archive/refs/tags/r${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/nlzy/vapoursynth-waifu2x-ncnn-vulkan/releases/download/r0.1/models.7z -> ${P}-models.7z"
-
+S="${WORKDIR}/${PN}-r${PV}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="dev-libs/ncnn media-libs/vulkan-loader"
 RDEPEND="${DEPEND}"
-BDEPEND="app-arch/p7zip"
+BDEPEND="app-arch/7zip"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-system-deps.patch" )
-
-S="${WORKDIR}/${PN}-r${PV}"
 
 src_unpack() {
 	local archive

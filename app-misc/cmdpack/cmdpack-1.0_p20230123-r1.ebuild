@@ -5,20 +5,19 @@ EAPI=8
 
 inherit toolchain-funcs
 
-KEYWORDS="~amd64 ~ppc64 ~x86"
 DESCRIPTION="Neill Corlett's command-line pack."
 HOMEPAGE="http://www.neillcorlett.com/cmdpack/"
 SHA="6674a1068d890279fad613ae37e7a170475f8970"
 SRC_URI="https://github.com/cmdpack/cmdpack/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/${PN}-${SHA}/src"
 LICENSE="GPL-3"
 SLOT="0"
+KEYWORDS="~amd64 ~ppc64 ~x86"
 
 DEPEND="!media-sound/vb2rip
 	!app-cdr/bin2iso"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/${PN}-${SHA}/src"
 
 src_compile() {
 	local app

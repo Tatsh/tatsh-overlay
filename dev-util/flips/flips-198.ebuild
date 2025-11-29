@@ -7,15 +7,13 @@ DESCRIPTION="Floating IPS is a patcher for IPS and BPS files."
 HOMEPAGE="https://github.com/Alcaro/Flips"
 SRC_URI="https://github.com/Alcaro/Flips/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/Flips-${PV}"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 IUSE="gtk"
-
 DEPEND="gtk? ( x11-libs/gtk+:3 )"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/Flips-${PV}"
 
 src_configure() {
 	:

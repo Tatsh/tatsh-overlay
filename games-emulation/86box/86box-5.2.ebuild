@@ -9,6 +9,8 @@ DESCRIPTION="Emulator of x86-based machines based on PCem."
 HOMEPAGE="https://github.com/86Box/86Box"
 SRC_URI="https://github.com/86Box/86Box/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/86Box-${PV}"
+
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -21,7 +23,7 @@ DEPEND="app-emulation/faudio
 	media-libs/libsdl2[X,opengl]
 	openal? ( media-libs/openal )
 	media-libs/libsndfile
-	>media-libs/rtmidi-4.1.0
+	media-libs/rtmidi
 	net-libs/libslirp
 	dev-libs/libevdev
 	dev-libs/wayland
@@ -30,8 +32,6 @@ DEPEND="app-emulation/faudio
 	x11-libs/libX11
 	x11-libs/libXi"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/86Box-${PV}"
 
 src_configure() {
 	local mycmakeargs=(

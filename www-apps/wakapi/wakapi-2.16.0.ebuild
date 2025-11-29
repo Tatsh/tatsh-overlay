@@ -457,11 +457,10 @@ DESCRIPTION="A minimalist, self-hosted WakaTime-compatible backend for coding st
 HOMEPAGE="https://wakapi.dev/ https://github.com/muety/wakapi"
 SRC_URI="https://github.com/muety/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
 	${EGO_SUM_SRC_URI}"
-RESTRICT="mirror"
-
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
+RESTRICT="mirror"
 
 BDEPEND=">=dev-lang/go-1.18 app-arch/unzip"
 

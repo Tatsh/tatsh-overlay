@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="github">williballenthin/viv-utils</remote-id>
 		<remote-id type="pypi">viv-utils</remote-id>
 	</upstream>
 </pkgmetadata>

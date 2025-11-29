@@ -8,7 +8,7 @@ inherit udev wxwidgets
 DESCRIPTION="Graphical user interface and command-line tools to manage raphnet adapters."
 HOMEPAGE="https://github.com/raphnet/gcn64tools"
 SRC_URI="https://github.com/raphnet/gcn64tools/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/gcn64tools-${PV}"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
@@ -17,7 +17,7 @@ IUSE="firmware"
 DEPEND="dev-libs/glib
 	dev-libs/hidapi
 	media-libs/harfbuzz
-	sys-libs/zlib
+	virtual/zlib
 	virtual/udev
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
@@ -25,8 +25,6 @@ DEPEND="dev-libs/glib
 	x11-libs/pango
 	x11-libs/wxGTK:3.2-gtk3"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/gcn64tools-${PV}"
 
 src_prepare() {
 	sed -e 's/, TAG+=".*/, GROUP="plugdev", MODE="0660"/g' \

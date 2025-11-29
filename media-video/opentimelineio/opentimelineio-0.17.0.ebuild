@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{1,2,3} )
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
 inherit cmake distutils-r1 pypi
@@ -18,7 +18,7 @@ KEYWORDS="~amd64"
 IUSE="tools"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-RDEPEND="dev-python/pyside2[${PYTHON_USEDEP}]
+RDEPEND="dev-python/pyside[${PYTHON_USEDEP}]
 	dev-libs/imath
 	dev-python/pyaaf2"
 DEPEND="${RDEPEND}"

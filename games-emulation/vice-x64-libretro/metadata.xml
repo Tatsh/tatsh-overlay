@@ -5,6 +5,7 @@
 		<email>amverweij@gmail.com</email>
 		<name>Bram Verweij</name>
 	</maintainer>
-	<longdescription lang="en">Versatile Commodore 8-bit Emulator as a libretro core
-	</longdescription>
+	<upstream>
+		<remote-id type="github">libretro/vice-libretro</remote-id>
+	</upstream>
 </pkgmetadata>

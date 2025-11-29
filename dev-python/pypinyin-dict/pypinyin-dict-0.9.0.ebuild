@@ -3,12 +3,12 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..13} )
+PYTHON_COMPAT=( python3_{10..14} )
 DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="使用 pinyin-data 和 phrase-pinyin-data 中的拼音数据文件覆盖 pypinyin 中的自带拼音数据，实现只使用某个或某些拼音数据文件中的拼音数据的需求."
+DESCRIPTION="Override pypinyin's built-in pinyin data with external data files."
 HOMEPAGE="https://pypi.org/project/pypinyin-dict/"
 
 LICENSE="MIT"

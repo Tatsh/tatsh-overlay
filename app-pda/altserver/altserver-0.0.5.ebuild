@@ -20,6 +20,8 @@ SRC_URI="https://github.com/NyaMisty/${MY_PN}/archive/refs/tags/v${PV}.tar.gz ->
 	https://github.com/libimobiledevice/libplist/archive/${LIBPLIST_SHA}.tar.gz -> ${PN}-libplist-${LIBPLIST_SHA:0:7}.tar.gz
 	https://github.com/libimobiledevice/libusbmuxd/archive/${LIBUSBMUXD_SHA}.tar.gz -> ${PN}-libusbmuxd-${LIBUSBMUXD_SHA:0:7}.tar.gz"
 
+S="${WORKDIR}/${MY_PN}-${PV}"
+
 LICENSE="AGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -30,11 +32,9 @@ DEPEND="dev-cpp/cpprestsdk
 	dev-libs/libzip
 	dev-libs/openssl
 	sys-apps/util-linux
-	sys-libs/zlib"
+	virtual/zlib"
 RDEPEND="${DEPEND}"
 BDEPEND="llvm-core/clang"
-
-S="${WORKDIR}/${MY_PN}-${PV}"
 
 PATCHES=(
 	"${FILESDIR}/altserver-altsign.patch"

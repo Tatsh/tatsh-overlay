@@ -13,7 +13,7 @@ SRC_URI="https://github.com/Tatsh/kate-wakatime/archive/v${PV}.tar.gz -> ${PN}-v
 
 LICENSE="GPL-3"
 SLOT="6"
-KEYWORDS="~amd64 ~ppc64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="aqua debug"
 
 DEPEND=">=kde-frameworks/ktexteditor-${KFMIN}:6

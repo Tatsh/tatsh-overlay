@@ -49,7 +49,7 @@ SRC_URI="https://github.com/Vita3K/Vita3K/archive/${SHA}.tar.gz -> ${P}-${SHA:0:
 	https://github.com/Vita3K/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
 	https://github.com/KorewaWatchful/libb64/archive/${LIBB64_SHA}.tar.gz -> libb64-${LIBB64_SHA:0:7}.tar.gz
 	https://github.com/vitasdk/vita-toolchain/archive/${VITA_TOOLCHAIN_SHA}.tar.gz -> vita-toolchain-${VITA_TOOLCHAIN_SHA:0:7}.tar.gz"
-
+S="${WORKDIR}/Vita3K-${SHA}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -69,10 +69,8 @@ DEPEND="dev-cpp/cli11
 	media-libs/libsdl2
 	media-video/ffmpeg
 	sys-apps/dbus
-	sys-libs/zlib"
+	virtual/zlib"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/Vita3K-${SHA}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"

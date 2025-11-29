@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=maturin
-PYTHON_COMPAT=( python3_{10..13} )
+PYTHON_COMPAT=( python3_{10..14} )
 RUST_MIN_VER="1.82.0"
-
 CRATES="
 	ahash@0.8.12
 	aho-corasick@1.1.3
@@ -133,11 +131,11 @@ inherit cargo distutils-r1
 
 DESCRIPTION="Fast iterable JSON parser."
 HOMEPAGE="https://github.com/pydantic/jiter"
-SRC_URI="https://github.com/pydantic/${PN}/archive/refs/tags/v${PV}.tar.gz ${CARGO_CRATE_URIS}"
+SRC_URI="https://github.com/pydantic/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz
+	${CARGO_CRATE_URIS}"
+S="${WORKDIR}/${P}/crates/jiter-python"
 
 LICENSE="MIT"
 LICENSE+=" Apache-2.0 Apache-2.0-with-LLVM-exceptions MIT MPL-2.0 UoI-NCSA Unicode-3.0"
 SLOT="0"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}/${P}/crates/jiter-python"

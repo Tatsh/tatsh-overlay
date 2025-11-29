@@ -8,10 +8,5 @@
 	<upstream>
 		<remote-id type="github">LithApp/lith</remote-id>
 	</upstream>
-	<use>
-		<flag name="dynrec" />
-		<flag name="fluidsynth" />
-		<flag name="mt-32" />
-		<flag name="new-dynrec" />
-	</use>
+
 </pkgmetadata>

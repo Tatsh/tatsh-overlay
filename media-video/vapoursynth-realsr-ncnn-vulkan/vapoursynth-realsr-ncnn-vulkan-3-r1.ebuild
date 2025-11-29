@@ -9,18 +9,16 @@ DESCRIPTION="RealSR super resolution plugin for VapourSynth."
 HOMEPAGE="https://github.com/Kiyamou/VapourSynth-RealSR-ncnn-Vulkan"
 SRC_URI="https://github.com/Kiyamou/VapourSynth-RealSR-ncnn-Vulkan/archive/refs/tags/r${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Kiyamou/VapourSynth-RealSR-ncnn-Vulkan/releases/download/r1/models.7z -> ${P}-models.7z"
-
+S="${WORKDIR}/VapourSynth-RealSR-ncnn-Vulkan-r${PV}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="dev-libs/ncnn media-libs/vulkan-loader"
 RDEPEND="${DEPEND}"
-BDEPEND="app-arch/p7zip"
+BDEPEND="app-arch/7zip"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-system-deps.patch" )
-
-S="${WORKDIR}/VapourSynth-RealSR-ncnn-Vulkan-r${PV}"
 
 src_unpack() {
 	local archive

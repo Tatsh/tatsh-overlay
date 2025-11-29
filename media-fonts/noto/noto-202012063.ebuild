@@ -2,22 +2,24 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit font
 
 DESCRIPTION="Google's font family that aims to support all the world's languages"
-HOMEPAGE="https://www.google.com/get/noto/ https://github.com/notofonts/notofonts.github.io"
-
+HOMEPAGE="https://fonts.google.com/noto https://github.com/notofonts/notofonts.github.io"
 SHA="noto-monthly-release-2025.08.01"
 SRC_URI="https://github.com/notofonts/notofonts.github.io/archive/refs/tags/${SHA}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/${PN}fonts.github.io-${SHA}"
 LICENSE="OFL-1.1"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~mips ~ppc ~ppc64 ~sparc ~x86"
-# Extra allows to optionally reduce disk usage even returning to tofu
-# issue as described in https://www.google.com/get/noto/
 IUSE="brahmi music coptic cuneiform cypriot deseret duployan linear
 	+display +symbols runic phagspa pau-cin-hau old-arabian hieroglyphs
 	+mono ancient +extra"
+RESTRICT="binchecks strip"
+
+# Extra allows to optionally reduce disk usage even returning to tofu
+# issue as described in https://fonts.google.com/noto
 IUSE_IL10N=( ar ban bax ber bku blt bn bo bsq bug bya ccp chr cja cmr dv
 	eo ff gu he hi hoc hy ii ja jv ka khb km kn ko kv lo mai men mjl ml mn mni
 	mww my new nod nqo or osa pa rej sa sat saz sd si so sq srb su syc syl ta
@@ -31,9 +33,6 @@ RDEPEND="l10n_zh-CN? ( media-fonts/noto-cjk )
 	l10n_zh-TW? ( media-fonts/noto-cjk )
 	l10n_ja? ( media-fonts/noto-cjk )
 	l10n_ko? ( media-fonts/noto-cjk )"
-RESTRICT="binchecks strip"
-
-S="${WORKDIR}/${PN}fonts.github.io-${SHA}"
 
 FONT_SUFFIX="ttf"
 FONT_CONF=(

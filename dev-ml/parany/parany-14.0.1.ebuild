@@ -9,7 +9,7 @@ DESCRIPTION="Parallelize any computation."
 HOMEPAGE="https://github.com/UnixJunkie/parany"
 SRC_URI="https://github.com/UnixJunkie/parany/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="LGPL-3.0"
+LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+ocamlopt"

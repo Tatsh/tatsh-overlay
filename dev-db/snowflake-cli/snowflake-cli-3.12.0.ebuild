@@ -2,15 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 DISTUTILS_USE_PEP517=hatchling
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
-
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="CLI to Snowflake database."
 HOMEPAGE="https://pypi.org/project/snowflake-cli-labs/"
-SRC_URI="https://github.com/snowflakedb/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/snowflakedb/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
+S="${WORKDIR}/${PN}-${PV}"
 
 LICENSE="MIT"
 SLOT="0"
@@ -31,8 +30,6 @@ RDEPEND="dev-python/jinja2[${PYTHON_USEDEP}]
 	dev-python/urllib3[${PYTHON_USEDEP}]
 	>=dev-python/pydantic-2.9.2[${PYTHON_USEDEP}]
 	dev-python/gitpython[${PYTHON_USEDEP}]"
-
-S="${WORKDIR}/${PN}-${PV}"
 
 src_prepare() {
 	sed -re '/^license =/d' -i pyproject.toml || die

@@ -7,13 +7,12 @@ DESCRIPTION="Bitrock unpacking script."
 HOMEPAGE="https://gist.github.com/mickael9/0b902da7c13207d1b86e"
 SRC_URI="https://gist.githubusercontent.com/mickael9/0b902da7c13207d1b86e/raw/ef65b6583c5cf077fb897a9a028781f577fed9ac/bitrock-unpacker.tcl -> ${P}.tcl"
 
+S="${WORKDIR}"
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="dev-tcltk/sdx"
-
-S="${WORKDIR}"
 
 src_unpack() {
 	:

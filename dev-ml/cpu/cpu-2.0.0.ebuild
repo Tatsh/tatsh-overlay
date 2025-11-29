@@ -9,7 +9,7 @@ DESCRIPTION="Pin current process to given core number."
 HOMEPAGE="https://github.com/UnixJunkie/cpu"
 SRC_URI="https://github.com/UnixJunkie/cpu/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="LGPL-3.0"
+LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+ocamlopt"

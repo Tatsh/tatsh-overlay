@@ -15,16 +15,16 @@ format-date() {
 MY_PV="$(format-date "${PV}")"
 SRC_URI="https://github.com/microsoft/${PN}/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/${PN}-${MY_PV}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
+RESTRICT="!test? ( test )"
 
 DEPEND="dev-libs/libfmt:0/11.2.0"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-util/cmakerc"
-
-S="${WORKDIR}/${PN}-${MY_PV}"
 
 src_configure() {
 	local mycmakeargs=(

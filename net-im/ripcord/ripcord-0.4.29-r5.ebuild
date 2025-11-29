@@ -2,18 +2,19 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit desktop wrapper
 
 DESCRIPTION="Desktop chat client for Slack and Discord (not web-based)."
 HOMEPAGE="https://cancel.fm/ripcord/"
 SRC_URI="https://cancel.fm/dl/R${PN:1}-${PV}-x86_64.AppImage"
-
+S="${WORKDIR}"
 LICENSE="Ripcord"
 SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="bindist"
 
-RDEPEND="dev-libs/libsodium:0/23
+RDEPEND="dev-libs/libsodium:0/26
 	dev-qt/qtcore:5
 	dev-qt/qtconcurrent:5
 	dev-qt/qtgui:5
@@ -24,14 +25,12 @@ RDEPEND="dev-libs/libsodium:0/23
 	dev-qt/qtwidgets:5
 	media-libs/libglvnd[X]
 	media-libs/opus
-	sys-libs/zlib
+	virtual/zlib
 	x11-libs/libX11
 	x11-libs/libXScrnSaver"
 
 QA_PREBUILT="/opt/${PN}/R${PN:1} /opt/${PN}/plugins/*/*.so"
 DOCS=( additional_license_information.txt )
-
-S="${WORKDIR}"
 
 src_unpack() {
 	cd "${WORKDIR}" || die "Failed to cd ${WORKDIR}"

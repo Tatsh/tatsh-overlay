@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">savoirfairelinux/num2words</remote-id>
+		<remote-id type="pypi">num2words</remote-id>
 	</upstream>
 </pkgmetadata>

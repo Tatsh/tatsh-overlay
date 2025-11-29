@@ -9,7 +9,7 @@ DESCRIPTION="Real-CUGAN super resolution plugin for VapourSynth."
 HOMEPAGE="https://github.com/Kiyamou/VapourSynth-RealCUGAN-ncnn-Vulkan"
 SRC_URI="https://github.com/Kiyamou/VapourSynth-RealCUGAN-ncnn-Vulkan/archive/refs/tags/r2.tar.gz -> ${P}.tar.gz
 	https://github.com/Kiyamou/VapourSynth-RealCUGAN-ncnn-Vulkan/releases/download/r2/models.zip -> ${PN}-models-${PV}.zip"
-
+S="${WORKDIR}/VapourSynth-RealCUGAN-ncnn-Vulkan-r${PV}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -19,8 +19,6 @@ RDEPEND="${DEPEND}"
 BDEPEND="app-arch/unzip"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-system-deps.patch" )
-
-S="${WORKDIR}/VapourSynth-RealCUGAN-ncnn-Vulkan-r${PV}"
 
 src_configure() {
 	local mycmakeargs=(

@@ -2,11 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
-PYTHON_COMPAT=( python3_{10..13} )
 DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_USE_PEP517=setuptools
-
+PYTHON_COMPAT=( python3_{10..14} )
 inherit distutils-r1 systemd
 
 DESCRIPTION="FastAPI wrapper for Kokoro-82M text-to-speech model"
@@ -14,11 +12,12 @@ HOMEPAGE="https://github.com/remsky/Kokoro-FastAPI"
 SRC_URI="https://github.com/remsky/Kokoro-FastAPI/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/remsky/Kokoro-FastAPI/releases/download/v0.1.4/kokoro-v1_0.pth -> ${P}-kokoro-v1_0.pth
   https://github.com/remsky/Kokoro-FastAPI/releases/download/v0.1.4/config.json -> ${P}-kokoro-v1_0-config.json"
-IUSE="standalone test"
+S="${WORKDIR}/Kokoro-FastAPI-${PV}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="standalone test"
 
 # shellcheck disable=SC2016
 RDEPEND="standalone? (
@@ -75,8 +74,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-quiet-logging.patch"
 )
 
-S="${WORKDIR}/Kokoro-FastAPI-${PV}"
-
 src_prepare() {
 	distutils-r1_src_prepare
 	mv api/src kokoro_fastapi || die
@@ -100,8 +97,8 @@ src_install() {
 		newinitd "${FILESDIR}/${PN}-cpu.initd" "${PN}-cpu"
 		newinitd "${FILESDIR}/${PN}-gpu.initd" "${PN}-gpu"
 	fi
-	insinto "$(python_get_sitedir)/kokoro_fastapi/core"
-	doins kokoro_fastapi/core/openai_mappings.json
+	python_moduleinto kokoro_fastapi/core
+	python_domodule kokoro_fastapi/core/openai_mappings.json
 }
 
 pkg_postinst() {

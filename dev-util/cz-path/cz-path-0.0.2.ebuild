@@ -4,11 +4,11 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=poetry
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{1,2,3} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Commitizen plugin that prefixes commit messages with the common path or prefix of staged files."
+DESCRIPTION="Commitizen plugin that prefixes commits with common path of files."
 HOMEPAGE="https://pypi.org/project/cz-path/"
 
 LICENSE="MIT"

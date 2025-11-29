@@ -3,8 +3,9 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..13} )
 DISTUTILS_USE_PEP517=setuptools
+
+PYTHON_COMPAT=( python3_{10..14} )
 
 inherit distutils-r1 pypi
 
@@ -12,8 +13,7 @@ DESCRIPTION="Logging utilities for SpaCy"
 HOMEPAGE="https://github.com/explosion/spacy-loggers"
 SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
 
+S="${WORKDIR}/${PN}-${PV}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}/${PN}-${PV}"

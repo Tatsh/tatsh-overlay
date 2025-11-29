@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit cmake
 
 DESCRIPTION="GTA III decompiled and re-built."
@@ -10,7 +11,7 @@ SHA="3233ffe1c4b99e8efb4c41c6794b4fce880cf503"
 LIBRW_SHA="5501c4fdc7425ff926be59369a13593bb6c81b54"
 SRC_URI="https://web.archive.org/web/20210906122012/https://github.com/GTAmodding/${PN}/archive/${SHA}.zip -> ${P}.zip
 	https://github.com/aap/librw/archive/${LIBRW_SHA}.tar.gz -> ${PN}-librw-${LIBRW_SHA}.tar.gz"
-
+S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
@@ -25,8 +26,6 @@ DEPEND="media-libs/libsndfile
 	sndfile? ( media-libs/libsndfile )"
 RDEPEND="${DEPEND}"
 BDEPEND="app-arch/unzip"
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-xdg.patch"

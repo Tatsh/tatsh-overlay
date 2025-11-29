@@ -4,13 +4,13 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
-
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Humane API for storing and accessing persistent data in IDA Pro databases."
 HOMEPAGE="https://pypi.org/project/ida-netnode/"
 SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
+S="${WORKDIR}/${P}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -18,5 +18,3 @@ KEYWORDS="~amd64"
 RESTRICT="test"
 
 RDEPEND="dev-python/six[${PYTHON_USEDEP}]"
-
-S="${WORKDIR}/${P}"

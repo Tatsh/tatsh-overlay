@@ -3,28 +3,26 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
 DISTUTILS_USE_PEP517=setuptools
+
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Package for simplifying writing VapourSynth 'plugins' in python."
 HOMEPAGE="https://pypi.org/project/vspyplugin/"
 SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
-
+S="${WORKDIR}/${PN}-${PV}"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="media-libs/vstools[${PYTHON_USEDEP}]
+RDEPEND="media-libs/vs-jetpack[${PYTHON_USEDEP}]
 	media-video/vapoursynth[${PYTHON_USEDEP}]"
-
-S="${WORKDIR}/${P^}"
-
-distutils_enable_tests pytest
-
-S="${WORKDIR}/${PN}-${PV}"
 
 src_prepare() {
 	touch requirements.txt
 	distutils-r1_src_prepare
 }
+
+distutils_enable_tests pytest

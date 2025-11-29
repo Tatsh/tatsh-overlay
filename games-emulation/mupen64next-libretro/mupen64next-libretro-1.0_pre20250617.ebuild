@@ -2,7 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 LIBRETRO_REPO_NAME="libretro/mupen64plus-libretro-nx"
 LIBRETRO_COMMIT_SHA="0346d3ef26016bb4de604cf918d004bd791447ee"
 LIBRETRO_CORE_NAME="mupen64plus_next"
@@ -11,10 +10,9 @@ inherit libretro-core
 
 DESCRIPTION="Improved mupen64plus libretro core reimplementation"
 HOMEPAGE="https://github.com/libretro/mupen64plus-libretro-nx"
-KEYWORDS="~amd64 ~arm64 ~x86"
-
 LICENSE="GPL-2"
 SLOT="0"
+KEYWORDS="~amd64 ~arm64 ~x86"
 IUSE="rpi rpi2 rpi3 rpi3_64 rpi4 rpi4_64 gles2 gles3"
 
 RDEPEND="media-libs/mesa:0=

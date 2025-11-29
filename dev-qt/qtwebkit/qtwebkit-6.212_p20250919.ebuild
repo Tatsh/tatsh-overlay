@@ -10,6 +10,7 @@ HOMEPAGE="https://github.com/movableink/webkit"
 SHA="1ab4d21d082e89fe1837c0279467a6da18c78cf0"
 SRC_URI="https://github.com/movableink/webkit/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
 
+S="${WORKDIR}/webkit-${SHA}"
 LICENSE="LGPL-2 BSD-2"
 SLOT="6/${PV%%_*}"
 KEYWORDS="~amd64"
@@ -30,7 +31,7 @@ DEPEND="dev-db/sqlite
 	media-libs/libpng
 	media-libs/libwebp
 	media-libs/woff2
-	sys-libs/zlib"
+	virtual/zlib"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-lang/ruby"
 
@@ -39,8 +40,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-fix-linking.patch"
 	"${FILESDIR}/${PN}-size.patch"
 )
-
-S="${WORKDIR}/webkit-${SHA}"
 
 src_configure() {
 	# Disable assertions https://bugs.webkit.org/show_bug.cgi?id=284786

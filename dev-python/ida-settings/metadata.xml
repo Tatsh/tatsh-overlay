@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="github">williballenthin/ida-settings</remote-id>
 		<remote-id type="pypi">ida-settings</remote-id>
 	</upstream>
 </pkgmetadata>

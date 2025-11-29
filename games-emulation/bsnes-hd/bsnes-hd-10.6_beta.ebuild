@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit desktop toolchain-funcs
 
 DESCRIPTION="bsnes fork that adds HD video features."
@@ -12,6 +13,8 @@ MY_MINOR="${MY_MINOR%_*}"
 SHA="f46b6d6368ea93943a30b5d4e79e8ed51c2da5e8"
 BIN_PN="${PN%-*}"
 SRC_URI="https://github.com/DerKoun/bsnes-hd/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+
+S="${WORKDIR}/${PN}-${SHA}"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -48,8 +51,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-114.patch"
 	"${FILESDIR}/${PN}-116.patch"
 )
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 disable_module() {
 	sed -i -e "s|$1\b||" ruby/GNUmakefile || die

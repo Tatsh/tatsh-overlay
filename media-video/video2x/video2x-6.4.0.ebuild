@@ -6,12 +6,12 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="A lossless video/GIF/image upscaler."
-HOMEPAGE="https://video2x.org/ https://github.com/k4yt3x/video2x"
+HOMEPAGE="https://github.com/k4yt3x/video2x/ https://github.com/k4yt3x/video2x"
 LIBREAL_ESRGAN_NCNN_VULKAN_SHA="c1f255524f79566c40866b38e5e65b40adf77eee"
 LIBRIFE_NCNN_VULKAN_SHA="3f7bcb44f38b2acda6fa5e575a6d12517ac16b94"
 LIBREALCUGAN_NCNN_VULKAN_SHA="d9c5a7eb4c8475af6110496c27c3d1f702f9b96a"
 SRC_URI="https://github.com/k4yt3x/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/k4yt3x/libreal-esrgan-ncnn-vulkan/archive/${LIBREAL_ESRGAN_NCNN_VULKAN_SHA}.tar.gz -> ${PN}-libreal-esrgan-ncnn-vulkan-${LIBREAL_ESRGAN_NCNN_VULKAN_SHA}.tar.gz
+	https://github.com/k4yt3x/librealesrgan-ncnn-vulkan/archive/${LIBREAL_ESRGAN_NCNN_VULKAN_SHA}.tar.gz -> ${PN}-librealesrgan-ncnn-vulkan-${LIBREAL_ESRGAN_NCNN_VULKAN_SHA}.tar.gz
 	https://github.com/k4yt3x/librife-ncnn-vulkan/archive/${LIBRIFE_NCNN_VULKAN_SHA}.tar.gz -> ${PN}-librife-ncnn-vulkan-${LIBRIFE_NCNN_VULKAN_SHA}.tar.gz
 	https://github.com/k4yt3x/librealcugan-ncnn-vulkan/archive/${LIBREALCUGAN_NCNN_VULKAN_SHA}.tar.gz -> ${PN}-librealcugan-ncnn-vulkan-${LIBREALCUGAN_NCNN_VULKAN_SHA}.tar.gz"
 

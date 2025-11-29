@@ -10,7 +10,7 @@ inherit distutils-r1
 
 DESCRIPTION="Python library for video editing."
 HOMEPAGE="https://pypi.org/project/moviepy/"
-SRC_URI="https://github.com/Zulko/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/Zulko/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"

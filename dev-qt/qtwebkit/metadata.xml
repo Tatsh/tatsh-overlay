@@ -5,6 +5,9 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+	<upstream>
+		<remote-id type="github">movableink/webkit</remote-id>
+	</upstream>
 	<use>
 		<flag name="video">Enable video playback support</flag>
 	</use>

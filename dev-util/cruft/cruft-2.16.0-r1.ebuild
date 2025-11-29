@@ -4,13 +4,13 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{1,2,3} )
 
 inherit distutils-r1
 
 DESCRIPTION="Fight back against the boilerplate monster."
 HOMEPAGE="https://pypi.org/project/cruft/ https://cruft.github.io/ https://github.com/cruft/cruft/"
-SRC_URI="https://github.com/${PN}/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/${PN}/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"

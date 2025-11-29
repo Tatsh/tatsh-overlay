@@ -11,6 +11,7 @@ SHA="2d022df81177ca05b259598e2a1345a9309de096"
 SRC_URI="https://github.com/kanjitalk755/macemu/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://sheepshaver.cebix.net/images/sheep.png -> ${PN}-icon.png"
 
+S="${WORKDIR}/macemu-${SHA}/SheepShaver/src/Unix"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -23,7 +24,6 @@ DEPEND="dev-libs/glib
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-fix-implicit.patch" )
-S="${WORKDIR}/macemu-${SHA}/SheepShaver/src/Unix"
 MAKEOPTS+=" -j1"
 FILECAPS=( cap_sys_rawio /usr/bin/SheepShaver )
 

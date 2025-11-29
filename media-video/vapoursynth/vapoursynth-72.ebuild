@@ -3,31 +3,33 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
 DISTUTILS_EXT=1
+
 DISTUTILS_USE_PEP517=setuptools
+
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
+
 inherit autotools distutils-r1
 
 DESCRIPTION="A video processing framework with simplicity in mind."
-HOMEPAGE="http://www.vapoursynth.com/ https://github.com/vapoursynth/vapoursynth"
-MY_PV="R${PV//_/-}"
-MY_PV="${MY_PV^^}"
+HOMEPAGE="https://www.vapoursynth.com/ https://github.com/vapoursynth/vapoursynth"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
-RESTRICT="mirror"
-
+S="${WORKDIR}/${PN}-${MY_PV}"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="guard-pattern +x86-asm +vsscript +vspipe"
+RESTRICT="mirror"
+
+MY_PV="R${PV//_/-}"
+MY_PV="${MY_PV^^}"
 
 DEPEND=">=media-libs/zimg-3.0.5
 	x86-asm? ( >=dev-lang/yasm-1.3.0 )
 	vsscript? ( >=dev-lang/python-3.9 )
-	sys-libs/zlib"
+	virtual/zlib"
 REQUIRED_USE="vspipe? ( vsscript )"
 BDEPEND="dev-python/cython[${PYTHON_USEDEP}]"
-
-S="${WORKDIR}/${PN}-${MY_PV}"
 
 src_prepare () {
 	eautoreconf

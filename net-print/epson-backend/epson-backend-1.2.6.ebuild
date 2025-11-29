@@ -8,7 +8,7 @@ inherit systemd
 DESCRIPTION="Epson CUPS backend (ecbd)."
 HOMEPAGE="https://support.epson.net/linux/Printer/LSB_distribution_pages/en/utility.php"
 SRC_URI="https://download3.ebz.epson.net/dsc/f/03/00/14/68/96/20259c8247fdde4faa8416ba642825e903f32bb8/epson-printer-utility_arm_source.zip -> ${P}.zip"
-
+S="${WORKDIR}/epson-printer-utility_arm_source"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -17,8 +17,7 @@ RDEPEND="dev-qt/qtcore
 	dev-qt/qtgui
 	dev-qt/qtwidgets
 	virtual/libusb"
-
-S="${WORKDIR}/epson-printer-utility_arm_source"
+BDEPEND="app-arch/unzip"
 
 PATCHES=( "${FILESDIR}/${PN}-fixes.patch" )
 

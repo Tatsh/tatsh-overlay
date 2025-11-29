@@ -2,19 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
-PYTHON_COMPAT=( python3_1{0..3} )
+PYTHON_COMPAT=( python3_1{0..4} )
 inherit python-single-r1
 
 DESCRIPTION="A code-completion engine for Vim."
 HOMEPAGE="https://github.com/ycm-core/YouCompleteMe"
-LICENSE="GPL-3"
-KEYWORDS="~amd64 ~ppc64 ~x86"
-
-SLOT="0"
 SHA="131b1827354871a4e984c1660b6af0fefca755c3"
 MY_PN="YouCompleteMe"
 SRC_URI="https://github.com/ycm-core/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/${MY_PN}-${SHA}"
+LICENSE="GPL-3"
+SLOT="0"
+KEYWORDS="~amd64 ~ppc64 ~x86"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 DEPEND="|| ( >=app-editors/vim-7.3[python] >=app-editors/gvim-7.3[python] )"
@@ -25,8 +24,6 @@ RDEPEND="${DEPEND}
 	$(python_gen_cond_dep 'dev-python/requests-futures[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	$(python_gen_cond_dep 'dev-python/requests[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	$(python_gen_cond_dep 'dev-util/ycmd[${PYTHON_SINGLE_USEDEP}]' "${PYTHON_COMPAT[@]}")"
-
-S="${WORKDIR}/${MY_PN}-${SHA}"
 
 src_prepare() {
 	rm -fR third_party/ python/ycm/tests/ || die

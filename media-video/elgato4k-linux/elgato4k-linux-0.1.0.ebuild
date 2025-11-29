@@ -22,11 +22,9 @@ HOMEPAGE="https://github.com/13bm/elgato4k-linux"
 SHA="8e61fc4a08719ba32da9cd2ca653656b3707799c"
 SRC_URI="https://github.com/13bm/elgato4k-linux/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz
 	${CARGO_CRATE_URIS}"
-
+S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="all-rights-reserved MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="virtual/libusb:1"
-
-S="${WORKDIR}/${PN}-${SHA}"

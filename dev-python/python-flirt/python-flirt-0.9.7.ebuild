@@ -2,7 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 CRATES="
 	addr2line@0.21.0
 	adler32@1.2.0
@@ -257,22 +256,24 @@ CRATES="
 "
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=maturin
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 
 inherit cargo distutils-r1
 
-DESCRIPTION="A Python library for parsing, compiling, and matching Fast Library Identification and Recognition Technology (FLIRT) signatures."
+DESCRIPTION="Python library for parsing, compiling, and matching FLIRT signatures."
 HOMEPAGE="https://pypi.org/project/python-flirt/"
-SRC_URI="https://github.com/williballenthin/lancelot/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/williballenthin/lancelot/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz
 	${CARGO_CRATE_URIS}"
+S="${WORKDIR}/lancelot-${PV}/pyflirt"
 
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="test? ( dev-python/pytest-sugar[${PYTHON_USEDEP}] dev-python/pytest-instafail[${PYTHON_USEDEP}] )"
-
-S="${WORKDIR}/lancelot-${PV}/pyflirt"
+BDEPEND="test? (
+	dev-python/pytest-sugar[${PYTHON_USEDEP}]
+	dev-python/pytest-instafail[${PYTHON_USEDEP}]
+)"
 
 python_prepare_all() {
 	sed -re 's/^ar =.*/ar = "0.9"/' -i ../bin/Cargo.toml || die

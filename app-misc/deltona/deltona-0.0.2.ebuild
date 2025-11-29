@@ -8,11 +8,11 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="A lot of uncategorised utilities."
 HOMEPAGE="https://github.com/Tatsh/deltona"
-IUSE="admin desktop git media string wine www"
-
+S="${WORKDIR}/${PN}-${PV}"
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc64 ~x86"
+KEYWORDS="~amd64"
+IUSE="admin desktop git media string wine www"
 
 RDEPEND="dev-python/binaryornot[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]

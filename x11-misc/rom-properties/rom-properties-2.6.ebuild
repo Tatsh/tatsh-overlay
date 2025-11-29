@@ -12,7 +12,7 @@ SRC_URI="https://github.com/GerbilSoft/${PN}/archive/refs/tags/v${PV}.tar.gz -> 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="achievements +astc cli +crypt gtk kde nls +lz4 +lzo +pvr test +unice68 +xbox-360 xfce +xml +zstd"
+IUSE="achievements +astc +cli +crypt gtk kde nls +lz4 +lzo +pvr test +unice68 +xbox-360 xfce +xml +zstd"
 REQUIRED_USE="pvr? ( astc )
 	|| ( cli gtk kde xfce )"
 RESTRICT="!test? ( test )"
@@ -24,7 +24,7 @@ DEPEND="dev-libs/libfmt
 	media-libs/libpng
 	net-misc/curl
 	sys-libs/libseccomp
-	sys-libs/zlib
+	virtual/zlib
 	gtk? ( x11-libs/gtk+:3 )
 	kde? ( dev-qt/qtbase:6[dbus,network]
 		kde-frameworks/kcoreaddons

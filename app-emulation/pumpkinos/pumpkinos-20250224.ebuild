@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit desktop wrapper
+inherit desktop
 
 DESCRIPTION="PumpkinOS is a re-implementation of PalmOS."
 HOMEPAGE="https://github.com/migueletto/PumpkinOS https://pmig96.wordpress.com/category/palmos/"
@@ -11,14 +11,13 @@ SHA="c892e282d154d2598fc5c6185403ca1b11132bd9"
 MY_PN="PumpkinOS"
 SRC_URI="https://github.com/migueletto/${MY_PN}/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 
+S="${WORKDIR}/${MY_PN}-${SHA}"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="media-libs/libsdl2"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/${MY_PN}-${SHA}"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-copy-vfs.patch" )
 
@@ -28,24 +27,24 @@ src_prepare() {
 }
 
 src_compile() {
-	local DIR ROOT dir
+	local DIR _ROOT dir
 	pushd src || die
 	DIR=$(pwd -P)
-	ROOT="${DIR}/.."
+	_ROOT="${DIR}/.."
 	for dir in bin lib tools vfs/app_card/PALM/Programs vfs/app_install vfs/app_storage registry; do
-		if [ ! -d "${ROOT}/${dir}" ]; then
-			mkdir -p "${ROOT}/${dir}" || die
+		if [ ! -d "${_ROOT}/${dir}" ]; then
+			mkdir -p "${_ROOT}/${dir}" || die
 		fi
 	done
 	for dir in pilrc prcbuild; do
 		if [ -d "$dir" ]; then
-			pushd "$dir" && emake "ROOT=${ROOT}" BITS=64
+			pushd "$dir" && emake "ROOT=${_ROOT}" BITS=64
 			popd || die
 		fi
 	done
 	for dir in libpit lua liblsdl2 libpumpkin libos libshell linux BOOT Launcher Preferences Command Edit LuaSyntax MemoPad AddressBook ToDoList DateBook; do
 		if [ -d "$dir" ]; then
-			pushd "$dir" && emake "ROOT=${ROOT}" OSNAME=GNU/Linux BITS=64
+			pushd "$dir" && emake "ROOT=${_ROOT}" OSNAME=GNU/Linux BITS=64
 			popd || die
 		fi
 	done

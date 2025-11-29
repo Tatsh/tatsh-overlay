@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">explosion/wasabi</remote-id>
+		<remote-id type="pypi">wasabi</remote-id>
 	</upstream>
 </pkgmetadata>

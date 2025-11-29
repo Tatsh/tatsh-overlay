@@ -3,7 +3,6 @@
 
 EAPI=8
 
-
 DESCRIPTION="Repository containing cheat code files, content data files, etc."
 HOMEPAGE="https://github.com/libretro/libretro-database"
 
@@ -11,7 +10,7 @@ if [[ "${PV}" == *9999* ]] ; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/libretro/libretro-database"
 else
-	SRC_URI="https://github.com/libretro/libretro-database/archive/refs/tags/v${PV}.tar.gz"
+	SRC_URI="https://github.com/libretro/libretro-database/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="amd64 arm64"
 fi
 

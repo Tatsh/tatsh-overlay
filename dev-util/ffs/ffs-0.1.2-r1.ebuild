@@ -5,75 +5,72 @@
 
 EAPI=8
 
-CRATES="
-	ansi_term-0.11.0
-	ansi_term-0.12.1
-	atty-0.2.14
-	autocfg-1.0.1
-	base64-0.13.0
-	bitflags-1.2.1
-	byteorder-1.4.3
-	cfg-if-1.0.0
-	chrono-0.4.19
-	clap-2.33.3
-	fuser-0.9.1
-	hermit-abi-0.1.18
-	itoa-0.4.7
-	lazy_static-1.4.0
-	libc-0.2.95
-	linked-hash-map-0.5.4
-	log-0.4.14
-	matchers-0.0.1
-	memchr-2.4.0
-	num-integer-0.1.44
-	num-traits-0.2.14
-	once_cell-1.7.2
-	page_size-0.4.2
-	pin-project-lite-0.2.6
-	pkg-config-0.3.19
-	proc-macro2-1.0.27
-	quote-1.0.9
-	regex-1.5.4
-	regex-automata-0.1.10
-	regex-syntax-0.6.25
-	ryu-1.0.5
-	serde-1.0.126
-	serde_json-1.0.64
-	sharded-slab-0.1.1
-	smallvec-1.6.1
-	strsim-0.8.0
-	syn-1.0.72
-	synstructure-0.12.4
-	textwrap-0.11.0
-	thread_local-1.1.3
-	toml-0.5.8
-	tracing-0.1.26
-	tracing-attributes-0.1.15
-	tracing-core-0.1.18
-	tracing-log-0.1.2
-	tracing-serde-0.1.2
-	tracing-subscriber-0.2.18
-	unicode-width-0.1.8
-	unicode-xid-0.2.2
-	users-0.11.0
-	vec_map-0.8.2
-	winapi-0.3.9
-	winapi-i686-pc-windows-gnu-0.4.0
-	winapi-x86_64-pc-windows-gnu-0.4.0
-	yaml-rust-0.4.5
-	zerocopy-0.5.0
-	zerocopy-derive-0.3.0
-"
-
+CRATES="ansi_term@0.11.0
+	ansi_term@0.12.1
+	atty@0.2.14
+	autocfg@1.0.1
+	base64@0.13.0
+	bitflags@1.2.1
+	byteorder@1.4.3
+	cfg-if@1.0.0
+	chrono@0.4.19
+	clap@2.33.3
+	fuser@0.9.1
+	hermit-abi@0.1.18
+	itoa@0.4.7
+	lazy_static@1.4.0
+	libc@0.2.95
+	linked-hash-map@0.5.4
+	log@0.4.14
+	matchers@0.0.1
+	memchr@2.4.0
+	num-integer@0.1.44
+	num-traits@0.2.14
+	once_cell@1.7.2
+	page_size@0.4.2
+	pin-project-lite@0.2.6
+	pkg-config@0.3.19
+	proc-macro2@1.0.27
+	quote@1.0.9
+	regex@1.5.4
+	regex-automata@0.1.10
+	regex-syntax@0.6.25
+	ryu@1.0.5
+	serde@1.0.126
+	serde_json@1.0.64
+	sharded-slab@0.1.1
+	smallvec@1.6.1
+	strsim@0.8.0
+	syn@1.0.72
+	synstructure@0.12.4
+	textwrap@0.11.0
+	thread_local@1.1.3
+	toml@0.5.8
+	tracing@0.1.26
+	tracing-attributes@0.1.15
+	tracing-core@0.1.18
+	tracing-log@0.1.2
+	tracing-serde@0.1.2
+	tracing-subscriber@0.2.18
+	unicode-width@0.1.8
+	unicode-xid@0.2.2
+	users@0.11.0
+	vec_map@0.8.2
+	winapi@0.3.9
+	winapi-i686-pc-windows-gnu@0.4.0
+	winapi-x86_64-pc-windows-gnu@0.4.0
+	yaml-rust@0.4.5
+	zerocopy@0.5.0
+	zerocopy-derive@0.3.0"
 inherit cargo
 
 DESCRIPTION="Lets you mount semi-structured data (like JSON) as a filesystem"
 HOMEPAGE="https://github.com/mgree/ffs"
 # shellcheck disable=SC2086
-SRC_URI="https://github.com/mgree/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-	$(cargo_crate_uris ${CRATES})"
+SRC_URI="https://github.com/mgree/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz
+	${CARGO_CRATE_URIS}"
 
-LICENSE="Apache-2.0 BSD BSL-1.1 GPL-3 MIT Unlicense"
+LICENSE="Apache-2.0 BSD BUSL-1.1 GPL-3 MIT Unlicense"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~ppc64"
 RESTRICT="mirror"

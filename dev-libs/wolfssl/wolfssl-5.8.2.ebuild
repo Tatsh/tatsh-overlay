@@ -2,11 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit autotools
 
 DESCRIPTION="Embedded SSL library."
 HOMEPAGE="https://www.wolfssl.com/ https://github.com/wolfSSL/wolfssl"
 SRC_URI="https://github.com/wolfSSL/${PN}/archive/refs/tags/v${PV}-stable.tar.gz -> ${P}.tar.gz"
+
+S="${WORKDIR}/${P}-stable"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -16,8 +19,6 @@ IUSE="debug cpu_flags_x86_aes jni sniffer +writedup"
 DEPEND="sniffer? ( net-libs/libpcap )"
 RDEPEND="${DEPEND}"
 BDEPEND="app-arch/unzip"
-
-S="${WORKDIR}/${P}-stable"
 
 src_prepare() {
 	eautoreconf

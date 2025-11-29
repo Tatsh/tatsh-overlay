@@ -2,19 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 DISTUTILS_SINGLE_IMPL=1
-PYTHON_COMPAT=( python3_{10..13} )
 DISTUTILS_USE_PEP517=setuptools
-
-inherit distutils-r1 python-single-r1 systemd
-
-COMMIT="996bc8dbe141d5c233978ef7cc50cb6351498bb9"
+PYTHON_COMPAT=( python3_{10..14} )
+inherit distutils-r1 systemd
 
 DESCRIPTION="An OAI compatible exllamav2 API that's both lightweight and fast."
 HOMEPAGE="https://github.com/theroyallab/tabbyAPI"
+COMMIT="996bc8dbe141d5c233978ef7cc50cb6351498bb9"
 SRC_URI="https://github.com/theroyallab/tabbyAPI/archive/${COMMIT}.tar.gz -> ${P}-${COMMIT:0:7}.tar.gz"
-
+S="${WORKDIR}/tabbyAPI-${COMMIT}"
 LICENSE="AGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -56,8 +53,6 @@ RDEPEND="${PYTHON_DEPS}
 	>=sci-ml/tokenizers-0.21.0[${PYTHON_SINGLE_USEDEP}]"
 DEPEND="${RDEPEND}"
 BDEPEND="${PYTHON_DEPS}"
-
-S="${WORKDIR}/tabbyAPI-${COMMIT}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-reorganize.patch"

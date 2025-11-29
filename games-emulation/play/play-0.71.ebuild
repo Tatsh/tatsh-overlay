@@ -2,10 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit cmake flag-o-matic xdg
 
 DESCRIPTION="PlayStation 2 emulator."
-HOMEPAGE="http://purei.org/ https://github.com/jpd002/Play-"
+HOMEPAGE="https://purei.org/ https://github.com/jpd002/Play-"
 MY_PV="${PV:0:4}"
 CODEGEN_SHA="ed5740e9fc489b6a32cf60d8ee560564609d8a6b"
 DEPS_SHA="427000062320b6b0daa2f7a37349e38e1c6772ff"
@@ -25,6 +26,10 @@ SRC_URI="https://github.com/jpd002/Play-/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/facebook/zstd/archive/${ZSTD_SHA}.tar.gz -> ${PN}-zstd-${ZSTD_SHA:0:7}.tar.gz
 	https://github.com/Cyan4973/xxHash/archive/${XXHASH_SHA}.tar.gz -> ${PN}-xxhash-${XXHASH_SHA:0:7}.tar.gz"
 
+UPPER_PN="${PN^^}"
+MY_PN="${UPPER_PN:0:1}${PN:1}-"
+S="${WORKDIR}/${MY_PN}-${MY_PV}"
+
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
@@ -42,14 +47,10 @@ DEPEND="app-arch/bzip2
 	media-libs/glu
 	media-libs/openal
 	net-misc/curl
-	sys-libs/zlib
+	virtual/zlib
 	vulkan? ( media-libs/vulkan-loader )"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-cpp/nlohmann_json"
-
-UPPER_PN="${PN^^}"
-MY_PN="${UPPER_PN:0:1}${PN:1}-"
-S="${WORKDIR}/${MY_PN}-${MY_PV}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-source-system-deps.patch"

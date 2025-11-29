@@ -6,7 +6,7 @@ EAPI=8
 inherit bash-completion-r1 yarn
 
 DESCRIPTION="CLI tool for running Yeoman generators"
-HOMEPAGE="http://yeoman.io"
+HOMEPAGE="https://yeoman.io/"
 YARN_PKGS=(
 	@babel/code-frame-7.26.2
 	@babel/helper-validator-identifier-7.25.9
@@ -726,12 +726,10 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
-RESTRICT="mirror"
-
-LICENSE="BSD-2 MIT Apache-2.0 CC0-1.0 0BSD BlueOak-1.0.0 CC-BY-3.0 ISC WTFPL"
-KEYWORDS="~amd64"
-
 S="${WORKDIR}"
+LICENSE="BSD-2 MIT Apache-2.0 CC0-1.0 0BSD BlueOak-1.0.0 CC-BY-3.0 ISC WTFPL-2"
+KEYWORDS="~amd64"
+RESTRICT="mirror"
 
 src_install() {
 	yarn_src_install

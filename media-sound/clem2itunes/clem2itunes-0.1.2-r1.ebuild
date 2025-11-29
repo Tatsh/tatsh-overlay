@@ -2,17 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 DISTUTILS_USE_PEP517=poetry
 inherit distutils-r1
 
-DESCRIPTION="Crazy way to synchronise a remote Strawberry rated library to Music.app using Python, JXA and SSH."
+DESCRIPTION="Sync a remote Strawberry rated library to Music.app using Python, JXA and SSH."
 HOMEPAGE="https://github.com/Tatsh/clem2itunes"
-SRC_URI="https://github.com/Tatsh/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/Tatsh/${PN}/archive/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc64 ~x86"
+KEYWORDS="~amd64"
 
 RDEPEND="dev-python/aiosqlite[${PYTHON_USEDEP}]
 	dev-python/anyio[${PYTHON_USEDEP}]
@@ -27,7 +27,7 @@ RDEPEND="dev-python/aiosqlite[${PYTHON_USEDEP}]
 	media-video/atomicparsley"
 BDEPEND="test? (
 	dev-python/mock[${PYTHON_USEDEP}]
-	dev-python/asyncio[${PYTHON_USEDEP}]
+	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
 	dev-python/pytest-mock[${PYTHON_USEDEP}]
 	dev-python/requests-mock[${PYTHON_USEDEP}]
 )"

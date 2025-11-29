@@ -5,6 +5,7 @@
 		<email>amverweij@gmail.com</email>
 		<name>Bram Verweij</name>
 	</maintainer>
-	<longdescription lang="en">Fast Sony Playstation emulator
-	</longdescription>
+	<upstream>
+		<remote-id type="github">libretro/swanstation</remote-id>
+	</upstream>
 </pkgmetadata>

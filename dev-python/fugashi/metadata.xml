@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">polm/fugashi</remote-id>
+		<remote-id type="pypi">fugashi</remote-id>
 	</upstream>
 </pkgmetadata>

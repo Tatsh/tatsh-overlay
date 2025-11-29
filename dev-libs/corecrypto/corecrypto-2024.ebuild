@@ -14,9 +14,7 @@ LICENSE="corecrypto"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND=""
-RDEPEND="${DEPEND}"
-BDEPEND=""
+BDEPEND="app-arch/unzip"
 
 pkg_nofetch() {
 	elog "Download '${PN}.zip' from https://developer.apple.com/security/ or use the following command:"

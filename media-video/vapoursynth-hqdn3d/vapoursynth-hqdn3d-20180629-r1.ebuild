@@ -9,15 +9,13 @@ DESCRIPTION="Port of hqdn3d from AviSynth"
 HOMEPAGE="https://github.com/Hinterwaeldlers/vapoursynth-hqdn3d"
 SHA="eb820cb23f7dc47eb67ea95def8a09ab69251d30"
 SRC_URI="https://github.com/Hinterwaeldlers/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="media-video/vapoursynth"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 DOCS=( readme.rst )
 

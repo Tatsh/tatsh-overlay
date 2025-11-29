@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit cmake flag-o-matic xdg
 
 DESCRIPTION="Nintendo Switch emulator."
@@ -25,12 +26,16 @@ SRC_URI="https://web.archive.org/web/20240304181657if_/https://codeload.github.c
 	https://github.com/libsdl-org/SDL/archive/${SDL_SHA}.tar.gz -> ${PN}-sdl-${SDL_SHA:0:7}.tar.gz
 	https://github.com/brofield/simpleini/archive/${SIMPLEINI_SHA}.tar.gz -> ${PN}-simpleini-${SIMPLEINI_SHA:0:7}.tar.gz
 	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz -> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz"
-
+S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="+compatibility-reporting +cubeb llvm-libunwind qt5 +qt6 +web-service +webengine"
-REQUIRED_USE="compatibility-reporting? ( web-service )"
+
+REQUIRED_USE="compatibility-reporting? ( web-service )
+	|| ( qt5 qt6 )
+		qt5? ( !qt6 )
+		qt6? ( !qt5 )"
 
 DEPEND=">=app-arch/zstd-1.5.0:=
 	>=dev-libs/xbyak-6.03:=
@@ -59,7 +64,7 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	media-libs/libva
 	media-libs/opus
 	net-libs/enet:=
-	sys-libs/zlib
+	virtual/zlib
 	virtual/libusb:=
 	webengine? (
 		qt5? ( dev-qt/qtwebengine:5 )
@@ -75,11 +80,6 @@ BDEPEND="app-arch/unzip
 	dev-cpp/robin-map
 	>=dev-util/vulkan-headers-1.3.275
 	dev-util/spirv-headers"
-REQUIRED_USE="|| ( qt5 qt6 )
-	qt5? ( !qt6 )
-	qt6? ( !qt5 )"
-
-S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-system-libs.patch"

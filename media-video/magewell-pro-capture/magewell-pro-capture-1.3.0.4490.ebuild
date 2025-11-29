@@ -2,24 +2,24 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit linux-mod-r1 udev
 
 DESCRIPTION="Magewell Pro Capture driver."
 HOMEPAGE="https://www.magewell.com/downloads/pro-capture#/driver/linux-x86"
 SRC_URI="https://www.magewell.com/files/drivers/ProCaptureForLinuxPUBLIC_${PV/.0}.tar.gz"
-
+S="${WORKDIR}/ProCaptureForLinuxPUBLIC_${PV/.0}"
 LICENSE="Magewell-Pro-Capture"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc weave"
+RESTRICT="strip"
 
 RDEPENDS="media-libs/alsa-lib"
 
-S="${WORKDIR}/ProCaptureForLinuxPUBLIC_${PV/.0}"
 DOCS=(quick_start.txt docs/Readme.txt docs/ProCaptureSeriesCardUserGuideforLinux.{eng,chs}.pdf)
 
 CONFIG_CHECK="VIDEOBUF2_DMA_SG"
-RESTRICT="strip"
 
 src_prepare() {
 	sed -e 's:/local::g' -e 's:/src::g' -i scripts/ProCapture.conf || die 'Failed to patch!'

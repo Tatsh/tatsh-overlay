@@ -2,7 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 WANT_GYP=1
 inherit systemd yarn
 
@@ -202,12 +201,10 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
-RESTRICT="mirror"
-
+S="${WORKDIR}"
 LICENSE="0BSD Apache-2.0 BSD BSD-2 ISC MIT"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}"
+RESTRICT="mirror"
 
 src_install() {
 	yarn_src_install

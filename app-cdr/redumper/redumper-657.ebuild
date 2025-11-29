@@ -10,6 +10,7 @@ DESCRIPTION="Low level CD dumper utility"
 HOMEPAGE="https://github.com/superg/redumper"
 SRC_URI="https://github.com/superg/redumper/archive/refs/tags/b${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/${PN}-b${PV}"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -20,8 +21,6 @@ BDEPEND=">=llvm-core/clang-16.0.6
 	dev-build/ninja"
 DEPEND=">=llvm-runtimes/libcxx-16[static-libs]
 	>=llvm-runtimes/libcxxabi-16[static-libs]"
-
-S="${WORKDIR}/${PN}-b${PV}"
 
 src_configure() {
 	filter-flags -O*

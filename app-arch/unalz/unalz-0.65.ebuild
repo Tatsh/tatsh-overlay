@@ -7,11 +7,12 @@ DESCRIPTION="Unpack ALZ archives."
 HOMEPAGE="https://web.archive.org/web/20201025202521/http://kippler.com/win/unalz/"
 SRC_URI="https://web.archive.org/web/20150107141553if_/http://www.kippler.com/win/${PN}/${P}.tgz"
 
+S="${WORKDIR}/${PN}"
 LICENSE="ZLIB"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 
-DEPEND="sys-libs/zlib"
+DEPEND="virtual/zlib"
 RDEPEND="${DEPEND}"
 
 PATCHES=(
@@ -19,8 +20,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-types.patch"
 	"${FILESDIR}/${PN}-system-bz2-01.patch"
 )
-
-S="${WORKDIR}/${PN}"
 
 src_compile() {
 	emake linux-utf8

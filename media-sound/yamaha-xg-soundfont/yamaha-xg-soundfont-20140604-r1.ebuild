@@ -5,13 +5,11 @@ EAPI=8
 
 DESCRIPTION="Yamaha XG re-mapped soundfont by ZSF on SF2 forums."
 HOMEPAGE="https://www.ronimusic.com/smp_ios_dls_files.htm"
-SRC_URI="http://www.ronimusic.com/sf2/Yamaha_XG_Sound_Set.sf2"
-
+SRC_URI="https://www.ronimusic.com/sf2/Yamaha_XG_Sound_Set.sf2"
+S="$WORKDIR"
 LICENSE="Roni-Music"
 SLOT="0"
 KEYWORDS="amd64 arm arm64 ppc64 x86"
-
-S="$WORKDIR"
 
 src_unpack() {
 	:

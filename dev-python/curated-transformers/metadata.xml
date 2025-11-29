@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">explosion/curated-transformers</remote-id>
+		<remote-id type="pypi">curated-transformers</remote-id>
 	</upstream>
 </pkgmetadata>

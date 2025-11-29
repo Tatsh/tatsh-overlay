@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<maintainer type="person">
-		<email>audvare@gmail.com</email>
-		<name>Andrew Udvare</name>
-	</maintainer>
-	<upstream>
-		<remote-id type="github">theroyallab/tabbyAPI</remote-id>
-	</upstream>
+  <maintainer type="person">
+    <email>audvare@gmail.com</email>
+    <name>Andrew Udvare</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="github">theroyallab/tabbyAPI</remote-id>
+  </upstream>
+  <use>
+    <flag name="standalone">Install service files for standalone mode.</flag>
+  </use>
 </pkgmetadata>

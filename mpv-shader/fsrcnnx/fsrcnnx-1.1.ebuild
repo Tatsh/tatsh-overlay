@@ -10,11 +10,9 @@ HOMEPAGE="https://github.com/igv/FSRCNN-TensorFlow"
 MY_PN="${PN^^}"
 SRC_URI="https://github.com/igv/FSRCNN-TensorFlow/releases/download/${PV}/${MY_PN}_x2_16-0-4-1.glsl
 	https://github.com/igv/FSRCNN-TensorFlow/releases/download/${PV}/${MY_PN}_x2_8-0-4-1.glsl"
-
+S="${WORKDIR}"
 LICENSE="GPL-3"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}"
 
 MPV_SHADER_FILES=(
 	"${DISTDIR}/${MY_PN}_x2_16-0-4-1.glsl"

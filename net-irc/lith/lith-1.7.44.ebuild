@@ -8,7 +8,7 @@ inherit cmake
 DESCRIPTION="Multiplatform, mobile-focused WeeChat relay client."
 HOMEPAGE="https://github.com/LithApp/lith"
 SRC_URI="https://github.com/LithApp/lith/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/Lith-${PV}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -21,8 +21,6 @@ DEPEND="dev-libs/qcoro
 	dev-libs/qtkeychain
 	dev-qt/qtwebsockets:6"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/Lith-${PV}"
 
 src_configure() {
 	local mycmakeargs=(

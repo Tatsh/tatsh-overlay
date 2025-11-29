@@ -7,8 +7,10 @@ inherit cmake desktop wrapper xdg
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
 SHA="d55acb1ba26f1c5b5e3048d6d6c0bd116625216f"
-HOMEPAGE="http://www.stepmania.com/"
+HOMEPAGE="https://www.stepmania.com/"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+
+S="${WORKDIR}/${PN}-${SHA}"
 
 LICENSE="MIT"
 SLOT="0"
@@ -36,7 +38,7 @@ DEPEND="X? ( x11-libs/libX11 )
 	media-libs/libjpeg-turbo
 	media-libs/libpng
 	media-video/ffmpeg
-	sys-libs/zlib
+	virtual/zlib
 	virtual/udev
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:2
@@ -48,8 +50,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-ffmpeg-6.patch"
 	"${FILESDIR}/${PN}-ffmpeg-7.patch"
 )
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 src_prepare() {
 	einfo 'Removing useless instructions.txt files ...'

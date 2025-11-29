@@ -1,4 +1,11 @@
 {
+  "[diff]": {
+    "files.trimFinalNewlines": false,
+    "files.trimTrailingWhitespace": false
+  },
+  "[jsonnet]": {
+    "editor.defaultFormatter": "Grafana.vscode-jsonnet"
+  },
   "[markdown]": {
     "editor.renderWhitespace": "boundary"
   },
@@ -8,9 +15,6 @@
     "editor.tabSize": 4
   },
   "[shellscript]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.shellcheck": "explicit"
-    },
     "editor.detectIndentation": false,
     "editor.insertSpaces": false,
     "editor.renderWhitespace": "boundary",
@@ -22,6 +26,9 @@
     "editor.useTabStops": true
   },
   "cSpell.enabled": true,
+  "editor.codeActionsOnSave": {
+    "ssource.fixAll": "always"
+  },
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
@@ -33,5 +40,7 @@
     "*.eclass": "shellscript"
   },
   "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
   "shellformat.flag": "-i,0,-kp,-s,-sr"
 }

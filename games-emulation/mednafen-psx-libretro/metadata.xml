@@ -5,6 +5,7 @@
 		<email>amverweij@gmail.com</email>
 		<name>Bram Verweij</name>
 	</maintainer>
-	<longdescription lang="en">Standalone port/fork of Mednafen PSX to the Libretro API.
-	</longdescription>
+	<upstream>
+		<remote-id type="github">libretro/beetle-psx-libretro</remote-id>
+	</upstream>
 </pkgmetadata>

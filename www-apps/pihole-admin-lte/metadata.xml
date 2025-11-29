@@ -6,6 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">pi-hole/AdminLTE</remote-id>
+		<remote-id type="github">pi-hole/web</remote-id>
 	</upstream>
 </pkgmetadata>

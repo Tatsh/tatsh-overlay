@@ -3,12 +3,12 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..13} )
+PYTHON_COMPAT=( python3_{10..14} )
 DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Formatron empowers everyone to control the output format of language models with minimal overhead."
+DESCRIPTION="Control the output format of language models with minimal overhead."
 HOMEPAGE="https://pypi.org/project/formatron/"
 
 LICENSE="MIT"

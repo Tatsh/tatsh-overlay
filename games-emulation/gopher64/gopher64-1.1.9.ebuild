@@ -727,9 +727,7 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.
         ${CARGO_CRATE_URIS}"
 
 RUST_MIN_VER="1.91.0"
-LICENSE="GPL-3"
-# Dependent crate licenses
-LICENSE+="Apache-2.0 BSD Boost-1.0 CC0-1.0 ISC MIT MPL-2.0 Unicode-3.0 ZLIB"
+LICENSE="GPL-3 Apache-2.0 BSD Boost-1.0 CC0-1.0 ISC MIT MPL-2.0 Unicode-3.0 ZLIB"
 SLOT="0"
 # KEYWORDS="~amd64"
 DEPEND="app-arch/zstd

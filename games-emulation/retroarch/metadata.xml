@@ -9,14 +9,17 @@
 		<flag name="cg">Enable Cg shader support</flag>
 		<flag name="egl">Enable EGL context support</flag>
 		<flag name="freetype">Enable FreeType support</flag>
+		<flag name="gamemode">Enable gamemode support</flag>
 		<flag name="gles">Enable GLES support</flag>
 		<flag name="gles3">Enable GLES3 support</flag>
 		<flag name="kms">Enable KMS context support</flag>
 		<flag name="libusb">Enable LibUSB HID support</flag>
 		<flag name="materialui">Enable MaterialUI menu</flag>
-		<flag name="miniupnpc">Enable Mini UPnP client library (for NAT traversal)</flag>
+		<flag name="opengl_core">Enable OpenGL core support</flag>
 		<flag name="ozone">Enable ozone menu</flag>
-		<flag name="qt">Enable QT support</flag>
+		<flag name="parport">Enable parallel port support</flag>
+		<flag name="plain_drm">Enable plain DRM support</flag>
+		<flag name="qt5">Enable QT5 support</flag>
 		<flag name="rgui">Enable rgui menu</flag>
 		<flag name="sdl2">Enable SDL2 backend (disables SDL 1.x)</flag>
 		<flag name="sixel">Enable libsixel support</flag>
@@ -27,5 +30,4 @@
 		<flag name="xrandr">Enable xrandr support</flag>
 		<flag name="xmb">Enable XMB menu</flag>
 	</use>
-	<longdescription lang="en">Frontend for emulators, game engines and media players</longdescription>
 </pkgmetadata>

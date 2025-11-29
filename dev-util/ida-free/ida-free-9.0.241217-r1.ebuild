@@ -6,14 +6,15 @@ EAPI=8
 inherit desktop wrapper
 
 DESCRIPTION="Free version of the code analyzer."
-HOMEPAGE="https://hex-rays.com/ida-free/"
+HOMEPAGE="https://hex-rays.com/ida-free"
 SRC_URI="${P}.run"
+S="${WORKDIR}/ida/programfiles"
 
-LICENSE="EULA"
+LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
-RESTRICT="fetch strip splitdebug"
 IUSE="wayland"
+RESTRICT="fetch strip splitdebug"
 
 RDEPEND="app-crypt/mit-krb5
 	dev-libs/glib
@@ -21,7 +22,7 @@ RDEPEND="app-crypt/mit-krb5
 	media-libs/freetype
 	media-libs/libglvnd
 	sys-apps/dbus
-	sys-libs/zlib
+	virtual/zlib
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+
@@ -41,8 +42,6 @@ RDEPEND="app-crypt/mit-krb5
 	x11-libs/xcb-util-wm
 	wayland? ( dev-libs/wayland dev-qt/qtwayland )"
 BDEPEND="app-arch/bitrock-unpacker"
-
-S="${WORKDIR}/ida/programfiles"
 
 src_unpack() {
 	cp "${DISTDIR}/${A}" . || die

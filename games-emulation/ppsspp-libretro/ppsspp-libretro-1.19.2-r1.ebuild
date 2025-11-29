@@ -31,7 +31,7 @@ RDEPEND="
 	media-libs/libpng:=
 	media-libs/libsdl2[joystick]
 	system-ffmpeg? ( media-video/ffmpeg:0/58.60.60 )
-	sys-libs/zlib:=
+	virtual/zlib:=
 	opengl? (
 		virtual/opengl
 		media-libs/glew:=

@@ -6,8 +6,6 @@ EAPI=8
 WANT_GYP=1
 inherit cmake systemd yarn
 
-DESCRIPTION="Server endpoints to process or create content for chatting"
-HOMEPAGE="https://www.npmjs.com/package/anything-llm-server"
 YARN_PKGS=(
 	@75lb/deep-merge-1.1.2
 	@anthropic-ai/sdk-0.20.9
@@ -1151,12 +1149,16 @@ YARN_PKGS=(
 	zod-to-json-schema-3.24.5
 )
 yarn_set_globals
-CMAKE_BARE_TAG="1.6.5"
-CMAKE_NPM_TAG="1.1.0"
+DESCRIPTION="Server endpoints to process or create content for chatting"
+HOMEPAGE="https://www.npmjs.com/package/anything-llm-server"
 SRC_URI="${YARN_SRC_URI}
 	https://github.com/Mintplex-Labs/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}"
+LICENSE="0BSD Apache-2.0 BSD BSD-2 CC0-1.0 ISC MIT PSF-2 Unlicense WTFPL-2"
 RESTRICT="mirror"
-LICENSE="0BSD Apache-2.0 BSD BSD-2 CC0-1.0 ISC MIT Python-2.0 Unlicense WTFPL"
+
+CMAKE_BARE_TAG="1.6.5"
+CMAKE_NPM_TAG="1.1.0"
 # KEYWORDS="~amd64"
 
 DEPEND="dev-db/prisma-engines
@@ -1178,8 +1180,6 @@ DEPEND="dev-db/prisma-engines
 #   but it will when under emerge due to the network sandbox.
 # - sharp/build/Release/sharp-linux-x64.node: this will build because of vips being installed. Also
 #   requires glib.
-
-S="${WORKDIR}"
 
 src_compile() {
 	yarn_src_compile

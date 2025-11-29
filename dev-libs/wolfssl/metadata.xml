@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<maintainer type="person">
-		<email>audvare@gmail.com</email>
-		<name>Andrew Udvare</name>
-	</maintainer>
-	<upstream>
-		<remote-id type="github">wolfSSL/wolfssl</remote-id>
-	</upstream>
-	<use>
-		<flag name="debug">Debug support</flag>
-		<flag name="sniffer">Enable sniffer via libpcap</flag>
-		<flag name="writedup">Enable write duplication of WOLFSSL objects</flag>
-	</use>
+  <maintainer type="person">
+    <email>audvare@gmail.com</email>
+    <name>Andrew Udvare</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="github">wolfSSL/wolfssl</remote-id>
+  </upstream>
+  <use>
+    <flag name="debug">Debug support</flag>
+    <flag name="jni">Enable Java JNI support</flag>
+    <flag name="sniffer">Enable sniffer via libpcap</flag>
+    <flag name="writedup">Enable write duplication of WOLFSSL objects</flag>
+  </use>
 </pkgmetadata>

@@ -2,19 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 inherit distutils-r1 flag-o-matic pypi
 
 DESCRIPTION="NumPy aware dynamic Python compiler using LLVM"
 HOMEPAGE="https://pypi.org/project/numba/"
-IUSE="tbb"
-
+S="${WORKDIR}/${PN}-${PV}"
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="tbb"
 
 DEPEND="tbb? ( dev-cpp/tbb )
 	<dev-python/numpy-2.3.0[${PYTHON_USEDEP}]"

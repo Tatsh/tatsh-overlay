@@ -7,12 +7,10 @@ DESCRIPTION="Updated and improved Kate editor syntax files and code snippets."
 HOMEPAGE="https://github.com/zaufi/kate-stuff"
 SHA="b8f64a4084dcaa8d634578a3b7ed488883fbc226"
 SRC_URI="https://github.com/zaufi/kate-stuff/archive/${SHA}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 src_install() {
 	insinto "/usr/share/${PN}"

@@ -9,6 +9,6 @@
 		<remote-id type="pypi">misaki</remote-id>
 	</upstream>
 	<use>
-		<flag name="l10n_en" />
+		<flag name="l10n_en">English localization</flag>
 	</use>
 </pkgmetadata>

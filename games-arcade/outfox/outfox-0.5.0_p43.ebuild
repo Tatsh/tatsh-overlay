@@ -14,6 +14,7 @@ DATE="20250804"
 MAJOR="${PV:0:5}"
 PRE="${PV:7}"
 SRC_URI="${MY_PN}-alpha-${MAJOR}-pre0${PRE}-a40-24.04-amd64-current-date-${DATE}.tar.gz"
+S="${WORKDIR}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -37,8 +38,6 @@ RDEPEND="app-arch/bzip2
 	media-video/ffmpeg
 	virtual/libusb"
 RESTRICT="fetch splitdebug strip"
-
-S="${WORKDIR}"
 
 src_prepare() {
 	if use amd64; then

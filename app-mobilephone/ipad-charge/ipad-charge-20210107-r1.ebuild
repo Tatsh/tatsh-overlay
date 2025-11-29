@@ -8,6 +8,7 @@ DESCRIPTION="Helper utility to enable charging with Apple mobile devices such as
 HOMEPAGE="https://github.com/mkorenkov/ipad_charge"
 SHA="f070404d27affea6963024d852dd2e4941153792"
 SRC_URI="https://github.com/mkorenkov/ipad_charge/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/${PN/-/_}-${SHA}"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -15,8 +16,6 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 
 DEPEND="virtual/libusb:1"
 RDEPEND="${DEPEND}"
-
-S="${WORKDIR}/${PN/-/_}-${SHA}"
 
 src_prepare() {
 	# shellcheck disable=SC2016

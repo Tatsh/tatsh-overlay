@@ -2,20 +2,20 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit desktop xdg
 
 DESCRIPTION="Web debugging proxy application."
 HOMEPAGE="https://www.charlesproxy.com/"
 SRC_URI="https://www.charlesproxy.com/assets/release/${PV}/${PN}-proxy-${PV}_x86_64.tar.gz"
-
+S="${WORKDIR}/charles"
 LICENSE="Charles Apache-2.0 MIT GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-
-RDEPEND="virtual/jre:17"
 RESTRICT="strip"
 
-S="${WORKDIR}/charles"
+RDEPEND="virtual/jre:17"
+
 PATCHES=( "${FILESDIR}/${PN}-misc.patch" )
 
 src_prepare() {

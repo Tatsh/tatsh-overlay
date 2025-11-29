@@ -11,10 +11,9 @@ SHA="d2c717730092c7bf8cbb033b12fd4001b7c4d932"
 MY_PN="ZArchive"
 SRC_URI="https://github.com/Exzap/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/${MY_PN}-${SHA}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="app-arch/zstd"
-
-S="${WORKDIR}/${MY_PN}-${SHA}"

@@ -3,17 +3,17 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 DISTUTILS_USE_PEP517=poetry
 inherit distutils-r1
 
-DESCRIPTION="Script and installkernel hook to copy Linux kernel to the host system and update .wslconfig."
+DESCRIPTION="installkernel for WSL 2."
 HOMEPAGE="https://pypi.org/project/installkernel-wsl/"
-SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc64 ~x86"
+KEYWORDS="~amd64 ~arm64"
 
 distutils_enable_tests pytest
 

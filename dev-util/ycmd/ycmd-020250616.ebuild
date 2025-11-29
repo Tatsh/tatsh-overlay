@@ -2,13 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_1{0..3} )
+
+PYTHON_COMPAT=( python3_1{0..4} )
+
 inherit cmake python-single-r1
 
 DESCRIPTION="A code-completion & code-comprehension server."
 HOMEPAGE="https://github.com/ycm-core/ycmd"
 SHA="a51329a55f02ee3f16218c25ed5ee57b44cfc954"
 SRC_URI="https://github.com/ycm-core/ycmd/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+
+S="${WORKDIR}/${PN}-${SHA}/cpp"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -26,8 +30,6 @@ RDEPEND="
 	$(python_gen_cond_dep 'dev-python/waitress[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	$(python_gen_cond_dep 'dev-python/watchdog[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	llvm-core/clang:=[static-analyzer]"
-
-S="${WORKDIR}/${PN}-${SHA}/cpp"
 
 src_prepare() {
 	rm -fR ../ycmd/tests ../third_party

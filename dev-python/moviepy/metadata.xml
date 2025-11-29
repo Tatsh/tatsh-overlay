@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="github">Zulko/moviepy</remote-id>
 		<remote-id type="pypi">moviepy</remote-id>
 	</upstream>
 </pkgmetadata>

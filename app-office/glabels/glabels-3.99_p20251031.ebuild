@@ -2,26 +2,27 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit cmake xdg
 
 DESCRIPTION="glabels label designer (now in Qt)."
-HOMEPAGE="https://github.com/jimevins/glabels-qt"
+HOMEPAGE="https://github.com/j-evins/glabels-qt"
 SHA="e5be07101b0f14285b08038f6f2bad0f79bc9a27"
 SRC_URI="https://github.com/j-evins/${PN}-qt/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+
+S="${WORKDIR}/${PN}-qt-${SHA}"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 IUSE="barcode qrcode zlib"
 
-DEPEND="zlib? ( sys-libs/zlib )
+DEPEND="zlib? ( virtual/zlib )
 	barcode? ( app-text/barcode )
 	dev-qt/qtbase:6[cups,gui,widgets,xml]
 	dev-qt/qtsvg:6"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-qt/qttools:6[linguist]"
-
-S="${WORKDIR}/${PN}-qt-${SHA}"
 
 src_prepare() {
 	sed -r -e '/find_package \(Qt5Test.*/d' \

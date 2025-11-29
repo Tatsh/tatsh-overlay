@@ -7,9 +7,9 @@ inherit vim-plugin
 
 DESCRIPTION="vim plugin: automatic time tracking with WakaTime"
 HOMEPAGE="https://github.com/wakatime/vim-wakatime"
-LICENSE="BSD"
-KEYWORDS="~amd64 ~ppc64"
 SRC_URI="https://github.com/wakatime/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+LICENSE="BSD"
+KEYWORDS="~amd64 ~arm64 ~ppc64"
 
 VIM_PLUGIN_HELPURI="https://github.com/wakatime/vim-wakatime"
 

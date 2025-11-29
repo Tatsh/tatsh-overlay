@@ -5,6 +5,7 @@
 		<email>amverweij@gmail.com</email>
 		<name>Bram Verweij</name>
 	</maintainer>
-	<longdescription lang="en">Port of fMSX to the libretro API.
-	</longdescription>
+	<upstream>
+		<remote-id type="github">libretro/fmsx-libretro</remote-id>
+	</upstream>
 </pkgmetadata>

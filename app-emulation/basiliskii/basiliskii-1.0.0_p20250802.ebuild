@@ -11,6 +11,7 @@ SHA="2d022df81177ca05b259598e2a1345a9309de096"
 SRC_URI="https://github.com/kanjitalk755/macemu/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://basilisk.cebix.net/images/apple.png -> ${PN}-icon.png"
 
+S="${WORKDIR}/macemu-${SHA}/BasiliskII/src/Unix"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -23,7 +24,6 @@ DEPEND="dev-libs/glib
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}/${PN}-fixes.patch" )
-S="${WORKDIR}/macemu-${SHA}/BasiliskII/src/Unix"
 MAKEOPTS+=" -j1"
 
 src_unpack() {

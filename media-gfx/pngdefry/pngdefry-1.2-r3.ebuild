@@ -8,14 +8,12 @@ inherit toolchain-funcs
 DESCRIPTION="Convert iOS and macOS compressed PNG files to normal."
 HOMEPAGE="https://web.archive.org/web/20211120053356/http://www.jongware.com/pngdefry.html"
 SRC_URI="https://web.archive.org/web/20211205021959/http://www.jongware.com/binaries/${PN}.zip -> ${P}.zip"
-
+S="${WORKDIR}/source"
 LICENSE="public-domain"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 
 BDEPEND="app-arch/unzip"
-
-S="${WORKDIR}/source"
 
 src_compile() {
 	read -ra cflags <<< "${CFLAGS-}"

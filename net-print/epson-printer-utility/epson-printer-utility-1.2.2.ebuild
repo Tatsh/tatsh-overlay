@@ -8,7 +8,7 @@ inherit desktop systemd udev unpacker
 DESCRIPTION="Epson printer utility for USB only."
 HOMEPAGE="https://download-center.epson.com/softwares/?device_id=XP-7100+Series&region=US&os=DEBX64&language=en"
 SRC_URI="https://download-center.epson.com/f/module/3a44298f-8898-4a4d-8928-48211a1a9657/${PN}_${PV}-1_amd64.deb"
-
+S="${WORKDIR}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -17,8 +17,6 @@ RDEPEND="dev-qt/qtcore
 	dev-qt/qtgui
 	dev-qt/qtwidgets
 	virtual/libusb"
-
-S="${WORKDIR}"
 
 src_prepare() {
 	default

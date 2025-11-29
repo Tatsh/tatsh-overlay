@@ -52,7 +52,6 @@ EGO_SUM=(
 	"google.golang.org/protobuf v1.33.0"
 	"google.golang.org/protobuf v1.33.0/go.mod"
 )
-
 go-module_set_globals
 
 DESCRIPTION="Tool that uses Gmail in order to mimic sendmail for 'git send-email'."
@@ -60,12 +59,10 @@ HOMEPAGE="https://github.com/google/gmail-oauth2-tools/tree/master/go/sendgmail"
 SHA="85c6b4f07e637683cc5e0ec6a66ce8e4397a4b18"
 SRC_URI="https://github.com/google/gmail-oauth2-tools/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz
 	${EGO_SUM_SRC_URI}"
-
+S="${WORKDIR}/gmail-oauth2-tools-${SHA}/go/${PN}"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}/gmail-oauth2-tools-${SHA}/go/${PN}"
 
 src_compile() {
 	go build -o "${PN}" || die

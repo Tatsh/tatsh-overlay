@@ -18,12 +18,10 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
-RESTRICT="mirror"
-
+S="${WORKDIR}"
 LICENSE="Apache-2.0 MIT"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}"
+RESTRICT="mirror"
 
 src_install() {
 	yarn_src_install

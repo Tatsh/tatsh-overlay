@@ -7,14 +7,13 @@ inherit mpv-shader
 
 DESCRIPTION="AMD FidelityFX Contrast Adaptive Sharpening."
 HOMEPAGE="https://gist.github.com/agyild/bbb4e58298b2f86aa24da3032a0d2ee6"
-GIST_ID="bbb4e58298b2f86aa24da3032a0d2ee6"
 SHA="10e4ca1b6ef173b64391ce2c81b9a95fcd095931"
 SRC_URI="https://gist.github.com/agyild/${GIST_ID}/archive/${SHA}.zip -> ${P}.zip"
-BDEPEND="app-arch/unzip"
-
+S="${WORKDIR}/${GIST_ID}-${SHA}"
 LICENSE="MIT"
 KEYWORDS="~amd64"
 
-S="${WORKDIR}/${GIST_ID}-${SHA}"
+GIST_ID="bbb4e58298b2f86aa24da3032a0d2ee6"
+BDEPEND="app-arch/unzip"
 
 MPV_SHADER_FILES=(CAS-scaled.glsl CAS.glsl)

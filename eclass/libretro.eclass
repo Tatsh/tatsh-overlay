@@ -13,23 +13,23 @@
 # ebuilds for Libretro-related ebuilds, including those for both low-level
 # Libretro cores and assets as well for Libretro and Retroarch themselves.
 
-# @ECLASS-VARIABLE: LIBRETRO_DATA_DIR
+# @ECLASS_VARIABLE: LIBRETRO_DATA_DIR
 # @DESCRIPTION:
 # Absolute path of the directory containing Libretro data files.
 LIBRETRO_DATA_DIR="${EROOT}usr/share/libretro"
 
-# @ECLASS-VARIABLE: RETROARCH_DATA_DIR
+# @ECLASS_VARIABLE: RETROARCH_DATA_DIR
 # @DESCRIPTION:
 # Absolute path of the directory containing Retroarch data files.
 RETROARCH_DATA_DIR="${EROOT}usr/share/retroarch"
 
-# @ECLASS-VARIABLE: LIBRETRO_COMMIT_SHA
+# @ECLASS_VARIABLE: LIBRETRO_COMMIT_SHA
 # @DESCRIPTION:
 # Commit SHA used for SRC_URI will die if not set in <9999 ebuilds.
 # Needs to be set before inherit.
 : "${LIBRETRO_COMMIT_SHA:=die}"
 
-# @ECLASS-VARIABLE: LIBRETRO_REPO_NAME
+# @ECLASS_VARIABLE: LIBRETRO_REPO_NAME
 # @DESCRIPTION:
 # Contains the real repo name of the core formatted as "repo_user/repo_name".
 # Needs to be set before inherit. Otherwise defaults to "libretro/${PN}"
@@ -44,7 +44,6 @@ fi
 if [[ ! ${PV} = 9999 ]] && [[ ! ${PN} = retroarch ]] && [[ ! ${PN} = ppsspp-libretro ]] && [[ ! ${PN} = psp1-libretro ]] && [[ ! ${PN} = psp-assets ]] && [[ ! ${PN} = citra-libretro ]]; then
 	[ "${LIBRETRO_COMMIT_SHA}" = die ] && die "LIBRETRO_COMMIT_SHA must be set before inherit."
 	SRC_URI="https://github.com/${LIBRETRO_REPO_NAME}/archive/${LIBRETRO_COMMIT_SHA}.tar.gz -> ${P}.tar.gz"
-	RESTRICT="primaryuri"
 	S="${WORKDIR}/${LIBRETRO_REPO_NAME##*/}-${LIBRETRO_COMMIT_SHA}"
 fi
 

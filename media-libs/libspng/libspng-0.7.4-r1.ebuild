@@ -13,8 +13,9 @@ LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
+RESTRICT="!test? ( test )"
 
-DEPEND="sys-libs/zlib
+DEPEND="virtual/zlib
 	test? ( media-libs/libpng )"
 RDEPEND="${DEPEND}"
 

@@ -5,10 +5,17 @@
 		<email>amverweij@gmail.com</email>
 		<name>Bram Verweij</name>
 	</maintainer>
+	<upstream>
+		<remote-id type="github">libretro/mupen64plus-libretro-nx</remote-id>
+	</upstream>
 	<use>
 		<flag name="gles2">Enable GLES2 support</flag>
-		<flag name="vulkan">Enable vulkan support</flag>
+		<flag name="gles3">Enable GLES3 support</flag>
+		<flag name="rpi">Build for Raspberry Pi</flag>
+		<flag name="rpi2">Build for Raspberry Pi 2</flag>
+		<flag name="rpi3">Build for Raspberry Pi 3</flag>
+		<flag name="rpi3_64">Build for Raspberry Pi 3 (64-bit)</flag>
+		<flag name="rpi4">Build for Raspberry Pi 4</flag>
+		<flag name="rpi4_64">Build for Raspberry Pi 4 (64-bit)</flag>
 	</use>
-	<longdescription lang="en">
-	</longdescription>
 </pkgmetadata>

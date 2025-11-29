@@ -2,18 +2,20 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit udev
 
 DESCRIPTION="Random systemd utilities."
 HOMEPAGE="https://github.com/kylemanna/systemd-utils"
 SHA="eadaa1c9878553b7c032bf2911321fd6374fdeaa"
-MY_PN="${PN/kylemanna-}"
 SRC_URI="https://github.com/kylemanna/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/${MY_PN}-${SHA}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="amazon cmsis-dap btrfs crashplan ipv6 rssh systemd storj tahoe kodi youtube papertrail multilib"
+
+MY_PN="${PN/kylemanna-}"
 
 RDEPEND="btrfs? ( sys-fs/btrfs-progs )
 	multilib? (
@@ -22,8 +24,6 @@ RDEPEND="btrfs? ( sys-fs/btrfs-progs )
 	kodi? ( media-tv/kodi )
 	systemd? ( sys-apps/systemd )"
 REQUIRED_USE="cmsis-dap? ( multilib )"
-
-S="${WORKDIR}/${MY_PN}-${SHA}"
 
 src_prepare() {
 	default

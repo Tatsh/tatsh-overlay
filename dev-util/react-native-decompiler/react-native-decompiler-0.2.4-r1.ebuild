@@ -6,7 +6,7 @@ EAPI=8
 inherit yarn
 
 DESCRIPTION="React Native decompiler."
-HOMEPAGE="https://github.com/nomi9995/react-native-decompiler"
+HOMEPAGE="https://github.com/numandev1/react-native-decompiler"
 YARN_PKGS=(
 	react-native-decompiler-0.2.4
 	@aashutoshrathi/word-wrap-1.2.6
@@ -238,12 +238,10 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
-RESTRICT="mirror"
-
+S="${WORKDIR}"
 LICENSE="MIT AGPL-3+ Apache-2.0 BSD-2 BSD ISC"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}"
+RESTRICT="mirror"
 
 src_install() {
 	yarn_src_install

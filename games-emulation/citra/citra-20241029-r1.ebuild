@@ -2,11 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit cmake flag-o-matic xdg
 
 DESCRIPTION="A Nintendo 3DS emulator."
 HOMEPAGE="https://github.com/PabloMK7/citra https://web.archive.org/web/20240301162216/https://citra-emu.org/"
-SHA="864414f8fd79c90feff29f674898993f0053552f"
 DDS_KTX_SHA="42dd8aa6ded90b1ec06091522774feff51e83fc5"
 LODEPNG_SHA="18964554bc769255401942e0e6dfd09f2fab2093"
 SIRIT_SHA="4ab79a8c023aa63caaa93848b09b9fe8b183b1a9"
@@ -14,6 +14,7 @@ SIRIT_SPIRV_HEADERS_SHA="c214f6f2d1a7253bb0e9f195c2dc5b0659dc99ef"
 SOUNDTOUCH_SHA="dd2252e9af3f2d6b749378173a4ae89551e06faf"
 SUB_DYNARMIC_SHA="c08c5a9362bb224dc343c2f616c24df027dfdf13"
 XBYAK_SHA="a1ac3750f9a639b5a6c6d6c7da4259b8d6790989"
+SHA="864414f8fd79c90feff29f674898993f0053552f"
 SRC_URI="https://github.com/PabloMK7/citra/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz
 	https://github.com/lvandeve/lodepng/archive/${LODEPNG_SHA}.tar.gz -> ${PN}-lodepng-${LODEPNG_SHA:0:7}.tar.gz
 	https://github.com/yuzu-mirror/dynarmic/archive/${SUB_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${SUB_DYNARMIC_SHA:0:7}.tar.gz
@@ -23,7 +24,7 @@ SRC_URI="https://github.com/PabloMK7/citra/archive/${SHA}.tar.gz -> ${P}-${SHA:0
 	https://github.com/yuzu-mirror/sirit/archive/${SIRIT_SHA}.tar.gz -> ${PN}-yuzu-emu-sirit-${SIRIT_SHA:0:7}.tar.gz
 	https://github.com/KhronosGroup/SPIRV-Headers/archive/${SIRIT_SPIRV_HEADERS_SHA}.tar.gz -> ${PN}-yuzu-emu-sirit-spirv-headers-${SIRIT_SPIRV_HEADERS_SHA:0:7}.tar.gz
 	https://web.archive.org/web/20231111133415/https://api.citra-emu.org/gamedb -> ${PN}-compatibility_list.json"
-
+S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -62,8 +63,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0005-azahar-vulkan-1.4.304.patch"
 	"${FILESDIR}/${PN}-0006-azahar-mcl-fix.patch"
 )
-
-S="${WORKDIR}/${PN}-${SHA}"
 
 src_prepare() {
 	rmdir "${S}/externals/lodepng/lodepng" \

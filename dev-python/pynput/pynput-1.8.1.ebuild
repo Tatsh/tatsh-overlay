@@ -4,13 +4,13 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 
 inherit distutils-r1 pypi
 
 DESCRIPTION="Control and monitor input devices."
 HOMEPAGE="https://pypi.org/project/pynput/"
-SRC_URI="https://github.com/moses-palmer/pynput/archive/refs/tags/v1.8.1.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/moses-palmer/pynput/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"

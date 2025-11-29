@@ -2,8 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+
 DISTUTILS_USE_PEP517=hatchling
+
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 
 inherit distutils-r1
 
@@ -11,11 +13,11 @@ DESCRIPTION="Holy's ported AviSynth functions for VapourSynth"
 HOMEPAGE="https://github.com/HomeOfVapourSynthEvolution/havsfunc"
 SHA="31b09b3cc5e97690c5bc1d7c9d59cf1d6fe4e2c6"
 SRC_URI="https://github.com/HomeOfVapourSynthEvolution/havsfunc/archive/${SHA}.tar.gz -> ${P}.tar.gz"
-RESTRICT="mirror"
-
+S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
+RESTRICT="mirror"
 
 RDEPEND=">=media-video/ffms2-2.23.1
 	>=media-video/fmtconv-20
@@ -30,5 +32,3 @@ RDEPEND=">=media-video/ffms2-2.23.1
 	media-video/vapoursynth-fft3dfilter
 	media-video/vs-miscfilters-obsolete
 	media-video/znedi3"
-
-S="${WORKDIR}/${PN}-${SHA}"

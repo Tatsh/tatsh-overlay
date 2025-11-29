@@ -9,7 +9,6 @@ DESCRIPTION="Libretro info files required for libretro cores"
 HOMEPAGE="https://github.com/libretro/libretro-super"
 
 if [[ ${PV} == *9999 ]]; then
-	SRC_URI=""
 	EGIT_REPO_URI="https://github.com/libretro/libretro-super.git"
 
 	inherit git-r3
@@ -18,7 +17,7 @@ else
 
 	SRC_URI="https://github.com/libretro/libretro-super/archive/${LIBRETRO_COMMIT_SHA}.tar.gz -> ${P}.tar.gz"
 
-	KEYWORDS="~amd64 ~x86 ~arm ~arm64"
+	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 fi
 
 LICENSE="GPL-3"

@@ -4,13 +4,16 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 
 inherit distutils-r1
 
 DESCRIPTION="Utilities for Vivisect."
 HOMEPAGE="https://github.com/williballenthin/viv-utils https://pypi.org/project/viv-utils/"
-SRC_URI="https://github.com/williballenthin/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/williballenthin/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
+
+S="${WORKDIR}/${PN}-${PV}"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -27,7 +30,5 @@ RDEPEND="
 		dev-python/pytest-instafail[${PYTHON_USEDEP}]
 	)
 "
-
-S="${WORKDIR}/${PN}-${PV}"
 
 distutils_enable_tests pytest

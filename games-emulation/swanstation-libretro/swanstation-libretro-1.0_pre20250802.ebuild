@@ -2,18 +2,16 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 LIBRETRO_REPO_NAME="libretro/swanstation"
 LIBRETRO_COMMIT_SHA="4d309c05fd7bdc503d91d267bd542edb8d192b09"
 
-inherit libretro-core cmake flag-o-matic
+inherit libretro-core cmake
 
 DESCRIPTION="Fast Sony Playstation emulator."
 HOMEPAGE="https://github.com/libretro/swanstation"
-KEYWORDS="~amd64 ~arm64"
-
 LICENSE="GPL-3"
 SLOT="0"
+KEYWORDS="~amd64 ~arm64"
 
 DEPEND="
 		media-libs/vulkan-loader

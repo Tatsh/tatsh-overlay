@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="github">Tatsh/installkernel-wsl</remote-id>
 		<remote-id type="pypi">installkernel-wsl</remote-id>
 	</upstream>
 </pkgmetadata>

@@ -10,15 +10,13 @@ HOMEPAGE="https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public"
 GODOT_VERSION=4.5.1
 SRC_URI="https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
-
+S="${WORKDIR}/Super-Mario-Bros.-Remastered-Public-${PV}"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
 RESTRICT="strip"
 
 BDEPEND=">=dev-games/godot-${GODOT_VERSION}[tools]"
-
-S="${WORKDIR}/Super-Mario-Bros.-Remastered-Public-${PV}"
 
 pkg_setup() {
 	if has_version -b ">=dev-games/godot-${GODOT_VERSION}[double-precision]"; then

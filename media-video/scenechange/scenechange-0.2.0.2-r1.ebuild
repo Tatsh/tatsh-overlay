@@ -7,14 +7,12 @@ DESCRIPTION="Scene change detection plugin for VapourSynth"
 HOMEPAGE="https://forum.doom9.org/showthread.php?t=166769"
 SRC_URI="https://raw.githubusercontent.com/Tatsh/${PN}/60c6ad25f33950ac3f11803197d915b110e32458/src/Makefile -> ${P}-Makefile
 	https://github.com/Tatsh/${PN}/archive/v$(ver_cut 1-3)-2.tar.gz -> ${P}.tar.gz"
-
+S="${WORKDIR}/${PN}-${PV:0:5}-2/src"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 RDEPEND=">=media-video/vapoursynth-37"
-
-S="${WORKDIR}/${PN}-${PV:0:5}-2/src"
 
 src_prepare () {
 	cp "${DISTDIR}/${P}-Makefile" "${S}/Makefile"

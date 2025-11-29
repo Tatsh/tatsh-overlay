@@ -8,6 +8,7 @@ HOMEPAGE="https://github.com/pi-hole/PADD"
 MY_PN="${PN^^}"
 SRC_URI="https://github.com/pi-hole/${MY_PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/${MY_PN}-${PV}"
 LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
@@ -17,8 +18,6 @@ RDEPEND="app-shells/bash:0"
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-more-path-fixes.patch"
 )
-
-S="${WORKDIR}/${MY_PN}-${PV}"
 
 src_install() {
 	newbin "${PN}.sh" "${PN}"

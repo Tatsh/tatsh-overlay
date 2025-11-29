@@ -218,14 +218,12 @@ YARN_PKGS=(
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
-RESTRICT="mirror"
-
-DEPEND="sys-libs/zlib"
-BDEPEND="dev-libs/glib"
+S="${WORKDIR}"
 LICENSE="BSD-2 MIT Apache-2.0 ISC MIT PSF-2"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}"
+DEPEND="virtual/zlib"
+BDEPEND="dev-libs/glib"
+RESTRICT="mirror"
 
 src_install() {
 	yarn_src_install

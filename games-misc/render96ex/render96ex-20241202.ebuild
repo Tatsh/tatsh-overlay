@@ -18,6 +18,8 @@ SRC_URI="https://github.com/Render96/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	eu? ( sm64.eu.z64 )
 	jp? ( sm64.jp.z64 )"
 
+S="${WORKDIR}/${MY_PN}-${SHA}"
+
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
@@ -37,8 +39,6 @@ RDEPEND="${DEPEND}"
 BDEPEND="app-arch/p7zip media-libs/audiofile"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-custom-flags.patch" )
-
-S="${WORKDIR}/${MY_PN}-${SHA}"
 
 pkg_nofetch() {
 	if use us; then

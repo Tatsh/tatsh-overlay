@@ -2,11 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
 LIBRETRO_REPO_NAME="libretro/dolphin"
 LIBRETRO_COMMIT_SHA="bfac84ab609696a96a24261fd3bb5f12e90c2409"
 LIBRETRO_CORE_NAME="dolphin"
-
 inherit libretro-core cmake
 
 DESCRIPTION="A Gamecube/Wii emulator core for libretro"
@@ -18,11 +16,10 @@ SRC_URI="https://github.com/${LIBRETRO_REPO_NAME}/archive/${LIBRETRO_COMMIT_SHA}
 	https://github.com/syoyo/tinygltf/archive/${TINYGLTF_SHA}.tar.gz -> tinygltf-${TINYGLTF_SHA:0:7}.tar.gz
 	https://github.com/epezent/implot/archive/${IMPLOT_SHA}.tar.gz -> implot-${IMPLOT_SHA:0:7}.tar.gz
 	https://github.com/e-dant/watcher/archive/${WATCHER_SHA}.tar.gz -> watcher-${WATCHER_SHA:0:7}.tar.gz"
-KEYWORDS="~amd64 ~arm64"
-IUSE="+opengl vulkan +X"
-
 LICENSE="GPL-2"
 SLOT="0"
+KEYWORDS="~amd64 ~arm64"
+IUSE="+opengl vulkan +X"
 
 DEPEND="
 	<dev-libs/libfmt-10
@@ -32,7 +29,7 @@ DEPEND="
 	net-libs/mbedtls
 	net-misc/curl
 	sys-libs/readline
-	sys-libs/zlib
+	virtual/zlib
 	X? (
 		x11-libs/libXext
 		x11-libs/libXi
@@ -73,7 +70,7 @@ src_configure() {
 }
 
 src_install() {
-	LIBRETRO_LIB_DIR="${EROOT%/}/usr/$(get_libdir)/libretro"
+	LIBRETRO_LIB_DIR="${EROOT}/usr/$(get_libdir)/libretro"
 	insinto "${LIBRETRO_LIB_DIR}"
 	doins "${BUILD_DIR}/${LIBRETRO_CORE_NAME}_libretro.so"
 }

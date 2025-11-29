@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 PYTHON_REQ_USE="ncurses,readline"
 
 inherit fcaps flag-o-matic pax-utils python-r1 toolchain-funcs xdg-utils
@@ -54,7 +54,7 @@ DEPEND="dev-libs/glib
 	net-libs/libpcap
 	net-libs/libslirp
 	sys-apps/dtc
-	sys-libs/zlib
+	virtual/zlib
 	x11-libs/gtk+:3
 	x11-libs/pixman
 	aio? ( dev-libs/libaio )

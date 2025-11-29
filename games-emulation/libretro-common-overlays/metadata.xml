@@ -5,6 +5,7 @@
 		<email>amverweij@gmail.com</email>
 		<name>Bram Verweij</name>
 	</maintainer>
-	<longdescription lang="en">Collection of overlay files for use with RetroArch
-	</longdescription>
+	<upstream>
+		<remote-id type="github">libretro/common-overlays</remote-id>
+	</upstream>
 </pkgmetadata>

@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="github">tmbo/questionary</remote-id>
 		<remote-id type="pypi">questionary</remote-id>
 	</upstream>
 </pkgmetadata>

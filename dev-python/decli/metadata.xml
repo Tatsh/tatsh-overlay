@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="github">Woile/decli</remote-id>
 		<remote-id type="pypi">decli</remote-id>
 	</upstream>
 </pkgmetadata>

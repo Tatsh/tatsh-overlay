@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+
 inherit desktop wrapper
 
 DESCRIPTION="JAR and Android APK reverse engineering suite."
@@ -12,13 +13,12 @@ PB="${PNB}-${PV}"
 SRC_URI="https://github.com/Konloch/${PNB}/releases/download/v${PV}/${MY_PN}-${PV}.jar -> ${PB}.jar
 	https://raw.githubusercontent.com/Konloch/${PNB}/v${PV}/BCV%20Icon.png -> ${PB}-icon.png"
 
+S="${WORKDIR}"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="virtual/jre:17"
-
-S="${WORKDIR}"
 
 src_install() {
 	insinto "/usr/share/${PNB}"

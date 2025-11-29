@@ -2,10 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-DISTUTILS_USE_PEP517=setuptools
 DISTUTILS_EXT=1
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
-
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 inherit cmake desktop distutils-r1
 
 DESCRIPTION="Software defined VHS decoder."
@@ -13,12 +12,11 @@ HOMEPAGE="https://github.com/oyvindln/vhs-decode"
 LD_DECODE_TESTDATA_REV="dd9569daee212dd3fea413c97372d2bf55aceba2"
 SRC_URI="https://github.com/oyvindln/vhs-decode/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
 	test? ( https://github.com/happycube/ld-decode-testdata/archive/${LD_DECODE_TESTDATA_REV}.tar.gz -> ld-decode-testdata-${LD_DECODE_TESTDATA_REV:0:7}.tar.gz )"
-IUSE="gtk test"
-RESTRICT="!test? ( test )"
-
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="gtk test"
+RESTRICT="!test? ( test )"
 
 DEPEND="x11-libs/qwt:6
 	dev-qt/qtcore:5

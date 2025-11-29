@@ -14,12 +14,11 @@ COINHSL_ARCHIVE_P="coinhsl-archive-${COINHSL_ARCHIVE_PV}"
 SRC_URI="mirror+https://github.com/coin-or-tools/ThirdParty-HSL/archive/refs/tags/releases/${PV}.tar.gz -> ${P}.tar.gz
 	mirror+https://github.com/coin-or-tools/BuildTools/archive/${BUILD_TOOLS_VERSION}.tar.gz -> coin-or-tools-BuildTools-${BUILD_TOOLS_VERSION}.tar.gz
 	${COINHSL_ARCHIVE_P}.tar.gz"
-RESTRICT="fetch"
 S="${WORKDIR}/ThirdParty-HSL-releases-${PV}"
-
 LICENSE="EPL-2.0 HSL-Academic-Licence"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
+RESTRICT="fetch"
 
 DEPEND="sci-libs/lapack"
 BDEPEND="virtual/fortran"

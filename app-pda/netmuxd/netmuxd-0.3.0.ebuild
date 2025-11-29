@@ -253,10 +253,10 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="app-pda/libimobiledevice[static-libs]
-	>=app-pda/libplist-2.6.0[static-libs]"
+	>=app-pda/libplist-2.6.0"
 BDEPEND="dev-libs/openssl[static-libs]
-	app-pda/libimobiledevice-glue[static-libs]
-	app-pda/libusbmuxd[static-libs]"
+	app-pda/libimobiledevice-glue
+	app-pda/libusbmuxd"
 
 src_prepare() {
 	default

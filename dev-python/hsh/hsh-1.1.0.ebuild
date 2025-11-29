@@ -4,21 +4,22 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 
 inherit distutils-r1
 
 DESCRIPTION="Hashing library."
 HOMEPAGE="https://pypi.org/project/hsh/"
-SRC_URI="https://github.com/chrissimpkins/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/chrissimpkins/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
+RESTRICT="!test? ( test )"
 
 RDEPEND="dev-python/commandlines[${PYTHON_USEDEP}]"
-BDEPEND="test? ( $(python_gen_cond_dep 'dev-python/nose') )"
+BDEPEND="test? ( $(python_gen_cond_dep 'dev-python/nose2') )"
 
 python_test() {
 	nosetests --where=tests --verbosity=2 || die

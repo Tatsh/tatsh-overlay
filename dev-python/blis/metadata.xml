@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">explosion/cython-blis</remote-id>
+		<remote-id type="pypi">blis</remote-id>
 	</upstream>
 </pkgmetadata>

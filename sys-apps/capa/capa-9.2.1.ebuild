@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0,1,2,3} )
+PYTHON_COMPAT=( python3_1{1,2,3} )
 inherit distutils-r1
 
 DESCRIPTION="The FLARE team's open-source tool to identify capabilities in executable files."

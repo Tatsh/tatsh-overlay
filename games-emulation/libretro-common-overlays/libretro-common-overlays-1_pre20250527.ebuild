@@ -9,7 +9,6 @@ DESCRIPTION="Collection of overlay files for use with RetroArch"
 HOMEPAGE="https://github.com/libretro/common-overlays"
 
 if [[ ${PV} == *9999 ]]; then
-	SRC_URI=""
 	EGIT_REPO_URI="https://github.com/libretro/common-overlays.git"
 
 	inherit git-r3
@@ -18,7 +17,7 @@ else
 
 	SRC_URI="https://github.com/libretro/common-overlays/archive/${LIBRETRO_COMMIT_SHA}.tar.gz -> ${P}.tar.gz"
 
-	KEYWORDS="~amd64 ~x86 ~arm64"
+	KEYWORDS="~amd64 ~arm64 ~x86"
 fi
 
 LICENSE="GPL-3"
