@@ -7,6 +7,7 @@ inherit udev
 
 DESCRIPTION="Random systemd utilities."
 HOMEPAGE="https://github.com/kylemanna/systemd-utils"
+MY_PN="${PN/kylemanna-}"
 SHA="eadaa1c9878553b7c032bf2911321fd6374fdeaa"
 SRC_URI="https://github.com/kylemanna/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${MY_PN}-${SHA}"
@@ -14,8 +15,6 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="amazon cmsis-dap btrfs crashplan ipv6 rssh systemd storj tahoe kodi youtube papertrail multilib"
-
-MY_PN="${PN/kylemanna-}"
 
 RDEPEND="btrfs? ( sys-fs/btrfs-progs )
 	multilib? (
