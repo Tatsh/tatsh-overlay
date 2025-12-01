@@ -7,14 +7,13 @@ inherit cmake desktop
 
 DESCRIPTION="Software for the 40Mhz USB-3.0 RF sampler (harrypm fork)."
 HOMEPAGE="https://github.com/simoninns/DomesdayDuplicator"
+MY_PN="DomesdayDuplicator"
 SHA="43dce04c7e277cf6690f7c4cf913a1a59ae3d185"
 SRC_URI="https://github.com/simoninns/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${MY_PN}-${SHA}/Linux-Application"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-
-MY_PN="DomesdayDuplicator"
 
 DEPEND="dev-libs/qcustomplot
 	dev-qt/qtbase:6
