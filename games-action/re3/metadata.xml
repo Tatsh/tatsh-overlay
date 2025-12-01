@@ -5,9 +5,6 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
-	<upstream>
-		<remote-id type="github">GTAmodding/re3</remote-id>
-	</upstream>
 	<use>
 		<flag name="sanitizer">Build with address sanitiser for better crash logs</flag>
 	</use>
