@@ -8,7 +8,7 @@ inherit font
 DESCRIPTION="High quality Arabic Naskh-style font"
 HOMEPAGE="https://aliftype.com/amiri/"
 DISTNAME_PN="Amiri"
-SRC_URI="https://github.com/alif-type/${PN}/releases/download/${PV}/${DISTNAME_PN}-${PV}.zip"
+SRC_URI="https://github.com/aliftype/${PN}/releases/download/${PV}/${DISTNAME_PN}-${PV}.zip"
 S="${WORKDIR}/${DISTNAME_PN}-${PV}"
 LICENSE="GPL-2"
 SLOT="0"
