@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Converts DiscJuggler CDI files to NRG (Nero)."
 HOMEPAGE="http://digitalimagecorp.de/software/cdi2nero/"
-SRC_URI="http://web.archive.org/web/20091027063725/http://es.geocities.com/dextstuff/cdirip/${PN}${PV//.}-src.zip"
+SRC_URI="https://web.archive.org/web/20091027063725/http://es.geocities.com/dextstuff/cdirip/${PN}${PV//.}-src.zip"
 
 S="${WORKDIR}"
 LICENSE="all-rights-reserved"
