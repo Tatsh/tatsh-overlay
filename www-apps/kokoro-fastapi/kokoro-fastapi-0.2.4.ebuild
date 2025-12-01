@@ -4,7 +4,7 @@
 EAPI=8
 DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{10..14} )
+PYTHON_COMPAT=( python3_{12..13} )
 inherit distutils-r1 systemd
 
 DESCRIPTION="FastAPI wrapper for Kokoro-82M text-to-speech model"
@@ -68,7 +68,7 @@ BDEPEND="test? (
 			>=dev-python/tomli-2.0.1[${PYTHON_USEDEP}]
 		')
   )"
-  
+
 PATCHES=(
 	"${FILESDIR}/${PN}-rename-package.patch"
 	"${FILESDIR}/${PN}-quiet-logging.patch"
