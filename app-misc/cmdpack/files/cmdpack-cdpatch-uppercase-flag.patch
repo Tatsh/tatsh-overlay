@@ -1,0 +1,34 @@
+From 480428199a1c92e0ad0d8b1a5f5ddbaaad5d7b64 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Thu, 21 Apr 2016 17:36:24 -0700
+Subject: [PATCH] Make cdpatch.c -x to use uppercase filenames
+
+Credit to @rufaswan
+https://github.com/rufaswan/cmdpack/commit/ef6cfc7ed0ffde3146db34853381d6057e87291e
+---
+ src/cdpatch.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/cdpatch.c b/src/cdpatch.c
+index ae46ae8..2be15c7 100644
+--- a/cdpatch.c
++++ b/cdpatch.c
+@@ -1369,14 +1369,14 @@ static int read_iso_dr(
+         for(i = 0; i < namelen; i++) {
+             uint8_t c = n->name[i];
+             if(
+-                (c >= 'a' && c <= 'z') ||
++                (c >= 'A' && c <= 'Z') ||
+                 (c >= '0' && c <= '9') ||
+                 (c == '_')
+             ) {
+                 // acceptable character
+-            } else if(c >= 'A' && c <= 'Z') {
+-                // uppercase alpha - convert to lowercase
+-                c += ('a' - 'A');
++            } else if(c >= 'a' && c <= 'z') {
++                // lowercase alpha - convert to uppercase
++                c -= ('a' - 'A');
+             } else if(c == '.') {
+                 // if the next character is the end, or version number, then
+                 // eat the dot

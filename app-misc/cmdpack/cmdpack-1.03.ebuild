@@ -6,11 +6,10 @@ EAPI=8
 inherit toolchain-funcs
 
 DESCRIPTION="Neill Corlett's command-line pack."
-HOMEPAGE="http://www.neillcorlett.com/cmdpack/"
-SHA="6674a1068d890279fad613ae37e7a170475f8970"
-SRC_URI="https://github.com/cmdpack/cmdpack/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://web.archive.org/web/20140330233023/https://neillcorlett.com/cmdpack/"
+SRC_URI="https://web.archive.org/web/20130616041227/http://www.neillcorlett.com/downloads/${P}-src.tar.gz -> ${P}.tar.gz"
 
-S="${WORKDIR}/${PN}-${SHA}/src"
+S="${WORKDIR}/${P}-src/src"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
@@ -18,6 +17,12 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 DEPEND="!media-sound/vb2rip
 	!app-cdr/bin2iso"
 RDEPEND="${DEPEND}"
+
+PATCHES=(
+	"${FILESDIR}/${PN}-cdpatch-uppercase-flag.patch"
+)
+
+DOCS=( ../doc/cmdpack.txt )
 
 src_compile() {
 	local app
@@ -47,7 +52,6 @@ src_compile() {
 }
 
 src_install() {
-	dodoc ../README.md
 	dobin bincomp \
 		brrrip \
 		byteshuf \
@@ -65,4 +69,5 @@ src_install() {
 		wordadd \
 		zerofill
 	dosym -r "${EPREFIX}/usr/bin/ecm" /usr/bin/unecm
+	einstalldocs
 }
