@@ -13,9 +13,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="dev-qt/qtdbus:6
-	dev-qt/qtnetwork:6
-	dev-qt/qtbase:6"
+DEPEND="dev-qt/qtbase:6[dbus,network]"
 RDEPEND="${DEPEND}"
 
 src_install() {
