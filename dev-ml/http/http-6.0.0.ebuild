@@ -14,3 +14,5 @@ LICENSE="ISC"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+ocamlopt"
+
+BDEPEND="dev-ml/ppx_sexp_conv:="
