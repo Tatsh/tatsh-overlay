@@ -15,9 +15,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="!=dev-python/pydantic-1.8.1[${PYTHON_USEDEP}]
-	!=dev-python/pydantic-1.8[${PYTHON_USEDEP}]
-	<dev-python/pydantic-3.0.0[${PYTHON_USEDEP}]
+RDEPEND="<dev-python/pydantic-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/pydantic-1.7.4[${PYTHON_USEDEP}]
 	<dev-python/srsly-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/srsly-2.4.0[${PYTHON_USEDEP}]"
