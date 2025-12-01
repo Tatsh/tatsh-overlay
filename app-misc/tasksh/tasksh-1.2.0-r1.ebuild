@@ -6,7 +6,7 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="Shell command that wraps Taskwarrior commands"
-HOMEPAGE="https://gothenburgbitfactory.org/projects/tasksh.html"
+HOMEPAGE="https://gothenburgbitfactory.org/tasksh/"
 LIBSHARED_SHA="f1a3cd6bfabfb083fe3c26f580a15c0d60a92ee9"
 SRC_URI="https://github.com/GothenburgBitFactory/taskshell/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/GothenburgBitFactory/libshared/archive/${LIBSHARED_SHA}.tar.gz -> ${PN}-libshared-${LIBSHARED_SHA:0:7}.tar.gz"
