@@ -11,7 +11,7 @@ DISTUTILS_USE_PEP517=setuptools
 inherit distutils-r1 pypi
 
 DESCRIPTION="Inference library for running local LLMs on consumer hardware."
-HOMEPAGE="https://github.com/turboderp/exllamav3"
+HOMEPAGE="https://github.com/turboderp-org/exllamav3"
 SRC_URI="https://github.com/turboderp-org/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
