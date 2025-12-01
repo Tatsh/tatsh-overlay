@@ -6,7 +6,7 @@ EAPI=8
 inherit cmake flag-o-matic xdg
 
 DESCRIPTION="Nintendo Switch emulator."
-HOMEPAGE="https://web.archive.org/web/20240304190805/https://yuzu-emu.org/ https://github.com/yuzu-mirror/yuzu-mainline"
+HOMEPAGE="https://web.archive.org/web/20240304190805/https://yuzu-emu.org/"
 MY_PV="mainline-${PV/./-}"
 CPP_HTTPLIB_SHA="6d963fbe8d415399d65e94db7910bbd22fe3741c"
 CPP_JWT_SHA="10ef5735d842b31025f1257ae78899f50a40fb14"
