@@ -9,6 +9,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="Turn any command line program into a full GUI application with one line."
 HOMEPAGE="https://pypi.org/project/gooey/"
+SRC_URI="$(pypi_sdist_url --no-normalize "${PN^}")"
 S="${WORKDIR}/${MY_PN}-${PV}"
 LICENSE="MIT"
 SLOT="0"
