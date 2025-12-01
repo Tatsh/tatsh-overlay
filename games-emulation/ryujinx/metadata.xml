@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer type="project">
-    <email>dotnet@gentoo.org</email>
-    <name>Gentoo Dotnet Project</name>
-  </maintainer>
   <maintainer type="person" proxied="yes">
     <email>audvare@gmail.com</email>
     <name>Andrew Udvare</name>
@@ -15,7 +11,6 @@
     performance and user-friendly interface.
   </longdescription>
   <upstream>
-    <bugs-to>https://github.com/Ryubing/Ryujinx/issues/</bugs-to>
-    <remote-id type="github">Ryubing/Ryujinx</remote-id>
+    <bugs-to>https://git.ryujinx.app/ryubing/ryujinx/-/issues</bugs-to>
   </upstream>
 </pkgmetadata>
