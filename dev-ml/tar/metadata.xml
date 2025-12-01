@@ -8,7 +8,4 @@
 	<upstream>
 		<remote-id type="github">mirage/ocaml-tar</remote-id>
 	</upstream>
-	<use>
-		<flag name="unix"></flag>
-	</use>
 </pkgmetadata>
