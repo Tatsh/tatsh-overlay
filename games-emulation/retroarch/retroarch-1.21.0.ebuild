@@ -7,6 +7,8 @@ inherit flag-o-matic
 
 DESCRIPTION="Frontend for emulators, game engines and media players"
 HOMEPAGE="https://www.retroarch.com/"
+MY_PN=RetroArch
+MY_P="${MY_PN}-${PV}"
 SRC_URI="https://github.com/libretro/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${MY_P}"
 LICENSE="GPL-3"
@@ -17,8 +19,7 @@ IUSE="alsa cg cpu_flags_x86_sse dbus egl ffmpeg flac freetype gamemode gles gles
 	parport plain_drm pulseaudio qt5 rgui sdl +sdl2 sixel subtitles ssl stripes
 	systemd tinyalsa udev vulkan X xrandr xmb xv wayland +zlib"
 
-MY_PN=RetroArch
-MY_P=${MY_PN}-${PV}
+
 
 MENU_REQUIRED_USE="|| ( gles opengl vulkan )"
 REQUIRED_USE="
