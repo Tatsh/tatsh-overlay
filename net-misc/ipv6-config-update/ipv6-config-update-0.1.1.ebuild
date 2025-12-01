@@ -12,7 +12,14 @@ SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="split-usr"
 
 DEPEND="dev-qt/qtbase:6[dbus,network]
-	sys-apps/systemd"
+	!split-usr? ( sys-apps/systemd )"
 RDEPEND="${DEPEND}"
+
+pkg_pretend() {
+	if use split-usr; then
+		die "This package only supports merged-usr with systemd."
+	fi
+}
