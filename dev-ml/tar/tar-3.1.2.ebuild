@@ -13,8 +13,7 @@ S="${WORKDIR}/ocaml-${P}"
 LICENSE="ISC"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+ocamlopt unix"
+IUSE="+ocamlopt"
 
-DEPEND=">=dev-ml/decompress-1.5.1:=
-	unix? ( >=dev-ml/lwt-5.7.0:= )"
+DEPEND=">=dev-ml/decompress-1.5.1:="
 RDEPEND="${DEPEND}"
