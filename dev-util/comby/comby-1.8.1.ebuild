@@ -20,8 +20,8 @@ DEPEND="dev-db/sqlite
 	dev-libs/libpcre2
 	virtual/zlib
 	dev-ml/cohttp-lwt-unix
-	=dev-ml/comby-kernel-${PV}:=
-	=dev-ml/comby-semantic-${PV}:=
+	~dev-ml/comby-kernel-${PV}:=
+	~dev-ml/comby-semantic-${PV}:=
 	dev-ml/core:=
 	dev-ml/hack_parallel:=
 	dev-ml/lwt:=
