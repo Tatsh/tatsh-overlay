@@ -18,7 +18,7 @@ IUSE="+ocamlopt"
 BDEPEND="dev-ml/ppx_sexp_conv
 	dev-ml/uri-sexp
 	dev-ml/magic-mime
-	dev-ml/cohtt-curl
+	dev-ml/cohttp-curl
 	dev-ml/logs[fmt,lwt]
 	dev-ml/astring
 	dev-ml/lwt_unix
