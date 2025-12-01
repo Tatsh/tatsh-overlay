@@ -5,6 +5,9 @@
 		<email>amverweij@gmail.com</email>
 		<name>Bram Verweij</name>
 	</maintainer>
+	<upstream>
+		<remote-id type="github">libretro/RetroArch</remote-id>
+	</upstream>
 	<use>
 		<flag name="cg">Enable Cg shader support</flag>
 		<flag name="egl">Enable EGL context support</flag>

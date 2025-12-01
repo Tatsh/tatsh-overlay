@@ -19,8 +19,6 @@ IUSE="alsa cg cpu_flags_x86_sse dbus egl ffmpeg flac freetype gamemode gles gles
 	parport plain_drm pulseaudio qt5 rgui sdl +sdl2 sixel subtitles ssl stripes
 	systemd tinyalsa udev vulkan X xrandr xmb xv wayland +zlib"
 
-
-
 MENU_REQUIRED_USE="|| ( gles opengl vulkan )"
 REQUIRED_USE="
 	cg? ( opengl )
