@@ -13,7 +13,7 @@ HOMEPAGE="https://github.com/vivisect/vivisect"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64"
+# KEYWORDS="~amd64"
 
 RDEPEND="dev-python/pyasn1[${PYTHON_USEDEP}]
 	dev-python/pyasn1-modules[${PYTHON_USEDEP}]
