@@ -20,6 +20,5 @@ DEPEND="dev-ml/cohttp:=
 	dev-ml/core_kernel:=
 	dev-ml/lwt:=
 	dev-ml/ppx_deriving:=
-	>=dev-ml/yojson-1.6.0:=
-	<dev-ml/yojson-2.0.0:="
+	>=dev-ml/yojson-1.6.0:="
 RDEPEND="${DEPEND}"
