@@ -16,8 +16,5 @@ IUSE="+ocamlopt"
 
 DEPEND=">=dev-ml/spawn-0.15:=
 	>=dev-ml/textutils-0.16:=
-	<dev-ml/textutils-0.17:=
 	>=dev-ml/core-0.16:=
-	<dev-ml/core-0.17:=
-	>=dev-ml/ppx_jane-0.16:=
-	<dev-ml/ppx_jane-0.17:="
+	>=dev-ml/ppx_jane-0.16:="
