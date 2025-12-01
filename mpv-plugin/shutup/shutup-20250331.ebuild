@@ -16,7 +16,7 @@ LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
 
-BDEPEND="dev-qt/qtdbus:5"
+RDEPEND="dev-qt/qtbase:6[dbus]"
 
 MPV_PLUGIN_FILES=( "${PN}.so" )
 
