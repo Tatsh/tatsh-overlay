@@ -22,6 +22,5 @@ DEPEND="dev-ml/bigstringaf:=
 	dev-ml/pcre-ocaml:=
 	dev-ml/ppx_deriving:=
 	>=dev-ml/ppx_deriving_yojson-3.6.0:=
-	>=dev-ml/yojson-1.6.0:=
-	<dev-ml/yojson-2.0.0:="
+	>=dev-ml/yojson-1.6.0:="
 RDEPEND="${DEPEND}"
