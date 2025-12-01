@@ -15,4 +15,12 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+ocamlopt"
 
-BDEPEND="dev-ml/ppx_sexp_conv:="
+BDEPEND="dev-ml/ppx_sexp_conv
+	dev-ml/uri-sexp
+	dev-ml/magic-mime
+	dev-ml/cohtt-curl
+	dev-ml/logs[fmt,lwt]
+	dev-ml/astring
+	dev-ml/lwt_unix
+	dev-ml/js_of_ocaml-ppx
+	dev-ml/ocurl"
