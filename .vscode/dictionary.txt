@@ -35,7 +35,7 @@ alecthomas
 alessio
 alexedwards
 alext
-alif
+aliftype
 alitto
 allenc
 alpn
@@ -103,6 +103,7 @@ astikit
 astilectron
 astisub
 astits
+astring
 asyncio
 asynckit
 atomicparsley
@@ -156,8 +157,6 @@ bdynamic
 beautifulsoup
 becheran
 benbjohnson
-benc
-bencoder
 beorn
 bfloat
 bgentry
@@ -166,6 +165,7 @@ bigfft
 bigints
 bignum
 bigobj
+bigstringaf
 binarycookies
 binaryextensions
 binaryop
@@ -177,6 +177,7 @@ bincookie
 bincue
 bindir
 bindist
+biniou
 binja
 binv
 bitrock
@@ -288,6 +289,7 @@ charmbracelet
 chdir
 checkpath
 checkreqs
+checkseum
 cheevos
 chishm
 chksums
@@ -323,6 +325,7 @@ cloudpathlib
 cmakerc
 cmath
 cmdclass
+cmdliner
 cmdpack
 cmocka
 cmrc
@@ -362,6 +365,7 @@ confdir
 configfile
 configor
 configura
+configurator
 conflicter
 conftest
 coninput
@@ -388,6 +392,7 @@ cplugins
 cplusplus
 cppclass
 cppflags
+cppo
 cpprest
 cpprestsdk
 cpuguy
@@ -869,6 +874,7 @@ fsrcnn
 fsrcnnx
 fsspec
 fstream
+fsuite
 fsutil
 fsutils
 ftemplate
@@ -1138,6 +1144,7 @@ intv
 ioctl
 iohelper
 iommu
+ionelmc
 iostreams
 irecovery
 iregex
@@ -1343,6 +1350,7 @@ libdrm
 libeigen
 libepoxy
 libespeak
+libev
 libevdev
 libexec
 libexecdir
@@ -1364,6 +1372,7 @@ libgudev
 libgusb
 libhac
 libhistory
+libhp
 libhsl
 libhttps
 libidn
@@ -1552,6 +1561,7 @@ matplotlib
 mattn
 matttproud
 mawen
+maxcountryman
 maxperfwiz
 mbedcrypto
 mbedtls
@@ -1701,6 +1711,7 @@ nabataean
 nadermx
 nall
 namedtuples
+namelen
 nandinagari
 nanoclone
 nanoid
@@ -1777,7 +1788,6 @@ nosleep
 nosniff
 noto
 notofonts
-notpeter
 nowrap
 nozzlecheck
 npad
@@ -1807,6 +1817,8 @@ objx
 ocaml
 ocamlopt
 occivink
+ocsigen
+ocurl
 ogham
 oklog
 olchiki
@@ -1844,6 +1856,7 @@ openrc
 opentimelineio
 optarg
 optflags
+optint
 optionator
 opusfile
 orisano
@@ -1972,7 +1985,6 @@ pprof
 ppsspp
 prboom
 prcbuild
-prdownloads
 pred
 preinst
 prelu
@@ -2201,15 +2213,16 @@ rtmp
 rtrim
 rtti
 ruamel
+rufaswan
 runewidth
 rusha
 russross
 rustflags
+rvantonder
 rwcarlsen
 rwcore
 ryanuber
 ryszard
-ryubing
 ryujinx
 safeint
 safetensors
@@ -2237,6 +2250,7 @@ scikit
 scipy
 scires
 scmp
+scrapinghub
 screamf
 scrn
 scuid
@@ -2251,7 +2265,6 @@ securecookie
 securejoin
 sekrit
 selu
-sendgmail
 sentencepiece
 serde
 sergi
@@ -2266,6 +2279,7 @@ setuptools
 setupvars
 sevinf
 sexp
+sexplib
 sezanzeb
 shagkur
 sharada
@@ -2403,6 +2417,7 @@ strfmt
 stricmp
 strikethrough
 strincmp
+stringext
 stringprintf
 stringtopath
 stringutils
@@ -2508,6 +2523,7 @@ tidwall
 tifinagh
 tihmstar
 tiktoken
+timebombs
 timezone
 tink
 tinkup
@@ -2575,6 +2591,7 @@ unaryop
 uncompromisable
 undefsafe
 underthesea
+undertheseanlp
 undici
 unecm
 ungap
