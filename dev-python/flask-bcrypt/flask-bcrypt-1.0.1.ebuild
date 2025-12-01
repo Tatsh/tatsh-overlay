@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{10..14} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Brcrypt hashing for Flask."
-HOMEPAGE="https://github.com/maxcountryman/flask-bcrypt https://pypi.org/project/flask-bcrypt/"
+HOMEPAGE="https://github.com/maxcountryman/flask-bcrypt https://pypi.org/project/Flask-Bcrypt/"
 SRC_URI="$(pypi_sdist_url --no-normalize Flask-Bcrypt)"
 
 S="${WORKDIR}/Flask-Bcrypt-${PV}"
