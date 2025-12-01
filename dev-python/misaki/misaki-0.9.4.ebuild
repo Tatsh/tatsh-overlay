@@ -47,7 +47,7 @@ RDEPEND="$(python_gen_cond_dep '
 		l10n_vi? (
 			dev-python/num2words[${PYTHON_USEDEP}]
 			dev-python/spacy[${PYTHON_USEDEP}]
-			dev-python/underthesea[${PYTHON_USEDEP}]
+			dev-python/underthesea[${PYTHON_SINGLE_USEDEP}]
 		)
 		dev-python/addict[${PYTHON_USEDEP}]
 		dev-python/regex[${PYTHON_USEDEP}]
