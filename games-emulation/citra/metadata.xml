@@ -7,6 +7,7 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="codeberg">soundtouch/soundtouch</remote-id>
+		<remote-id type="github">PabloMK7/citra</remote-id>
 	</upstream>
 	<use>
 		<flag name="scripting">Enable RPC server for scripting</flag>
