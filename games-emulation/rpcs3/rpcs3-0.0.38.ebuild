@@ -30,7 +30,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE="faudio joystick +llvm vulkan wayland"
+IUSE="faudio joystick +llvm system-ffmpeg vulkan wayland"
 REQUIRED_USE="wayland? ( vulkan )"
 
 DEPEND="app-arch/zstd
@@ -130,7 +130,7 @@ src_configure() {
 		-DUSE_NATIVE_INSTRUCTIONS=OFF
 		-DUSE_SYSTEM_CUBEB=ON
 		-DUSE_SYSTEM_CURL=ON
-		-DUSE_SYSTEM_FFMPEG=OFF
+		"-DUSE_SYSTEM_FFMPEG=$(usex system-ffmpeg)"
 		-DUSE_SYSTEM_FLATBUFFERS=ON
 		-DUSE_SYSTEM_GLSLANG=OFF
 		-DUSE_SYSTEM_LIBPNG=ON
