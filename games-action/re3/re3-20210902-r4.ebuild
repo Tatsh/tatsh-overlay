@@ -6,7 +6,7 @@ EAPI=8
 inherit cmake
 
 DESCRIPTION="GTA III decompiled and re-built."
-HOMEPAGE="https://github.com/GTAmodding/re3"
+HOMEPAGE="https://web.archive.org/web/20210906122012/https://github.com/GTAmodding/re3"
 SHA="3233ffe1c4b99e8efb4c41c6794b4fce880cf503"
 LIBRW_SHA="5501c4fdc7425ff926be59369a13593bb6c81b54"
 SRC_URI="https://web.archive.org/web/20210906122012/https://github.com/GTAmodding/${PN}/archive/${SHA}.zip -> ${P}.zip
