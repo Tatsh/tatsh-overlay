@@ -6,6 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">rvantonder/hack-parallel</remote-id>
+		<remote-id type="github">rvantonder/hack_parallel</remote-id>
 	</upstream>
 </pkgmetadata>

@@ -6,7 +6,7 @@ EAPI=8
 inherit dune
 
 DESCRIPTION="Parallel and shared memory library."
-HOMEPAGE="https://github.com/rvantonder/hack-parallel"
+HOMEPAGE="https://github.com/rvantonder/hack_parallel"
 SRC_URI="https://github.com/rvantonder/hack_parallel/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
