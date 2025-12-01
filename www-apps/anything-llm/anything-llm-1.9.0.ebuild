@@ -1150,7 +1150,7 @@ YARN_PKGS=(
 )
 yarn_set_globals
 DESCRIPTION="Server endpoints to process or create content for chatting"
-HOMEPAGE="https://www.npmjs.com/package/anything-llm-server"
+HOMEPAGE="https://anythingllm.com/"
 SRC_URI="${YARN_SRC_URI}
 	https://github.com/Mintplex-Labs/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}"
