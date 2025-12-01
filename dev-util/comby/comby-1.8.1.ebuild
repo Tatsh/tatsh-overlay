@@ -32,7 +32,7 @@ DEPEND="dev-db/sqlite
 	>=dev-ml/parany-12.0.3:=
 	>=dev-ml/patience_diff-0.14:=
 	dev-ml/ppx_deriving:=
-	dev-ml/pcre
+	dev-ml/pcre-ocaml:=
 	>=dev-ml/ppx_deriving_yojson-3.6.0:=
 	dev-ml/ppx_expect:=
 	dev-ml/ppx_sexp_message:=
