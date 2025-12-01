@@ -8,10 +8,10 @@ HOMEPAGE="https://github.com/stiefel40k/kitgen"
 MY_PV="${PV:0:5}-${PV:6}"
 MY_PN="kitgen"
 TCL_VERSION="8.6.11"
-TK_VERSION="8.6.11.1"
+TK_VERSION="${TCL_VERSION}.1"
 SRC_URI="https://github.com/stiefel40k/kitgen/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
-	https://downloads.sourceforge.net/project/tcl/Tcl/8.6.11/tk${TK_VERSION}-src.tar.gz -> ${PN}-tk-${TK_VERSION}.tar.gz
-	https://downloads.sourceforge.net/project/tcl/Tcl/8.6.11/tcl${TCL_VERSION}-src.tar.gz -> ${PN}-tcl-${TCL_VERSION}.tar.gz"
+	https://downloads.sourceforge.net/project/tcl/Tcl/${TCL_VERSION}/tk${TK_VERSION}-src.tar.gz -> ${PN}-tk-${TK_VERSION}.tar.gz
+	https://downloads.sourceforge.net/project/tcl/Tcl/${TCL_VERSION}/tcl${TCL_VERSION}-src.tar.gz -> ${PN}-tcl-${TCL_VERSION}.tar.gz"
 
 S="${WORKDIR}/${MY_PN}-${MY_PV}"
 LICENSE="all-rights-reserved"
