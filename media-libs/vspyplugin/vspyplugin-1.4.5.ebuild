@@ -17,7 +17,7 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="media-libs/vs-jetpack[${PYTHON_USEDEP}]
+RDEPEND="media-video/vs-jetpack[${PYTHON_USEDEP}]
 	media-video/vapoursynth[${PYTHON_USEDEP}]"
 
 src_prepare() {
