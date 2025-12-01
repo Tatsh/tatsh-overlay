@@ -13,7 +13,7 @@ SRC_URI="https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/archiv
 S="${WORKDIR}/Super-Mario-Bros.-Remastered-Public-${PV}"
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="~amd64"
 RESTRICT="strip"
 
 BDEPEND=">=dev-games/godot-${GODOT_VERSION}[tools]"
