@@ -9,6 +9,8 @@ inherit desktop multilib-build pax-utils xdg
 
 DESCRIPTION="Open source tool for debugging, testing and building with HTTP requests."
 HOMEPAGE="https://github.com/httptoolkit/httptoolkit-desktop https://httptoolkit.com/"
+MY_PN="HttpToolkit"
+MY_PN_LOWER="${MY_PN,,}"
 SRC_URI="https://github.com/${MY_PN_LOWER}/${MY_PN_LOWER}-desktop/releases/download/v${PV}/${MY_PN}-${PV}-linux-x64.zip -> ${P}.zip
 	https://raw.githubusercontent.com/${MY_PN_LOWER}/${MY_PN_LOWER}-desktop/main/src/icons/icon.svg
 	https://raw.githubusercontent.com/${MY_PN_LOWER}/${MY_PN_LOWER}-desktop/main/src/icons/icon.png"
@@ -18,9 +20,6 @@ SLOT="0"
 KEYWORDS="-* ~amd64"
 IUSE="suid"
 RESTRICT="strip"
-
-MY_PN="HttpToolkit"
-MY_PN_LOWER="${MY_PN,,}"
 
 RDEPEND="app-accessibility/at-spi2-core:2[${MULTILIB_USEDEP}]
 	dev-libs/expat:0[${MULTILIB_USEDEP}]
