@@ -13,6 +13,8 @@ inherit autotools distutils-r1
 
 DESCRIPTION="A video processing framework with simplicity in mind."
 HOMEPAGE="https://www.vapoursynth.com/ https://github.com/vapoursynth/vapoursynth"
+MY_PV="R${PV//_/-}"
+MY_PV="${MY_PV^^}"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}-${MY_PV}"
 LICENSE="LGPL-2.1"
@@ -20,9 +22,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="guard-pattern +x86-asm +vsscript +vspipe"
 RESTRICT="mirror"
-
-MY_PV="R${PV//_/-}"
-MY_PV="${MY_PV^^}"
 
 DEPEND=">=media-libs/zimg-3.0.5
 	x86-asm? ( >=dev-lang/yasm-1.3.0 )
