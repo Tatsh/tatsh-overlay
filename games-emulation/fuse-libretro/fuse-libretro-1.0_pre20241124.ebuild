@@ -11,6 +11,6 @@ DESCRIPTION="A port of the Fuse Unix Spectrum Emulator to libretro"
 HOMEPAGE="https://github.com/libretro/fuse-libretro"
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~x86"
 
 RDEPEND="games-emulation/libretro-info"
