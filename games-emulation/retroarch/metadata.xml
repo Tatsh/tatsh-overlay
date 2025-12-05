@@ -22,7 +22,7 @@
 		<flag name="ozone">Enable ozone menu</flag>
 		<flag name="parport">Enable parallel port support</flag>
 		<flag name="plain_drm">Enable plain DRM support</flag>
-		<flag name="qt5">Enable QT5 support</flag>
+		<flag name="qt6">Enable QT6 support</flag>
 		<flag name="rgui">Enable rgui menu</flag>
 		<flag name="sdl2">Enable SDL2 backend (disables SDL 1.x)</flag>
 		<flag name="sixel">Enable libsixel support</flag>
