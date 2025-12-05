@@ -29,7 +29,7 @@ IUSE="bsnes-mercury dolphin dosbox fceumm flycast fmsx fuse genesis-plus-gx medn
 
 RDEPEND="
 	bsnes-mercury? ( games-emulation/bsnes-mercury-performance-libretro )
-	dolphin? ( games-emulation/dolphin-libretro )
+	!x86? ( dolphin? ( games-emulation/dolphin-libretro ) )
 	dosbox? ( games-emulation/libretro-dosbox )
 	fceumm? ( games-emulation/fceumm-libretro )
 	flycast? ( games-emulation/flycast-libretro )
@@ -43,7 +43,7 @@ RDEPEND="
 	puae? ( games-emulation/puae-libretro )
 	puae2021? ( games-emulation/puae2021-libretro )
 	snes9x? ( games-emulation/libretro-snes9x )
-	swanstation? ( games-emulation/swanstation-libretro )
+	!x86? ( swanstation? ( games-emulation/swanstation-libretro ) )
 	tyrquake? ( games-emulation/tyrquake-libretro )
 	vice-x64? ( games-emulation/vice-x64-libretro )
 	vice-x64sc? ( games-emulation/vice-x64sc-libretro )"
