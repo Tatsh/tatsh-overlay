@@ -45,11 +45,11 @@ RDEPEND="
 	games-emulation/retroarch-assets
 	media-libs/mesa[opengl]
 	alsa? ( media-libs/alsa-lib )
-	cg? ( media-gfx/nvidia-cg-toolkit )
+	!arm64? ( cg? ( media-gfx/nvidia-cg-toolkit ) )
 	ffmpeg? ( media-video/ffmpeg )
 	flac? ( media-libs/flac )
 	freetype? ( media-libs/freetype )
-	gamemode? ( games-util/gamemode )
+	!arm64? ( gamemode? ( games-util/gamemode ) )
 	kms? (
 		x11-libs/libdrm
 	)
