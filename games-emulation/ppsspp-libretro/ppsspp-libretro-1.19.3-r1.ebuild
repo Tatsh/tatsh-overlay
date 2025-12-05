@@ -16,7 +16,7 @@ S="${WORKDIR}"/ppsspp-${PV}
 LICENSE="Apache-2.0 BSD BSD-2 GPL-2 JSON MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
-IUSE="opengl +gles2 vulkan X wayland gbm system-ffmpeg"
+IUSE="opengl gles2 vulkan X +wayland gbm system-ffmpeg"
 RESTRICT="test"
 REQUIRED_USE="
 	|| ( gbm wayland X )
