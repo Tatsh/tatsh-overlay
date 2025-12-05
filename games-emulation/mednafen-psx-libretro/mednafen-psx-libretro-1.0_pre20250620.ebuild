@@ -12,6 +12,6 @@ DESCRIPTION="Standalone port/fork of Mednafen PSX to the Libretro API."
 HOMEPAGE="https://github.com/libretro/beetle-psx-libretro"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~x86"
 
 RDEPEND="games-emulation/libretro-info"
