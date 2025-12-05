@@ -12,7 +12,7 @@ DESCRIPTION="libretro implementation of Genesis Plus GX. \
 HOMEPAGE="https://github.com/libretro/Genesis-Plus-GX"
 LICENSE="GPGX"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~x86"
 
 DEPEND="virtual/zlib"
 RDEPEND="${DEPEND}
