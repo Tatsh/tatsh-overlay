@@ -11,7 +11,7 @@ SRC_URI="https://github.com/pi-hole/web/archive/refs/tags/v${PV}.tar.gz -> ${P}.
 S="${WORKDIR}/web-${PV}"
 LICENSE="EUPL-1.2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64"
+KEYWORDS="~amd64"
 
 BDEPEND="app-misc/jq app-portage/portage-utils"
 RDEPEND="app-admin/sudo
