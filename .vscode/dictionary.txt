@@ -1335,6 +1335,7 @@ libb
 libbar
 libbz
 libc
+libc's
 libcaca
 libcdio
 libchdr
@@ -1342,7 +1343,6 @@ libclang
 libco
 libcpp
 libcrypt
-libc's
 libcxx
 libcxxabi
 libd
@@ -1418,6 +1418,7 @@ libscriptlua
 libsdl
 libseccomp
 libsecret
+libsfml
 libshared
 libshell
 libsixel
@@ -1629,6 +1630,7 @@ miniupnp
 miniupnpc
 miniwget
 miniz
+minizip
 minizlib
 mintplex
 mipsdisasm
@@ -1858,6 +1860,7 @@ optarg
 optflags
 optint
 optionator
+optparse
 opusfile
 orisano
 osdef
@@ -2730,6 +2733,7 @@ webvr
 webxr
 werror
 wextra
+wfuse
 whatwg
 wiedenbauer
 wiimm
