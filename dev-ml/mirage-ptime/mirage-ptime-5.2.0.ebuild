@@ -5,7 +5,7 @@ EAPI=8
 
 inherit dune
 
-DESCRIPTION="Benchmarking module for OCaml."
+DESCRIPTION="POSIX time functions for MirageOS."
 HOMEPAGE="https://github.com/mirage/mirage-ptime"
 SRC_URI="https://github.com/mirage/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${P}"
