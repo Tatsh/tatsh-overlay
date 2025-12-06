@@ -11,11 +11,13 @@ S="${WORKDIR}/${PN}-${SHA}/project"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="fuse"
 
 DEPEND="dev-libs/openssl
 	sys-libs/ncurses
 	virtual/zlib"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	fuse? ( sys-fs/fuse )"
 
 DOCS=( ../README.md )
 
@@ -24,11 +26,18 @@ src_prepare() {
 	sed -re 's/@\$\(CC\)/$(CC)/g' -e 's/-O3\b//g' \
 		-e 's/^CC\s+=(.*)/CC ?=\1/' \
 		-e 's/^STRIP\s+=(.*)/STRIP ?=\1/' \
-		-i Makefile
+		-e 's/^install: all/install:/' \
+		-i Makefile || die
+	sed -re 's/ln -f/ln -sf/g' -i setup/install.sh || die
 	default
 }
 
 src_compile() {
-	local ED
-	emake INSTALL_PATH="${ED}/usr" STRIP=touch
+	emake STRIP=touch "HAVE_FUSE=$(usex fuse 1)" tools install.sh load-titles.sh INSTALL.txt
+}
+
+src_install() {
+	sed -re "s|/usr/local|${ED}/usr|g" -i install.sh load-titles.sh Makefile.setup \
+		templates.sed version.h || die
+	emake STRIP=touch "HAVE_FUSE=$(usex fuse 1)" INSTALL_PATH="${ED}/usr" install
 }

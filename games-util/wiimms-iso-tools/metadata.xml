@@ -8,4 +8,7 @@
 	<upstream>
 		<remote-id type="github">Wiimm/wiimms-iso-tools</remote-id>
 	</upstream>
+	<use>
+		<flag name="fuse">Build wfuse</flag>
+	</use>
 </pkgmetadata>
