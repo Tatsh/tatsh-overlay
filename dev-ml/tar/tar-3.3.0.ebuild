@@ -15,5 +15,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+ocamlopt"
 
-DEPEND=">=dev-ml/decompress-1.5.1:="
+DEPEND=">=dev-ml/decompress-1.5.1:=
+	dev-ml/eio:=
+	dev-ml/mirage-block:=
+	dev-ml/mirage-kv:=
+	dev-ml/optint:=
+	dev-ml/ptime:=
+	dev-ml/mirage-ptime:="
 RDEPEND="${DEPEND}"
