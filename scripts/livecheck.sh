@@ -37,6 +37,7 @@ exceptions=(
     -e dev-qt/qtwebkit
     -e games-emulation/cemu
     -e games-arcade/stepmania
+    -e games-emulation/mupen64plus-video-gliden64
     # Weird tag livecheck cannot handle.
     -e games-emulation/fuse-libretro
     # Yarn packages broken?
