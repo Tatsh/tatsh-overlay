@@ -14,7 +14,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+ocamlopt"
 
-DEPEND=">=dev-ml/biniou-1.2.0:=
-	dev-ml/easy-format:="
+DEPEND="dev-ml/benchmark:=
+	>=dev-ml/biniou-1.2.0:=
+	dev-ml/easy-format:=
+	dev-ml/sedlex:="
 RDEPEND="${DEPEND}"
 BDEPEND="dev-ml/cppo"
