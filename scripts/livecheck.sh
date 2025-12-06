@@ -36,7 +36,11 @@ exceptions=(
     -e app-emulation/sheepshaver
     -e dev-qt/qtwebkit
     -e games-emulation/cemu
+    -e games-arcade/stepmania
     # Weird tag livecheck cannot handle.
     -e games-emulation/fuse-libretro
+    # Yarn packages broken?
+    -e app-misc/zwave-js-server
+    -e dev-util/yo
 )
 livecheck "${exceptions[@]}" "$@"
