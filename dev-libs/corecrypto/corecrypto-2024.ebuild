@@ -18,7 +18,7 @@ BDEPEND="app-arch/unzip"
 pkg_nofetch() {
 	elog "Download '${PN}.zip' from https://developer.apple.com/security/ or use the following command (change output directory if necessary):"
 	elog
-	elog "  curl 'https://developer.apple.com/file/?file=security&agree=Yes' -H 'Referer: https://developer.apple.com/security/' -o ${DISTDIR}/${P}.zip"
+	elog "  curl 'https://developer.apple.com/file/?file=security&agree=Yes' -H 'Referer: https://developer.apple.com/security/' -o /var/cache/distfiles/${P}.zip"
 	elog
 	elog "Place it into your DISTDIR directory renamed to 'corecrypto-2024.zip'."
 }
