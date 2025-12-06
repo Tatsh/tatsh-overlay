@@ -29,13 +29,11 @@ SRC_URI="https://web.archive.org/web/20240304181657if_/https://codeload.github.c
 S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE="+compatibility-reporting +cubeb llvm-libunwind qt5 +qt6 +web-service +webengine"
+KEYWORDS="~amd64"
+IUSE="+compatibility-reporting +cubeb llvm-libunwind qt5 +qt6 +web-service webengine"
 
 REQUIRED_USE="compatibility-reporting? ( web-service )
-	|| ( qt5 qt6 )
-		qt5? ( !qt6 )
-		qt6? ( !qt5 )"
+	|| ( qt5? ( !webengine ) qt6? ( !qt5 ) )"
 
 DEPEND=">=app-arch/zstd-1.5.0:=
 	>=dev-libs/xbyak-6.03:=
@@ -59,6 +57,7 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	qt6? (
 		dev-qt/qtbase
 		dev-qt/qtmultimedia:6
+		webengine? ( dev-qt/qtwebengine:6 )
 	)
 	media-libs/libsdl2
 	media-libs/libva
@@ -66,10 +65,6 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	net-libs/enet:=
 	virtual/zlib
 	virtual/libusb:=
-	webengine? (
-		qt5? ( dev-qt/qtwebengine:5 )
-		qt6? ( dev-qt/qtwebengine:6 )
-	)
 	llvm-libunwind? ( llvm-runtimes/libunwind )
 	!llvm-libunwind? ( sys-libs/libunwind:= )"
 RDEPEND="${DEPEND}
