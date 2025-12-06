@@ -5,11 +5,12 @@ EAPI=8
 PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 DISTUTILS_USE_PEP517=hatchling
 
-inherit distutils-r1
+inherit distutils-r1 pypi
 
 DESCRIPTION="Full suite of filters, wrappers, etc for filtering video using VapourSynth."
 HOMEPAGE="https://github.com/Jaded-Encoding-Thaumaturgy/vs-jetpack"
-SRC_URI="https://github.com/Jaded-Encoding-Thaumaturgy/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="$(pypi_sdist_url vsjetpack)"
+S="${WORKDIR}/vsjetpack-${PV}"
 
 LICENSE="GPL-2"
 SLOT="0"
