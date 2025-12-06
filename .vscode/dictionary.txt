@@ -938,6 +938,7 @@ gles
 glew
 glfw
 glibcxx
+gliden
 gliderlabs
 globalthis
 globby
@@ -1059,6 +1060,7 @@ hinterwaeldlers
 hiro
 hjson
 hlsl
+hmap
 hmong
 hmp
 hoek
@@ -1523,6 +1525,7 @@ lunixbochs
 lutro
 luuid
 lzma
+macaddr
 macemu
 machienhum
 macvendor
@@ -2687,6 +2690,7 @@ voyageai
 vpnc
 vsaa
 vsexprtools
+vsjetpack
 vskernels
 vsmasktools
 vspipe
