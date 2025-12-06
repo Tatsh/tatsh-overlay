@@ -11,7 +11,7 @@ SRC_URI="https://github.com/pi-hole/pi-hole/archive/v${PV}.tar.gz -> ${P}.tar.gz
 S="${WORKDIR}/pi-hole-${PV}"
 LICENSE="EUPL-1.2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="cron"
 
 DEPEND="acct-user/${PN}
