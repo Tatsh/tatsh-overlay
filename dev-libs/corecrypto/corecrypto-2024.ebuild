@@ -8,18 +8,17 @@ inherit cmake
 DESCRIPTION="Low-level cryptographic primitives from Apple."
 HOMEPAGE="https://developer.apple.com/security/"
 SRC_URI="${P}.zip"
-#RESTRICT="fetch"
-
 LICENSE="corecrypto"
 SLOT="0"
 KEYWORDS="~amd64"
+RESTRICT="fetch"
 
 BDEPEND="app-arch/unzip"
 
 pkg_nofetch() {
-	elog "Download '${PN}.zip' from https://developer.apple.com/security/ or use the following command:"
+	elog "Download '${PN}.zip' from https://developer.apple.com/security/ or use the following command (change output directory if necessary):"
 	elog
-	elog "  curl 'https://developer.apple.com/file/?file=security&agree=Yes' -H 'Referer: https://developer.apple.com/security/' -o /var/cache/distfiles/corecrypto.zip"
+	elog "  curl 'https://developer.apple.com/file/?file=security&agree=Yes' -H 'Referer: https://developer.apple.com/security/' -o ${DISTDIR}/${P}.zip"
 	elog
 	elog "Place it into your DISTDIR directory renamed to 'corecrypto-2024.zip'."
 }
