@@ -1164,7 +1164,7 @@ CMAKE_NPM_TAG="1.1.0"
 DEPEND="dev-db/prisma-engines
 	dev-libs/glib
 	media-libs/vips
-	sci-libs/onnxruntime[nodejs]"
+	>=sci-libs/onnxruntime-1.23.2[nodejs]"
 
 #PREBUILT_IGNORE=(
 #	./node_modules/@lancedb/lancedb-linux-x64-gnu/lancedb.linux-x64-gnu.node
