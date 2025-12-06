@@ -643,7 +643,6 @@ dsplit
 dsun
 dsystemd
 dubhater
-duckstation
 dudev
 dunder
 duplexpair
@@ -794,7 +793,6 @@ fbneo
 fcaps
 fceu
 fceumm
-fceux
 fclose
 fdest
 fdir
@@ -970,7 +968,6 @@ goexif
 gofork
 gofrs
 gofuzz
-gogextract
 gogo
 gogs
 gohugoio
@@ -1335,7 +1332,6 @@ libb
 libbar
 libbz
 libc
-libc's
 libcaca
 libcdio
 libchdr
@@ -1343,6 +1339,7 @@ libclang
 libco
 libcpp
 libcrypt
+libc's
 libcxx
 libcxxabi
 libd
