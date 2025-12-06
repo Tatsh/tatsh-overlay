@@ -70,8 +70,10 @@ src_unpack() {
 
 src_prepare() {
 	local i
-	for i in "${DISTDIR}/sm64."*.z64; do
-		cp "${i}" "$(basename "${i/sm64/baserom}")" || die
+	for i in ${A}; do
+		if [[ "${i}" == *.z64 ]]; then
+			cp "${DISTDIR}/${i}" "$(basename "${i/sm64/baserom}")" || die
+		fi
 	done
 	sed -re 's/^GIT_HASH=.*/GIT_HASH?=/' -i Makefile || die
 	edo ./extract_assets.py "$(get_version)"
