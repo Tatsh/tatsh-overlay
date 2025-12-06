@@ -11,7 +11,7 @@ SRC_URI="https://github.com/arun11299/${PN}/archive/refs/tags/v${PV}.tar.gz -> $
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
 DEPEND="test? ( dev-cpp/gtest )
 	dev-libs/openssl
