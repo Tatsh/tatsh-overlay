@@ -421,6 +421,7 @@ cstdio
 cstdlib
 cstool
 cstring
+cstruct
 csvlens
 csvw
 ctest
@@ -565,6 +566,7 @@ dlibrw
 dlibsamplerate
 dlinfo
 dlith
+dllist
 dllvmlite
 dlmalloc
 dlpack
@@ -1058,6 +1060,7 @@ hiro
 hjson
 hlsl
 hmong
+hmp
 hoek
 homebridge
 honnef
@@ -1141,6 +1144,7 @@ intv
 ioctl
 iohelper
 iommu
+iomux
 ionelmc
 iostreams
 irecovery
@@ -2016,6 +2020,7 @@ psvpfstools
 pthread
 pthreadpool
 pthreads
+ptime
 puae
 puerkito
 pugixml
@@ -2263,6 +2268,7 @@ seatools
 seccomp
 securecookie
 securejoin
+sedlex
 sekrit
 selu
 sentencepiece
