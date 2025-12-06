@@ -30,8 +30,7 @@ DEPEND="dev-libs/glib
 	media-libs/libsdl2
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
-	x11-libs/gtk+:2
-	x11-libs/gtksourceview:2.0
+	x11-libs/gtk+:3
 	x11-libs/libX11
 	x11-libs/libXext
 	x11-libs/libXrandr
@@ -50,6 +49,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-102.patch"
 	"${FILESDIR}/${PN}-114.patch"
 	"${FILESDIR}/${PN}-116.patch"
+	"${FILESDIR}/${PN}-gdk-backend.patch"
 )
 
 disable_module() {
@@ -80,7 +80,7 @@ src_compile() {
 	# Needed for fluent audio (even on i5 hardware)
 	export CFLAGS="${CFLAGS} -O3"
 	export CXXFLAGS="${CXXFLAGS} -O3"
-	emake -C "${BIN_PN}" "compiler=$(tc-getCXX)"
+	emake -C "${BIN_PN}" "compiler=$(tc-getCXX)" hiro=gtk3
 	mkdir saved || die
 	cp "${BIN_PN}/out/${BIN_PN}" saved/ || die
 	if use libretro; then
