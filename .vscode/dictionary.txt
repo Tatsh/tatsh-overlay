@@ -1332,6 +1332,7 @@ libb
 libbar
 libbz
 libc
+libc's
 libcaca
 libcdio
 libchdr
@@ -1339,7 +1340,6 @@ libclang
 libco
 libcpp
 libcrypt
-libc's
 libcxx
 libcxxabi
 libd
@@ -2283,6 +2283,7 @@ sexplib
 sezanzeb
 shagkur
 sharada
+sheepshaver
 shellcheck
 shellescape
 shellformat
