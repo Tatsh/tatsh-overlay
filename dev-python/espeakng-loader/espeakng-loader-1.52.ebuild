@@ -6,7 +6,7 @@ DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{10..14} )
 inherit distutils-r1
 
-COMMIT="146599e29be31bf17d99f0bcb7dbb2f92aef3d95"
+COMMIT="e5e9200dc3fd894b7415942c2602fc31526d60fc"
 
 DESCRIPTION="Shared library loader for eSpeak NG."
 HOMEPAGE="https://github.com/thewh1teagle/espeakng-loader"
