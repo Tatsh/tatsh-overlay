@@ -24,9 +24,18 @@ exceptions=(
     #-e dev-python/spacy-curated-transformers
     #-e dev-python/thinc
     # Not yet.
+    -e app-admin/padd
+    -e app-admin/padd
+    -e app-admin/padd
+    -e app-admin/padd
     -e net-dns/pihole-ftl
     -e net-dns/pihole
     -e www-apps/pihole-admin-lte
+    # Inaccurate.
+    -e app-emulation/basiliskii
+    -e app-emulation/sheepshaver
+    -e dev-qt/qtwebkit
+    -e games-emulation/cemu
     # Weird tag livecheck cannot handle.
     -e games-emulation/fuse-libretro
 )
