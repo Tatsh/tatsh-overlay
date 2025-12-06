@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{2,3} )
+PYTHON_COMPAT=( python3_1{2,3,4} )
 inherit distutils-r1
 
 DESCRIPTION="The FLARE team's open-source tool to identify capabilities in executable files."
@@ -14,7 +14,7 @@ SRC_URI="https://github.com/mandiant/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64"
+# KEYWORDS="~amd64"
 
 RDEPEND="dev-python/colorama[${PYTHON_USEDEP}]
 	dev-python/dncil[${PYTHON_USEDEP}]
