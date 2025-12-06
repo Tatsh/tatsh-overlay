@@ -17,6 +17,7 @@ WATCHER_SHA="b03bdcfc11549df595b77239cefe2643943a3e2f"
 CPP_IPC_SHA="a0c7725a1441d18bc768d748a93e512a0fa7ab52"
 CPP_OPTPARSE_SHA="2265d647232249a53a03b411099863ceca35f0d3"
 IMGUI_SHA="45acd5e0e82f4c954432533ae9985ff0e1aad6d5"
+SFML_SHA="016bea9491ccafc3529019fe1d403885a8b3a6ae"
 SRC_URI="https://github.com/${LIBRETRO_REPO_NAME}/archive/${LIBRETRO_COMMIT_SHA}.tar.gz -> ${P}-${LIBRETRO_COMMIT_SHA:0:7}.tar.gz
 	https://github.com/syoyo/tinygltf/archive/${TINYGLTF_SHA}.tar.gz -> tinygltf-${TINYGLTF_SHA:0:7}.tar.gz
 	https://github.com/epezent/implot/archive/${IMPLOT_SHA}.tar.gz -> implot-${IMPLOT_SHA:0:7}.tar.gz
@@ -25,7 +26,8 @@ SRC_URI="https://github.com/${LIBRETRO_REPO_NAME}/archive/${LIBRETRO_COMMIT_SHA}
 	https://github.com/e-dant/watcher/archive/${WATCHER_SHA}.tar.gz -> watcher-${WATCHER_SHA:0:7}.tar.gz
 	https://github.com/mutouyun/cpp-ipc/archive/${CPP_IPC_SHA}.tar.gz -> cpp-ipc-${CPP_IPC_SHA:0:7}.tar.gz
 	https://github.com/weisslj/cpp-optparse/archive/${CPP_OPTPARSE_SHA}.tar.gz -> cpp-optparse-${CPP_OPTPARSE_SHA:0:7}.tar.gz
-	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> imgui-${IMGUI_SHA:0:7}.tar.gz"
+	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> imgui-${IMGUI_SHA:0:7}.tar.gz
+	https://github.com/SFML/SFML/archive/${SFML_SHA}.tar.gz -> SFML-${SFML_SHA:0:7}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -39,7 +41,6 @@ DEPEND="
 	>=dev-libs/libfmt-10.1
 	dev-libs/lzo:2
 	dev-libs/pugixml
-	>=media-libs/libsfml-3.0:=
 	media-libs/libspng
 	>=net-libs/enet-1.3.18:1.3=
 	media-libs/mesa
@@ -52,7 +53,10 @@ DEPEND="
 		x11-libs/libXrandr
 		dev-qt/qtconcurrent
 	)
-	opengl? ( virtual/opengl )
+	opengl? (
+		virtual/opengl
+		>=media-libs/libsfml-3.0:=
+	)
 	vulkan? ( media-libs/vulkan-loader )
 	virtual/libusb
 "
@@ -68,6 +72,10 @@ src_prepare() {
 	mv -T "${WORKDIR}/imgui-${IMGUI_SHA}" Externals/imgui/imgui || die
 	mv -T "${WORKDIR}/Vulkan-Headers-${VULKAN_HEADERS_SHA}" Externals/Vulkan-Headers || die
 	mv -T "${WORKDIR}/VulkanMemoryAllocator-${VULKANMEMORYALLOCATOR_SHA}" Externals/VulkanMemoryAllocator || die
+	if ! use opengl;
+	then
+		mv -T "${WORKDIR}/SFML-${SFML_SHA}" Externals/SFML/SFML || die
+	fi
 	sed -re 's|dolphin_find_optional_system_library\(glslang Externals/glslang 15\.0\)|dolphin_find_optional_system_library(glslang Externals/glslang)|' -i CMakeLists.txt || die
 	libretro-core_src_prepare
 	cmake_src_prepare
