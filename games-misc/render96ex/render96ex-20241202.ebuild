@@ -17,12 +17,11 @@ SRC_URI="https://github.com/Render96/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.
 	us? ( sm64.us.z64 )
 	eu? ( sm64.eu.z64 )
 	jp? ( sm64.jp.z64 )"
-
 S="${WORKDIR}/${MY_PN}-${SHA}"
-
 LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
+
 IUSE="+goddard
 	+models
 	+texture-fix
@@ -33,6 +32,7 @@ IUSE="+goddard
 	jp
 	+us"
 REQUIRED_USE="|| ( eu jp us )"
+RESTRICT="fetch"
 
 DEPEND="media-libs/glew:= media-libs/libsdl2 media-libs/libglvnd[X]"
 RDEPEND="${DEPEND}"
