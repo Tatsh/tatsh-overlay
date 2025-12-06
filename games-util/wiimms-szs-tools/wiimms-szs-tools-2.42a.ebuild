@@ -24,10 +24,17 @@ src_prepare() {
 	sed -re 's/@\$\(CC\)/$(CC)/g' -e 's/-O3\b//g' \
 		-e 's/^CC\s+=(.*)/CC ?=\1/' \
 		-e 's/^STRIP\s+=(.*)/STRIP ?=\1/' \
+		-e 's/^install: all/install:/' \
 		-i Makefile
+	sed -re 's/ln -f/ln -sf/g' -i setup/install.sh || die
 	default
 }
 
 src_compile() {
-	emake INSTALL_PATH="${ED}/usr" STRIP=touch
+	emake STRIP=touch tools install.sh INSTALL.txt
+}
+
+src_install() {
+	sed -re "s|/usr/local|${ED}/usr|g" -i install.sh Makefile.setup templates.sed version.h || die
+	emake STRIP=touch INSTALL_PATH="${ED}/usr" install
 }
