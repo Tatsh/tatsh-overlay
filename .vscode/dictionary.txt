@@ -588,6 +588,7 @@ docstrings
 dodoc
 doenvd
 doexe
+doheader
 doicon
 doinitd
 doins
@@ -1305,6 +1306,7 @@ leichtgewicht
 lepcha
 leveladj
 levn
+lewissbaker
 lexiforest
 lgomp
 lgtest
@@ -1323,6 +1325,7 @@ libb
 libbar
 libbz
 libc
+libc's
 libcaca
 libcdio
 libchdr
@@ -1330,7 +1333,6 @@ libclang
 libco
 libcpp
 libcrypt
-libc's
 libcxx
 libcxxabi
 libd
@@ -1464,6 +1466,7 @@ liteon
 lith
 livecheck
 llvmlite
+lmax
 lmod
 loadlib
 loadsc
