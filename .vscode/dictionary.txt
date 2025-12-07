@@ -103,7 +103,6 @@ astikit
 astilectron
 astisub
 astits
-astring
 asyncio
 asynckit
 atomicparsley
@@ -165,7 +164,6 @@ bigfft
 bigints
 bignum
 bigobj
-bigstringaf
 binarycookies
 binaryextensions
 binaryop
@@ -177,7 +175,6 @@ bincookie
 bincue
 bindir
 bindist
-biniou
 binja
 binv
 bitrock
@@ -239,7 +236,6 @@ caffe
 calloc
 callsites
 calpin
-caml
 canadianaboriginal
 cancelable
 cancelreader
@@ -289,7 +285,6 @@ charmbracelet
 chdir
 checkpath
 checkreqs
-checkseum
 cheevos
 chishm
 chksums
@@ -325,7 +320,6 @@ cloudpathlib
 cmakerc
 cmath
 cmdclass
-cmdliner
 cmdpack
 cmocka
 cmrc
@@ -334,7 +328,6 @@ codeberg
 codegen
 codem
 codeman
-cohttp
 coinhsl
 coleco
 colfile
@@ -360,7 +353,6 @@ commitizen
 commondir
 compreply
 comserv
-conc
 confdir
 configfile
 configor
@@ -392,7 +384,6 @@ cplugins
 cplusplus
 cppclass
 cppflags
-cppo
 cpprest
 cpprestsdk
 cpuguy
@@ -421,7 +412,6 @@ cstdio
 cstdlib
 cstool
 cstring
-cstruct
 csvlens
 csvw
 ctest
@@ -490,6 +480,7 @@ ddrivers
 ddynarec
 deark
 deband
+debiancompat
 debugf
 debugpy
 decamelize
@@ -566,7 +557,6 @@ dlibrw
 dlibsamplerate
 dlinfo
 dlith
-dllist
 dllvmlite
 dlmalloc
 dlpack
@@ -682,7 +672,6 @@ eclass
 eclasses
 econf
 ecwolf
-edune
 eedi
 eend
 eerror
@@ -1060,9 +1049,7 @@ hinterwaeldlers
 hiro
 hjson
 hlsl
-hmap
 hmong
-hmp
 hoek
 homebridge
 honnef
@@ -1146,7 +1133,6 @@ intv
 ioctl
 iohelper
 iommu
-iomux
 ionelmc
 iostreams
 irecovery
@@ -1176,7 +1162,6 @@ jackspeak
 jaconv
 jakcron
 jamo
-janestreet
 javax
 jbenet
 jcmturner
@@ -1338,7 +1323,6 @@ libb
 libbar
 libbz
 libc
-libc's
 libcaca
 libcdio
 libchdr
@@ -1346,6 +1330,7 @@ libclang
 libco
 libcpp
 libcrypt
+libc's
 libcxx
 libcxxabi
 libd
@@ -1375,7 +1360,6 @@ libgudev
 libgusb
 libhac
 libhistory
-libhp
 libhsl
 libhttps
 libidn
@@ -1525,7 +1509,6 @@ lunixbochs
 lutro
 luuid
 lzma
-macaddr
 macemu
 machienhum
 macvendor
@@ -1669,7 +1652,6 @@ montanaflynn
 mousa
 movableink
 moviepy
-mparser
 mpfr
 mrboom
 mrlotfi
@@ -1698,7 +1680,6 @@ multimatch
 munnerz
 munt
 mupen
-murmour
 murmurhash
 mustache
 mvsfunc
@@ -1820,11 +1801,7 @@ nxengine
 objdump
 objs
 objx
-ocaml
-ocamlopt
 occivink
-ocsigen
-ocurl
 ogham
 oklog
 olchiki
@@ -1862,7 +1839,6 @@ openrc
 opentimelineio
 optarg
 optflags
-optint
 optionator
 optparse
 opusfile
@@ -1894,7 +1870,6 @@ pango
 paparam
 papertrail
 paramiko
-parany
 parport
 parrado
 parseargs
@@ -2023,7 +1998,6 @@ psvpfstools
 pthread
 pthreadpool
 pthreads
-ptime
 puae
 puerkito
 pugixml
@@ -2067,8 +2041,6 @@ pypinyin
 pypinyin's
 pyproject
 pypy
-pyqt
-pyqtwebengine
 pyrate
 pyrescene
 pyserial
@@ -2226,7 +2198,6 @@ runewidth
 rusha
 russross
 rustflags
-rvantonder
 rwcarlsen
 rwcore
 ryanuber
@@ -2271,7 +2242,6 @@ seatools
 seccomp
 securecookie
 securejoin
-sedlex
 sekrit
 selu
 sentencepiece
@@ -2287,8 +2257,6 @@ setuid
 setuptools
 setupvars
 sevinf
-sexp
-sexplib
 sezanzeb
 sfml
 shagkur
@@ -2360,7 +2328,6 @@ soundfont
 soundtouch
 sourcedir
 sourceforge
-sourcegraph
 sourcehut
 spacepacket
 spacy
@@ -2428,7 +2395,6 @@ strfmt
 stricmp
 strikethrough
 strincmp
-stringext
 stringprintf
 stringtopath
 stringutils
@@ -2517,7 +2483,6 @@ testpaths
 texinfo
 textextensions
 textsplitters
-textutils
 tfperms
 tgbdual
 thaana
@@ -2839,7 +2804,6 @@ ycmd
 yhat
 yocto
 yoctocolors
-yojson
 yolodetectionoutput
 yolov
 yookoala
