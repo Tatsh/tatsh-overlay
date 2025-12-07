@@ -6,5 +6,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">Jaded-Encoding-Thaumaturgy/vs-jetpack</remote-id>
+		<remote-id type="pypi">vsjetpack</remote-id>
 	</upstream>
 </pkgmetadata>
