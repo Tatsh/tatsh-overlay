@@ -16,12 +16,12 @@ YARN_PKGS=(
 	@eslint-community/eslint-utils-4.9.0
 	@eslint-community/regexpp-4.12.2
 	@eslint/config-array-0.21.1
-	@eslint/config-helpers-0.4.1
-	@eslint/core-0.16.0
+	@eslint/config-helpers-0.4.2
+	@eslint/core-0.17.0
 	@eslint/eslintrc-3.3.1
-	@eslint/js-9.38.0
+	@eslint/js-9.39.1
 	@eslint/object-schema-2.1.7
-	@eslint/plugin-kit-0.4.0
+	@eslint/plugin-kit-0.4.1
 	@homebridge/ciao-1.3.4
 	@humanfs/core-0.19.1
 	@humanfs/node-0.16.7
@@ -48,15 +48,15 @@ YARN_PKGS=(
 	@types/estree-1.0.8
 	@types/json-schema-7.0.15
 	@types/triple-beam-1.3.5
-	@zwave-js/cc-15.15.3
-	@zwave-js/config-15.15.3
-	@zwave-js/core-15.15.3
-	@zwave-js/host-15.15.3
-	@zwave-js/nvmedit-15.15.3
-	@zwave-js/serial-15.15.3
-	@zwave-js/server-3.4.0
-	@zwave-js/shared-15.15.1
-	@zwave-js/testing-15.15.3
+	@zwave-js/cc-15.17.0
+	@zwave-js/config-15.17.0
+	@zwave-js/core-15.17.0
+	@zwave-js/host-15.17.0
+	@zwave-js/nvmedit-15.17.0
+	@zwave-js/serial-15.17.0
+	@zwave-js/server-3.5.0
+	@zwave-js/shared-15.17.0
+	@zwave-js/testing-15.17.0
 	@zwave-js/waddle-1.2.1
 	acorn-8.15.0
 	acorn-jsx-5.3.2
@@ -91,7 +91,7 @@ YARN_PKGS=(
 	enabled-2.0.0
 	escalade-3.2.0
 	escape-string-regexp-4.0.0
-	eslint-9.38.0
+	eslint-9.39.1
 	eslint-scope-8.4.0
 	eslint-visitor-keys-3.4.3
 	eslint-visitor-keys-4.2.1
@@ -197,14 +197,14 @@ YARN_PKGS=(
 	yargs-18.0.0
 	yargs-parser-22.0.0
 	yocto-queue-0.1.0
-	zwave-js-15.15.3
+	zwave-js-15.17.1
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
 S="${WORKDIR}"
 LICENSE="0BSD Apache-2.0 BSD BSD-2 ISC MIT"
 KEYWORDS="~amd64"
-RESTRICT="mirror"
+RESTRICT="mirror strip"
 
 src_install() {
 	yarn_src_install
