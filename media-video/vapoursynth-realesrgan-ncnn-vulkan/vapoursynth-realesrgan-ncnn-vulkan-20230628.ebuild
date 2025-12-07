@@ -9,7 +9,7 @@ DESCRIPTION="RealESRGAN super resolution plugin for VapourSynth"
 HOMEPAGE="https://github.com/Tatsh/VapourSynth-Real-ESRGAN-ncnn-vulkan"
 SHA="731633e6ac3d4e48476b64f2f77a006148913d25"
 SRC_URI="https://github.com/Tatsh/VapourSynth-Real-ESRGAN-ncnn-vulkan/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz
-	https://dev.gentoo.org/~slashbeast/distfiles/realesrgan-ncnn-vulkan/realesrgan-ncnn-vulkan-models.tar.xz"
+	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/realesrgan-ncnn-vulkan-models.tar.xz"
 S="${WORKDIR}/VapourSynth-Real-ESRGAN-ncnn-vulkan-${SHA}/src"
 LICENSE="MIT"
 SLOT="0"
