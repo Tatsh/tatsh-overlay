@@ -2290,6 +2290,7 @@ sevinf
 sexp
 sexplib
 sezanzeb
+sfml
 shagkur
 sharada
 sheepshaver
