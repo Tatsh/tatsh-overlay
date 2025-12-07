@@ -15,6 +15,6 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="+ocamlopt"
 
-DEPEND="=dev-ml/macaddr-${PV}
+DEPEND="~dev-ml/macaddr-${PV}
 	>=dev-ml/domain-name-0.3.0"
 RDEPEND="${DEPEND}"
