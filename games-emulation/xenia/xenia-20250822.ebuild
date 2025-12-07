@@ -23,7 +23,6 @@ DEPEND="app-arch/snappy
 	dev-libs/disruptorplus
 	dev-libs/libfmt:=
 	dev-libs/pugixml
-	dev-libs/rapidcsv
 	dev-libs/rapidjson
 	dev-libs/tabulate
 	dev-libs/utfcpp
