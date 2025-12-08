@@ -15,6 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
 RDEPEND="dev-python/gitpython[${PYTHON_USEDEP}]
+	dev-python/bascom[${PYTHON_USEDEP}]
 	dev-python/binaryornot[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
 	dev-python/platformdirs[${PYTHON_USEDEP}]"
