@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Script to configure parameters for increasing system performance."
 HOMEPAGE="https://gitlab.com/cscs/maxperfwiz"
-SHA="68134696722510ef5ebd157fe44f4eac7c317166"
+SHA="476c7fc8cb563364c9eb53d5ad5b4746804b460b"
 SRC_URI="https://gitlab.com/cscs/${PN}/-/archive/${SHA}/${PN}-${SHA}.tar.bz2 -> ${P}.tar.bz2"
 S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="CSL-1"
