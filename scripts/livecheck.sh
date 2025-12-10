@@ -38,6 +38,7 @@ exceptions=(
     -e games-emulation/cemu
     -e games-arcade/stepmania
     -e games-emulation/mupen64plus-video-gliden64
+    -e games-emulation/rpcs3
     # Weird tag livecheck cannot handle.
     -e games-emulation/fuse-libretro
     # Yarn packages broken?
