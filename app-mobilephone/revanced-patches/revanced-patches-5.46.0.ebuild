@@ -13,8 +13,6 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=virtual/jre-11-r2"
-
 src_install() {
 	insinto "/usr/share/${PN}"
 	newins "${DISTDIR}/${P}.rvp" patches.rvp
