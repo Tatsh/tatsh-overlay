@@ -18,7 +18,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">notofonts/noto-fonts</remote-id>
+		<remote-id type="github">notofonts/notofonts.github.io</remote-id>
 	</upstream>
 	<use>
 		<flag name="brahmi">Install font for Brahmi script</flag>
