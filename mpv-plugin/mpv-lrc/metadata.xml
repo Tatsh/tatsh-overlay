@@ -6,7 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="sourcehut">~guidocella/mpv-lrc</remote-id>
+		<remote-id type="github">~guidocella/mpv-lrc</remote-id>
 	</upstream>
 	<use>
 		<flag name="autoload">Auto-load the plugin</flag>
