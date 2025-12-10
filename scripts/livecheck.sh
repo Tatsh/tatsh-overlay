@@ -31,6 +31,7 @@ exceptions=(
     -e net-dns/pihole-ftl
     -e net-dns/pihole
     -e www-apps/pihole-admin-lte
+    -e games-emulation/gopher64
     # Inaccurate.
     -e app-emulation/basiliskii
     -e app-emulation/sheepshaver
@@ -39,6 +40,8 @@ exceptions=(
     -e games-arcade/stepmania
     -e games-emulation/mupen64plus-video-gliden64
     -e games-emulation/rpcs3
+    -e media-video/vapoursynth
+    -e dev-python/thinc
     # Weird tag livecheck cannot handle.
     -e games-emulation/fuse-libretro
     # Yarn packages broken?
