@@ -10,9 +10,9 @@ USE_MPV="rdepend"
 inherit mpv-plugin
 
 DESCRIPTION="Synchronize lyrics with mpv"
-HOMEPAGE="https://git.sr.ht/~guidocella/mpv-lrc"
-SHA="1380a0c4a4a7f4e45b7e46e4a43ab3834b9ea8a8"
-SRC_URI="https://git.sr.ht/~guidocella/mpv-lrc/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
+HOMEPAGE="https://github.com/guidocella/mpv-lrc"
+SHA="bb1c653a05e382dddef1f702745be76c17f786d0"
+SRC_URI="https://github.com/guidocella/mpv-lrc/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="GPL-3"
 SLOT="0"
