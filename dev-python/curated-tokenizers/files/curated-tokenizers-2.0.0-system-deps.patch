@@ -1,0 +1,97 @@
+--- a/setup.py	2025-10-20 00:01:06.755586101 -0400
++++ b/setup.py	2025-10-20 00:07:55.019945759 -0400
+@@ -16,61 +16,6 @@
+     return list(map(lambda f: f"{prefix}/{f}", files))
+ 
+ 
+-ABSL_SRC = prefix_path("sentencepiece/third_party/absl", ["flags/flag.cc"])
+-
+-PROTOBUF_LIGHT_SRC = prefix_path(
+-    "sentencepiece/third_party/protobuf-lite",
+-    [
+-        "arena.cc",
+-        "arenastring.cc",
+-        "bytestream.cc",
+-        "coded_stream.cc",
+-        "common.cc",
+-        "extension_set.cc",
+-        "generated_enum_util.cc",
+-        "generated_message_table_driven_lite.cc",
+-        "generated_message_util.cc",
+-        "implicit_weak_message.cc",
+-        "int128.cc",
+-        "io_win32.cc",
+-        "message_lite.cc",
+-        "parse_context.cc",
+-        "repeated_field.cc",
+-        "status.cc",
+-        "statusor.cc",
+-        "stringpiece.cc",
+-        "stringprintf.cc",
+-        "structurally_valid.cc",
+-        "strutil.cc",
+-        "time.cc",
+-        "wire_format_lite.cc",
+-        "zero_copy_stream.cc",
+-        "zero_copy_stream_impl.cc",
+-        "zero_copy_stream_impl_lite.cc",
+-    ],
+-)
+-
+-SENTENCEPIECE_PROTOBUF_SRC = prefix_path(
+-    "sentencepiece/src/builtin_pb", ["sentencepiece.pb.cc", "sentencepiece_model.pb.cc"]
+-)
+-
+-SENTENCEPIECE_SRC = prefix_path(
+-    "sentencepiece/src",
+-    [
+-        "bpe_model.cc",
+-        "char_model.cc",
+-        "error.cc",
+-        "filesystem.cc",
+-        "model_factory.cc",
+-        "model_interface.cc",
+-        "normalizer.cc",
+-        "sentencepiece_processor.cc",
+-        "unigram_model.cc",
+-        "util.cc",
+-        "word_model.cc",
+-    ],
+-)
+-
+ PACKAGES = find_packages()
+ MOD_NAMES = [
+     "curated_tokenizers.sp",
+@@ -87,8 +30,8 @@
+         "/wd4514",
+     ],
+     "other": [
+-        "--std=c++17",
+-        "-Wno-sign-compare" "-Wno-strict-prototypes",
++        "--std=c++17",
++        "-Wno-sign-compare", "-Wno-strict-prototypes",
+         "-Wno-unused-function",
+         "-pthread",
+         "-DHAVE_PTHREAD=1",
+@@ -142,19 +85,9 @@
+     ext_modules = [
+         Extension(
+             "curated_tokenizers._spp",
+-            ["curated_tokenizers/_spp.pyx"]
+-            + ABSL_SRC
+-            + PROTOBUF_LIGHT_SRC
+-            + SENTENCEPIECE_SRC
+-            + SENTENCEPIECE_PROTOBUF_SRC,
+-            include_dirs=[
+-                "curated_tokenizers",
+-                "sentencepiece",
+-                "sentencepiece/src",
+-                "sentencepiece/src/builtin_pb",
+-                "sentencepiece/third_party/protobuf-lite",
+-            ],
++            ["curated_tokenizers/_spp.pyx"],
+             language="c++",
++            libraries=["sentencepiece", "protobuf", "absl_flags_commandlineflag", "absl_flags_config", "absl_flags_internal", "absl_flags_reflection", "absl_strings",],
+         ),
+         Extension(
+             "curated_tokenizers._wordpiece",
