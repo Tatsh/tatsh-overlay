@@ -13,7 +13,9 @@ LICENSE="all-rights-reserved"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="virtual/libcrypt"
+DEPEND="sys-libs/ncurses-compat
+	virtual/libcrypt
+	virtual/zlib"
 RDEPEND="${DEPEND}"
 
 RESTRICT="strip"
