@@ -19,7 +19,7 @@ DEPEND="dev-libs/glib
 	media-libs/libao
 	media-libs/libglvnd
 	media-libs/libpulse
-	media-libs/libsdl2
+	media-libs/libsdl3
 	media-libs/openal
 	virtual/udev
 	x11-libs/cairo
