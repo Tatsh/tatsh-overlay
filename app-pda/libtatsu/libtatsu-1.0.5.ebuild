@@ -13,7 +13,8 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND=">=app-pda/libplist-2.6.0"
+DEPEND=">=app-pda/libplist-2.6.0
+	net-misc/curl"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
