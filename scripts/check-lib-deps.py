@@ -40,6 +40,8 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
             lib_package = 'virtual/udev'
         elif x.startswith('libusb-'):
             lib_package = 'virtual/libusb'
+        elif x.startswith('libz.so'):
+            lib_package = 'virtual/zlib'
         else:
             try:
                 lines = qfile(x).splitlines()
@@ -104,7 +106,8 @@ def main() -> int:
                                         capture_output=True,
                                         text=True).stdout.splitlines()
                       if is_elf(x) and not re.match(r'/usr/lib\d+/ryujinx/lib.*\.so$', x)
-                      and not re.match(r'/opt/stepmania-outfox/lib.*\.so(?:\.\d+)?', x))
+                      and not re.match(r'/opt/stepmania-outfox/lib.*\.so(?:\.\d+)?', x)
+                      and not re.match(r'/opt/ida/.*lib.*\.so(?:\d.\d+)?', x))
         if len(exes):
             for exe, missing in ((exe, [
                     y for y in m if not (package_name in IGNORE and y in IGNORE[package_name])
