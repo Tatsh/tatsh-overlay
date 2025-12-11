@@ -15,6 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
 
 RDEPEND="games-emulation/libretro-info"
+DEPEND="media-libs/libglvnd"
 IUSE="opengl vulkan cdrom"
 
 src_compile() {
