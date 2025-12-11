@@ -39,6 +39,7 @@ RDEPEND="
 	mednafen-psx? ( games-emulation/mednafen-psx-libretro )
 	mednafen-psx-hw? ( games-emulation/mednafen-psx-hw-libretro )
 	mupen64? ( games-emulation/mupen64next-libretro )
+	pcsx-rearmed? ( games-emulation/pcsx-rearmed-libretro )
 	ppsspp? ( games-emulation/ppsspp-libretro )
 	puae? ( games-emulation/puae-libretro )
 	puae2021? ( games-emulation/puae2021-libretro )
