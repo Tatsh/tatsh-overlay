@@ -36,7 +36,8 @@ RDEPEND="app-arch/bzip2
 	virtual/jack
 	virtual/udev
 	media-video/ffmpeg
-	virtual/libusb"
+	virtual/libusb
+	virtual/zlib"
 RESTRICT="fetch splitdebug strip"
 
 src_prepare() {

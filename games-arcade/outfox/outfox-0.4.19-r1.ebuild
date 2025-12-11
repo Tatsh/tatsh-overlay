@@ -36,7 +36,8 @@ RDEPEND="app-arch/bzip2
 	media-libs/libpulse
 	virtual/glu
 	virtual/jack
-virtual/udev
+	virtual/udev
+	virtual/zlib
 	media-video/ffmpeg
 	virtual/libusb"
 RESTRICT="splitdebug strip"
