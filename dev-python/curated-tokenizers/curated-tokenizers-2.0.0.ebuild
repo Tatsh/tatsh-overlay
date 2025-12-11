@@ -14,7 +14,7 @@ SRC_URI="https://github.com/explosion/${PN}/archive/refs/tags/v${PV}.tar.gz -> $
 
 PATCHES=(
 	"${FILESDIR}/${P}-system-deps.patch"
-	"${FILESDIR}/${P}-system-headers.patch"
+	"${FILESDIR}/${PN}-system-headers.patch"
 )
 
 LICENSE="MIT"
