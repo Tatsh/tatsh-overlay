@@ -621,7 +621,8 @@ LICENSE="Apache-2.0 BSD ISC MIT MPL-2.0 Unicode-3.0 Unicode-DFS-2016 ZLIB"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="dev-libs/openssl:="
+DEPEND="dev-libs/openssl:=
+	virtual/zlib"
 RDEPEND="${DEPEND}"
 BDEPEND="virtual/pkgconfig"
 
