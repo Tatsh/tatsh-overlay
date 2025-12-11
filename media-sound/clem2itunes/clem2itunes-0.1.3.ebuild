@@ -32,6 +32,11 @@ BDEPEND="test? (
 	dev-python/requests-mock[${PYTHON_USEDEP}]
 )"
 
+src_prepare() {
+	rm "${PN}/index.js" || die
+	distutils-r1_src_prepare
+}
+
 src_install() {
 	distutils-r1_src_install
 	doman "man/${PN}.1"
