@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Python access to Snowflake entity metadata."
-HOMEPAGE="https://pypi.org/project/snowflake-core/"
+HOMEPAGE="https://pypi.org/project/snowflake.core/"
 
 LICENSE="Apache-2.0"
 SLOT="0"

@@ -6,6 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="pypi">snowflake-core</remote-id>
+		<remote-id type="pypi">snowflake.core</remote-id>
 	</upstream>
 </pkgmetadata>
