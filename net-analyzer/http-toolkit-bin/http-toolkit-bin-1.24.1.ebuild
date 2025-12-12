@@ -46,7 +46,7 @@ RDEPEND="app-accessibility/at-spi2-core:2[${MULTILIB_USEDEP}]
 	x11-libs/libxkbfile:0[${MULTILIB_USEDEP}]
 	x11-libs/libXrandr:0[${MULTILIB_USEDEP}]
 	x11-libs/pango:0[${MULTILIB_USEDEP}]
-	virtual/udev[${MULTILIB_USEDEP}]"
+	virtual/udev"
 BDEPEND="app-arch/unzip"
 
 QA_PREBUILT="opt/${MY_PN_LOWER}/chrome-sandbox
