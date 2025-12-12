@@ -7,6 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">chriskiehl/Gooey</remote-id>
-		<remote-id type="pypi">gooey</remote-id>
+		<remote-id type="pypi">Gooey</remote-id>
 	</upstream>
 </pkgmetadata>
