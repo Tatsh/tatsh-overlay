@@ -19,6 +19,7 @@
 		<flag name="mupen64">Nintendo 64 (mupen64-next)</flag>
 		<flag name="pcsx-rearmed">Sony - PlayStation (PCSX ReARMed)</flag>
 		<flag name="ppsspp">Sony PSP (ppsspp)</flag>
+		<flag name="prboom">Doom (PrBoom)</flag>
 		<flag name="puae">Commodore - Amiga (P-UAE)</flag>
 		<flag name="puae2021">Commodore - Amiga (P-UAE)</flag>
 		<flag name="snes9x">Nintendo - SNES / SFC (Snes9x - Current)</flag>
@@ -104,7 +105,6 @@
 			<flag name="pocketcdg">PocketCDG</flag>
 			<flag name="pokemini">Nintendo - Pokemon Mini (PokeMini)</flag>
 			<flag name="potator">Watara SuperVision (potator)</flag>
-			<flag name="prboom">Doom (PrBoom)</flag>
 			<flag name="prosystem">Atari - 7800 (ProSystem)</flag>
 			<flag name="px68k">Sharp - X68000 (PX68k)</flag>
 			<flag name="quasi88">NEC - PC-8000 / PC-8800 series (QUASI88)</flag>
