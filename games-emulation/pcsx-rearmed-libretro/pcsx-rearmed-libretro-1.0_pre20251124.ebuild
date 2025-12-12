@@ -27,6 +27,7 @@ RDEPEND="${DEPEND}
 src_prepare() {
 	mv -T "${WORKDIR}/libpicofe-${LIBPICOFE_SHA}" frontend/libpicofe || die
 	libretro-core_src_prepare
+	# shellcheck disable=SC2016
 	sed -i configure \
 		-e 's/*) echo "ERROR: unknown option $opt"; show_help="yes"/*) echo "unknown option $opt"/'
 }
