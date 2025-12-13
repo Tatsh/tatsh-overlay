@@ -11,7 +11,7 @@ DESCRIPTION="MAME (0.78) with extra features for libretro."
 HOMEPAGE="https://github.com/libretro/mame2003-plus-libretro"
 LICENSE="MAME-GPL"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~x86"
 
 RDEPEND="games-emulation/libretro-info"
 
