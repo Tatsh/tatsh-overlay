@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>amverweij@gmail.com</email>
+		<name>Bram Verweij</name>
+	</maintainer>
+	<longdescription lang="en">Updated 2018 version of MAME (0.78) for libretro. With added game support plus many fixes and improvements.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">libretro/mame2003-plus-libretro</remote-id>
+	</upstream>
+</pkgmetadata>
