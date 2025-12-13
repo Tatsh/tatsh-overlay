@@ -14,6 +14,7 @@
 		<flag name="fmsx">Microsoft - MSX (fMSX)</flag>
 		<flag name="fuse">ZX Spectrum (Fuse)</flag>
 		<flag name="genesis-plus-gx">Sega Genesis / Megadrive (genesis_plus_gx)</flag>
+		<flag name="mame2003-plus">Arcade (MAME 2003 Plus)</flag>
 		<flag name="mednafen-psx">Sony - PlayStation (Beetle PSX)</flag>
 		<flag name="mednafen-psx-hw">Sony - Playstation (Beetle PSX HW)</flag>
 		<flag name="mupen64">Nintendo 64 (mupen64-next)</flag>
@@ -68,7 +69,6 @@
 			<flag name="lutro">Lua Engine (Lutro)</flag>
 			<flag name="mame2000">Arcade (MAME 2000)</flag>
 			<flag name="mame2003">Arcade (MAME 2003)</flag>
-			<flag name="mame2003-plus-libretro">Arcade (MAME 2003 Plus)</flag>
 			<flag name="mame2010">Arcade (MAME 2010)</flag>
 			<flag name="mame2015">Arcade (MAME 2015)</flag>
 			<flag name="mess2015">Multi systems (MESS 2015)</flag>

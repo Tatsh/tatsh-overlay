@@ -14,7 +14,7 @@ SLOT="0"
 #IUSE="2048 3dengine 81 atari800 bk blastem bluemsx bnes boom3 bsnes cannonball cap32 chailove citra \
 #	craft crocods desmume dinothawr dosbox-svn swanstation ecwolf fbalpha fbalpha2012 fbneo \
 #	fceu-next ffmpeg freechaf freeintv frodo gambatte gearboy gearsystem \
-#	genesis-plus-gx_wide gme gong gpsp gw handy hatari lowresnx lutro mame2000 mame2003 mame2003_plus-libretro \
+#	genesis-plus-gx_wide gme gong gpsp gw handy hatari lowresnx lutro mame2000 mame2003 \
 #	mame2010 mame2015 mess2015 mednafen-bsnes mednafen-gba mednafen-lynx mednafen-ngp mednafen-pce \
 #	mednafen-pce-fast mednafen-pcfx mednafen-saturn mednafen-supafaust \
 #	mednafen-supergrafx mednafen-vb mednafen-wswan melonds meowpc98 mesen mesens meteor mgba mrboom mu mupen64 \
@@ -26,7 +26,7 @@ SLOT="0"
 
 KEYWORDS="~amd64 ~arm64 ~x86"
 IUSE="
-	bsnes-mercury dolphin dosbox fceumm flycast fmsx fuse genesis-plus-gx mednafen-psx mednafen-psx-hw
+	bsnes-mercury dolphin dosbox fceumm flycast fmsx fuse genesis-plus-gx mame2003-plus mednafen-psx mednafen-psx-hw
 	mupen64 pcsx-rearmed ppsspp prboom puae puae2021 snes9x swanstation tyrquake vice-x64 vice-x64sc"
 
 RDEPEND="
@@ -38,6 +38,7 @@ RDEPEND="
 	fmsx? ( games-emulation/fmsx-libretro )
 	fuse? ( games-emulation/fuse-libretro )
 	genesis-plus-gx? ( games-emulation/genesis-plus-gx-libretro )
+	mame2003-plus? ( games-emulation/mame2003-plus-libretro )
 	mednafen-psx? ( games-emulation/mednafen-psx-libretro )
 	mednafen-psx-hw? ( games-emulation/mednafen-psx-hw-libretro )
 	mupen64? ( games-emulation/mupen64next-libretro )
