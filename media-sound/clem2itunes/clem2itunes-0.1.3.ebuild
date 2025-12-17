@@ -16,6 +16,7 @@ KEYWORDS="~amd64"
 
 RDEPEND="dev-python/aiosqlite[${PYTHON_USEDEP}]
 	dev-python/anyio[${PYTHON_USEDEP}]
+	dev-python/bascom[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
 	dev-python/click-aliases[${PYTHON_USEDEP}]
 	dev-python/colorlog[${PYTHON_USEDEP}]
