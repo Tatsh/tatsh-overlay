@@ -14,6 +14,7 @@ exceptions=(
     # Inaccurate.
     -e app-emulation/basiliskii
     -e app-emulation/sheepshaver
+    -e dev-db/prisma-engines
     -e dev-python/thinc
     -e dev-qt/qtwebkit
     -e games-arcade/stepmania
