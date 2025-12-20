@@ -13,7 +13,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~ppc64"
 
-RDEPEND="dev-python/click[${PYTHON_USEDEP}]
+RDEPEND="dev-python/bascom[${PYTHON_USEDEP}]
+	dev-python/click[${PYTHON_USEDEP}]
 	dev-python/keyring[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]"
 
