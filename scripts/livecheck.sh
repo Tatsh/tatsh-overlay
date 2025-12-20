@@ -24,6 +24,7 @@ exceptions=(
     -e media-video/vapoursynth
     # Weird tag livecheck cannot handle.
     -e games-emulation/fuse-libretro
+    -e games-emulation/pcsx-rearmed-libretro
     # Yarn packages broken?
     -e app-misc/zwave-js-server
     -e dev-util/yo
