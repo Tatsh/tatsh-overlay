@@ -251,6 +251,7 @@ ccache
 ccflags
 ccgo
 ccmd
+ccompiler
 ccount
 ccsha
 cctalk
@@ -761,6 +762,7 @@ extern
 extglob
 extrawarn
 exzap
+ezpwd
 faad
 fabiocaccamo
 faccessat
@@ -1704,6 +1706,7 @@ nall
 namedtuples
 namelen
 nandinagari
+nanobind
 nanoclone
 nanoid
 napi
@@ -2333,6 +2336,7 @@ soundtouch
 sourcedir
 sourceforge
 sourcehut
+soxr
 spacepacket
 spacy
 spammy
