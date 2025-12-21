@@ -47,7 +47,7 @@ CRATES="approx@0.5.1
 	unindent@0.2.4"
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
+PYTHON_COMPAT=( python3_1{2,3,4} )
 inherit cargo cmake desktop distutils-r1
 
 DESCRIPTION="Software defined VHS decoder."
@@ -68,6 +68,7 @@ DEPEND="x11-libs/qwt:6[qt6]
 RDEPEND="${DEPEND}
 	${PYTHON_DEPS}
 	dev-python/numpy[${PYTHON_USEDEP}]
+	dev-python/soxr[${PYTHON_USEDEP}]
 	media-video/ffmpeg
 	dev-python/scipy[${PYTHON_USEDEP}]
 	gtk? ( dev-python/gooey[${PYTHON_USEDEP}] )
