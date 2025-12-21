@@ -1,0 +1,31 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d1d3127b..ec26d119 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -27,9 +27,6 @@ option(USE_QWT
+ # Needed for ezpwd as it uses alternative operators
+ if(MSVC)
+     add_compile_options(/permissive-)
+-else()
+-    add_compile_options(-O3)
+-    add_link_options(-O3)
+ endif()
+ 
+ set(USE_QT_VERSION "" CACHE STRING
+@@ -81,15 +78,7 @@ endif()
+ 
+ find_package(PkgConfig REQUIRED)
+ if(USE_QWT)
+-    # try pkg-config first
+-    pkg_check_modules(QWT Qt${QT_VERSION_MAJOR}Qwt6)
+-    if(QWT_FOUND)
+-        # .....
+-        set(QWT_INCLUDE_DIR ${QWT_INCLUDE_DIRS})
+-        set(QWT_LIBRARY ${QWT_LIBRARIES})
+-    else()
+-        find_package(Qwt REQUIRED)
+-    endif()
++    find_package(Qwt REQUIRED)
+ endif()
+ 
+ if(NOT MSVC)

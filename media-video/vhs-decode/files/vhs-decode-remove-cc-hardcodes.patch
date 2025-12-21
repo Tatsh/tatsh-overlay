@@ -1,0 +1,23 @@
+diff --git a/setup.py b/setup.py
+index ee4869d6..836f1d0e 100755
+--- a/setup.py
++++ b/setup.py
+@@ -13,16 +13,8 @@ import numpy
+ 
+ compiler = distutils.ccompiler.new_compiler()
+ 
+-if compiler.compiler_type == "unix":
+-    if shutil.which("clang"):
+-        os.environ["CC"] = "clang"
+-        os.environ["CXX"] = "clang++"
+-
+-    extra_compile_args=["-O3", "-flto"]
+-    extra_link_args=["-O3", "-flto"]
+-else:
+-    extra_compile_args=[]
+-    extra_link_args=[]
++extra_compile_args=[]
++extra_link_args=[]
+ 
+ setup(
+     # name='ld-decode',
