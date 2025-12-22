@@ -9,6 +9,7 @@ CRATES="ahash@0.8.12
 	aho-corasick@1.1.4
 	allocator-api2@0.2.21
 	android_system_properties@0.1.5
+	anes@0.1.6
 	ansi-to-tui@7.0.0
 	anstream@0.6.21
 	anstyle-parse@0.2.7
@@ -37,10 +38,15 @@ CRATES="ahash@0.8.12
 	bytecount@0.6.9
 	bytes@1.10.1
 	cassowary@0.3.0
+	cast@0.3.0
 	castaway@0.2.4
 	cc@1.2.43
 	cfg-if@1.0.4
 	chrono@0.4.42
+	ciborium-io@0.2.2
+	ciborium-ll@0.2.2
+	ciborium@0.2.2
+	clap-cargo@0.18.3
 	clap@4.5.50
 	clap_builder@4.5.50
 	clap_derive@4.5.49
@@ -51,6 +57,11 @@ CRATES="ahash@0.8.12
 	const-random-macro@0.1.16
 	const-random@0.1.18
 	core-foundation-sys@0.8.7
+	criterion-plot@0.5.0
+	criterion@0.5.1
+	crossbeam-deque@0.8.6
+	crossbeam-epoch@0.9.18
+	crossbeam-utils@0.8.21
 	crossterm@0.28.1
 	crossterm_winapi@0.9.1
 	crunchy@0.2.4
@@ -72,20 +83,29 @@ CRATES="ahash@0.8.12
 	fixedbitset@0.4.2
 	fnv@1.0.7
 	foldhash@0.1.5
+	futures-core@0.3.31
+	futures-macro@0.3.31
+	futures-task@0.3.31
+	futures-timer@3.0.3
+	futures-util@0.3.31
 	gethostname@1.1.0
 	getrandom@0.2.16
 	getrandom@0.3.4
+	glob@0.3.3
 	half@2.7.1
 	hashbrown@0.15.5
 	hashbrown@0.16.0
 	heck@0.5.0
+	hermit-abi@0.5.2
 	iana-time-zone-haiku@0.1.2
 	iana-time-zone@0.1.64
 	ident_case@1.0.1
 	indexmap@2.12.0
 	indoc@2.0.7
 	instability@0.3.9
+	is-terminal@0.4.17
 	is_terminal_polyfill@1.70.2
+	itertools@0.10.5
 	itertools@0.13.0
 	itoa@1.0.15
 	js-sys@0.3.82
@@ -122,36 +142,59 @@ CRATES="ahash@0.8.12
 	objc2@0.6.3
 	once_cell@1.21.3
 	once_cell_polyfill@1.70.2
+	oorandom@11.1.5
 	os_pipe@1.2.3
 	parking_lot@0.12.5
 	parking_lot_core@0.9.12
 	paste@1.0.15
 	percent-encoding@2.3.2
 	petgraph@0.6.5
+	pin-project-lite@0.2.16
+	pin-utils@0.1.0
 	pkg-config@0.3.32
+	plotters-backend@0.3.7
+	plotters-svg@0.3.7
+	plotters@0.3.7
+	ppv-lite86@0.2.21
+	proc-macro-crate@3.4.0
 	proc-macro2@1.0.103
 	qsv-dateparser@0.13.0
-	qsv-sniffer@0.11.0
+	qsv-sniffer@0.12.2
+	qsv-tabwriter@2.0.0
 	quick-xml@0.37.5
 	quote@1.0.41
 	r-efi@5.3.0
+	rand@0.8.5
+	rand_chacha@0.3.1
+	rand_core@0.6.4
 	ratatui@0.29.0
+	rayon-core@1.13.0
+	rayon@1.11.0
 	redox_syscall@0.5.18
 	regex-automata@0.4.13
 	regex-syntax@0.8.8
 	regex@1.12.2
+	relative-path@1.9.3
+	rstest@0.26.1
+	rstest_macros@0.26.1
+	rustc_version@0.4.1
 	rustix@0.38.44
 	rustix@1.1.2
 	rustversion@1.0.22
 	ryu@1.0.20
+	same-file@1.0.6
 	scopeguard@1.2.0
+	semver@1.0.27
+	serde@1.0.228
 	serde_core@1.0.228
 	serde_derive@1.0.228
+	serde_json@1.0.145
 	shlex@1.3.0
 	signal-hook-mio@0.2.5
 	signal-hook-registry@1.4.6
 	signal-hook@0.3.18
 	simdutf8@0.1.5
+	slab@0.4.11
 	smallvec@1.15.1
 	sorted-vec@0.8.10
 	static_assertions@1.1.0
@@ -159,7 +202,6 @@ CRATES="ahash@0.8.12
 	strum@0.26.3
 	strum_macros@0.26.4
 	syn@2.0.108
-	tabwriter@1.4.1
 	tempfile@3.23.0
 	terminal-colorsaurus@1.0.1
 	terminal-trx@0.2.5
@@ -169,6 +211,10 @@ CRATES="ahash@0.8.12
 	thiserror@1.0.69
 	thiserror@2.0.17
 	tiny-keccak@2.0.2
+	tinytemplate@1.2.1
+	toml_datetime@0.7.3
+	toml_edit@0.23.7
+	toml_parser@1.0.4
 	tree_magic_mini@3.2.0
 	tui-input@0.13.0
 	unicode-ident@1.0.20
@@ -178,6 +224,7 @@ CRATES="ahash@0.8.12
 	unicode-width@0.2.0
 	utf8parse@0.2.2
 	version_check@0.9.5
+	walkdir@2.5.0
 	wasi@0.11.1+wasi-snapshot-preview1
 	wasip2@1.0.1+wasi-0.2.4
 	wasm-bindgen-macro-support@0.2.105
@@ -190,7 +237,9 @@ CRATES="ahash@0.8.12
 	wayland-protocols@0.32.9
 	wayland-scanner@0.31.7
 	wayland-sys@0.31.7
+	web-sys@0.3.82
 	winapi-i686-pc-windows-gnu@0.4.0
+	winapi-util@0.1.11
 	winapi-x86_64-pc-windows-gnu@0.4.0
 	winapi@0.3.9
 	windows-core@0.62.2
@@ -220,6 +269,7 @@ CRATES="ahash@0.8.12
 	windows_x86_64_gnullvm@0.53.1
 	windows_x86_64_msvc@0.52.6
 	windows_x86_64_msvc@0.53.1
+	winnow@0.7.14
 	wit-bindgen@0.46.0
 	wl-clipboard-rs@0.9.2
 	x11rb-protocol@0.13.2
