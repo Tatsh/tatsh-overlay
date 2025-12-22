@@ -22,6 +22,5 @@ RDEPEND="$(python_gen_cond_dep '
 		<dev-python/thinc-9.1.0[${PYTHON_USEDEP}]
 		>=dev-python/thinc-8.1.6[${PYTHON_USEDEP}]
 	')
-  >=dev-python/curated-transformers-0.1.0[${PYTHON_SINGLE_USEDEP}]
-  <dev-python/curated-transformers-0.2.0[${PYTHON_SINGLE_USEDEP}]
+	>=dev-python/curated-transformers-2.0.1[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/pytorch-1.12.0[${PYTHON_SINGLE_USEDEP}]"
