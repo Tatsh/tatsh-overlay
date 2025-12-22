@@ -18,8 +18,8 @@ YARN_PKGS=(
 	@eslint/config-array-0.21.1
 	@eslint/config-helpers-0.4.2
 	@eslint/core-0.17.0
-	@eslint/eslintrc-3.3.1
-	@eslint/js-9.39.1
+	@eslint/eslintrc-3.3.3
+	@eslint/js-9.39.2
 	@eslint/object-schema-2.1.7
 	@eslint/plugin-kit-0.4.1
 	@homebridge/ciao-1.3.4
@@ -48,15 +48,15 @@ YARN_PKGS=(
 	@types/estree-1.0.8
 	@types/json-schema-7.0.15
 	@types/triple-beam-1.3.5
-	@zwave-js/cc-15.17.0
-	@zwave-js/config-15.17.0
-	@zwave-js/core-15.17.0
-	@zwave-js/host-15.17.0
-	@zwave-js/nvmedit-15.17.0
-	@zwave-js/serial-15.17.0
+	@zwave-js/cc-15.18.0
+	@zwave-js/config-15.18.0
+	@zwave-js/core-15.18.0
+	@zwave-js/host-15.18.0
+	@zwave-js/nvmedit-15.18.0
+	@zwave-js/serial-15.18.0
 	@zwave-js/server-3.5.0
-	@zwave-js/shared-15.17.0
-	@zwave-js/testing-15.17.0
+	@zwave-js/shared-15.18.0
+	@zwave-js/testing-15.18.0
 	@zwave-js/waddle-1.2.1
 	acorn-8.15.0
 	acorn-jsx-5.3.2
@@ -74,15 +74,15 @@ YARN_PKGS=(
 	callsites-3.1.0
 	chalk-4.1.2
 	cliui-9.0.1
-	color-5.0.2
+	color-5.0.3
 	color-convert-2.0.1
-	color-convert-3.1.2
+	color-convert-3.1.3
 	color-name-1.1.4
-	color-name-2.0.2
-	color-string-2.1.2
+	color-name-2.1.0
+	color-string-2.1.4
 	concat-map-0.0.1
 	cross-spawn-7.0.6
-	dayjs-1.11.18
+	dayjs-1.11.19
 	debug-4.4.0
 	debug-4.4.3
 	deep-is-0.1.4
@@ -91,7 +91,7 @@ YARN_PKGS=(
 	enabled-2.0.0
 	escalade-3.2.0
 	escape-string-regexp-4.0.0
-	eslint-9.39.1
+	eslint-9.39.2
 	eslint-scope-8.4.0
 	eslint-visitor-keys-3.4.3
 	eslint-visitor-keys-4.2.1
@@ -126,7 +126,7 @@ YARN_PKGS=(
 	is-glob-4.0.3
 	is-stream-2.0.1
 	isexe-2.0.0
-	js-yaml-4.1.0
+	js-yaml-4.1.1
 	json-buffer-3.0.1
 	json-logic-js-2.0.5
 	json-schema-traverse-0.4.1
@@ -134,7 +134,7 @@ YARN_PKGS=(
 	json5-2.2.3
 	keyv-4.5.4
 	kuler-2.0.0
-	ky-1.13.0
+	ky-1.14.1
 	levn-0.4.1
 	locate-path-6.0.0
 	lodash.merge-4.6.2
@@ -187,7 +187,7 @@ YARN_PKGS=(
 	uri-js-4.4.1
 	util-deprecate-1.0.2
 	which-2.0.2
-	winston-3.18.3
+	winston-3.19.0
 	winston-daily-rotate-file-5.0.0
 	winston-transport-4.9.0
 	word-wrap-1.2.5
@@ -197,7 +197,7 @@ YARN_PKGS=(
 	yargs-18.0.0
 	yargs-parser-22.0.0
 	yocto-queue-0.1.0
-	zwave-js-15.17.1
+	zwave-js-15.18.0
 )
 yarn_set_globals
 SRC_URI="${YARN_SRC_URI}"
