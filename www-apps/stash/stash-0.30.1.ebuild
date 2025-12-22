@@ -80,7 +80,6 @@ EGO_SUM=(
 	"github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751/go.mod"
 	"github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf/go.mod"
 	"github.com/alecthomas/units v0.0.0-20190717042225-c3de453c63f4/go.mod"
-	"github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d/go.mod"
 	"github.com/anacrolix/dms v1.2.2"
 	"github.com/anacrolix/dms v1.2.2/go.mod"
 	"github.com/anacrolix/envpprof v0.0.0-20180404065416-323002cec2fa/go.mod"
@@ -112,16 +111,6 @@ EGO_SUM=(
 	"github.com/asticode/go-astisub v0.25.1/go.mod"
 	"github.com/asticode/go-astits v1.8.0"
 	"github.com/asticode/go-astits v1.8.0/go.mod"
-	"github.com/aws/aws-sdk-go-v2 v1.9.2/go.mod"
-	"github.com/aws/aws-sdk-go-v2/config v1.8.3/go.mod"
-	"github.com/aws/aws-sdk-go-v2/credentials v1.4.3/go.mod"
-	"github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.6.0/go.mod"
-	"github.com/aws/aws-sdk-go-v2/internal/ini v1.2.4/go.mod"
-	"github.com/aws/aws-sdk-go-v2/service/appconfig v1.4.2/go.mod"
-	"github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.3.2/go.mod"
-	"github.com/aws/aws-sdk-go-v2/service/sso v1.4.2/go.mod"
-	"github.com/aws/aws-sdk-go-v2/service/sts v1.7.2/go.mod"
-	"github.com/aws/smithy-go v1.8.0/go.mod"
 	"github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod"
 	"github.com/beorn7/perks v1.0.0/go.mod"
 	"github.com/beorn7/perks v1.0.1/go.mod"
@@ -193,7 +182,6 @@ EGO_SUM=(
 	"github.com/doug-martin/goqu/v9 v9.18.0"
 	"github.com/doug-martin/goqu/v9 v9.18.0/go.mod"
 	"github.com/dustin/go-humanize v0.0.0-20180421182945-02af3965c54e/go.mod"
-	"github.com/dustin/go-humanize v1.0.0/go.mod"
 	"github.com/envoyproxy/go-control-plane v0.9.0/go.mod"
 	"github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod"
 	"github.com/envoyproxy/go-control-plane v0.9.4/go.mod"
@@ -208,19 +196,17 @@ EGO_SUM=(
 	"github.com/fatih/color v1.7.0/go.mod"
 	"github.com/fatih/color v1.9.0/go.mod"
 	"github.com/fatih/color v1.13.0/go.mod"
-	"github.com/fatih/structs v1.1.0/go.mod"
 	"github.com/frankban/quicktest v1.14.6"
 	"github.com/frankban/quicktest v1.14.6/go.mod"
-	"github.com/fsnotify/fsnotify v1.4.9/go.mod"
 	"github.com/fsnotify/fsnotify v1.5.1/go.mod"
-	"github.com/fsnotify/fsnotify v1.6.0"
-	"github.com/fsnotify/fsnotify v1.6.0/go.mod"
+	"github.com/fsnotify/fsnotify v1.9.0"
+	"github.com/fsnotify/fsnotify v1.9.0/go.mod"
 	"github.com/ghodss/yaml v1.0.0/go.mod"
 	"github.com/glycerine/go-unsnap-stream v0.0.0-20180323001048-9f0cb55181dd/go.mod"
 	"github.com/glycerine/goconvey v0.0.0-20180728074245-46e3a41ad493/go.mod"
 	"github.com/go-chi/chi/v5 v5.0.7/go.mod"
-	"github.com/go-chi/chi/v5 v5.0.12"
-	"github.com/go-chi/chi/v5 v5.0.12/go.mod"
+	"github.com/go-chi/chi/v5 v5.2.2"
+	"github.com/go-chi/chi/v5 v5.2.2/go.mod"
 	"github.com/go-chi/cors v1.2.1"
 	"github.com/go-chi/cors v1.2.1/go.mod"
 	"github.com/go-chi/httplog v0.3.1"
@@ -230,22 +216,18 @@ EGO_SUM=(
 	"github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4/go.mod"
 	"github.com/go-kit/kit v0.8.0/go.mod"
 	"github.com/go-kit/kit v0.9.0/go.mod"
-	"github.com/go-kit/log v0.1.0/go.mod"
-	"github.com/go-ldap/ldap v3.0.2+incompatible/go.mod"
 	"github.com/go-logfmt/logfmt v0.3.0/go.mod"
 	"github.com/go-logfmt/logfmt v0.4.0/go.mod"
-	"github.com/go-logfmt/logfmt v0.5.0/go.mod"
 	"github.com/go-sourcemap/sourcemap v2.1.3+incompatible"
 	"github.com/go-sourcemap/sourcemap v2.1.3+incompatible/go.mod"
 	"github.com/go-sql-driver/mysql v1.6.0/go.mod"
 	"github.com/go-sql-driver/mysql v1.8.1"
 	"github.com/go-sql-driver/mysql v1.8.1/go.mod"
 	"github.com/go-stack/stack v1.8.0/go.mod"
-	"github.com/go-test/deep v1.0.2-0.20181118220953-042da051cf31/go.mod"
 	"github.com/go-toast/toast v0.0.0-20190211030409-01e6764cf0a4"
 	"github.com/go-toast/toast v0.0.0-20190211030409-01e6764cf0a4/go.mod"
-	"github.com/go-viper/mapstructure/v2 v2.2.1"
-	"github.com/go-viper/mapstructure/v2 v2.2.1/go.mod"
+	"github.com/go-viper/mapstructure/v2 v2.4.0"
+	"github.com/go-viper/mapstructure/v2 v2.4.0/go.mod"
 	"github.com/gobwas/httphead v0.1.0"
 	"github.com/gobwas/httphead v0.1.0/go.mod"
 	"github.com/gobwas/pool v0.2.1"
@@ -296,7 +278,6 @@ EGO_SUM=(
 	"github.com/golang/protobuf v1.5.1/go.mod"
 	"github.com/golang/protobuf v1.5.2/go.mod"
 	"github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db/go.mod"
-	"github.com/golang/snappy v0.0.1/go.mod"
 	"github.com/golang/snappy v0.0.3/go.mod"
 	"github.com/google/btree v0.0.0-20180124185431-e89373fe6b4a/go.mod"
 	"github.com/google/btree v0.0.0-20180813153112-4030bb1f1f0c/go.mod"
@@ -313,7 +294,6 @@ EGO_SUM=(
 	"github.com/google/go-cmp v0.5.4/go.mod"
 	"github.com/google/go-cmp v0.5.5/go.mod"
 	"github.com/google/go-cmp v0.5.6/go.mod"
-	"github.com/google/go-cmp v0.5.7/go.mod"
 	"github.com/google/go-cmp v0.7.0"
 	"github.com/google/go-cmp v0.7.0/go.mod"
 	"github.com/google/gofuzz v1.0.0/go.mod"
@@ -354,11 +334,9 @@ EGO_SUM=(
 	"github.com/gorilla/sessions v1.2.1/go.mod"
 	"github.com/gorilla/websocket v1.5.0"
 	"github.com/gorilla/websocket v1.5.0/go.mod"
-	"github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0/go.mod"
 	"github.com/grpc-ecosystem/grpc-gateway v1.16.0/go.mod"
 	"github.com/hashicorp/consul/api v1.11.0/go.mod"
 	"github.com/hashicorp/consul/api v1.12.0/go.mod"
-	"github.com/hashicorp/consul/api v1.13.0/go.mod"
 	"github.com/hashicorp/consul/sdk v0.8.0/go.mod"
 	"github.com/hashicorp/errwrap v1.0.0/go.mod"
 	"github.com/hashicorp/errwrap v1.1.0"
@@ -366,8 +344,6 @@ EGO_SUM=(
 	"github.com/hashicorp/go-cleanhttp v0.5.0/go.mod"
 	"github.com/hashicorp/go-cleanhttp v0.5.1/go.mod"
 	"github.com/hashicorp/go-cleanhttp v0.5.2/go.mod"
-	"github.com/hashicorp/go-hclog v0.0.0-20180709165350-ff2cf002a8dd/go.mod"
-	"github.com/hashicorp/go-hclog v0.8.0/go.mod"
 	"github.com/hashicorp/go-hclog v0.12.0/go.mod"
 	"github.com/hashicorp/go-hclog v1.0.0/go.mod"
 	"github.com/hashicorp/go-immutable-radix v1.0.0/go.mod"
@@ -377,17 +353,12 @@ EGO_SUM=(
 	"github.com/hashicorp/go-multierror v1.1.0/go.mod"
 	"github.com/hashicorp/go-multierror v1.1.1"
 	"github.com/hashicorp/go-multierror v1.1.1/go.mod"
-	"github.com/hashicorp/go-plugin v1.0.1/go.mod"
 	"github.com/hashicorp/go-retryablehttp v0.5.3/go.mod"
-	"github.com/hashicorp/go-retryablehttp v0.5.4/go.mod"
-	"github.com/hashicorp/go-rootcerts v1.0.1/go.mod"
 	"github.com/hashicorp/go-rootcerts v1.0.2/go.mod"
 	"github.com/hashicorp/go-sockaddr v1.0.0/go.mod"
-	"github.com/hashicorp/go-sockaddr v1.0.2/go.mod"
 	"github.com/hashicorp/go-syslog v1.0.0/go.mod"
 	"github.com/hashicorp/go-uuid v1.0.0/go.mod"
 	"github.com/hashicorp/go-uuid v1.0.1/go.mod"
-	"github.com/hashicorp/go-version v1.1.0/go.mod"
 	"github.com/hashicorp/golang-lru v0.5.0/go.mod"
 	"github.com/hashicorp/golang-lru v0.5.1/go.mod"
 	"github.com/hashicorp/golang-lru v0.5.4/go.mod"
@@ -402,14 +373,8 @@ EGO_SUM=(
 	"github.com/hashicorp/memberlist v0.3.0/go.mod"
 	"github.com/hashicorp/serf v0.9.5/go.mod"
 	"github.com/hashicorp/serf v0.9.6/go.mod"
-	"github.com/hashicorp/vault/api v1.0.4/go.mod"
-	"github.com/hashicorp/vault/sdk v0.1.13/go.mod"
-	"github.com/hashicorp/yamux v0.0.0-20180604194846-3520598351bb/go.mod"
-	"github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d/go.mod"
 	"github.com/hasura/go-graphql-client v0.13.1"
 	"github.com/hasura/go-graphql-client v0.13.1/go.mod"
-	"github.com/hjson/hjson-go/v4 v4.0.0"
-	"github.com/hjson/hjson-go/v4 v4.0.0/go.mod"
 	"github.com/huandu/xstrings v1.0.0/go.mod"
 	"github.com/iancoleman/strcase v0.2.0/go.mod"
 	"github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6/go.mod"
@@ -420,18 +385,12 @@ EGO_SUM=(
 	"github.com/inconshreveable/mousetrap v1.1.0/go.mod"
 	"github.com/jinzhu/copier v0.4.0"
 	"github.com/jinzhu/copier v0.4.0/go.mod"
-	"github.com/jmespath/go-jmespath v0.4.0/go.mod"
-	"github.com/jmespath/go-jmespath/internal/testify v1.5.1/go.mod"
 	"github.com/jmoiron/sqlx v1.4.0"
 	"github.com/jmoiron/sqlx v1.4.0/go.mod"
-	"github.com/joho/godotenv v1.3.0"
-	"github.com/joho/godotenv v1.3.0/go.mod"
 	"github.com/josharian/intern v1.0.0"
 	"github.com/josharian/intern v1.0.0/go.mod"
-	"github.com/jpillora/backoff v1.0.0/go.mod"
 	"github.com/json-iterator/go v1.1.6/go.mod"
 	"github.com/json-iterator/go v1.1.9/go.mod"
-	"github.com/json-iterator/go v1.1.10/go.mod"
 	"github.com/json-iterator/go v1.1.11/go.mod"
 	"github.com/json-iterator/go v1.1.12"
 	"github.com/json-iterator/go v1.1.12/go.mod"
@@ -439,17 +398,25 @@ EGO_SUM=(
 	"github.com/jstemmer/go-junit-report v0.9.1/go.mod"
 	"github.com/jtolds/gls v4.2.1+incompatible/go.mod"
 	"github.com/julienschmidt/httprouter v1.2.0/go.mod"
-	"github.com/julienschmidt/httprouter v1.3.0/go.mod"
 	"github.com/kermieisinthehouse/gosx-notifier v0.1.2"
 	"github.com/kermieisinthehouse/gosx-notifier v0.1.2/go.mod"
 	"github.com/kermieisinthehouse/systray v1.2.4"
 	"github.com/kermieisinthehouse/systray v1.2.4/go.mod"
 	"github.com/kisielk/errcheck v1.5.0/go.mod"
 	"github.com/kisielk/gotool v1.0.0/go.mod"
-	"github.com/knadh/koanf v1.5.0"
-	"github.com/knadh/koanf v1.5.0/go.mod"
+	"github.com/knadh/koanf/maps v0.1.2"
+	"github.com/knadh/koanf/maps v0.1.2/go.mod"
+	"github.com/knadh/koanf/parsers/yaml v1.1.0"
+	"github.com/knadh/koanf/parsers/yaml v1.1.0/go.mod"
+	"github.com/knadh/koanf/providers/env v1.1.0"
+	"github.com/knadh/koanf/providers/env v1.1.0/go.mod"
+	"github.com/knadh/koanf/providers/file v1.2.0"
+	"github.com/knadh/koanf/providers/file v1.2.0/go.mod"
+	"github.com/knadh/koanf/providers/posflag v1.0.1"
+	"github.com/knadh/koanf/providers/posflag v1.0.1/go.mod"
+	"github.com/knadh/koanf/v2 v2.2.1"
+	"github.com/knadh/koanf/v2 v2.2.1/go.mod"
 	"github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod"
-	"github.com/konsorten/go-windows-terminal-sequences v1.0.3/go.mod"
 	"github.com/kr/fs v0.1.0/go.mod"
 	"github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod"
 	"github.com/kr/pretty v0.1.0/go.mod"
@@ -500,22 +467,17 @@ EGO_SUM=(
 	"github.com/miekg/dns v1.0.14/go.mod"
 	"github.com/miekg/dns v1.1.26/go.mod"
 	"github.com/miekg/dns v1.1.41/go.mod"
-	"github.com/mitchellh/cli v1.0.0/go.mod"
 	"github.com/mitchellh/cli v1.1.0/go.mod"
-	"github.com/mitchellh/copystructure v1.0.0/go.mod"
 	"github.com/mitchellh/copystructure v1.2.0"
 	"github.com/mitchellh/copystructure v1.2.0/go.mod"
 	"github.com/mitchellh/go-homedir v1.1.0"
 	"github.com/mitchellh/go-homedir v1.1.0/go.mod"
-	"github.com/mitchellh/go-testing-interface v0.0.0-20171004221916-a61a99592b77/go.mod"
 	"github.com/mitchellh/go-testing-interface v1.0.0/go.mod"
-	"github.com/mitchellh/go-wordwrap v1.0.0/go.mod"
 	"github.com/mitchellh/mapstructure v0.0.0-20160808181253-ca63d7c062ee/go.mod"
 	"github.com/mitchellh/mapstructure v1.1.2/go.mod"
 	"github.com/mitchellh/mapstructure v1.4.3/go.mod"
 	"github.com/mitchellh/mapstructure v1.5.0"
 	"github.com/mitchellh/mapstructure v1.5.0/go.mod"
-	"github.com/mitchellh/reflectwalk v1.0.0/go.mod"
 	"github.com/mitchellh/reflectwalk v1.0.2"
 	"github.com/mitchellh/reflectwalk v1.0.2/go.mod"
 	"github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421/go.mod"
@@ -527,26 +489,20 @@ EGO_SUM=(
 	"github.com/modern-go/reflect2 v1.0.2/go.mod"
 	"github.com/mschoch/smat v0.0.0-20160514031455-90eadee771ae/go.mod"
 	"github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod"
-	"github.com/mwitkow/go-conntrack v0.0.0-20190716064945-2f068394615f/go.mod"
 	"github.com/natefinch/pie v0.0.0-20170715172608-9a0d72014007"
 	"github.com/natefinch/pie v0.0.0-20170715172608-9a0d72014007/go.mod"
 	"github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646"
 	"github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646/go.mod"
-	"github.com/npillmayer/nestext v0.1.3/go.mod"
 	"github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d"
 	"github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d/go.mod"
-	"github.com/oklog/run v1.0.0/go.mod"
 	"github.com/orisano/pixelmatch v0.0.0-20220722002657-fb0b55479cde"
 	"github.com/orisano/pixelmatch v0.0.0-20220722002657-fb0b55479cde/go.mod"
 	"github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c/go.mod"
 	"github.com/pascaldekloe/goe v0.1.0/go.mod"
-	"github.com/pelletier/go-toml v1.7.0/go.mod"
-	"github.com/pelletier/go-toml v1.9.4"
 	"github.com/pelletier/go-toml v1.9.4/go.mod"
 	"github.com/pelletier/go-toml/v2 v2.1.0"
 	"github.com/pelletier/go-toml/v2 v2.1.0/go.mod"
 	"github.com/philhofer/fwd v1.0.0/go.mod"
-	"github.com/pierrec/lz4 v2.0.5+incompatible/go.mod"
 	"github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8"
 	"github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8/go.mod"
 	"github.com/pkg/errors v0.8.0/go.mod"
@@ -563,24 +519,17 @@ EGO_SUM=(
 	"github.com/prometheus/client_golang v0.9.1/go.mod"
 	"github.com/prometheus/client_golang v1.0.0/go.mod"
 	"github.com/prometheus/client_golang v1.4.0/go.mod"
-	"github.com/prometheus/client_golang v1.7.1/go.mod"
-	"github.com/prometheus/client_golang v1.11.1/go.mod"
 	"github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910/go.mod"
 	"github.com/prometheus/client_model v0.0.0-20190129233127-fd36f4220a90/go.mod"
 	"github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod"
 	"github.com/prometheus/client_model v0.2.0/go.mod"
 	"github.com/prometheus/common v0.4.1/go.mod"
 	"github.com/prometheus/common v0.9.1/go.mod"
-	"github.com/prometheus/common v0.10.0/go.mod"
-	"github.com/prometheus/common v0.26.0/go.mod"
 	"github.com/prometheus/procfs v0.0.0-20181005140218-185b4288413d/go.mod"
 	"github.com/prometheus/procfs v0.0.2/go.mod"
 	"github.com/prometheus/procfs v0.0.8/go.mod"
-	"github.com/prometheus/procfs v0.1.3/go.mod"
-	"github.com/prometheus/procfs v0.6.0/go.mod"
 	"github.com/remeh/sizedwaitgroup v1.0.0"
 	"github.com/remeh/sizedwaitgroup v1.0.0/go.mod"
-	"github.com/rhnvrm/simples3 v0.6.1/go.mod"
 	"github.com/rogpeppe/fastuuid v1.2.0/go.mod"
 	"github.com/rogpeppe/go-internal v1.3.0/go.mod"
 	"github.com/rogpeppe/go-internal v1.6.1/go.mod"
@@ -598,8 +547,6 @@ EGO_SUM=(
 	"github.com/rwcarlsen/goexif v0.0.0-20190401172101-9e8deecbddbd"
 	"github.com/rwcarlsen/goexif v0.0.0-20190401172101-9e8deecbddbd/go.mod"
 	"github.com/ryanuber/columnize v0.0.0-20160712163229-9b3edd62028f/go.mod"
-	"github.com/ryanuber/columnize v2.1.0+incompatible/go.mod"
-	"github.com/ryanuber/go-glob v1.0.0/go.mod"
 	"github.com/ryszard/goskiplist v0.0.0-20150312221310-2dfbae5fcf46/go.mod"
 	"github.com/sagikazarmark/crypt v0.3.0/go.mod"
 	"github.com/sagikazarmark/crypt v0.4.0/go.mod"
@@ -608,7 +555,6 @@ EGO_SUM=(
 	"github.com/sergi/go-diff v1.3.1/go.mod"
 	"github.com/sirupsen/logrus v1.2.0/go.mod"
 	"github.com/sirupsen/logrus v1.4.2/go.mod"
-	"github.com/sirupsen/logrus v1.6.0/go.mod"
 	"github.com/sirupsen/logrus v1.9.3"
 	"github.com/sirupsen/logrus v1.9.3/go.mod"
 	"github.com/smartystreets/assertions v0.0.0-20180927180507-b2de0cb4f26d/go.mod"
@@ -629,8 +575,9 @@ EGO_SUM=(
 	"github.com/spf13/cobra v1.7.0/go.mod"
 	"github.com/spf13/jwalterweatherman v1.1.0"
 	"github.com/spf13/jwalterweatherman v1.1.0/go.mod"
-	"github.com/spf13/pflag v1.0.5"
 	"github.com/spf13/pflag v1.0.5/go.mod"
+	"github.com/spf13/pflag v1.0.6"
+	"github.com/spf13/pflag v1.0.6/go.mod"
 	"github.com/spf13/viper v1.10.0/go.mod"
 	"github.com/spf13/viper v1.10.1/go.mod"
 	"github.com/spf13/viper v1.16.0"
@@ -691,11 +638,8 @@ EGO_SUM=(
 	"github.com/zencoder/go-dash/v3 v3.0.2"
 	"github.com/zencoder/go-dash/v3 v3.0.2/go.mod"
 	"go.etcd.io/etcd/api/v3 v3.5.1/go.mod"
-	"go.etcd.io/etcd/api/v3 v3.5.4/go.mod"
 	"go.etcd.io/etcd/client/pkg/v3 v3.5.1/go.mod"
-	"go.etcd.io/etcd/client/pkg/v3 v3.5.4/go.mod"
 	"go.etcd.io/etcd/client/v2 v2.305.1/go.mod"
-	"go.etcd.io/etcd/client/v3 v3.5.4/go.mod"
 	"go.opencensus.io v0.21.0/go.mod"
 	"go.opencensus.io v0.22.0/go.mod"
 	"go.opencensus.io v0.22.2/go.mod"
@@ -709,6 +653,8 @@ EGO_SUM=(
 	"go.uber.org/atomic v1.11.0/go.mod"
 	"go.uber.org/multierr v1.6.0/go.mod"
 	"go.uber.org/zap v1.17.0/go.mod"
+	"go.yaml.in/yaml/v3 v3.0.3"
+	"go.yaml.in/yaml/v3 v3.0.3/go.mod"
 	"golang.org/x/crypto v0.0.0-20180904163835-0709b304e793/go.mod"
 	"golang.org/x/crypto v0.0.0-20181029021203-45a5f77698d3/go.mod"
 	"golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod"
@@ -726,8 +672,8 @@ EGO_SUM=(
 	"golang.org/x/crypto v0.0.0-20211215165025-cf75a172585e/go.mod"
 	"golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce/go.mod"
 	"golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa/go.mod"
-	"golang.org/x/crypto v0.38.0"
-	"golang.org/x/crypto v0.38.0/go.mod"
+	"golang.org/x/crypto v0.45.0"
+	"golang.org/x/crypto v0.45.0/go.mod"
 	"golang.org/x/exp v0.0.0-20190121172915-509febef88a4/go.mod"
 	"golang.org/x/exp v0.0.0-20190306152737-a1d7652674e8/go.mod"
 	"golang.org/x/exp v0.0.0-20190510132918-efd6b22b2522/go.mod"
@@ -769,8 +715,8 @@ EGO_SUM=(
 	"golang.org/x/mod v0.5.0/go.mod"
 	"golang.org/x/mod v0.5.1/go.mod"
 	"golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4/go.mod"
-	"golang.org/x/mod v0.24.0"
-	"golang.org/x/mod v0.24.0/go.mod"
+	"golang.org/x/mod v0.29.0"
+	"golang.org/x/mod v0.29.0/go.mod"
 	"golang.org/x/net v0.0.0-20180724234803-3673e40ba225/go.mod"
 	"golang.org/x/net v0.0.0-20180826012351-8a410e7b638d/go.mod"
 	"golang.org/x/net v0.0.0-20181023162649-9b4f9f5ad519/go.mod"
@@ -820,8 +766,8 @@ EGO_SUM=(
 	"golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2/go.mod"
 	"golang.org/x/net v0.0.0-20220722155237-a158d28d115b/go.mod"
 	"golang.org/x/net v0.5.0/go.mod"
-	"golang.org/x/net v0.40.0"
-	"golang.org/x/net v0.40.0/go.mod"
+	"golang.org/x/net v0.47.0"
+	"golang.org/x/net v0.47.0/go.mod"
 	"golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod"
 	"golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421/go.mod"
 	"golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45/go.mod"
@@ -851,18 +797,16 @@ EGO_SUM=(
 	"golang.org/x/sync v0.0.0-20201207232520-09787c993a3a/go.mod"
 	"golang.org/x/sync v0.0.0-20210220032951-036812b2e83c/go.mod"
 	"golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4/go.mod"
-	"golang.org/x/sync v0.14.0"
-	"golang.org/x/sync v0.14.0/go.mod"
+	"golang.org/x/sync v0.18.0"
+	"golang.org/x/sync v0.18.0/go.mod"
 	"golang.org/x/sys v0.0.0-20180823144017-11551d06cbcc/go.mod"
 	"golang.org/x/sys v0.0.0-20180830151530-49385e6e1522/go.mod"
 	"golang.org/x/sys v0.0.0-20180905080454-ebe1bf3edb33/go.mod"
 	"golang.org/x/sys v0.0.0-20181026203630-95b1ffbd15a5/go.mod"
 	"golang.org/x/sys v0.0.0-20181116152217-5ac8a444bdc5/go.mod"
-	"golang.org/x/sys v0.0.0-20190129075346-302c3dd5f1cc/go.mod"
 	"golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod"
 	"golang.org/x/sys v0.0.0-20190222072716-a9d3bda3a223/go.mod"
 	"golang.org/x/sys v0.0.0-20190312061237-fead79001313/go.mod"
-	"golang.org/x/sys v0.0.0-20190403152447-81d4e9dc473e/go.mod"
 	"golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod"
 	"golang.org/x/sys v0.0.0-20190415145633-3fd5a3612ccd/go.mod"
 	"golang.org/x/sys v0.0.0-20190422165155-953cdadca894/go.mod"
@@ -874,12 +818,10 @@ EGO_SUM=(
 	"golang.org/x/sys v0.0.0-20190922100055-0a153f010e69/go.mod"
 	"golang.org/x/sys v0.0.0-20190924154521-2837fb4f24fe/go.mod"
 	"golang.org/x/sys v0.0.0-20191001151750-bb3f8db39f24/go.mod"
-	"golang.org/x/sys v0.0.0-20191005200804-aed5e4c7ecf9/go.mod"
 	"golang.org/x/sys v0.0.0-20191008105621-543471e840be/go.mod"
 	"golang.org/x/sys v0.0.0-20191026070338-33540a1f6037/go.mod"
 	"golang.org/x/sys v0.0.0-20191204072324-ce4227a45e2e/go.mod"
 	"golang.org/x/sys v0.0.0-20191228213918-04cbcbbfeed8/go.mod"
-	"golang.org/x/sys v0.0.0-20200106162015-b016eb3dc98e/go.mod"
 	"golang.org/x/sys v0.0.0-20200113162924-86b910548bc1/go.mod"
 	"golang.org/x/sys v0.0.0-20200116001909-b77594299b42/go.mod"
 	"golang.org/x/sys v0.0.0-20200122134326-e047566fdf82/go.mod"
@@ -894,8 +836,6 @@ EGO_SUM=(
 	"golang.org/x/sys v0.0.0-20200511232937-7e40ca221e25/go.mod"
 	"golang.org/x/sys v0.0.0-20200515095857-1151b9dac4a9/go.mod"
 	"golang.org/x/sys v0.0.0-20200523222454-059865788121/go.mod"
-	"golang.org/x/sys v0.0.0-20200615200032-f1bc736245b1/go.mod"
-	"golang.org/x/sys v0.0.0-20200625212154-ddb9806d33ae/go.mod"
 	"golang.org/x/sys v0.0.0-20200803210538-64077c9b5642/go.mod"
 	"golang.org/x/sys v0.0.0-20200905004654-be1d3432aa8f/go.mod"
 	"golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f/go.mod"
@@ -903,7 +843,6 @@ EGO_SUM=(
 	"golang.org/x/sys v0.0.0-20201201145000-ef89a241ccb3/go.mod"
 	"golang.org/x/sys v0.0.0-20210104204734-6f8348627aad/go.mod"
 	"golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4/go.mod"
-	"golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c/go.mod"
 	"golang.org/x/sys v0.0.0-20210220050731-9a76102bfb43/go.mod"
 	"golang.org/x/sys v0.0.0-20210225134936-a50acf3fe073/go.mod"
 	"golang.org/x/sys v0.0.0-20210303074136-134d130e1a04/go.mod"
@@ -916,7 +855,6 @@ EGO_SUM=(
 	"golang.org/x/sys v0.0.0-20210423185535-09eb48e85fd7/go.mod"
 	"golang.org/x/sys v0.0.0-20210510120138-977fb7262007/go.mod"
 	"golang.org/x/sys v0.0.0-20210514084401-e8d321eab015/go.mod"
-	"golang.org/x/sys v0.0.0-20210603081109-ebe580a85c40/go.mod"
 	"golang.org/x/sys v0.0.0-20210603125802-9665404d3644/go.mod"
 	"golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1/go.mod"
 	"golang.org/x/sys v0.0.0-20210616045830-e2b7044e8c71/go.mod"
@@ -939,21 +877,19 @@ EGO_SUM=(
 	"golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8/go.mod"
 	"golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f/go.mod"
 	"golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab/go.mod"
-	"golang.org/x/sys v0.0.0-20220908164124-27713097b956/go.mod"
 	"golang.org/x/sys v0.4.0/go.mod"
 	"golang.org/x/sys v0.6.0/go.mod"
 	"golang.org/x/sys v0.10.0/go.mod"
-	"golang.org/x/sys v0.33.0"
-	"golang.org/x/sys v0.33.0/go.mod"
+	"golang.org/x/sys v0.38.0"
+	"golang.org/x/sys v0.38.0/go.mod"
 	"golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod"
 	"golang.org/x/term v0.0.0-20210927222741-03fcf44c2211/go.mod"
 	"golang.org/x/term v0.4.0/go.mod"
-	"golang.org/x/term v0.32.0"
-	"golang.org/x/term v0.32.0/go.mod"
+	"golang.org/x/term v0.37.0"
+	"golang.org/x/term v0.37.0/go.mod"
 	"golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c/go.mod"
 	"golang.org/x/text v0.3.0/go.mod"
 	"golang.org/x/text v0.3.1-0.20180807135948-17ff2d5776d2/go.mod"
-	"golang.org/x/text v0.3.1-0.20181227161524-e6919f6577db/go.mod"
 	"golang.org/x/text v0.3.2/go.mod"
 	"golang.org/x/text v0.3.3/go.mod"
 	"golang.org/x/text v0.3.4/go.mod"
@@ -962,8 +898,8 @@ EGO_SUM=(
 	"golang.org/x/text v0.3.7/go.mod"
 	"golang.org/x/text v0.3.8/go.mod"
 	"golang.org/x/text v0.6.0/go.mod"
-	"golang.org/x/text v0.25.0"
-	"golang.org/x/text v0.25.0/go.mod"
+	"golang.org/x/text v0.31.0"
+	"golang.org/x/text v0.31.0/go.mod"
 	"golang.org/x/time v0.0.0-20181108054448-85acf8d2951c/go.mod"
 	"golang.org/x/time v0.0.0-20190308202827-9d24e82272b4/go.mod"
 	"golang.org/x/time v0.0.0-20191024005414-555d28b269f0/go.mod"
@@ -1028,8 +964,8 @@ EGO_SUM=(
 	"golang.org/x/tools v0.1.7/go.mod"
 	"golang.org/x/tools v0.1.8/go.mod"
 	"golang.org/x/tools v0.1.12/go.mod"
-	"golang.org/x/tools v0.33.0"
-	"golang.org/x/tools v0.33.0/go.mod"
+	"golang.org/x/tools v0.38.0"
+	"golang.org/x/tools v0.38.0/go.mod"
 	"golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod"
 	"golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898/go.mod"
 	"golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod"
@@ -1076,7 +1012,6 @@ EGO_SUM=(
 	"google.golang.org/appengine v1.6.7/go.mod"
 	"google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8/go.mod"
 	"google.golang.org/genproto v0.0.0-20190307195333-5fe7a883aa19/go.mod"
-	"google.golang.org/genproto v0.0.0-20190404172233-64821d5d2107/go.mod"
 	"google.golang.org/genproto v0.0.0-20190418145605-e7d98fc518a7/go.mod"
 	"google.golang.org/genproto v0.0.0-20190425155659-357c62f0e4bb/go.mod"
 	"google.golang.org/genproto v0.0.0-20190502173448-54afdca5d873/go.mod"
@@ -1140,11 +1075,9 @@ EGO_SUM=(
 	"google.golang.org/genproto v0.0.0-20211203200212-54befc351ae9/go.mod"
 	"google.golang.org/genproto v0.0.0-20211206160659-862468c7d6e0/go.mod"
 	"google.golang.org/genproto v0.0.0-20211208223120-3a66f561d7aa/go.mod"
-	"google.golang.org/grpc v1.14.0/go.mod"
 	"google.golang.org/grpc v1.19.0/go.mod"
 	"google.golang.org/grpc v1.20.1/go.mod"
 	"google.golang.org/grpc v1.21.1/go.mod"
-	"google.golang.org/grpc v1.22.0/go.mod"
 	"google.golang.org/grpc v1.23.0/go.mod"
 	"google.golang.org/grpc v1.25.1/go.mod"
 	"google.golang.org/grpc v1.26.0/go.mod"
@@ -1185,7 +1118,6 @@ EGO_SUM=(
 	"google.golang.org/protobuf v1.26.0/go.mod"
 	"google.golang.org/protobuf v1.27.1/go.mod"
 	"gopkg.in/alecthomas/kingpin.v2 v2.2.6/go.mod"
-	"gopkg.in/asn1-ber.v1 v1.0.0-20181015200546-f715ec2f112d/go.mod"
 	"gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod"
 	"gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod"
 	"gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15/go.mod"
@@ -1198,14 +1130,14 @@ EGO_SUM=(
 	"gopkg.in/ini.v1 v1.66.3/go.mod"
 	"gopkg.in/ini.v1 v1.67.0"
 	"gopkg.in/ini.v1 v1.67.0/go.mod"
-	"gopkg.in/square/go-jose.v2 v2.3.1/go.mod"
+	"gopkg.in/natefinch/lumberjack.v2 v2.2.1"
+	"gopkg.in/natefinch/lumberjack.v2 v2.2.1/go.mod"
 	"gopkg.in/yaml.v2 v2.2.1/go.mod"
 	"gopkg.in/yaml.v2 v2.2.2/go.mod"
 	"gopkg.in/yaml.v2 v2.2.3/go.mod"
 	"gopkg.in/yaml.v2 v2.2.4/go.mod"
 	"gopkg.in/yaml.v2 v2.2.5/go.mod"
 	"gopkg.in/yaml.v2 v2.2.8/go.mod"
-	"gopkg.in/yaml.v2 v2.3.0/go.mod"
 	"gopkg.in/yaml.v2 v2.4.0"
 	"gopkg.in/yaml.v2 v2.4.0/go.mod"
 	"gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod"
@@ -1222,7 +1154,6 @@ EGO_SUM=(
 	"rsc.io/binaryregexp v0.2.0/go.mod"
 	"rsc.io/quote/v3 v3.1.0/go.mod"
 	"rsc.io/sampler v1.3.0/go.mod"
-	"sigs.k8s.io/yaml v1.2.0/go.mod"
 )
 go-module_set_globals
 YARN_PKGS=(
@@ -1232,114 +1163,154 @@ YARN_PKGS=(
 	@ardatan/relay-compiler-12.0.0
 	@ardatan/sync-fetch-0.0.1
 	@babel/code-frame-7.23.5
+	@babel/code-frame-7.27.1
 	@babel/compat-data-7.23.5
+	@babel/compat-data-7.28.5
 	@babel/core-7.23.9
+	@babel/core-7.28.5
 	@babel/generator-7.23.6
+	@babel/generator-7.28.5
 	@babel/helper-annotate-as-pure-7.18.6
-	@babel/helper-builder-binary-assignment-operator-visitor-7.18.9
+	@babel/helper-annotate-as-pure-7.27.3
 	@babel/helper-compilation-targets-7.23.6
+	@babel/helper-compilation-targets-7.27.2
 	@babel/helper-create-class-features-plugin-7.21.0
+	@babel/helper-create-class-features-plugin-7.28.5
 	@babel/helper-create-regexp-features-plugin-7.21.0
-	@babel/helper-define-polyfill-provider-0.3.3
+	@babel/helper-create-regexp-features-plugin-7.28.5
+	@babel/helper-define-polyfill-provider-0.6.5
 	@babel/helper-environment-visitor-7.22.20
-	@babel/helper-explode-assignable-expression-7.18.6
 	@babel/helper-function-name-7.23.0
+	@babel/helper-globals-7.28.0
 	@babel/helper-hoist-variables-7.22.5
 	@babel/helper-member-expression-to-functions-7.21.0
+	@babel/helper-member-expression-to-functions-7.28.5
 	@babel/helper-module-imports-7.22.15
+	@babel/helper-module-imports-7.27.1
 	@babel/helper-module-transforms-7.23.3
+	@babel/helper-module-transforms-7.28.3
 	@babel/helper-optimise-call-expression-7.18.6
+	@babel/helper-optimise-call-expression-7.27.1
 	@babel/helper-plugin-utils-7.20.2
-	@babel/helper-remap-async-to-generator-7.18.9
+	@babel/helper-plugin-utils-7.27.1
+	@babel/helper-remap-async-to-generator-7.27.1
 	@babel/helper-replace-supers-7.20.7
+	@babel/helper-replace-supers-7.27.1
 	@babel/helper-simple-access-7.22.5
 	@babel/helper-skip-transparent-expression-wrappers-7.20.0
+	@babel/helper-skip-transparent-expression-wrappers-7.27.1
 	@babel/helper-split-export-declaration-7.22.6
 	@babel/helper-string-parser-7.23.4
+	@babel/helper-string-parser-7.27.1
 	@babel/helper-validator-identifier-7.22.20
+	@babel/helper-validator-identifier-7.28.5
 	@babel/helper-validator-option-7.23.5
-	@babel/helper-wrap-function-7.20.5
+	@babel/helper-validator-option-7.27.1
+	@babel/helper-wrap-function-7.28.3
 	@babel/helpers-7.23.9
+	@babel/helpers-7.28.4
 	@babel/highlight-7.23.4
 	@babel/parser-7.23.9
-	@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression-7.18.6
-	@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining-7.20.7
-	@babel/plugin-proposal-async-generator-functions-7.20.7
+	@babel/parser-7.28.5
+	@babel/plugin-bugfix-firefox-class-in-computed-class-key-7.28.5
+	@babel/plugin-bugfix-safari-class-field-initializer-scope-7.27.1
+	@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression-7.27.1
+	@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining-7.27.1
+	@babel/plugin-bugfix-v8-static-class-fields-redefine-readonly-7.28.3
 	@babel/plugin-proposal-class-properties-7.18.6
-	@babel/plugin-proposal-class-static-block-7.21.0
-	@babel/plugin-proposal-dynamic-import-7.18.6
-	@babel/plugin-proposal-export-namespace-from-7.18.9
-	@babel/plugin-proposal-json-strings-7.18.6
-	@babel/plugin-proposal-logical-assignment-operators-7.20.7
-	@babel/plugin-proposal-nullish-coalescing-operator-7.18.6
-	@babel/plugin-proposal-numeric-separator-7.18.6
 	@babel/plugin-proposal-object-rest-spread-7.20.7
-	@babel/plugin-proposal-optional-catch-binding-7.18.6
-	@babel/plugin-proposal-optional-chaining-7.21.0
-	@babel/plugin-proposal-private-methods-7.18.6
-	@babel/plugin-proposal-private-property-in-object-7.21.0
-	@babel/plugin-proposal-unicode-property-regex-7.18.6
-	@babel/plugin-syntax-async-generators-7.8.4
+	@babel/plugin-proposal-private-property-in-object-7.21.0-placeholder-for-preset-env.2
 	@babel/plugin-syntax-class-properties-7.12.13
-	@babel/plugin-syntax-class-static-block-7.14.5
-	@babel/plugin-syntax-dynamic-import-7.8.3
-	@babel/plugin-syntax-export-namespace-from-7.8.3
 	@babel/plugin-syntax-flow-7.18.6
 	@babel/plugin-syntax-import-assertions-7.20.0
-	@babel/plugin-syntax-json-strings-7.8.3
+	@babel/plugin-syntax-import-assertions-7.27.1
+	@babel/plugin-syntax-import-attributes-7.27.1
 	@babel/plugin-syntax-jsx-7.18.6
-	@babel/plugin-syntax-logical-assignment-operators-7.10.4
-	@babel/plugin-syntax-nullish-coalescing-operator-7.8.3
-	@babel/plugin-syntax-numeric-separator-7.10.4
 	@babel/plugin-syntax-object-rest-spread-7.8.3
-	@babel/plugin-syntax-optional-catch-binding-7.8.3
-	@babel/plugin-syntax-optional-chaining-7.8.3
-	@babel/plugin-syntax-private-property-in-object-7.14.5
-	@babel/plugin-syntax-top-level-await-7.14.5
+	@babel/plugin-syntax-unicode-sets-regex-7.18.6
 	@babel/plugin-transform-arrow-functions-7.20.7
-	@babel/plugin-transform-async-to-generator-7.20.7
+	@babel/plugin-transform-arrow-functions-7.27.1
+	@babel/plugin-transform-async-generator-functions-7.28.0
+	@babel/plugin-transform-async-to-generator-7.27.1
 	@babel/plugin-transform-block-scoped-functions-7.18.6
+	@babel/plugin-transform-block-scoped-functions-7.27.1
 	@babel/plugin-transform-block-scoping-7.21.0
+	@babel/plugin-transform-block-scoping-7.28.5
+	@babel/plugin-transform-class-properties-7.27.1
+	@babel/plugin-transform-class-static-block-7.28.3
 	@babel/plugin-transform-classes-7.21.0
+	@babel/plugin-transform-classes-7.28.4
 	@babel/plugin-transform-computed-properties-7.20.7
+	@babel/plugin-transform-computed-properties-7.27.1
 	@babel/plugin-transform-destructuring-7.20.7
-	@babel/plugin-transform-dotall-regex-7.18.6
-	@babel/plugin-transform-duplicate-keys-7.18.9
-	@babel/plugin-transform-exponentiation-operator-7.18.6
+	@babel/plugin-transform-destructuring-7.28.5
+	@babel/plugin-transform-dotall-regex-7.27.1
+	@babel/plugin-transform-duplicate-keys-7.27.1
+	@babel/plugin-transform-duplicate-named-capturing-groups-regex-7.27.1
+	@babel/plugin-transform-dynamic-import-7.27.1
+	@babel/plugin-transform-explicit-resource-management-7.28.0
+	@babel/plugin-transform-exponentiation-operator-7.28.5
+	@babel/plugin-transform-export-namespace-from-7.27.1
 	@babel/plugin-transform-flow-strip-types-7.19.0
 	@babel/plugin-transform-for-of-7.21.0
+	@babel/plugin-transform-for-of-7.27.1
 	@babel/plugin-transform-function-name-7.18.9
+	@babel/plugin-transform-function-name-7.27.1
+	@babel/plugin-transform-json-strings-7.27.1
 	@babel/plugin-transform-literals-7.18.9
+	@babel/plugin-transform-literals-7.27.1
+	@babel/plugin-transform-logical-assignment-operators-7.28.5
 	@babel/plugin-transform-member-expression-literals-7.18.6
-	@babel/plugin-transform-modules-amd-7.20.11
+	@babel/plugin-transform-member-expression-literals-7.27.1
+	@babel/plugin-transform-modules-amd-7.27.1
 	@babel/plugin-transform-modules-commonjs-7.20.11
-	@babel/plugin-transform-modules-systemjs-7.20.11
-	@babel/plugin-transform-modules-umd-7.18.6
-	@babel/plugin-transform-named-capturing-groups-regex-7.20.5
-	@babel/plugin-transform-new-target-7.18.6
+	@babel/plugin-transform-modules-commonjs-7.27.1
+	@babel/plugin-transform-modules-systemjs-7.28.5
+	@babel/plugin-transform-modules-umd-7.27.1
+	@babel/plugin-transform-named-capturing-groups-regex-7.27.1
+	@babel/plugin-transform-new-target-7.27.1
+	@babel/plugin-transform-nullish-coalescing-operator-7.27.1
+	@babel/plugin-transform-numeric-separator-7.27.1
+	@babel/plugin-transform-object-rest-spread-7.28.4
 	@babel/plugin-transform-object-super-7.18.6
+	@babel/plugin-transform-object-super-7.27.1
+	@babel/plugin-transform-optional-catch-binding-7.27.1
+	@babel/plugin-transform-optional-chaining-7.28.5
 	@babel/plugin-transform-parameters-7.20.7
+	@babel/plugin-transform-parameters-7.27.7
+	@babel/plugin-transform-private-methods-7.27.1
+	@babel/plugin-transform-private-property-in-object-7.27.1
 	@babel/plugin-transform-property-literals-7.18.6
+	@babel/plugin-transform-property-literals-7.27.1
 	@babel/plugin-transform-react-display-name-7.18.6
 	@babel/plugin-transform-react-jsx-7.20.13
-	@babel/plugin-transform-react-jsx-self-7.18.6
-	@babel/plugin-transform-react-jsx-source-7.19.6
-	@babel/plugin-transform-regenerator-7.20.5
-	@babel/plugin-transform-reserved-words-7.18.6
+	@babel/plugin-transform-react-jsx-self-7.27.1
+	@babel/plugin-transform-react-jsx-source-7.27.1
+	@babel/plugin-transform-regenerator-7.28.4
+	@babel/plugin-transform-regexp-modifiers-7.27.1
+	@babel/plugin-transform-reserved-words-7.27.1
 	@babel/plugin-transform-shorthand-properties-7.18.6
+	@babel/plugin-transform-shorthand-properties-7.27.1
 	@babel/plugin-transform-spread-7.20.7
-	@babel/plugin-transform-sticky-regex-7.18.6
+	@babel/plugin-transform-spread-7.27.1
+	@babel/plugin-transform-sticky-regex-7.27.1
 	@babel/plugin-transform-template-literals-7.18.9
-	@babel/plugin-transform-typeof-symbol-7.18.9
-	@babel/plugin-transform-unicode-escapes-7.18.10
-	@babel/plugin-transform-unicode-regex-7.18.6
-	@babel/preset-env-7.20.2
-	@babel/preset-modules-0.1.5
+	@babel/plugin-transform-template-literals-7.27.1
+	@babel/plugin-transform-typeof-symbol-7.27.1
+	@babel/plugin-transform-unicode-escapes-7.27.1
+	@babel/plugin-transform-unicode-property-regex-7.27.1
+	@babel/plugin-transform-unicode-regex-7.27.1
+	@babel/plugin-transform-unicode-sets-regex-7.27.1
+	@babel/preset-env-7.28.5
+	@babel/preset-modules-0.1.6-no-external-plugins
 	@babel/regjsgen-0.8.0
 	@babel/runtime-7.27.0
 	@babel/template-7.23.9
+	@babel/template-7.27.2
 	@babel/traverse-7.23.9
+	@babel/traverse-7.28.5
 	@babel/types-7.23.9
+	@babel/types-7.28.5
 	@cspotcode/source-map-support-0.8.1
 	@csstools/css-parser-algorithms-2.3.0
 	@csstools/css-tokenizer-2.1.1
@@ -1356,28 +1327,29 @@ YARN_PKGS=(
 	@emotion/use-insertion-effect-with-fallbacks-1.0.0
 	@emotion/utils-1.2.0
 	@emotion/weak-memoize-0.3.0
-	@esbuild/android-arm-0.18.20
-	@esbuild/android-arm64-0.18.20
-	@esbuild/android-x64-0.18.20
-	@esbuild/darwin-arm64-0.18.20
-	@esbuild/darwin-x64-0.18.20
-	@esbuild/freebsd-arm64-0.18.20
-	@esbuild/freebsd-x64-0.18.20
-	@esbuild/linux-arm-0.18.20
-	@esbuild/linux-arm64-0.18.20
-	@esbuild/linux-ia32-0.18.20
-	@esbuild/linux-loong64-0.18.20
-	@esbuild/linux-mips64el-0.18.20
-	@esbuild/linux-ppc64-0.18.20
-	@esbuild/linux-riscv64-0.18.20
-	@esbuild/linux-s390x-0.18.20
-	@esbuild/linux-x64-0.18.20
-	@esbuild/netbsd-x64-0.18.20
-	@esbuild/openbsd-x64-0.18.20
-	@esbuild/sunos-x64-0.18.20
-	@esbuild/win32-arm64-0.18.20
-	@esbuild/win32-ia32-0.18.20
-	@esbuild/win32-x64-0.18.20
+	@esbuild/aix-ppc64-0.21.5
+	@esbuild/android-arm-0.21.5
+	@esbuild/android-arm64-0.21.5
+	@esbuild/android-x64-0.21.5
+	@esbuild/darwin-arm64-0.21.5
+	@esbuild/darwin-x64-0.21.5
+	@esbuild/freebsd-arm64-0.21.5
+	@esbuild/freebsd-x64-0.21.5
+	@esbuild/linux-arm-0.21.5
+	@esbuild/linux-arm64-0.21.5
+	@esbuild/linux-ia32-0.21.5
+	@esbuild/linux-loong64-0.21.5
+	@esbuild/linux-mips64el-0.21.5
+	@esbuild/linux-ppc64-0.21.5
+	@esbuild/linux-riscv64-0.21.5
+	@esbuild/linux-s390x-0.21.5
+	@esbuild/linux-x64-0.21.5
+	@esbuild/netbsd-x64-0.21.5
+	@esbuild/openbsd-x64-0.21.5
+	@esbuild/sunos-x64-0.21.5
+	@esbuild/win32-arm64-0.21.5
+	@esbuild/win32-ia32-0.21.5
+	@esbuild/win32-x64-0.21.5
 	@eslint/eslintrc-1.4.1
 	@floating-ui/core-1.2.1
 	@floating-ui/dom-1.2.1
@@ -1446,12 +1418,17 @@ YARN_PKGS=(
 	@humanwhocodes/config-array-0.11.8
 	@humanwhocodes/module-importer-1.0.1
 	@humanwhocodes/object-schema-1.2.1
+	@jridgewell/gen-mapping-0.3.13
 	@jridgewell/gen-mapping-0.3.2
+	@jridgewell/remapping-2.3.5
 	@jridgewell/resolve-uri-3.1.0
+	@jridgewell/resolve-uri-3.1.2
 	@jridgewell/set-array-1.1.2
 	@jridgewell/source-map-0.3.2
 	@jridgewell/sourcemap-codec-1.4.14
+	@jridgewell/sourcemap-codec-1.5.5
 	@jridgewell/trace-mapping-0.3.17
+	@jridgewell/trace-mapping-0.3.31
 	@jridgewell/trace-mapping-0.3.9
 	@juggle/resize-observer-3.4.0
 	@kamilkisiela/fast-url-parser-1.1.4
@@ -1469,6 +1446,29 @@ YARN_PKGS=(
 	@repeaterjs/repeater-3.0.4
 	@restart/context-2.1.4
 	@restart/hooks-0.4.9
+	@rolldown/pluginutils-1.0.0-beta.53
+	@rollup/rollup-android-arm-eabi-4.54.0
+	@rollup/rollup-android-arm64-4.54.0
+	@rollup/rollup-darwin-arm64-4.54.0
+	@rollup/rollup-darwin-x64-4.54.0
+	@rollup/rollup-freebsd-arm64-4.54.0
+	@rollup/rollup-freebsd-x64-4.54.0
+	@rollup/rollup-linux-arm-gnueabihf-4.54.0
+	@rollup/rollup-linux-arm-musleabihf-4.54.0
+	@rollup/rollup-linux-arm64-gnu-4.54.0
+	@rollup/rollup-linux-arm64-musl-4.54.0
+	@rollup/rollup-linux-loong64-gnu-4.54.0
+	@rollup/rollup-linux-ppc64-gnu-4.54.0
+	@rollup/rollup-linux-riscv64-gnu-4.54.0
+	@rollup/rollup-linux-riscv64-musl-4.54.0
+	@rollup/rollup-linux-s390x-gnu-4.54.0
+	@rollup/rollup-linux-x64-gnu-4.54.0
+	@rollup/rollup-linux-x64-musl-4.54.0
+	@rollup/rollup-openharmony-arm64-4.54.0
+	@rollup/rollup-win32-arm64-msvc-4.54.0
+	@rollup/rollup-win32-ia32-msvc-4.54.0
+	@rollup/rollup-win32-x64-gnu-4.54.0
+	@rollup/rollup-win32-x64-msvc-4.54.0
 	@silvermine/videojs-airplay-1.2.0
 	@silvermine/videojs-chromecast-1.4.1
 	@tsconfig/node10-1.0.9
@@ -1478,11 +1478,14 @@ YARN_PKGS=(
 	@tweenjs/tween.js-18.6.4
 	@types/apollo-upload-client-18.0.0
 	@types/babel__core-7.20.0
+	@types/babel__core-7.20.5
 	@types/babel__generator-7.6.4
 	@types/babel__template-7.4.1
 	@types/babel__traverse-7.18.3
 	@types/cookie-0.3.3
 	@types/crypto-js-4.2.2
+	@types/dom-screen-wake-lock-1.0.3
+	@types/estree-1.0.8
 	@types/extract-files-13.0.1
 	@types/fs-extra-9.0.13
 	@types/history-4.7.11
@@ -1534,8 +1537,8 @@ YARN_PKGS=(
 	@videojs/http-streaming-2.16.2
 	@videojs/vhs-utils-3.0.5
 	@videojs/xhr-2.6.0
-	@vitejs/plugin-legacy-4.0.1
-	@vitejs/plugin-react-3.1.0
+	@vitejs/plugin-legacy-5.4.3
+	@vitejs/plugin-react-5.1.2
 	@whatwg-node/events-0.0.2
 	@whatwg-node/events-0.1.1
 	@whatwg-node/fetch-0.8.1
@@ -1586,9 +1589,9 @@ YARN_PKGS=(
 	axobject-query-3.1.1
 	b64-to-blob-1.2.19
 	babel-plugin-macros-3.1.0
-	babel-plugin-polyfill-corejs2-0.3.3
-	babel-plugin-polyfill-corejs3-0.6.0
-	babel-plugin-polyfill-regenerator-0.4.1
+	babel-plugin-polyfill-corejs2-0.4.14
+	babel-plugin-polyfill-corejs3-0.13.0
+	babel-plugin-polyfill-regenerator-0.6.5
 	babel-plugin-react-intl-7.9.4
 	babel-plugin-syntax-trailing-function-commas-7.0.0-beta.0
 	babel-preset-fbjs-3.4.0
@@ -1597,6 +1600,7 @@ YARN_PKGS=(
 	balanced-match-2.0.0
 	base64-blob-1.4.1
 	base64-js-1.5.1
+	baseline-browser-mapping-2.9.11
 	bcp-47-1.0.8
 	bcp-47-match-1.0.3
 	bcp-47-normalize-1.1.1
@@ -1606,6 +1610,8 @@ YARN_PKGS=(
 	brace-expansion-1.1.11
 	braces-3.0.3
 	browserslist-4.22.3
+	browserslist-4.28.1
+	browserslist-to-esbuild-2.1.1
 	bser-2.1.1
 	buffer-5.7.1
 	buffer-from-1.1.2
@@ -1618,6 +1624,7 @@ YARN_PKGS=(
 	camelcase-keys-6.2.2
 	camelcase-keys-7.0.2
 	caniuse-lite-1.0.30001580
+	caniuse-lite-1.0.30001761
 	capital-case-1.0.4
 	cardboard-vr-display-1.0.19
 	ccount-1.1.0
@@ -1656,8 +1663,8 @@ YARN_PKGS=(
 	convert-source-map-1.9.0
 	convert-source-map-2.0.0
 	cookie-0.4.2
-	core-js-3.28.0
-	core-js-compat-3.28.0
+	core-js-3.47.0
+	core-js-compat-3.47.0
 	cosmiconfig-7.1.0
 	cosmiconfig-8.3.6
 	create-require-1.1.1
@@ -1676,6 +1683,7 @@ YARN_PKGS=(
 	debounce-1.2.1
 	debug-3.2.7
 	debug-4.3.4
+	debug-4.4.3
 	decamelize-1.2.0
 	decamelize-5.0.1
 	decamelize-keys-1.1.1
@@ -1698,6 +1706,7 @@ YARN_PKGS=(
 	dotenv-16.0.3
 	dset-3.1.4
 	electron-to-chromium-1.4.648
+	electron-to-chromium-1.5.267
 	emoji-regex-8.0.0
 	emoji-regex-9.2.2
 	error-ex-1.3.2
@@ -1707,8 +1716,9 @@ YARN_PKGS=(
 	es-shim-unscopables-1.0.0
 	es-to-primitive-1.2.1
 	es6-promise-4.2.8
-	esbuild-0.18.20
+	esbuild-0.21.5
 	escalade-3.1.1
+	escalade-3.2.0
 	escape-string-regexp-1.0.5
 	escape-string-regexp-4.0.0
 	eslint-8.34.0
@@ -1808,6 +1818,7 @@ YARN_PKGS=(
 	has-proto-1.0.1
 	has-symbols-1.0.3
 	has-tostringtag-1.0.0
+	hasown-2.0.2
 	hast-to-hyperscript-9.0.1
 	header-case-2.0.4
 	history-4.10.1
@@ -1839,7 +1850,6 @@ YARN_PKGS=(
 	inline-style-parser-0.1.1
 	inquirer-8.2.5
 	internal-slot-1.0.5
-	intersection-observer-0.12.2
 	intl-messageformat-10.3.0
 	intl-messageformat-parser-5.5.1
 	intl-messageformat-parser-6.1.2
@@ -1856,6 +1866,7 @@ YARN_PKGS=(
 	is-buffer-2.0.5
 	is-callable-1.2.7
 	is-core-module-2.13.0
+	is-core-module-2.16.1
 	is-date-object-1.0.5
 	is-decimal-1.0.4
 	is-extglob-2.1.1
@@ -1901,6 +1912,7 @@ YARN_PKGS=(
 	js-yaml-4.1.0
 	jsesc-0.5.0
 	jsesc-2.5.2
+	jsesc-3.1.0
 	json-parse-even-better-errors-2.3.1
 	json-schema-traverse-0.4.1
 	json-schema-traverse-1.0.0
@@ -1943,7 +1955,7 @@ YARN_PKGS=(
 	lru-cache-5.1.1
 	lru-cache-6.0.0
 	m3u8-parser-4.8.0
-	magic-string-0.27.0
+	magic-string-0.30.21
 	make-dir-3.1.0
 	make-error-1.3.6
 	map-cache-0.2.2
@@ -1966,6 +1978,7 @@ YARN_PKGS=(
 	mdurl-1.0.1
 	memoize-one-6.0.0
 	meow-10.1.5
+	meow-13.2.0
 	meow-6.1.1
 	merge2-1.4.1
 	meros-1.2.1
@@ -1995,6 +2008,7 @@ YARN_PKGS=(
 	ms-2.1.3
 	mute-stream-0.0.8
 	mux.js-6.0.1
+	nanoid-3.3.11
 	nanoid-3.3.8
 	natural-compare-1.4.0
 	natural-compare-lite-1.4.0
@@ -2003,6 +2017,7 @@ YARN_PKGS=(
 	node-fetch-2.6.9
 	node-int64-0.4.0
 	node-releases-2.0.14
+	node-releases-2.0.27
 	normalize-package-data-2.5.0
 	normalize-package-data-3.0.3
 	normalize-path-2.1.1
@@ -2048,10 +2063,12 @@ YARN_PKGS=(
 	path-to-regexp-1.9.0
 	path-type-4.0.0
 	picocolors-1.0.0
+	picocolors-1.1.1
 	picomatch-2.3.1
 	pify-5.0.0
 	pkcs7-1.0.4
 	postcss-8.4.31
+	postcss-8.5.6
 	postcss-resolve-nested-selector-0.1.1
 	postcss-safe-parser-6.0.0
 	postcss-scss-4.0.6
@@ -2088,7 +2105,7 @@ YARN_PKGS=(
 	react-overlays-5.2.1
 	react-photo-gallery-8.0.0
 	react-popper-2.3.0
-	react-refresh-0.14.0
+	react-refresh-0.18.0
 	react-remark-2.1.0
 	react-router-5.3.4
 	react-router-bootstrap-0.25.0
@@ -2108,12 +2125,14 @@ YARN_PKGS=(
 	redent-4.0.0
 	regenerate-1.4.2
 	regenerate-unicode-properties-10.1.0
-	regenerator-runtime-0.13.11
+	regenerate-unicode-properties-10.2.2
 	regenerator-runtime-0.14.1
-	regenerator-transform-0.15.1
 	regexp.prototype.flags-1.4.3
 	regexpp-3.2.0
 	regexpu-core-5.3.1
+	regexpu-core-6.4.0
+	regjsgen-0.8.0
+	regjsparser-0.13.0
 	regjsparser-0.9.1
 	rehype-react-6.2.1
 	relay-runtime-12.0.0
@@ -2128,6 +2147,7 @@ YARN_PKGS=(
 	require-from-string-2.0.2
 	require-main-filename-2.0.0
 	resize-observer-polyfill-1.5.1
+	resolve-1.22.11
 	resolve-1.22.8
 	resolve-2.0.0-next.4
 	resolve-from-4.0.0
@@ -2138,7 +2158,7 @@ YARN_PKGS=(
 	reusify-1.0.4
 	rfdc-1.3.0
 	rimraf-3.0.2
-	rollup-3.29.5
+	rollup-4.54.0
 	run-async-2.4.1
 	run-parallel-1.2.0
 	rust-result-1.0.0
@@ -2175,6 +2195,7 @@ YARN_PKGS=(
 	source-map-0.5.7
 	source-map-0.6.1
 	source-map-js-1.0.2
+	source-map-js-1.2.1
 	source-map-support-0.5.21
 	space-separated-tokens-1.1.5
 	spdx-correct-3.1.1
@@ -2211,7 +2232,7 @@ YARN_PKGS=(
 	svg-tags-1.0.0
 	swap-case-2.0.2
 	symbol-observable-4.0.0
-	systemjs-6.13.0
+	systemjs-6.15.1
 	table-6.8.1
 	terser-5.16.4
 	text-table-0.2.0
@@ -2260,6 +2281,7 @@ YARN_PKGS=(
 	unicode-canonical-property-names-ecmascript-2.0.0
 	unicode-match-property-ecmascript-2.0.0
 	unicode-match-property-value-ecmascript-2.1.0
+	unicode-match-property-value-ecmascript-2.2.1
 	unicode-property-aliases-ecmascript-2.1.0
 	unified-9.2.2
 	unist-builder-2.0.3
@@ -2276,6 +2298,7 @@ YARN_PKGS=(
 	universalify-2.0.0
 	unixify-1.0.0
 	update-browserslist-db-1.0.13
+	update-browserslist-db-1.2.3
 	upper-case-2.0.2
 	upper-case-first-2.0.2
 	uri-js-4.4.1
@@ -2298,7 +2321,7 @@ YARN_PKGS=(
 	videojs-seek-buttons-3.0.1
 	videojs-vr-1.8.0
 	videojs-vtt.js-0.15.4
-	vite-4.5.14
+	vite-5.4.21
 	vite-plugin-compression-0.5.1
 	vite-tsconfig-paths-4.0.5
 	warning-4.0.3
