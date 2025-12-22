@@ -1,25 +1,4 @@
 {
-  "name": "stash",
-  "private": true,
-  "homepage": "./",
-  "type": "module",
-  "scripts": {
-    "start": "vite",
-    "build": "vite build",
-    "build-ci": "npm run validate && npm run build",
-    "validate": "npm run lint && npm run check && npm run format-check",
-    "lint": "npm run lint:js && npm run lint:css",
-    "lint:css": "stylelint --cache \"src/**/*.scss\"",
-    "lint:js": "eslint --cache src/",
-    "check": "tsc --noEmit",
-    "eslint": "eslint",
-    "prettier": "prettier",
-    "stylelint": "stylelint",
-    "format": "prettier --write . ../../graphql",
-    "format-check": "prettier --check . ../../graphql",
-    "gqlgen": "gql-gen --config codegen.ts",
-    "extract": "NODE_ENV=development extract-messages -l=en,de -o src/locale -d en --flat false 'src/**/!(*.test).tsx'"
-  },
   "dependencies": {
     "@ant-design/react-slick": "^1.0.0",
     "@apollo/client": "^3.8.10",
@@ -133,7 +112,28 @@
     "vite-plugin-compression": "^0.5.1",
     "vite-tsconfig-paths": "^4.0.5"
   },
+  "homepage": "./",
+  "name": "stash",
+  "private": true,
   "resolutions": {
     "webcomponents.js": "^0.7.24"
-  }
+  },
+  "scripts": {
+    "build": "vite build",
+    "build-ci": "npm run validate && npm run build",
+    "check": "tsc --noEmit",
+    "eslint": "eslint",
+    "extract": "NODE_ENV=development extract-messages -l=en,de -o src/locale -d en --flat false 'src/**/!(*.test).tsx'",
+    "format": "prettier --write . ../../graphql",
+    "format-check": "prettier --check . ../../graphql",
+    "gqlgen": "gql-gen --config codegen.ts",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:css": "stylelint --cache \"src/**/*.scss\"",
+    "lint:js": "eslint --cache src/",
+    "prettier": "prettier",
+    "start": "vite",
+    "stylelint": "stylelint",
+    "validate": "npm run lint && npm run check && npm run format-check"
+  },
+  "type": "module"
 }
