@@ -33,6 +33,8 @@ DEPEND="app-emulation/faudio
 	x11-libs/libXi"
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${PN}-fallthrough-no-reserved-keyword.patch" )
+
 src_configure() {
 	local mycmakeargs=(
 		-DDEV_BRANCH=ON
