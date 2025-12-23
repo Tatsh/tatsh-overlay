@@ -1,7 +1,7 @@
 From 65b736613910c2d5f53de597630ce2f5f184b78f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 16 Sep 2024 03:51:16 -0400
-Subject: [PATCH 09/12] Fix OpenAL header include
+Subject: [PATCH 09/15] Fix OpenAL header include
 
 ---
  rpcs3/Emu/Cell/Modules/cellMic.h     | 2 +-
@@ -36,5 +36,5 @@ index 2821fd82e..460a57a53 100644
  LOG_CHANNEL(cfg_log, "CFG");
  
 -- 
-2.51.1
+2.52.0
 

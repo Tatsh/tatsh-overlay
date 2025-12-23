@@ -1,0 +1,25 @@
+From 39beaa72b806b28680e3103cde2a9886a161a12a Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 23 Dec 2025 01:48:08 -0500
+Subject: [PATCH 14/15] cellMic: fix AL include
+
+---
+ rpcs3/Emu/Cell/Modules/cellMic.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rpcs3/Emu/Cell/Modules/cellMic.cpp b/rpcs3/Emu/Cell/Modules/cellMic.cpp
+index 0724b4892..072c73d58 100644
+--- a/rpcs3/Emu/Cell/Modules/cellMic.cpp
++++ b/rpcs3/Emu/Cell/Modules/cellMic.cpp
+@@ -11,7 +11,7 @@
+ #include <cmath>
+ 
+ #ifndef WITHOUT_OPENAL
+-#include "alext.h"
++#include <AL/alext.h>
+ #endif
+ 
+ LOG_CHANNEL(cellMic);
+-- 
+2.52.0
+

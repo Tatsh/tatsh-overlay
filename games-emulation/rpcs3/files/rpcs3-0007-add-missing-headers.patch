@@ -1,7 +1,7 @@
 From 9a86c3f33b6f2e6b98b45427685cd5fad017816f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sat, 6 Apr 2024 22:58:57 -0400
-Subject: [PATCH 07/12] add missing headers
+Subject: [PATCH 07/15] add missing headers
 
 ---
  rpcs3/Emu/NP/np_handler.cpp | 1 +
@@ -20,5 +20,5 @@ index b64fad176..97b7b457a 100644
  #include <arpa/inet.h>
  #include <netdb.h>
 -- 
-2.51.1
+2.52.0
 

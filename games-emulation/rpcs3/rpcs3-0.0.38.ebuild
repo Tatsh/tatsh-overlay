@@ -84,6 +84,9 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0010-fix-including-glslang.patch"
 	"${FILESDIR}/${PN}-0011-fix-zstd-alias.patch"
 	"${FILESDIR}/${PN}-0012-system-gamemode.patch"
+	"${FILESDIR}/${PN}-0013-cellatracxdec-remove-depreca.patch"
+	"${FILESDIR}/${PN}-0014-cellmic-fix-al-include.patch"
+	"${FILESDIR}/${PN}-0015-rpcs3qt-force-include-path-f.patch"
 	"${FILESDIR}/${PN}-41a122a-newer-llvm.patch"
 )
 

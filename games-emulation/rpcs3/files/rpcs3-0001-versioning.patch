@@ -1,7 +1,7 @@
 From 0970140af0b575efa93f56fa73191799e80f55e0 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Fri, 8 Oct 2021 09:08:30 -0400
-Subject: [PATCH 01/12] versioning
+Subject: [PATCH 01/15] versioning
 
 ---
  rpcs3/rpcs3_version.cpp | 4 ++--
@@ -27,5 +27,5 @@ index 8d789d2ba..a7d5c9a59 100644
  
  	std::pair<std::string, std::string> get_commit_and_hash()
 -- 
-2.51.1
+2.52.0
 

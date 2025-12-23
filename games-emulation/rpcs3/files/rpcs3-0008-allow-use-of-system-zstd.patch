@@ -1,7 +1,7 @@
 From 3c87444a7f35148b3be4c4ce8a4dd3759c000dab Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 16 Sep 2024 03:44:30 -0400
-Subject: [PATCH 08/12] Allow use of system zstd
+Subject: [PATCH 08/15] Allow use of system zstd
 
 ---
  3rdparty/CMakeLists.txt      | 4 +++-
@@ -36,5 +36,5 @@ index f4c97d3ee..c5c8dd66f 100644
    add_library(3rdparty_zstd INTERFACE)
    target_link_libraries(3rdparty_zstd INTERFACE libzstd_static)
 -- 
-2.51.1
+2.52.0
 

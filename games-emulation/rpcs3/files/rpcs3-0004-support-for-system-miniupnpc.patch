@@ -1,7 +1,7 @@
 From 52512ed425db36be292828a021cc80528880b7a4 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 5 Mar 2023 20:38:09 -0500
-Subject: [PATCH 04/12] Support for system miniupnpc
+Subject: [PATCH 04/15] Support for system miniupnpc
 
 ---
  3rdparty/CMakeLists.txt       | 8 ++++++--
@@ -64,5 +64,5 @@ index 40892f744..bb99b88ae 100644
  #include "upnp_config.h"
  #include "Utilities/mutex.h"
 -- 
-2.51.1
+2.52.0
 

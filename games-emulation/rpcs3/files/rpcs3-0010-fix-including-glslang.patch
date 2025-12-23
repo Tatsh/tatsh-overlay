@@ -1,7 +1,7 @@
 From da9e4b753db2d7cfaa33667ef19124b9ebb1903d Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 26 Oct 2025 05:41:31 -0400
-Subject: [PATCH 10/12] Fix including glslang
+Subject: [PATCH 10/15] Fix including glslang
 
 ---
  3rdparty/CMakeLists.txt | 1 -
@@ -20,5 +20,5 @@ index 6c1892760..b467b80c3 100644
  endif()
  #add_subdirectory(SPIRV EXCLUDE_FROM_ALL)
 -- 
-2.51.1
+2.52.0
 

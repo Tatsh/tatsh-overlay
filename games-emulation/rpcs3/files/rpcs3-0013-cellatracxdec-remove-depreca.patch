@@ -1,0 +1,37 @@
+From d2dc275f6cb89fa7a2dfc20629cc7fbfd23e84fe Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 23 Dec 2025 01:44:49 -0500
+Subject: [PATCH 13/15] cellAtracXdec: remove deprecated ffmpeg API use
+
+---
+ rpcs3/Emu/Cell/Modules/cellAtracXdec.cpp | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
+
+diff --git a/rpcs3/Emu/Cell/Modules/cellAtracXdec.cpp b/rpcs3/Emu/Cell/Modules/cellAtracXdec.cpp
+index 36228d8a5..4fcffb146 100644
+--- a/rpcs3/Emu/Cell/Modules/cellAtracXdec.cpp
++++ b/rpcs3/Emu/Cell/Modules/cellAtracXdec.cpp
+@@ -111,8 +111,6 @@ void AtracXdecDecoder::alloc_avcodec()
+ 		fmt::throw_exception("avcodec_find_decoder() failed");
+ 	}
+ 
+-	ensure(!(codec->capabilities & AV_CODEC_CAP_SUBFRAMES));
+-
+ 	ctx = avcodec_alloc_context3(codec);
+ 	if (!ctx)
+ 	{
+@@ -156,10 +154,7 @@ void AtracXdecDecoder::free_avcodec()
+ 
+ void AtracXdecDecoder::init_avcodec()
+ {
+-	if (int err = avcodec_close(ctx); err)
+-	{
+-		fmt::throw_exception("avcodec_close() failed (err=0x%x='%s')", err, utils::av_error_to_string(err));
+-	}
++	avcodec_free_context(&ctx);
+ 
+ 	ctx->block_align = nbytes;
+ 	ctx->ch_layout.nb_channels = nch_in;
+-- 
+2.52.0
+

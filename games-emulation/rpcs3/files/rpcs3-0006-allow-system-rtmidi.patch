@@ -1,7 +1,7 @@
 From f1908400d532f769a61d4884622378f01ef69425 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 4 Jun 2023 01:50:57 -0400
-Subject: [PATCH 06/12] Allow system rtmidi
+Subject: [PATCH 06/15] Allow system rtmidi
 
 ---
  3rdparty/CMakeLists.txt | 8 ++++++--
@@ -34,5 +34,5 @@ index 9481002b1..c7538053e 100644
  add_library(3rdparty::fusion ALIAS Fusion)
  add_library(3rdparty::feralinteractive ALIAS 3rdparty_feralinteractive)
 -- 
-2.51.1
+2.52.0
 

@@ -1,7 +1,7 @@
 From 1d22f6204759354b343dc31838a0f5179a59b4bd Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 26 Oct 2025 06:03:28 -0400
-Subject: [PATCH 12/12] System gamemode
+Subject: [PATCH 12/15] System gamemode
 
 ---
  3rdparty/CMakeLists.txt    | 12 ++++++++++--
@@ -49,5 +49,5 @@ index 3879ebacc..12c961979 100644
  #endif
  
 -- 
-2.51.1
+2.52.0
 
