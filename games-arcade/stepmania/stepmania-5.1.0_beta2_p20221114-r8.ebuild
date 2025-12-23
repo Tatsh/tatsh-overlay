@@ -15,7 +15,7 @@ S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
-IUSE="+alsa +crash-handler debug +gles2 +gpl +gtk +jpeg +mp3 +networking +ogg
+IUSE="+alsa +crash-handler debug +gles2 +gpl +jpeg +mp3 +networking +ogg
 	+wav +xinerama +sdl +xrandr +X +bundled-songs +bundled-courses minimaid
 	parallel-port profiling pulseaudio jack"
 
@@ -40,8 +40,6 @@ DEPEND="X? ( x11-libs/libX11 )
 	media-video/ffmpeg
 	virtual/zlib
 	virtual/udev
-	x11-libs/gdk-pixbuf
-	x11-libs/gtk+:2
 	x11-libs/libXext
 	x11-libs/libXtst"
 
@@ -49,6 +47,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-add-ppc64-detection.patch"
 	"${FILESDIR}/${PN}-ffmpeg-6.patch"
 	"${FILESDIR}/${PN}-ffmpeg-7.patch"
+	"${FILESDIR}/${PN}-ffmpeg-8.patch"
+	"${FILESDIR}/${PN}-libtom-use-pkgconfig.patch"
 )
 
 src_prepare() {
@@ -73,6 +73,7 @@ src_prepare() {
 
 src_configure() {
 	mycmakeargs=(
+		-DWITH_GTK3=no  # broken, https://github.com/stepmania/stepmania/issues/2291
 		-DWITH_FFMPEG=yes
 		-DWITH_SYSTEM_FFMPEG=yes
 		-DWITH_FULL_RELEASE=yes
@@ -92,6 +93,7 @@ src_configure() {
 		"-DWITH_PROFILING=$(usex profiling)"
 		"-DWITH_SDL=$(usex sdl)"
 		-DWITH_SYSTEM_GLEW=yes
+		-DWITH_SYSTEM_TOMCRYPT=yes
 		-DWITH_SYSTEM_TOMMATH=yes
 		-DWITH_SYSTEM_MAD=yes
 		-DWITH_SYSTEM_ZLIB=yes
@@ -112,7 +114,6 @@ src_install() {
 	make_wrapper stepmania "/usr/$(get_libdir)/${PN}/${PN}" "/usr/$(get_libdir)/${PN}"
 	exeinto "/usr/$(get_libdir)/${PN}"
 	newexe "${PN}-release-symbols" "${PN}" || die "dobin failed"
-	doexe GtkModule.so || die "doexe GtkModule.so failed"
 	insinto "/usr/$(get_libdir)/${PN}"
 	! [ -d Announcers ] && mkdir Announcers
 	doins -r Announcers BackgroundEffects BackgroundTransitions \
