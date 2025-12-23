@@ -11,7 +11,7 @@ inherit fcaps flag-o-matic pax-utils python-r1 toolchain-funcs xdg-utils
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/xemu-project/xemu"
 GENCONFIG_SHA="42f85f9a2457e61d7e32542c07723565a284fcd6"
-GLSLANG_SHA="vulkan-sdk-1.4.304.0"
+GLSLANG_SHA="16.1.0"
 HTTPLIB_SHA="0f1b62c2b3d0898cbab7aa685c2593303ffdc1a2"
 IMGUI_SHA="80cbdab5ecd70db79917c448c333163995e605a5"
 IMPLOT_SHA="006a1c23e5706bbe816968163b4d589162257a57"
