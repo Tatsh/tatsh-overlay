@@ -24,14 +24,13 @@ jobs:
           wget -O bootstrap-prefix.sh \
             https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh
           chmod +x bootstrap-prefix.sh
-          export LATEST_TREE_YES=1 EMERGE_DEFAULT_OPTS="--jobs 4 --quiet-build=y"
+          export LATEST_TREE_YES=1 EMERGE_DEFAULT_OPTS="--jobs 1 --quiet-build=y" ACCEPT_KEYWORDS="~amd64" ACCEPT_LICENSE="*" FEATURES="clean-logs"
           ./bootstrap-prefix.sh ${{ github.workspace }}/gentoo noninteractive
           source ${{ github.workspace }}/gentoo/etc/profile
           emerge --ask=n dev-util/pkgcheck
       - name: Run pkgcheck on changed content
         run: |
           source ${{ github.workspace }}/gentoo/etc/profile
-          cd "${GITHUB_WORKSPACE}"
           pkgcheck scan --net --commits master
 name: pkgcheck
 'on':
