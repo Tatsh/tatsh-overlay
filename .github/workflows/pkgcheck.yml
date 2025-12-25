@@ -9,41 +9,33 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up cache for Gentoo Prefix
+        id: gentoo-prefix-cache
         uses: actions/cache@v3
         with:
-          key: gentoo-prefix-${{ runner.os }}-v1
-          path: ~/gentoo
-          restore-keys: |
-            gentoo-prefix-${{ runner.os }}-
+          key: gentoo-prefix
+          path: ${{ github.workspace }}/gentoo
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential wget curl
       - name: Bootstrap Gentoo Prefix
+        if: steps.gentoo-prefix-cache.outputs.cache-hit != 'true'
         run: |
-          if [ ! -d ~/gentoo/usr/bin ]; then
-            cd ~
-            wget -O bootstrap-prefix.sh \
-              https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh
-            chmod +x bootstrap-prefix.sh
-            export LATEST_TREE_YES=1
-            ./bootstrap-prefix.sh "${HOME}/gentoo" noninteractive
-          else
-            echo "Using cached Gentoo Prefix"
-          fi
-      - name: Update Portage tree
-        run: |
-          source ~/gentoo/etc/profile
-          emerge --sync || true
+          cd ~
+          wget -O bootstrap-prefix.sh \
+            https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh
+          chmod +x bootstrap-prefix.sh
+          export LATEST_TREE_YES=1
+          ./bootstrap-prefix.sh ${{ github.workspace }}/gentoo noninteractive
       - name: Emerge pkgcheck
         run: |
-          source ~/gentoo/etc/profile
+          source ${{ github.workspace }}/gentoo/etc/profile
           emerge --ask=n dev-util/pkgcheck
       - name: Run pkgcheck on changed content
         run: |
-          source ~/gentoo/etc/profile
+          source ${{ github.workspace }}/gentoo/etc/profile
           cd "${GITHUB_WORKSPACE}"
-          pkgcheck --scan --net --commits
+          pkgcheck scan --net --commits master
 name: pkgcheck
 'on':
   pull_request:
