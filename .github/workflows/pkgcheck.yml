@@ -21,14 +21,11 @@ jobs:
       - name: Bootstrap Gentoo Prefix
         if: steps.gentoo-prefix-cache.outputs.cache-hit != 'true'
         run: |
-          cd ~
           wget -O bootstrap-prefix.sh \
             https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh
           chmod +x bootstrap-prefix.sh
-          export LATEST_TREE_YES=1
+          export LATEST_TREE_YES=1 EMERGE_DEFAULT_OPTS="--jobs 4 --quiet-build=y"
           ./bootstrap-prefix.sh ${{ github.workspace }}/gentoo noninteractive
-      - name: Emerge pkgcheck
-        run: |
           source ${{ github.workspace }}/gentoo/etc/profile
           emerge --ask=n dev-util/pkgcheck
       - name: Run pkgcheck on changed content
