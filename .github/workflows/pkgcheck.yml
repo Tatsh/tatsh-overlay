@@ -27,7 +27,7 @@ jobs:
               https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh
             chmod +x bootstrap-prefix.sh
             export LATEST_TREE_YES=1
-            EPREFIX="${HOME}/gentoo" ./bootstrap-prefix.sh noninteractive
+            ./bootstrap-prefix.sh "${HOME}/gentoo" noninteractive
           else
             echo "Using cached Gentoo Prefix"
           fi
