@@ -43,7 +43,7 @@ jobs:
         run: |
           source ~/gentoo/etc/profile
           cd "${GITHUB_WORKSPACE}"
-          pkgcheck --scan --net
+          pkgcheck --scan --net --commits
 name: pkgcheck
 'on':
   pull_request:
