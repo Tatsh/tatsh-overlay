@@ -27,7 +27,16 @@ jobs:
           export LATEST_TREE_YES=1 EMERGE_DEFAULT_OPTS="--jobs 1 --quiet-build=y" ACCEPT_KEYWORDS="~amd64" ACCEPT_LICENSE="*" FEATURES="clean-logs"
           ./bootstrap-prefix.sh ${{ github.workspace }}/gentoo noninteractive
           source ${{ github.workspace }}/gentoo/etc/profile
-          emerge --ask=n dev-util/pkgcheck
+          ls -la /etc/portage/repos.conf || true
+          cat /etc/portage/repos.conf/*.conf || true
+          emerge --ask=n dev-util/pkgcheck app-eselect/eselect-repository
+          eselect repository enable guru
+          emerge --sync
+          mkdir -p ${{ github.workspace }}/gentoo/etc/portage/repos.conf
+          cat > ${{ github.workspace }}/gentoo/etc/portage/repos.conf/tatsh-overlay.conf <<EOF
+          [tatsh-overlay]
+          location = ${{ github.workspace }}
+          EOF
       - name: Run pkgcheck on changed content
         run: |
           source ${{ github.workspace }}/gentoo/etc/profile
