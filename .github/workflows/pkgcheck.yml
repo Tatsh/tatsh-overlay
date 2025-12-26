@@ -30,7 +30,12 @@ jobs:
           ls -la /etc/portage/repos.conf || true
           cat /etc/portage/repos.conf/*.conf || true
           emerge --ask=n dev-util/pkgcheck app-eselect/eselect-repository
-          eselect repository enable guru
+          cat > ${{ github.workspace }}/gentoo/etc/portage/repos.conf/guru.conf <<EOF
+          [guru]
+          location = ${{ github.workspace }}/gentoo/var/db/repos/guru
+          sync-type = git
+          sync-uri = https://github.com/gentoo-mirror/guru.git
+          EOF
           emerge --sync
           mkdir -p ${{ github.workspace }}/gentoo/etc/portage/repos.conf
           cat > ${{ github.workspace }}/gentoo/etc/portage/repos.conf/tatsh-overlay.conf <<EOF
