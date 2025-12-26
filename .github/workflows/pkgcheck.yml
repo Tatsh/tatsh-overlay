@@ -14,42 +14,52 @@ jobs:
         with:
           key: gentoo-prefix
           path: ${{ github.workspace }}/gentoo
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential wget curl
       - name: Bootstrap Gentoo Prefix
         if: steps.gentoo-prefix-cache.outputs.cache-hit != 'true'
         run: |
-          set -xv
-          locale || true
-          set +xv
+          sudo apt-get update
+          sudo apt-get install -y build-essential wget curl
           wget -O bootstrap-prefix.sh \
             https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh
           chmod +x bootstrap-prefix.sh
-          export LATEST_TREE_YES=1 EMERGE_DEFAULT_OPTS="--jobs 1 --quiet-build=y" ACCEPT_KEYWORDS="~amd64" ACCEPT_LICENSE="*" FEATURES="clean-logs"
+          export LATEST_TREE_YES=1 EMERGE_DEFAULT_OPTS="--jobs 1 --quiet-build=y" \
+            ACCEPT_KEYWORDS="~amd64" ACCEPT_LICENSE="*" FEATURES="clean-logs"
           ./bootstrap-prefix.sh ${{ github.workspace }}/gentoo noninteractive
           source ${{ github.workspace }}/gentoo/etc/profile
-          ls -la /etc/portage/repos.conf || true
-          cat /etc/portage/repos.conf/*.conf || true
-          emerge --ask=n dev-util/pkgcheck app-eselect/eselect-repository
+          mkdir -p ${{ github.workspace }}/gentoo/etc/portage/repos.conf
+          emerge --ask=n dev-util/pkgcheck dev-python/requests
           cat > ${{ github.workspace }}/gentoo/etc/portage/repos.conf/guru.conf <<EOF
           [guru]
           location = ${{ github.workspace }}/gentoo/var/db/repos/guru
           sync-type = git
           sync-uri = https://github.com/gentoo-mirror/guru.git
           EOF
+          cat > ${{ github.workspace }}/gentoo/etc/portage/repos.conf/gentoo.conf <<EOF
+          [DEFAULT]
+          main-repo = gentoo
+          [gentoo]
+          location = ${{ github.workspace }}/gentoo/var/db/repos/gentoo
+          sync-type = rsync
+          sync-uri = rsync://rsync.gentoo.org/gentoo-portage
+          auto-sync = yes
+          EOF
           emerge --sync
-          mkdir -p ${{ github.workspace }}/gentoo/etc/portage/repos.conf
           cat > ${{ github.workspace }}/gentoo/etc/portage/repos.conf/tatsh-overlay.conf <<EOF
           [tatsh-overlay]
           location = ${{ github.workspace }}
           EOF
-          emerge dev-util/pkgcheck
-      - name: Run pkgcheck on changed content
+      - name: Run pkgcheck ci
         run: |
           source ${{ github.workspace }}/gentoo/etc/profile
-          pkgcheck scan --net --commits master
+          git remote set-head origin -a
+          pkgcheck ci --debug --net --commits origin/master --failures failures.json \
+            --exit error,warning,style,info
+      - name: Upload pkgcheck failures file
+        if: failure()
+        uses: actions/upload-artifact@v6
+        with:
+          name: pkgcheck-failures
+          path: failures.json
 name: pkgcheck
 'on':
   pull_request:
