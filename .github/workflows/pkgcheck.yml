@@ -21,6 +21,9 @@ jobs:
       - name: Bootstrap Gentoo Prefix
         if: steps.gentoo-prefix-cache.outputs.cache-hit != 'true'
         run: |
+          set -xv
+          locale || true
+          set +xv
           wget -O bootstrap-prefix.sh \
             https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh
           chmod +x bootstrap-prefix.sh
@@ -42,6 +45,7 @@ jobs:
           [tatsh-overlay]
           location = ${{ github.workspace }}
           EOF
+          emerge dev-util/pkgcheck
       - name: Run pkgcheck on changed content
         run: |
           source ${{ github.workspace }}/gentoo/etc/profile
