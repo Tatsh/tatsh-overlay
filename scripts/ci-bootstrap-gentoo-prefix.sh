@@ -14,7 +14,7 @@ export LATEST_TREE_YES=1 \
 	FEATURES="clean-logs"
 bash bootstrap-prefix.sh "${workspace}/gentoo" noninteractive
 # shellcheck disable=SC1091
-source "${workspace}/gentoo/etc/profile"
+. "${workspace}/gentoo/etc/profile"
 mkdir -p "${workspace}/gentoo/etc/portage/repos.conf"
 emerge -v --ask=n dev-util/pkgcheck dev-python/requests
 cat > "${workspace}"/gentoo/etc/portage/repos.conf/guru.conf <<EOF
