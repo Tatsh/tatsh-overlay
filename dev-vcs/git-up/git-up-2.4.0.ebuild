@@ -3,15 +3,13 @@
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=poetry
-
+DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
-
 inherit distutils-r1
 
 DESCRIPTION="Python implementation of git-up"
 HOMEPAGE="https://github.com/msiemens/PyGitUp"
-SHA="ae06420e2833f6b1c91473bd2756ea8ed296b3d1"
+SHA="531cbe3b17545d4571a4ad12a37dd05c1f57500c"
 SRC_URI="https://github.com/msiemens/PyGitUp/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/PyGitUp-${SHA}"
 LICENSE="MIT"
