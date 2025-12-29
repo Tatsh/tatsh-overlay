@@ -3,7 +3,8 @@ jobs:
   refresh-gentoo-prefix:
     runs-on: ubuntu-latest
     steps:
-      - env:
+      - continue-on-error: true
+        env:
           GH_REPO: ${{ github.repository }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           KEY: gentoo-prefix
