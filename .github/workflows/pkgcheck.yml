@@ -9,7 +9,6 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up cache for Gentoo Prefix
-        id: gentoo-prefix-cache
         uses: actions/cache@v3
         with:
           fail-on-cache-miss: true
