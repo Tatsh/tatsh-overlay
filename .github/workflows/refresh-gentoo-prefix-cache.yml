@@ -31,3 +31,4 @@ name: Refresh Gentoo Prefix Cache
 'on':
   schedule:
     - cron: '0 0 1 * *'
+  workflow_dispatch:
