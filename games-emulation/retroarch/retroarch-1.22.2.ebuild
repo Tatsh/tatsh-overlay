@@ -72,13 +72,13 @@ RDEPEND="
 	zlib? ( virtual/zlib )
 "
 DEPEND="${RDEPEND}
+	dbus? ( sys-apps/dbus )
 	dev-libs/fribidi
 	ssl? ( dev-libs/openssl )
 	media-libs/fontconfig
-	media-libs/libglvnd
+	opengl? ( media-libs/libglvnd )
 	media-libs/libv4l
-	media-video/pipewire
-	sys-apps/dbus
+	pulseaudio? ( media-video/pipewire )
 	qt6? ( dev-qt/qtbase[concurrent,gui,network,widgets] )
 	X? (
 		x11-libs/libX11
