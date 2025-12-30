@@ -42,6 +42,7 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	cubeb? ( media-libs/cubeb )
 	dev-cpp/cpp-httplib
 	dev-libs/boost:=[context]
+	dev-libs/dynarmic
 	>=dev-libs/libfmt-9.1.0:=
 	dev-libs/libzip
 	dev-libs/openssl:=
