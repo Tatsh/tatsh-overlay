@@ -10,8 +10,13 @@ import portage
 P = portage.db[portage.root]['porttree'].dbapi
 
 IGNORE = {
+    # IDA comes with its own custom built Qt.
+    'dev-util/ida-free': {
+        'dev-qt/qtbase',
+        'dev-qt/qtsvg',
+    },
     'games-arcade/outfox': {
-        'media-video/ffmpeg',
+        'media-video/ffmpeg-compat',
         'media-video/pipewire',  # ignored because virtual/jack is listed
         'virtual/libusb',
     },
