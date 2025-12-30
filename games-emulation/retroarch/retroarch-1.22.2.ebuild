@@ -60,7 +60,6 @@ RDEPEND="
 	opengl? ( virtual/opengl )
 	ozone? ( games-emulation/retroarch-assets[ozone] )
 	pulseaudio? ( media-libs/libpulse )
-	qt6? ( dev-qt/qtbase[concurrent,gui,network,widgets] )
 	rgui? ( games-emulation/retroarch-assets[rgui] )
 	sdl? ( media-libs/libsdl2 )
 	sixel? ( media-libs/libsixel )
@@ -68,24 +67,36 @@ RDEPEND="
 	subtitles? ( media-libs/libass )
 	systemd? ( sys-apps/systemd )
 	udev? ( virtual/udev )
+	xmb? ( games-emulation/retroarch-assets[xmb] )
 	vulkan? ( media-libs/vulkan-loader[X?,wayland?] )
+	zlib? ( virtual/zlib )
+"
+DEPEND="${RDEPEND}
+	dev-libs/fribidi
+	ssl? ( dev-libs/openssl )
+	media-libs/fontconfig
+	media-libs/libglvnd
+	media-libs/libv4l
+	media-video/pipewire
+	sys-apps/dbus
+	qt6? ( dev-qt/qtbase[concurrent,gui,network,widgets] )
 	X? (
 		x11-libs/libX11
+		x11-libs/libXScrnSaver
 		x11-libs/libXext
+		x11-libs/libXi
+		x11-libs/libXinerama
 		x11-libs/libXxf86vm
 		x11-libs/libxcb
+		x11-libs/libxkbcommon
+		x11-libs/libXv
 	)
-	xmb? ( games-emulation/retroarch-assets[xmb] )
-	xrandr? ( x11-libs/libXrandr )
-	xv? ( x11-libs/libXv )
 	wayland? (
 		dev-libs/wayland
 		dev-libs/wayland-protocols
 	)
-	zlib? ( virtual/zlib )
-"
-DEPEND="${RDEPEND}
 	vulkan? ( dev-util/vulkan-headers )
+	xrandr? ( x11-libs/libXrandr )
 	virtual/pkgconfig"
 
 src_prepare() {
