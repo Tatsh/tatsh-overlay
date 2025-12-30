@@ -686,6 +686,7 @@ frankban
 freechaf
 freeintv
 freetype
+fribidi
 frob
 fromentries
 frozendict
@@ -1061,13 +1062,13 @@ libb
 libbar
 libbz
 libc
+libc's
 libcaca
 libcdio
 libchdr
 libclang
 libco
 libcrypt
-libc's
 libcxx
 libcxxabi
 libd
@@ -1158,6 +1159,7 @@ libunwind
 liburing
 libusb
 libusbmuxd
+libv
 libva
 libvapoursynth
 libvk
@@ -1424,7 +1426,6 @@ nltk
 nlzy
 nnedi
 noaccess
-noninteractive
 nodedir
 nodelib
 nodemon
@@ -1433,6 +1434,7 @@ noextract
 nofetch
 nolegacy
 noncommercial
+noninteractive
 nonrenewal
 nontransferability
 nopasswd
@@ -2317,3 +2319,4 @@ zwave
 zwitch
 zyan
 zycore
+zydis
