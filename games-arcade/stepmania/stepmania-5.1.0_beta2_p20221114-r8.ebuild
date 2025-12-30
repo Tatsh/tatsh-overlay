@@ -31,6 +31,7 @@ DEPEND="X? ( x11-libs/libX11 )
 	xrandr? ( x11-libs/libXrandr )
 	dev-libs/glib
 	dev-libs/libpcre
+	dev-libs/libtomcrypt
 	dev-libs/libtommath
 	media-libs/glew
 	media-libs/glu
