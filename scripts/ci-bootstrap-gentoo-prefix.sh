@@ -7,9 +7,9 @@ curl -fsSL \
 	https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh \
 	-o bootstrap-prefix.sh
 chmod +x bootstrap-prefix.sh
+# ACCEPT_KEYWORDS="~amd64" \
 export LATEST_TREE_YES=1 \
-	EMERGE_DEFAULT_OPTS="--jobs 1 --quiet-build=y" \
-	ACCEPT_KEYWORDS="~amd64" \
+	EMERGE_DEFAULT_OPTS="--jobs 1 --quiet-build=y --usepkg" \
 	ACCEPT_LICENSE="*" \
 	FEATURES="clean-logs"
 bash bootstrap-prefix.sh "${workspace}/gentoo" noninteractive
