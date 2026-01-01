@@ -2126,6 +2126,7 @@ urlpattern
 usbkill
 usbmuxd
 usedep
+usepkg
 useragent
 userspace
 usex
