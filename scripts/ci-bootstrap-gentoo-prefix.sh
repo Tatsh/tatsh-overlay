@@ -2,7 +2,7 @@
 set -euo pipefail
 workspace="${1}"
 sudo apt-get -qq update
-sudo apt-get -y install build-essential curl wget
+sudo apt-get -y install build-essential curl wget zstd
 curl -fsSL \
 	https://gitweb.gentoo.org/repo/proj/prefix.git/plain/scripts/bootstrap-prefix.sh \
 	-o bootstrap-prefix.sh

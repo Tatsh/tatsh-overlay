@@ -27,6 +27,18 @@ jobs:
           path: ${{ github.workspace }}/gentoo
       - name: Bootstrap Gentoo Prefix
         run: bash ./scripts/ci-bootstrap-gentoo-prefix.sh "${{ github.workspace }}"
+      - name: Create artifact
+        run: tar -acf "gentoo-prefix-$(date '+%Y%m%d%H%M%S').tar.zst" "${{ github.workspace }}/gentoo"
+      - name: Attest
+        uses: 'actions/attest-build-provenance@v3'
+        with:
+          subject-path: gentoo-prefix-*.tar.zst
+      - name: Upload artifact
+        uses: 'actions/upload-artifact@v6'
+        with:
+          if-no-files-found: error
+          name: gentoo-prefix
+          path: gentoo-prefix-*.tar.zst
 name: Refresh Gentoo Prefix Cache
 'on':
   schedule:
