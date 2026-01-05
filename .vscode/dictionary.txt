@@ -156,6 +156,7 @@ bomberman
 boolbase
 boringssl
 boto
+botocore
 boxen
 bradfitz
 bradleyjkemp
@@ -1548,6 +1549,7 @@ pefile
 pehrson
 pelletier
 petamoriken
+petsafe
 pexpect
 pflag
 pgpass
@@ -1828,6 +1830,7 @@ schollz
 scikit
 scipy
 scires
+scoopfree
 scrapinghub
 screamf
 scrn
