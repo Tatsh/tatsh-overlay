@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{1,2,3,4} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Connect and control a PetSafe Smart Feed and Scoopfree device using the PetSafe API."
+DESCRIPTION="Connect and control a PetSafe devices using the PetSafe API."
 HOMEPAGE="https://pypi.org/project/petsafe/"
 
 LICENSE="MIT"
