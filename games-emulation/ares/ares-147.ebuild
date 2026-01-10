@@ -8,7 +8,7 @@ inherit cmake
 DESCRIPTION="Multi-system emulator focusing on accuracy and preservation."
 HOMEPAGE="https://github.com/ares-emulator/ares https://ares-emu.net/"
 SRC_URI="https://github.com/ares-emulator/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/ares-emulator/ares-deps/releases/download/2025-07-14/ares-deps-linux-universal.tar.xz -> ${P}-deps.tar.xz"
+	https://github.com/ares-emulator/ares-deps/releases/download/2025-10-27/ares-deps-linux-universal.tar.xz -> ${P}-deps.tar.xz"
 
 LICENSE="MPL-2.0 MIT BSD public-domain ZLIB BSD-2 Apache-2.0"
 SLOT="0"
@@ -34,6 +34,6 @@ src_prepare() {
 	mkdir -p .deps || die
 	cp "${DISTDIR}/${P}-deps.tar.xz" .deps/ares-deps-linux-universal.tar.xz || die
 	mv "${WORKDIR}/ares-deps-linux-universal" .deps/ || die
-	printf '%s' c4679098d2a9cd51c1cacb70555e302e78501e481dcaabc060ca16d6f620128f > .deps/.dependency_prebuilt_universal.sha256 || die
+	printf '%s' 0272b4b25bf9dc58891e2528e79f1155b37a961a50fae7980fce9f39ebe29833 > .deps/.dependency_prebuilt_universal.sha256 || die
 	cmake_src_prepare
 }
