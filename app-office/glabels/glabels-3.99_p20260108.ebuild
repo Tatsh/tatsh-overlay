@@ -7,7 +7,7 @@ inherit cmake xdg
 
 DESCRIPTION="glabels label designer (now in Qt)."
 HOMEPAGE="https://github.com/j-evins/glabels-qt"
-SHA="44a10fc796fc6537d43724ee47810fe09361a89c"
+SHA="1c902230fe33b199fca4ad104916427d4cd66970"
 SRC_URI="https://github.com/j-evins/${PN}-qt/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
 S="${WORKDIR}/${PN}-qt-${SHA}"
@@ -32,10 +32,4 @@ src_prepare() {
 	! use barcode && { sed -r -e '/find_package \(GnuBarcode.*/d' -i CMakeLists.txt || die; }
 	! use qrcode && { sed -r -e '/find_package \(LibQrencode.*/d' -i CMakeLists.txt || die; }
 	cmake_src_prepare
-}
-
-src_install() {
-	cmake_src_install
-	rm -R "${D}/usr/share/appdata" || die
-	einstalldocs
 }
