@@ -10,10 +10,10 @@ HOMEPAGE="https://projectoutfox.com/"
 
 UPPER_PN="${PN^^}"
 MY_PN="${UPPER_PN:0:1}${PN:1:1}${PN:2:1}${UPPER_PN:3:1}${PN:4}"
-DATE="20250804"
+DATE="20250907"
 MAJOR="${PV:0:5}"
 PRE="${PV:7}"
-SRC_URI="${MY_PN}-alpha-${MAJOR}-pre0${PRE}-a40-24.04-amd64-current-date-${DATE}.tar.gz"
+SRC_URI="https://github.com/TeamRizu/${MY_PN}/releases/download/OF5.0.0-0${PRE}/${MY_PN}-alpha-${MAJOR}-pre-0${PRE}-Final-24.04-amd64-current-date-${DATE}.tar.gz"
 S="${WORKDIR}"
 LICENSE="MIT"
 SLOT="0"
@@ -38,11 +38,11 @@ RDEPEND="app-arch/bzip2
 	media-video/ffmpeg
 	virtual/libusb
 	virtual/zlib"
-RESTRICT="fetch splitdebug strip"
+RESTRICT="splitdebug strip"
 
 src_prepare() {
 	if use amd64; then
-		cd "${MY_PN}-alpha-${MAJOR}-pre0${PRE}-a40-24.04-amd64-current-date-${DATE}" || die
+		cd "${MY_PN}-alpha-${MAJOR}-pre0${PRE}-Final-24.04-amd64-current-date-${DATE}" || die
 	else
 		die 'Unsupported architecture'
 	fi
@@ -61,7 +61,7 @@ src_prepare() {
 }
 
 src_install() {
-	cd "${MY_PN}-alpha-${MAJOR}-pre0${PRE}-a40-24.04-amd64-current-date-${DATE}" || die
+	cd "${MY_PN}-alpha-${MAJOR}-pre0${PRE}-Final-24.04-amd64-current-date-${DATE}" || die
 	local inst="${EPREFIX}/opt/${PN}"
 	patchelf --set-rpath "\$ORIGIN:${EPREFIX}/lib64:${EPREIFX}/usr/lib64" \
 		OutFox || die 'Failed to patch ELFs'
