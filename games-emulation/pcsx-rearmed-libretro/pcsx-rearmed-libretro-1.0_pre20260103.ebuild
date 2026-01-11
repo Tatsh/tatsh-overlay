@@ -4,13 +4,13 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/pcsx_rearmed"
-LIBRETRO_COMMIT_SHA="9059485691c44cb3a555464b06eddfb1082d586c"
+LIBRETRO_COMMIT_SHA="32e2193bcc9d937d9b1a16db43258aef51cddae8"
 
 inherit libretro-core
 
 DESCRIPTION="libretro implementation of PCSX ReARMed. (PlayStation)"
 HOMEPAGE="https://github.com/libretro/pcsx_rearmed"
-LIBPICOFE_SHA="da09f8f20da6548e1debf4abb9840eb9f130678d"
+LIBPICOFE_SHA="dd11f2d723162eb1cf8e6db9f40de7db0d0b6bba"
 SRC_URI="https://github.com/${LIBRETRO_REPO_NAME}/archive/${LIBRETRO_COMMIT_SHA}.tar.gz -> ${P}-${LIBRETRO_COMMIT_SHA:0:7}.tar.gz
 	https://github.com/notaz/libpicofe/archive/${LIBPICOFE_SHA}.tar.gz -> libpicofe-${LIBPICOFE_SHA:0:7}.tar.gz "
 KEYWORDS="~amd64 ~arm64 ~x86"
