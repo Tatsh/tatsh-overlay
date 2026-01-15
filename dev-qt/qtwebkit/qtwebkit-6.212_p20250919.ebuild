@@ -33,7 +33,7 @@ DEPEND="dev-db/sqlite
 	media-libs/woff2
 	virtual/zlib"
 RDEPEND="${DEPEND}"
-BDEPEND="dev-lang/ruby"
+BDEPEND="dev-lang/ruby:*"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-fix-header.patch"
@@ -42,9 +42,17 @@ PATCHES=(
 )
 
 src_configure() {
+	local base_ver
 	# Disable assertions https://bugs.webkit.org/show_bug.cgi?id=284786
 	append-cxxflags -U_GLIBCXX_ASSERTIONS
 	filter-lto # LTO causes bin/jsc to fail to compile.
+	base_ver=$(best_version dev-qt/qtbase:6)
+	base_ver="${base_ver:14}"
+	if ! [ -d "${EPREFIX}/usr/include/qt6/QtCore/${base_ver}" ]; then
+		ewarn 'Falling back to guessing Qt 6 include directory. This may fail.'
+		base_ver=$(basename "$(find "${EPREFIX}/usr/include/qt6/QtCore" -maxdepth 1 -type d -name '6*')")
+		[ -n "${base_ver}" ] || die
+	fi
 	local mycmakeargs=(
 		"-DENABLE_X11_TARGET=$(usex X)"
 		"-DENABLE_VIDEO=$(usex video)"
@@ -53,6 +61,9 @@ src_configure() {
 		-DENABLE_PRINT_SUPPORT=ON
 		-DENABLE_SPELLCHECK=OFF
 		-DPORT=Qt
+		# Detection broken since 6.10.1.
+		-DQt6Gui_PRIVATE_INCLUDE_DIRS="${EPREFIX}/usr/include/qt6/QtGui/${base_ver}/QtGui;${EPREFIX}/usr/include/qt6/QtGui/${base_ver};${EPREFIX}/usr/include/qt6/QtCore/${base_ver}"
+		-DQt6Network_PRIVATE_INCLUDE_DIRS="${EPREFIX}/usr/include/qt6/QtNetwork/${base_ver}/QtNetwork;${EPREFIX}/usr/include/qt6/QtCore/${base_ver};${EPREFIX}/usr/include/qt6/QtNetwork/${base_ver}"
 		-DUSE_MINIMAL_DEBUG_INFO=ON
 		-DUSE_SYSTEM_MALLOC=ON
 		-Wno-dev
