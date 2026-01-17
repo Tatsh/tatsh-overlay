@@ -1,0 +1,46 @@
+From 5420bec4c6ccf193e5a827a68d39088fee565755 Mon Sep 17 00:00:00 2001
+From: Matt Whitlock <qt@mattwhitlock.name>
+Date: Thu, 15 Jan 2026 20:52:38 -0500
+Subject: [PATCH] cmake: fix finding Qt private headers with Qt >=6.10
+
+Qt private header directories only get added to the include search path
+when the "Qt6::${component}Private" library is added to the target.
+---
+ Source/WebCore/PlatformQt.cmake | 7 +++++++
+ Source/cmake/OptionsQt.cmake    | 5 +++++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/Source/WebCore/PlatformQt.cmake b/Source/WebCore/PlatformQt.cmake
+index e787b33c375a..59599cbfbbe1 100644
+--- a/Source/WebCore/PlatformQt.cmake
++++ b/Source/WebCore/PlatformQt.cmake
+@@ -311,6 +311,13 @@ list(APPEND WebCore_LIBRARIES
+     ${ZLIB_LIBRARIES}
+ )
+ 
++if (Qt6Gui_VERSION VERSION_GREATER_EQUAL 6.10)
++    list(APPEND WebCore_PRIVATE_LIBRARIES Qt6::GuiPrivate)
++endif ()
++if (Qt6Network_VERSION VERSION_GREATER_EQUAL 6.10)
++    list(APPEND WebCore_PRIVATE_LIBRARIES Qt6::NetworkPrivate)
++endif ()
++
+ if (QT_STATIC_BUILD)
+     list(APPEND WebCore_LIBRARIES
+         ${STATIC_LIB_DEPENDENCIES}
+diff --git a/Source/cmake/OptionsQt.cmake b/Source/cmake/OptionsQt.cmake
+index e6bb8e240f4e..c1f30b3774f3 100644
+--- a/Source/cmake/OptionsQt.cmake
++++ b/Source/cmake/OptionsQt.cmake
+@@ -80,6 +80,11 @@ macro(CHECK_Qt6_PRIVATE_INCLUDE_DIRS _qt_component _header)
+     set(CMAKE_REQUIRED_INCLUDES ${Qt6${_qt_component}_PRIVATE_INCLUDE_DIRS})
+     set(CMAKE_REQUIRED_LIBRARIES Qt6::${_qt_component})
+ 
++    if (Qt6${_qt_component}_VERSION VERSION_GREATER_EQUAL 6.10)
++        find_package(Qt6 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS ${_qt_component}Private)
++        list(APPEND CMAKE_REQUIRED_LIBRARIES Qt6::${_qt_component}Private)
++    endif ()
++
+     # Avoid check_include_file_cxx() because it performs linking but doesn't support CMAKE_REQUIRED_LIBRARIES (doh!)
+     check_cxx_source_compiles("${INCLUDE_TEST_SOURCE}" Qt6${_qt_component}_PRIVATE_HEADER_FOUND)
+ 

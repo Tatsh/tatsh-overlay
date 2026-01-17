@@ -1,0 +1,18 @@
+diff --git a/Tools/QtTestBrowser/CMakeLists.txt b/Tools/QtTestBrowser/CMakeLists.txt
+index 4e670650cc..3e5206e899 100644
+--- a/Tools/QtTestBrowser/CMakeLists.txt
++++ b/Tools/QtTestBrowser/CMakeLists.txt
+@@ -74,6 +74,13 @@ if (NOT TARGET Qt6::StateMachine)
+     add_definitions(-DQT_NO_ANIMATION)
+ endif ()
+ 
++if (Qt6Gui_VERSION VERSION_GREATER_EQUAL 6.10)
++    list(APPEND QtTestBrowser_LIBRARIES Qt6::GuiPrivate)
++endif ()
++if (Qt6Core_VERSION VERSION_GREATER_EQUAL 6.10)
++    list(APPEND QtTestBrowser_LIBRARIES Qt6::CorePrivate)
++endif ()
++
+ include_directories(${QtTestBrowser_INCLUDE_DIRECTORIES})
+ include_directories(SYSTEM ${QtTestBrowser_SYSTEM_INCLUDE_DIRECTORIES})
+ add_executable(QtTestBrowser ${QtTestBrowser_SOURCES})
