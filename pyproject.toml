@@ -15,7 +15,7 @@ portage = { git = "https://github.com/gentoo/portage.git" }
 portage-types = "^0.0.2"
 pyyaml = "^6.0.3"
 requests = "^2.32.5"
-ruff = "^0.14.11"
+ruff = "^0.14.13"
 types-pyyaml = "^6.0.12.20250915"
 types-requests = "^2.32.4.20260107"
 yapf = "^0.43.0"
