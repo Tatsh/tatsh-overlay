@@ -20,7 +20,7 @@ RDEPEND="${DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
-		-DHWVIEW_USE_KDE=$(usex kde)
+		"-DHWVIEW_USE_KDE=$(usex kde)"
 	)
 	cmake_src_configure
 }
