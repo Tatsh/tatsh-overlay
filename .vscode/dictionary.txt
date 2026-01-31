@@ -1,5 +1,4 @@
 aashutoshrathi
-qttestbrowser
 aatl
 abloop
 aclocal
@@ -165,6 +164,7 @@ brahmi
 breakpad
 breejs
 breml
+browserchooser
 browserify
 browserslist
 brrrip
@@ -422,6 +422,7 @@ dglslang
 dgryski
 dgtk
 dheadless
+dhwview
 dialog
 dialogs
 difflib
@@ -877,6 +878,7 @@ huggingface
 humanfs
 humanwhocodes
 hwmon
+hwview
 hyperscript
 iancoleman
 ianlancetaylor
@@ -1718,6 +1720,7 @@ qtsensors
 qtserialport
 qtsql
 qtsvg
+qttestbrowser
 qttools
 qtwayland
 qtwebengine
