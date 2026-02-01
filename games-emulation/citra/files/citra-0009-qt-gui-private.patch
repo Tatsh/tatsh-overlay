@@ -1,0 +1,28 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6931cda9d..0c9d9bf67 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -255,6 +253,10 @@ if (ENABLE_QT)
+     endif()
+ 
+     find_package(Qt6 REQUIRED COMPONENTS Widgets Multimedia Concurrent)
++    find_package(Qt6Gui REQUIRED)
++    if (NOT WIN32)
++        find_package(Qt6 REQUIRED COMPONENTS GuiPrivate)
++    endif()
+ 
+     if (UNIX AND NOT APPLE)
+         find_package(Qt6 REQUIRED COMPONENTS DBus)
+diff --git a/src/citra_qt/CMakeLists.txt b/src/citra_qt/CMakeLists.txt
+index d8fce8c41..2cee97f9d 100644
+--- a/src/citra_qt/CMakeLists.txt
++++ b/src/citra_qt/CMakeLists.txt
+@@ -309,7 +309,7 @@ if (ENABLE_VULKAN)
+ endif()
+ 
+ if (NOT WIN32)
+-    target_include_directories(citra-qt PRIVATE ${Qt6Gui_PRIVATE_INCLUDE_DIRS})
++    target_link_libraries(citra-qt PRIVATE Qt6::GuiPrivate)
+ endif()
+ 
+ if (UNIX AND NOT APPLE)

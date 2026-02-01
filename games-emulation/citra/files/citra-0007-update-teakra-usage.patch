@@ -1,0 +1,59 @@
+diff --git a/src/audio_core/lle/lle.cpp b/src/audio_core/lle/lle.cpp
+index 91ac5dc73..2dfb28ae1 100644
+--- a/src/audio_core/lle/lle.cpp
++++ b/src/audio_core/lle/lle.cpp
+@@ -14,6 +14,7 @@
+ #include "core/core.h"
+ #include "core/core_timing.h"
+ #include "core/hle/service/dsp/dsp_dsp.h"
++#include "core/memory.h"
+ 
+ namespace AudioCore {
+ 
+@@ -130,7 +131,8 @@ struct DspLle::Impl final {
+         StopTeakraThread();
+     }
+ 
+-    Teakra::Teakra teakra;
++    std::array<u8, Memory::DSP_RAM_SIZE> dsp_memory{};
++    Teakra::Teakra teakra{Teakra::UserConfig{.dsp_memory = dsp_memory.data()}};
+     u16 pipe_base_waddr = 0;
+ 
+     bool semaphore_signaled = false;
+@@ -189,13 +191,11 @@ struct DspLle::Impl final {
+     }
+ 
+     u8* GetDspDataPointer(u32 baddr) {
+-        auto& memory = teakra.GetDspMemory();
+-        return &memory[DspDataOffset + baddr];
++        return teakra.GetDspMemory() + DspDataOffset + baddr;
+     }
+ 
+     const u8* GetDspDataPointer(u32 baddr) const {
+-        auto& memory = teakra.GetDspMemory();
+-        return &memory[DspDataOffset + baddr];
++        return teakra.GetDspMemory() + DspDataOffset + baddr;
+     }
+ 
+     PipeStatus GetPipeStatus(u8 pipe_index, PipeDirection direction) const {
+@@ -312,9 +312,8 @@ struct DspLle::Impl final {
+         teakra.Reset();
+ 
+         Dsp1 dsp(buffer);
+-        auto& dsp_memory = teakra.GetDspMemory();
+-        u8* program = dsp_memory.data();
+-        u8* data = dsp_memory.data() + DspDataOffset;
++        u8* program = teakra.GetDspMemory();
++        u8* data = teakra.GetDspMemory() + DspDataOffset;
+         for (const auto& segment : dsp.segments) {
+             if (segment.memory_type == SegmentType::ProgramA ||
+                 segment.memory_type == SegmentType::ProgramB) {
+@@ -404,7 +403,7 @@ void DspLle::PipeWrite(DspPipe pipe_number, std::span<const u8> buffer) {
+ }
+ 
+ std::array<u8, Memory::DSP_RAM_SIZE>& DspLle::GetDspMemory() {
+-    return impl->teakra.GetDspMemory();
++    return impl->dsp_memory;
+ }
+ 
+ void DspLle::SetInterruptHandler(

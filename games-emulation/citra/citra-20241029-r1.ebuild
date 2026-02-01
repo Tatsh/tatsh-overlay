@@ -40,7 +40,6 @@ DEPEND="app-arch/zstd
 	dev-libs/inih
 	dev-libs/libfmt
 	dev-libs/mp
-	dev-libs/teakra
 	dev-libs/zydis
 	media-libs/VulkanMemoryAllocator
 	>=dev-libs/xbyak-5.941
@@ -63,6 +62,9 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0004-boost-1.87.patch"
 	"${FILESDIR}/${PN}-0005-azahar-vulkan-1.4.304.patch"
 	"${FILESDIR}/${PN}-0006-azahar-mcl-fix.patch"
+	"${FILESDIR}/${PN}-0007-update-teakra-usage.patch"
+	"${FILESDIR}/${PN}-0008-fix-find-cryptopp.patch"
+	"${FILESDIR}/${PN}-0009-qt-gui-private.patch"
 )
 
 src_prepare() {
