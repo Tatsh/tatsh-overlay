@@ -1,7 +1,7 @@
 From 3b2c69d634cbed6dd0a9220a8437e470cc80b72b Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 1 Feb 2026 22:18:35 -0500
-Subject: [PATCH 8/9] add target_long_bits
+Subject: [PATCH 08/11] add target_long_bits
 
 ---
  configs/targets/xemu.mak | 1 +

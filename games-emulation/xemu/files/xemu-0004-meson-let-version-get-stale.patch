@@ -1,7 +1,7 @@
 From 4da56ab9a0cb7f82e27e8b4f6b67423cfcf1d1a8 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 6 Oct 2021 03:48:34 -0400
-Subject: [PATCH 4/9] meson: let version get stale
+Subject: [PATCH 04/11] meson: let version get stale
 
 ---
  meson.build | 4 ++--

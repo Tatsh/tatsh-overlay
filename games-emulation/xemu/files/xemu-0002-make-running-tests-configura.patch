@@ -1,7 +1,7 @@
 From 9849547ca329cad141b06c187b6834bd3cb46434 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 6 Oct 2021 02:35:51 -0400
-Subject: [PATCH 2/9] Make running tests configurable
+Subject: [PATCH 02/11] Make running tests configurable
 
 ---
  configure         |  5 +++++

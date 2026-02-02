@@ -1,0 +1,25 @@
+From 84540404f7686a29b2be091d06998fb4279ff299 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 2 Feb 2026 01:16:00 -0500
+Subject: [PATCH 10/11] Fix number of registered audio models
+
+---
+ hw/audio/model.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/audio/model.c b/hw/audio/model.c
+index 40929c6e77..a25217315e 100644
+--- a/hw/audio/model.c
++++ b/hw/audio/model.c
+@@ -36,7 +36,7 @@ struct audio_model {
+     void (*init)(const char *audiodev);
+ };
+ 
+-static struct audio_model audio_models[9];
++static struct audio_model audio_models[10];
+ static int audio_models_count;
+ 
+ void audio_register_model_with_cb(const char *name, const char *descr,
+-- 
+2.52.0
+

@@ -1,7 +1,7 @@
 From 544190c520287cbfafb2cbb2502ed53a7d2fd28e Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 6 Oct 2021 02:26:40 -0400
-Subject: [PATCH 1/9] Make --target-list=xemu work, with bin name set to xemu
+Subject: [PATCH 01/11] Make --target-list=xemu work, with bin name set to xemu
 
 ---
  configs/devices/xemu/default.mak | 32 ++++++++++++++++++++++++++

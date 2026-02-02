@@ -90,6 +90,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0007-not-for-upstream-misc-update.patch"
 	"${FILESDIR}/${PN}-0008-add-target_long_bits.patch"
 	"${FILESDIR}/${PN}-0009-uncomment-acpi-build.c.patch"
+	"${FILESDIR}/${PN}-0010-fix-number-of-registered-aud.patch"
+	"${FILESDIR}/${PN}-0011-fix-boot.patch"
 )
 DOCS=( README.md )
 

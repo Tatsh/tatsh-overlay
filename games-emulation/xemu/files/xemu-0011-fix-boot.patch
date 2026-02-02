@@ -1,0 +1,60 @@
+From c30b0e239c6d8ab98aebac9cd50631fe2801f553 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 2 Feb 2026 01:19:29 -0500
+Subject: [PATCH 11/11] fix boot
+
+---
+ configs/targets/meson.build |  2 +-
+ configs/targets/xemu.c      | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 1 deletion(-)
+ create mode 100644 configs/targets/xemu.c
+
+diff --git a/configs/targets/meson.build b/configs/targets/meson.build
+index cca2514eb5..5e5d51695d 100644
+--- a/configs/targets/meson.build
++++ b/configs/targets/meson.build
+@@ -1,5 +1,5 @@
+ foreach target : [
+-      'arm-softmmu', 'aarch64-softmmu',
++      'arm-softmmu', 'aarch64-softmmu', 'xemu',
+   ]
+   config_target_info += {target : files(target + '.c')}
+ endforeach
+diff --git a/configs/targets/xemu.c b/configs/targets/xemu.c
+new file mode 100644
+index 0000000000..7f237547cc
+--- /dev/null
++++ b/configs/targets/xemu.c
+@@ -0,0 +1,29 @@
++/*
++ * xemu binary/target API
++ *
++ * xemu is a single-binary Xbox emulator based on QEMU's i386 target.
++ * We provide explicit target_info so target_name() and target_arch()
++ * return valid SysEmuTarget values ("i386" / SYS_EMU_TARGET_I386)
++ * instead of the executable name "xemu".
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/target-info-impl.h"
++#include "hw/i386/x86.h"
++#include "target/i386/cpu-qom.h"
++
++static const TargetInfo target_info_xemu = {
++    .target_name = "i386",
++    .target_arch = SYS_EMU_TARGET_I386,
++    .long_bits = 32,
++    .cpu_type = TYPE_X86_CPU,
++    .machine_typename = TYPE_X86_MACHINE,
++    .endianness = ENDIAN_MODE_LITTLE,
++};
++
++const TargetInfo *target_info(void)
++{
++    return &target_info_xemu;
++}
+-- 
+2.52.0
+

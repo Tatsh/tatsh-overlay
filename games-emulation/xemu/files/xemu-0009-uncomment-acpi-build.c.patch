@@ -1,7 +1,7 @@
 From 0227b01194ce6cd913bb2af510eb1dd95988937f Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Sun, 1 Feb 2026 22:43:35 -0500
-Subject: [PATCH 9/9] uncomment acpi-build.c
+Subject: [PATCH 09/11] uncomment acpi-build.c
 
 ---
  hw/i386/meson.build | 2 +-
