@@ -1,0 +1,25 @@
+From 0227b01194ce6cd913bb2af510eb1dd95988937f Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 1 Feb 2026 22:43:35 -0500
+Subject: [PATCH 9/9] uncomment acpi-build.c
+
+---
+ hw/i386/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index ff1ac0cb84..436b3ce52d 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -29,7 +29,7 @@ i386_ss.add(when: 'CONFIG_PC', if_true: files(
+   'x86-common.c',
+   'pc.c',
+   'pc_sysfw.c',
+-  # 'acpi-build.c',
++  'acpi-build.c',
+   'port92.c'))
+ i386_ss.add(when: 'CONFIG_X86_FW_OVMF', if_true: files('pc_sysfw_ovmf.c'),
+                                         if_false: files('pc_sysfw_ovmf-stubs.c'))
+-- 
+2.52.0
+

@@ -10,6 +10,8 @@ inherit fcaps flag-o-matic pax-utils python-r1 toolchain-funcs xdg-utils
 
 DESCRIPTION="Original Xbox emulator."
 HOMEPAGE="https://xemu.app/ https://github.com/xemu-project/xemu"
+BERKELEY_SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
+BERKELEY_TESTFLOAT_SHA="e7af9751d9f9fd3b47911f51a5cfd08af256a9ab"
 GENCONFIG_SHA="42f85f9a2457e61d7e32542c07723565a284fcd6"
 GLSLANG_SHA="16.1.0"
 HTTPLIB_SHA="0f1b62c2b3d0898cbab7aa685c2593303ffdc1a2"
@@ -34,12 +36,13 @@ SRC_URI="https://github.com/xemu-project/xemu/archive/v${PV}.tar.gz -> ${P}.tar.
 	https://github.com/zeux/volk/archive/refs/tags/${VOLK_SHA}.tar.gz -> ${PN}-volk-${VOLK_SHA}.tar.gz
 	https://github.com/KhronosGroup/SPIRV-Reflect/archive/refs/tags/${SPIRV_REFLECT_SHA}.tar.gz -> ${PN}-spirv-reflect-${SPIRV_REFLECT_SHA}.tar.gz
 	https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/refs/tags/v${VMA_SHA}.tar.gz -> ${PN}-vulkanmemoryallocator-${VMA_SHA}.tar.gz
-"
+	https://gitlab.com/qemu-project/berkeley-softfloat-3/-/archive/${BERKELEY_SOFTFLOAT_SHA}/berkeley-softfloat-3-${BERKELEY_SOFTFLOAT_SHA}.tar.bz2 -> ${PN}-berkeley-softfloat-3-${BERKELEY_SOFTFLOAT_SHA}.tar.bz2
+	https://gitlab.com/qemu-project/berkeley-testfloat-3/-/archive/${BERKELEY_TESTFLOAT_SHA}/berkeley-testfloat-3-${BERKELEY_TESTFLOAT_SHA}.tar.bz2 -> ${PN}-berkeley-testfloat-3-${BERKELEY_TESTFLOAT_SHA}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
-IUSE="xattr aio alsa cpu_flags_x86_avx2 debug io-uring jack malloc-trim membarrier pulseaudio test"
+IUSE="xattr aio alsa debug io-uring jack malloc-trim membarrier pulseaudio test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 RESTRICT="!test? ( test )"
 
@@ -82,10 +85,11 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0002-make-running-tests-configura.patch"
 	"${FILESDIR}/${PN}-0003-ui-qemu-xemu-do-not-install-.patch"
 	"${FILESDIR}/${PN}-0004-meson-let-version-get-stale.patch"
-	"${FILESDIR}/${PN}-0005-allow-use-of-system-xxhash-h.patch"
-	"${FILESDIR}/${PN}-0006-not-for-upstream-remove-trac.patch"
-	"${FILESDIR}/${PN}-0007-not-for-upstream-remove-keym.patch"
-	"${FILESDIR}/${PN}-0008-not-for-upstream-misc-update.patch"
+	"${FILESDIR}/${PN}-0005-not-for-upstream-remove-trac.patch"
+	"${FILESDIR}/${PN}-0006-not-for-upstream-remove-keym.patch"
+	"${FILESDIR}/${PN}-0007-not-for-upstream-misc-update.patch"
+	"${FILESDIR}/${PN}-0008-add-target_long_bits.patch"
+	"${FILESDIR}/${PN}-0009-uncomment-acpi-build.c.patch"
 )
 DOCS=( README.md )
 
@@ -104,6 +108,10 @@ src_prepare() {
 	mv "${WORKDIR}/volk-${VOLK_SHA}" subprojects/volk || die
 	mv "${WORKDIR}/SPIRV-Reflect-${SPIRV_REFLECT_SHA}" subprojects/SPIRV-Reflect || die
 	mv "${WORKDIR}/VulkanMemoryAllocator-${VMA_SHA}" subprojects/VulkanMemoryAllocator || die
+	mv "${WORKDIR}/berkeley-softfloat-3-${BERKELEY_SOFTFLOAT_SHA}" subprojects/berkeley-softfloat-3 || die
+	cp subprojects/packagefiles/berkeley-softfloat-3/meson* subprojects/berkeley-softfloat-3 || die
+	mv "${WORKDIR}/berkeley-testfloat-3-${BERKELEY_TESTFLOAT_SHA}" subprojects/berkeley-testfloat-3 || die
+	cp subprojects/packagefiles/berkeley-testfloat-3/meson* subprojects/berkeley-testfloat-3 || die
 	echo "${PV}" > XEMU_VERSION || die
 	echo master > XEMU_BRANCH || die
 	touch XEMU_COMMIT || die
@@ -153,7 +161,6 @@ src_configure() {
 	audio_drv_list_str="${audio_drv_list_str// /}"
 	econf \
 		"$(use_enable aio linux-aio)" \
-		"$(use_enable cpu_flags_x86_avx2 avx2)" \
 		${debug_flag} \
 		"$(use_enable io-uring linux-io-uring)" \
 		"$(use_enable malloc-trim)" \
@@ -166,7 +173,6 @@ src_configure() {
 		--disable-werror \
 		"--extra-cflags=-DXBOX=1 -DCONFIG_SOFTMMU ${build_cflags[*]} -Wno-error=redundant-decls ${CFLAGS}" \
 		--target-list=xemu \
-		--with-xxhash=system \
 		"${other_opts[@]}"
 }
 

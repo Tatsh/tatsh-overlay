@@ -1,0 +1,21 @@
+From 3b2c69d634cbed6dd0a9220a8437e470cc80b72b Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 1 Feb 2026 22:18:35 -0500
+Subject: [PATCH 8/9] add target_long_bits
+
+---
+ configs/targets/xemu.mak | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/configs/targets/xemu.mak b/configs/targets/xemu.mak
+index 5babf71895..9253ec144b 100644
+--- a/configs/targets/xemu.mak
++++ b/configs/targets/xemu.mak
+@@ -1,3 +1,4 @@
+ TARGET_ARCH=i386
+ TARGET_SUPPORTS_MTTCG=y
+ TARGET_XML_FILES= gdb-xml/i386-32bit.xml
++TARGET_LONG_BITS=32
+-- 
+2.52.0
+

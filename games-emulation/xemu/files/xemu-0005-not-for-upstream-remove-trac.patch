@@ -1,24 +1,25 @@
-From 882777769cc3b3a5f03f1bb5958b8c8e3a91235b Mon Sep 17 00:00:00 2001
+From 6827c78664c8e19e1af3d735c98b8c526d65a313 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Thu, 7 Oct 2021 07:24:08 -0400
-Subject: [PATCH 6/8] not for upstream: remove trace-events-all
+Subject: [PATCH 5/9] not for upstream: remove trace-events-all
 
 ---
- trace/meson.build | 8 --------
- 1 file changed, 8 deletions(-)
+ trace/meson.build | 9 ---------
+ 1 file changed, 9 deletions(-)
 
 diff --git a/trace/meson.build b/trace/meson.build
-index c3412dc0ba..6cc1893d9b 100644
+index d89a0db82a..f25aa3b227 100644
 --- a/trace/meson.build
 +++ b/trace/meson.build
-@@ -59,14 +59,6 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
+@@ -63,15 +63,6 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
    endif
  endforeach
  
+-cat = [ python, '-c', 'import fileinput; [print(line, end="") for line in fileinput.input()]', '@INPUT@' ]
 -trace_events_all = custom_target('trace-events-all',
 -                                 output: 'trace-events-all',
 -                                 input: trace_events_files,
--                                 command: [ 'cat', '@INPUT@' ],
+-                                 command: cat,
 -                                 capture: true,
 -                                 install: get_option('trace_backends') != [ 'nop' ],
 -                                 install_dir: qemu_datadir)
@@ -27,5 +28,5 @@ index c3412dc0ba..6cc1893d9b 100644
    trace_ust_all_h = custom_target('trace-ust-all.h',
                                    output: 'trace-ust-all.h',
 -- 
-2.48.1
+2.52.0
 

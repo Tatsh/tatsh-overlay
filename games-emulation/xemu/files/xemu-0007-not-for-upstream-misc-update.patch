@@ -1,17 +1,17 @@
-From 09b3d153472e19584594a71a1e6ca5912f3160be Mon Sep 17 00:00:00 2001
+From 616a037d36fa93cd78be2474aef862f1281aa6c7 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 24 Feb 2025 01:51:53 -0500
-Subject: [PATCH 8/8] Not for upstream: misc updates
+Subject: [PATCH 7/9] Not for upstream: misc updates
 
 ---
- meson.build | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ meson.build | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index 4e94ec2069..0f71bf444f 100644
+index a25a77bb98..51a4fc0d53 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -4435,20 +4432,20 @@ foreach target : target_dirs
+@@ -4611,20 +4611,20 @@ foreach target : target_dirs
      execs = [{
        'name': 'xemu',
        'gui': false,
@@ -36,6 +36,6 @@ index 4e94ec2069..0f71bf444f 100644
        specific_fuzz = specific_fuzz_ss.apply(config_target, strict: false)
        execs += [{
          'name': 'xemu-fuzz',
---
-2.48.1
+-- 
+2.52.0
 

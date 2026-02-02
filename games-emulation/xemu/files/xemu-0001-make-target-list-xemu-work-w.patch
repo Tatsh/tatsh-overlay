@@ -1,7 +1,7 @@
-From 96133e610aa6ab436ed13c0451bdc07f78992567 Mon Sep 17 00:00:00 2001
+From 544190c520287cbfafb2cbb2502ed53a7d2fd28e Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 6 Oct 2021 02:26:40 -0400
-Subject: [PATCH 1/8] Make --target-list=xemu work, with bin name set to xemu
+Subject: [PATCH 1/9] Make --target-list=xemu work, with bin name set to xemu
 
 ---
  configs/devices/xemu/default.mak | 32 ++++++++++++++++++++++++++
@@ -60,10 +60,10 @@ index 0000000000..5babf71895
 +TARGET_SUPPORTS_MTTCG=y
 +TARGET_XML_FILES= gdb-xml/i386-32bit.xml
 diff --git a/configure b/configure
-index c660bcfbe4..d79043187f 100755
+index 410bf21b1c..92ba54b375 100755
 --- a/configure
 +++ b/configure
-@@ -876,6 +876,17 @@ fi
+@@ -848,6 +848,17 @@ fi
  if [ "$system" = "yes" ]; then
      mak_wilds="${mak_wilds} $source_path/configs/targets/*-softmmu.mak"
  fi
@@ -82,10 +82,10 @@ index c660bcfbe4..d79043187f 100755
  for config in $mak_wilds; do
      target="$(basename "$config" .mak)"
 diff --git a/meson.build b/meson.build
-index 61eb1fef01..ec0d183b77 100644
+index d9424547f1..24e14547a7 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -60,7 +60,7 @@ have_system = false
+@@ -65,7 +65,7 @@ have_system = false
  foreach target : target_dirs
    have_linux_user = have_linux_user or target.endswith('linux-user')
    have_bsd_user = have_bsd_user or target.endswith('bsd-user')
@@ -94,7 +94,7 @@ index 61eb1fef01..ec0d183b77 100644
  endforeach
  have_user = have_linux_user or have_bsd_user
  
-@@ -3304,6 +3304,7 @@ disassemblers = {
+@@ -3429,6 +3429,7 @@ disassemblers = {
    'hexagon' : ['CONFIG_HEXAGON_DIS'],
    'hppa' : ['CONFIG_HPPA_DIS'],
    'i386' : ['CONFIG_I386_DIS'],
@@ -102,7 +102,7 @@ index 61eb1fef01..ec0d183b77 100644
    'x86_64' : ['CONFIG_I386_DIS'],
    'm68k' : ['CONFIG_M68K_DIS'],
    'microblaze' : ['CONFIG_MICROBLAZE_DIS'],
-@@ -3364,9 +3365,8 @@ foreach target : target_dirs
+@@ -3489,9 +3490,8 @@ foreach target : target_dirs
        error('Target @0@ is only available on a BSD host'.format(target))
      endif
      config_target += { 'CONFIG_BSD_USER': 'y' }
@@ -113,7 +113,7 @@ index 61eb1fef01..ec0d183b77 100644
    endif
    if target.endswith('-user')
      config_target += {
-@@ -3455,7 +3455,7 @@ foreach target : target_dirs
+@@ -3579,7 +3579,7 @@ foreach target : target_dirs
    config_target_h += {target: configure_file(output: target + '-config-target.h',
                                                 configuration: config_target_data)}
  
@@ -122,7 +122,7 @@ index 61eb1fef01..ec0d183b77 100644
      target_kconfig += 'CONFIG_' + config_target['TARGET_ARCH'].to_upper() + '=y'
      target_kconfig += 'CONFIG_TARGET_BIG_ENDIAN=' + config_target['TARGET_BIG_ENDIAN']
  
-@@ -4024,7 +4024,7 @@ foreach d, list : target_modules
+@@ -4138,7 +4138,7 @@ foreach d, list : target_modules
      if enable_modules
        module_ss.add(modulecommon)
        foreach target : target_dirs
@@ -131,7 +131,7 @@ index 61eb1fef01..ec0d183b77 100644
            config_target = config_target_mak[target]
            target_inc = [include_directories('target' / config_target['TARGET_BASE_ARCH'])]
            c_args = ['-DCOMPILING_PER_TARGET',
-@@ -4281,7 +4281,7 @@ foreach target : target_dirs
+@@ -4440,7 +4440,7 @@ foreach target : target_dirs
    if host_os == 'linux'
      target_inc += include_directories('linux-headers', is_system: true)
    endif
@@ -140,7 +140,7 @@ index 61eb1fef01..ec0d183b77 100644
      target_type='system'
      t = target_system_arch[target_base_arch].apply(config_target, strict: false)
      arch_srcs += t.sources()
-@@ -4413,6 +4413,33 @@ foreach target : target_dirs
+@@ -4605,6 +4605,33 @@ foreach target : target_dirs
          'dependencies': specific_fuzz.dependencies(),
        }]
      endif
@@ -175,5 +175,5 @@ index 61eb1fef01..ec0d183b77 100644
      execs = [{
        'name': 'qemu-' + target_name,
 -- 
-2.48.1
+2.52.0
 
