@@ -1523,6 +1523,7 @@ oxffaa
 oyvindln
 pacct
 pacho
+packagefiles
 packlist
 pacote
 padd
@@ -2025,6 +2026,7 @@ terak
 termcolor
 termenv
 testdata
+testfloat
 texinfo
 textextensions
 textsplitters
