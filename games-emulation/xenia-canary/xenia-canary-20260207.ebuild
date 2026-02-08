@@ -10,7 +10,6 @@ HOMEPAGE="https://github.com/xenia-canary/xenia-canary https://xenia.jp/"
 SHA="ef65c6761bcfa16ab40101ee229c2b88e47251e2"
 AES_128_SHA="7e3ac3bb6b478187472b4ac6f1698eb203e8e90b"
 BINUTILS_PPC_CYGWIN_SHA="6f3f15db908d339472db7be450f7c58bb71545cc"
-DISCORD_RPC_SHA="963aa9f3e5ce81a4682c6ca3d136cddda614db33"
 FIDELITYFX_CAS_SHA="9fabcc9a2c45f958aff55ddfda337e74ef894b7f"
 FIDELITYFX_FSR_SHA="a21ffb8f6c13233ba336352bdff293894c706575"
 IMGUI_SHA="4806a1924ff6181180bf5e4b8b79ab4394118875"
@@ -24,8 +23,6 @@ SRC_URI="https://github.com/xenia-canary/xenia-canary/archive/${SHA}.tar.gz
 		-> ${PN}-aes_128-${AES_128_SHA:0:7}.tar.gz
 	https://github.com/benvanik/binutils-ppc-cygwin/archive/${BINUTILS_PPC_CYGWIN_SHA}.tar.gz
 		-> ${PN}-binutils-ppc-cygwin-${BINUTILS_PPC_CYGWIN_SHA:0:7}.tar.gz
-	https://github.com/discordapp/discord-rpc/archive/${DISCORD_RPC_SHA}.tar.gz
-		-> ${PN}-discord-rpc-${DISCORD_RPC_SHA:0:7}.tar.gz
 	https://github.com/GPUOpen-Effects/FidelityFX-CAS/archive/${FIDELITYFX_CAS_SHA}.tar.gz
 		-> ${PN}-FidelityFX-CAS-${FIDELITYFX_CAS_SHA:0:7}.tar.gz
 	https://github.com/GPUOpen-Effects/FidelityFX-FSR/archive/${FIDELITYFX_FSR_SHA}.tar.gz
@@ -66,22 +63,24 @@ DEPEND="app-arch/snappy
 	dev-libs/xxhash
 	dev-util/DirectXShaderCompiler
 	dev-util/vulkan-headers
+	discord? ( dev-libs/discord-rpc )
 	media-libs/VulkanMemoryAllocator
 	media-libs/libsdl2
 	media-video/ffmpeg:=
 	virtual/zlib"
 RDEPEND="${DEPEND}"
+BDEPEND="dev-cpp/cpptoml
+	dev-util/directx-headers"
 
 src_prepare() {
 	rm .gitmodules || die
-	rmdir "${S}"/third_party/{aes_128,binutils-ppc-cygwin,discord-rpc} || die
+	rmdir "${S}"/third_party/{aes_128,binutils-ppc-cygwin} || die
 	rmdir "${S}"/third_party/{FidelityFX-CAS,FidelityFX-FSR,imgui} || die
 	rmdir "${S}"/third_party/{premake-androidndk,premake-cmake,premake-core} || die
 	rmdir "${S}"/third_party/premake-export-compile-commands || die
 	mv "${WORKDIR}/aes_128-${AES_128_SHA}" "${S}/third_party/aes_128" || die
 	mv "${WORKDIR}/binutils-ppc-cygwin-${BINUTILS_PPC_CYGWIN_SHA}" \
 		"${S}/third_party/binutils-ppc-cygwin" || die
-	mv "${WORKDIR}/discord-rpc-${DISCORD_RPC_SHA}" "${S}/third_party/discord-rpc" || die
 	mv "${WORKDIR}/FidelityFX-CAS-${FIDELITYFX_CAS_SHA}" \
 		"${S}/third_party/FidelityFX-CAS" || die
 	mv "${WORKDIR}/FidelityFX-FSR-${FIDELITYFX_FSR_SHA}" \
