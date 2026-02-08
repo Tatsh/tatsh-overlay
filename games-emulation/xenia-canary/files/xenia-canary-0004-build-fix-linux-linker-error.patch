@@ -1,0 +1,59 @@
+From 70c3d8d1469354eddf392041637e99a644e72ff1 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 14:35:31 -0500
+Subject: [PATCH 04/21] build: fix Linux linker errors (fontconfig and app
+ transitive deps)
+
+Add fontconfig to global Linux links (imgui drawer uses it). Add
+explicit links in xenia-app for transitive deps: libavformat,
+xenia-hid-skylander, pugixml, zarchive, zlib-ng, zstd.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua               | 1 +
+ src/xenia/app/premake5.lua | 6 ++++++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/premake5.lua b/premake5.lua
+index 3564866ca..3afe35d72 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -150,6 +150,7 @@ filter("platforms:Linux")
+   links({
+     "stdc++fs",
+     "dl",
++    "fontconfig",
+     "lz4",
+     "pthread",
+     "rt",
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index c99ff0184..f8eaa5874 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -19,6 +19,7 @@ project("xenia-app")
+     "xenia-gpu-vulkan",
+     "xenia-hid",
+     "xenia-hid-nop",
++    "xenia-hid-skylander",
+     "xenia-kernel",
+     "xenia-patcher",
+     "xenia-ui",
+@@ -34,10 +35,15 @@ project("xenia-app")
+     "glslang-spirv",
+     "imgui",
+     "libavcodec",
++    "libavformat",
+     "libavutil",
+     "mspack",
++    "pugixml",
+     "snappy",
+     "xxhash",
++    "zarchive",
++    "zlib-ng",
++    "zstd",
+   })
+   defines({
+     "XBYAK_NO_OP_NAMES",
+-- 
+2.52.0
+

@@ -1,0 +1,348 @@
+diff --git a/premake5.lua b/premake5.lua
+index b0ae36d05..34b1caa21 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -292,6 +292,27 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_DISCORD_RPC: use system discord-rpc when set (Linux only). Link lib; fail if set and not found.
++use_system_discord_rpc = false
++discord_rpc_pkg_config_available = false
++discord_rpc_system_include = nil
++discord_rpc_system_links = nil
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_DISCORD_RPC") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_discord_rpc = true
++    discord_rpc_pkg_config_available = os.execute("pkg-config --exists discord-rpc") or os.execute("pkg-config --exists discord_rpc")
++    if not discord_rpc_pkg_config_available then
++      if os.isfile("/usr/include/discord_rpc.h") and (os.isfile("/usr/lib/libdiscord-rpc.so") or os.isfile("/usr/lib64/libdiscord-rpc.so")) then
++        discord_rpc_system_include = "/usr/include"
++        discord_rpc_system_links = "discord-rpc"
++      else
++        error("USE_SYSTEM_DISCORD_RPC is set but discord-rpc was not found (no pkg-config and no /usr/include/discord_rpc.h + libdiscord-rpc.so). Install dev-libs/discord-rpc or unset USE_SYSTEM_DISCORD_RPC.")
++      end
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -447,6 +468,9 @@ end
+ if use_system_vulkan_memory_allocator then
+   defines({ "XENIA_USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR" })
+ end
++if use_system_discord_rpc then
++  defines({ "XENIA_USE_SYSTEM_DISCORD_RPC" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -717,7 +741,9 @@ workspace("xenia")
+     include("third_party/capstone.lua")
+   end
+   include("third_party/dxbc.lua")
+-  include("third_party/discord-rpc.lua")
++  if not use_system_discord_rpc then
++    include("third_party/discord-rpc.lua")
++  end
+   if not use_system_cxxopts then
+     include("third_party/cxxopts.lua")
+   end
+diff --git a/src/xenia/app/discord/discord_presence.cc b/src/xenia/app/discord/discord_presence.cc
+index 4140a9076..63e0dba3d 100644
+--- a/src/xenia/app/discord/discord_presence.cc
++++ b/src/xenia/app/discord/discord_presence.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "discord_presence.h"
+ #include <ctime>
+-#include "third_party/discord-rpc/include/discord_rpc.h"
++#include "xenia/base/discord_rpc_include.h"
+ #include "xenia/base/string.h"
+ 
+ // TODO: This library has been deprecated in favor of Discord's GameSDK.
+diff --git a/src/xenia/app/discord/premake5.lua b/src/xenia/app/discord/premake5.lua
+index 13e82b5f0..84e4b2b8a 100644
+--- a/src/xenia/app/discord/premake5.lua
++++ b/src/xenia/app/discord/premake5.lua
+@@ -6,12 +6,14 @@ project("xenia-app-discord")
+   uuid("d14c0885-22d2-40de-ab28-7b234ef2b949")
+   kind("StaticLib")
+   language("C++")
+-  links({
+-    "discord-rpc"
+-  })
+-  includedirs({
+-    project_root.."/third_party/discord-rpc/src"
+-  })
++  if use_system_discord_rpc then
++    pkg_config.all("discord-rpc")
++  else
++    links({ "discord-rpc" })
++    includedirs({
++      project_root.."/third_party/discord-rpc/src"
++    })
++  end
+   files({
+     "discord_presence.cc",
+     "discord_presence.h"
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index d159f72fa..9fa6cab5c 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -32,6 +32,9 @@ project("xenia-app")
+   if use_system_zlib_ng then
+     pkg_config.all("zlib-ng")
+   end
++  if use_system_discord_rpc then
++    pkg_config.all("discord-rpc")
++  end
+   links({
+     "xenia-apu",
+     "xenia-apu-nop",
+@@ -55,7 +58,6 @@ project("xenia-app")
+     "capstone",
+     "fmt",
+     "dxbc",
+-    "discord-rpc",
+     "imgui",
+     "libavcodec",
+     "libavformat",
+@@ -71,7 +73,6 @@ project("xenia-app")
+     "capstone",
+     "fmt",
+     "dxbc",
+-    "discord-rpc",
+     "imgui",
+     "libavcodec",
+     "libavformat",
+@@ -88,7 +89,6 @@ project("xenia-app")
+     "capstone",
+     "fmt",
+     "dxbc",
+-    "discord-rpc",
+     "glslang-spirv",
+     "imgui",
+     "libavcodec",
+@@ -105,7 +105,6 @@ project("xenia-app")
+     "capstone",
+     "fmt",
+     "dxbc",
+-    "discord-rpc",
+     "glslang-spirv",
+     "imgui",
+     "libavcodec",
+@@ -119,6 +118,9 @@ project("xenia-app")
+     "zlib-ng",
+     "zstd",
+   }))
++  if not use_system_discord_rpc then
++    links({ "discord-rpc" })
++  end
+   defines({
+     "XBYAK_NO_OP_NAMES",
+     "XBYAK_ENABLE_OMITTED_OPERAND",
+diff --git a/src/xenia/base/discord_rpc_include.h b/src/xenia/base/discord_rpc_include.h
+new file mode 100644
+index 000000000..4993fdf99
+--- /dev/null
++++ b/src/xenia/base/discord_rpc_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled discord-rpc or system (XENIA_USE_SYSTEM_DISCORD_RPC).
++#ifndef XENIA_BASE_DISCORD_RPC_INCLUDE_H_
++#define XENIA_BASE_DISCORD_RPC_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_DISCORD_RPC
++#include <discord_rpc.h>
++#else
++#include "third_party/discord-rpc/include/discord_rpc.h"
++#endif
++
++#endif  // XENIA_BASE_DISCORD_RPC_INCLUDE_H_
+diff --git a/tools/build/scripts/pkg_config.lua b/tools/build/scripts/pkg_config.lua
+index 1f679d498..6bba02242 100644
+--- a/tools/build/scripts/pkg_config.lua
++++ b/tools/build/scripts/pkg_config.lua
+@@ -65,6 +65,12 @@ function pkg_config.all(lib)
+     defines({ "WITH_GZFILEOP" })
+     return
+   end
++  -- When discord-rpc has no pkg-config (e.g. Gentoo), use fallback include/links.
++  if lib == "discord-rpc" and use_system_discord_rpc and discord_rpc_system_include and discord_rpc_system_links then
++    includedirs(discord_rpc_system_include)
++    links(discord_rpc_system_links)
++    return
++  end
+   pkg_config.cflags(lib)
+   pkg_config.lflags(lib)
+ end
+-- 
+2.52.0
+
+
+diff --git a/premake5.lua b/premake5.lua
+index dbc46dfbe..a98b3d13f 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -313,6 +313,9 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- XENIA_DISCORD: when set to "0", do not build or link Discord support (no third_party, no app/discord). Default "1".
++enable_discord = (os.getenv("XENIA_DISCORD") or "1") == "1"
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -502,8 +505,11 @@ end
+ if use_system_vulkan_memory_allocator then
+   defines({ "XENIA_USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR" })
+ end
+-if use_system_discord_rpc then
++if enable_discord and use_system_discord_rpc then
+   defines({ "XENIA_USE_SYSTEM_DISCORD_RPC" })
+ end
++if enable_discord then
++  defines({ "XENIA_ENABLE_DISCORD" })
++end
+ 
+ cdialect("C17")
+@@ -765,7 +771,7 @@ workspace("xenia")
+     include("third_party/capstone.lua")
+   end
+   include("third_party/dxbc.lua")
+-  if not use_system_discord_rpc then
++  if enable_discord and not use_system_discord_rpc then
+     include("third_party/discord-rpc.lua")
+   end
+   if not use_system_cxxopts then
+@@ -830,7 +836,9 @@ workspace("xenia")
+ 
+   include("src/xenia")
+   include("src/xenia/app")
+-  include("src/xenia/app/discord")
++  if enable_discord then
++    include("src/xenia/app/discord")
++  end
+   include("src/xenia/apu")
+   include("src/xenia/apu/nop")
+   include("src/xenia/base")
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index 687583c37..57a7c0efe 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -32,7 +32,7 @@ project("xenia-app")
+   if use_system_zlib_ng then
+     pkg_config.all("zlib-ng")
+   end
+-  if use_system_discord_rpc then
++  if enable_discord and use_system_discord_rpc then
+     pkg_config.all("discord-rpc")
+   end
+   if use_system_imgui then
+@@ -117,7 +117,7 @@ project("xenia-app")
+     "zlib-ng",
+     "zstd",
+   }))
+-  if not use_system_discord_rpc then
++  if enable_discord and not use_system_discord_rpc then
+     links({ "discord-rpc" })
+   end
+   if not use_system_imgui then
+@@ -177,13 +177,18 @@ project("xenia-app")
+     vectorextensions("SSE2")  -- Disable AVX for main_init_win.cc so our AVX check doesn't use AVX instructions.
+ 
+   filter("platforms:not Android-*")
+-    links({
++    links(enable_discord and {
+       "xenia-app-discord",
+       "xenia-apu-sdl",
+       -- TODO(Triang3l): CPU debugger on Android.
+       "xenia-debug-ui",
+       "xenia-helper-sdl",
+       "xenia-hid-sdl",
++    } or {
++      "xenia-apu-sdl",
++      "xenia-debug-ui",
++      "xenia-helper-sdl",
++      "xenia-hid-sdl",
+     })
+ 
+   filter("platforms:Linux")
+diff --git a/src/xenia/app/xenia_main.cc b/src/xenia/app/xenia_main.cc
+index b70ba2d7c..1cc090def 100644
+--- a/src/xenia/app/xenia_main.cc
++++ b/src/xenia/app/xenia_main.cc
+@@ -14,7 +14,9 @@
+ #include <string>
+ #include <thread>
+ 
++#ifdef XENIA_ENABLE_DISCORD
+ #include "xenia/app/discord/discord_presence.h"
++#endif
+ #include "xenia/app/emulator_window.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/cvar.h"
+@@ -108,7 +110,9 @@ DEFINE_transient_bool(portable, true,
+ 
+ DECLARE_bool(debug);
+ 
++#ifdef XENIA_ENABLE_DISCORD
+ DEFINE_bool(discord, true, "Enable Discord rich presence", "General");
++#endif
+ 
+ DECLARE_bool(widescreen);
+ 
+@@ -501,10 +505,12 @@ bool EmulatorApp::OnInitialize() {
+   cache_root = std::filesystem::absolute(cache_root);
+   XELOGI("Host cache root: {}", cache_root);
+ 
++#ifdef XENIA_ENABLE_DISCORD
+   if (cvars::discord) {
+     discord::DiscordPresence::Initialize();
+     discord::DiscordPresence::NotPlaying();
+   }
++#endif
+ 
+   // Create the emulator but don't initialize so we can setup the window.
+   emulator_ =
+@@ -533,9 +539,11 @@ bool EmulatorApp::OnInitialize() {
+ void EmulatorApp::OnDestroy() {
+   ShutdownEmulatorThreadFromUIThread();
+ 
++#ifdef XENIA_ENABLE_DISCORD
+   if (cvars::discord) {
+     discord::DiscordPresence::Shutdown();
+   }
++#endif
+ 
+   Profiler::Dump();
+   // The profiler needs to shut down before the graphics context.
+@@ -663,10 +671,12 @@ void EmulatorApp::EmulatorThread() {
+   }
+ 
+   emulator_->on_launch.AddListener([&](auto title_id, const auto& game_title) {
++#ifdef XENIA_ENABLE_DISCORD
+     if (cvars::discord) {
+       discord::DiscordPresence::PlayingTitle(
+           game_title.empty() ? "Unknown Title" : std::string(game_title));
+     }
++#endif
+     app_context().CallInUIThread([this]() { emulator_window_->UpdateTitle(); });
+     emulator_thread_event_->Set();
+   });
+@@ -683,9 +693,11 @@ void EmulatorApp::EmulatorThread() {
+   });
+ 
+   emulator_->on_terminate.AddListener([]() {
++#ifdef XENIA_ENABLE_DISCORD
+     if (cvars::discord) {
+       discord::DiscordPresence::NotPlaying();
+     }
++#endif
+   });
+ 
+   // Enable emulator input now that the emulator is properly loaded.

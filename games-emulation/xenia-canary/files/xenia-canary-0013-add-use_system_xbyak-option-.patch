@@ -1,0 +1,165 @@
+From 7e31fe8a41a1b3c5468db113ce495ba3c0c9d90e Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 19:51:00 -0500
+Subject: [PATCH 16/21] Add USE_SYSTEM_XBYAK option for system xbyak
+ (header-only)
+
+- premake5.lua: read USE_SYSTEM_XBYAK on Linux; pkg-config xbyak or
+  fallback to /usr/include/xbyak; add global includedirs from
+  pkg-config --cflags or fallback; define XENIA_USE_SYSTEM_XBYAK.
+- src/xenia/base/xbyak_include.h: wrapper for xbyak.h and xbyak_util.h
+  (system vs bundled).
+- x64_emitter.h, platform_amd64.cc, main_init_win.cc, main_init_posix.cc:
+  use xbyak_include.h instead of third_party or system path.
+
+Clean build tested with all USE_SYSTEM_* except glslang.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                            | 37 +++++++++++++++++++++++++
+ src/xenia/base/main_init_posix.cc       |  2 +-
+ src/xenia/base/main_init_win.cc         |  2 +-
+ src/xenia/base/platform_amd64.cc        |  3 +-
+ src/xenia/base/xbyak_include.h          | 13 +++++++++
+ src/xenia/cpu/backend/x64/x64_emitter.h |  3 +-
+ 6 files changed, 54 insertions(+), 6 deletions(-)
+ create mode 100644 src/xenia/base/xbyak_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index 19af0619d..0cd8b40a4 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -190,6 +190,26 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_XBYAK: use system xbyak when set (Linux only). Header-only; fail if set and not found.
++-- Prefer pkg-config; if unavailable (e.g. Gentoo without .pc), fall back to /usr/include/xbyak.
++use_system_xbyak = false
++xbyak_pkg_config_available = false
++xbyak_system_include = nil
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_XBYAK") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_xbyak = true
++    xbyak_pkg_config_available = os.execute("pkg-config --exists xbyak")
++    if not xbyak_pkg_config_available then
++      if os.isfile("/usr/include/xbyak/xbyak.h") or os.isdir("/usr/include/xbyak") then
++        xbyak_system_include = "/usr/include"
++      else
++        error("USE_SYSTEM_XBYAK is set but xbyak was not found (no pkg-config and no /usr/include/xbyak). Install dev-libs/xbyak or unset USE_SYSTEM_XBYAK.")
++      end
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -217,6 +237,20 @@ if use_system_cxxopts then
+     end
+   end
+ end
++if use_system_xbyak then
++  if xbyak_system_include then
++    includedirs(xbyak_system_include)
++  else
++    local cflags = os.outputof("pkg-config --cflags xbyak")
++    if cflags then
++      for _, flag in next, string.explode(cflags, " ") do
++        if flag and flag:sub(1, 2) == "-I" then
++          includedirs(flag:sub(3))
++        end
++      end
++    end
++  end
++end
+ 
+ defines({
+   "VULKAN_HPP_NO_TO_STRING",
+@@ -257,6 +291,9 @@ end
+ if use_system_cxxopts then
+   defines({ "XENIA_USE_SYSTEM_CXXOPTS" })
+ end
++if use_system_xbyak then
++  defines({ "XENIA_USE_SYSTEM_XBYAK" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+diff --git a/src/xenia/base/main_init_posix.cc b/src/xenia/base/main_init_posix.cc
+index a599a31d9..bb6242932 100644
+--- a/src/xenia/base/main_init_posix.cc
++++ b/src/xenia/base/main_init_posix.cc
+@@ -8,7 +8,7 @@
+ */
+ #include <gdk/gdk.h>
+ #include <gtk/gtk.h>
+-#include <xbyak/xbyak/xbyak_util.h>
++#include "xenia/base/xbyak_include.h"
+ 
+ #include "xenia/ui/window_gtk.h"
+ 
+diff --git a/src/xenia/base/main_init_win.cc b/src/xenia/base/main_init_win.cc
+index 0db3576cb..c31819be2 100644
+--- a/src/xenia/base/main_init_win.cc
++++ b/src/xenia/base/main_init_win.cc
+@@ -12,7 +12,7 @@
+ #include <cstdlib>
+ 
+ // Includes Windows headers, so it goes after platform_win.h.
+-#include "third_party/xbyak/xbyak/xbyak_util.h"
++#include "xenia/base/xbyak_include.h"
+ 
+ class StartupCpuFeatureCheck {
+  public:
+diff --git a/src/xenia/base/platform_amd64.cc b/src/xenia/base/platform_amd64.cc
+index c4f8fa3e1..34d813d79 100644
+--- a/src/xenia/base/platform_amd64.cc
++++ b/src/xenia/base/platform_amd64.cc
+@@ -10,8 +10,7 @@
+ #include "xenia/base/cvar.h"
+ #include "xenia/base/platform.h"
+ #define XBYAK_NO_OP_NAMES
+-#include "third_party/xbyak/xbyak/xbyak.h"
+-#include "third_party/xbyak/xbyak/xbyak_util.h"
++#include "xenia/base/xbyak_include.h"
+ DEFINE_int64(x64_extension_mask, -1LL,
+              "Allow the detection and utilization of specific instruction set "
+              "features.\n"
+diff --git a/src/xenia/base/xbyak_include.h b/src/xenia/base/xbyak_include.h
+new file mode 100644
+index 000000000..830e023ef
+--- /dev/null
++++ b/src/xenia/base/xbyak_include.h
+@@ -0,0 +1,13 @@
++// Wrapper so Xenia can use either bundled xbyak or system xbyak (XENIA_USE_SYSTEM_XBYAK). Header-only.
++#ifndef XENIA_BASE_XBYAK_INCLUDE_H_
++#define XENIA_BASE_XBYAK_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_XBYAK
++#include <xbyak/xbyak.h>
++#include <xbyak/xbyak_util.h>
++#else
++#include "third_party/xbyak/xbyak/xbyak.h"
++#include "third_party/xbyak/xbyak/xbyak_util.h"
++#endif
++
++#endif  // XENIA_BASE_XBYAK_INCLUDE_H_
+diff --git a/src/xenia/cpu/backend/x64/x64_emitter.h b/src/xenia/cpu/backend/x64/x64_emitter.h
+index 909085097..2c48b5f1c 100644
+--- a/src/xenia/cpu/backend/x64/x64_emitter.h
++++ b/src/xenia/cpu/backend/x64/x64_emitter.h
+@@ -21,8 +21,7 @@
+ #include "xenia/cpu/xex_module.h"
+ #include "xenia/memory.h"
+ // NOTE: must be included last as it expects windows.h to already be included.
+-#include "third_party/xbyak/xbyak/xbyak.h"
+-#include "third_party/xbyak/xbyak/xbyak_util.h"
++#include "xenia/base/xbyak_include.h"
+ #include "x64_amdfx_extensions.h"
+ namespace xe {
+ namespace cpu {
+-- 
+2.52.0
+

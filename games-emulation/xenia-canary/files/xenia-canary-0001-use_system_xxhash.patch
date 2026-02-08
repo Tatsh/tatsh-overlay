@@ -1,0 +1,143 @@
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -18,6 +18,18 @@ objdir(build_obj)
+ enableTests = false
+ enableMiscSubprojects = false
+ 
++-- USE_SYSTEM_XXHASH: use system libxxhash when set (Linux only). Fail if set and not found.
++use_system_xxhash = false
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_XXHASH") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_xxhash = true
++    if not os.execute("pkg-config --exists libxxhash") then
++      error("USE_SYSTEM_XXHASH is set but libxxhash was not found. Install dev-libs/xxhash or unset USE_SYSTEM_XXHASH.")
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -40,6 +52,9 @@ defines({
+   --"IMGUI_ENABLE_FREETYPE",
+   "USE_CPP17", -- Tabulate
+ })
++if use_system_xxhash then
++  defines({ "XENIA_USE_SYSTEM_XXHASH" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -314,7 +329,9 @@ workspace("xenia")
+   include("third_party/imgui.lua")
+   include("third_party/mspack.lua")
+   include("third_party/snappy.lua")
+-  include("third_party/xxhash.lua")
++  if not use_system_xxhash then
++    include("third_party/xxhash.lua")
++  end
+   include("third_party/zarchive.lua")
+   include("third_party/zstd.lua")
+   include("third_party/zlib-ng.lua")
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -5,6 +5,9 @@ group("src")
+ project("xenia-app")
+   uuid("d7e98620-d007-4ad8-9dbd-b47c8853a17f")
+   language("C++")
++  if use_system_xxhash then
++    pkg_config.all("libxxhash")
++  end
+   links({
+     "xenia-apu",
+     "xenia-apu-nop",
+--- a/src/xenia/base/xxhash.h
++++ b/src/xenia/base/xxhash.h
+@@ -10,12 +10,18 @@
+ #ifndef XENIA_BASE_XXHASH_H_
+ #define XENIA_BASE_XXHASH_H_
+ 
++#ifdef XENIA_USE_SYSTEM_XXHASH
++/* Expose XXH3_state_s definition so stack-allocated XXH3_state_t is valid. */
++#define XXH_STATIC_LINKING_ONLY
++#include <xxhash.h>
++#else
+ #define XXH_INLINE_ALL
+ 
+ // Can't use XXH_X86DISPATCH because XXH is calculated on multiple threads,
+ // while the dispatch writes the result (multiple pointers without any
+ // synchronization) to XXH_g_dispatch at the first call.
+ 
+ #include "third_party/xxhash/xxhash.h"
++#endif
+ 
+ #endif  // XENIA_BASE_XXHASH_H_
+--- a/src/xenia/gpu/d3d12/premake5.lua
++++ b/src/xenia/gpu/d3d12/premake5.lua
+@@ -6,6 +6,9 @@ project("xenia-gpu-d3d12")
+   uuid("c057eae4-e7bb-4113-9a69-1fe07b735c49")
+   kind("StaticLib")
+   language("C++")
++  if use_system_xxhash then
++    pkg_config.all("libxxhash")
++  end
+   links({
+     "fmt",
+     "xenia-base",
+@@ -25,6 +28,9 @@ if enableMiscSubprojects then
+     uuid("7b5b9fcb-7bf1-43ff-a774-d4c41c8706be")
+     single_library_windowed_app_kind()
+     language("C++")
++    if use_system_xxhash then
++      pkg_config.all("libxxhash")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+--- a/src/xenia/gpu/null/premake5.lua
++++ b/src/xenia/gpu/null/premake5.lua
+@@ -6,6 +6,9 @@ project("xenia-gpu-null")
+   uuid("42FCA0B3-4C20-4532-95E9-07D297013BE4")
+   kind("StaticLib")
+   language("C++")
++  if use_system_xxhash then
++    pkg_config.all("libxxhash")
++  end
+   links({
+     "xenia-base",
+     "xenia-gpu",
+--- a/src/xenia/gpu/premake5.lua
++++ b/src/xenia/gpu/premake5.lua
+@@ -6,6 +6,9 @@ project("xenia-gpu")
+   uuid("0e8d3370-e4b1-4b05-a2e8-39ebbcdf9b17")
+   kind("StaticLib")
+   language("C++")
++  if use_system_xxhash then
++    pkg_config.all("libxxhash")
++  end
+   links({
+     "dxbc",
+     "fmt",
+--- a/src/xenia/gpu/vulkan/premake5.lua
++++ b/src/xenia/gpu/vulkan/premake5.lua
+@@ -6,6 +6,9 @@ project("xenia-gpu-vulkan")
+   uuid("717590b4-f579-4162-8f23-0624e87d6cca")
+   kind("StaticLib")
+   language("C++")
++  if use_system_xxhash then
++    pkg_config.all("libxxhash")
++  end
+   links({
+     "fmt",
+     "glslang-spirv",
+@@ -29,6 +32,9 @@ if enableMiscSubprojects then
+     uuid("86a1dddc-a26a-4885-8c55-cf745225d93e")
+     single_library_windowed_app_kind()
+     language("C++")
++    if use_system_xxhash then
++      pkg_config.all("libxxhash")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",

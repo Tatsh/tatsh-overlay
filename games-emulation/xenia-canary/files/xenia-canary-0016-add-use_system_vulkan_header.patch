@@ -1,0 +1,341 @@
+From d3b46918a652a57d9e1171967b37e3c98b7d41e7 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 20:14:36 -0500
+Subject: [PATCH 19/21] Add USE_SYSTEM_VULKAN_HEADERS and
+ USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR
+
+- premake5.lua: env vars; pkg-config or fallback /usr/include for both;
+  global includedirs and defines when set
+- src/xenia/base/vulkan_headers_include.h: wrapper for vulkan.h,
+  vulkan_hpp_macros.hpp, vulkan_to_string.hpp
+- src/xenia/base/vulkan_memory_allocator_include.h: wrapper for vk_mem_alloc.h
+- vulkan_api.h uses vulkan_headers_include.h; vulkan_mem_alloc.h uses
+  vulkan_memory_allocator_include.h
+- gpu/vulkan, gpu, ui/vulkan, gpu/null: conditional Vulkan-Headers
+  includedirs only when not use_system_vulkan_headers
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                                  | 72 +++++++++++++++++++
+ src/xenia/base/vulkan_headers_include.h       | 15 ++++
+ .../base/vulkan_memory_allocator_include.h    | 11 +++
+ src/xenia/gpu/null/premake5.lua               |  8 ++-
+ src/xenia/gpu/premake5.lua                    | 16 +++--
+ src/xenia/gpu/vulkan/premake5.lua             | 24 ++++---
+ src/xenia/ui/vulkan/premake5.lua              | 16 +++--
+ src/xenia/ui/vulkan/vulkan_api.h              |  5 +-
+ src/xenia/ui/vulkan/vulkan_mem_alloc.h        |  5 +-
+ 9 files changed, 141 insertions(+), 31 deletions(-)
+ create mode 100644 src/xenia/base/vulkan_headers_include.h
+ create mode 100644 src/xenia/base/vulkan_memory_allocator_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index 23ea98123..b0ae36d05 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -254,6 +254,44 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_VULKAN_HEADERS: use system Vulkan headers when set (Linux only). Header-only; fail if set and not found.
++use_system_vulkan_headers = false
++vulkan_headers_pkg_config_available = false
++vulkan_headers_system_include = nil
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_VULKAN_HEADERS") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_vulkan_headers = true
++    vulkan_headers_pkg_config_available = os.execute("pkg-config --exists vulkan-headers") or os.execute("pkg-config --exists VulkanHeaders")
++    if not vulkan_headers_pkg_config_available then
++      if os.isfile("/usr/include/vulkan/vulkan.h") or os.isdir("/usr/include/vulkan") then
++        vulkan_headers_system_include = "/usr/include"
++      else
++        error("USE_SYSTEM_VULKAN_HEADERS is set but Vulkan headers were not found (no pkg-config and no /usr/include/vulkan). Install dev-util/vulkan-headers or unset USE_SYSTEM_VULKAN_HEADERS.")
++      end
++    end
++  end
++end
++
++-- USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR: use system VulkanMemoryAllocator when set (Linux only). Header-only; fail if set and not found.
++use_system_vulkan_memory_allocator = false
++vulkan_memory_allocator_pkg_config_available = false
++vulkan_memory_allocator_system_include = nil
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_vulkan_memory_allocator = true
++    vulkan_memory_allocator_pkg_config_available = os.execute("pkg-config --exists VulkanMemoryAllocator") or os.execute("pkg-config --exists vk_mem_alloc")
++    if not vulkan_memory_allocator_pkg_config_available then
++      if os.isfile("/usr/include/vk_mem_alloc.h") or os.isdir("/usr/include/VulkanMemoryAllocator") then
++        vulkan_memory_allocator_system_include = "/usr/include"
++      else
++        error("USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR is set but VulkanMemoryAllocator was not found (no pkg-config and no /usr/include/vk_mem_alloc.h). Install media-libs/VulkanMemoryAllocator or unset USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR.")
++      end
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -323,6 +361,34 @@ if use_system_utfcpp then
+     end
+   end
+ end
++if use_system_vulkan_headers then
++  if vulkan_headers_system_include then
++    includedirs(vulkan_headers_system_include)
++  else
++    local cflags = os.outputof("pkg-config --cflags vulkan-headers") or os.outputof("pkg-config --cflags VulkanHeaders")
++    if cflags and cflags ~= "" then
++      for _, flag in next, string.explode(cflags, " ") do
++        if flag and flag:sub(1, 2) == "-I" then
++          includedirs(flag:sub(3))
++        end
++      end
++    end
++  end
++end
++if use_system_vulkan_memory_allocator then
++  if vulkan_memory_allocator_system_include then
++    includedirs(vulkan_memory_allocator_system_include)
++  else
++    local cflags = os.outputof("pkg-config --cflags VulkanMemoryAllocator") or os.outputof("pkg-config --cflags vk_mem_alloc")
++    if cflags and cflags ~= "" then
++      for _, flag in next, string.explode(cflags, " ") do
++        if flag and flag:sub(1, 2) == "-I" then
++          includedirs(flag:sub(3))
++        end
++      end
++    end
++  end
++end
+ 
+ defines({
+   "VULKAN_HPP_NO_TO_STRING",
+@@ -375,6 +441,12 @@ if use_system_utfcpp then
+     defines({ "XENIA_USE_SYSTEM_UTFCPP_UTF8CPP_HEADER" })
+   end
+ end
++if use_system_vulkan_headers then
++  defines({ "XENIA_USE_SYSTEM_VULKAN_HEADERS" })
++end
++if use_system_vulkan_memory_allocator then
++  defines({ "XENIA_USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+diff --git a/src/xenia/base/vulkan_headers_include.h b/src/xenia/base/vulkan_headers_include.h
+new file mode 100644
+index 000000000..5684dcc3c
+--- /dev/null
++++ b/src/xenia/base/vulkan_headers_include.h
+@@ -0,0 +1,15 @@
++// Wrapper so Xenia can use either bundled Vulkan-Headers or system (XENIA_USE_SYSTEM_VULKAN_HEADERS). Header-only.
++#ifndef XENIA_BASE_VULKAN_HEADERS_INCLUDE_H_
++#define XENIA_BASE_VULKAN_HEADERS_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_VULKAN_HEADERS
++#include <vulkan/vulkan.h>
++#include <vulkan/vulkan_hpp_macros.hpp>
++#include <vulkan/vulkan_to_string.hpp>
++#else
++#include "third_party/Vulkan-Headers/include/vulkan/vulkan.h"
++#include "third_party/Vulkan-Headers/include/vulkan/vulkan_hpp_macros.hpp"
++#include "third_party/Vulkan-Headers/include/vulkan/vulkan_to_string.hpp"
++#endif
++
++#endif  // XENIA_BASE_VULKAN_HEADERS_INCLUDE_H_
+diff --git a/src/xenia/base/vulkan_memory_allocator_include.h b/src/xenia/base/vulkan_memory_allocator_include.h
+new file mode 100644
+index 000000000..1faa20c91
+--- /dev/null
++++ b/src/xenia/base/vulkan_memory_allocator_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled VulkanMemoryAllocator or system (XENIA_USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR). Header-only.
++#ifndef XENIA_BASE_VULKAN_MEMORY_ALLOCATOR_INCLUDE_H_
++#define XENIA_BASE_VULKAN_MEMORY_ALLOCATOR_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR
++#include <vk_mem_alloc.h>
++#else
++#include "third_party/VulkanMemoryAllocator/include/vk_mem_alloc.h"
++#endif
++
++#endif  // XENIA_BASE_VULKAN_MEMORY_ALLOCATOR_INCLUDE_H_
+diff --git a/src/xenia/gpu/null/premake5.lua b/src/xenia/gpu/null/premake5.lua
+index 53568dd32..0ccb92d05 100644
+--- a/src/xenia/gpu/null/premake5.lua
++++ b/src/xenia/gpu/null/premake5.lua
+@@ -16,7 +16,9 @@ project("xenia-gpu-null")
+     "xenia-ui-vulkan",
+     "xxhash",
+   })
+-  includedirs({
+-    project_root.."/third_party/Vulkan-Headers/include",
+-  })
++  if not use_system_vulkan_headers then
++    includedirs({
++      project_root.."/third_party/Vulkan-Headers/include",
++    })
++  end
+   local_platform_files()
+diff --git a/src/xenia/gpu/premake5.lua b/src/xenia/gpu/premake5.lua
+index 13f8eb71b..96c3ad534 100644
+--- a/src/xenia/gpu/premake5.lua
++++ b/src/xenia/gpu/premake5.lua
+@@ -34,9 +34,11 @@ project("xenia-gpu")
+     "xenia-ui",
+     "xxhash",
+   })
+-  includedirs({
+-    project_root.."/third_party/Vulkan-Headers/include",
+-  })
++  if not use_system_vulkan_headers then
++    includedirs({
++      project_root.."/third_party/Vulkan-Headers/include",
++    })
++  end
+   local_platform_files()
+ 
+ group("src")
+@@ -71,9 +73,11 @@ project("xenia-gpu-shader-compiler")
+     "xenia-ui",
+     "xenia-ui-vulkan",
+   })
+-  includedirs({
+-    project_root.."/third_party/Vulkan-Headers/include",
+-  })
++  if not use_system_vulkan_headers then
++    includedirs({
++      project_root.."/third_party/Vulkan-Headers/include",
++    })
++  end
+   files({
+     "shader_compiler_main.cc",
+     "../base/console_app_main_"..platform_suffix..".cc",
+diff --git a/src/xenia/gpu/vulkan/premake5.lua b/src/xenia/gpu/vulkan/premake5.lua
+index d6bb6ef36..ac637dd82 100644
+--- a/src/xenia/gpu/vulkan/premake5.lua
++++ b/src/xenia/gpu/vulkan/premake5.lua
+@@ -31,9 +31,11 @@ project("xenia-gpu-vulkan")
+     "xenia-ui-vulkan",
+     "xxhash",
+   })
+-  includedirs({
+-    project_root.."/third_party/Vulkan-Headers/include",
+-  })
++  if not use_system_vulkan_headers then
++    includedirs({
++      project_root.."/third_party/Vulkan-Headers/include",
++    })
++  end
+   local_platform_files()
+   files({
+     "../shaders/bytecode/vulkan_spirv/*.h",
+@@ -99,9 +101,11 @@ if enableMiscSubprojects then
+       "snappy",
+       "xxhash",
+     })
+-    includedirs({
+-      project_root.."/third_party/Vulkan-Headers/include",
+-    })
++    if not use_system_vulkan_headers then
++      includedirs({
++        project_root.."/third_party/Vulkan-Headers/include",
++      })
++    end
+     files({
+       "vulkan_trace_viewer_main.cc",
+       "../../ui/windowed_app_main_"..platform_suffix..".cc",
+@@ -186,9 +190,11 @@ if enableMiscSubprojects then
+       "snappy",
+       "xxhash",
+     })
+-    includedirs({
+-      project_root.."/third_party/Vulkan-Headers/include",
+-    })
++    if not use_system_vulkan_headers then
++      includedirs({
++        project_root.."/third_party/Vulkan-Headers/include",
++      })
++    end
+     files({
+       "vulkan_trace_dump_main.cc",
+       "../../base/console_app_main_"..platform_suffix..".cc",
+diff --git a/src/xenia/ui/vulkan/premake5.lua b/src/xenia/ui/vulkan/premake5.lua
+index 9b3d772c1..6d9069210 100644
+--- a/src/xenia/ui/vulkan/premake5.lua
++++ b/src/xenia/ui/vulkan/premake5.lua
+@@ -10,9 +10,11 @@ project("xenia-ui-vulkan")
+     "xenia-base",
+     "xenia-ui",
+   })
+-  includedirs({
+-    project_root.."/third_party/Vulkan-Headers/include",
+-  })
++  if not use_system_vulkan_headers then
++    includedirs({
++      project_root.."/third_party/Vulkan-Headers/include",
++    })
++  end
+   local_platform_files()
+   local_platform_files("functions")
+   files({
+@@ -35,9 +37,11 @@ if enableMiscSubprojects then
+       "xenia-ui",
+       "xenia-ui-vulkan",
+     })
+-    includedirs({
+-      project_root.."/third_party/Vulkan-Headers/include",
+-    })
++    if not use_system_vulkan_headers then
++      includedirs({
++        project_root.."/third_party/Vulkan-Headers/include",
++      })
++    end
+     files({
+       "../window_demo.cc",
+       "vulkan_window_demo.cc",
+diff --git a/src/xenia/ui/vulkan/vulkan_api.h b/src/xenia/ui/vulkan/vulkan_api.h
+index 27f99fdf0..825952641 100644
+--- a/src/xenia/ui/vulkan/vulkan_api.h
++++ b/src/xenia/ui/vulkan/vulkan_api.h
+@@ -42,9 +42,6 @@
+ #endif
+ #endif
+ 
+-#include "third_party/Vulkan-Headers/include/vulkan/vulkan.h"
+-
+-#include "third_party/Vulkan-Headers/include/vulkan/vulkan_hpp_macros.hpp"
+-#include "third_party/Vulkan-Headers/include/vulkan/vulkan_to_string.hpp"
++#include "xenia/base/vulkan_headers_include.h"
+ 
+ #endif  // XENIA_UI_VULKAN_VULKAN_API_H_
+diff --git a/src/xenia/ui/vulkan/vulkan_mem_alloc.h b/src/xenia/ui/vulkan/vulkan_mem_alloc.h
+index 0b8738542..088109bda 100644
+--- a/src/xenia/ui/vulkan/vulkan_mem_alloc.h
++++ b/src/xenia/ui/vulkan/vulkan_mem_alloc.h
+@@ -10,8 +10,7 @@
+ #ifndef XENIA_UI_VULKAN_VULKAN_MEM_ALLOC_H_
+ #define XENIA_UI_VULKAN_VULKAN_MEM_ALLOC_H_
+ 
+-// Make sure vulkan.h is included from third_party (rather than from the system
+-// include directory) before vk_mem_alloc.h.
++// vulkan.h must be included (via vulkan_device.h -> vulkan_api.h) before vk_mem_alloc.h.
+ 
+ #include "xenia/ui/vulkan/vulkan_device.h"
+ 
+@@ -23,7 +22,7 @@
+ #ifndef VMA_NOT_NULL
+ #define VMA_NOT_NULL
+ #endif
+-#include "third_party/VulkanMemoryAllocator/include/vk_mem_alloc.h"
++#include "xenia/base/vulkan_memory_allocator_include.h"
+ 
+ namespace xe {
+ namespace ui {
+-- 
+2.52.0
+

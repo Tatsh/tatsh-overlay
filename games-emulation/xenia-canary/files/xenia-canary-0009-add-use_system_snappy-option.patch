@@ -1,0 +1,238 @@
+From 99ef47ccd2717f492362feeb53289cc3546fc203 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 19:13:28 -0500
+Subject: [PATCH 12/21] Add USE_SYSTEM_SNAPPY option for system libsnappy
+
+- premake5.lua: read USE_SYSTEM_SNAPPY on Linux; pkg-config snappy;
+  fallback to /usr/include/snappy.h when no .pc (e.g. Gentoo).
+- Define XENIA_USE_SYSTEM_SNAPPY when set; conditional third_party/snappy.lua.
+- src/xenia/base/snappy_include.h: wrapper for snappy.h and
+  snappy-sinksource.h (system vs bundled).
+- trace_writer.cc, trace_reader.cc: use snappy_include.h.
+- pkg_config.all("snappy"): use fallback include/links when set
+  (pkg_config.lua).
+- pkg_config.all("snappy") in app, gpu, gpu/vulkan, gpu/d3d12
+  (trace-viewer, trace-dump) when use_system_snappy.
+
+Build tested with all USE_SYSTEM_* except glslang.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                       | 29 ++++++++++++++++++++++++++++-
+ src/xenia/app/premake5.lua         |  3 +++
+ src/xenia/base/snappy_include.h    | 13 +++++++++++++
+ src/xenia/gpu/d3d12/premake5.lua   |  6 ++++++
+ src/xenia/gpu/premake5.lua         |  6 ++++++
+ src/xenia/gpu/trace_reader.cc      |  2 +-
+ src/xenia/gpu/trace_writer.cc      |  3 +--
+ src/xenia/gpu/vulkan/premake5.lua  |  6 ++++++
+ tools/build/scripts/pkg_config.lua |  6 ++++++
+ 9 files changed, 70 insertions(+), 4 deletions(-)
+ create mode 100644 src/xenia/base/snappy_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index c2ee9e2fe..9944546dd 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -104,6 +104,28 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_SNAPPY: use system snappy when set (Linux only). Fail if set and not found.
++-- Prefer pkg-config; if unavailable (e.g. Gentoo app-arch/snappy without .pc), fall back to /usr/include/snappy.h.
++use_system_snappy = false
++snappy_pkg_config_available = false
++snappy_system_include = nil
++snappy_system_links = nil
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_SNAPPY") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_snappy = true
++    snappy_pkg_config_available = os.execute("pkg-config --exists snappy")
++    if not snappy_pkg_config_available then
++      if os.isfile("/usr/include/snappy.h") or os.isfile("/usr/include/snappy/snappy.h") then
++        snappy_system_include = "/usr/include"
++        snappy_system_links = { "snappy" }
++      else
++        error("USE_SYSTEM_SNAPPY is set but snappy was not found (no pkg-config and no /usr/include/snappy.h). Install app-arch/snappy or unset USE_SYSTEM_SNAPPY.")
++      end
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -145,6 +167,9 @@ if use_system_capstone then
+   defines({ "XENIA_USE_SYSTEM_CAPSTONE" })
+   defines({ "CAPSTONE_X86_ATT_DISABLE", "CAPSTONE_HAS_X86", "CAPSTONE_USE_SYS_DYN_MEM" })
+ end
++if use_system_snappy then
++  defines({ "XENIA_USE_SYSTEM_SNAPPY" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -427,7 +452,9 @@ workspace("xenia")
+   end
+   include("third_party/imgui.lua")
+   include("third_party/mspack.lua")
+-  include("third_party/snappy.lua")
++  if not use_system_snappy then
++    include("third_party/snappy.lua")
++  end
+   if not use_system_xxhash then
+     include("third_party/xxhash.lua")
+   end
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index 898cc7930..ca23c99b9 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -23,6 +23,9 @@ project("xenia-app")
+   if use_system_capstone then
+     pkg_config.all("capstone")
+   end
++  if use_system_snappy then
++    pkg_config.all("snappy")
++  end
+   links({
+     "xenia-apu",
+     "xenia-apu-nop",
+diff --git a/src/xenia/base/snappy_include.h b/src/xenia/base/snappy_include.h
+new file mode 100644
+index 000000000..a9820a393
+--- /dev/null
++++ b/src/xenia/base/snappy_include.h
+@@ -0,0 +1,13 @@
++// Wrapper so Xenia can use either bundled snappy or system libsnappy (XENIA_USE_SYSTEM_SNAPPY).
++#ifndef XENIA_BASE_SNAPPY_INCLUDE_H_
++#define XENIA_BASE_SNAPPY_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_SNAPPY
++#include <snappy.h>
++#include <snappy-sinksource.h>
++#else
++#include "third_party/snappy/snappy.h"
++#include "third_party/snappy/snappy-sinksource.h"
++#endif
++
++#endif  // XENIA_BASE_SNAPPY_INCLUDE_H_
+diff --git a/src/xenia/gpu/d3d12/premake5.lua b/src/xenia/gpu/d3d12/premake5.lua
+index 4c4e8867f..8f437739c 100644
+--- a/src/xenia/gpu/d3d12/premake5.lua
++++ b/src/xenia/gpu/d3d12/premake5.lua
+@@ -40,6 +40,9 @@ if enableMiscSubprojects then
+     if use_system_capstone then
+       pkg_config.all("capstone")
+     end
++    if use_system_snappy then
++      pkg_config.all("snappy")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+@@ -99,6 +102,9 @@ if enableMiscSubprojects then
+     if use_system_capstone then
+       pkg_config.all("capstone")
+     end
++    if use_system_snappy then
++      pkg_config.all("snappy")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+diff --git a/src/xenia/gpu/premake5.lua b/src/xenia/gpu/premake5.lua
+index 55a6f01dd..13f8eb71b 100644
+--- a/src/xenia/gpu/premake5.lua
++++ b/src/xenia/gpu/premake5.lua
+@@ -15,6 +15,9 @@ project("xenia-gpu")
+   if use_system_glslang then
+     pkg_config.all("glslang")
+   end
++  if use_system_snappy then
++    pkg_config.all("snappy")
++  end
+   links(use_system_glslang and {
+     "dxbc",
+     "fmt",
+@@ -47,6 +50,9 @@ project("xenia-gpu-shader-compiler")
+   if use_system_glslang then
+     pkg_config.all("glslang")
+   end
++  if use_system_snappy then
++    pkg_config.all("snappy")
++  end
+   links(use_system_glslang and {
+     "dxbc",
+     "fmt",
+diff --git a/src/xenia/gpu/trace_reader.cc b/src/xenia/gpu/trace_reader.cc
+index 83d36121c..660993af0 100644
+--- a/src/xenia/gpu/trace_reader.cc
++++ b/src/xenia/gpu/trace_reader.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/gpu/trace_reader.h"
+ 
+-#include "third_party/snappy/snappy.h"
++#include "xenia/base/snappy_include.h"
+ #include "xenia/base/filesystem.h"
+ #include "xenia/base/logging.h"
+ #include "xenia/base/mapped_memory.h"
+diff --git a/src/xenia/gpu/trace_writer.cc b/src/xenia/gpu/trace_writer.cc
+index e1fb81cce..0fbc0ebd8 100644
+--- a/src/xenia/gpu/trace_writer.cc
++++ b/src/xenia/gpu/trace_writer.cc
+@@ -11,8 +11,7 @@
+ 
+ #include <cstring>
+ 
+-#include "third_party/snappy/snappy-sinksource.h"
+-#include "third_party/snappy/snappy.h"
++#include "xenia/base/snappy_include.h"
+ 
+ #include "build/version.h"
+ #include "xenia/base/assert.h"
+diff --git a/src/xenia/gpu/vulkan/premake5.lua b/src/xenia/gpu/vulkan/premake5.lua
+index 9bf51d35b..d6bb6ef36 100644
+--- a/src/xenia/gpu/vulkan/premake5.lua
++++ b/src/xenia/gpu/vulkan/premake5.lua
+@@ -57,6 +57,9 @@ if enableMiscSubprojects then
+     if use_system_capstone then
+       pkg_config.all("capstone")
+     end
++    if use_system_snappy then
++      pkg_config.all("snappy")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+@@ -141,6 +144,9 @@ if enableMiscSubprojects then
+     if use_system_capstone then
+       pkg_config.all("capstone")
+     end
++    if use_system_snappy then
++      pkg_config.all("snappy")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+diff --git a/tools/build/scripts/pkg_config.lua b/tools/build/scripts/pkg_config.lua
+index d061a46f7..38f8a8109 100644
+--- a/tools/build/scripts/pkg_config.lua
++++ b/tools/build/scripts/pkg_config.lua
+@@ -46,6 +46,12 @@ function pkg_config.all(lib)
+     links(glslang_system_links)
+     return
+   end
++  -- When snappy has no pkg-config (e.g. Gentoo), use fallback include/links.
++  if lib == "snappy" and use_system_snappy and snappy_system_include and snappy_system_links then
++    includedirs(snappy_system_include)
++    links(snappy_system_links)
++    return
++  end
+   pkg_config.cflags(lib)
+   pkg_config.lflags(lib)
+ end
+-- 
+2.52.0
+

@@ -1,0 +1,158 @@
+From 17bfd46ed70d0656eee4d40257fd33820ec632b6 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 19:20:56 -0500
+Subject: [PATCH 13/21] Add USE_SYSTEM_PUGIXML option for system libpugixml
+
+- premake5.lua: read USE_SYSTEM_PUGIXML on Linux; pkg-config pugixml;
+  fallback to /usr/include/pugixml.hpp when no .pc (e.g. Gentoo).
+- Define XENIA_USE_SYSTEM_PUGIXML when set; conditional third_party/pugixml.lua.
+- src/xenia/base/pugixml_include.h: wrapper for pugixml.hpp (system vs bundled).
+- xlast.h: use pugixml_include.h instead of third_party path.
+- pkg_config.all("pugixml"): use fallback include/links when set (pkg_config.lua).
+- pkg_config.all("pugixml") in app and kernel when use_system_pugixml.
+
+Build tested with all USE_SYSTEM_* except glslang.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                       | 29 ++++++++++++++++++++++++++++-
+ src/xenia/app/premake5.lua         |  3 +++
+ src/xenia/base/pugixml_include.h   | 11 +++++++++++
+ src/xenia/kernel/premake5.lua      |  3 +++
+ src/xenia/kernel/util/xlast.h      |  2 +-
+ tools/build/scripts/pkg_config.lua |  6 ++++++
+ 6 files changed, 52 insertions(+), 2 deletions(-)
+ create mode 100644 src/xenia/base/pugixml_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index 9944546dd..cffbe1116 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -126,6 +126,28 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_PUGIXML: use system pugixml when set (Linux only). Fail if set and not found.
++-- Prefer pkg-config; if unavailable (e.g. Gentoo without .pc), fall back to /usr/include/pugixml.hpp.
++use_system_pugixml = false
++pugixml_pkg_config_available = false
++pugixml_system_include = nil
++pugixml_system_links = nil
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_PUGIXML") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_pugixml = true
++    pugixml_pkg_config_available = os.execute("pkg-config --exists pugixml")
++    if not pugixml_pkg_config_available then
++      if os.isfile("/usr/include/pugixml.hpp") then
++        pugixml_system_include = "/usr/include"
++        pugixml_system_links = { "pugixml" }
++      else
++        error("USE_SYSTEM_PUGIXML is set but pugixml was not found (no pkg-config and no /usr/include/pugixml.hpp). Install dev-libs/pugixml or unset USE_SYSTEM_PUGIXML.")
++      end
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -170,6 +192,9 @@ end
+ if use_system_snappy then
+   defines({ "XENIA_USE_SYSTEM_SNAPPY" })
+ end
++if use_system_pugixml then
++  defines({ "XENIA_USE_SYSTEM_PUGIXML" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -465,7 +490,9 @@ workspace("xenia")
+     include("third_party/zstd.lua")
+   end
+   include("third_party/zlib-ng.lua")
+-  include("third_party/pugixml.lua")
++  if not use_system_pugixml then
++    include("third_party/pugixml.lua")
++  end
+ 
+   if os.istarget("windows") then
+     include("third_party/libusb.lua")
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index ca23c99b9..1bb4c033c 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -26,6 +26,9 @@ project("xenia-app")
+   if use_system_snappy then
+     pkg_config.all("snappy")
+   end
++  if use_system_pugixml then
++    pkg_config.all("pugixml")
++  end
+   links({
+     "xenia-apu",
+     "xenia-apu-nop",
+diff --git a/src/xenia/base/pugixml_include.h b/src/xenia/base/pugixml_include.h
+new file mode 100644
+index 000000000..7b9ad839c
+--- /dev/null
++++ b/src/xenia/base/pugixml_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled pugixml or system libpugixml (XENIA_USE_SYSTEM_PUGIXML).
++#ifndef XENIA_BASE_PUGIXML_INCLUDE_H_
++#define XENIA_BASE_PUGIXML_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_PUGIXML
++#include <pugixml.hpp>
++#else
++#include "third_party/pugixml/src/pugixml.hpp"
++#endif
++
++#endif  // XENIA_BASE_PUGIXML_INCLUDE_H_
+diff --git a/src/xenia/kernel/premake5.lua b/src/xenia/kernel/premake5.lua
+index 7451cc4e9..b0b00a311 100644
+--- a/src/xenia/kernel/premake5.lua
++++ b/src/xenia/kernel/premake5.lua
+@@ -9,6 +9,9 @@ project("xenia-kernel")
+   if use_system_fmt then
+     pkg_config.all("fmt")
+   end
++  if use_system_pugixml then
++    pkg_config.all("pugixml")
++  end
+   links({
+     "aes_128",
+     "fmt",
+diff --git a/src/xenia/kernel/util/xlast.h b/src/xenia/kernel/util/xlast.h
+index bc2e34b7f..0736b2053 100644
+--- a/src/xenia/kernel/util/xlast.h
++++ b/src/xenia/kernel/util/xlast.h
+@@ -16,7 +16,7 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third_party/pugixml/src/pugixml.hpp"
++#include "xenia/base/pugixml_include.h"
+ #include "xenia/xbox.h"
+ 
+ namespace xe {
+diff --git a/tools/build/scripts/pkg_config.lua b/tools/build/scripts/pkg_config.lua
+index 38f8a8109..43766a523 100644
+--- a/tools/build/scripts/pkg_config.lua
++++ b/tools/build/scripts/pkg_config.lua
+@@ -52,6 +52,12 @@ function pkg_config.all(lib)
+     links(snappy_system_links)
+     return
+   end
++  -- When pugixml has no pkg-config (e.g. Gentoo), use fallback include/links.
++  if lib == "pugixml" and use_system_pugixml and pugixml_system_include and pugixml_system_links then
++    includedirs(pugixml_system_include)
++    links(pugixml_system_links)
++    return
++  end
+   pkg_config.cflags(lib)
+   pkg_config.lflags(lib)
+ end
+-- 
+2.52.0
+

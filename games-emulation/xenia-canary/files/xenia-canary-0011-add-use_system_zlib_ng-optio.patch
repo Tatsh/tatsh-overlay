@@ -1,0 +1,230 @@
+From d83d161f1be47afb59e9775de0663e64aa6ca7e9 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 19:33:01 -0500
+Subject: [PATCH 14/21] Add USE_SYSTEM_ZLIB_NG option for system libz-ng
+
+- premake5.lua: read USE_SYSTEM_ZLIB_NG on Linux; pkg-config zlib-ng;
+  fallback to /usr/include/zlib-ng.h when no .pc (e.g. Gentoo).
+- Define XENIA_USE_SYSTEM_ZLIB_NG when set; conditional third_party/zlib-ng.lua.
+- src/xenia/base/zlib_ng_include.h: wrapper for zlib-ng.h (system vs bundled).
+- xlast.cc: use zlib_ng_include.h instead of third_party path.
+- pkg_config.all("zlib-ng"): use fallback include/links and WITH_GZFILEOP
+  when set (pkg_config.lua).
+- pkg_config.all("zlib-ng") in app and kernel when use_system_zlib_ng;
+  omit zlib-ng from project links when system (link -lz-ng from pkg-config).
+
+Clean build tested with all USE_SYSTEM_* except glslang.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                       | 29 +++++++++++++++++++++-
+ src/xenia/app/premake5.lua         | 40 ++++++++++++++++++++++++++++--
+ src/xenia/base/zlib_ng_include.h   | 11 ++++++++
+ src/xenia/kernel/premake5.lua      | 14 ++++++++++-
+ src/xenia/kernel/util/xlast.cc     |  2 +-
+ tools/build/scripts/pkg_config.lua |  7 ++++++
+ 6 files changed, 98 insertions(+), 5 deletions(-)
+ create mode 100644 src/xenia/base/zlib_ng_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index cffbe1116..b9dceed35 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -148,6 +148,28 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_ZLIB_NG: use system zlib-ng when set (Linux only). Fail if set and not found.
++-- Prefer pkg-config; if unavailable (e.g. Gentoo without .pc), fall back to /usr/include/zlib-ng.h.
++use_system_zlib_ng = false
++zlib_ng_pkg_config_available = false
++zlib_ng_system_include = nil
++zlib_ng_system_links = nil
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_ZLIB_NG") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_zlib_ng = true
++    zlib_ng_pkg_config_available = os.execute("pkg-config --exists zlib-ng")
++    if not zlib_ng_pkg_config_available then
++      if os.isfile("/usr/include/zlib-ng.h") then
++        zlib_ng_system_include = "/usr/include"
++        zlib_ng_system_links = { "z-ng" }
++      else
++        error("USE_SYSTEM_ZLIB_NG is set but zlib-ng was not found (no pkg-config and no /usr/include/zlib-ng.h). Install sys-libs/zlib-ng or unset USE_SYSTEM_ZLIB_NG.")
++      end
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -195,6 +217,9 @@ end
+ if use_system_pugixml then
+   defines({ "XENIA_USE_SYSTEM_PUGIXML" })
+ end
++if use_system_zlib_ng then
++  defines({ "XENIA_USE_SYSTEM_ZLIB_NG" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -489,7 +514,9 @@ workspace("xenia")
+   if not use_system_zstd then
+     include("third_party/zstd.lua")
+   end
+-  include("third_party/zlib-ng.lua")
++  if not use_system_zlib_ng then
++    include("third_party/zlib-ng.lua")
++  end
+   if not use_system_pugixml then
+     include("third_party/pugixml.lua")
+   end
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index 1bb4c033c..d159f72fa 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -29,6 +29,9 @@ project("xenia-app")
+   if use_system_pugixml then
+     pkg_config.all("pugixml")
+   end
++  if use_system_zlib_ng then
++    pkg_config.all("zlib-ng")
++  end
+   links({
+     "xenia-apu",
+     "xenia-apu-nop",
+@@ -47,7 +50,23 @@ project("xenia-app")
+     "xenia-ui-vulkan",
+     "xenia-vfs",
+   })
+-  links(use_system_glslang and {
++  links(use_system_glslang and (use_system_zlib_ng and {
++    "aes_128",
++    "capstone",
++    "fmt",
++    "dxbc",
++    "discord-rpc",
++    "imgui",
++    "libavcodec",
++    "libavformat",
++    "libavutil",
++    "mspack",
++    "pugixml",
++    "snappy",
++    "xxhash",
++    "zarchive",
++    "zstd",
++  } or {
+     "aes_128",
+     "capstone",
+     "fmt",
+@@ -64,6 +83,23 @@ project("xenia-app")
+     "zarchive",
+     "zlib-ng",
+     "zstd",
++  }) or (use_system_zlib_ng and {
++    "aes_128",
++    "capstone",
++    "fmt",
++    "dxbc",
++    "discord-rpc",
++    "glslang-spirv",
++    "imgui",
++    "libavcodec",
++    "libavformat",
++    "libavutil",
++    "mspack",
++    "pugixml",
++    "snappy",
++    "xxhash",
++    "zarchive",
++    "zstd",
+   } or {
+     "aes_128",
+     "capstone",
+@@ -82,7 +118,7 @@ project("xenia-app")
+     "zarchive",
+     "zlib-ng",
+     "zstd",
+-  })
++  }))
+   defines({
+     "XBYAK_NO_OP_NAMES",
+     "XBYAK_ENABLE_OMITTED_OPERAND",
+diff --git a/src/xenia/base/zlib_ng_include.h b/src/xenia/base/zlib_ng_include.h
+new file mode 100644
+index 000000000..035e25358
+--- /dev/null
++++ b/src/xenia/base/zlib_ng_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled zlib-ng or system libz-ng (XENIA_USE_SYSTEM_ZLIB_NG).
++#ifndef XENIA_BASE_ZLIB_NG_INCLUDE_H_
++#define XENIA_BASE_ZLIB_NG_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_ZLIB_NG
++#include <zlib-ng.h>
++#else
++#include "third_party/zlib-ng/zlib-ng.h"
++#endif
++
++#endif  // XENIA_BASE_ZLIB_NG_INCLUDE_H_
+diff --git a/src/xenia/kernel/premake5.lua b/src/xenia/kernel/premake5.lua
+index b0b00a311..96d9f8415 100644
+--- a/src/xenia/kernel/premake5.lua
++++ b/src/xenia/kernel/premake5.lua
+@@ -12,7 +12,19 @@ project("xenia-kernel")
+   if use_system_pugixml then
+     pkg_config.all("pugixml")
+   end
+-  links({
++  if use_system_zlib_ng then
++    pkg_config.all("zlib-ng")
++  end
++  links(use_system_zlib_ng and {
++    "aes_128",
++    "fmt",
++    "pugixml",
++    "xenia-apu",
++    "xenia-base",
++    "xenia-cpu",
++    "xenia-hid",
++    "xenia-vfs",
++  } or {
+     "aes_128",
+     "fmt",
+     "zlib-ng",
+diff --git a/src/xenia/kernel/util/xlast.cc b/src/xenia/kernel/util/xlast.cc
+index 20b7c878d..d5e8b9c85 100644
+--- a/src/xenia/kernel/util/xlast.cc
++++ b/src/xenia/kernel/util/xlast.cc
+@@ -8,7 +8,7 @@
+  */
+ 
+ #include "xenia/kernel/util/xlast.h"
+-#include "third_party/zlib-ng/zlib-ng.h"
++#include "xenia/base/zlib_ng_include.h"
+ #include "xenia/base/filesystem.h"
+ #include "xenia/base/logging.h"
+ #include "xenia/base/string_util.h"
+diff --git a/tools/build/scripts/pkg_config.lua b/tools/build/scripts/pkg_config.lua
+index 43766a523..1f679d498 100644
+--- a/tools/build/scripts/pkg_config.lua
++++ b/tools/build/scripts/pkg_config.lua
+@@ -58,6 +58,13 @@ function pkg_config.all(lib)
+     links(pugixml_system_links)
+     return
+   end
++  -- When zlib-ng has no pkg-config (e.g. Gentoo), use fallback include/links.
++  if lib == "zlib-ng" and use_system_zlib_ng and zlib_ng_system_include and zlib_ng_system_links then
++    includedirs(zlib_ng_system_include)
++    links(zlib_ng_system_links)
++    defines({ "WITH_GZFILEOP" })
++    return
++  end
+   pkg_config.cflags(lib)
+   pkg_config.lflags(lib)
+ end
+-- 
+2.52.0
+

@@ -1,0 +1,657 @@
+From 2e76c36732f523f75bdf25354030dfed3711dc9d Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 20:56:18 -0500
+Subject: [PATCH 21/21] Add USE_SYSTEM_IMGUI option for system imgui
+
+- premake5.lua: env USE_SYSTEM_IMGUI; pkg-config or fallback
+  /usr/include/imgui + libimgui; conditional third_party/imgui.lua;
+  define XENIA_USE_SYSTEM_IMGUI
+- pkg_config.lua: fallback includedirs/links for imgui when no .pc
+- app, debug/ui, cpu/ppc/testing, cpu/testing (uses_imgui),
+  gpu/vulkan (trace-viewer, trace-dump), gpu/d3d12, ui/vulkan,
+  ui/d3d12: pkg_config.all('imgui') when system; conditional link
+- test_suite.lua: config.uses_imgui for pkg_config.all('imgui')
+- src/xenia/base/imgui_include.h, imgui_internal_include.h: wrappers
+- All imgui includes in src switched to wrappers
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                            | 28 ++++++++++++++++++++++++-
+ src/xenia/app/emulator_window.cc        |  2 +-
+ src/xenia/app/premake5.lua              | 10 +++++----
+ src/xenia/base/imgui_include.h          | 11 ++++++++++
+ src/xenia/base/imgui_internal_include.h | 11 ++++++++++
+ src/xenia/cpu/ppc/testing/premake5.lua  |  7 ++++++-
+ src/xenia/cpu/testing/premake5.lua      | 22 +++++++++++--------
+ src/xenia/debug/ui/debug_window.cc      |  4 ++--
+ src/xenia/debug/ui/premake5.lua         |  6 +++++-
+ src/xenia/gpu/d3d12/premake5.lua        | 14 +++++++++++--
+ src/xenia/gpu/trace_viewer.cc           |  2 +-
+ src/xenia/gpu/vulkan/premake5.lua       | 16 ++++++++++----
+ src/xenia/hid/hid_demo.cc               |  2 +-
+ src/xenia/ui/d3d12/premake5.lua         |  7 ++++++-
+ src/xenia/ui/imgui_dialog.cc            |  2 +-
+ src/xenia/ui/imgui_drawer.cc            |  2 +-
+ src/xenia/ui/imgui_drawer.h             |  2 +-
+ src/xenia/ui/imgui_guest_notification.h |  2 +-
+ src/xenia/ui/imgui_host_notification.h  |  2 +-
+ src/xenia/ui/imgui_notification.h       |  2 +-
+ src/xenia/ui/vulkan/premake5.lua        |  7 ++++++-
+ src/xenia/ui/window.cc                  |  2 +-
+ src/xenia/ui/window_demo.cc             |  2 +-
+ tools/build/scripts/pkg_config.lua      |  6 ++++++
+ tools/build/scripts/test_suite.lua      |  6 ++++++
+ 25 files changed, 140 insertions(+), 37 deletions(-)
+ create mode 100644 src/xenia/base/imgui_include.h
+ create mode 100644 src/xenia/base/imgui_internal_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index 34b1caa21..dbc46dfbe 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -313,6 +313,27 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_IMGUI: use system imgui when set (Linux only). Link lib; fail if set and not found.
++use_system_imgui = false
++imgui_pkg_config_available = false
++imgui_system_include = nil
++imgui_system_links = nil
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_IMGUI") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_imgui = true
++    imgui_pkg_config_available = os.execute("pkg-config --exists imgui")
++    if not imgui_pkg_config_available then
++      if (os.isfile("/usr/include/imgui/imgui.h") or os.isdir("/usr/include/imgui")) and (os.isfile("/usr/lib/libimgui.a") or os.isfile("/usr/lib/libimgui.so") or os.isfile("/usr/lib64/libimgui.a") or os.isfile("/usr/lib64/libimgui.so")) then
++        imgui_system_include = "/usr/include"
++        imgui_system_links = "imgui"
++      else
++        error("USE_SYSTEM_IMGUI is set but imgui was not found (no pkg-config and no /usr/include/imgui + libimgui). Install media-libs/imgui or unset USE_SYSTEM_IMGUI.")
++      end
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -471,6 +492,9 @@ end
+ if use_system_discord_rpc then
+   defines({ "XENIA_USE_SYSTEM_DISCORD_RPC" })
+ end
++if use_system_imgui then
++  defines({ "XENIA_USE_SYSTEM_IMGUI" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -757,7 +781,9 @@ workspace("xenia")
+   if not use_system_glslang then
+     include("third_party/glslang-spirv.lua")
+   end
+-  include("third_party/imgui.lua")
++  if not use_system_imgui then
++    include("third_party/imgui.lua")
++  end
+   include("third_party/mspack.lua")
+   if not use_system_snappy then
+     include("third_party/snappy.lua")
+diff --git a/src/xenia/app/emulator_window.cc b/src/xenia/app/emulator_window.cc
+index 0c863a3b8..24c0401ff 100644
+--- a/src/xenia/app/emulator_window.cc
++++ b/src/xenia/app/emulator_window.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/app/emulator_window.h"
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "third_party/stb/stb_image_write.h"
+ #include "xenia/base/tomlplusplus_include.h"
+ #include "xenia/base/assert.h"
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index 9fa6cab5c..687583c37 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -35,6 +35,9 @@ project("xenia-app")
+   if use_system_discord_rpc then
+     pkg_config.all("discord-rpc")
+   end
++  if use_system_imgui then
++    pkg_config.all("imgui")
++  end
+   links({
+     "xenia-apu",
+     "xenia-apu-nop",
+@@ -58,7 +61,6 @@ project("xenia-app")
+     "capstone",
+     "fmt",
+     "dxbc",
+-    "imgui",
+     "libavcodec",
+     "libavformat",
+     "libavutil",
+@@ -73,7 +75,6 @@ project("xenia-app")
+     "capstone",
+     "fmt",
+     "dxbc",
+-    "imgui",
+     "libavcodec",
+     "libavformat",
+     "libavutil",
+@@ -90,7 +91,6 @@ project("xenia-app")
+     "fmt",
+     "dxbc",
+     "glslang-spirv",
+-    "imgui",
+     "libavcodec",
+     "libavformat",
+     "libavutil",
+@@ -106,7 +106,6 @@ project("xenia-app")
+     "fmt",
+     "dxbc",
+     "glslang-spirv",
+-    "imgui",
+     "libavcodec",
+     "libavformat",
+     "libavutil",
+@@ -121,6 +120,9 @@ project("xenia-app")
+   if not use_system_discord_rpc then
+     links({ "discord-rpc" })
+   end
++  if not use_system_imgui then
++    links({ "imgui" })
++  end
+   defines({
+     "XBYAK_NO_OP_NAMES",
+     "XBYAK_ENABLE_OMITTED_OPERAND",
+diff --git a/src/xenia/base/imgui_include.h b/src/xenia/base/imgui_include.h
+new file mode 100644
+index 000000000..73f40b3ce
+--- /dev/null
++++ b/src/xenia/base/imgui_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled imgui or system (XENIA_USE_SYSTEM_IMGUI).
++#ifndef XENIA_BASE_IMGUI_INCLUDE_H_
++#define XENIA_BASE_IMGUI_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_IMGUI
++#include <imgui/imgui.h>
++#else
++#include "third_party/imgui/imgui.h"
++#endif
++
++#endif  // XENIA_BASE_IMGUI_INCLUDE_H_
+diff --git a/src/xenia/base/imgui_internal_include.h b/src/xenia/base/imgui_internal_include.h
+new file mode 100644
+index 000000000..10680fff6
+--- /dev/null
++++ b/src/xenia/base/imgui_internal_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled imgui_internal.h or system (XENIA_USE_SYSTEM_IMGUI).
++#ifndef XENIA_BASE_IMGUI_INTERNAL_INCLUDE_H_
++#define XENIA_BASE_IMGUI_INTERNAL_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_IMGUI
++#include <imgui/imgui_internal.h>
++#else
++#include "third_party/imgui/imgui_internal.h"
++#endif
++
++#endif  // XENIA_BASE_IMGUI_INTERNAL_INCLUDE_H_
+diff --git a/src/xenia/cpu/ppc/testing/premake5.lua b/src/xenia/cpu/ppc/testing/premake5.lua
+index e1886cb11..eca2e5f84 100644
+--- a/src/xenia/cpu/ppc/testing/premake5.lua
++++ b/src/xenia/cpu/ppc/testing/premake5.lua
+@@ -12,11 +12,13 @@ project("xenia-cpu-ppc-tests")
+   if use_system_capstone then
+     pkg_config.all("capstone")
+   end
++  if use_system_imgui then
++    pkg_config.all("imgui")
++  end
+   links({
+     "capstone", -- cpu-backend-x64
+     "fmt",
+     "mspack",
+-    "imgui",
+     "xenia-core",
+     "xenia-cpu",
+     "xenia-gpu",
+@@ -25,6 +27,9 @@ project("xenia-cpu-ppc-tests")
+     "xenia-patcher",
+     "xenia-hid-skylander",
+   })
++  if not use_system_imgui then
++    links({ "imgui" })
++  end
+   files({
+     "ppc_testing_main.cc",
+     "../../../base/console_app_main_"..platform_suffix..".cc",
+diff --git a/src/xenia/cpu/testing/premake5.lua b/src/xenia/cpu/testing/premake5.lua
+index 23c0c6fb9..d2e4d2996 100644
+--- a/src/xenia/cpu/testing/premake5.lua
++++ b/src/xenia/cpu/testing/premake5.lua
+@@ -1,12 +1,10 @@
+ project_root = "../../../.."
+ include(project_root.."/tools/build")
+ 
+-test_suite("xenia-cpu-tests", project_root, ".", {
+-  links = {
+-    "capstone",
+-    "fmt",
+-    "imgui",
+-    "xenia-base",
++local cpu_test_links = {
++  "capstone",
++  "fmt",
++  "xenia-base",
+     "xenia-core",
+     "xenia-cpu",
+     "xenia-gpu",
+@@ -14,9 +12,15 @@ test_suite("xenia-cpu-tests", project_root, ".", {
+ 
+     -- TODO(benvanik): cut these dependencies?
+     "xenia-kernel",
+-    "xenia-ui", -- needed by xenia-base
+-    "xenia-patcher",
+-  },
++  "xenia-ui", -- needed by xenia-base
++  "xenia-patcher",
++}
++if not use_system_imgui then
++  table.insert(cpu_test_links, "imgui")
++end
++test_suite("xenia-cpu-tests", project_root, ".", {
++  links = cpu_test_links,
++  uses_imgui = true,
+   filtered_links = {
+     {
+       filter = 'architecture:x86_64',
+diff --git a/src/xenia/debug/ui/debug_window.cc b/src/xenia/debug/ui/debug_window.cc
+index e63adf65b..80b3ba6b4 100644
+--- a/src/xenia/debug/ui/debug_window.cc
++++ b/src/xenia/debug/ui/debug_window.cc
+@@ -12,8 +12,8 @@
+ #include <cinttypes>
+ 
+ #include "xenia/base/capstone_include.h"
+-#include "third_party/imgui/imgui.h"
+-#include "third_party/imgui/imgui_internal.h"
++#include "xenia/base/imgui_include.h"
++#include "xenia/base/imgui_internal_include.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/fuzzy.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/debug/ui/premake5.lua b/src/xenia/debug/ui/premake5.lua
+index 19d48cc2f..31c0f32c9 100644
+--- a/src/xenia/debug/ui/premake5.lua
++++ b/src/xenia/debug/ui/premake5.lua
+@@ -6,8 +6,12 @@ project("xenia-debug-ui")
+   uuid("9193a274-f4c2-4746-bd85-93fcfc5c3e38")
+   kind("StaticLib")
+   language("C++")
++  if use_system_imgui then
++    pkg_config.all("imgui")
++  else
++    links({ "imgui" })
++  end
+   links({
+-    "imgui",
+     "xenia-base",
+     "xenia-cpu",
+     "xenia-ui",
+diff --git a/src/xenia/gpu/d3d12/premake5.lua b/src/xenia/gpu/d3d12/premake5.lua
+index 8f437739c..fda447e26 100644
+--- a/src/xenia/gpu/d3d12/premake5.lua
++++ b/src/xenia/gpu/d3d12/premake5.lua
+@@ -60,18 +60,23 @@ if enableMiscSubprojects then
+       "xenia-ui-d3d12",
+       "xenia-vfs",
+     })
++    if use_system_imgui then
++      pkg_config.all("imgui")
++    end
+     links({
+       "aes_128",
+       "capstone",
+       "dxbc",
+       "fmt",
+-      "imgui",
+       "libavcodec",
+       "libavutil",
+       "mspack",
+       "snappy",
+       "xxhash",
+     })
++    if not use_system_imgui then
++      links({ "imgui" })
++    end
+     files({
+       "d3d12_trace_viewer_main.cc",
+       "../../ui/windowed_app_main_"..platform_suffix..".cc",
+@@ -105,6 +110,9 @@ if enableMiscSubprojects then
+     if use_system_snappy then
+       pkg_config.all("snappy")
+     end
++    if use_system_imgui then
++      pkg_config.all("imgui")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+@@ -127,13 +135,15 @@ if enableMiscSubprojects then
+       "capstone",
+       "dxbc",
+       "fmt",
+-      "imgui",
+       "libavcodec",
+       "libavutil",
+       "mspack",
+       "snappy",
+       "xxhash",
+     })
++    if not use_system_imgui then
++      links({ "imgui" })
++    end
+     files({
+       "d3d12_trace_dump_main.cc",
+       "../../base/console_app_main_"..platform_suffix..".cc",
+diff --git a/src/xenia/gpu/trace_viewer.cc b/src/xenia/gpu/trace_viewer.cc
+index 830ebcfcc..f47ec43be 100644
+--- a/src/xenia/gpu/trace_viewer.cc
++++ b/src/xenia/gpu/trace_viewer.cc
+@@ -12,7 +12,7 @@
+ #include <cinttypes>
+ 
+ #include "third_party/half/include/half.hpp"
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/filesystem.h"
+diff --git a/src/xenia/gpu/vulkan/premake5.lua b/src/xenia/gpu/vulkan/premake5.lua
+index ac637dd82..2efe7b3fe 100644
+--- a/src/xenia/gpu/vulkan/premake5.lua
++++ b/src/xenia/gpu/vulkan/premake5.lua
+@@ -62,6 +62,9 @@ if enableMiscSubprojects then
+     if use_system_snappy then
+       pkg_config.all("snappy")
+     end
++    if use_system_imgui then
++      pkg_config.all("imgui")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+@@ -83,7 +86,6 @@ if enableMiscSubprojects then
+       "aes_128",
+       "capstone",
+       "fmt",
+-      "imgui",
+       "libavcodec",
+       "libavutil",
+       "mspack",
+@@ -94,13 +96,15 @@ if enableMiscSubprojects then
+       "capstone",
+       "fmt",
+       "glslang-spirv",
+-      "imgui",
+       "libavcodec",
+       "libavutil",
+       "mspack",
+       "snappy",
+       "xxhash",
+     })
++    if not use_system_imgui then
++      links({ "imgui" })
++    end
+     if not use_system_vulkan_headers then
+       includedirs({
+         project_root.."/third_party/Vulkan-Headers/include",
+@@ -151,6 +155,9 @@ if enableMiscSubprojects then
+     if use_system_snappy then
+       pkg_config.all("snappy")
+     end
++    if use_system_imgui then
++      pkg_config.all("imgui")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+@@ -172,7 +179,6 @@ if enableMiscSubprojects then
+       "aes_128",
+       "capstone",
+       "fmt",
+-      "imgui",
+       "libavcodec",
+       "libavutil",
+       "mspack",
+@@ -183,13 +189,15 @@ if enableMiscSubprojects then
+       "capstone",
+       "fmt",
+       "glslang-spirv",
+-      "imgui",
+       "libavcodec",
+       "libavutil",
+       "mspack",
+       "snappy",
+       "xxhash",
+     })
++    if not use_system_imgui then
++      links({ "imgui" })
++    end
+     if not use_system_vulkan_headers then
+       includedirs({
+         project_root.."/third_party/Vulkan-Headers/include",
+diff --git a/src/xenia/hid/hid_demo.cc b/src/xenia/hid/hid_demo.cc
+index b5fbb9995..1af837bb2 100644
+--- a/src/xenia/hid/hid_demo.cc
++++ b/src/xenia/hid/hid_demo.cc
+@@ -17,7 +17,7 @@
+ #include <vector>
+ 
+ #include "xenia/base/fmt_include.h"
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/cvar.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/ui/d3d12/premake5.lua b/src/xenia/ui/d3d12/premake5.lua
+index 9a69d9da8..95a1e1140 100644
+--- a/src/xenia/ui/d3d12/premake5.lua
++++ b/src/xenia/ui/d3d12/premake5.lua
+@@ -24,13 +24,18 @@ if enableMiscSubprojects then
+     if use_system_fmt then
+       pkg_config.all("fmt")
+     end
++    if use_system_imgui then
++      pkg_config.all("imgui")
++    end
+     links({
+       "fmt",
+-      "imgui",
+       "xenia-base",
+       "xenia-ui",
+       "xenia-ui-d3d12",
+     })
++    if not use_system_imgui then
++      links({ "imgui" })
++    end
+     files({
+       "../window_demo.cc",
+       "d3d12_window_demo.cc",
+diff --git a/src/xenia/ui/imgui_dialog.cc b/src/xenia/ui/imgui_dialog.cc
+index c5e490be9..16584e111 100644
+--- a/src/xenia/ui/imgui_dialog.cc
++++ b/src/xenia/ui/imgui_dialog.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/ui/imgui_dialog.h"
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/ui/imgui_drawer.h"
+ 
+diff --git a/src/xenia/ui/imgui_drawer.cc b/src/xenia/ui/imgui_drawer.cc
+index 9fc1aa90e..f9721aca9 100644
+--- a/src/xenia/ui/imgui_drawer.cc
++++ b/src/xenia/ui/imgui_drawer.cc
+@@ -13,7 +13,7 @@
+ #include <cstring>
+ #include <ranges>
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/ui/imgui_drawer.h b/src/xenia/ui/imgui_drawer.h
+index 6c32a225b..8d1db2ef3 100644
+--- a/src/xenia/ui/imgui_drawer.h
++++ b/src/xenia/ui/imgui_drawer.h
+@@ -17,7 +17,7 @@
+ #include <span>
+ #include <vector>
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/hid/input_system.h"
+ #include "xenia/ui/immediate_drawer.h"
+ #include "xenia/ui/presenter.h"
+diff --git a/src/xenia/ui/imgui_guest_notification.h b/src/xenia/ui/imgui_guest_notification.h
+index 1e6ae57a2..b664de791 100644
+--- a/src/xenia/ui/imgui_guest_notification.h
++++ b/src/xenia/ui/imgui_guest_notification.h
+@@ -10,7 +10,7 @@
+ #ifndef XENIA_UI_IMGUI_GUEST_NOTIFICATION_H_
+ #define XENIA_UI_IMGUI_GUEST_NOTIFICATION_H_
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/ui/imgui_dialog.h"
+ #include "xenia/ui/imgui_notification.h"
+ 
+diff --git a/src/xenia/ui/imgui_host_notification.h b/src/xenia/ui/imgui_host_notification.h
+index aa0ef5de7..c96e6684f 100644
+--- a/src/xenia/ui/imgui_host_notification.h
++++ b/src/xenia/ui/imgui_host_notification.h
+@@ -10,7 +10,7 @@
+ #ifndef XENIA_UI_IMGUI_HOST_NOTIFICATION_H_
+ #define XENIA_UI_IMGUI_HOST_NOTIFICATION_H_
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/ui/imgui_dialog.h"
+ #include "xenia/ui/imgui_drawer.h"
+ #include "xenia/ui/imgui_notification.h"
+diff --git a/src/xenia/ui/imgui_notification.h b/src/xenia/ui/imgui_notification.h
+index 746684970..628ee6aa0 100644
+--- a/src/xenia/ui/imgui_notification.h
++++ b/src/xenia/ui/imgui_notification.h
+@@ -10,7 +10,7 @@
+ #ifndef XENIA_UI_IMGUI_NOTIFICATION_H_
+ #define XENIA_UI_IMGUI_NOTIFICATION_H_
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/ui/imgui_dialog.h"
+ #include "xenia/ui/imgui_drawer.h"
+ 
+diff --git a/src/xenia/ui/vulkan/premake5.lua b/src/xenia/ui/vulkan/premake5.lua
+index 6d9069210..8a2215803 100644
+--- a/src/xenia/ui/vulkan/premake5.lua
++++ b/src/xenia/ui/vulkan/premake5.lua
+@@ -30,13 +30,18 @@ if enableMiscSubprojects then
+     if use_system_fmt then
+       pkg_config.all("fmt")
+     end
++    if use_system_imgui then
++      pkg_config.all("imgui")
++    end
+     links({
+       "fmt",
+-      "imgui",
+       "xenia-base",
+       "xenia-ui",
+       "xenia-ui-vulkan",
+     })
++    if not use_system_imgui then
++      links({ "imgui" })
++    end
+     if not use_system_vulkan_headers then
+       includedirs({
+         project_root.."/third_party/Vulkan-Headers/include",
+diff --git a/src/xenia/ui/window.cc b/src/xenia/ui/window.cc
+index 8164f0d57..b1edaa02b 100644
+--- a/src/xenia/ui/window.cc
++++ b/src/xenia/ui/window.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/ui/window.h"
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/ui/window_demo.cc b/src/xenia/ui/window_demo.cc
+index 0d1e97a9a..72e0aaf85 100644
+--- a/src/xenia/ui/window_demo.cc
++++ b/src/xenia/ui/window_demo.cc
+@@ -9,7 +9,7 @@
+ 
+ #include <cstring>
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/logging.h"
+ #include "xenia/base/profiling.h"
+diff --git a/tools/build/scripts/pkg_config.lua b/tools/build/scripts/pkg_config.lua
+index 6bba02242..85cc714ff 100644
+--- a/tools/build/scripts/pkg_config.lua
++++ b/tools/build/scripts/pkg_config.lua
+@@ -71,6 +71,12 @@ function pkg_config.all(lib)
+     links(discord_rpc_system_links)
+     return
+   end
++  -- When imgui has no pkg-config (e.g. Gentoo), use fallback include/links.
++  if lib == "imgui" and use_system_imgui and imgui_system_include and imgui_system_links then
++    includedirs(imgui_system_include)
++    links(imgui_system_links)
++    return
++  end
+   pkg_config.cflags(lib)
+   pkg_config.lflags(lib)
+ end
+diff --git a/tools/build/scripts/test_suite.lua b/tools/build/scripts/test_suite.lua
+index 30b5d5f5e..ac9221d4f 100644
+--- a/tools/build/scripts/test_suite.lua
++++ b/tools/build/scripts/test_suite.lua
+@@ -30,6 +30,9 @@ local function combined_test_suite(test_suite_name, project_root, base_path, con
+       end
+       if has_capstone then pkg_config.all("capstone") end
+     end
++    if use_system_imgui and config["uses_imgui"] then
++      pkg_config.all("imgui")
++    end
+     includedirs(merge_arrays(config["includedirs"], {
+       project_root.."/"..build_tools,
+       project_root.."/"..build_tools_src,
+@@ -83,6 +86,9 @@ local function split_test_suite(test_suite_name, project_root, base_path, config
+         end
+         if has_capstone then pkg_config.all("capstone") end
+       end
++      if use_system_imgui and config["uses_imgui"] then
++        pkg_config.all("imgui")
++      end
+       includedirs(merge_arrays(config["includedirs"], {
+         project_root.."/"..build_tools,
+         project_root.."/"..build_tools_src,
+-- 
+2.52.0
+

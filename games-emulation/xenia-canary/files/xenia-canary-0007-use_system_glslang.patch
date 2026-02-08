@@ -1,0 +1,430 @@
+diff --git a/premake5.lua b/premake5.lua
+index 9d21a3e95..e8ab1e7f3 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -66,6 +66,18 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_GLSLANG: use system glslang when set (Linux only). Fail if set and not found.
++use_system_glslang = false
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_GLSLANG") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_glslang = true
++    if not os.execute("pkg-config --exists glslang") then
++      error("USE_SYSTEM_GLSLANG is set but glslang was not found. Install dev-util/glslang or unset USE_SYSTEM_GLSLANG.")
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -100,6 +112,9 @@ end
+ if use_system_zarchive then
+   defines({ "XENIA_USE_SYSTEM_ZARCHIVE" })
+ end
++if use_system_glslang then
++  defines({ "XENIA_USE_SYSTEM_GLSLANG" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -375,7 +390,9 @@ workspace("xenia")
+   if not use_system_fmt then
+     include("third_party/fmt.lua")
+   end
+-  include("third_party/glslang-spirv.lua")
++  if not use_system_glslang then
++    include("third_party/glslang-spirv.lua")
++  end
+   include("third_party/imgui.lua")
+   include("third_party/mspack.lua")
+   include("third_party/snappy.lua")
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index 1fe6d4e1c..d557d2957 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -17,6 +17,9 @@ project("xenia-app")
+   if use_system_zarchive then
+     pkg_config.all("zarchive")
+   end
++  if use_system_glslang then
++    pkg_config.all("glslang")
++  end
+   links({
+     "xenia-apu",
+     "xenia-apu-nop",
+diff --git a/src/xenia/base/glslang_include.h b/src/xenia/base/glslang_include.h
+new file mode 100644
+index 000000000..59a5f8f5b
+--- /dev/null
++++ b/src/xenia/base/glslang_include.h
+@@ -0,0 +1,15 @@
++// Wrapper so Xenia can use either bundled glslang SPIRV subset or system glslang (XENIA_USE_SYSTEM_GLSLANG).
++#ifndef XENIA_BASE_GLSLANG_INCLUDE_H_
++#define XENIA_BASE_GLSLANG_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_GLSLANG
++#include <glslang/SPIRV/GLSL.std.450.h>
++#include <glslang/SPIRV/SpvBuilder.h>
++#include <glslang/SPIRV/disassemble.h>
++#else
++#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "third_party/glslang/SPIRV/SpvBuilder.h"
++#include "third_party/glslang/SPIRV/disassemble.h"
++#endif
++
++#endif  // XENIA_BASE_GLSLANG_INCLUDE_H_
+diff --git a/src/xenia/gpu/premake5.lua b/src/xenia/gpu/premake5.lua
+index 6121d5265..071834d39 100644
+--- a/src/xenia/gpu/premake5.lua
++++ b/src/xenia/gpu/premake5.lua
+@@ -12,6 +12,9 @@ project("xenia-gpu")
+   if use_system_fmt then
+     pkg_config.all("fmt")
+   end
++  if use_system_glslang then
++    pkg_config.all("glslang")
++  end
+   links({
+     "dxbc",
+     "fmt",
+@@ -34,6 +37,9 @@ project("xenia-gpu-shader-compiler")
+   if use_system_fmt then
+     pkg_config.all("fmt")
+   end
++  if use_system_glslang then
++    pkg_config.all("glslang")
++  end
+   links({
+     "dxbc",
+     "fmt",
+diff --git a/src/xenia/gpu/shader_compiler_main.cc b/src/xenia/gpu/shader_compiler_main.cc
+index d36ff49d4..7f6f2c6e8 100644
+--- a/src/xenia/gpu/shader_compiler_main.cc
++++ b/src/xenia/gpu/shader_compiler_main.cc
+@@ -12,7 +12,7 @@
+ #include <string>
+ #include <utility>
+ 
+-#include "third_party/glslang/SPIRV/disassemble.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/console_app_main.h"
+ #include "xenia/base/cvar.h"
+diff --git a/src/xenia/gpu/spirv_builder.h b/src/xenia/gpu/spirv_builder.h
+index 7422d7c63..2a184a527 100644
+--- a/src/xenia/gpu/spirv_builder.h
++++ b/src/xenia/gpu/spirv_builder.h
+@@ -15,7 +15,7 @@
+ #include <utility>
+ #include <vector>
+ 
+-#include "third_party/glslang/SPIRV/SpvBuilder.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ 
+ namespace xe {
+diff --git a/src/xenia/gpu/spirv_shader_translator.cc b/src/xenia/gpu/spirv_shader_translator.cc
+index d9ed426b6..97923e225 100644
+--- a/src/xenia/gpu/spirv_shader_translator.cc
++++ b/src/xenia/gpu/spirv_shader_translator.cc
+@@ -13,7 +13,7 @@
+ #include <cstdint>
+ 
+ #include "xenia/base/fmt_include.h"
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+ #include "xenia/base/string_buffer.h"
+diff --git a/src/xenia/gpu/spirv_shader_translator_alu.cc b/src/xenia/gpu/spirv_shader_translator_alu.cc
+index 701a9aeea..3fcb1e55e 100644
+--- a/src/xenia/gpu/spirv_shader_translator_alu.cc
++++ b/src/xenia/gpu/spirv_shader_translator_alu.cc
+@@ -13,7 +13,7 @@
+ #include <cmath>
+ #include <cstdint>
+ 
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+ 
+diff --git a/src/xenia/gpu/spirv_shader_translator_fetch.cc b/src/xenia/gpu/spirv_shader_translator_fetch.cc
+index 135db5aca..6578329b8 100644
+--- a/src/xenia/gpu/spirv_shader_translator_fetch.cc
++++ b/src/xenia/gpu/spirv_shader_translator_fetch.cc
+@@ -13,7 +13,7 @@
+ #include <cmath>
+ 
+ #include "xenia/base/fmt_include.h"
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+ 
+diff --git a/src/xenia/gpu/spirv_shader_translator_memexport.cc b/src/xenia/gpu/spirv_shader_translator_memexport.cc
+index b9f9f91ed..605220c16 100644
+--- a/src/xenia/gpu/spirv_shader_translator_memexport.cc
++++ b/src/xenia/gpu/spirv_shader_translator_memexport.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/gpu/spirv_shader_translator.h"
+ 
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+ #include "xenia/gpu/ucode.h"
+diff --git a/src/xenia/gpu/spirv_shader_translator_rb.cc b/src/xenia/gpu/spirv_shader_translator_rb.cc
+index fa98fe974..e0910e560 100644
+--- a/src/xenia/gpu/spirv_shader_translator_rb.cc
++++ b/src/xenia/gpu/spirv_shader_translator_rb.cc
+@@ -11,7 +11,7 @@
+ 
+ #include <cstdint>
+ 
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+ #include "xenia/gpu/draw_util.h"
+diff --git a/src/xenia/gpu/vulkan/premake5.lua b/src/xenia/gpu/vulkan/premake5.lua
+index d23c94d7b..662f9b513 100644
+--- a/src/xenia/gpu/vulkan/premake5.lua
++++ b/src/xenia/gpu/vulkan/premake5.lua
+@@ -12,6 +12,9 @@ project("xenia-gpu-vulkan")
+   if use_system_fmt then
+     pkg_config.all("fmt")
+   end
++  if use_system_glslang then
++    pkg_config.all("glslang")
++  end
+   links({
+     "fmt",
+     "glslang-spirv",
+@@ -41,6 +44,9 @@ if enableMiscSubprojects then
+     if use_system_fmt then
+       pkg_config.all("fmt")
+     end
++    if use_system_glslang then
++      pkg_config.all("glslang")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+@@ -109,6 +115,9 @@ if enableMiscSubprojects then
+     if use_system_fmt then
+       pkg_config.all("fmt")
+     end
++    if use_system_glslang then
++      pkg_config.all("glslang")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+diff --git a/src/xenia/gpu/vulkan/vulkan_render_target_cache.cc b/src/xenia/gpu/vulkan/vulkan_render_target_cache.cc
+index adc33082c..d69fd2564 100644
+--- a/src/xenia/gpu/vulkan/vulkan_render_target_cache.cc
++++ b/src/xenia/gpu/vulkan/vulkan_render_target_cache.cc
+@@ -13,7 +13,7 @@
+ #include <cstdint>
+ #include <cstring>
+ 
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/cvar.h"
+ #include "xenia/base/logging.h"
+-- 
+2.52.0
+
+
+diff --git a/premake5.lua b/premake5.lua
+index a2dfc28fb..c2ee9e2fe 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -67,13 +67,27 @@ if os.istarget("linux") then
+ end
+ 
+ -- USE_SYSTEM_GLSLANG: use system glslang when set (Linux only). Fail if set and not found.
++-- Prefer pkg-config; if unavailable (e.g. Gentoo dev-util/glslang only installs CMake config),
++-- fall back to detecting /usr/include/glslang.
+ use_system_glslang = false
++glslang_pkg_config_available = false
++glslang_system_include = nil
++glslang_system_links = nil
+ if os.istarget("linux") then
+   local env = os.getenv("USE_SYSTEM_GLSLANG") or ""
+   if env ~= "" and env ~= "0" then
+     use_system_glslang = true
+-    if not os.execute("pkg-config --exists glslang") then
+-      error("USE_SYSTEM_GLSLANG is set but glslang was not found. Install dev-util/glslang or unset USE_SYSTEM_GLSLANG.")
++    glslang_pkg_config_available = os.execute("pkg-config --exists glslang")
++    if not glslang_pkg_config_available then
++      -- Gentoo and some distros install glslang without a .pc file; check for headers.
++      if os.isdir("/usr/include/glslang") or os.isdir("/usr/include/glslang/SPIRV") then
++        glslang_system_include = "/usr/include"
++        -- Many distros (e.g. Gentoo) build glslang without exporting the C++ spv::Builder API;
++        -- link may then fail with undefined spv::Builder. Unset USE_SYSTEM_GLSLANG to use bundled.
++        glslang_system_links = { "glslang", "SPIRV" }
++      else
++        error("USE_SYSTEM_GLSLANG is set but glslang was not found (no pkg-config and no /usr/include/glslang). Install dev-util/glslang or unset USE_SYSTEM_GLSLANG.")
++      end
+     end
+   end
+ end
+diff --git a/tools/build/scripts/pkg_config.lua b/tools/build/scripts/pkg_config.lua
+index bc83ae1c0..d061a46f7 100644
+--- a/tools/build/scripts/pkg_config.lua
++++ b/tools/build/scripts/pkg_config.lua
+@@ -40,6 +40,12 @@ function pkg_config.lflags(lib)
+ end
+ 
+ function pkg_config.all(lib)
+-    pkg_config.cflags(lib)
+-    pkg_config.lflags(lib)
++  -- When glslang has no pkg-config (e.g. Gentoo), use fallback include/links.
++  if lib == "glslang" and use_system_glslang and glslang_system_include and glslang_system_links then
++    includedirs(glslang_system_include)
++    links(glslang_system_links)
++    return
++  end
++  pkg_config.cflags(lib)
++  pkg_config.lflags(lib)
+ end
+-- 
+2.52.0
+
+
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index 6b5f40dbe..898cc7930 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -41,7 +41,24 @@ project("xenia-app")
+     "xenia-ui-vulkan",
+     "xenia-vfs",
+   })
+-  links({
++  links(use_system_glslang and {
++    "aes_128",
++    "capstone",
++    "fmt",
++    "dxbc",
++    "discord-rpc",
++    "imgui",
++    "libavcodec",
++    "libavformat",
++    "libavutil",
++    "mspack",
++    "pugixml",
++    "snappy",
++    "xxhash",
++    "zarchive",
++    "zlib-ng",
++    "zstd",
++  } or {
+     "aes_128",
+     "capstone",
+     "fmt",
+diff --git a/src/xenia/gpu/premake5.lua b/src/xenia/gpu/premake5.lua
+index 071834d39..55a6f01dd 100644
+--- a/src/xenia/gpu/premake5.lua
++++ b/src/xenia/gpu/premake5.lua
+@@ -15,7 +15,14 @@ project("xenia-gpu")
+   if use_system_glslang then
+     pkg_config.all("glslang")
+   end
+-  links({
++  links(use_system_glslang and {
++    "dxbc",
++    "fmt",
++    "snappy",
++    "xenia-base",
++    "xenia-ui",
++    "xxhash",
++  } or {
+     "dxbc",
+     "fmt",
+     "glslang-spirv",
+@@ -40,7 +47,15 @@ project("xenia-gpu-shader-compiler")
+   if use_system_glslang then
+     pkg_config.all("glslang")
+   end
+-  links({
++  links(use_system_glslang and {
++    "dxbc",
++    "fmt",
++    "snappy",
++    "xenia-base",
++    "xenia-gpu",
++    "xenia-ui",
++    "xenia-ui-vulkan",
++  } or {
+     "dxbc",
+     "fmt",
+     "glslang-spirv",
+diff --git a/src/xenia/gpu/vulkan/premake5.lua b/src/xenia/gpu/vulkan/premake5.lua
+index a89c2c1c4..9bf51d35b 100644
+--- a/src/xenia/gpu/vulkan/premake5.lua
++++ b/src/xenia/gpu/vulkan/premake5.lua
+@@ -15,7 +15,14 @@ project("xenia-gpu-vulkan")
+   if use_system_glslang then
+     pkg_config.all("glslang")
+   end
+-  links({
++  links(use_system_glslang and {
++    "fmt",
++    "xenia-base",
++    "xenia-gpu",
++    "xenia-ui",
++    "xenia-ui-vulkan",
++    "xxhash",
++  } or {
+     "fmt",
+     "glslang-spirv",
+     "xenia-base",
+@@ -67,7 +74,17 @@ if enableMiscSubprojects then
+       "xenia-ui-vulkan",
+       "xenia-vfs",
+     })
+-    links({
++    links(use_system_glslang and {
++      "aes_128",
++      "capstone",
++      "fmt",
++      "imgui",
++      "libavcodec",
++      "libavutil",
++      "mspack",
++      "snappy",
++      "xxhash",
++    } or {
+       "aes_128",
+       "capstone",
+       "fmt",
+@@ -141,7 +158,17 @@ if enableMiscSubprojects then
+       "xenia-vfs",
+       "xenia-patcher",
+     })
+-    links({
++    links(use_system_glslang and {
++      "aes_128",
++      "capstone",
++      "fmt",
++      "imgui",
++      "libavcodec",
++      "libavutil",
++      "mspack",
++      "snappy",
++      "xxhash",
++    } or {
+       "aes_128",
+       "capstone",
+       "fmt",
+-- 
+2.52.0
+
