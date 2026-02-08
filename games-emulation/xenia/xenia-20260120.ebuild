@@ -3,6 +3,8 @@
 
 EAPI=8
 
+inherit desktop
+
 DESCRIPTION="Xbox 360 emulator research project."
 HOMEPAGE="https://github.com/xenia-project/xenia https://xenia.jp/"
 SHA="c7f61342d7061b8264e4b988b8d2e03351b6e088"
@@ -48,6 +50,7 @@ S="${WORKDIR}/xenia-${SHA}"
 LICENSE="MIT"
 SLOT="0"
 # KEYWORDS="~amd64"
+IUSE="discord"
 
 DEPEND="app-arch/snappy
 	dev-cpp/catch:0
@@ -95,4 +98,28 @@ src_prepare() {
 	mv "${WORKDIR}/premake-export-compile-commands-${PREMAKE_EXPORT_CC_SHA}" \
 		"${S}/third_party/premake-export-compile-commands" || die
 	default
+}
+
+src_configure() {
+	emake -C "${S}/third_party/premake-core" -f Bootstrap.mak linux
+	if ! use discord; then
+		sed -e '/include.*discord-rpc/d' -i premake5.lua || die
+	fi
+	"${S}/third_party/premake-core/bin/release/premake5" \
+		--scripts="${S}/third_party/premake-core" \
+		--file=premake5.lua \
+		--os=linux \
+		--cc=clang \
+		--verbose \
+		gmake2 || die "premake5 failed"
+}
+
+src_compile() {
+	emake -C build/ config=release_linux
+}
+
+src_install() {
+	dobin "build/bin/Linux/Release/xenia-app"
+	make_desktop_entry xenia-app Xenia "" "Game;Emulator"
+	dodoc README.md
 }
