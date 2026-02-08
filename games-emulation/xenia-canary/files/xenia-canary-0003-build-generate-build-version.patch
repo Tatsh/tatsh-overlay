@@ -1,0 +1,68 @@
+From 0ee2476372e2a1f8d3f9995e5f68fa74e14f8062 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 14:35:20 -0500
+Subject: [PATCH 03/21] build: generate build/version.h when running premake
+
+Add 'version-h' subcommand to xenia-build.py to generate build/version.h
+(git branch, commit, date). Run it at the end of premake so the file
+exists for sources that include it (e.g. trace_writer.cc) when building
+via make or other generators.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua   |  5 +++++
+ xenia-build.py | 18 ++++++++++++++++++
+ 2 files changed, 23 insertions(+)
+
+diff --git a/premake5.lua b/premake5.lua
+index bc1623142..3564866ca 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -397,3 +397,8 @@ workspace("xenia")
+     include("src/xenia/hid/xinput")
+     include("src/xenia/ui/d3d12")
+   end
++
++  -- Generate build/version.h so sources that include it can find it (trace_writer, etc.).
++  if not os.istarget("android") then
++    os.execute("python3 xenia-build.py version-h 2>/dev/null")
++  end
+diff --git a/xenia-build.py b/xenia-build.py
+index 3057a39f2..d5d93e344 100755
+--- a/xenia-build.py
++++ b/xenia-build.py
+@@ -650,6 +650,7 @@ def discover_commands(subparsers):
+         "setup": SetupCommand(subparsers),
+         "pull": PullCommand(subparsers),
+         "premake": PremakeCommand(subparsers),
++        "version-h": VersionHCommand(subparsers),
+         "build": BuildCommand(subparsers),
+         "buildshaders": BuildShadersCommand(subparsers),
+         "devenv": DevenvCommand(subparsers),
+@@ -901,6 +902,23 @@ class BaseBuildCommand(Command):
+         return result
+ 
+ 
++class VersionHCommand(Command):
++    """'version-h' command: generate build/version.h only.
++    """
++
++    def __init__(self, subparsers, *args, **kwargs):
++        super(VersionHCommand, self).__init__(
++            subparsers,
++            name="version-h",
++            help_short="Generate build/version.h (git branch, commit, date).",
++            *args, **kwargs)
++
++    def execute(self, args, pass_args, cwd):
++        os.makedirs("build", exist_ok=True)
++        generate_version_h()
++        return 0
++
++
+ class BuildCommand(BaseBuildCommand):
+     """'build' command.
+     """
+-- 
+2.52.0
+

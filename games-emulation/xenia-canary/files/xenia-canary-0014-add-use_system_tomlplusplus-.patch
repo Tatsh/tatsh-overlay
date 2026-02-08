@@ -1,0 +1,182 @@
+From a18babb72918cd97564a13704c1410dfc5964d36 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 19:57:17 -0500
+Subject: [PATCH 17/21] Add USE_SYSTEM_TOMLPLUSPLUS option for system toml++
+ (header-only)
+
+- premake5.lua: env USE_SYSTEM_TOMLPLUSPLUS; pkg-config tomlplusplus or
+  fallback to /usr/include/toml++; conditional third_party/tomlplusplus.lua
+- src/xenia/base/tomlplusplus_include.h: wrapper for bundled vs system toml.hpp
+- Switch cvar.h, config.h, patch_db.h, plugin_loader.h, emulator_window.cc
+  to use the wrapper
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                          | 41 ++++++++++++++++++++++++++-
+ src/xenia/app/emulator_window.cc      |  2 +-
+ src/xenia/base/cvar.h                 |  2 +-
+ src/xenia/base/tomlplusplus_include.h | 11 +++++++
+ src/xenia/config.h                    |  2 +-
+ src/xenia/patcher/patch_db.h          |  2 +-
+ src/xenia/patcher/plugin_loader.h     |  2 +-
+ 7 files changed, 56 insertions(+), 6 deletions(-)
+ create mode 100644 src/xenia/base/tomlplusplus_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index 0cd8b40a4..ae1dc52bf 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -210,6 +210,26 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_TOMLPLUSPLUS: use system toml++ when set (Linux only). Header-only; fail if set and not found.
++-- Prefer pkg-config; if unavailable (e.g. Gentoo without .pc), fall back to /usr/include/toml++.
++use_system_tomlplusplus = false
++tomlplusplus_pkg_config_available = false
++tomlplusplus_system_include = nil
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_TOMLPLUSPLUS") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_tomlplusplus = true
++    tomlplusplus_pkg_config_available = os.execute("pkg-config --exists tomlplusplus")
++    if not tomlplusplus_pkg_config_available then
++      if os.isfile("/usr/include/toml++/toml.hpp") or os.isdir("/usr/include/toml++") then
++        tomlplusplus_system_include = "/usr/include"
++      else
++        error("USE_SYSTEM_TOMLPLUSPLUS is set but tomlplusplus was not found (no pkg-config and no /usr/include/toml++). Install dev-cpp/tomlplusplus or unset USE_SYSTEM_TOMLPLUSPLUS.")
++      end
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -251,6 +271,20 @@ if use_system_xbyak then
+     end
+   end
+ end
++if use_system_tomlplusplus then
++  if tomlplusplus_system_include then
++    includedirs(tomlplusplus_system_include)
++  else
++    local cflags = os.outputof("pkg-config --cflags tomlplusplus")
++    if cflags then
++      for _, flag in next, string.explode(cflags, " ") do
++        if flag and flag:sub(1, 2) == "-I" then
++          includedirs(flag:sub(3))
++        end
++      end
++    end
++  end
++end
+ 
+ defines({
+   "VULKAN_HPP_NO_TO_STRING",
+@@ -294,6 +328,9 @@ end
+ if use_system_xbyak then
+   defines({ "XENIA_USE_SYSTEM_XBYAK" })
+ end
++if use_system_tomlplusplus then
++  defines({ "XENIA_USE_SYSTEM_TOMLPLUSPLUS" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -568,7 +605,9 @@ workspace("xenia")
+   if not use_system_cxxopts then
+     include("third_party/cxxopts.lua")
+   end
+-  include("third_party/tomlplusplus.lua")
++  if not use_system_tomlplusplus then
++    include("third_party/tomlplusplus.lua")
++  end
+   include("third_party/FFmpeg/premake5.lua")
+   if not use_system_fmt then
+     include("third_party/fmt.lua")
+diff --git a/src/xenia/app/emulator_window.cc b/src/xenia/app/emulator_window.cc
+index 4e1b506c2..0c863a3b8 100644
+--- a/src/xenia/app/emulator_window.cc
++++ b/src/xenia/app/emulator_window.cc
+@@ -11,7 +11,7 @@
+ 
+ #include "third_party/imgui/imgui.h"
+ #include "third_party/stb/stb_image_write.h"
+-#include "third_party/tomlplusplus/toml.hpp"
++#include "xenia/base/tomlplusplus_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/cvar.h"
+diff --git a/src/xenia/base/cvar.h b/src/xenia/base/cvar.h
+index 99feca1ba..b5ddc6d64 100644
+--- a/src/xenia/base/cvar.h
++++ b/src/xenia/base/cvar.h
+@@ -17,7 +17,7 @@
+ 
+ #include "xenia/base/cxxopts_include.h"
+ #include "xenia/base/fmt_include.h"
+-#include "third_party/tomlplusplus/include/toml++/toml.hpp"
++#include "xenia/base/tomlplusplus_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/filesystem.h"
+ #include "xenia/base/platform.h"
+diff --git a/src/xenia/base/tomlplusplus_include.h b/src/xenia/base/tomlplusplus_include.h
+new file mode 100644
+index 000000000..870599e6f
+--- /dev/null
++++ b/src/xenia/base/tomlplusplus_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled toml++ or system toml++ (XENIA_USE_SYSTEM_TOMLPLUSPLUS). Header-only.
++#ifndef XENIA_BASE_TOMLPLUSPLUS_INCLUDE_H_
++#define XENIA_BASE_TOMLPLUSPLUS_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_TOMLPLUSPLUS
++#include <toml++/toml.hpp>
++#else
++#include "third_party/tomlplusplus/include/toml++/toml.hpp"
++#endif
++
++#endif  // XENIA_BASE_TOMLPLUSPLUS_INCLUDE_H_
+diff --git a/src/xenia/config.h b/src/xenia/config.h
+index 907d5ab2c..150b338f6 100644
+--- a/src/xenia/config.h
++++ b/src/xenia/config.h
+@@ -11,7 +11,7 @@
+ #define XENIA_CONFIG_H_
+ 
+ #include <filesystem>
+-#include "third_party/tomlplusplus/toml.hpp"
++#include "xenia/base/tomlplusplus_include.h"
+ 
+ toml::parse_result ParseFile(const std::filesystem::path& filename);
+ 
+diff --git a/src/xenia/patcher/patch_db.h b/src/xenia/patcher/patch_db.h
+index fef737ee8..4662007f7 100644
+--- a/src/xenia/patcher/patch_db.h
++++ b/src/xenia/patcher/patch_db.h
+@@ -15,7 +15,7 @@
+ #include <optional>
+ #include <regex>
+ 
+-#include "third_party/tomlplusplus/toml.hpp"
++#include "xenia/base/tomlplusplus_include.h"
+ 
+ namespace xe {
+ namespace patcher {
+diff --git a/src/xenia/patcher/plugin_loader.h b/src/xenia/patcher/plugin_loader.h
+index 46cb763be..5277e912d 100644
+--- a/src/xenia/patcher/plugin_loader.h
++++ b/src/xenia/patcher/plugin_loader.h
+@@ -10,7 +10,7 @@
+ #ifndef XENIA_PLUGIN_LOADER_H_
+ #define XENIA_PLUGIN_LOADER_H_
+ 
+-#include "third_party/tomlplusplus/toml.hpp"
++#include "xenia/base/tomlplusplus_include.h"
+ #include "xenia/kernel/kernel_state.h"
+ #include "xenia/memory.h"
+ 
+-- 
+2.52.0
+

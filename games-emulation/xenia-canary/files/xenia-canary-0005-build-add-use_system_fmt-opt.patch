@@ -1,0 +1,905 @@
+From bab9e6d28e261a1d04325a0b51c6f5b6d5251e91 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 18:23:10 -0500
+Subject: [PATCH 05/21] build: add USE_SYSTEM_FMT option for system libfmt
+
+- Env USE_SYSTEM_FMT on Linux; pkg-config fmt; fail if not found.
+- Define XENIA_USE_SYSTEM_FMT; conditional third_party/fmt.lua.
+- xenia/base/fmt_include.h wrapper for format/printf/xchar/std.
+- Replace third_party/fmt includes with wrapper in src.
+- pkg_config.all(fmt) in projects that link fmt; test_suite.lua
+  supports use_system_fmt when suite links fmt.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                                  | 19 ++++++++++++++++++-
+ src/xenia/app/premake5.lua                    |  3 +++
+ src/xenia/base/cvar.h                         |  2 +-
+ src/xenia/base/debugging.h                    |  2 +-
+ src/xenia/base/fmt_include.h                  | 17 +++++++++++++++++
+ src/xenia/base/logging.cc                     |  2 +-
+ src/xenia/base/logging.h                      |  3 +--
+ src/xenia/base/mapped_memory_win.cc           |  2 +-
+ src/xenia/base/premake5.lua                   |  3 +++
+ src/xenia/base/profiling.cc                   |  2 +-
+ src/xenia/base/string_buffer.h                |  2 +-
+ src/xenia/base/string_util.h                  |  2 +-
+ src/xenia/base/testing/memory_test.cc         |  2 +-
+ src/xenia/base/vec128.cc                      |  2 +-
+ src/xenia/config.cc                           |  2 +-
+ src/xenia/cpu/backend/x64/premake5.lua        |  3 +++
+ src/xenia/cpu/backend/x64/x64_code_cache.cc   |  2 +-
+ src/xenia/cpu/backend/x64/x64_emitter.cc      |  2 +-
+ .../cpu/compiler/passes/finalization_pass.cc  |  2 +-
+ src/xenia/cpu/hir/hir_builder.h               |  2 +-
+ src/xenia/cpu/ppc/ppc_hir_builder.cc          |  2 +-
+ src/xenia/cpu/ppc/testing/premake5.lua        |  6 ++++++
+ src/xenia/cpu/xex_module.cc                   |  2 +-
+ src/xenia/emulator.cc                         |  2 +-
+ src/xenia/gpu/command_processor.cc            |  2 +-
+ .../gpu/d3d12/d3d12_render_target_cache.cc    |  2 +-
+ src/xenia/gpu/d3d12/pipeline_cache.cc         |  4 ++--
+ src/xenia/gpu/d3d12/premake5.lua              |  9 +++++++++
+ src/xenia/gpu/dxbc_shader_translator_fetch.cc |  2 +-
+ src/xenia/gpu/premake5.lua                    |  6 ++++++
+ src/xenia/gpu/render_target_cache.h           |  2 +-
+ src/xenia/gpu/shader.cc                       |  2 +-
+ src/xenia/gpu/spirv_shader_translator.cc      |  2 +-
+ .../gpu/spirv_shader_translator_fetch.cc      |  2 +-
+ src/xenia/gpu/vulkan/premake5.lua             |  9 +++++++++
+ src/xenia/gpu/vulkan/vulkan_pipeline_cache.cc |  2 +-
+ src/xenia/hid/hid_demo.cc                     |  2 +-
+ src/xenia/kernel/premake5.lua                 |  3 +++
+ .../kernel/util/presence_string_builder.cc    |  2 +-
+ src/xenia/kernel/xam/content_manager.cc       |  2 +-
+ src/xenia/kernel/xam/profile_manager.h        |  2 +-
+ src/xenia/kernel/xam/user_profile.cc          |  2 +-
+ src/xenia/kernel/xam/user_settings.cc         |  2 +-
+ src/xenia/kernel/xam/user_tracker.cc          |  2 +-
+ src/xenia/kernel/xam/xam_enum.cc              |  2 +-
+ src/xenia/kernel/xam/xam_info.cc              |  3 +--
+ src/xenia/kernel/xam/xam_task.cc              |  2 +-
+ src/xenia/memory.cc                           |  2 +-
+ src/xenia/premake5.lua                        |  3 +++
+ src/xenia/ui/d3d12/premake5.lua               |  3 +++
+ src/xenia/ui/vulkan/premake5.lua              |  3 +++
+ src/xenia/vfs/premake5.lua                    |  3 +++
+ tools/build/scripts/test_suite.lua            | 14 ++++++++++++++
+ 53 files changed, 142 insertions(+), 42 deletions(-)
+ create mode 100644 src/xenia/base/fmt_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index 3afe35d72..c094fcc7a 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -30,6 +30,18 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_FMT: use system libfmt when set (Linux only). Fail if set and not found.
++use_system_fmt = false
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_FMT") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_fmt = true
++    if not os.execute("pkg-config --exists fmt") then
++      error("USE_SYSTEM_FMT is set but fmt was not found. Install dev-libs/libfmt or unset USE_SYSTEM_FMT.")
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -55,6 +67,9 @@ defines({
+ if use_system_xxhash then
+   defines({ "XENIA_USE_SYSTEM_XXHASH" })
+ end
++if use_system_fmt then
++  defines({ "XENIA_USE_SYSTEM_FMT" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -327,7 +342,9 @@ workspace("xenia")
+   include("third_party/cxxopts.lua")
+   include("third_party/tomlplusplus.lua")
+   include("third_party/FFmpeg/premake5.lua")
+-  include("third_party/fmt.lua")
++  if not use_system_fmt then
++    include("third_party/fmt.lua")
++  end
+   include("third_party/glslang-spirv.lua")
+   include("third_party/imgui.lua")
+   include("third_party/mspack.lua")
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index f8eaa5874..1831fdd06 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -8,6 +8,9 @@ project("xenia-app")
+   if use_system_xxhash then
+     pkg_config.all("libxxhash")
+   end
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "xenia-apu",
+     "xenia-apu-nop",
+diff --git a/src/xenia/base/cvar.h b/src/xenia/base/cvar.h
+index e174b3a70..48f0d571f 100644
+--- a/src/xenia/base/cvar.h
++++ b/src/xenia/base/cvar.h
+@@ -16,7 +16,7 @@
+ #include <vector>
+ 
+ #include "third_party/cxxopts/include/cxxopts.hpp"
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "third_party/tomlplusplus/include/toml++/toml.hpp"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/filesystem.h"
+diff --git a/src/xenia/base/debugging.h b/src/xenia/base/debugging.h
+index 1933bdd58..df88f3982 100644
+--- a/src/xenia/base/debugging.h
++++ b/src/xenia/base/debugging.h
+@@ -12,7 +12,7 @@
+ 
+ #include <cstdint>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ 
+ namespace xe {
+ namespace debugging {
+diff --git a/src/xenia/base/fmt_include.h b/src/xenia/base/fmt_include.h
+new file mode 100644
+index 000000000..20bd0d375
+--- /dev/null
++++ b/src/xenia/base/fmt_include.h
+@@ -0,0 +1,17 @@
++// Wrapper so Xenia can use either bundled fmt or system libfmt (XENIA_USE_SYSTEM_FMT).
++#ifndef XENIA_BASE_FMT_INCLUDE_H_
++#define XENIA_BASE_FMT_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_FMT
++#include <fmt/format.h>
++#include <fmt/printf.h>
++#include <fmt/xchar.h>
++#include <fmt/std.h>
++#else
++#include "third_party/fmt/include/fmt/format.h"
++#include "third_party/fmt/include/fmt/printf.h"
++#include "third_party/fmt/include/fmt/xchar.h"
++#include "third_party/fmt/include/fmt/std.h"
++#endif
++
++#endif  // XENIA_BASE_FMT_INCLUDE_H_
+diff --git a/src/xenia/base/logging.cc b/src/xenia/base/logging.cc
+index 9154306e6..aa7bdbe84 100644
+--- a/src/xenia/base/logging.cc
++++ b/src/xenia/base/logging.cc
+@@ -40,7 +40,7 @@
+ #include "xenia/base/platform_win.h"
+ #endif  // XE_PLATFORM
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ 
+ #if XE_PLATFORM_ANDROID
+ DEFINE_bool(log_to_logcat, true, "Write log output to Android Logcat.",
+diff --git a/src/xenia/base/logging.h b/src/xenia/base/logging.h
+index d0e62cdf4..93e5cde3b 100644
+--- a/src/xenia/base/logging.h
++++ b/src/xenia/base/logging.h
+@@ -14,8 +14,7 @@
+ #include <cstdint>
+ #include <string>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
+-#include "third_party/fmt/include/fmt/std.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/string.h"
+ 
+ namespace xe {
+diff --git a/src/xenia/base/mapped_memory_win.cc b/src/xenia/base/mapped_memory_win.cc
+index 9c1e52bdb..09f3d7aed 100644
+--- a/src/xenia/base/mapped_memory_win.cc
++++ b/src/xenia/base/mapped_memory_win.cc
+@@ -9,7 +9,7 @@
+ 
+ #include <mutex>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/logging.h"
+ #include "xenia/base/mapped_memory.h"
+ #include "xenia/base/math.h"
+diff --git a/src/xenia/base/premake5.lua b/src/xenia/base/premake5.lua
+index a4ed45935..82f0f1480 100644
+--- a/src/xenia/base/premake5.lua
++++ b/src/xenia/base/premake5.lua
+@@ -5,6 +5,9 @@ project("xenia-base")
+   uuid("aeadaf22-2b20-4941-b05f-a802d5679c11")
+   kind("StaticLib")
+   language("C++")
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "fmt",
+   })
+diff --git a/src/xenia/base/profiling.cc b/src/xenia/base/profiling.cc
+index d97ba81cc..7b3e6b5e5 100644
+--- a/src/xenia/base/profiling.cc
++++ b/src/xenia/base/profiling.cc
+@@ -11,7 +11,7 @@
+ // XELOGI.
+ #include "xenia/base/logging.h"
+ 
+-#include "third_party/fmt/include/fmt/printf.h"
++#include "xenia/base/fmt_include.h"
+ 
+ // NOTE: microprofile must be setup first, before profiling.h is included.
+ #define MICROPROFILE_ENABLED 1
+diff --git a/src/xenia/base/string_buffer.h b/src/xenia/base/string_buffer.h
+index 9a4743deb..6d3f5e613 100644
+--- a/src/xenia/base/string_buffer.h
++++ b/src/xenia/base/string_buffer.h
+@@ -14,7 +14,7 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ 
+ namespace xe {
+ 
+diff --git a/src/xenia/base/string_util.h b/src/xenia/base/string_util.h
+index 5a4cc1152..8504f1243 100644
+--- a/src/xenia/base/string_util.h
++++ b/src/xenia/base/string_util.h
+@@ -18,7 +18,7 @@
+ #include <string>
+ #include <variant>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/memory.h"
+ #include "xenia/base/platform.h"
+diff --git a/src/xenia/base/testing/memory_test.cc b/src/xenia/base/testing/memory_test.cc
+index 11125ad8f..8127fef3a 100644
+--- a/src/xenia/base/testing/memory_test.cc
++++ b/src/xenia/base/testing/memory_test.cc
+@@ -10,7 +10,7 @@
+ #include "xenia/base/memory.h"
+ 
+ #include "third_party/catch/include/catch.hpp"
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ 
+ #include "xenia/base/clock.h"
+ 
+diff --git a/src/xenia/base/vec128.cc b/src/xenia/base/vec128.cc
+index 79f7820cc..d2339fe63 100644
+--- a/src/xenia/base/vec128.cc
++++ b/src/xenia/base/vec128.cc
+@@ -10,7 +10,7 @@
+ #include <ostream>
+ #include <string>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/math.h"
+ #include "xenia/base/platform.h"
+ #include "xenia/base/string_util.h"
+diff --git a/src/xenia/config.cc b/src/xenia/config.cc
+index e64b8922c..401e25114 100644
+--- a/src/xenia/config.cc
++++ b/src/xenia/config.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "config.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/cvar.h"
+ #include "xenia/base/filesystem.h"
+diff --git a/src/xenia/cpu/backend/x64/premake5.lua b/src/xenia/cpu/backend/x64/premake5.lua
+index ac9c7f80d..d3d4208d0 100644
+--- a/src/xenia/cpu/backend/x64/premake5.lua
++++ b/src/xenia/cpu/backend/x64/premake5.lua
+@@ -6,6 +6,9 @@ project("xenia-cpu-backend-x64")
+   uuid("7d8d5dce-4696-4197-952a-09506f725afe")
+   kind("StaticLib")
+   language("C++")
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "capstone",
+     "fmt",
+diff --git a/src/xenia/cpu/backend/x64/x64_code_cache.cc b/src/xenia/cpu/backend/x64/x64_code_cache.cc
+index 2b49e14a9..08f136b38 100644
+--- a/src/xenia/cpu/backend/x64/x64_code_cache.cc
++++ b/src/xenia/cpu/backend/x64/x64_code_cache.cc
+@@ -17,7 +17,7 @@
+ #pragma comment(lib, "../third_party/vtune/lib64/jitprofiling.lib")
+ #endif
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/literals.h"
+diff --git a/src/xenia/cpu/backend/x64/x64_emitter.cc b/src/xenia/cpu/backend/x64/x64_emitter.cc
+index d2dfa9e2c..659273043 100644
+--- a/src/xenia/cpu/backend/x64/x64_emitter.cc
++++ b/src/xenia/cpu/backend/x64/x64_emitter.cc
+@@ -14,7 +14,7 @@
+ #include <climits>
+ #include <cstring>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/atomic.h"
+ #include "xenia/base/debugging.h"
+diff --git a/src/xenia/cpu/compiler/passes/finalization_pass.cc b/src/xenia/cpu/compiler/passes/finalization_pass.cc
+index 1afd9d6bb..1afbe14e7 100644
+--- a/src/xenia/cpu/compiler/passes/finalization_pass.cc
++++ b/src/xenia/cpu/compiler/passes/finalization_pass.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/cpu/compiler/passes/finalization_pass.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/profiling.h"
+ #include "xenia/cpu/backend/backend.h"
+ #include "xenia/cpu/compiler/compiler.h"
+diff --git a/src/xenia/cpu/hir/hir_builder.h b/src/xenia/cpu/hir/hir_builder.h
+index 91c6ad4c0..6b12305d5 100644
+--- a/src/xenia/cpu/hir/hir_builder.h
++++ b/src/xenia/cpu/hir/hir_builder.h
+@@ -12,7 +12,7 @@
+ 
+ #include <vector>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/arena.h"
+ #include "xenia/base/string_buffer.h"
+ 
+diff --git a/src/xenia/cpu/ppc/ppc_hir_builder.cc b/src/xenia/cpu/ppc/ppc_hir_builder.cc
+index 42d996cba..5952dd0ff 100644
+--- a/src/xenia/cpu/ppc/ppc_hir_builder.cc
++++ b/src/xenia/cpu/ppc/ppc_hir_builder.cc
+@@ -12,7 +12,7 @@
+ #include <stddef.h>
+ #include <cstring>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ 
+ #include "xenia/base/byte_order.h"
+ #include "xenia/base/cvar.h"
+diff --git a/src/xenia/cpu/ppc/testing/premake5.lua b/src/xenia/cpu/ppc/testing/premake5.lua
+index 2b724eed2..72c9107e4 100644
+--- a/src/xenia/cpu/ppc/testing/premake5.lua
++++ b/src/xenia/cpu/ppc/testing/premake5.lua
+@@ -6,6 +6,9 @@ project("xenia-cpu-ppc-tests")
+   uuid("2a57d5ac-4024-4c49-9cd3-aa3a603c2ef8")
+   kind("ConsoleApp")
+   language("C++")
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "capstone", -- cpu-backend-x64
+     "fmt",
+@@ -52,6 +55,9 @@ project("xenia-cpu-ppc-nativetests")
+   uuid("E381E8EE-65CD-4D5E-9223-D9C03B2CE78C")
+   kind("ConsoleApp")
+   language("C++")
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "fmt",
+     "xenia-base",
+diff --git a/src/xenia/cpu/xex_module.cc b/src/xenia/cpu/xex_module.cc
+index a4455173a..0a3786390 100644
+--- a/src/xenia/cpu/xex_module.cc
++++ b/src/xenia/cpu/xex_module.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/cpu/xex_module.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ 
+ #include "xenia/base/byte_order.h"
+ #include "xenia/base/cvar.h"
+diff --git a/src/xenia/emulator.cc b/src/xenia/emulator.cc
+index c0ad9655f..6c6c2f2b2 100644
+--- a/src/xenia/emulator.cc
++++ b/src/xenia/emulator.cc
+@@ -12,7 +12,7 @@
+ #include "xenia/emulator.h"
+ 
+ #include "config.h"
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "third_party/tabulate/single_include/tabulate/tabulate.hpp"
+ #include "third_party/zarchive/include/zarchive/zarchivecommon.h"
+ #include "third_party/zarchive/include/zarchive/zarchivewriter.h"
+diff --git a/src/xenia/gpu/command_processor.cc b/src/xenia/gpu/command_processor.cc
+index 4c9a6c91b..0528026c9 100644
+--- a/src/xenia/gpu/command_processor.cc
++++ b/src/xenia/gpu/command_processor.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/gpu/command_processor.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/byte_stream.h"
+ #include "xenia/base/cvar.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/gpu/d3d12/d3d12_render_target_cache.cc b/src/xenia/gpu/d3d12/d3d12_render_target_cache.cc
+index 36eda1585..c16b3a2ad 100644
+--- a/src/xenia/gpu/d3d12/d3d12_render_target_cache.cc
++++ b/src/xenia/gpu/d3d12/d3d12_render_target_cache.cc
+@@ -13,7 +13,7 @@
+ #include <cstring>
+ 
+ #include "third_party/dxbc/DXBCChecksum.h"
+-#include "third_party/fmt/include/fmt/xchar.h"
++#include "xenia/base/fmt_include.h"
+ 
+ #include "xenia/base/assert.h"
+ #include "xenia/base/cvar.h"
+diff --git a/src/xenia/gpu/d3d12/pipeline_cache.cc b/src/xenia/gpu/d3d12/pipeline_cache.cc
+index 1c1425438..f3ccb69bb 100644
+--- a/src/xenia/gpu/d3d12/pipeline_cache.cc
++++ b/src/xenia/gpu/d3d12/pipeline_cache.cc
+@@ -13,7 +13,7 @@
+ #include <cstring>
+ 
+ #include "third_party/dxbc/DXBCChecksum.h"
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/byte_order.h"
+ #include "xenia/base/clock.h"
+@@ -35,7 +35,7 @@
+ #include "xenia/gpu/xenos.h"
+ #include "xenia/ui/d3d12/d3d12_util.h"
+ 
+-#include "third_party/fmt/include/fmt/xchar.h"
++#include "xenia/base/fmt_include.h"
+ 
+ DEFINE_bool(d3d12_dxbc_disasm, false,
+             "Disassemble DXBC shaders after generation.", "D3D12");
+diff --git a/src/xenia/gpu/d3d12/premake5.lua b/src/xenia/gpu/d3d12/premake5.lua
+index 0aa466913..c3ca53e88 100644
+--- a/src/xenia/gpu/d3d12/premake5.lua
++++ b/src/xenia/gpu/d3d12/premake5.lua
+@@ -9,6 +9,9 @@ project("xenia-gpu-d3d12")
+   if use_system_xxhash then
+     pkg_config.all("libxxhash")
+   end
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "fmt",
+     "xenia-base",
+@@ -31,6 +34,9 @@ if enableMiscSubprojects then
+     if use_system_xxhash then
+       pkg_config.all("libxxhash")
+     end
++    if use_system_fmt then
++      pkg_config.all("fmt")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+@@ -84,6 +90,9 @@ if enableMiscSubprojects then
+     uuid("686b859c-0046-44c4-a02c-41fc3fb75698")
+     kind("ConsoleApp")
+     language("C++")
++    if use_system_fmt then
++      pkg_config.all("fmt")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+diff --git a/src/xenia/gpu/dxbc_shader_translator_fetch.cc b/src/xenia/gpu/dxbc_shader_translator_fetch.cc
+index aac480b19..2968d1dd5 100644
+--- a/src/xenia/gpu/dxbc_shader_translator_fetch.cc
++++ b/src/xenia/gpu/dxbc_shader_translator_fetch.cc
+@@ -9,7 +9,7 @@
+ 
+ #include <cmath>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+ #include "xenia/base/string.h"
+diff --git a/src/xenia/gpu/premake5.lua b/src/xenia/gpu/premake5.lua
+index 4402909fe..6121d5265 100644
+--- a/src/xenia/gpu/premake5.lua
++++ b/src/xenia/gpu/premake5.lua
+@@ -9,6 +9,9 @@ project("xenia-gpu")
+   if use_system_xxhash then
+     pkg_config.all("libxxhash")
+   end
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "dxbc",
+     "fmt",
+@@ -28,6 +31,9 @@ project("xenia-gpu-shader-compiler")
+   uuid("ad76d3e4-4c62-439b-a0f6-f83fcf0e83c5")
+   kind("ConsoleApp")
+   language("C++")
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "dxbc",
+     "fmt",
+diff --git a/src/xenia/gpu/render_target_cache.h b/src/xenia/gpu/render_target_cache.h
+index ec592c562..f97ead885 100644
+--- a/src/xenia/gpu/render_target_cache.h
++++ b/src/xenia/gpu/render_target_cache.h
+@@ -18,7 +18,7 @@
+ #include <utility>
+ #include <vector>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/cvar.h"
+ #include "xenia/gpu/draw_extent_estimator.h"
+diff --git a/src/xenia/gpu/shader.cc b/src/xenia/gpu/shader.cc
+index b34a8a83b..7e3a52d26 100644
+--- a/src/xenia/gpu/shader.cc
++++ b/src/xenia/gpu/shader.cc
+@@ -11,7 +11,7 @@
+ 
+ #include <cstring>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/filesystem.h"
+ #include "xenia/base/math.h"
+ #include "xenia/base/memory.h"
+diff --git a/src/xenia/gpu/spirv_shader_translator.cc b/src/xenia/gpu/spirv_shader_translator.cc
+index 9046adb2a..d9ed426b6 100644
+--- a/src/xenia/gpu/spirv_shader_translator.cc
++++ b/src/xenia/gpu/spirv_shader_translator.cc
+@@ -12,7 +12,7 @@
+ #include <cstddef>
+ #include <cstdint>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "third_party/glslang/SPIRV/GLSL.std.450.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+diff --git a/src/xenia/gpu/spirv_shader_translator_fetch.cc b/src/xenia/gpu/spirv_shader_translator_fetch.cc
+index 764bde94d..135db5aca 100644
+--- a/src/xenia/gpu/spirv_shader_translator_fetch.cc
++++ b/src/xenia/gpu/spirv_shader_translator_fetch.cc
+@@ -12,7 +12,7 @@
+ #include <climits>
+ #include <cmath>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "third_party/glslang/SPIRV/GLSL.std.450.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+diff --git a/src/xenia/gpu/vulkan/premake5.lua b/src/xenia/gpu/vulkan/premake5.lua
+index 28f7bcf12..d23c94d7b 100644
+--- a/src/xenia/gpu/vulkan/premake5.lua
++++ b/src/xenia/gpu/vulkan/premake5.lua
+@@ -9,6 +9,9 @@ project("xenia-gpu-vulkan")
+   if use_system_xxhash then
+     pkg_config.all("libxxhash")
+   end
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "fmt",
+     "glslang-spirv",
+@@ -35,6 +38,9 @@ if enableMiscSubprojects then
+     if use_system_xxhash then
+       pkg_config.all("libxxhash")
+     end
++    if use_system_fmt then
++      pkg_config.all("fmt")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+@@ -100,6 +106,9 @@ if enableMiscSubprojects then
+     uuid("0dd0dd1c-b321-494d-ab9a-6c062f0c65cc")
+     kind("ConsoleApp")
+     language("C++")
++    if use_system_fmt then
++      pkg_config.all("fmt")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+diff --git a/src/xenia/gpu/vulkan/vulkan_pipeline_cache.cc b/src/xenia/gpu/vulkan/vulkan_pipeline_cache.cc
+index 79ed348ba..72ef4fff7 100644
+--- a/src/xenia/gpu/vulkan/vulkan_pipeline_cache.cc
++++ b/src/xenia/gpu/vulkan/vulkan_pipeline_cache.cc
+@@ -12,7 +12,7 @@
+ #include <cstdint>
+ #include <cstring>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/logging.h"
+ #include "xenia/base/math.h"
+diff --git a/src/xenia/hid/hid_demo.cc b/src/xenia/hid/hid_demo.cc
+index c74935aea..b5fbb9995 100644
+--- a/src/xenia/hid/hid_demo.cc
++++ b/src/xenia/hid/hid_demo.cc
+@@ -16,7 +16,7 @@
+ #include <unordered_map>
+ #include <vector>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "third_party/imgui/imgui.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/cvar.h"
+diff --git a/src/xenia/kernel/premake5.lua b/src/xenia/kernel/premake5.lua
+index f478c9f22..7451cc4e9 100644
+--- a/src/xenia/kernel/premake5.lua
++++ b/src/xenia/kernel/premake5.lua
+@@ -6,6 +6,9 @@ project("xenia-kernel")
+   uuid("ae185c4a-1c4f-4503-9892-328e549e871a")
+   kind("StaticLib")
+   language("C++")
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "aes_128",
+     "fmt",
+diff --git a/src/xenia/kernel/util/presence_string_builder.cc b/src/xenia/kernel/util/presence_string_builder.cc
+index 91b0cf982..30975fb28 100644
+--- a/src/xenia/kernel/util/presence_string_builder.cc
++++ b/src/xenia/kernel/util/presence_string_builder.cc
+@@ -8,7 +8,7 @@
+  */
+ 
+ #include "xenia/kernel/util/presence_string_builder.h"
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ 
+ #include "xenia/base/string.h"
+ 
+diff --git a/src/xenia/kernel/xam/content_manager.cc b/src/xenia/kernel/xam/content_manager.cc
+index f3d49625a..af948ce32 100644
+--- a/src/xenia/kernel/xam/content_manager.cc
++++ b/src/xenia/kernel/xam/content_manager.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/kernel/xam/content_manager.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/filesystem.h"
+ #include "xenia/base/logging.h"
+ #include "xenia/base/string.h"
+diff --git a/src/xenia/kernel/xam/profile_manager.h b/src/xenia/kernel/xam/profile_manager.h
+index ad9bf5321..f5fe2e872 100644
+--- a/src/xenia/kernel/xam/profile_manager.h
++++ b/src/xenia/kernel/xam/profile_manager.h
+@@ -15,7 +15,7 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/string.h"
+ #include "xenia/kernel/title_id_utils.h"
+ #include "xenia/kernel/xam/user_profile.h"
+diff --git a/src/xenia/kernel/xam/user_profile.cc b/src/xenia/kernel/xam/user_profile.cc
+index 1ca5d3d84..75ed6b0f6 100644
+--- a/src/xenia/kernel/xam/user_profile.cc
++++ b/src/xenia/kernel/xam/user_profile.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/kernel/xam/user_profile.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/kernel/kernel_state.h"
+ #include "xenia/kernel/util/shim_utils.h"
+ #include "xenia/kernel/xam/xdbf/gpd_info.h"
+diff --git a/src/xenia/kernel/xam/user_settings.cc b/src/xenia/kernel/xam/user_settings.cc
+index 074162b5a..d05a4c45f 100644
+--- a/src/xenia/kernel/xam/user_settings.cc
++++ b/src/xenia/kernel/xam/user_settings.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/kernel/xam/user_settings.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/kernel/kernel_state.h"
+ #include "xenia/kernel/util/shim_utils.h"
+ 
+diff --git a/src/xenia/kernel/xam/user_tracker.cc b/src/xenia/kernel/xam/user_tracker.cc
+index e9f3588ed..75bd75255 100644
+--- a/src/xenia/kernel/xam/user_tracker.cc
++++ b/src/xenia/kernel/xam/user_tracker.cc
+@@ -10,7 +10,7 @@
+ #include "xenia/emulator.h"
+ #include "xenia/kernel/xam/user_profile.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "third_party/stb/stb_image.h"
+ #include "xenia/kernel/kernel_state.h"
+ #include "xenia/kernel/util/shim_utils.h"
+diff --git a/src/xenia/kernel/xam/xam_enum.cc b/src/xenia/kernel/xam/xam_enum.cc
+index a80431caf..fe9ece424 100644
+--- a/src/xenia/kernel/xam/xam_enum.cc
++++ b/src/xenia/kernel/xam/xam_enum.cc
+@@ -16,7 +16,7 @@
+ #include "xenia/kernel/xenumerator.h"
+ #include "xenia/xbox.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ 
+ namespace xe {
+ namespace kernel {
+diff --git a/src/xenia/kernel/xam/xam_info.cc b/src/xenia/kernel/xam/xam_info.cc
+index 0fd67f63a..3f5319fe1 100644
+--- a/src/xenia/kernel/xam/xam_info.cc
++++ b/src/xenia/kernel/xam/xam_info.cc
+@@ -28,8 +28,7 @@
+ #include "xenia/ui/windowed_app_context.h"
+ #include "xenia/xbox.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
+-#include "third_party/fmt/include/fmt/xchar.h"
++#include "xenia/base/fmt_include.h"
+ 
+ DEFINE_int32(avpack, 8,
+              "Video modes\n"
+diff --git a/src/xenia/kernel/xam/xam_task.cc b/src/xenia/kernel/xam/xam_task.cc
+index 7844b6437..b85b25aa5 100644
+--- a/src/xenia/kernel/xam/xam_task.cc
++++ b/src/xenia/kernel/xam/xam_task.cc
+@@ -17,7 +17,7 @@
+ #include "xenia/kernel/xthread.h"
+ #include "xenia/xbox.h"
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ 
+ namespace xe {
+ namespace kernel {
+diff --git a/src/xenia/memory.cc b/src/xenia/memory.cc
+index aa25cb899..b7422a9c3 100644
+--- a/src/xenia/memory.cc
++++ b/src/xenia/memory.cc
+@@ -12,7 +12,7 @@
+ #include <cstring>
+ #include <random>
+ 
+-#include "third_party/fmt/include/fmt/format.h"
++#include "xenia/base/fmt_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/byte_stream.h"
+ #include "xenia/base/clock.h"
+diff --git a/src/xenia/premake5.lua b/src/xenia/premake5.lua
+index 98846361e..5af2e7bf5 100644
+--- a/src/xenia/premake5.lua
++++ b/src/xenia/premake5.lua
+@@ -6,6 +6,9 @@ project("xenia-core")
+   uuid("970f7892-f19a-4bf5-8795-478c51757bec")
+   kind("StaticLib")
+   language("C++")
++  if use_system_fmt then
++    pkg_config.all("fmt")
++  end
+   links({
+     "fmt",
+     "xenia-base",
+diff --git a/src/xenia/ui/d3d12/premake5.lua b/src/xenia/ui/d3d12/premake5.lua
+index fdbdf73bf..9a69d9da8 100644
+--- a/src/xenia/ui/d3d12/premake5.lua
++++ b/src/xenia/ui/d3d12/premake5.lua
+@@ -21,6 +21,9 @@ if enableMiscSubprojects then
+     uuid("3b9686a7-0f04-4e17-8b00-aeb78ae1107c")
+     single_library_windowed_app_kind()
+     language("C++")
++    if use_system_fmt then
++      pkg_config.all("fmt")
++    end
+     links({
+       "fmt",
+       "imgui",
+diff --git a/src/xenia/ui/vulkan/premake5.lua b/src/xenia/ui/vulkan/premake5.lua
+index e272e1adb..9b3d772c1 100644
+--- a/src/xenia/ui/vulkan/premake5.lua
++++ b/src/xenia/ui/vulkan/premake5.lua
+@@ -25,6 +25,9 @@ if enableMiscSubprojects then
+     uuid("97598f13-3177-454c-8e58-c59e2b6ede27")
+     single_library_windowed_app_kind()
+     language("C++")
++    if use_system_fmt then
++      pkg_config.all("fmt")
++    end
+     links({
+       "fmt",
+       "imgui",
+diff --git a/src/xenia/vfs/premake5.lua b/src/xenia/vfs/premake5.lua
+index f857da693..1fa6278ae 100644
+--- a/src/xenia/vfs/premake5.lua
++++ b/src/xenia/vfs/premake5.lua
+@@ -22,6 +22,9 @@ if enableMiscSubprojects then
+     uuid("2EF270C7-41A8-4D0E-ACC5-59693A9CCE32")
+     kind("ConsoleApp")
+     language("C++")
++    if use_system_fmt then
++      pkg_config.all("fmt")
++    end
+     links({
+       "fmt",
+       "xenia-base",
+diff --git a/tools/build/scripts/test_suite.lua b/tools/build/scripts/test_suite.lua
+index 2ef600995..ca385173f 100644
+--- a/tools/build/scripts/test_suite.lua
++++ b/tools/build/scripts/test_suite.lua
+@@ -16,6 +16,13 @@ local function combined_test_suite(test_suite_name, project_root, base_path, con
+   project(test_suite_name)
+     kind("ConsoleApp")
+     language("C++")
++    if use_system_fmt then
++      local has_fmt = false
++      for _, L in ipairs(config["links"]) do
++        if L == "fmt" then has_fmt = true break end
++      end
++      if has_fmt then pkg_config.all("fmt") end
++    end
+     includedirs(merge_arrays(config["includedirs"], {
+       project_root.."/"..build_tools,
+       project_root.."/"..build_tools_src,
+@@ -55,6 +62,13 @@ local function split_test_suite(test_suite_name, project_root, base_path, config
+     project(test_suite_name.."-"..test_name)
+       kind("ConsoleApp")
+       language("C++")
++      if use_system_fmt then
++        local has_fmt = false
++        for _, L in ipairs(config["links"]) do
++          if L == "fmt" then has_fmt = true break end
++        end
++        if has_fmt then pkg_config.all("fmt") end
++      end
+       includedirs(merge_arrays(config["includedirs"], {
+         project_root.."/"..build_tools,
+         project_root.."/"..build_tools_src,
+-- 
+2.52.0
+

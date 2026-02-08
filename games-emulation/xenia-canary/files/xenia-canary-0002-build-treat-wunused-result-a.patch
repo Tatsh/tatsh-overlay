@@ -1,0 +1,29 @@
+From 74d6cb14aa86ab58dce8aa4b091cf6b7d1f479cc Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 14:35:14 -0500
+Subject: [PATCH 02/21] build: treat -Wunused-result as warning only on Linux
+
+Add -Wno-error=unused-result so ignoring return values (readlink,
+ftruncate, fread, etc.) is reported but does not fail the build.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/premake5.lua b/premake5.lua
+index 3af5a0e1c..bc1623142 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -141,6 +141,8 @@ filter({"configurations:Release", "platforms:Windows"}) -- "toolset:msc"
+ filter("platforms:Linux")
+   system("linux")
+   toolset("clang")
++  -- Unused-result: warn only, do not promote to error (e.g. readlink, ftruncate, fread).
++  buildoptions({ "-Wno-error=unused-result" })
+   --buildoptions({
+   --    "-mlzcnt",   -- (don't) Assume lzcnt is supported.
+   --})
+-- 
+2.52.0
+

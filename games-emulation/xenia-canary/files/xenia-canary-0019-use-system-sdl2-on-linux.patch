@@ -1,0 +1,41 @@
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 23:00:00 -0500
+Subject: [PATCH] Use system SDL2 on Linux
+
+xenia-base did not call sdl2_include() and system_gnulinux.cc used a
+hardcoded third_party path, so the build required bundled SDL2. Add
+sdl2_include() to xenia-base for Linux/Mac and use <SDL.h> so system
+libsdl2 is used when building on Linux.
+
+---
+ src/xenia/base/premake5.lua     | 4 ++++
+ src/xenia/base/system_gnulinux.cc | 3 +--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/src/xenia/base/premake5.lua b/src/xenia/base/premake5.lua
+--- a/src/xenia/base/premake5.lua
++++ b/src/xenia/base/premake5.lua
+@@ -8,6 +8,9 @@ project("xenia-base")
+   links({
+     "fmt",
+   })
++  filter("platforms:Linux or platforms:Mac")
++    sdl2_include()
++  filter({})
+   local_platform_files()
+   removefiles({
+     "console_app_main_*.cc",
+diff --git a/src/xenia/base/system_gnulinux.cc b/src/xenia/base/system_gnulinux.cc
+--- a/src/xenia/base/system_gnulinux.cc
++++ b/src/xenia/base/system_gnulinux.cc
+@@ -18,8 +18,8 @@
+ #include "xenia/base/string.h"
+ #include "xenia/base/system.h"
+ 
+-// Use headers in third party to not depend on system sdl headers for building
+-#include "third_party/SDL2/include/SDL.h"
++// Use system SDL on Linux/Mac (sdl2_include() in premake); bundled on Windows.
++#include <SDL.h>
+ 
+ namespace xe {
+ 

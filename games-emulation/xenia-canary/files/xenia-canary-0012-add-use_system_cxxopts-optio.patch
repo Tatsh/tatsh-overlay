@@ -1,0 +1,129 @@
+From f681fc172ca89fa3d610fe7e47aa18970aaa82fc Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 19:43:14 -0500
+Subject: [PATCH 15/21] Add USE_SYSTEM_CXXOPTS option for system cxxopts
+ (header-only)
+
+- premake5.lua: read USE_SYSTEM_CXXOPTS on Linux; pkg-config cxxopts or
+  fallback to /usr/include/cxxopts.hpp; add global includedirs from
+  pkg-config --cflags or fallback; define XENIA_USE_SYSTEM_CXXOPTS;
+  conditional third_party/cxxopts.lua.
+- src/xenia/base/cxxopts_include.h: wrapper for cxxopts.hpp (system vs bundled).
+- cvar.h: use cxxopts_include.h instead of third_party path.
+
+Clean build tested with all USE_SYSTEM_* except glslang.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                     | 41 +++++++++++++++++++++++++++++++-
+ src/xenia/base/cvar.h            |  2 +-
+ src/xenia/base/cxxopts_include.h | 11 +++++++++
+ 3 files changed, 52 insertions(+), 2 deletions(-)
+ create mode 100644 src/xenia/base/cxxopts_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index b9dceed35..19af0619d 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -170,6 +170,26 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_CXXOPTS: use system cxxopts when set (Linux only). Header-only; fail if set and not found.
++-- Prefer pkg-config; if unavailable (e.g. Gentoo without .pc), fall back to /usr/include/cxxopts.hpp.
++use_system_cxxopts = false
++cxxopts_pkg_config_available = false
++cxxopts_system_include = nil
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_CXXOPTS") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_cxxopts = true
++    cxxopts_pkg_config_available = os.execute("pkg-config --exists cxxopts")
++    if not cxxopts_pkg_config_available then
++      if os.isfile("/usr/include/cxxopts.hpp") or os.isdir("/usr/include/cxxopts") then
++        cxxopts_system_include = "/usr/include"
++      else
++        error("USE_SYSTEM_CXXOPTS is set but cxxopts was not found (no pkg-config and no /usr/include/cxxopts.hpp). Install dev-libs/cxxopts or unset USE_SYSTEM_CXXOPTS.")
++      end
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -183,6 +203,20 @@ includedirs({
+   "src",
+   "third_party",
+ })
++if use_system_cxxopts then
++  if cxxopts_system_include then
++    includedirs(cxxopts_system_include)
++  else
++    local cflags = os.outputof("pkg-config --cflags cxxopts")
++    if cflags then
++      for _, flag in next, string.explode(cflags, " ") do
++        if flag and flag:sub(1, 2) == "-I" then
++          includedirs(flag:sub(3))
++        end
++      end
++    end
++  end
++end
+ 
+ defines({
+   "VULKAN_HPP_NO_TO_STRING",
+@@ -220,6 +254,9 @@ end
+ if use_system_zlib_ng then
+   defines({ "XENIA_USE_SYSTEM_ZLIB_NG" })
+ end
++if use_system_cxxopts then
++  defines({ "XENIA_USE_SYSTEM_CXXOPTS" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -491,7 +528,9 @@ workspace("xenia")
+   end
+   include("third_party/dxbc.lua")
+   include("third_party/discord-rpc.lua")
+-  include("third_party/cxxopts.lua")
++  if not use_system_cxxopts then
++    include("third_party/cxxopts.lua")
++  end
+   include("third_party/tomlplusplus.lua")
+   include("third_party/FFmpeg/premake5.lua")
+   if not use_system_fmt then
+diff --git a/src/xenia/base/cvar.h b/src/xenia/base/cvar.h
+index 48f0d571f..99feca1ba 100644
+--- a/src/xenia/base/cvar.h
++++ b/src/xenia/base/cvar.h
+@@ -15,7 +15,7 @@
+ #include <string>
+ #include <vector>
+ 
+-#include "third_party/cxxopts/include/cxxopts.hpp"
++#include "xenia/base/cxxopts_include.h"
+ #include "xenia/base/fmt_include.h"
+ #include "third_party/tomlplusplus/include/toml++/toml.hpp"
+ #include "xenia/base/assert.h"
+diff --git a/src/xenia/base/cxxopts_include.h b/src/xenia/base/cxxopts_include.h
+new file mode 100644
+index 000000000..ee63d5065
+--- /dev/null
++++ b/src/xenia/base/cxxopts_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled cxxopts or system cxxopts (XENIA_USE_SYSTEM_CXXOPTS). Header-only.
++#ifndef XENIA_BASE_CXXOPTS_INCLUDE_H_
++#define XENIA_BASE_CXXOPTS_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_CXXOPTS
++#include <cxxopts.hpp>
++#else
++#include "third_party/cxxopts/include/cxxopts.hpp"
++#endif
++
++#endif  // XENIA_BASE_CXXOPTS_INCLUDE_H_
+-- 
+2.52.0
+

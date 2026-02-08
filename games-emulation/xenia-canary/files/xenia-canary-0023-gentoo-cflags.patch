@@ -1,0 +1,19 @@
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -505,7 +505,6 @@ end
+ cdialect("C17")
+ cppdialect("C++20")
+ symbols("On")
+-fatalwarnings("All")
+ 
+ -- TODO(DrChat): Find a way to disable this on other architectures.
+ if ARCH ~= "ppc64" then
+@@ -556,7 +556,6 @@ filter("configurations:Release")
+   defines({
+     "NDEBUG",
+     "_NO_DEBUG_HEAP=1",
+   })
+-  optimize("Speed")
+   flags({
+     "NoBufferSecurityCheck"
+   })

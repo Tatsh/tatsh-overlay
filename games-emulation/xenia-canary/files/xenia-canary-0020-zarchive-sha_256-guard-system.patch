@@ -1,0 +1,26 @@
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 9 Feb 2026 00:00:00 -0500
+Subject: [PATCH] Guard zarchive sha_256.h include when using system zarchive
+
+When XENIA_USE_SYSTEM_ZARCHIVE is set, third_party/zarchive is not
+present; sha_256 is internal to libzarchive and not needed by emulator.cc.
+
+---
+ src/xenia/emulator.cc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/xenia/emulator.cc b/src/xenia/emulator.cc
+--- a/src/xenia/emulator.cc
++++ b/src/xenia/emulator.cc
+@@ -15,7 +15,9 @@
+ #include "config.h"
+ #include "xenia/base/fmt_include.h"
+ #include "third_party/tabulate/single_include/tabulate/tabulate.hpp"
+ #include "xenia/base/zarchive_include.h"
+-#include "third_party/zarchive/src/sha_256.h"
++#if !defined(XENIA_USE_SYSTEM_ZARCHIVE)
++#include "third_party/zarchive/src/sha_256.h"
++#endif
+ #include "xenia/apu/audio_system.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/byte_stream.h"

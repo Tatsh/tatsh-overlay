@@ -1,0 +1,229 @@
+From 5470330eb308c19a946a27ce208aad692ea8062d Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 18:24:44 -0500
+Subject: [PATCH 06/21] build: add USE_SYSTEM_ZSTD and USE_SYSTEM_ZARCHIVE
+ options
+
+- USE_SYSTEM_ZSTD: pkg-config libzstd; conditional third_party/zstd.lua;
+  zarchive.lua uses system zstd (pkg_config, no zstd/lib include when set);
+  pkg_config.all(libzstd) in app and vfs.
+- USE_SYSTEM_ZARCHIVE: pkg-config zarchive; conditional
+  third_party/zarchive.lua; xenia/base/zarchive_include.h wrapper for
+  common/reader/writer; pkg_config.all(zarchive) in app and vfs;
+  sha_256.h remains bundled path.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                                  | 38 ++++++++++++++++++-
+ src/xenia/app/premake5.lua                    |  6 +++
+ src/xenia/base/zarchive_include.h             | 15 ++++++++
+ src/xenia/emulator.cc                         |  3 +-
+ src/xenia/vfs/devices/disc_zarchive_device.cc |  2 +-
+ src/xenia/vfs/devices/disc_zarchive_device.h  |  2 +-
+ src/xenia/vfs/devices/disc_zarchive_entry.cc  |  2 +-
+ src/xenia/vfs/premake5.lua                    |  6 +++
+ third_party/zarchive.lua                      | 13 +++++--
+ 9 files changed, 76 insertions(+), 11 deletions(-)
+ create mode 100644 src/xenia/base/zarchive_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index c094fcc7a..9d21a3e95 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -42,6 +42,30 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_ZSTD: use system libzstd when set (Linux only). Fail if set and not found.
++use_system_zstd = false
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_ZSTD") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_zstd = true
++    if not os.execute("pkg-config --exists libzstd") then
++      error("USE_SYSTEM_ZSTD is set but libzstd was not found. Install app-arch/zstd or unset USE_SYSTEM_ZSTD.")
++    end
++  end
++end
++
++-- USE_SYSTEM_ZARCHIVE: use system zarchive when set (Linux only). Fail if set and not found.
++use_system_zarchive = false
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_ZARCHIVE") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_zarchive = true
++    if not os.execute("pkg-config --exists zarchive") then
++      error("USE_SYSTEM_ZARCHIVE is set but zarchive was not found. Install app-arch/zarchive or unset USE_SYSTEM_ZARCHIVE.")
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -70,6 +94,12 @@ end
+ if use_system_fmt then
+   defines({ "XENIA_USE_SYSTEM_FMT" })
+ end
++if use_system_zstd then
++  defines({ "XENIA_USE_SYSTEM_ZSTD" })
++end
++if use_system_zarchive then
++  defines({ "XENIA_USE_SYSTEM_ZARCHIVE" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -352,8 +382,12 @@ workspace("xenia")
+   if not use_system_xxhash then
+     include("third_party/xxhash.lua")
+   end
+-  include("third_party/zarchive.lua")
+-  include("third_party/zstd.lua")
++  if not use_system_zarchive then
++    include("third_party/zarchive.lua")
++  end
++  if not use_system_zstd then
++    include("third_party/zstd.lua")
++  end
+   include("third_party/zlib-ng.lua")
+   include("third_party/pugixml.lua")
+ 
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index 1831fdd06..1fe6d4e1c 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -11,6 +11,12 @@ project("xenia-app")
+   if use_system_fmt then
+     pkg_config.all("fmt")
+   end
++  if use_system_zstd then
++    pkg_config.all("libzstd")
++  end
++  if use_system_zarchive then
++    pkg_config.all("zarchive")
++  end
+   links({
+     "xenia-apu",
+     "xenia-apu-nop",
+diff --git a/src/xenia/base/zarchive_include.h b/src/xenia/base/zarchive_include.h
+new file mode 100644
+index 000000000..d2f974453
+--- /dev/null
++++ b/src/xenia/base/zarchive_include.h
+@@ -0,0 +1,15 @@
++// Wrapper so Xenia can use either bundled zarchive or system lib (XENIA_USE_SYSTEM_ZARCHIVE).
++#ifndef XENIA_BASE_ZARCHIVE_INCLUDE_H_
++#define XENIA_BASE_ZARCHIVE_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_ZARCHIVE
++#include <zarchive/zarchivecommon.h>
++#include <zarchive/zarchivereader.h>
++#include <zarchive/zarchivewriter.h>
++#else
++#include "third_party/zarchive/include/zarchive/zarchivecommon.h"
++#include "third_party/zarchive/include/zarchive/zarchivereader.h"
++#include "third_party/zarchive/include/zarchive/zarchivewriter.h"
++#endif
++
++#endif  // XENIA_BASE_ZARCHIVE_INCLUDE_H_
+diff --git a/src/xenia/emulator.cc b/src/xenia/emulator.cc
+index 6c6c2f2b2..705cf66c4 100644
+--- a/src/xenia/emulator.cc
++++ b/src/xenia/emulator.cc
+@@ -14,8 +14,7 @@
+ #include "config.h"
+ #include "xenia/base/fmt_include.h"
+ #include "third_party/tabulate/single_include/tabulate/tabulate.hpp"
+-#include "third_party/zarchive/include/zarchive/zarchivecommon.h"
+-#include "third_party/zarchive/include/zarchive/zarchivewriter.h"
++#include "xenia/base/zarchive_include.h"
+ #include "third_party/zarchive/src/sha_256.h"
+ #include "xenia/apu/audio_system.h"
+ #include "xenia/base/assert.h"
+diff --git a/src/xenia/vfs/devices/disc_zarchive_device.cc b/src/xenia/vfs/devices/disc_zarchive_device.cc
+index 31cf263f9..1ac2a3969 100644
+--- a/src/xenia/vfs/devices/disc_zarchive_device.cc
++++ b/src/xenia/vfs/devices/disc_zarchive_device.cc
+@@ -14,7 +14,7 @@
+ #include "xenia/base/math.h"
+ #include "xenia/vfs/devices/disc_zarchive_entry.h"
+ 
+-#include "third_party/zarchive/include/zarchive/zarchivereader.h"
++#include "xenia/base/zarchive_include.h"
+ 
+ namespace xe {
+ namespace vfs {
+diff --git a/src/xenia/vfs/devices/disc_zarchive_device.h b/src/xenia/vfs/devices/disc_zarchive_device.h
+index 8ea3188a2..8a92c853d 100644
+--- a/src/xenia/vfs/devices/disc_zarchive_device.h
++++ b/src/xenia/vfs/devices/disc_zarchive_device.h
+@@ -16,7 +16,7 @@
+ #include "xenia/base/mapped_memory.h"
+ #include "xenia/vfs/device.h"
+ 
+-#include "third_party/zarchive/include/zarchive/zarchivereader.h"
++#include "xenia/base/zarchive_include.h"
+ 
+ namespace xe {
+ namespace vfs {
+diff --git a/src/xenia/vfs/devices/disc_zarchive_entry.cc b/src/xenia/vfs/devices/disc_zarchive_entry.cc
+index 3047d49c9..746766a3c 100644
+--- a/src/xenia/vfs/devices/disc_zarchive_entry.cc
++++ b/src/xenia/vfs/devices/disc_zarchive_entry.cc
+@@ -12,7 +12,7 @@
+ #include "xenia/base/math.h"
+ #include "xenia/vfs/devices/disc_zarchive_file.h"
+ 
+-#include "third_party/zarchive/include/zarchive/zarchivereader.h"
++#include "xenia/base/zarchive_include.h"
+ 
+ namespace xe {
+ namespace vfs {
+diff --git a/src/xenia/vfs/premake5.lua b/src/xenia/vfs/premake5.lua
+index 1fa6278ae..0f4542fc8 100644
+--- a/src/xenia/vfs/premake5.lua
++++ b/src/xenia/vfs/premake5.lua
+@@ -6,6 +6,12 @@ project("xenia-vfs")
+   uuid("395c8abd-4dc9-46ed-af7a-c2b9b68a3a98")
+   kind("StaticLib")
+   language("C++")
++  if use_system_zstd then
++    pkg_config.all("libzstd")
++  end
++  if use_system_zarchive then
++    pkg_config.all("zarchive")
++  end
+   links({
+     "xenia-base",
+     "zstd",
+diff --git a/third_party/zarchive.lua b/third_party/zarchive.lua
+index 7856bd81f..6e74afcac 100644
+--- a/third_party/zarchive.lua
++++ b/third_party/zarchive.lua
+@@ -3,13 +3,18 @@ project("zarchive")
+   uuid("d32f03aa-f0c9-11ed-a05b-0242ac120003")
+   kind("StaticLib")
+   language("C++")
+-  links({
+-    "zstd",
+-  })
++  if use_system_zstd then
++    pkg_config.all("libzstd")
++  end
++  links(use_system_zstd and {} or {"zstd"})
+   includedirs({
+     "zarchive/include",
+-    "zstd/lib",
+   })
++  if not use_system_zstd then
++    includedirs({
++      "zstd/lib",
++    })
++  end
+   files({
+     "zarchive/include/zarchive/zarchivecommon.h",
+     "zarchive/include/zarchive/zarchivereader.h",
+-- 
+2.52.0
+

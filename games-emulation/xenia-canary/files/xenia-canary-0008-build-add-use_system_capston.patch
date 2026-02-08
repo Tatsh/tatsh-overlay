@@ -1,0 +1,298 @@
+From 25f3a60a4de4f078d51c68973f36770a901149a4 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 18:41:31 -0500
+Subject: [PATCH 08/21] build: add USE_SYSTEM_CAPSTONE option for system
+ libcapstone
+
+- Env USE_SYSTEM_CAPSTONE on Linux; pkg-config capstone; fail if not found.
+- Define XENIA_USE_SYSTEM_CAPSTONE; when set add CAPSTONE_X86_ATT_DISABLE,
+  CAPSTONE_HAS_X86, CAPSTONE_USE_SYS_DYN_MEM globally.
+- Conditional third_party/capstone.lua.
+- xenia/base/capstone_include.h wrapper for capstone.h, x86.h (system:
+  capstone/capstone.h, capstone/x86.h).
+- Replace third_party/capstone includes in debug_window.cc, x64_assembler.cc,
+  x64_backend.cc with wrapper.
+- pkg_config.all(capstone) in app, cpu/backend/x64, cpu/ppc/testing,
+  gpu/vulkan trace-viewer/trace-dump, gpu/d3d12 trace-viewer/trace-dump;
+  test_suite.lua supports use_system_capstone when suite links capstone.
+- cpu/backend/x64: conditional includedirs (third_party/capstone/include only
+  when bundled) and conditional CAPSTONE_* defines (bundled only).
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ premake5.lua                               | 20 +++++++++++++++++++-
+ src/xenia/app/premake5.lua                 |  3 +++
+ src/xenia/base/capstone_include.h          | 13 +++++++++++++
+ src/xenia/cpu/backend/x64/premake5.lua     | 21 +++++++++++++++------
+ src/xenia/cpu/backend/x64/x64_assembler.cc |  3 +--
+ src/xenia/cpu/backend/x64/x64_backend.cc   |  3 +--
+ src/xenia/cpu/ppc/testing/premake5.lua     |  3 +++
+ src/xenia/debug/ui/debug_window.cc         |  3 +--
+ src/xenia/gpu/d3d12/premake5.lua           |  6 ++++++
+ src/xenia/gpu/vulkan/premake5.lua          |  6 ++++++
+ tools/build/scripts/test_suite.lua         | 14 ++++++++++++++
+ 11 files changed, 82 insertions(+), 13 deletions(-)
+ create mode 100644 src/xenia/base/capstone_include.h
+
+diff --git a/premake5.lua b/premake5.lua
+index e8ab1e7f3..a2dfc28fb 100644
+--- a/premake5.lua
++++ b/premake5.lua
+@@ -78,6 +78,18 @@ if os.istarget("linux") then
+   end
+ end
+ 
++-- USE_SYSTEM_CAPSTONE: use system capstone when set (Linux only). Fail if set and not found.
++use_system_capstone = false
++if os.istarget("linux") then
++  local env = os.getenv("USE_SYSTEM_CAPSTONE") or ""
++  if env ~= "" and env ~= "0" then
++    use_system_capstone = true
++    if not os.execute("pkg-config --exists capstone") then
++      error("USE_SYSTEM_CAPSTONE is set but capstone was not found. Install dev-libs/capstone or unset USE_SYSTEM_CAPSTONE.")
++    end
++  end
++end
++
+ -- Define an ARCH variable
+ -- Only use this to enable architecture-specific functionality.
+ if os.istarget("linux") then
+@@ -115,6 +127,10 @@ end
+ if use_system_glslang then
+   defines({ "XENIA_USE_SYSTEM_GLSLANG" })
+ end
++if use_system_capstone then
++  defines({ "XENIA_USE_SYSTEM_CAPSTONE" })
++  defines({ "CAPSTONE_X86_ATT_DISABLE", "CAPSTONE_HAS_X86", "CAPSTONE_USE_SYS_DYN_MEM" })
++end
+ 
+ cdialect("C17")
+ cppdialect("C++20")
+@@ -381,7 +397,9 @@ workspace("xenia")
+   configurations({"Checked", "Debug", "Release"})
+ 
+   include("third_party/aes_128.lua")
+-  include("third_party/capstone.lua")
++  if not use_system_capstone then
++    include("third_party/capstone.lua")
++  end
+   include("third_party/dxbc.lua")
+   include("third_party/discord-rpc.lua")
+   include("third_party/cxxopts.lua")
+diff --git a/src/xenia/app/premake5.lua b/src/xenia/app/premake5.lua
+index d557d2957..6b5f40dbe 100644
+--- a/src/xenia/app/premake5.lua
++++ b/src/xenia/app/premake5.lua
+@@ -20,6 +20,9 @@ project("xenia-app")
+   if use_system_glslang then
+     pkg_config.all("glslang")
+   end
++  if use_system_capstone then
++    pkg_config.all("capstone")
++  end
+   links({
+     "xenia-apu",
+     "xenia-apu-nop",
+diff --git a/src/xenia/base/capstone_include.h b/src/xenia/base/capstone_include.h
+new file mode 100644
+index 000000000..10274fb05
+--- /dev/null
++++ b/src/xenia/base/capstone_include.h
+@@ -0,0 +1,13 @@
++// Wrapper so Xenia can use either bundled capstone or system libcapstone (XENIA_USE_SYSTEM_CAPSTONE).
++#ifndef XENIA_BASE_CAPSTONE_INCLUDE_H_
++#define XENIA_BASE_CAPSTONE_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_CAPSTONE
++#include <capstone/capstone.h>
++#include <capstone/x86.h>
++#else
++#include "third_party/capstone/include/capstone/capstone.h"
++#include "third_party/capstone/include/capstone/x86.h"
++#endif
++
++#endif  // XENIA_BASE_CAPSTONE_INCLUDE_H_
+diff --git a/src/xenia/cpu/backend/x64/premake5.lua b/src/xenia/cpu/backend/x64/premake5.lua
+index d3d4208d0..471739a4b 100644
+--- a/src/xenia/cpu/backend/x64/premake5.lua
++++ b/src/xenia/cpu/backend/x64/premake5.lua
+@@ -9,6 +9,9 @@ project("xenia-cpu-backend-x64")
+   if use_system_fmt then
+     pkg_config.all("fmt")
+   end
++  if use_system_capstone then
++    pkg_config.all("capstone")
++  end
+   links({
+     "capstone",
+     "fmt",
+@@ -16,18 +19,24 @@ project("xenia-cpu-backend-x64")
+     "xenia-cpu",
+   })
+   defines({
+-    "CAPSTONE_X86_ATT_DISABLE",
+-    "CAPSTONE_HAS_X86",
+-    "CAPSTONE_USE_SYS_DYN_MEM",
+     "XBYAK_NO_OP_NAMES",
+     "XBYAK_ENABLE_OMITTED_OPERAND",
+   })
++  if not use_system_capstone then
++    defines({
++      "CAPSTONE_X86_ATT_DISABLE",
++      "CAPSTONE_HAS_X86",
++      "CAPSTONE_USE_SYS_DYN_MEM",
++    })
++  end
+   -- Enable VTune, if it's installed.
+   if os.isdir(project_root.."/third_party/vtune") then
+     defines { "ENABLE_VTUNE=1" }
+   end
+ 
+-  includedirs({
+-    project_root.."/third_party/capstone/include",
+-  })
++  if not use_system_capstone then
++    includedirs({
++      project_root.."/third_party/capstone/include",
++    })
++  end
+   local_platform_files()
+diff --git a/src/xenia/cpu/backend/x64/x64_assembler.cc b/src/xenia/cpu/backend/x64/x64_assembler.cc
+index 8643c4fb0..8dbb6a70b 100644
+--- a/src/xenia/cpu/backend/x64/x64_assembler.cc
++++ b/src/xenia/cpu/backend/x64/x64_assembler.cc
+@@ -11,8 +11,7 @@
+ 
+ #include <climits>
+ 
+-#include "third_party/capstone/include/capstone/capstone.h"
+-#include "third_party/capstone/include/capstone/x86.h"
++#include "xenia/base/capstone_include.h"
+ #include "xenia/base/profiling.h"
+ #include "xenia/base/reset_scope.h"
+ #include "xenia/base/string.h"
+diff --git a/src/xenia/cpu/backend/x64/x64_backend.cc b/src/xenia/cpu/backend/x64/x64_backend.cc
+index e979df258..d2b083fae 100644
+--- a/src/xenia/cpu/backend/x64/x64_backend.cc
++++ b/src/xenia/cpu/backend/x64/x64_backend.cc
+@@ -10,8 +10,7 @@
+ #include "xenia/cpu/backend/x64/x64_backend.h"
+ 
+ #include <cstddef>
+-#include "third_party/capstone/include/capstone/capstone.h"
+-#include "third_party/capstone/include/capstone/x86.h"
++#include "xenia/base/capstone_include.h"
+ 
+ #include "xenia/base/exception_handler.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/cpu/ppc/testing/premake5.lua b/src/xenia/cpu/ppc/testing/premake5.lua
+index 72c9107e4..e1886cb11 100644
+--- a/src/xenia/cpu/ppc/testing/premake5.lua
++++ b/src/xenia/cpu/ppc/testing/premake5.lua
+@@ -9,6 +9,9 @@ project("xenia-cpu-ppc-tests")
+   if use_system_fmt then
+     pkg_config.all("fmt")
+   end
++  if use_system_capstone then
++    pkg_config.all("capstone")
++  end
+   links({
+     "capstone", -- cpu-backend-x64
+     "fmt",
+diff --git a/src/xenia/debug/ui/debug_window.cc b/src/xenia/debug/ui/debug_window.cc
+index ad1aaeecb..e63adf65b 100644
+--- a/src/xenia/debug/ui/debug_window.cc
++++ b/src/xenia/debug/ui/debug_window.cc
+@@ -11,8 +11,7 @@
+ 
+ #include <cinttypes>
+ 
+-#include "third_party/capstone/include/capstone/capstone.h"
+-#include "third_party/capstone/include/capstone/x86.h"
++#include "xenia/base/capstone_include.h"
+ #include "third_party/imgui/imgui.h"
+ #include "third_party/imgui/imgui_internal.h"
+ #include "xenia/base/clock.h"
+diff --git a/src/xenia/gpu/d3d12/premake5.lua b/src/xenia/gpu/d3d12/premake5.lua
+index c3ca53e88..4c4e8867f 100644
+--- a/src/xenia/gpu/d3d12/premake5.lua
++++ b/src/xenia/gpu/d3d12/premake5.lua
+@@ -37,6 +37,9 @@ if enableMiscSubprojects then
+     if use_system_fmt then
+       pkg_config.all("fmt")
+     end
++    if use_system_capstone then
++      pkg_config.all("capstone")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+@@ -93,6 +96,9 @@ if enableMiscSubprojects then
+     if use_system_fmt then
+       pkg_config.all("fmt")
+     end
++    if use_system_capstone then
++      pkg_config.all("capstone")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+diff --git a/src/xenia/gpu/vulkan/premake5.lua b/src/xenia/gpu/vulkan/premake5.lua
+index 662f9b513..a89c2c1c4 100644
+--- a/src/xenia/gpu/vulkan/premake5.lua
++++ b/src/xenia/gpu/vulkan/premake5.lua
+@@ -47,6 +47,9 @@ if enableMiscSubprojects then
+     if use_system_glslang then
+       pkg_config.all("glslang")
+     end
++    if use_system_capstone then
++      pkg_config.all("capstone")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+@@ -118,6 +121,9 @@ if enableMiscSubprojects then
+     if use_system_glslang then
+       pkg_config.all("glslang")
+     end
++    if use_system_capstone then
++      pkg_config.all("capstone")
++    end
+     links({
+       "xenia-apu",
+       "xenia-apu-nop",
+diff --git a/tools/build/scripts/test_suite.lua b/tools/build/scripts/test_suite.lua
+index ca385173f..30b5d5f5e 100644
+--- a/tools/build/scripts/test_suite.lua
++++ b/tools/build/scripts/test_suite.lua
+@@ -23,6 +23,13 @@ local function combined_test_suite(test_suite_name, project_root, base_path, con
+       end
+       if has_fmt then pkg_config.all("fmt") end
+     end
++    if use_system_capstone then
++      local has_capstone = false
++      for _, L in ipairs(config["links"]) do
++        if L == "capstone" then has_capstone = true break end
++      end
++      if has_capstone then pkg_config.all("capstone") end
++    end
+     includedirs(merge_arrays(config["includedirs"], {
+       project_root.."/"..build_tools,
+       project_root.."/"..build_tools_src,
+@@ -69,6 +76,13 @@ local function split_test_suite(test_suite_name, project_root, base_path, config
+         end
+         if has_fmt then pkg_config.all("fmt") end
+       end
++      if use_system_capstone then
++        local has_capstone = false
++        for _, L in ipairs(config["links"]) do
++          if L == "capstone" then has_capstone = true break end
++        end
++        if has_capstone then pkg_config.all("capstone") end
++      end
+       includedirs(merge_arrays(config["includedirs"], {
+         project_root.."/"..build_tools,
+         project_root.."/"..build_tools_src,
+-- 
+2.52.0
+
