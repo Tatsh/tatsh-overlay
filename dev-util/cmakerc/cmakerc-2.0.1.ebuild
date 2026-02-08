@@ -19,6 +19,9 @@ RESTRICT="!test? ( test )"
 PATCHES=( "${FILESDIR}/${PN}-40-install.patch" )
 
 src_configure() {
-	local mycmakeargs=( "-DBUILD_TESTS=$(usex test)" )
+	local mycmakeargs=(
+		"-DBUILD_TESTS=$(usex test)"
+		-DCMAKE_POLICY_VERSION_MINIMUM=3.12
+	)
 	cmake_src_configure
 }
