@@ -134,7 +134,8 @@ xenia_env() {
 	export CC=${CHOST}-clang CXX=${CHOST}-clang++
 	export USE_SYSTEM_CAPSTONE=1
 	export USE_SYSTEM_CXXOPTS=1
-	export USE_SYSTEM_DISCORD_RPC=$(usex discord 1 0)
+	USE_SYSTEM_DISCORD_RPC=$(usex discord 1 0)
+	export USE_SYSTEM_DISCORD_RPC
 	export USE_SYSTEM_FMT=1
 	export USE_SYSTEM_IMGUI=1
 	export USE_SYSTEM_PUGIXML=1
