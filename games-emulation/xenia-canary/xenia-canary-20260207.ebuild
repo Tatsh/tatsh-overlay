@@ -192,8 +192,17 @@ src_prepare() {
 		"${S}/third_party/premake-export-compile-commands" || die
 	xenia_env
 	default
-	python xenia-build.py premake || die
-	python xenia-build.py version-h || die
+	premake5 --file=premake5.lua --os=linux --cc=clang --verbose cmake || die
+	mkdir -p build || die
+	cat <<EOF > build/version.h
+#ifndef GENERATED_VERSION_H_
+#define GENERATED_VERSION_H_
+#define XE_BUILD_BRANCH "${XENIA_BUILD_BRANCH}"
+#define XE_BUILD_COMMIT "${XENIA_BUILD_COMMIT}"
+#define XE_BUILD_COMMIT_SHORT "${XENIA_BUILD_COMMIT_SHORT}"
+#define XE_BUILD_DATE __DATE__
+#endif  // GENERATED_VERSION_H_
+EOF
 	cmake_prepare
 }
 
