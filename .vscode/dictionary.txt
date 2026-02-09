@@ -37,6 +37,7 @@ anacrolix
 analyzer
 andrewbranch
 andreyvit
+androidndk
 andybalholm
 anmitsu
 ansiterm
@@ -140,6 +141,7 @@ bincue
 bindir
 bindist
 binja
+binutils
 binv
 bitrock
 bitwidth
@@ -198,6 +200,7 @@ cancelable
 cancelreader
 capa
 capi
+capston
 carambat
 carian
 cascadia
@@ -235,6 +238,7 @@ chishm
 chksums
 choco
 chokidar
+chost
 chownr
 chriskiehl
 chrissimpkins
@@ -429,6 +433,7 @@ difflib
 dilger
 dinothawr
 dinstall
+directx
 diropts
 disabl
 discordrpc
@@ -644,6 +649,7 @@ fflate
 ffms
 ffprobe
 fftw
+fidelityfx
 filecaps
 filelist
 filelock
@@ -1506,6 +1512,7 @@ openocd
 openrc
 opentimelineio
 optflags
+optio
 optionator
 optparse
 opusfile
@@ -1621,6 +1628,7 @@ ppsspp
 prboom
 prcbuild
 preinst
+premake
 preshed
 priv
 proc
@@ -1732,9 +1740,11 @@ quicknes
 quicktest
 quot
 quse
+radixsplit
 randers
 randomstring
 raphnet
+rapidcsv
 rapidjson
 raviqqe
 rawio
@@ -2245,6 +2255,7 @@ writedup
 writeedits
 writename
 wswan
+wunused
 wweula
 wxpython
 wxwidgets
