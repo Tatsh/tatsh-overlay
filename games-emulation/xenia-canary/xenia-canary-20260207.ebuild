@@ -23,6 +23,7 @@ GLSLANG_SHA="ae2a562936cc8504c9ef2757cceaff163147834f"
 SPIRV_TOOLS_SHA="4451f6ab13dda98bf255a7cd7b4d120132dc0dfd"
 RAPIDCSV_SHA="a98b85e663114b8fdc9c0dc03abf22c296f38241"
 TABULATE_SHA="3a58301067bbc03da89ae5a51b3e05b7da719d38"
+XBYAK_SHA="4e44f4614ddbf038f2a6296f5b906d5c72691e0f"
 SRC_URI="https://github.com/xenia-canary/xenia-canary/archive/${SHA}.tar.gz
 		-> ${P}-${SHA:0:7}.tar.gz
 	https://github.com/openluopworld/aes_128/archive/${AES_128_SHA}.tar.gz
@@ -54,7 +55,9 @@ SRC_URI="https://github.com/xenia-canary/xenia-canary/archive/${SHA}.tar.gz
 	https://github.com/d99kris/rapidcsv/archive/${RAPIDCSV_SHA}.tar.gz
 		-> ${PN}-rapidcsv-${RAPIDCSV_SHA:0:7}.tar.gz
 	https://github.com/p-ranav/tabulate/archive/${TABULATE_SHA}.tar.gz
-		-> ${PN}-tabulate-${TABULATE_SHA:0:7}.tar.gz"
+		-> ${PN}-tabulate-${TABULATE_SHA:0:7}.tar.gz
+	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz
+		-> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz"
 S="${WORKDIR}/xenia-canary-${SHA}"
 
 LICENSE="MIT"
@@ -91,7 +94,6 @@ DEPEND="app-arch/brotli
 RDEPEND="${DEPEND}"
 BDEPEND="dev-libs/cxxopts
 	dev-libs/utfcpp
-	dev-libs/xbyak
 	dev-util/directx-headers
 	dev-util/premake:5
 	dev-util/vulkan-headers
@@ -141,7 +143,6 @@ xenia_env() {
 	export USE_SYSTEM_UTFCPP=1
 	export USE_SYSTEM_VULKAN_HEADERS=1
 	export USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR=1
-	export USE_SYSTEM_XBYAK=1
 	export USE_SYSTEM_XXHASH=1
 	export USE_SYSTEM_ZARCHIVE=1
 	export USE_SYSTEM_ZLIB_NG=1
@@ -164,6 +165,7 @@ src_prepare() {
 	rm -rf "${S}"/third_party/imgui || die
 	rm -rf "${S}"/third_party/glslang || die
 	rm -rf "${S}"/third_party/rapidcsv || die
+	rm -rf "${S}"/third_party/xbyak || die
 	rm -rf "${S}"/third_party/SPIRV-Tools || die
 	rm -rf "${S}"/third_party/tabulate || die
 	rmdir "${S}"/third_party/{premake-androidndk,premake-cmake,premake-core} || die
@@ -180,6 +182,7 @@ src_prepare() {
 	mv "${WORKDIR}/FFmpeg_radixsplit-${FFMPEG_SHA}" "${S}/third_party/FFmpeg" || die
 	mv "${WORKDIR}/glslang-${GLSLANG_SHA}" "${S}/third_party/glslang" || die
 	mv "${WORKDIR}/rapidcsv-${RAPIDCSV_SHA}" "${S}/third_party/rapidcsv" || die
+	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/third_party/xbyak" || die
 	mv "${WORKDIR}/SPIRV-Tools-${SPIRV_TOOLS_SHA}" "${S}/third_party/SPIRV-Tools" || die
 	mv "${WORKDIR}/tabulate-${TABULATE_SHA}" "${S}/third_party/tabulate" || die
 	mv "${WORKDIR}/premake-androidndk-${PREMAKE_ANDROIDNDK_SHA}" \
