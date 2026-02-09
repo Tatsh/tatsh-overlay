@@ -132,10 +132,9 @@ xenia_env() {
 	export CC=${CHOST}-clang CXX=${CHOST}-clang++
 	export USE_SYSTEM_CAPSTONE=1
 	export USE_SYSTEM_CXXOPTS=1
-	export USE_SYSTEM_DISCORD_RPC=1
+	export USE_SYSTEM_DISCORD_RPC=$(usex discord 1 0)
 	export USE_SYSTEM_FMT=1
 	export USE_SYSTEM_IMGUI=1
-	export USE_SYSTEM_PREMAKE=1
 	export USE_SYSTEM_PUGIXML=1
 	export USE_SYSTEM_SNAPPY=1
 	export USE_SYSTEM_TOMLPLUSPLUS=1
@@ -150,7 +149,7 @@ xenia_env() {
 	export XENIA_BUILD_BRANCH="${PV}"
 	export XENIA_BUILD_COMMIT="${SHA}"
 	export XENIA_BUILD_COMMIT_SHORT="${SHA:0:7}"
-	XENIA_DISCORD="$(usex 1 0)"
+	XENIA_DISCORD="$(usex discord 1 0)"
 	export XENIA_DISCORD
 	export XENIA_USE_SYSTEM_PREMAKE=1
 }
