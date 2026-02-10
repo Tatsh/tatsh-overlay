@@ -213,6 +213,8 @@ EOF
 }
 
 src_configure() {
+	# These flags result in the emulator showing no video (Rocket/Tiger Lake).
+	filter-flags -march=* -mtune=*
 	xenia_env
 	cmake_src_configure
 }
