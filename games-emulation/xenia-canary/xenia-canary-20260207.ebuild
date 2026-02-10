@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake desktop
+inherit cmake desktop edo
 
 DESCRIPTION="Xbox 360 emulator research project (Canary version)."
 HOMEPAGE="https://github.com/xenia-canary/xenia-canary https://xenia.jp/"
@@ -24,9 +24,6 @@ SPIRV_TOOLS_SHA="4451f6ab13dda98bf255a7cd7b4d120132dc0dfd"
 RAPIDCSV_SHA="a98b85e663114b8fdc9c0dc03abf22c296f38241"
 TABULATE_SHA="3a58301067bbc03da89ae5a51b3e05b7da719d38"
 XBYAK_SHA="4e44f4614ddbf038f2a6296f5b906d5c72691e0f"
-VMA_SHA="c788c52156f3ef7bc7ab769cb03c110a53ac8fcb"
-VULKAN_HEADERS_SHA="409c16be502e39fe70dd6fe2d9ad4842ef2c9a53"
-IMGUI_SHA="4806a1924ff6181180bf5e4b8b79ab4394118875"
 SRC_URI="https://github.com/xenia-canary/xenia-canary/archive/${SHA}.tar.gz
 		-> ${P}-${SHA:0:7}.tar.gz
 	https://github.com/openluopworld/aes_128/archive/${AES_128_SHA}.tar.gz
@@ -60,13 +57,7 @@ SRC_URI="https://github.com/xenia-canary/xenia-canary/archive/${SHA}.tar.gz
 	https://github.com/p-ranav/tabulate/archive/${TABULATE_SHA}.tar.gz
 		-> ${PN}-tabulate-${TABULATE_SHA:0:7}.tar.gz
 	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz
-		-> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz
-	https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/${VMA_SHA}.tar.gz
-		-> ${PN}-vulkanmemoryallocator-${VMA_SHA:0:7}.tar.gz
-	https://github.com/KhronosGroup/Vulkan-Headers/archive/${VULKAN_HEADERS_SHA}.tar.gz
-		-> ${PN}-vulkan-headers-${VULKAN_HEADERS_SHA:0:7}.tar.gz
-	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz
-		-> ${PN}-imgui-${IMGUI_SHA:0:7}.tar.gz"
+		-> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz"
 S="${WORKDIR}/xenia-canary-${SHA}"
 
 LICENSE="MIT"
@@ -90,10 +81,12 @@ DEPEND="app-arch/brotli
 	discord? ( dev-libs/discord-rpc )
 	media-gfx/graphite2
 	media-libs/alsa-lib
+	media-libs/imgui
 	media-libs/libjpeg-turbo:=
 	media-libs/libpulse
 	media-libs/libsdl2
 	media-libs/libsndfile
+	media-libs/VulkanMemoryAllocator
 	media-libs/vulkan-loader
 	media-video/pipewire
 	sys-apps/util-linux
@@ -104,6 +97,7 @@ BDEPEND="dev-libs/cxxopts
 	dev-libs/utfcpp
 	dev-util/directx-headers
 	dev-util/premake:5
+	dev-util/vulkan-headers
 	llvm-core/clang"
 
 PATCHES=(
@@ -143,6 +137,7 @@ xenia_env() {
 	USE_SYSTEM_DISCORD_RPC=$(usex discord 1 0)
 	export USE_SYSTEM_DISCORD_RPC
 	export USE_SYSTEM_FMT=1
+	export USE_SYSTEM_IMGUI=1
 	export USE_SYSTEM_PUGIXML=1
 	export USE_SYSTEM_SNAPPY=1
 	export USE_SYSTEM_TOMLPLUSPLUS=1
@@ -151,6 +146,8 @@ xenia_env() {
 	export USE_SYSTEM_ZARCHIVE=1
 	export USE_SYSTEM_ZLIB_NG=1
 	export USE_SYSTEM_ZSTD=1
+	export USE_SYSTEM_VULKAN_HEADERS=1
+	export USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR=1
 	export XENIA_BUILD_BRANCH="${PV}"
 	export XENIA_BUILD_COMMIT="${SHA}"
 	export XENIA_BUILD_COMMIT_SHORT="${SHA:0:7}"
@@ -187,11 +184,8 @@ src_prepare() {
 	mv "${WORKDIR}/disruptorplus-${DISRUPTORPLUS_SHA}" "${S}/third_party/disruptorplus" || die
 	mv "${WORKDIR}/FFmpeg_radixsplit-${FFMPEG_SHA}" "${S}/third_party/FFmpeg" || die
 	mv "${WORKDIR}/glslang-${GLSLANG_SHA}" "${S}/third_party/glslang" || die
-	mv "${WORKDIR}/imgui-${IMGUI_SHA}" "${S}/third_party/imgui" || die
 	mv "${WORKDIR}/rapidcsv-${RAPIDCSV_SHA}" "${S}/third_party/rapidcsv" || die
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/third_party/xbyak" || die
-	mv "${WORKDIR}/VulkanMemoryAllocator-${VMA_SHA}" "${S}/third_party/VulkanMemoryAllocator" || die
-	mv "${WORKDIR}/Vulkan-Headers-${VULKAN_HEADERS_SHA}" "${S}/third_party/Vulkan-Headers" || die
 	mv "${WORKDIR}/SPIRV-Tools-${SPIRV_TOOLS_SHA}" "${S}/third_party/SPIRV-Tools" || die
 	mv "${WORKDIR}/tabulate-${TABULATE_SHA}" "${S}/third_party/tabulate" || die
 	mv "${WORKDIR}/premake-androidndk-${PREMAKE_ANDROIDNDK_SHA}" \
@@ -204,7 +198,7 @@ src_prepare() {
 		"${S}/third_party/premake-export-compile-commands" || die
 	xenia_env
 	default
-	premake5 --file=premake5.lua --os=linux --cc=clang --verbose cmake || die
+	edo premake5 --file=premake5.lua --os=linux --cc=clang --verbose cmake
 	mkdir -p build || die
 	cat <<EOF > build/version.h
 #ifndef GENERATED_VERSION_H_
