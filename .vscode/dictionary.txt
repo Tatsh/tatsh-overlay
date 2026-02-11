@@ -1260,6 +1260,7 @@ matchall
 materialui
 math
 mathml
+mathsops
 mathutil
 matishsiao
 matmul
@@ -1285,6 +1286,7 @@ melbahja
 melonds
 membarrier
 memberlist
+memcpy
 mende
 menelkir
 meowpc
