@@ -1,0 +1,19 @@
+diff --git a/cmake_workspace.lua b/cmake_workspace.lua
+index b1640f9..d09655a 100644
+--- a/third_party/premake-cmake/cmake_workspace.lua
++++ b/third_party/premake-cmake/cmake_workspace.lua
+@@ -83,6 +83,14 @@ function m.generate(wks)
+ 		p.w('set(CMAKE_C_FLAGS_%s "")', string.upper(cfg))
+ 		p.w('set(CMAKE_CXX_FLAGS_%s "")', string.upper(cfg))
+ 	end
++	-- Set compiler from premake --cc= so cmake uses it without extra args
++	if _OPTIONS.cc == "gcc" then
++		p.w('set(CMAKE_C_COMPILER "gcc" CACHE STRING "C compiler" FORCE)')
++		p.w('set(CMAKE_CXX_COMPILER "g++" CACHE STRING "C++ compiler" FORCE)')
++	elseif _OPTIONS.cc == "clang" then
++		p.w('set(CMAKE_C_COMPILER "clang" CACHE STRING "C compiler" FORCE)')
++		p.w('set(CMAKE_CXX_COMPILER "clang++" CACHE STRING "C++ compiler" FORCE)')
++	end
+ 	p.w()
+ 
+ 	p.w('project("%s")', wks.name)

@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Gentoo xenia-canary overlay
+Date: Wed, 11 Feb 2026 00:00:00 +0000
+Subject: [PATCH] FFmpeg mathops.h: fix GCC LTO operand type mismatch for shr/sar
+
+Under GCC LTO the "ic" constraint for the shift count can yield a
+register, but x86 shr/sar with a register operand must use %cl.
+Use constraint "c" and %b1 so the shift count is always in %cl,
+fixing "Error: operand type mismatch for 'shr'" and 'sar'.
+
+---
+ third_party/FFmpeg/libavcodec/x86/mathops.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/third_party/FFmpeg/libavcodec/x86/mathops.h b/third_party/FFmpeg/libavcodec/x86/mathops.h
+index 6298f5ed19..c74a2a6928 100644
+--- a/third_party/FFmpeg/libavcodec/x86/mathops.h
++++ b/third_party/FFmpeg/libavcodec/x86/mathops.h
+@@ -111,20 +111,21 @@ __asm__ volatile(\
+              : "+a"(level), "=&d"(mask))
+ 
+ // avoid +32 for shift optimization (gcc should do that ...)
++// Use "c" (%%cl) for shift count to avoid GCC LTO operand type mismatch (shr/sar).
+ #define NEG_SSR32 NEG_SSR32
+ static inline  int32_t NEG_SSR32( int32_t a, int8_t s){
+-    __asm__ ("sarl %1, %0\n\t"
++    __asm__ ("sarl %b1, %0\n\t"
+          : "+r" (a)
+-         : "ic" ((uint8_t)(-s))
++         : "c" ((uint8_t)(-s))
+     );
+     return a;
+ }
+ 
+ #define NEG_USR32 NEG_USR32
+ static inline uint32_t NEG_USR32(uint32_t a, int8_t s){
+-    __asm__ ("shrl %1, %0\n\t"
++    __asm__ ("shrl %b1, %0\n\t"
+          : "+r" (a)
+-         : "ic" ((uint8_t)(-s))
++         : "c" ((uint8_t)(-s))
+     );
+     return a;
+ }
+
+-- 
+2.52.0

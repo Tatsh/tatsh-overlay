@@ -1,0 +1,78 @@
+diff --git a/src/xenia/base/filesystem.h b/src/xenia/base/filesystem.h
+index 5dc3de7e7..683b4064d 100644
+--- a/src/xenia/base/filesystem.h
++++ b/src/xenia/base/filesystem.h
+@@ -40,6 +40,9 @@ std::filesystem::path GetExecutableFolder();
+ // Get user folder.
+ std::filesystem::path GetUserFolder();
+ 
++// Get user state folder (XDG_STATE_HOME or ~/.local/state on Linux).
++std::filesystem::path GetStateFolder();
++
+ // Creates the parent folder of the specified path if needed.
+ // This can be used to ensure the destination path for a new file exists before
+ // attempting to create it.
+diff --git a/src/xenia/base/filesystem_posix.cc b/src/xenia/base/filesystem_posix.cc
+index 3c8729700..cc7a5e75e 100644
+--- a/src/xenia/base/filesystem_posix.cc
++++ b/src/xenia/base/filesystem_posix.cc
+@@ -75,6 +75,23 @@ std::filesystem::path GetUserFolder() {
+   return std::filesystem::path(home) / ".local" / "share";
+ }
+ 
++std::filesystem::path GetStateFolder() {
++  char* state_home = std::getenv("XDG_STATE_HOME");
++  if (state_home && state_home[0]) {
++    return std::string(state_home);
++  }
++  char* home = std::getenv("HOME");
++  if (!home) {
++    struct passwd pw1;
++    struct passwd* pw;
++    char buf[4096];
++    getpwuid_r(getuid(), &pw1, buf, sizeof(buf), &pw);
++    assert(&pw1 == pw);
++    home = pw->pw_dir;
++  }
++  return std::filesystem::path(home) / ".local" / "state";
++}
++
+ FILE* OpenFile(const std::filesystem::path& path, const std::string_view mode) {
+   return fopen(path.c_str(), std::string(mode).c_str());
+ }
+diff --git a/src/xenia/base/filesystem_win.cc b/src/xenia/base/filesystem_win.cc
+index 7a50d8b12..415d4f646 100644
+--- a/src/xenia/base/filesystem_win.cc
++++ b/src/xenia/base/filesystem_win.cc
+@@ -60,6 +60,10 @@ std::filesystem::path GetUserFolder() {
+   return result;
+ }
+ 
++std::filesystem::path GetStateFolder() {
++  return GetUserFolder();
++}
++
+ bool CreateEmptyFile(const std::filesystem::path& path) {
+   auto handle = CreateFileW(path.c_str(), 0, 0, nullptr, CREATE_ALWAYS,
+                             FILE_ATTRIBUTE_NORMAL, nullptr);
+diff --git a/src/xenia/base/logging.cc b/src/xenia/base/logging.cc
+index aa7bdbe84..d773956ae 100644
+--- a/src/xenia/base/logging.cc
++++ b/src/xenia/base/logging.cc
+@@ -440,9 +440,14 @@ void InitializeLogging(const std::string_view app_name) {
+ #else
+   FILE* log_file = nullptr;
+   if (cvars::log_file.empty()) {
+-    // Default to app name.
+     auto file_name = fmt::format("{}.log", app_name);
+-    auto file_path = xe::filesystem::GetExecutableFolder() / file_name;
++    std::filesystem::path file_path;
++#if XE_PLATFORM_LINUX && !XE_PLATFORM_ANDROID
++    file_path = xe::filesystem::GetStateFolder() / file_name;
++    xe::filesystem::CreateParentFolder(file_path);
++#else
++    file_path = xe::filesystem::GetExecutableFolder() / file_name;
++#endif
+     log_file = xe::filesystem::OpenFile(file_path, "wt");
+   } else {
+     xe::filesystem::CreateParentFolder(cvars::log_file);

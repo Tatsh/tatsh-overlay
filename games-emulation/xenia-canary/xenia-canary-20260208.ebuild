@@ -3,18 +3,15 @@
 
 EAPI=8
 
-inherit cmake desktop edo
+inherit cmake desktop edo toolchain-funcs
 
 DESCRIPTION="Xbox 360 emulator research project (Canary version)."
 HOMEPAGE="https://github.com/xenia-canary/xenia-canary https://xenia.jp/"
-SHA="ef65c6761bcfa16ab40101ee229c2b88e47251e2"
+SHA="8f5da619f99fc66adc01c060b6b491939abae9d0"
 AES_128_SHA="7e3ac3bb6b478187472b4ac6f1698eb203e8e90b"
-BINUTILS_PPC_CYGWIN_SHA="6f3f15db908d339472db7be450f7c58bb71545cc"
 FIDELITYFX_CAS_SHA="9fabcc9a2c45f958aff55ddfda337e74ef894b7f"
 FIDELITYFX_FSR_SHA="a21ffb8f6c13233ba336352bdff293894c706575"
-PREMAKE_ANDROIDNDK_SHA="35a6955410a34840c9d091f071c46cd3e5280fb7"
 PREMAKE_CMAKE_SHA="91c646f638a6fbff20f0ea90769df8dcf62bc5e4"
-PREMAKE_CORE_SHA="ba2c383c0456aa75d1b93faf62f4aec2691f23b2"
 PREMAKE_EXPORT_CC_SHA="59e3e55df8dd87eea70556f50d172a17f1c4b6d0"
 DISRUPTORPLUS_SHA="302b6e03e829c6d6a70415f10d818a5088cb6ccf"
 FFMPEG_SHA="85e39939c90f3b34efe45fee29a2b653d06b55e5"
@@ -27,18 +24,12 @@ SRC_URI="https://github.com/xenia-canary/xenia-canary/archive/${SHA}.tar.gz
 		-> ${P}-${SHA:0:7}.tar.gz
 	https://github.com/openluopworld/aes_128/archive/${AES_128_SHA}.tar.gz
 		-> ${PN}-aes_128-${AES_128_SHA:0:7}.tar.gz
-	https://github.com/benvanik/binutils-ppc-cygwin/archive/${BINUTILS_PPC_CYGWIN_SHA}.tar.gz
-		-> ${PN}-binutils-ppc-cygwin-${BINUTILS_PPC_CYGWIN_SHA:0:7}.tar.gz
 	https://github.com/GPUOpen-Effects/FidelityFX-CAS/archive/${FIDELITYFX_CAS_SHA}.tar.gz
 		-> ${PN}-FidelityFX-CAS-${FIDELITYFX_CAS_SHA:0:7}.tar.gz
 	https://github.com/GPUOpen-Effects/FidelityFX-FSR/archive/${FIDELITYFX_FSR_SHA}.tar.gz
 		-> ${PN}-FidelityFX-FSR-${FIDELITYFX_FSR_SHA:0:7}.tar.gz
-	https://github.com/Triang3l/premake-androidndk/archive/${PREMAKE_ANDROIDNDK_SHA}.tar.gz
-		-> ${PN}-premake-androidndk-${PREMAKE_ANDROIDNDK_SHA:0:7}.tar.gz
 	https://github.com/JoelLinn/premake-cmake/archive/${PREMAKE_CMAKE_SHA}.tar.gz
 		-> ${PN}-premake-cmake-${PREMAKE_CMAKE_SHA:0:7}.tar.gz
-	https://github.com/premake/premake-core/archive/${PREMAKE_CORE_SHA}.tar.gz
-		-> ${PN}-premake-core-${PREMAKE_CORE_SHA:0:7}.tar.gz
 	https://github.com/xenia-project/premake-export-compile-commands/archive/${PREMAKE_EXPORT_CC_SHA}.tar.gz
 		-> ${PN}-premake-export-compile-commands-${PREMAKE_EXPORT_CC_SHA:0:7}.tar.gz
 	https://github.com/xenia-canary/disruptorplus/archive/${DISRUPTORPLUS_SHA}.tar.gz
@@ -95,8 +86,7 @@ BDEPEND="dev-libs/cxxopts
 	dev-libs/utfcpp
 	dev-util/directx-headers
 	dev-util/premake:5
-	dev-util/vulkan-headers
-	llvm-core/clang"
+	dev-util/vulkan-headers"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-use_system_xxhash.patch"
@@ -124,17 +114,22 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0023-gentoo-cflags.patch"
 	"${FILESDIR}/${PN}-0024-cmake-relwithdebinfo.patch"
 	"${FILESDIR}/${PN}-0025-use_system_date.patch"
+	"${FILESDIR}/${PN}-0026-gcc-compat.patch"
+	"${FILESDIR}/${PN}-0027-ffmpeg-mathsops-gcc-lto-shr.patch"
+	"${FILESDIR}/${PN}-0028-fix-memcpy-source.patch"
+	"${FILESDIR}/${PN}-0029-log-path.patch"
+	"${FILESDIR}/${PN}-0100-premake-cmake-cc-arg.patch"
 )
 
 CMAKE_USE_DIR="${S}/build"
 
 xenia_env() {
-	# Upstream only supports Clang.
-	export CC=${CHOST}-clang CXX=${CHOST}-clang++
+	# Necessary if the user does not want to use Clang.
+	CC=$(tc-getCC)
+	CXX=$(tc-getCXX)
 	export USE_SYSTEM_CAPSTONE=1
 	export USE_SYSTEM_CXXOPTS=1
 	USE_SYSTEM_DISCORD_RPC=$(usex discord 1 0)
-	export USE_SYSTEM_DISCORD_RPC
 	export USE_SYSTEM_FMT=1
 	export USE_SYSTEM_IMGUI=1
 	export USE_SYSTEM_PUGIXML=1
@@ -152,14 +147,13 @@ xenia_env() {
 	export XENIA_BUILD_COMMIT="${SHA}"
 	export XENIA_BUILD_COMMIT_SHORT="${SHA:0:7}"
 	XENIA_DISCORD="$(usex discord 1 0)"
-	export XENIA_DISCORD
 	export XENIA_USE_SYSTEM_PREMAKE=1
+	export XENIA_DISCORD CC CXX USE_SYSTEM_DISCORD_RPC
 }
 
 src_prepare() {
 	rm .gitmodules || die
-	rmdir "${S}"/third_party/{aes_128,binutils-ppc-cygwin} || die
-	rm -rf "${S}"/third_party/date || die
+	rmdir "${S}"/third_party/aes_128 || die
 	rmdir "${S}"/third_party/{FidelityFX-CAS,FidelityFX-FSR} || die
 	rm -rf "${S}"/third_party/disruptorplus || die
 	rm -rf "${S}"/third_party/FFmpeg || die
@@ -171,11 +165,9 @@ src_prepare() {
 	rm -rf "${S}"/third_party/Vulkan-Headers || die
 	rm -rf "${S}"/third_party/SPIRV-Tools || die
 	rm -rf "${S}"/third_party/tabulate || die
-	rmdir "${S}"/third_party/{premake-androidndk,premake-cmake,premake-core} || die
+	rmdir "${S}"/third_party/{premake-androidndk,premake-cmake} || die
 	rmdir "${S}"/third_party/premake-export-compile-commands || die
 	mv "${WORKDIR}/aes_128-${AES_128_SHA}" "${S}/third_party/aes_128" || die
-	mv "${WORKDIR}/binutils-ppc-cygwin-${BINUTILS_PPC_CYGWIN_SHA}" \
-		"${S}/third_party/binutils-ppc-cygwin" || die
 	mv "${WORKDIR}/FidelityFX-CAS-${FIDELITYFX_CAS_SHA}" \
 		"${S}/third_party/FidelityFX-CAS" || die
 	mv "${WORKDIR}/FidelityFX-FSR-${FIDELITYFX_FSR_SHA}" \
@@ -187,17 +179,15 @@ src_prepare() {
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/third_party/xbyak" || die
 	mv "${WORKDIR}/SPIRV-Tools-${SPIRV_TOOLS_SHA}" "${S}/third_party/SPIRV-Tools" || die
 	mv "${WORKDIR}/tabulate-${TABULATE_SHA}" "${S}/third_party/tabulate" || die
-	mv "${WORKDIR}/premake-androidndk-${PREMAKE_ANDROIDNDK_SHA}" \
-		"${S}/third_party/premake-androidndk" || die
 	mv "${WORKDIR}/premake-cmake-${PREMAKE_CMAKE_SHA}" \
 		"${S}/third_party/premake-cmake" || die
-	mv "${WORKDIR}/premake-core-${PREMAKE_CORE_SHA}" \
-		"${S}/third_party/premake-core" || die
 	mv "${WORKDIR}/premake-export-compile-commands-${PREMAKE_EXPORT_CC_SHA}" \
 		"${S}/third_party/premake-export-compile-commands" || die
 	xenia_env
 	default
-	edo premake5 --file=premake5.lua --os=linux --cc=clang --verbose cmake
+	local premake_cc=clang
+	[[ ${CC} == *gcc* ]] && premake_cc=gcc
+	edo premake5 --file=premake5.lua --os=linux --cc=${premake_cc} --verbose cmake
 	mkdir -p build || die
 	cat <<EOF > build/version.h
 #ifndef GENERATED_VERSION_H_
@@ -212,9 +202,15 @@ EOF
 }
 
 src_configure() {
-	# These flags result in the emulator showing no video (Rocket/Tiger Lake).
-	filter-flags -march=* -mtune=*
 	xenia_env
+	if [[ "${CC}" == *gcc* ]]; then
+		# Causes startup error in libstdc++ HashTable with GCC.
+		filter-lto
+	fi
+	if [[ "${CC}" == *clang* ]]; then
+		# These flags result in the emulator showing no video (Rocket/Tiger Lake).
+		filter-flags -march=* -mtune=*
+	fi
 	cmake_src_configure
 }
 

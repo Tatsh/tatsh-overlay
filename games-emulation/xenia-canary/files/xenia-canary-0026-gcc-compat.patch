@@ -1,0 +1,108 @@
+diff --git a/src/xenia/base/memory.cc b/src/xenia/base/memory.cc
+index 8d9cb3dc6..b9494f151 100644
+--- a/src/xenia/base/memory.cc
++++ b/src/xenia/base/memory.cc
+@@ -34,7 +34,7 @@ using xe::swcache::CacheLine;
+ 
+ static constexpr unsigned NUM_CACHELINES_IN_PAGE = 4096 / sizeof(CacheLine);
+ 
+-#if defined(__clang__)
++#if defined(__clang__) || defined(__GNUC__)
+ XE_FORCEINLINE
+ static void mvdir64b(void* to, const void* from) {
+   __asm__("movdir64b %1, %0" : : "r"(to), "m"(*(char*)from) : "memory");
+diff --git a/src/xenia/base/memory.h b/src/xenia/base/memory.h
+index 8ef40bbff..f14111352 100644
+--- a/src/xenia/base/memory.h
++++ b/src/xenia/base/memory.h
+@@ -724,10 +724,15 @@ static void ReadLineNT(CacheLine* XE_RESTRICT destination,
+                        const CacheLine* XE_RESTRICT source) {
+   assert_true((reinterpret_cast<uintptr_t>(source) & 63ULL) == 0);
+ 
+-  __m128i first = _mm_stream_load_si128(&source->xmms[0]);
+-  __m128i second = _mm_stream_load_si128(&source->xmms[1]);
+-  __m128i third = _mm_stream_load_si128(&source->xmms[2]);
+-  __m128i fourth = _mm_stream_load_si128(&source->xmms[3]);
++  // GCC's intrinsic takes non-const pointer; stream load does not modify source.
++  __m128i first =
++      _mm_stream_load_si128(const_cast<__m128i*>(&source->xmms[0]));
++  __m128i second =
++      _mm_stream_load_si128(const_cast<__m128i*>(&source->xmms[1]));
++  __m128i third =
++      _mm_stream_load_si128(const_cast<__m128i*>(&source->xmms[2]));
++  __m128i fourth =
++      _mm_stream_load_si128(const_cast<__m128i*>(&source->xmms[3]));
+ 
+   destination->xmms[0] = first;
+   destination->xmms[1] = second;
+diff --git a/src/xenia/gpu/command_processor.h b/src/xenia/gpu/command_processor.h
+index f2bf000d4..9a25e27d7 100644
+--- a/src/xenia/gpu/command_processor.h
++++ b/src/xenia/gpu/command_processor.h
+@@ -201,7 +201,13 @@ class CommandProcessor {
+   virtual void WriteRegistersFromMem(uint32_t start_index, uint32_t* base,
+                                      uint32_t num_registers);
+ 
++  // GCC fails with "inlining failed: function body not available" when the
++  // virtual definition is in a .cc and callers (e.g. pm4 template) are in
++  // headers. Omit XE_FORCEINLINE for GCC only so the call uses the out-of-line
++  // definition; Clang and others keep the hint.
++#if !defined(__GNUC__) || defined(__clang__)
+   XE_FORCEINLINE
++#endif
+   virtual void WriteRegisterRangeFromRing(xe::RingBuffer* ring, uint32_t base,
+                                           uint32_t num_registers);
+ 
+diff --git a/src/xenia/kernel/kernel_state.h b/src/xenia/kernel/kernel_state.h
+index 8095c3fa7..170d617cb 100644
+--- a/src/xenia/kernel/kernel_state.h
++++ b/src/xenia/kernel/kernel_state.h
+@@ -147,23 +147,24 @@ struct DPCImpersonationScope {
+   uint8_t previous_irql_;
+ };
+ 
++struct KernelVersionParts {
++  xe::be<uint16_t> major;
++  xe::be<uint16_t> minor;
++  xe::be<uint16_t> build;
++  xe::be<uint16_t> qfe;
++};
++
+ struct KernelVersion {
+   union {
+     xe::be<uint64_t> value;
+-
+-    struct {
+-      xe::be<uint16_t> major;
+-      xe::be<uint16_t> minor;
+-      xe::be<uint16_t> build;
+-      xe::be<uint16_t> qfe;
+-    };
++    KernelVersionParts parts;
+   };
+ 
+   KernelVersion(uint16_t build_ver = kBaseKernelBuildVersion) {
+-    major = 2;
+-    minor = 0;
+-    build = std::max(kBaseKernelBuildVersion, build_ver);
+-    qfe = 0;
++    parts.major = 2;
++    parts.minor = 0;
++    parts.build = std::max(kBaseKernelBuildVersion, build_ver);
++    parts.qfe = 0;
+   }
+ };
+ 
+diff --git a/src/xenia/kernel/xbdm/xbdm_misc.cc b/src/xenia/kernel/xbdm/xbdm_misc.cc
+index 264b3d50c..abc678c6b 100644
+--- a/src/xenia/kernel/xbdm/xbdm_misc.cc
++++ b/src/xenia/kernel/xbdm/xbdm_misc.cc
+@@ -205,7 +205,7 @@ dword_result_t DmGetSystemInfo_entry(pointer_t<XBDM_SYSTEM_INFO> info) {
+   info->base_kernel_version.qfe = info->kernel_version.qfe = 0;
+ 
+   info->base_kernel_version.build = kBaseKernelBuildVersion;
+-  info->kernel_version.build = kernel_state()->GetKernelVersion()->build;
++  info->kernel_version.build = kernel_state()->GetKernelVersion()->parts.build;
+ 
+   return XBDM_SUCCESSFUL;
+ }
