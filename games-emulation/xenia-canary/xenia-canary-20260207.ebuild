@@ -10,7 +10,6 @@ HOMEPAGE="https://github.com/xenia-canary/xenia-canary https://xenia.jp/"
 SHA="ef65c6761bcfa16ab40101ee229c2b88e47251e2"
 AES_128_SHA="7e3ac3bb6b478187472b4ac6f1698eb203e8e90b"
 BINUTILS_PPC_CYGWIN_SHA="6f3f15db908d339472db7be450f7c58bb71545cc"
-DATE_SHA="f94b8f36c6180be0021876c4a397a054fe50c6f2"
 FIDELITYFX_CAS_SHA="9fabcc9a2c45f958aff55ddfda337e74ef894b7f"
 FIDELITYFX_FSR_SHA="a21ffb8f6c13233ba336352bdff293894c706575"
 PREMAKE_ANDROIDNDK_SHA="35a6955410a34840c9d091f071c46cd3e5280fb7"
@@ -30,8 +29,6 @@ SRC_URI="https://github.com/xenia-canary/xenia-canary/archive/${SHA}.tar.gz
 		-> ${PN}-aes_128-${AES_128_SHA:0:7}.tar.gz
 	https://github.com/benvanik/binutils-ppc-cygwin/archive/${BINUTILS_PPC_CYGWIN_SHA}.tar.gz
 		-> ${PN}-binutils-ppc-cygwin-${BINUTILS_PPC_CYGWIN_SHA:0:7}.tar.gz
-	https://github.com/HowardHinnant/date/archive/${DATE_SHA}.tar.gz
-		-> ${PN}-date-${DATE_SHA:0:7}.tar.gz
 	https://github.com/GPUOpen-Effects/FidelityFX-CAS/archive/${FIDELITYFX_CAS_SHA}.tar.gz
 		-> ${PN}-FidelityFX-CAS-${FIDELITYFX_CAS_SHA:0:7}.tar.gz
 	https://github.com/GPUOpen-Effects/FidelityFX-FSR/archive/${FIDELITYFX_FSR_SHA}.tar.gz
@@ -73,6 +70,7 @@ DEPEND="app-arch/brotli
 	app-arch/zstd
 	dev-cpp/tomlplusplus
 	dev-libs/capstone
+	dev-libs/date
 	dev-libs/expat
 	dev-libs/libfmt:=
 	dev-libs/libpcre2
@@ -125,6 +123,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0022-allow-version-override.patch"
 	"${FILESDIR}/${PN}-0023-gentoo-cflags.patch"
 	"${FILESDIR}/${PN}-0024-cmake-relwithdebinfo.patch"
+	"${FILESDIR}/${PN}-0025-use_system_date.patch"
 )
 
 CMAKE_USE_DIR="${S}/build"
@@ -148,6 +147,7 @@ xenia_env() {
 	export USE_SYSTEM_ZSTD=1
 	export USE_SYSTEM_VULKAN_HEADERS=1
 	export USE_SYSTEM_VULKAN_MEMORY_ALLOCATOR=1
+	export USE_SYSTEM_DATE=1
 	export XENIA_BUILD_BRANCH="${PV}"
 	export XENIA_BUILD_COMMIT="${SHA}"
 	export XENIA_BUILD_COMMIT_SHORT="${SHA:0:7}"
@@ -176,7 +176,6 @@ src_prepare() {
 	mv "${WORKDIR}/aes_128-${AES_128_SHA}" "${S}/third_party/aes_128" || die
 	mv "${WORKDIR}/binutils-ppc-cygwin-${BINUTILS_PPC_CYGWIN_SHA}" \
 		"${S}/third_party/binutils-ppc-cygwin" || die
-	mv "${WORKDIR}/date-${DATE_SHA}" "${S}/third_party/date" || die
 	mv "${WORKDIR}/FidelityFX-CAS-${FIDELITYFX_CAS_SHA}" \
 		"${S}/third_party/FidelityFX-CAS" || die
 	mv "${WORKDIR}/FidelityFX-FSR-${FIDELITYFX_FSR_SHA}" \
