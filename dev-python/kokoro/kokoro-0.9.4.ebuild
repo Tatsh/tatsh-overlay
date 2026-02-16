@@ -26,4 +26,6 @@ RDEPEND="$(python_gen_cond_dep '
 	sci-ml/pytorch[${PYTHON_SINGLE_USEDEP}]
 	sci-ml/transformers[${PYTHON_SINGLE_USEDEP}]"
 
+PATCHES=( "${FILESDIR}/${PN}-270.patch" )
+
 distutils_enable_tests pytest

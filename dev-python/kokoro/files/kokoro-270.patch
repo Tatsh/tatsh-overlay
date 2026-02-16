@@ -1,0 +1,22 @@
+From 9a7732cbd03bde96cc70376d690832c5375e8188 Mon Sep 17 00:00:00 2001
+From: Niranjan Akella <niranjan.akella@genesys.com>
+Date: Sat, 27 Sep 2025 02:09:40 +0530
+Subject: [PATCH] AlbertModel import path updation for transformers:latest
+
+---
+ kokoro/modules.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kokoro/modules.py b/kokoro/modules.py
+index f183bd3..a6ce0cb 100644
+--- a/kokoro/modules.py
++++ b/kokoro/modules.py
+@@ -1,7 +1,7 @@
+ # https://github.com/yl4579/StyleTTS2/blob/main/models.py
+ from .istftnet import AdainResBlk1d
+ from torch.nn.utils import weight_norm
+-from transformers import AlbertModel
++from transformers.models.albert.modeling_albert import AlbertModel
+ import numpy as np
+ import torch
+ import torch.nn as nn
