@@ -1886,6 +1886,7 @@ shellformat
 shifta
 shlex
 shockwave
+shopspring
 shuralyov
 shurcoo
 shutup
