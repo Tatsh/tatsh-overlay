@@ -124,6 +124,7 @@ CRATES="addr2line@0.21.0
 	pyo3-macros-backend@0.27.2
 	pyo3-macros@0.27.2
 	pyo3@0.27.2
+	python3-dll-a@0.2.14
 	quote@1.0.37
 	radium@0.7.0
 	rayon-core@1.12.0
