@@ -5,7 +5,7 @@ EAPI=8
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=maturin
 PYTHON_COMPAT=( python3_{10..14} )
-RUST_MIN_VER="1.82.0"
+RUST_MIN_VER="1.83.0"
 CRATES="ahash@0.8.12
 	aho-corasick@1.1.4
 	anes@0.1.6
@@ -67,11 +67,11 @@ CRATES="ahash@0.8.12
 	plotters@0.3.7
 	portable-atomic@1.11.1
 	proc-macro2@1.0.103
-	pyo3-build-config@0.27.2
-	pyo3-ffi@0.27.2
-	pyo3-macros-backend@0.27.2
-	pyo3-macros@0.27.2
-	pyo3@0.27.2
+	pyo3-build-config@0.28.0
+	pyo3-ffi@0.28.0
+	pyo3-macros-backend@0.28.0
+	pyo3-macros@0.28.0
+	pyo3@0.28.0
 	python3-dll-a@0.2.14
 	quote@1.0.42
 	r-efi@5.3.0
