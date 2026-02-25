@@ -16,7 +16,7 @@ KEYWORDS="~amd64"
 IUSE="tbb"
 
 DEPEND="tbb? ( dev-cpp/tbb )
-	<dev-python/numpy-2.3.0[${PYTHON_USEDEP}]"
+	dev-python/numpy[${PYTHON_USEDEP}]"
 RDEPEND="dev-python/llvmlite[${PYTHON_USEDEP}]
 	dev-python/setuptools:0[${PYTHON_USEDEP}]"
 
