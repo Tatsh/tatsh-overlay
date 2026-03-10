@@ -20,7 +20,7 @@ RDEPEND="${DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
-		-DBUILD_TOOLS=$(usex tools)
+		"-DBUILD_TOOLS=$(usex tools)"
 		-DCMAKE_SKIP_INSTALL_RPATH=ON
 	)
 	cmake_src_configure
