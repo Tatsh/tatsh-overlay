@@ -15,4 +15,4 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-python/rabbitizer"
+RDEPEND="dev-python/rabbitizer[${PYTHON_USEDEP}]"
