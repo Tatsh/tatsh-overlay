@@ -2346,3 +2346,16 @@ zwitch
 zyan
 zycore
 zydis
+bfcodec
+decompollaborate
+ethteck
+hlsl
+libgfxd
+pygfxd
+pylibyaml
+pypng
+rabbitizer
+scribam
+spimdisasm
+spvremapper
+unjbt
