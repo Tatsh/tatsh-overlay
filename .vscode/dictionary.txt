@@ -125,6 +125,7 @@ beautifulsoup
 becheran
 benbjohnson
 beorn
+bfcodec
 bgentry
 bhaiksuki
 bigfft
@@ -395,6 +396,7 @@ debiancompat
 debugpy
 decamelize
 decli
+decompollaborate
 decrypter
 deepmerge
 defense
@@ -604,6 +606,7 @@ esrgan
 estraverse
 estree
 esutils
+ethteck
 evdev
 eventemitter
 eventsource
@@ -824,6 +827,7 @@ graphengine
 graphviz
 gravitydb
 grayed
+greenboost
 groupcache
 gstreamer
 gtksourceview
@@ -855,6 +859,7 @@ hexops
 higan
 hinterwaeldlers
 hiro
+hlsl
 hmong
 hoek
 homebridge
@@ -1101,8 +1106,10 @@ libfprint
 libfragmentzip
 libgcrypt
 libgeneral
+libgfxd
 libglvnd
 libgodot
+libgreenboost
 libgudev
 libgusb
 libhac
@@ -1557,6 +1564,7 @@ pathstr
 patrickmn
 paucinhau
 pcfx
+pcores
 pcre
 pcsx
 peds
@@ -1676,12 +1684,14 @@ pyelftools
 pyflirt
 pyfmt
 pyftdi
+pygfxd
 pygithub
 pygments
 pygobject
 pygtrie
 pyjwt
 pykakasi
+pylibyaml
 pymatting
 pynput
 pyopenjtalk
@@ -1691,6 +1701,7 @@ pyperclip
 pypi
 pypinyin
 pypinyin's
+pypng
 pyproject
 pypy
 pyrate
@@ -1744,6 +1755,7 @@ quicknes
 quicktest
 quot
 quse
+rabbitizer
 radixsplit
 randers
 randomstring
@@ -1852,6 +1864,7 @@ scires
 scoopfree
 scrapinghub
 screamf
+scribam
 scrn
 scuid
 scumm
@@ -1941,10 +1954,12 @@ spacy
 spammy
 spaolacci
 speakeasy
+spimdisasm
 spirv
 splitdebug
 splt
 sprintf
+spvremapper
 sqlalchemy
 sqlexp
 sqlfluff
@@ -2111,6 +2126,8 @@ ucwords
 udalov
 udevadm
 udevdir
+udeveof
+udevof
 udiff
 udpa
 udvare
@@ -2134,6 +2151,7 @@ unistd
 unitless
 universalify
 unixify
+unjbt
 unpipe
 unpreferred
 unscopables
@@ -2346,16 +2364,3 @@ zwitch
 zyan
 zycore
 zydis
-bfcodec
-decompollaborate
-ethteck
-hlsl
-libgfxd
-pygfxd
-pylibyaml
-pypng
-rabbitizer
-scribam
-spimdisasm
-spvremapper
-unjbt
