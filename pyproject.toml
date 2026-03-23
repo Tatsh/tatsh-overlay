@@ -11,11 +11,11 @@ python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.19.1"
-portage = { git = "https://github.com/gentoo/portage.git" }
+portage = "^3.0.77"
 portage-types = "^0.0.2"
 pyyaml = "^6.0.3"
 requests = "^2.32.5"
-ruff = "^0.15.6"
+ruff = "^0.15.7"
 types-pyyaml = "^6.0.12.20250915"
 types-requests = "^2.32.4.20260107"
 yapf = "^0.43.0"

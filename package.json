@@ -14,9 +14,7 @@
       "*": true
     },
     "enableGlobDot": true,
-    "files": [
-      "*"
-    ],
+    "files": ["*"],
     "ignorePaths": [
       "*.1",
       "*.har",
@@ -32,9 +30,7 @@
     "language": "en-GB",
     "languageSettings": [
       {
-        "dictionaries": [
-          "main"
-        ],
+        "dictionaries": ["main"],
         "languageId": "*"
       }
     ],
@@ -44,29 +40,21 @@
   "devDependencies": {
     "@prettier/plugin-xml": "^3.4.2",
     "cspell": "^9.7.0",
-    "markdownlint-cli2": "^0.21.0",
+    "markdownlint-cli2": "^0.22.0",
     "prettier": "^3.8.1",
     "prettier-plugin-ini": "^1.3.0",
     "prettier-plugin-sort-json": "^4.2.0",
     "prettier-plugin-toml": "^2.0.6",
     "pyright": "^1.1.408"
   },
-  "files": [
-    "LICENSE",
-    "README.md"
-  ],
+  "files": ["LICENSE", "README.md"],
   "homepage": "https://tatsh.github.io/tatsh-overlay/",
-  "keywords": [
-    "gentoo",
-    "overlay"
-  ],
+  "keywords": ["gentoo", "overlay"],
   "license": "MIT",
   "markdownlint-cli2": {
     "config": {
       "MD033": {
-        "allowed_elements": [
-          "kbd"
-        ]
+        "allowed_elements": ["kbd"]
       },
       "default": true,
       "line-length": {
@@ -84,17 +72,13 @@
     "jsonRecursiveSort": true,
     "overrides": [
       {
-        "files": [
-          "package.json"
-        ],
+        "files": ["package.json"],
         "options": {
           "parser": "json"
         }
       },
       {
-        "files": [
-          "*.xml"
-        ],
+        "files": ["*.xml"],
         "options": {
           "useTabs": true
         }
@@ -112,9 +96,9 @@
   },
   "repository": "git@github.com:Tatsh/tatsh-overlay.git",
   "scripts": {
-    "check-formatting": "yarn prettier -c . && poetry run yapf -prd scripts && yarn markdownlint-cli2 '**/*.md' '#node_modules'",
-    "check-spelling": "yarn cspell --no-progress './**/*'  './**/.*'",
-    "format": "prettier -w . && poetry run yapf -ri scripts && yarn markdownlint-cli2 --fix '**/*.md' '#node_modules'",
+    "check-formatting": "prettier -c . && poetry run yapf -prd scripts && markdownlint-cli2 --config package.json --configPointer /markdownlint-cli2 '**/*.md' '#node_modules'",
+    "check-spelling": "cspell --no-progress './**/*'  './**/.*'",
+    "format": "prettier -w . && poetry run yapf -ri scripts && markdownlint-cli2 --config package.json --configPointer /markdownlint-cli2 --fix '**/*.md' '#node_modules'",
     "mypy": "poetry run mypy",
     "qa": "yarn shellcheck && yarn mypy scripts && yarn ruff scripts && yarn check-spelling && yarn check-formatting",
     "ruff": "poetry run ruff check",
