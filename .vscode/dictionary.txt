@@ -631,6 +631,7 @@ fastapi
 fastcgi
 fasthttp
 fastify
+fastmcp
 fastparquet
 fastq
 fastuuid
@@ -1239,6 +1240,7 @@ lucasb
 lugaresi
 lunixbochs
 lutro
+lxml
 lzma
 macemu
 macvendor
@@ -2267,6 +2269,7 @@ wineshell
 wingetty
 winio
 wireshark
+wiswa
 woile
 wolfpld
 wolfssl
