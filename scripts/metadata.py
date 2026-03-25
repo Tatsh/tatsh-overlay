@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-from glob import glob
-from os.path import basename, dirname, exists, join as path_join, realpath
+from pathlib import Path
 from urllib.parse import urlparse
 import subprocess as sp
 import sys
@@ -34,37 +33,31 @@ def is_global_flag(name: str) -> bool:
     return False
 
 
-def ebuild_path_to_cpv(ebuild: str) -> str:
+def ebuild_path_to_cpv(ebuild: Path) -> str:
     """Convert an ebuild file path to a CPV string (category/package-version)."""
-    # /path/to/overlay/cat/pkg/pkg-ver.ebuild -> cat/pkg-ver
-    pkg_dir = dirname(ebuild)
-    cat_dir = dirname(pkg_dir)
-    category = basename(cat_dir)
-    version_name = basename(ebuild).removesuffix('.ebuild')
-    return f'{category}/{version_name}'
+    return f'{ebuild.parent.parent.name}/{ebuild.stem}'
 
 
-def get_repo_root(path: str) -> str:
+def get_repo_root(path: Path) -> str:
     """Resolve a local repo path to the portage-registered location via profiles/repo_name."""
-    repo_name_file = path_join(path, 'profiles', 'repo_name')
-    if not exists(repo_name_file):
-        return path
-    with open(repo_name_file) as f:
-        repo_name = f.read().strip()
+    repo_name_file = path / 'profiles' / 'repo_name'
+    if not repo_name_file.exists():
+        return str(path)
+    repo_name = repo_name_file.read_text().strip()
     try:
         return P.repositories[repo_name].location  # type: ignore[attr-defined, no-any-return]
     except KeyError:
-        return path
+        return str(path)
 
 
 def main() -> int:
-    root = realpath(path_join(dirname(__file__), '..'))
+    root = Path(__file__).resolve().parent.parent
     mytree = get_repo_root(root)
-    for pkg in set(dirname(x) for x in glob(f'{root}/**/*.ebuild', recursive=True)):
-        metadata_xml = path_join(pkg, 'metadata.xml')
-        if exists(metadata_xml):
+    for pkg in {p.parent for p in root.rglob('*.ebuild')}:
+        metadata_xml = pkg / 'metadata.xml'
+        if metadata_xml.exists():
             continue
-        ebuilds = glob(f'{pkg}/*.ebuild')
+        ebuilds = sorted(pkg.glob('*.ebuild'))
         if not ebuilds:
             continue
         cpv = ebuild_path_to_cpv(ebuilds[-1])
@@ -94,7 +87,7 @@ def main() -> int:
             if id_type and value:
                 upstream = ('\n\t<upstream>\n' + f'\t\t<remote-id type="{id_type}">' + value +
                             '</remote-id>' + '\n\t</upstream>')
-        with open(metadata_xml, 'w+') as m:
+        with metadata_xml.open('w') as m:
             use = (('\n\t<use>\n' + '\n'.join(f'\t\t<flag name="{name}"></flag>'
                                               for name in words) +
                     '\n\t</use>\n') if words else '\n')
