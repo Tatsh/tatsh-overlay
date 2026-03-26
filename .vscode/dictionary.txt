@@ -16,6 +16,7 @@ agentkeepalive
 agnivade
 ahom
 ailln
+aiofile
 aiofiles
 aiohttp
 aiosqlite
@@ -97,6 +98,7 @@ attn
 audiofile
 audioio
 audioop
+authlib
 authorware
 autoconfig
 automodule
@@ -135,6 +137,7 @@ batak
 bbolt
 bcicen
 bdepend
+beartype
 beautifulsoup
 becheran
 benbjohnson
@@ -208,6 +211,7 @@ byteswapped
 caca
 cacache
 cacerts
+cachetools
 caffe
 calloc
 callsites
@@ -254,6 +258,7 @@ chksums
 choco
 chokidar
 chownr
+chrisguidry
 chriskiehl
 chrissimpkins
 chromadb
@@ -368,6 +373,7 @@ cxleveladj
 cxxfilt
 cxxflags
 cxxopts
+cyclopts
 cygne
 cymem
 cyphar
@@ -630,6 +636,7 @@ eventsource
 eventstream
 evins
 ewarn
+exceptiongroup
 execa
 execall
 exeinto
@@ -690,6 +697,7 @@ flashplayer
 flatbuffers
 flatmap
 flexbin
+florimondmanca
 flto
 fluidsynth
 fluxsmooth
@@ -982,6 +990,7 @@ isodate
 isplainobject
 isystem
 itertools
+itsdangerous
 iuse
 jackaudio
 jackc
@@ -1027,6 +1036,7 @@ jsonname
 jsonnet
 jsonparse
 jsonpointer
+jsonref
 jsonreference
 jsonrepair
 jsonschema
@@ -1532,6 +1542,7 @@ numba
 numberformat
 numcpus
 numpy
+numpydoc
 nurio
 nvcc
 nvme
@@ -1727,6 +1738,7 @@ psvpfsparser
 pthread
 puae
 puerkito
+pugh
 pugixml
 pulseaudio
 pulseaudiosimple
@@ -2063,6 +2075,7 @@ stfc
 stfc's
 stiefel
 stix
+strawgate
 strcase
 streamsearch
 streamx
@@ -2320,6 +2333,7 @@ warangciti
 warnflags
 wasi
 watara
+watchfiles
 wchar
 wcurl
 wcwidth
