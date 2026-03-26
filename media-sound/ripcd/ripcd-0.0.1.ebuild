@@ -15,7 +15,7 @@ KEYWORDS="~amd64"
 
 RDEPEND="dev-python/bascom[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
-	dev-python/deltona[media,${PYTHON_USEDEP}]
+	app-misc/deltona[media,${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 BDEPEND="test? (
