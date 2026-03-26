@@ -28,9 +28,9 @@ all_ruby_prepare() {
 	rm -f Gemfile || die
 
 	sed -e 's/git ls-files -z/find * -print0/' \
-		-i ${RUBY_FAKEGEM_GEMSPEC} || die
+		-i "${RUBY_FAKEGEM_GEMSPEC}" || die
 
 	# Remove development dependencies from gemspec
 	sed -e '/add_development_dependency/d' \
-		-i ${RUBY_FAKEGEM_GEMSPEC} || die
+		-i "${RUBY_FAKEGEM_GEMSPEC}" || die
 }

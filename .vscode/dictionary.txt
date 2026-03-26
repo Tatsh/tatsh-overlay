@@ -8,6 +8,7 @@ adbsync
 addpredict
 addwrite
 adlam
+adoc
 aescts
 aesni
 afero
@@ -75,6 +76,7 @@ artifex
 asan
 asar
 asaskevich
+asciidoctor
 asio
 asmflags
 aspromise
@@ -635,6 +637,8 @@ exes
 existance
 exllamav
 extglob
+extradoc
+extrainstall
 exzap
 faad
 fabiocaccamo
@@ -1125,13 +1129,13 @@ libb
 libbar
 libbz
 libc
+libc's
 libcaca
 libcdio
 libchdr
 libclang
 libco
 libcrypt
-libc's
 libcxx
 libcxxabi
 libd
