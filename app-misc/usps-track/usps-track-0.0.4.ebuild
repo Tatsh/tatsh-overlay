@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
-DISTUTILS_USE_PEP517=poetry
+PYTHON_COMPAT=( python3_1{1,2,3,4} )
+DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1
 
 DESCRIPTION="CLI to track a USPS shipment by SMS."
@@ -16,3 +16,9 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 
 RDEPEND="dev-python/aiohttp[${PYTHON_USEDEP}]
 	dev-python/bascom[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
+	dev-python/pytest-mock[${PYTHON_USEDEP}]
+)"
+
+distutils_enable_tests pytest
