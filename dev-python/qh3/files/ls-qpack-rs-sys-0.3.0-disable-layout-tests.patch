@@ -1,0 +1,14 @@
+Disable bindgen layout tests to fix build with newer glibc where struct
+sizes (e.g. _IO_FILE) have changed.
+
+--- a/cargo_home/gentoo/ls-qpack-rs-sys-0.3.0/build.rs
++++ b/cargo_home/gentoo/ls-qpack-rs-sys-0.3.0/build.rs
+@@ -26,7 +26,7 @@
+         .derive_debug(true)
+         .derive_default(true)
+         .size_t_is_usize(true)
+-        .layout_tests(true)
++        .layout_tests(false)
+         .generate_comments(false)
+         .clang_arg(format!("-I{}", dst.join("include").display()))
+         .header(ls_qpack_dir.join("lsqpack.h").to_string_lossy())
