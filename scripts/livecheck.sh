@@ -25,5 +25,16 @@ exceptions=(
     # Weird tag livecheck cannot handle.
     -e games-emulation/fuse-libretro
     -e games-emulation/pcsx-rearmed-libretro
+    # Deprecated method to package these.
+    -e app-arch/asar
+    -e app-arch/asar
+    -e app-misc/zwave-js-server
+    -e dev-build/node-gyp
+    -e dev-util/prettier
+    -e dev-util/react-native-decompiler
+    -e dev-util/vscode-vsce
+    -e dev-util/yo
+    -e www-apps/anything-llm
+    -e www-apps/stash
 )
 livecheck "${exceptions[@]}" "$@"
