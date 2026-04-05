@@ -90,6 +90,7 @@ astisub
 astits
 asyncio
 asynckit
+atomicgo
 atomicparsley
 atomicwriter
 atotto
@@ -746,6 +747,7 @@ fsutil
 fugashi
 fulfill
 fullwidth
+fuzzysearch
 funcs
 funcy
 gailly
@@ -1258,6 +1260,7 @@ limbu
 lipgloss
 listformat
 listr
+lithammer
 lisu
 liteon
 lith
@@ -1736,6 +1739,7 @@ proxyd
 psalterpahlavi
 pstree
 psutil
+pterm
 psvpfsparser
 pthread
 puae
@@ -1803,6 +1807,7 @@ qdbus
 qdrant
 qfile
 qlist
+qpack
 qpxtool
 qrcode
 qrencode
@@ -1856,6 +1861,7 @@ redent
 redumper
 referer
 reflectwalk
+reflow
 refractoring
 regexpu
 regjsgen
@@ -1916,6 +1922,7 @@ rtaudio
 rtmp
 ruamel
 runewidth
+runkids
 rusha
 russross
 rustflags
@@ -1926,6 +1933,7 @@ ryszard
 ryujinx
 safetensors
 sagikazarmark
+sahilm
 salmoria
 samber
 sameboy
@@ -2005,6 +2013,7 @@ sizedwaitgroup
 sjson
 skeema
 skratchdot
+skillshare
 slirp
 slongfield
 smaniotto
@@ -2085,6 +2094,7 @@ streamx
 stretchr
 strfmt
 strikethrough
+stringish
 stringtopath
 stringutils
 strnum
@@ -2151,6 +2161,7 @@ termenv
 termios
 testdata
 testfloat
+testza
 texinfo
 textextensions
 textsplitters
@@ -2356,6 +2367,7 @@ webtheme
 webuiboxedlayout
 webvr
 webxr
+wendt
 werror
 wextra
 wfuse
