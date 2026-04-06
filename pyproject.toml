@@ -10,7 +10,7 @@ version = "0.0.1"
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^1.19.1"
+mypy = "^1.20.0"
 portage = "^3.0.77"
 portage-types = "^0.0.2"
 pyyaml = "^6.0.3"
