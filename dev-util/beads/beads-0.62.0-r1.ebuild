@@ -1764,7 +1764,8 @@ IUSE="test"
 RESTRICT="mirror !test? ( test )"
 
 DEPEND="dev-libs/icu"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	dev-db/dolt"
 
 src_compile() {
 	CGO_ENABLED=1 go build -ldflags="-X main.Build=v${PV}" -o bd ./cmd/bd || die
