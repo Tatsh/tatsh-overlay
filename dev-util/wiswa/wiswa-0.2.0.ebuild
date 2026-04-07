@@ -16,10 +16,9 @@ KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-RDEPEND="dev-python/aiofiles[${PYTHON_USEDEP}]
-	dev-python/aiohttp-client-cache[${PYTHON_USEDEP}]
-	dev-python/aiohttp[${PYTHON_USEDEP}]
+RDEPEND="dev-python/niquests[${PYTHON_USEDEP}]
 	dev-python/anyio[${PYTHON_USEDEP}]
+	dev-python/platformdirs[${PYTHON_USEDEP}]
 	dev-python/bascom[${PYTHON_USEDEP}]
 	dev-python/beautifulsoup4[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
@@ -36,5 +35,7 @@ BDEPEND="test? (
 	dev-python/pytest-cov[${PYTHON_USEDEP}]
 	dev-python/pytest-mock[${PYTHON_USEDEP}]
 )"
+
+PATCHES=( "${FILESDIR}/${PN}-0001-fix-pytest-stale-cwd.patch" )
 
 distutils_enable_tests pytest
