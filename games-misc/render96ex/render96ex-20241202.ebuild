@@ -36,7 +36,7 @@ RESTRICT="fetch"
 
 DEPEND="media-libs/glew:= media-libs/libsdl2 media-libs/libglvnd[X]"
 RDEPEND="${DEPEND}"
-BDEPEND="app-arch/7zip media-libs/audiofile"
+BDEPEND="|| ( app-arch/7zip app-arch/p7zip ) media-libs/audiofile"
 
 PATCHES=( "${FILESDIR}/${PN}-0001-custom-flags.patch" )
 
