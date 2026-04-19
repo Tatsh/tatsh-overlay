@@ -11,9 +11,9 @@ SHA="cd02b8886e0a0498c23b0c1f1e58f0b7c70ccc66"
 MODELS_SHA="f4f438447748782b7c824cee903594706a3941e2"
 TEXTURES_SHA="7ad93cfbdde449cc07e86ebf17985ee9c157f36f"
 MY_PN="Render96ex"
-SRC_URI="https://github.com/Render96/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
-	textures? ( https://github.com/pokeheadroom/RENDER96-HD-TEXTURE-PACK/archive/${TEXTURES_SHA}.tar.gz -> ${PN}-texture-pack-${TEXTURES_SHA:0:7}.tar.gz )
-	models? ( https://github.com/Render96/ModelPack/archive/${MODELS_SHA}.tar.gz -> ${PN}-models-vanilla-${MODELS_SHA:0:7}.tar.gz )
+SRC_URI="fetch+https://github.com/Render96/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz
+	textures? ( fetch+https://github.com/pokeheadroom/RENDER96-HD-TEXTURE-PACK/archive/${TEXTURES_SHA}.tar.gz -> ${PN}-texture-pack-${TEXTURES_SHA:0:7}.tar.gz )
+	models? ( fetch+https://github.com/Render96/ModelPack/archive/${MODELS_SHA}.tar.gz -> ${PN}-models-vanilla-${MODELS_SHA:0:7}.tar.gz )
 	us? ( sm64.us.z64 )
 	eu? ( sm64.eu.z64 )
 	jp? ( sm64.jp.z64 )"
