@@ -7,7 +7,7 @@ inherit desktop wrapper
 
 DESCRIPTION="Reimplementation of Super Mario World."
 HOMEPAGE="https://github.com/snesrev/smw"
-SRC_URI="https://github.com/snesrev/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
+SRC_URI="fetch+https://github.com/snesrev/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	smw.sfc"
 LICENSE="MIT"
 SLOT="0"
