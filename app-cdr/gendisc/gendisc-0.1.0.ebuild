@@ -3,7 +3,7 @@
 
 EAPI=8
 PYTHON_COMPAT=( python3_1{1,2,3,4} )
-DISTUTILS_USE_PEP517=poetry
+DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1
 
 DESCRIPTION="Generate a series of ISO images from a directory tree."
@@ -14,16 +14,18 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-python/bascom[${PYTHON_USEDEP}]
-	dev-python/python-fsutil[${PYTHON_USEDEP}]
+RDEPEND="dev-python/anyio[${PYTHON_USEDEP}]
+	dev-python/bascom[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
-	dev-python/colorlog[${PYTHON_USEDEP}]
 	dev-python/jinja2[${PYTHON_USEDEP}]
-	dev-python/tqdm[${PYTHON_USEDEP}]
+	dev-python/python-fsutil[${PYTHON_USEDEP}]
+	dev-python/rich[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	dev-python/wakepy[${PYTHON_USEDEP}]"
 BDEPEND="test? (
 	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
+	dev-python/pytest-cov[${PYTHON_USEDEP}]
 	dev-python/pytest-mock[${PYTHON_USEDEP}]
 	dev-python/requests-mock[${PYTHON_USEDEP}]
 )"
