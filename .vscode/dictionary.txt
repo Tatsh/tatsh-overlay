@@ -1258,6 +1258,7 @@ lide
 lightrec
 lighttpd
 limbu
+linters
 lipgloss
 listformat
 listr
@@ -1266,6 +1267,7 @@ liteon
 lith
 lithammer
 livecheck
+livechecks
 llvmlite
 lmod
 locafero
@@ -1597,6 +1599,7 @@ optionator
 optparse
 opusfile
 orisano
+orjson
 osmanya
 osname
 ospi
@@ -1889,6 +1892,7 @@ repr
 reqs
 resourcemanager
 resourcemapping
+respx
 retroarch
 retrodream
 retryablehttp
