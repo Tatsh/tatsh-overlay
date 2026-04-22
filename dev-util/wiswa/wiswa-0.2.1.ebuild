@@ -27,16 +27,15 @@ RDEPEND="dev-python/niquests[${PYTHON_USEDEP}]
 	dev-lang/jsonnet[python,${PYTHON_USEDEP}]
 	dev-python/keyring[${PYTHON_USEDEP}]
 	dev-python/lxml[${PYTHON_USEDEP}]
+	dev-python/niquests-cache[${PYTHON_USEDEP}]
 	dev-python/tomlkit[${PYTHON_USEDEP}]
-	dev-python/typing-extensions[${PYTHON_USEDEP}]
-	dev-python/yaspin[${PYTHON_USEDEP}]"
+	dev-python/rich[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 BDEPEND="test? (
 	dev-python/mock[${PYTHON_USEDEP}]
 	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
 	dev-python/pytest-cov[${PYTHON_USEDEP}]
 	dev-python/pytest-mock[${PYTHON_USEDEP}]
 )"
-
-PATCHES=( "${FILESDIR}/${PN}-0001-fix-pytest-stale-cwd.patch" )
 
 distutils_enable_tests pytest
