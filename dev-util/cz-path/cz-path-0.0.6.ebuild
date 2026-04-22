@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=poetry
+DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_1{1,2,3,4} )
 
 inherit distutils-r1 pypi
@@ -19,7 +19,8 @@ RDEPEND="dev-python/gitpython[${PYTHON_USEDEP}]
 	dev-util/commitizen[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 BDEPEND="test? (
-	dev-python/mock
+	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pytest-cov[${PYTHON_USEDEP}]
 	dev-python/pytest-mock[${PYTHON_USEDEP}]
 )"
 
