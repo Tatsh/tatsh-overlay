@@ -3,7 +3,7 @@
 
 EAPI=8
 PYTHON_COMPAT=( python3_1{2,3,4} )
-DISTUTILS_USE_PEP517=poetry
+DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1
 
 DESCRIPTION="Simple home directory versioning."
@@ -14,15 +14,18 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-RDEPEND="dev-python/gitpython[${PYTHON_USEDEP}]
+RDEPEND="dev-python/anyio[${PYTHON_USEDEP}]
 	dev-python/bascom[${PYTHON_USEDEP}]
 	dev-python/binaryornot[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
-	dev-python/platformdirs[${PYTHON_USEDEP}]"
+	dev-python/gitpython[${PYTHON_USEDEP}]
+	dev-python/platformdirs[${PYTHON_USEDEP}]
+	dev-python/tomlkit[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 BDEPEND="test? (
 	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pytest-cov[${PYTHON_USEDEP}]
 	dev-python/pytest-mock[${PYTHON_USEDEP}]
-	dev-python/requests-mock[${PYTHON_USEDEP}]
 )"
 
 src_install() {
