@@ -4,7 +4,7 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
-DISTUTILS_USE_PEP517=poetry
+DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1 pypi
 
 DESCRIPTION="Tool to update ebuilds."
@@ -24,10 +24,5 @@ RDEPEND="dev-python/bascom[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
-
-src_install() {
-	distutils-r1_src_install
-	doman "man/${PN}.1"
-}
 
 distutils_enable_tests pytest
