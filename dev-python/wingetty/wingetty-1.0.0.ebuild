@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
 
-PYTHON_COMPAT=( python3_1{1,2,3} )
+PYTHON_COMPAT=( python3_1{1,2,3,4} )
 
 inherit python-r1
 
