@@ -3,7 +3,7 @@
 
 EAPI=8
 PYTHON_COMPAT=( python3_1{1,2,3,4} )
-DISTUTILS_USE_PEP517=poetry
+DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1
 
 DESCRIPTION="Tools for Xirvik servers."
@@ -16,25 +16,27 @@ KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-RDEPEND="dev-python/bascom[${PYTHON_USEDEP}]
-	dev-python/fabric[${PYTHON_USEDEP}]
+RDEPEND="dev-python/anyio[${PYTHON_USEDEP}]
+	dev-python/bascom[${PYTHON_USEDEP}]
 	dev-python/beautifulsoup4[${PYTHON_USEDEP}]
 	dev-python/click[${PYTHON_USEDEP}]
-	dev-python/colorlog[${PYTHON_USEDEP}]
+	dev-python/fabric[${PYTHON_USEDEP}]
 	dev-python/html5lib[${PYTHON_USEDEP}]
 	dev-python/keyring[${PYTHON_USEDEP}]
+	media-libs/mutagen[${PYTHON_USEDEP}]
 	dev-python/platformdirs[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/ratelimit[${PYTHON_USEDEP}]
-	dev-python/requests[${PYTHON_USEDEP}]
 	dev-python/tabulate[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	dev-python/unidecode[${PYTHON_USEDEP}]"
 BDEPEND="
 	test? (
 		dev-python/mock[${PYTHON_USEDEP}]
-		dev-python/pytest[${PYTHON_USEDEP}]
-		dev-python/requests-mock[${PYTHON_USEDEP}]
+		dev-python/niquests-mock[${PYTHON_USEDEP}]
+		dev-python/pytest-asyncio[${PYTHON_USEDEP}]
+		dev-python/pytest-cov[${PYTHON_USEDEP}]
+		dev-python/pytest-mock[${PYTHON_USEDEP}]
 	)"
 
 distutils_enable_tests pytest
