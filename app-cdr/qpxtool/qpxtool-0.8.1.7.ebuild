@@ -3,6 +3,8 @@
 
 EAPI=8
 
+inherit edo
+
 DESCRIPTION="Enhanced (unofficial) qpxtool version."
 HOMEPAGE="https://github.com/speed47/qpxtool"
 MY_PV="$(ver_cut 1-3)"
@@ -15,31 +17,34 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="debug +gui +internal-wt +liteon-probe"
 
-DEPEND="gui? (
-		dev-qt/qtcore:5
-		dev-qt/qtgui:5
-		dev-qt/qtnetwork:5
-		dev-qt/qtprintsupport:5
-		dev-qt/qtsql:5
-		dev-qt/qtwidgets:5
-	)
+DEPEND="gui? ( dev-qt/qtbase:5[gui,network,sql,widgets] )
 	media-libs/libpng"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	# Ignore invalid arguments
-	sed -re '811s/exit//' \
-		-e 's/.*strip --strip-unneeded.*/echo/g' \
-		-e "s|lrelease|${EPREFIX}/usr/$(get_libdir)/qt5/bin/lrelease|g" \
-		-i configure || die
+	# Disable stripping.
+	sed -re 's/.*strip .*/echo/g' -i configure || die
 	sed -re 's/^all:.*//' -e 's/\.gz//g' -e 's/^install:.*/install:/g' -i man/Makefile || die
 	default
 }
 
 src_configure() {
-	econf \
-		"$(use_enable debug)" \
-		"$(use_enable gui)" \
-		"$(use_enable internal-wt)" \
-		"$(use_enable liteon-probe)"
+	# Not autotools.
+	local args=( --prefix=/usr )
+	if use gui; then
+		args+=( "--qmake=${EPREFIX}/usr/bin/qmake6" )
+	fi
+	if use debug; then
+		args+=( --enable-debug )
+	fi
+	if ! use gui; then
+		args+=( --disable-gui )
+	fi
+	if ! use internal-wt; then
+		args+=( --disable-internal-wt )
+	fi
+	if ! use liteon-probe; then
+		args+=( --disable-liteon-probe )
+	fi
+	edo ./configure "${args[*]}"
 }
