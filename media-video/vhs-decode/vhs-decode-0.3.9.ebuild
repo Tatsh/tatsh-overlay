@@ -62,7 +62,7 @@ KEYWORDS="~amd64"
 IUSE="gtk test"
 RESTRICT="!test? ( test )"
 
-DEPEND="x11-libs/qwt:6[qt6]
+DEPEND="x11-libs/qwt
 	dev-qt/qtbase:6
 	sci-libs/fftw"
 RDEPEND="${DEPEND}
