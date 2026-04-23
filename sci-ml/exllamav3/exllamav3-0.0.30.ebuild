@@ -35,4 +35,10 @@ RDEPEND="${PYTHON_DEPS}
 	>=sci-ml/tokenizers-0.21.1[${PYTHON_SINGLE_USEDEP}]"
 DEPEND="${RDEPEND}"
 BDEPEND="${PYTHON_DEPS}
-	dev-build/ninja"
+	dev-build/ninja
+	sys-devel/gcc:13"
+
+src_configure() {
+	export CC=${CHOST}-gcc-13 CXX=${CHOST}-g++-13
+	distutils-r1_src_configure
+}
