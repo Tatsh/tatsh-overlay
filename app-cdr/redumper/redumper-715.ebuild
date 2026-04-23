@@ -22,6 +22,11 @@ BDEPEND=">=llvm-core/clang-16.0.6
 DEPEND=">=llvm-runtimes/libcxx-16[static-libs]
 	>=llvm-runtimes/libcxxabi-16[static-libs]"
 
+src_prepare() {
+	sed -re '/^enable_testing.*/d' -e 's/^add_subdirectory\(.tests.\)$//' -i CMakeLists.txt || die
+	cmake_src_prepare
+}
+
 src_configure() {
 	filter-flags -O*
 	if use clang; then
