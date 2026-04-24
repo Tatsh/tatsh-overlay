@@ -24,6 +24,7 @@ DEPEND=">=media-libs/zimg-3.0.5
 	${PYTHON_DEPS}
 	virtual/zlib"
 RDEPEND="${DEPEND}"
+# shellcheck disable=SC2016
 BDEPEND="${PYTHON_DEPS}
 	$(python_gen_any_dep 'dev-python/cython[${PYTHON_USEDEP}]')"
 
@@ -32,6 +33,7 @@ python_check_deps() {
 }
 
 src_configure() {
+	# shellcheck disable=SC2207
 	local emesonargs=(
 		$(meson_use guard-pattern enable_guard_pattern)
 		$(meson_use x86-asm enable_x86_asm)
