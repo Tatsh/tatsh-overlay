@@ -15,20 +15,12 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="<dev-python/cloudpathlib-1.0.0[${PYTHON_USEDEP}]
-	>=dev-python/cloudpathlib-0.7.0[${PYTHON_USEDEP}]
-	<dev-python/confection-0.2.0[${PYTHON_USEDEP}]
-	>=dev-python/confection-0.0.4[${PYTHON_USEDEP}]
+RDEPEND=">=dev-python/cloudpathlib-0.7.0[${PYTHON_USEDEP}]
+	>=dev-python/confection-1.0.0[${PYTHON_USEDEP}]
+	>=dev-python/httpx-0.24.0[${PYTHON_USEDEP}]
 	>=dev-python/packaging-20.0[${PYTHON_USEDEP}]
-	<dev-python/pydantic-3.0.0[${PYTHON_USEDEP}]
-	>=dev-python/pydantic-1.7.4[${PYTHON_USEDEP}]
-	<dev-python/requests-3.0.0[${PYTHON_USEDEP}]
-	>=dev-python/requests-2.13.0[${PYTHON_USEDEP}]
-	<dev-python/smart-open-8.0.0[${PYTHON_USEDEP}]
+	>=dev-python/pydantic-2.0.0[${PYTHON_USEDEP}]
 	>=dev-python/smart-open-5.2.1[${PYTHON_USEDEP}]
-	<dev-python/srsly-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/srsly-2.4.3[${PYTHON_USEDEP}]
-	<dev-python/typer-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/typer-0.3.0[${PYTHON_USEDEP}]
-	<dev-python/wasabi-1.2.0[${PYTHON_USEDEP}]
 	>=dev-python/wasabi-0.9.1[${PYTHON_USEDEP}]"
