@@ -258,6 +258,7 @@ chishm
 chksums
 choco
 chokidar
+chost
 chownr
 chrisguidry
 chriskiehl
