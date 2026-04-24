@@ -21,7 +21,7 @@ PATCHES=( "${FILESDIR}/${PN}-misc.patch" )
 src_prepare() {
 	# Collides with Wireshark
 	find . -name application-vnd.tcpdump.pcap.png -delete
-	rm -R lib/jdk || die
+	rm -Rf lib/jdk
 	sed -e "s/^Icon=.*/Icon=${PN}-proxy/" -i "etc/${PN}-proxy5.desktop" || die
 	default
 	sed -e "s/@EPREFIX@/${EPREFIX}/g" -i "bin/${PN}"

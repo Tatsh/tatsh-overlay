@@ -1,15 +1,11 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-DISTUTILS_EXT=1
-
-DISTUTILS_USE_PEP517=setuptools
-
 PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 
-inherit autotools distutils-r1
+inherit meson python-r1
 
 DESCRIPTION="A video processing framework with simplicity in mind."
 HOMEPAGE="https://www.vapoursynth.com/ https://github.com/vapoursynth/vapoursynth"
@@ -21,42 +17,27 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="guard-pattern +x86-asm +vsscript +vspipe"
-RESTRICT="mirror"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}
+	vspipe? ( vsscript )"
 
 DEPEND=">=media-libs/zimg-3.0.5
-	x86-asm? ( >=dev-lang/yasm-1.3.0 )
-	vsscript? ( >=dev-lang/python-3.9 )
+	${PYTHON_DEPS}
 	virtual/zlib"
-REQUIRED_USE="vspipe? ( vsscript )"
-BDEPEND="dev-python/cython[${PYTHON_USEDEP}]"
+RDEPEND="${DEPEND}"
+BDEPEND="${PYTHON_DEPS}
+	$(python_gen_any_dep 'dev-python/cython[${PYTHON_USEDEP}]')"
 
-src_prepare () {
-	eautoreconf
-	distutils-r1_src_prepare
-	default
+python_check_deps() {
+	python_has_version "dev-python/cython[${PYTHON_USEDEP}]"
 }
 
-src_configure () {
-	x86_asm=
-	if use amd64 || use x86; then
-		x86_asm=$(use_enable x86-asm)
-	fi
-	econf \
-		"$x86_asm" \
-		--disable-python-module \
-		"$(use_enable guard-pattern)" \
-		"$(use_enable vspipe)" \
-		"$(use_enable vsscript)"
-	distutils-r1_src_configure
-}
-
-src_compile() {
-	default
-	distutils-r1_src_compile
-}
-
-src_install() {
-	default
-	distutils-r1_src_install
-	rm -f "${ED}/usr/$(get_libdir)/libvapoursynth"*.la
+src_configure() {
+	local emesonargs=(
+		$(meson_use guard-pattern enable_guard_pattern)
+		$(meson_use x86-asm enable_x86_asm)
+		$(meson_use vsscript enable_vsscript)
+		$(meson_use vspipe enable_vspipe)
+		-Denable_python_module=true
+	)
+	meson_src_configure
 }
