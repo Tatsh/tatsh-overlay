@@ -22,7 +22,7 @@ KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-DEPEND="dev-libs/libfmt:0/11.2.0
+DEPEND="dev-libs/libfmt
 	net-misc/curl"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-util/cmakerc"
