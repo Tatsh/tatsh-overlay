@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
+PYTHON_COMPAT=( python3_1{2,3,4} )
 
 inherit meson python-r1
 
@@ -16,7 +16,7 @@ S="${WORKDIR}/${PN}-${MY_PV}"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="guard-pattern +x86-asm +vsscript +vspipe"
+IUSE="guard-pattern +x86-asm +vspipe +vsscript"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
 	vspipe? ( vsscript )"
 
@@ -38,6 +38,7 @@ src_configure() {
 		$(meson_use vsscript enable_vsscript)
 		$(meson_use vspipe enable_vspipe)
 		-Denable_python_module=true
+		-Dbuild_wheel=false
 	)
 	meson_src_configure
 }
