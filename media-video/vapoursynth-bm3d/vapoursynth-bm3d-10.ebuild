@@ -15,3 +15,9 @@ KEYWORDS="~amd64"
 
 DEPEND="media-video/vapoursynth sci-libs/fftw"
 RDEPEND="${DEPEND}"
+
+src_configure() {
+	export PYTHONPATH="${T}:${PYTHONPATH}"
+	echo "def get_include(): return '${ESYSROOT}/usr/include/vapoursynth'" > "${T}/vapoursynth.py" || die
+	meson_src_configure
+}

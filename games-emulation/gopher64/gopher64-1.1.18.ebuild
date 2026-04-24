@@ -788,7 +788,11 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.
 
 LICENSE="GPL-3 Apache-2.0 BSD Boost-1.0 CC0-1.0 ISC MIT MPL-2.0 Unicode-3.0 ZLIB"
 SLOT="0"
-KEYWORDS="~amd64"
+#KEYWORDS="~amd64"
+
+DEPEND="media-libs/freetype
+	media-libs/vulkan-loader"
+RDEPEND="${DEPEND}"
 
 DOCS=( README.md )
 
@@ -803,6 +807,9 @@ src_prepare() {
 	sed -re '/.*\.flag\("-flto=thin"\);/d' -i build.rs || die
 	sed -re '/.*\.flag\("-march=.*"\);/d' -i build.rs || die
 	sed -e 's|panic!("Failed to get git describe");|format!("v{}", env!("CARGO_PKG_VERSION"))|' -i build.rs || die
+	sed -e '/retroachievements_build\.compile/a\
+\    println!("cargo:rustc-link-arg=-lvulkan");\
+\    println!("cargo:rustc-link-arg=-lfreetype");' -i build.rs || die
 	default
 }
 

@@ -1076,13 +1076,13 @@ libb
 libbar
 libbz
 libc
+libc's
 libcaca
 libcdio
 libchdr
 libclang
 libco
 libcrypt
-libc's
 libcxx
 libcxxabi
 libd
@@ -1629,6 +1629,7 @@ prcbuild
 preinst
 premake
 preshed
+println
 priv
 proc
 procapture
@@ -1699,6 +1700,7 @@ pyside
 pysocks
 pytest
 pythonhosted
+pythonpath
 pytimeparse
 pytorch
 pytz
@@ -1830,6 +1832,7 @@ runewidth
 runkids
 rusha
 russross
+rustc
 rustflags
 rwcarlsen
 ryanuber
