@@ -18,6 +18,12 @@ DEPEND=">=media-video/vapoursynth-37
 		>=sci-libs/fftw-3.3.4"
 RDEPEND="${DEPEND}"
 
+src_prepare() {
+	mkdir -p vapoursynth/include || die
+	ln -s /usr/include/vapoursynth/*.h vapoursynth/include/ || die
+	default
+}
+
 src_configure() {
 	emesonargs=(
 		"--libdir=/usr/$(get_libdir)/vapoursynth"
