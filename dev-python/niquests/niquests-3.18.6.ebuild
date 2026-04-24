@@ -20,7 +20,17 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/charset-normalizer-2[${PYTHON_USEDEP}]
 	<dev-python/charset-normalizer-4[${PYTHON_USEDEP}]
+	>=dev-python/kiss-headers-2.5.0[${PYTHON_USEDEP}]
 	>=dev-python/urllib3-future-2.13.903[${PYTHON_USEDEP}]
 	<dev-python/urllib3-future-3[${PYTHON_USEDEP}]
 	>=dev-python/wassima-1.0.1[${PYTHON_USEDEP}]
 	<dev-python/wassima-3[${PYTHON_USEDEP}]"
+
+src_prepare() {
+	rm -r src/niquests/_vendor/kiss_headers || die
+	find src/niquests -name '*.py' -exec \
+		sed -i 's/from \._vendor\.kiss_headers/from kiss_headers/' {} + || die
+	find src/niquests -name '*.py' -exec \
+		sed -i 's/from \.\._vendor\.kiss_headers/from kiss_headers/' {} + || die
+	distutils-r1_src_prepare
+}
