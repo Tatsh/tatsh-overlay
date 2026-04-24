@@ -1,84 +1,139 @@
 diff --git a/libs.json b/libs.json
-index 3825dfe..0e1b619 100644
 --- a/libs.json
 +++ b/libs.json
-@@ -41,7 +41,7 @@
+@@ -34,7 +34,7 @@
+         "machine": "x86_64",
          "pointer_size": 64,
-         "libdir": "",
+         "sysname": "macos",
+-        "link_type": "static",
++        "link_type": "dynamic",
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "x86_64"
+     },
+@@ -43,7 +43,7 @@
+         "machine": "arm64",
+         "pointer_size": 64,
+         "sysname": "macos",
+-        "link_type": "static",
++        "link_type": "dynamic",
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "arm64"
+     },
+@@ -52,7 +52,7 @@
+         "machine": "x86_64",
+         "pointer_size": 64,
          "sysname": "linux",
 -        "link_type": "static",
 +        "link_type": "dynamic",
          "libc": "gnu",
-         "so_name": "libcurl-impersonate-chrome.so",
-         "so_arch": "x86_64"
-@@ -52,7 +52,7 @@
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "x86_64"
+@@ -62,7 +62,7 @@
+         "machine": "x86_64",
          "pointer_size": 64,
-         "libdir": "",
          "sysname": "linux",
 -        "link_type": "static",
 +        "link_type": "dynamic",
          "libc": "musl",
-         "so_name": "libcurl-impersonate-chrome.so",
-         "so_arch": "x86_64"
-@@ -63,7 +63,7 @@
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "x86_64"
+@@ -72,7 +72,7 @@
+         "machine": "i686",
          "pointer_size": 32,
-         "libdir": "",
          "sysname": "linux",
 -        "link_type": "static",
 +        "link_type": "dynamic",
          "libc": "gnu",
-         "so_name": "libcurl-impersonate-chrome.so",
-         "so_arch": "i386"
-@@ -74,7 +74,7 @@
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "i386"
+@@ -82,7 +82,7 @@
+         "machine": "aarch64",
          "pointer_size": 64,
-         "libdir": "",
          "sysname": "linux",
 -        "link_type": "static",
 +        "link_type": "dynamic",
          "libc": "gnu",
-         "so_name": "libcurl-impersonate-chrome.so",
-         "so_arch": "aarch64"
-@@ -96,7 +96,7 @@
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "aarch64"
+@@ -92,7 +92,7 @@
+         "machine": "aarch64",
+         "pointer_size": 64,
+         "sysname": "linux-android",
+-        "link_type": "static",
++        "link_type": "dynamic",
+         "libc": "android",
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "aarch64"
+@@ -102,7 +102,7 @@
+         "machine": "riscv64",
+         "pointer_size": 64,
+         "sysname": "linux",
+-        "link_type": "static",
++        "link_type": "dynamic",
+         "libc": "gnu",
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "riscv64"
+@@ -112,7 +112,7 @@
+         "machine": "aarch64",
+         "pointer_size": 64,
+         "sysname": "linux",
+-        "link_type": "static",
++        "link_type": "dynamic",
+         "libc": "musl",
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "aarch64"
+@@ -122,7 +122,7 @@
+         "machine": "armv6l",
          "pointer_size": 32,
-         "libdir": "",
          "sysname": "linux",
 -        "link_type": "static",
 +        "link_type": "dynamic",
          "libc": "gnueabihf",
-         "so_name": "libcurl-impersonate-chrome.so",
-         "so_arch": "arm"
-@@ -107,7 +107,7 @@
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "arm"
+@@ -132,7 +132,7 @@
+         "machine": "armv7l",
          "pointer_size": 32,
-         "libdir": "",
          "sysname": "linux",
 -        "link_type": "static",
 +        "link_type": "dynamic",
          "libc": "gnueabihf",
-         "so_name": "libcurl-impersonate-chrome.so",
-         "so_arch": "arm"
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "arm"
+@@ -142,7 +142,7 @@
+         "machine": "loongarch64",
+         "pointer_size": 64,
+         "sysname": "linux",
+-        "link_type": "static",
++        "link_type": "dynamic",
+         "libc": "gnu",
+         "obj_name": "libcurl-impersonate.a",
+         "arch": "loongarch64"
 diff --git a/scripts/build.py b/scripts/build.py
-index 4891867..926f2c1 100644
 --- a/scripts/build.py
 +++ b/scripts/build.py
-@@ -103,7 +103,6 @@ def get_curl_libraries():
+@@ -107,9 +107,7 @@
+
+
+ def get_curl_archives():
+-    print("Files in linking directory:")
+-    print(os.listdir(libdir))
+-    if is_static:
++    if is_static and libdir.exists():
+         # note that the order of libraries matters
+         # https://stackoverflow.com/a/36581865
+         return [str(libdir / arch["obj_name"])]
+@@ -146,7 +144,6 @@
  ffibuilder = FFI()
  system = platform.system()
  root_dir = Path(__file__).parent.parent
 -download_libcurl()
- 
- 
- ffibuilder.set_source(
-@@ -113,7 +112,6 @@ ffibuilder.set_source(
-     """,
-     # FIXME from `curl-impersonate`
-     libraries=get_curl_libraries(),
--    extra_objects=get_curl_archives(),
-     library_dirs=[arch["libdir"]],
-     source_extension=".c",
-     include_dirs=[
-@@ -132,4 +130,4 @@ with open(root_dir / "ffi/cdef.c") as f:
- 
- 
+
+ # With mega archive, we only have one to link
+ static_libs = get_curl_archives()
+@@ -197,4 +194,4 @@
+
+
  if __name__ == "__main__":
 -    ffibuilder.compile(verbose=False)
 +    ffibuilder.compile(verbose=True)
