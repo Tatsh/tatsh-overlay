@@ -254,10 +254,10 @@ inherit check-reqs desktop dotnet-pkg xdg
 
 DESCRIPTION="Experimental Nintendo Switch Emulator written in C#"
 HOMEPAGE="https://ryujinx.app/ https://git.ryujinx.app/ryubing/ryujinx/"
-SRC_URI="https://git.ryujinx.app/ryubing/${PN}/-/archive/Canary-${PV}/${PN}-Canary-${PV}.tar.gz -> ${P}.tar.gz
-	https://git.ryujinx.app/ryubing/libhac/-/package_files/172/download -> ${PN}.libhac.0.20.0-alpha.103+af879d1b.nupkg
+SRC_URI="https://git.ryujinx.app/ryubing/${PN}/archive/Canary-${PV}.tar.gz -> ${P}.tar.gz
+	https://git.ryujinx.app/projects/-/packages/nuget/ryujinx.libhac/0.20.0-alpha.103/files/89 -> ${PN}.libhac.0.20.0-alpha.103.nupkg
 	${NUGET_URIS}"
-S="${WORKDIR}/${PN}-Canary-${PV}"
+S="${WORKDIR}/ryubing"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
