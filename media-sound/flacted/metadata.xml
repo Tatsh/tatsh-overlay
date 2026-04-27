@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="pypi">flacted</remote-id>
 		<remote-id type="github">Tatsh/flacted</remote-id>
 	</upstream>
 </pkgmetadata>

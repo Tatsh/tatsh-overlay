@@ -2,21 +2,24 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_1{2,3,4} )
+PYTHON_COMPAT=( python3_{10..14} )
 DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1 pypi
 
 DESCRIPTION="Front-end to metaflac to set common FLAC tags."
-HOMEPAGE="https://github.com/Tatsh/flacted"
-S="${WORKDIR}/${PN}-${PV}"
+HOMEPAGE="
+	https://github.com/Tatsh/flacted
+	https://pypi.org/project/flacted/
+"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-python/bascom[${PYTHON_USEDEP}]
-	dev-python/click[${PYTHON_USEDEP}]
-	app-misc/deltona[${PYTHON_USEDEP}]
-	dev-python/typing-extensions[${PYTHON_USEDEP}]
+RDEPEND=">=app-misc/deltona-0.1.4[${PYTHON_USEDEP}]
+	>=dev-python/bascom-0.1.2[${PYTHON_USEDEP}]
+	>=dev-python/click-8.3.2[${PYTHON_USEDEP}]
+	>=dev-python/typing-extensions-4.15.0[${PYTHON_USEDEP}]
 	media-libs/flac"
 BDEPEND="test? (
 	${RDEPEND}
@@ -24,9 +27,9 @@ BDEPEND="test? (
 	dev-python/pytest-mock[${PYTHON_USEDEP}]
 )"
 
+distutils_enable_tests pytest
+
 src_install() {
 	distutils-r1_src_install
 	doman "man/${PN}.1"
 }
-
-distutils_enable_tests pytest
