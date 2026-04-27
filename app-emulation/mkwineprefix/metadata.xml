@@ -6,6 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
+		<remote-id type="pypi">mkwineprefix</remote-id>
 		<remote-id type="github">Tatsh/mkwineprefix</remote-id>
 	</upstream>
 </pkgmetadata>
