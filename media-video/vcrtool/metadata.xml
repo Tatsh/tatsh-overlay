@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="pypi">vcrtool</remote-id>
+		<remote-id type="github">Tatsh/vcrtool</remote-id>
 	</upstream>
 </pkgmetadata>
