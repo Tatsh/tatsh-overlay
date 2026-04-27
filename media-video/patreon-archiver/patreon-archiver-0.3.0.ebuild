@@ -18,12 +18,13 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/anyio-4.13.0[${PYTHON_USEDEP}]
+	>=dev-python/archiver-stats-0.0.1[${PYTHON_USEDEP}]
 	>=dev-python/bascom-0.1.2[${PYTHON_USEDEP}]
 	>=dev-python/click-8.3.2[${PYTHON_USEDEP}]
-	>=dev-python/niquests-3.18.4[${PYTHON_USEDEP}]
-	>=dev-python/rich-14.3.3[${PYTHON_USEDEP}]
+	>=dev-python/niquests-3.18.6[${PYTHON_USEDEP}]
+	>=dev-python/rich-15.0.0[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.15.0[${PYTHON_USEDEP}]
-	>=dev-python/yt-dlp-utils-0.0.8[${PYTHON_USEDEP}]"
+	>=dev-python/yt-dlp-utils-0.1.0[${PYTHON_USEDEP}]"
 BDEPEND="test? (
 	${RDEPEND}
 	dev-python/mock[${PYTHON_USEDEP}]
