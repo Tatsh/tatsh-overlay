@@ -16,6 +16,8 @@ ailln
 aiofile
 aiofiles
 aiohttp
+aioimaplib
+aiosmtplib
 aiosqlite
 ajstarks
 akavel
@@ -110,6 +112,7 @@ azcore
 azidentity
 babelfish
 backgroundremover
+bamthomas
 bamum
 bandai
 barbieri
