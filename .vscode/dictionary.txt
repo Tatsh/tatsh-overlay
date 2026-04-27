@@ -1841,6 +1841,7 @@ rustflags
 rwcarlsen
 ryanuber
 ryszard
+ryubing
 ryujinx
 safetensors
 sagikazarmark
