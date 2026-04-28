@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from typing import Collection, Iterator
 import re
@@ -224,14 +225,21 @@ class EbuildParser:
         dict[str, set[Dependency]]
             Dict with '' key and USE flag keys mapping to dependency sets.
         """
-        result: dict[str, set[Dependency]] = {'': set()}
         tokens = value.replace('\n', ' ').split()
-        self._parse_dep_tokens(tokens, 0, len(tokens), '', result)
+        _, result = self._parse_dep_tokens(tokens, 0, len(tokens), '')
+        result.setdefault('', set())
         return result
 
-    def _parse_dep_tokens(self, tokens: list[str], start: int, end: int, use_context: str,
-                          result: dict[str, set[Dependency]]) -> int:
-        """Recursively parse dependency tokens with USE flag context."""
+    def _parse_dep_tokens(self, tokens: Sequence[str], start: int, end: int,
+                          use_context: str) -> tuple[int, dict[str, set[Dependency]]]:
+        """Recursively parse dependency tokens with USE flag context.
+
+        Returns
+        -------
+        tuple[int, dict[str, set[Dependency]]]
+            Index of the first token after the consumed range, and the parsed mapping.
+        """
+        result: dict[str, set[Dependency]] = {}
         i = start
         while i < end:
             token = tokens[i]
@@ -240,8 +248,7 @@ class EbuildParser:
                 if use_context:
                     use_flag = f'{use_context}+{use_flag}'
                 if i + 1 < end and tokens[i + 1] == '(':
-                    if use_flag not in result:
-                        result[use_flag] = set()
+                    result.setdefault(use_flag, set())
                     i += 2
                     paren_count = 1
                     block_start = i
@@ -251,15 +258,15 @@ class EbuildParser:
                         elif tokens[i] == ')':
                             paren_count -= 1
                         i += 1
-                    self._parse_dep_tokens(tokens, block_start, i - 1, use_flag, result)
+                    _, sub = self._parse_dep_tokens(tokens, block_start, i - 1, use_flag)
+                    for k, v in sub.items():
+                        result.setdefault(k, set()).update(v)
                     continue
             elif token not in ('(', ')'):
-                key = use_context if use_context else ''
-                if key not in result:
-                    result[key] = set()
-                result[key].add(self._parse_dependency(token))
+                key = use_context or ''
+                result.setdefault(key, set()).add(self._parse_dependency(token))
             i += 1
-        return i
+        return i, result
 
     def _parse_dependency(self, dep_str: str) -> Dependency:
         """Parse a single dependency string into a Dependency object."""
@@ -312,7 +319,7 @@ class EbuildParser:
 
     def set_variable(self,
                      name: str,
-                     value: str | list[str] | bool | int,
+                     value: str | Sequence[str] | bool | int,
                      *,
                      delimited_list: bool = False) -> None:
         """Set a variable value and update content.
@@ -321,16 +328,16 @@ class EbuildParser:
         ----------
         name : str
             Variable name.
-        value : str | list[str] | bool | int
-            New value (bool True becomes '1', int converts to str, lists become arrays).
+        value : str | Sequence[str] | bool | int
+            New value (bool True becomes '1', int converts to str, sequences become arrays).
         delimited_list : bool
-            If ``True`` and value is a list, format as a delimited string instead of an array.
+            If ``True`` and value is a sequence, format as a delimited string instead of an array.
         """
         if isinstance(value, bool):
             value = '1' if value else '0'
         elif isinstance(value, int):
             value = str(value)
-        elif isinstance(value, list):
+        elif isinstance(value, Sequence):
             if not delimited_list:
                 value = '(\n\t' + '\n\t'.join(str(x) for x in value) + '\n)'
             else:
