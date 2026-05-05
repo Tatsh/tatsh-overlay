@@ -58,6 +58,7 @@ NA_INHERIT = frozenset({
 NA_CATEGORIES = frozenset({
     'acct-user',
     'acct-group',
+    'app-vim',
     'media-fonts',
     'mpv-plugin',
     'mpv-shader',
@@ -266,11 +267,19 @@ def is_na(category: str, eclasses: Sequence[str], build_system: str) -> tuple[bo
 
 
 def already_handles_tests(parser: EbuildParser) -> bool:
-    """Whether the ebuild already wires tests in some form."""
+    """Whether the ebuild already wires tests in some form.
+
+    Includes the case where the maintainer has deliberately set
+    ``RESTRICT="test"`` — that is a conscious decision (tests need
+    network, GPUs, models, etc.) and Phase 1 should leave those alone.
+    """
     text = parser.content
     if 'distutils_enable_tests' in text:
         return True
     if 'src_test' in parser.phases:
+        return True
+    restrict = parser.get_variable('RESTRICT')
+    if isinstance(restrict, str) and re.search(r'\btest\b', restrict):
         return True
     iuse = parser.get_variable('IUSE')
     if isinstance(iuse, str) and re.search(r'\btest\b', iuse):

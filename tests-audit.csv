@@ -48,9 +48,9 @@ app-pda/netmuxd/netmuxd-0.3.0.ebuild,app-pda,netmuxd,cargo,github,jkcoxson/netmu
 app-portage/livecheck/livecheck-0.2.0.ebuild,app-portage,livecheck,python,unknown,,false,,true,no GitHub upstream — manual review needed
 app-portage/livecheck/livecheck-0.2.1.ebuild,app-portage,livecheck,python,unknown,,false,,true,no GitHub upstream — manual review needed
 app-portage/upkeep/upkeep-1.7.0.ebuild,app-portage,upkeep,python,github,Tatsh/upkeep@v1.7.0,true,pytest,true,
-app-vim/kotlin-vim/kotlin-vim-20221230.ebuild,app-vim,kotlin-vim,other,n/a,,false,,false,N/A (eclass=vim-plugin)
-app-vim/vim-wakatime/vim-wakatime-12.0.0.ebuild,app-vim,vim-wakatime,other,n/a,,false,,false,N/A (eclass=vim-plugin)
-app-vim/youcompleteme/youcompleteme-20241216.ebuild,app-vim,youcompleteme,python-single,github,ycm-core/YouCompleteMe@master,true,pytest,false,no pyproject/setup.py — verify framework manually
+app-vim/kotlin-vim/kotlin-vim-20221230.ebuild,app-vim,kotlin-vim,other,n/a,,false,,false,N/A (category=app-vim)
+app-vim/vim-wakatime/vim-wakatime-12.0.0.ebuild,app-vim,vim-wakatime,other,n/a,,false,,false,N/A (category=app-vim)
+app-vim/youcompleteme/youcompleteme-20241216.ebuild,app-vim,youcompleteme,python-single,n/a,,false,,false,N/A (category=app-vim)
 dev-build/node-gyp/node-gyp-11.4.2-r1.ebuild,dev-build,node-gyp,python-multi,unknown,,false,,false,no GitHub upstream — manual review needed
 dev-cpp/cli11/cli11-2.6.2.ebuild,dev-cpp,cli11,cmake,github,CLIUtils/cli11@v2.6.2,true,cmake,true,verify BUILD_TESTING toggle in CMakeLists.txt
 dev-cpp/cpp-jwt/cpp-jwt-1.5.1.ebuild,dev-cpp,cpp-jwt,cmake,github,arun11299/cpp-jwt@v1.5.1,true,cmake,true,verify BUILD_TESTING toggle in CMakeLists.txt
@@ -94,7 +94,7 @@ dev-python/curated-tokenizers/curated-tokenizers-0.0.9.ebuild,dev-python,curated
 dev-python/curated-tokenizers/curated-tokenizers-2.0.0.ebuild,dev-python,curated-tokenizers,python,github,explosion/curated-tokenizers@v2.0.0,true,pytest,false,
 dev-python/curated-transformers/curated-transformers-2.0.1.ebuild,dev-python,curated-transformers,python,github,explosion/curated-transformers@v2.0.1,true,pytest,false,
 dev-python/curl-cffi/curl-cffi-0.15.0.ebuild,dev-python,curl-cffi,python,unknown,,false,,true,no GitHub upstream — manual review needed
-dev-python/cxxfilt/cxxfilt-0.3.0.ebuild,dev-python,cxxfilt,python,github,afq984/python-cxxfilt@v0.3.0,true,pytest,false,
+dev-python/cxxfilt/cxxfilt-0.3.0.ebuild,dev-python,cxxfilt,python,github,afq984/python-cxxfilt@v0.3.0,true,pytest,true,
 dev-python/cyclopts/cyclopts-4.11.0.ebuild,dev-python,cyclopts,python,github,BrianPugh/cyclopts@v4.11.0,true,pytest,false,
 dev-python/cymem/cymem-2.0.13.ebuild,dev-python,cymem,python,github,explosion/cymem@release-v2.0.13,false,,false,
 dev-python/decli/decli-0.6.3.ebuild,dev-python,decli,python,github,Woile/decli@v0.6.3,true,pytest,true,
@@ -118,8 +118,8 @@ dev-python/gooey/gooey-1.0.8.1-r3.ebuild,dev-python,gooey,python,github,chriskie
 dev-python/halo/halo-0.0.31.ebuild,dev-python,halo,python,github,manrajgrover/halo@master,true,pytest,true,
 dev-python/hsh/hsh-1.1.0.ebuild,dev-python,hsh,python,github,chrissimpkins/hsh@v1.1.0,true,pytest,true,
 dev-python/httpx-sse/httpx-sse-0.4.3.ebuild,dev-python,httpx-sse,python,github,florimondmanca/httpx-sse@0.4.3,true,pytest,false,
-dev-python/ida-netnode/ida-netnode-3.0.ebuild,dev-python,ida-netnode,python,unknown,,false,,false,no GitHub upstream — manual review needed
-dev-python/ida-settings/ida-settings-3.3.0.ebuild,dev-python,ida-settings,python,github,williballenthin/ida-settings@v3.3.0,false,,false,
+dev-python/ida-netnode/ida-netnode-3.0.ebuild,dev-python,ida-netnode,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/ida-settings/ida-settings-3.3.0.ebuild,dev-python,ida-settings,python,github,williballenthin/ida-settings@v3.3.0,false,,true,
 dev-python/jaconv/jaconv-0.5.0.ebuild,dev-python,jaconv,python,unknown,,false,,false,no GitHub upstream — manual review needed
 dev-python/jamo/jamo-0.4.1.ebuild,dev-python,jamo,python,unknown,,false,,false,no GitHub upstream — manual review needed
 dev-python/jetpytools/jetpytools-2.2.7.ebuild,dev-python,jetpytools,python,unknown,,false,,true,no GitHub upstream — manual review needed
@@ -244,7 +244,7 @@ dev-util/prettier/prettier-3.6.2-r1.ebuild,dev-util,prettier,yarn,unknown,,false
 dev-util/react-native-decompiler/react-native-decompiler-0.2.4-r1.ebuild,dev-util,react-native-decompiler,yarn,github,numandev1/react-native-decompiler@master,true,yarn,false,inspect package.json scripts.test
 dev-util/skillshare/skillshare-0.19.5.ebuild,dev-util,skillshare,go,github,runkids/skillshare@v0.19.5,true,go,false,
 dev-util/spimdisasm/spimdisasm-1.40.2.ebuild,dev-util,spimdisasm,python,unknown,,false,,false,no GitHub upstream — manual review needed
-dev-util/splat64/splat64-0.39.1.ebuild,dev-util,splat64,python,github,ethteck/splat@0.39.1,true,pytest,false,
+dev-util/splat64/splat64-0.39.1.ebuild,dev-util,splat64,python,github,ethteck/splat@0.39.1,true,pytest,true,
 dev-util/sqlfluff/sqlfluff-4.1.0.ebuild,dev-util,sqlfluff,python,unknown,,false,,true,no GitHub upstream — manual review needed
 dev-util/vcpkg-tool/vcpkg-tool-2026.4.8.ebuild,dev-util,vcpkg-tool,cmake,github,microsoft/vcpkg-tool@main,false,,false,
 dev-util/vivisect/vivisect-1.3.2.ebuild,dev-util,vivisect,python,github,vivisect/vivisect@v1.3.2,false,,true,
@@ -270,7 +270,7 @@ games-arcade/stepmania/stepmania-5.1.0_beta2_p20221114-r8.ebuild,games-arcade,st
 games-arcade/super-mario-bros-remastered/super-mario-bros-remastered-1.1.0.ebuild,games-arcade,super-mario-bros-remastered,other,github,JHDev2006/Super-Mario-Bros.-Remastered-Public@1.1.0,false,,false,
 games-emulation/ares/ares-147.ebuild,games-emulation,ares,cmake,github,ares-emulator/ares@v147,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
 games-emulation/bsnes-hd/bsnes-hd-10.6_beta.ebuild,games-emulation,bsnes-hd,other,github,DerKoun/bsnes-hd@master,false,,false,
-games-emulation/bsnes-mercury-performance-libretro/bsnes-mercury-performance-libretro-1.0_pre20241021.ebuild,games-emulation,bsnes-mercury-performance-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/bsnes-mercury-performance-libretro/bsnes-mercury-performance-libretro-1.0_pre20241021.ebuild,games-emulation,bsnes-mercury-performance-libretro,other,n/a,,false,,true,N/A (eclass=libretro-core)
 games-emulation/cemu/cemu-2.6.ebuild,games-emulation,cemu,cmake,github,cemu-project/Cemu@v2.6,false,,false,
 games-emulation/citra/citra-20241029-r1.ebuild,games-emulation,citra,cmake,github,PabloMK7/citra,false,,false,no resolvable git ref
 games-emulation/dolphin-libretro/dolphin-libretro-2509.ebuild,games-emulation,dolphin-libretro,cmake,n/a,,false,,false,N/A (eclass=libretro-core)
@@ -297,7 +297,7 @@ games-emulation/mupen64plus-input-raphnetraw/mupen64plus-input-raphnetraw-1.1.0-
 games-emulation/mupen64plus-video-gliden64/mupen64plus-video-gliden64-4.0_p20260109.ebuild,games-emulation,mupen64plus-video-gliden64,cmake,github,gonetz/GLideN64@master,false,,false,
 games-emulation/pcsx-rearmed-libretro/pcsx-rearmed-libretro-1.0_pre20260103.ebuild,games-emulation,pcsx-rearmed-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
 games-emulation/play/play-0.75.ebuild,games-emulation,play,cmake,github,jpd002/Play-@0.75,false,,false,
-games-emulation/ppsspp-libretro/ppsspp-libretro-1.20.3.ebuild,games-emulation,ppsspp-libretro,cmake,n/a,,false,,false,N/A (eclass=libretro)
+games-emulation/ppsspp-libretro/ppsspp-libretro-1.20.3.ebuild,games-emulation,ppsspp-libretro,cmake,n/a,,false,,true,N/A (eclass=libretro)
 games-emulation/prboom-libretro/prboom-libretro-1.0_pre20241227.ebuild,games-emulation,prboom-libretro,other,n/a,,false,,false,N/A (eclass=libretro)
 games-emulation/puae-libretro/puae-libretro-1.0_pre20251102.ebuild,games-emulation,puae-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
 games-emulation/puae2021-libretro/puae2021-libretro-1.0_pre20251102.ebuild,games-emulation,puae2021-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
@@ -362,7 +362,7 @@ media-video/instagram-archiver/instagram-archiver-0.4.0.ebuild,media-video,insta
 media-video/magewell-pro-capture/magewell-pro-capture-1.3.0.4490.ebuild,media-video,magewell-pro-capture,kmod,n/a,,false,,false,N/A (kernel module)
 media-video/mnamer/mnamer-2.6.0.ebuild,media-video,mnamer,python,github,jkwill87/mnamer@2.6.0,true,pytest,true,
 media-video/mvsfunc/mvsfunc-10_p20230321-r2.ebuild,media-video,mvsfunc,python,github,HomeOfVapourSynthEvolution/mvsfunc@master,false,,false,
-media-video/open-in-mpv/open-in-mpv-0.1.3-r1.ebuild,media-video,open-in-mpv,python,github,Tatsh/open-in-mpv@v0.1.3,true,pytest,false,
+media-video/open-in-mpv/open-in-mpv-0.1.3-r1.ebuild,media-video,open-in-mpv,python,github,Tatsh/open-in-mpv@v0.1.3,true,pytest,true,
 media-video/opentimelineio/opentimelineio-0.18.1.ebuild,media-video,opentimelineio,cmake,github,AcademySoftwareFoundation/OpenTimelineIO@v0.18.1,true,cmake,true,verify BUILD_TESTING toggle in CMakeLists.txt
 media-video/patreon-archiver/patreon-archiver-0.3.0.ebuild,media-video,patreon-archiver,python,github,Tatsh/patreon-archiver@v0.3.0,true,pytest,true,
 media-video/scc-tools/scc-tools-3.5.ebuild,media-video,scc-tools,none,n/a,,false,,false,N/A (no build system)
@@ -429,7 +429,7 @@ net-misc/curl-impersonate/curl-impersonate-1.5.5.ebuild,net-misc,curl-impersonat
 net-misc/ipv6-config-update/ipv6-config-update-0.1.1.ebuild,net-misc,ipv6-config-update,cmake,github,Tatsh/ipv6-config-update@v0.1.1,false,,false,
 net-misc/muffet/muffet-2.11.2.ebuild,net-misc,muffet,go,github,raviqqe/muffet@v2.11.2,true,go,false,
 net-misc/phantomjs/phantomjs-2.1.1_p20241215.ebuild,net-misc,phantomjs,cmake,github,Tatsh/phantomjs@master,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
-net-misc/wayback-machine-downloader/wayback-machine-downloader-2.3.1_p20240208.ebuild,net-misc,wayback-machine-downloader,ruby,github,ShiftaDeband/wayback-machine-downloader@master,true,ruby,false,
+net-misc/wayback-machine-downloader/wayback-machine-downloader-2.3.1_p20240208.ebuild,net-misc,wayback-machine-downloader,ruby,github,ShiftaDeband/wayback-machine-downloader@master,true,ruby,true,
 net-p2p/xirvik-tools/xirvik-tools-0.6.0.ebuild,net-p2p,xirvik-tools,python,github,Tatsh/xirvik-tools@v0.6.0,true,pytest,true,
 net-print/epson-backend/epson-backend-1.2.6.ebuild,net-print,epson-backend,other,unknown,,false,,false,no GitHub upstream — manual review needed
 net-print/epson-printer-utility/epson-printer-utility-1.2.2.ebuild,net-print,epson-printer-utility,other,unknown,,false,,false,no GitHub upstream — manual review needed
