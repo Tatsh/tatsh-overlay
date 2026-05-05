@@ -1029,6 +1029,7 @@ kisielk
 kitgen
 kiyamou
 klauspost
+kmod
 knadh
 knownhosts
 koanf
@@ -1795,6 +1796,7 @@ replaceall
 repr
 reqs
 resourcemanager
+resp
 respx
 retroachievements
 retroarch

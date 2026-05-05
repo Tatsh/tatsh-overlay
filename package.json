@@ -17,6 +17,7 @@
     "files": ["*"],
     "ignorePaths": [
       "*.1",
+      "*.csv",
       "*.har",
       "*.lock",
       "*.patch",

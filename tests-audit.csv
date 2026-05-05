@@ -1,0 +1,467 @@
+ebuild,category,package,build_system,upstream_kind,upstream_ref,has_tests,test_framework,already_enabled,notes
+acct-group/kokoro-fastapi/kokoro-fastapi-0.ebuild,acct-group,kokoro-fastapi,other,n/a,,false,,false,N/A (category=acct-group)
+acct-group/pihole/pihole-0-r1.ebuild,acct-group,pihole,other,n/a,,false,,false,N/A (category=acct-group)
+acct-group/tabbyapi/tabbyapi-0.ebuild,acct-group,tabbyapi,other,n/a,,false,,false,N/A (category=acct-group)
+acct-user/kokoro-fastapi/kokoro-fastapi-0.ebuild,acct-user,kokoro-fastapi,other,n/a,,false,,false,N/A (category=acct-user)
+acct-user/pihole/pihole-0-r1.ebuild,acct-user,pihole,other,n/a,,false,,false,N/A (category=acct-user)
+acct-user/tabbyapi/tabbyapi-0.ebuild,acct-user,tabbyapi,other,n/a,,false,,false,N/A (category=acct-user)
+app-admin/awscli-plugin-endpoint/awscli-plugin-endpoint-0.4-r4.ebuild,app-admin,awscli-plugin-endpoint,python,unknown,,false,,false,no GitHub upstream — manual review needed
+app-admin/mb8611/mb8611-0.0.2-r1.ebuild,app-admin,mb8611,python,github,Tatsh/mb8611@v0.0.2,true,pytest,true,
+app-admin/padd/padd-3.11.1.ebuild,app-admin,padd,none,n/a,,false,,false,N/A (no build system)
+app-arch/asar/asar-4.0.1-r1.ebuild,app-arch,asar,yarn,github,electron/asar@v4.0.1,true,yarn,false,inspect package.json scripts.test
+app-arch/bfcodec/bfcodec-0.0.4.ebuild,app-arch,bfcodec,cmake,github,Tatsh/bfcodec@v0.0.4,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
+app-arch/bitrock-unpacker/bitrock-unpacker-20160622.ebuild,app-arch,bitrock-unpacker,none,n/a,,false,,false,N/A (no build system)
+app-arch/pychoco/pychoco-0.1.5.ebuild,app-arch,pychoco,python,github,Tatsh/pychoco@v0.1.5,true,pytest,true,
+app-arch/zarchive/zarchive-0.1.2.ebuild,app-arch,zarchive,cmake,github,Exzap/ZArchive@v0.1.2,false,,false,
+app-cdr/cdi2nero/cdi2nero-0.9.9-r1.ebuild,app-cdr,cdi2nero,none,n/a,,false,,false,N/A (no build system)
+app-cdr/cdirip/cdirip-0.6.2-r2.ebuild,app-cdr,cdirip,other,unknown,,false,,false,no GitHub upstream — manual review needed
+app-cdr/gendisc/gendisc-0.1.0.ebuild,app-cdr,gendisc,python,github,Tatsh/gendisc@v0.1.0,true,pytest,true,
+app-cdr/qpxtool/qpxtool-0.8.1.7.ebuild,app-cdr,qpxtool,other,github,speed47/qpxtool@master,false,,false,
+app-cdr/redumper/redumper-715.ebuild,app-cdr,redumper,cmake,github,superg/redumper@main,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
+app-crypt/lssecret/lssecret-20230105-r1.ebuild,app-crypt,lssecret,none,n/a,,false,,false,N/A (no build system)
+app-emulation/basiliskii/basiliskii-1.0.0_p20251227.ebuild,app-emulation,basiliskii,autotools,github,kanjitalk755/macemu@v1.0.0,false,autotools,false,check Makefile.am for check_PROGRAMS
+app-emulation/mkwineprefix/mkwineprefix-0.1.0.ebuild,app-emulation,mkwineprefix,python,github,Tatsh/mkwineprefix@v0.1.0,true,pytest,true,
+app-emulation/pumpkinos/pumpkinos-20250224.ebuild,app-emulation,pumpkinos,other,github,migueletto/PumpkinOS@master,false,,false,
+app-emulation/sheepshaver/sheepshaver-1.0.0_p20251227.ebuild,app-emulation,sheepshaver,autotools,github,kanjitalk755/macemu@v1.0.0,false,autotools,false,check Makefile.am for check_PROGRAMS
+app-misc/baldwin/baldwin-0.1.0.ebuild,app-misc,baldwin,python,github,Tatsh/baldwin@v0.1.0,true,pytest,true,
+app-misc/cmdpack/cmdpack-1.03.ebuild,app-misc,cmdpack,other,github,cmdpack/cmdpack@master,false,,false,
+app-misc/csvlens/csvlens-0.15.1.ebuild,app-misc,csvlens,cargo,github,YS-L/csvlens@v0.15.1,true,cargo,false,integration tests directory
+app-misc/deark/deark-1.7.2.ebuild,app-misc,deark,none,n/a,,false,,false,N/A (no build system)
+app-misc/deltona/deltona-0.2.0.ebuild,app-misc,deltona,python,github,Tatsh/deltona@v0.2.0,true,pytest,true,
+app-misc/fx/fx-39.2.0.ebuild,app-misc,fx,go,github,antonmedv/fx@39.2.0,true,go,false,
+app-misc/mcontrolcenter/mcontrolcenter-0.5.1.ebuild,app-misc,mcontrolcenter,cmake,github,dmitry-s93/MControlCenter@0.5.1,false,,false,
+app-misc/mutt-oauth2/mutt-oauth2-0.2.0.ebuild,app-misc,mutt-oauth2,python,github,Tatsh/mutt-oauth2@v0.2.0,true,pytest,true,
+app-misc/nvidia-greenboost/nvidia-greenboost-20260315.ebuild,app-misc,nvidia-greenboost,kmod,n/a,,false,,false,N/A (kernel module)
+app-misc/pyrescene/pyrescene-0.7-r3.ebuild,app-misc,pyrescene,python,unknown,,false,,false,no GitHub upstream — manual review needed
+app-misc/tasksh/tasksh-1.2.0-r1.ebuild,app-misc,tasksh,cmake,github,GothenburgBitFactory/taskshell@v1.2.0,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
+app-misc/usps-track/usps-track-0.0.5.ebuild,app-misc,usps-track,python,github,Tatsh/usps-track@v0.0.5,true,pytest,true,
+app-misc/zwave-js-server/zwave-js-server-3.5.0-r1.ebuild,app-misc,zwave-js-server,yarn,github,zwave-js/zwave-js-server@3.5.0,true,yarn,false,inspect package.json scripts.test
+app-mobilephone/better-adb-sync/better-adb-sync-1.4.0-r1.ebuild,app-mobilephone,better-adb-sync,python,github,jb2170/better-adb-sync@v1.4.0,false,,false,
+app-mobilephone/ipad-charge/ipad-charge-20210107-r1.ebuild,app-mobilephone,ipad-charge,other,github,mkorenkov/ipad_charge@master,false,,false,
+app-mobilephone/revanced-cli/revanced-cli-6.0.0.ebuild,app-mobilephone,revanced-cli,other,github,ReVanced/revanced-cli@v6.0.0,false,,false,
+app-mobilephone/revanced-patches/revanced-patches-5.50.2.ebuild,app-mobilephone,revanced-patches,none,n/a,,false,,false,N/A (no build system)
+app-office/glabels/glabels-20260327-r1.ebuild,app-office,glabels,cmake,github,j-evins/glabels-qt@master,false,,false,
+app-pda/altserver/altserver-0.0.5.ebuild,app-pda,altserver,none,n/a,,false,,false,N/A (no build system)
+app-pda/libplist/libplist-2.7.0-r1.ebuild,app-pda,libplist,autotools,github,libimobiledevice/libplist@2.7.0,true,autotools,false,check Makefile.am for check_PROGRAMS
+app-pda/libtatsu/libtatsu-1.0.5.ebuild,app-pda,libtatsu,autotools,github,libimobiledevice/libtatsu@1.0.5,false,autotools,false,check Makefile.am for check_PROGRAMS
+app-pda/netmuxd/netmuxd-0.3.0.ebuild,app-pda,netmuxd,cargo,github,jkcoxson/netmuxd@v0.3.0,false,,false,uncertain — Cargo inline tests not detectable
+app-portage/livecheck/livecheck-0.2.0.ebuild,app-portage,livecheck,python,unknown,,false,,true,no GitHub upstream — manual review needed
+app-portage/livecheck/livecheck-0.2.1.ebuild,app-portage,livecheck,python,unknown,,false,,true,no GitHub upstream — manual review needed
+app-portage/upkeep/upkeep-1.7.0.ebuild,app-portage,upkeep,python,github,Tatsh/upkeep@v1.7.0,true,pytest,true,
+app-vim/kotlin-vim/kotlin-vim-20221230.ebuild,app-vim,kotlin-vim,other,n/a,,false,,false,N/A (eclass=vim-plugin)
+app-vim/vim-wakatime/vim-wakatime-12.0.0.ebuild,app-vim,vim-wakatime,other,n/a,,false,,false,N/A (eclass=vim-plugin)
+app-vim/youcompleteme/youcompleteme-20241216.ebuild,app-vim,youcompleteme,python-single,github,ycm-core/YouCompleteMe@master,true,pytest,false,no pyproject/setup.py — verify framework manually
+dev-build/node-gyp/node-gyp-11.4.2-r1.ebuild,dev-build,node-gyp,python-multi,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-cpp/cli11/cli11-2.6.2.ebuild,dev-cpp,cli11,cmake,github,CLIUtils/cli11@v2.6.2,true,cmake,true,verify BUILD_TESTING toggle in CMakeLists.txt
+dev-cpp/cpp-jwt/cpp-jwt-1.5.1.ebuild,dev-cpp,cpp-jwt,cmake,github,arun11299/cpp-jwt@v1.5.1,true,cmake,true,verify BUILD_TESTING toggle in CMakeLists.txt
+dev-cpp/cpprestsdk/cpprestsdk-2.10.19-r3.ebuild,dev-cpp,cpprestsdk,cmake,github,microsoft/cpprestsdk@v2.10.19,false,,false,
+dev-cpp/tracy/tracy-0.13.1.ebuild,dev-cpp,tracy,cmake,github,wolfpld/tracy@v0.13.1,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
+dev-db/dbeaver-creds/dbeaver-creds-0.0.3.ebuild,dev-db,dbeaver-creds,none,n/a,,false,,false,N/A (no build system)
+dev-db/prisma-engines/prisma-engines-7.8.0.ebuild,dev-db,prisma-engines,cargo,github,prisma/prisma-engines@7.8.0,false,,false,uncertain — Cargo inline tests not detectable
+dev-db/snowflake-cli/snowflake-cli-3.16.0.ebuild,dev-db,snowflake-cli,python,github,snowflakedb/snowflake-cli@v3.16.0,true,pytest,true,
+dev-db/snowsql/snowsql-1.3.3.ebuild,dev-db,snowsql,other,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-libs/bincookie/bincookie-0.1.7.ebuild,dev-libs,bincookie,cmake,github,Tatsh/bincookie@v0.1.7,false,,true,
+dev-libs/corecrypto/corecrypto-2024.ebuild,dev-libs,corecrypto,cmake,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-libs/libfat16/libfat16-20250103.ebuild,dev-libs,libfat16,cmake,github,Vita3K/libfat16@master,false,,false,
+dev-libs/libfragmentzip/libfragmentzip-76.ebuild,dev-libs,libfragmentzip,autotools,github,tihmstar/libfragmentzip@76,false,autotools,false,check Makefile.am for check_PROGRAMS
+dev-libs/libpietendo/libpietendo-0.9.0.ebuild,dev-libs,libpietendo,none,n/a,,false,,false,N/A (no build system)
+dev-libs/libtoolchain/libtoolchain-0.8.0.ebuild,dev-libs,libtoolchain,none,n/a,,false,,false,N/A (no build system)
+dev-libs/marisa/marisa-0.2.6.ebuild,dev-libs,marisa,autotools,github,s-yata/marisa-trie@v0.2.6,true,autotools,false,check Makefile.am for check_PROGRAMS
+dev-libs/marisa/marisa-0.3.1.ebuild,dev-libs,marisa,autotools,github,s-yata/marisa-trie@v0.3.1,true,autotools,false,check Makefile.am for check_PROGRAMS
+dev-libs/mp/mp-1.0_p20210810.ebuild,dev-libs,mp,none,n/a,,false,,false,N/A (no build system)
+dev-libs/nativefiledialog-extended/nativefiledialog-extended-1.3.0.ebuild,dev-libs,nativefiledialog-extended,cmake,github,btzy/nativefiledialog-extended@v1.3.0,true,cmake,true,verify BUILD_TESTING toggle in CMakeLists.txt
+dev-libs/tihmstar-libgeneral/tihmstar-libgeneral-90.ebuild,dev-libs,tihmstar-libgeneral,autotools,github,tihmstar/${PN,false,,false,no resolvable git ref
+dev-libs/wolfssl/wolfssl-5.9.1.ebuild,dev-libs,wolfssl,autotools,github,wolfSSL/wolfssl@master,true,autotools,false,check Makefile.am for check_PROGRAMS
+dev-python/addict/addict-2.4.0.ebuild,dev-python,addict,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/aiofile/aiofile-3.9.0.ebuild,dev-python,aiofile,python,github,mosquito/aiofile@master,true,pytest,false,
+dev-python/aioimaplib/aioimaplib-2.0.1.ebuild,dev-python,aioimaplib,python,github,bamthomas/aioimaplib@2.0.1,true,pytest,false,
+dev-python/aiosmtplib/aiosmtplib-5.1.0.ebuild,dev-python,aiosmtplib,python,github,cole/aiosmtplib@v5.1.0,true,pytest,true,
+dev-python/archiver-stats/archiver-stats-0.0.1.ebuild,dev-python,archiver-stats,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/av/av-17.0.1.ebuild,dev-python,av,python,github,PyAV-Org/PyAV@v17.0.1,true,pytest,true,
+dev-python/bascom/bascom-0.1.2.ebuild,dev-python,bascom,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/blis/blis-1.3.3.ebuild,dev-python,blis,python,github,explosion/cython-blis@release-v1.3.3,true,pytest,false,
+dev-python/caio/caio-0.9.25.ebuild,dev-python,caio,python,github,mosquito/caio@0.9.25,true,pytest,false,
+dev-python/catalogue/catalogue-2.0.10.ebuild,dev-python,catalogue,python,github,explosion/catalogue@v2.0.10,false,,false,
+dev-python/catalogue/catalogue-2.1.0.ebuild,dev-python,catalogue,python,github,explosion/catalogue@v2.1.0,true,pytest,false,
+dev-python/cloudpathlib/cloudpathlib-0.23.0.ebuild,dev-python,cloudpathlib,python,github,drivendataorg/cloudpathlib@v0.23.0,true,pytest,false,
+dev-python/cn2an/cn2an-0.5.24.ebuild,dev-python,cn2an,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/colored/colored-2.3.2.ebuild,dev-python,colored,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/commandlines/commandlines-0.4.1-r2.ebuild,dev-python,commandlines,python,github,chrissimpkins/commandlines@v0.4.1,true,pytest,true,
+dev-python/confection/confection-1.3.3.ebuild,dev-python,confection,python,github,explosion/confection@release-v1.3.3,true,pytest,false,
+dev-python/crunch64/crunch64-0.6.2.ebuild,dev-python,crunch64,cargo,github,decompals/crunch64@0.6.2,false,,false,uncertain — Cargo inline tests not detectable
+dev-python/csvw/csvw-3.7.0.ebuild,dev-python,csvw,python,github,cldf/csvw@v3.7.0,true,pytest,false,
+dev-python/curated-tokenizers/curated-tokenizers-0.0.9.ebuild,dev-python,curated-tokenizers,python,github,explosion/curated-tokenizers@v0.0.9,false,,false,
+dev-python/curated-tokenizers/curated-tokenizers-2.0.0.ebuild,dev-python,curated-tokenizers,python,github,explosion/curated-tokenizers@v2.0.0,true,pytest,false,
+dev-python/curated-transformers/curated-transformers-2.0.1.ebuild,dev-python,curated-transformers,python,github,explosion/curated-transformers@v2.0.1,true,pytest,false,
+dev-python/curl-cffi/curl-cffi-0.15.0.ebuild,dev-python,curl-cffi,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/cxxfilt/cxxfilt-0.3.0.ebuild,dev-python,cxxfilt,python,github,afq984/python-cxxfilt@v0.3.0,true,pytest,false,
+dev-python/cyclopts/cyclopts-4.11.0.ebuild,dev-python,cyclopts,python,github,BrianPugh/cyclopts@v4.11.0,true,pytest,false,
+dev-python/cymem/cymem-2.0.13.ebuild,dev-python,cymem,python,github,explosion/cymem@release-v2.0.13,false,,false,
+dev-python/decli/decli-0.6.3.ebuild,dev-python,decli,python,github,Woile/decli@v0.6.3,true,pytest,true,
+dev-python/django-stubs-ext/django-stubs-ext-6.0.3.ebuild,dev-python,django-stubs-ext,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/dlinfo/dlinfo-2.0.0.ebuild,dev-python,dlinfo,python,github,fphammerle/python-dlinfo@v2.0.0,true,pytest,false,
+dev-python/dncil/dncil-1.0.2.ebuild,dev-python,dncil,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/dnfile/dnfile-0.18.0.ebuild,dev-python,dnfile,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/docstring-parser/docstring-parser-0.18.0.ebuild,dev-python,docstring-parser,python,github,rr-/docstring_parser@0.18.0,false,,false,
+dev-python/dynaconf/dynaconf-3.2.13.ebuild,dev-python,dynaconf,python,github,dynaconf/dynaconf@3.2.13,true,pytest,true,
+dev-python/en-core-web-sm/en-core-web-sm-3.8.0.ebuild,dev-python,en-core-web-sm,python,github,explosion/spacy-models@master,true,pytest,true,no pyproject/setup.py — verify framework manually
+dev-python/espeakng-loader/espeakng-loader-1.52.ebuild,dev-python,espeakng-loader,python,github,thewh1teagle/espeakng-loader@v1.52,false,,false,
+dev-python/fabric/fabric-3.2.3.ebuild,dev-python,fabric,python,github,fabric/fabric@3.2.3,true,pytest,true,
+dev-python/fastmcp/fastmcp-3.2.4.ebuild,dev-python,fastmcp,python,github,PrefectHQ/fastmcp@v3.2.4,true,pytest,false,
+dev-python/fastparquet/fastparquet-2026.3.0.ebuild,dev-python,fastparquet,python,github,dask/fastparquet@2026.3.0,false,,false,
+dev-python/flask-bcrypt/flask-bcrypt-1.0.1.ebuild,dev-python,flask-bcrypt,python,github,maxcountryman/flask-bcrypt@1.0.1,true,pytest,true,
+dev-python/formatron/formatron-0.5.0.ebuild,dev-python,formatron,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/frozendict/frozendict-2.4.7.ebuild,dev-python,frozendict,python,github,Marco-Sulla/python-frozendict@v2.4.7,true,pytest,false,
+dev-python/fugashi/fugashi-1.5.2.ebuild,dev-python,fugashi,python,github,polm/fugashi@v1.5.2,false,,false,
+dev-python/general-sam/general-sam-1.0.3.ebuild,dev-python,general-sam,cargo,github,ModelTC/general-sam-py@v1.0.3,true,cargo,false,integration tests directory
+dev-python/gooey/gooey-1.0.8.1-r3.ebuild,dev-python,gooey,python,github,chriskiehl/Gooey@1.0.8.1,false,,true,
+dev-python/halo/halo-0.0.31.ebuild,dev-python,halo,python,github,manrajgrover/halo@master,true,pytest,true,
+dev-python/hsh/hsh-1.1.0.ebuild,dev-python,hsh,python,github,chrissimpkins/hsh@v1.1.0,true,pytest,true,
+dev-python/httpx-sse/httpx-sse-0.4.3.ebuild,dev-python,httpx-sse,python,github,florimondmanca/httpx-sse@0.4.3,true,pytest,false,
+dev-python/ida-netnode/ida-netnode-3.0.ebuild,dev-python,ida-netnode,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/ida-settings/ida-settings-3.3.0.ebuild,dev-python,ida-settings,python,github,williballenthin/ida-settings@v3.3.0,false,,false,
+dev-python/jaconv/jaconv-0.5.0.ebuild,dev-python,jaconv,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/jamo/jamo-0.4.1.ebuild,dev-python,jamo,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/jetpytools/jetpytools-2.2.7.ebuild,dev-python,jetpytools,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/jh2/jh2-5.0.11.ebuild,dev-python,jh2,cargo,github,jawah/h2@v5.0.11,true,cargo,false,integration tests directory
+dev-python/jieba/jieba-0.42.1.ebuild,dev-python,jieba,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/jiter/jiter-0.14.0.ebuild,dev-python,jiter,cargo,github,pydantic/jiter@v0.14.0,false,,false,uncertain — Cargo inline tests not detectable
+dev-python/kbnf/kbnf-0.4.2.ebuild,dev-python,kbnf,cargo,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/kiss-headers/kiss-headers-2.5.0.ebuild,dev-python,kiss-headers,python,github,jawah/kiss-headers@2.5.0,true,pytest,false,
+dev-python/kokoro/kokoro-0.9.4.ebuild,dev-python,kokoro,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/langcodes/langcodes-3.5.1.ebuild,dev-python,langcodes,python,github,georgkrause/langcodes@v3.5.1,true,pytest,false,
+dev-python/language-data/language-data-1.4.0.ebuild,dev-python,language-data,python,github,georgkrause/language_data@v1.4.0,true,pytest,false,
+dev-python/language-tags/language-tags-1.2.0.ebuild,dev-python,language-tags,python,github,OnroerendErfgoed/language-tags@1.2.0,true,pytest,false,
+dev-python/llvmlite/llvmlite-0.47.0.ebuild,dev-python,llvmlite,cmake,github,numba/llvmlite@v0.47.0,false,,true,
+dev-python/log-symbols/log-symbols-0.0.14.ebuild,dev-python,log-symbols,python,github,manrajgrover/py-log-symbols@master,true,pytest,false,
+dev-python/mcp/mcp-1.27.0.ebuild,dev-python,mcp,python,github,modelcontextprotocol/python-sdk@v1.27.0,true,pytest,false,
+dev-python/minchoc/minchoc-0.2.0.ebuild,dev-python,minchoc,python,github,Tatsh/minchoc@v0.2.0,true,pytest,true,
+dev-python/misaki/misaki-0.9.4.ebuild,dev-python,misaki,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/mojimoji/mojimoji-0.0.13.ebuild,dev-python,mojimoji,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/moviepy/moviepy-2.2.1.ebuild,dev-python,moviepy,python,github,Zulko/moviepy@v2.2.1,true,pytest,true,
+dev-python/msgspec/msgspec-0.21.1.ebuild,dev-python,msgspec,python,github,jcrist/msgspec@0.21.1,true,pytest,true,
+dev-python/murmurhash/murmurhash-1.0.15.ebuild,dev-python,murmurhash,python,github,explosion/murmurhash@release-v1.0.15,false,,false,
+dev-python/n64img/n64img-0.3.3.ebuild,dev-python,n64img,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/niquests/niquests-3.18.6.ebuild,dev-python,niquests,python,github,jawah/niquests@v3.18.6,true,pytest,false,
+dev-python/niquests-cache/niquests-cache-0.2.3.ebuild,dev-python,niquests-cache,python,github,Tatsh/niquests-cache@v0.2.3,true,pytest,false,
+dev-python/niquests-mock/niquests-mock-0.3.1.ebuild,dev-python,niquests-mock,python,github,0x12th/niquests-mock@v0.3.1,true,pytest,false,
+dev-python/nltk/nltk-3.9.4.ebuild,dev-python,nltk,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/num2words/num2words-0.5.14.ebuild,dev-python,num2words,python,github,savoirfairelinux/num2words@v0.5.14,true,pytest,false,
+dev-python/numba/numba-0.65.1.ebuild,dev-python,numba,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/openai/openai-2.32.0.ebuild,dev-python,openai,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/openapi-pydantic/openapi-pydantic-0.5.1.ebuild,dev-python,openapi-pydantic,python,github,mike-oakley/openapi-pydantic@v0.5.1,true,pytest,false,
+dev-python/petsafe/petsafe-2.0.7.ebuild,dev-python,petsafe,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/phonemizer-fork/phonemizer-fork-3.3.2.ebuild,dev-python,phonemizer-fork,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/poetry-plugin-shell/poetry-plugin-shell-1.0.1-r1.ebuild,dev-python,poetry-plugin-shell,python,github,python-poetry/poetry-plugin-shell@1.0.1,true,pytest,true,
+dev-python/poetry-plugin-up/poetry-plugin-up-0.9.0.ebuild,dev-python,poetry-plugin-up,python,github,MousaZeidBaker/poetry-plugin-up@v0.9.0,true,pytest,true,
+dev-python/preshed/preshed-3.0.10.ebuild,dev-python,preshed,python,github,explosion/preshed@release-v3.0.10,false,,false,
+dev-python/preshed/preshed-4.0.0.ebuild,dev-python,preshed,python,github,explosion/preshed@v4.0.0,false,,false,
+dev-python/proces/proces-0.1.7.ebuild,dev-python,proces,python,github,Ailln/proces@master,true,pytest,false,
+dev-python/proglog/proglog-0.1.12.ebuild,dev-python,proglog,python,github,Edinburgh-Genome-Foundry/${PN^},false,,true,no resolvable git ref
+dev-python/py-key-value-aio/py-key-value-aio-0.4.4.ebuild,dev-python,py-key-value-aio,python,github,strawgate/py-key-value@0.4.4,true,pytest,false,
+dev-python/pyaaf2/pyaaf2-1.7.1-r1.ebuild,dev-python,pyaaf2,python,github,markreidvfx/pyaaf2@v1.7.1,true,pytest,true,
+dev-python/pydantic-settings/pydantic-settings-2.14.0.ebuild,dev-python,pydantic-settings,python,github,pydantic/pydantic-settings@v2.14.0,true,pytest,false,
+dev-python/pydub/pydub-0.25.1.ebuild,dev-python,pydub,python,github,jiaaro/pydub@v0.25.1,true,pytest,false,
+dev-python/pygfxd/pygfxd-1.0.5.ebuild,dev-python,pygfxd,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/pygtrie/pygtrie-2.5.0-r4.ebuild,dev-python,pygtrie,python,github,mina86/pygtrie@v2.5.0,false,,true,
+dev-python/pykakasi/pykakasi-2.3.0.ebuild,dev-python,pykakasi,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/pylibyaml/pylibyaml-0.1.0.ebuild,dev-python,pylibyaml,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/pymatting/pymatting-1.1.15.ebuild,dev-python,pymatting,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/pynput/pynput-1.8.1.ebuild,dev-python,pynput,python,github,moses-palmer/pynput@v1.8.1,true,pytest,true,
+dev-python/pyopenjtalk/pyopenjtalk-0.4.1.ebuild,dev-python,pyopenjtalk,python,github,r9y9/pyopenjtalk@v0.4.1,true,pytest,false,
+dev-python/pypinyin/pypinyin-0.55.0.ebuild,dev-python,pypinyin,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/pypinyin-dict/pypinyin-dict-0.9.0.ebuild,dev-python,pypinyin-dict,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/pytest-benchmark/pytest-benchmark-5.2.3.ebuild,dev-python,pytest-benchmark,python,github,ionelmc/pytest-benchmark@v5.2.3,true,pytest,true,
+dev-python/pytest-instafail/pytest-instafail-0.5.0.ebuild,dev-python,pytest-instafail,python,github,pytest-dev/pytest-instafail@v0.5.0,true,pytest,true,
+dev-python/pytest-repeat/pytest-repeat-0.9.4.ebuild,dev-python,pytest-repeat,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/python-crfsuite/python-crfsuite-0.9.12.ebuild,dev-python,python-crfsuite,python,github,scrapinghub/python-crfsuite@0.9.12,true,pytest,true,
+dev-python/python-flirt/python-flirt-0.9.10.ebuild,dev-python,python-flirt,cargo,github,williballenthin/lancelot@v0.9.10,false,,true,uncertain — Cargo inline tests not detectable
+dev-python/python-fsutil/python-fsutil-0.16.1.ebuild,dev-python,python-fsutil,python,github,fabiocaccamo/python-fsutil@0.16.1,true,pytest,true,
+dev-python/python-gitlab/python-gitlab-8.2.0.ebuild,dev-python,python-gitlab,python,github,python-gitlab/python-gitlab@v8.2.0,true,pytest,false,
+dev-python/python-xz/python-xz-0.6.0.ebuild,dev-python,python-xz,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/pytimeparse2/pytimeparse2-1.7.1.ebuild,dev-python,pytimeparse2,python,github,onegreyonewhite/pytimeparse2@1.7.1,true,pytest,false,
+dev-python/qh3/qh3-1.7.3.ebuild,dev-python,qh3,cargo,github,jawah/qh3@v1.7.3,true,cargo,false,integration tests directory
+dev-python/questionary/questionary-2.1.1.ebuild,dev-python,questionary,python,github,tmbo/questionary@2.1.1,true,pytest,true,
+dev-python/rabbitizer/rabbitizer-1.16.0.ebuild,dev-python,rabbitizer,python,github,Decompollaborate/rabbitizer@1.16.0,true,pytest,false,
+dev-python/re-wx/re-wx-0.1.0-r2.ebuild,dev-python,re-wx,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/realcugan-ncnn-vulkan-python/realcugan-ncnn-vulkan-python-1.0.2-r2.ebuild,dev-python,realcugan-ncnn-vulkan-python,cmake,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/realsr-ncnn-vulkan-python/realsr-ncnn-vulkan-python-1.0.6-r1.ebuild,dev-python,realsr-ncnn-vulkan-python,cmake,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/requirements-parser/requirements-parser-0.13.0.ebuild,dev-python,requirements-parser,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/rfc3986/rfc3986-1.5.0.ebuild,dev-python,rfc3986,python,github,python-hyper/rfc3986@1.5.0,true,pytest,false,
+dev-python/rfc3986/rfc3986-2.0.0.ebuild,dev-python,rfc3986,python,github,python-hyper/rfc3986@2.0.0,true,pytest,false,
+dev-python/rich-rst/rich-rst-2.0.0.ebuild,dev-python,rich-rst,python,github,wasi-master/rich-rst@main,true,pytest,false,
+dev-python/rife-ncnn-vulkan-python/rife-ncnn-vulkan-python-1.2.1-r1.ebuild,dev-python,rife-ncnn-vulkan-python,cmake,github,nihui/rife-ncnn-vulkan@master,false,,false,
+dev-python/samplerate/samplerate-0.2.4.ebuild,dev-python,samplerate,python,github,tuxu/python-samplerate@v0.2.4,true,pytest,true,
+dev-python/segments/segments-2.4.0.ebuild,dev-python,segments,python,github,cldf/segments@v2.4.0,true,pytest,false,
+dev-python/smart-open/smart-open-7.6.0.ebuild,dev-python,smart-open,python,github,piskvorky/smart_open@v7.6.0,true,pytest,false,
+dev-python/snowflake-connector-python/snowflake-connector-python-4.4.0.ebuild,dev-python,snowflake-connector-python,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/snowflake-core/snowflake-core-1.12.0.ebuild,dev-python,snowflake-core,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/sounddevice/sounddevice-0.5.5.ebuild,dev-python,sounddevice,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/soundfile/soundfile-0.13.1.ebuild,dev-python,soundfile,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/soxr/soxr-1.0.0.ebuild,dev-python,soxr,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/spacy/spacy-3.8.14.ebuild,dev-python,spacy,python,github,explosion/spaCy@release-v3.8.14,true,pytest,true,
+dev-python/spacy-curated-transformers/spacy-curated-transformers-2.1.2.ebuild,dev-python,spacy-curated-transformers,python,github,explosion/spacy-curated-transformers@release-v2.1.2,true,pytest,false,
+dev-python/spacy-legacy/spacy-legacy-3.0.12.ebuild,dev-python,spacy-legacy,python,github,explosion/spacy-legacy@v3.0.12,false,,false,
+dev-python/spacy-loggers/spacy-loggers-1.0.5.ebuild,dev-python,spacy-loggers,python,github,explosion/spacy-loggers@v1.0.5,false,,false,
+dev-python/spinners/spinners-0.0.24.ebuild,dev-python,spinners,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/srmd-ncnn-vulkan-python/srmd-ncnn-vulkan-python-1.0.2-r1.ebuild,dev-python,srmd-ncnn-vulkan-python,cmake,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/srsly/srsly-2.5.3.ebuild,dev-python,srsly,python,github,explosion/srsly@release-v2.5.3,true,pytest,false,
+dev-python/sse-starlette/sse-starlette-3.3.4.ebuild,dev-python,sse-starlette,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/stashapp-tools/stashapp-tools-0.2.59.ebuild,dev-python,stashapp-tools,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/teletype/teletype-1.3.4.ebuild,dev-python,teletype,python,github,jkwill87/teletype@1.3.4,false,,false,
+dev-python/text2num/text2num-3.0.1.ebuild,dev-python,text2num,cargo,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/thinc/thinc-8.3.13.ebuild,dev-python,thinc,python,github,explosion/thinc@v8.3.13,true,pytest,false,
+dev-python/tiktoken/tiktoken-0.12.0.ebuild,dev-python,tiktoken,cargo,github,openai/tiktoken@0.12.0,true,cargo,false,integration tests directory
+dev-python/toml/toml-0.10.2.ebuild,dev-python,toml,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/uncalled-for/uncalled-for-0.3.1.ebuild,dev-python,uncalled-for,python,github,chrisguidry/uncalled-for@0.3.1,true,pytest,false,
+dev-python/underthesea/underthesea-9.4.0.ebuild,dev-python,underthesea,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/underthesea-core/underthesea-core-9.4.0.ebuild,dev-python,underthesea-core,cargo,github,undertheseanlp/underthesea@main,true,cargo,false,integration tests directory
+dev-python/unidic/unidic-1.1.0.ebuild,dev-python,unidic,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/urllib3-future/urllib3-future-2.19.911.ebuild,dev-python,urllib3-future,python,github,jawah/urllib3.future@2.19.911,true,pytest,false,
+dev-python/viv-utils/viv-utils-0.8.1.ebuild,dev-python,viv-utils,python,github,williballenthin/viv-utils@v0.8.1,true,pytest,true,
+dev-python/vsutil/vsutil-0.8.0-r3.ebuild,dev-python,vsutil,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/waifu2x-ncnn-vulkan-python/waifu2x-ncnn-vulkan-python-1.0.4-r1.ebuild,dev-python,waifu2x-ncnn-vulkan-python,cmake,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-python/wakepy/wakepy-1.0.0.ebuild,dev-python,wakepy,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-python/wasabi/wasabi-1.1.3.ebuild,dev-python,wasabi,python,github,explosion/wasabi@v1.1.3,false,,false,
+dev-python/wassima/wassima-2.0.6.ebuild,dev-python,wassima,python,github,jawah/wassima@2.0.6,true,pytest,false,
+dev-python/weasel/weasel-1.0.0.ebuild,dev-python,weasel,python,github,explosion/weasel@release-v1.0.0,false,,false,
+dev-python/wingetty/wingetty-1.0.0.ebuild,dev-python,wingetty,python-multi,github,thilojaeggi/WinGetty@v1.0.0,false,,false,
+dev-python/yt-dlp-utils/yt-dlp-utils-0.1.0.ebuild,dev-python,yt-dlp-utils,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-qt/qdbus-symlink/qdbus-symlink-0.ebuild,dev-qt,qdbus-symlink,none,n/a,,false,,false,N/A (no build system)
+dev-qt/qtwebkit/qtwebkit-6.212_p20250919.ebuild,dev-qt,qtwebkit,cmake,github,movableink/webkit@master,false,,false,tree truncated by GitHub — partial listing
+dev-ruby/asciidoctor-revealjs/asciidoctor-revealjs-5.2.0.ebuild,dev-ruby,asciidoctor-revealjs,ruby,github,asciidoctor/asciidoctor-reveal.js@v5.2.0,true,ruby,false,
+dev-tcltk/sdx/sdx-20110317.ebuild,dev-tcltk,sdx,none,n/a,,false,,false,N/A (no build system)
+dev-tcltk/tclkit/tclkit-8.6.4.9-r1.ebuild,dev-tcltk,tclkit,none,n/a,,false,,false,N/A (no build system)
+dev-util/bytecode-viewer-bin/bytecode-viewer-bin-2.13.2.ebuild,dev-util,bytecode-viewer-bin,other,github,Konloch/${PN%-*},false,,false,no resolvable git ref
+dev-util/cmakerc/cmakerc-2.0.1.ebuild,dev-util,cmakerc,none,n/a,,false,,false,N/A (no build system)
+dev-util/comby-bin/comby-bin-1.8.1.ebuild,dev-util,comby-bin,other,github,comby-tools/comby@1.8.1,false,,false,
+dev-util/commitizen/commitizen-4.13.10.ebuild,dev-util,commitizen,python,github,commitizen-tools/commitizen@v4.13.10,true,pytest,true,
+dev-util/cz-path/cz-path-0.0.7.ebuild,dev-util,cz-path,python,github,Tatsh/cz-path@v0.0.7,true,pytest,true,
+dev-util/ffs/ffs-0.1.2-r1.ebuild,dev-util,ffs,cargo,github,mgree/ffs@v0.1.2,true,cargo,false,integration tests directory
+dev-util/flips/flips-198.ebuild,dev-util,flips,none,n/a,,false,,false,N/A (no build system)
+dev-util/ida-free/ida-free-9.2.250908.ebuild,dev-util,ida-free,other,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-util/prettier/prettier-3.6.2-r1.ebuild,dev-util,prettier,yarn,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-util/react-native-decompiler/react-native-decompiler-0.2.4-r1.ebuild,dev-util,react-native-decompiler,yarn,github,numandev1/react-native-decompiler@master,true,yarn,false,inspect package.json scripts.test
+dev-util/skillshare/skillshare-0.19.5.ebuild,dev-util,skillshare,go,github,runkids/skillshare@v0.19.5,true,go,false,
+dev-util/spimdisasm/spimdisasm-1.40.2.ebuild,dev-util,spimdisasm,python,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-util/splat64/splat64-0.39.1.ebuild,dev-util,splat64,python,github,ethteck/splat@0.39.1,true,pytest,false,
+dev-util/sqlfluff/sqlfluff-4.1.0.ebuild,dev-util,sqlfluff,python,unknown,,false,,true,no GitHub upstream — manual review needed
+dev-util/vcpkg-tool/vcpkg-tool-2026.4.8.ebuild,dev-util,vcpkg-tool,cmake,github,microsoft/vcpkg-tool@main,false,,false,
+dev-util/vivisect/vivisect-1.3.2.ebuild,dev-util,vivisect,python,github,vivisect/vivisect@v1.3.2,false,,true,
+dev-util/vscode-vsce/vscode-vsce-3.2.1-r1.ebuild,dev-util,vscode-vsce,yarn,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-util/wakatime-cli/wakatime-cli-2.7.0.ebuild,dev-util,wakatime-cli,go,github,wakatime/wakatime-cli@v2.7.0,true,go,true,
+dev-util/wiswa/wiswa-0.3.1.ebuild,dev-util,wiswa,python,github,Tatsh/wiswa@v0.3.1,true,pytest,true,
+dev-util/ycmd/ycmd-20240823.ebuild,dev-util,ycmd,cmake,github,ycm-core/ycmd@master,false,,false,
+dev-util/yo/yo-7.29.0.ebuild,dev-util,yo,yarn,unknown,,false,,false,no GitHub upstream — manual review needed
+dev-vcs/blackbox/blackbox-1.20220610-r1.ebuild,dev-vcs,blackbox,go,github,StackExchange/blackbox@v1.20220610,true,go,false,
+dev-vcs/gickup/gickup-0.10.40.ebuild,dev-vcs,gickup,go,github,cooperspencer/gickup@v0.10.40,true,go,false,
+dev-vcs/git-radar/git-radar-0.6_p20170108-r1.ebuild,dev-vcs,git-radar,none,n/a,,false,,false,N/A (no build system)
+dev-vcs/git-secrets/git-secrets-1.3.0_p20230620.ebuild,dev-vcs,git-secrets,none,n/a,,false,,false,N/A (no build system)
+dev-vcs/git-up/git-up-2.4.0.ebuild,dev-vcs,git-up,python,github,msiemens/PyGitUp@v2.4.0,false,,true,
+dev-vcs/lumen/lumen-2.22.0.ebuild,dev-vcs,lumen,cargo,github,jnsahaj/lumen@v2.22.0,false,,false,uncertain — Cargo inline tests not detectable
+games-action/re3/re3-20210902-r4.ebuild,games-action,re3,cmake,github,aap/librw@master,false,,false,
+games-action/relcs/relcs-20210902-r3.ebuild,games-action,relcs,cmake,github,aap/librw@master,false,,false,
+games-action/revc/revc-20210902-r3.ebuild,games-action,revc,cmake,github,aap/librw@master,false,,false,
+games-arcade/clone-hero/clone-hero-1.0.0.4080-r4.ebuild,games-arcade,clone-hero,other,github,clonehero-game/releases@main,false,,false,
+games-arcade/outfox/outfox-0.4.19-r1.ebuild,games-arcade,outfox,other,github,TeamRizu/OutFox@master,false,,false,
+games-arcade/outfox/outfox-0.5.0_p43-r1.ebuild,games-arcade,outfox,other,github,TeamRizu/${UPPER_PN:0:1}${PN:1:1}${PN:2:1}${UPPER_PN:3:1}${PN:4},false,,false,no resolvable git ref
+games-arcade/outfox-serenity/outfox-serenity-3.0.3.ebuild,games-arcade,outfox-serenity,none,n/a,,false,,false,N/A (no build system)
+games-arcade/stepmania/stepmania-5.1.0_beta2_p20221114-r8.ebuild,games-arcade,stepmania,cmake,github,stepmania/stepmania@master,false,,false,
+games-arcade/super-mario-bros-remastered/super-mario-bros-remastered-1.1.0.ebuild,games-arcade,super-mario-bros-remastered,other,github,JHDev2006/Super-Mario-Bros.-Remastered-Public@1.1.0,false,,false,
+games-emulation/ares/ares-147.ebuild,games-emulation,ares,cmake,github,ares-emulator/ares@v147,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
+games-emulation/bsnes-hd/bsnes-hd-10.6_beta.ebuild,games-emulation,bsnes-hd,other,github,DerKoun/bsnes-hd@master,false,,false,
+games-emulation/bsnes-mercury-performance-libretro/bsnes-mercury-performance-libretro-1.0_pre20241021.ebuild,games-emulation,bsnes-mercury-performance-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/cemu/cemu-2.6.ebuild,games-emulation,cemu,cmake,github,cemu-project/Cemu@v2.6,false,,false,
+games-emulation/citra/citra-20241029-r1.ebuild,games-emulation,citra,cmake,github,PabloMK7/citra,false,,false,no resolvable git ref
+games-emulation/dolphin-libretro/dolphin-libretro-2509.ebuild,games-emulation,dolphin-libretro,cmake,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/dosbox-x/dosbox-x-2026.3.29.ebuild,games-emulation,dosbox-x,autotools,github,joncampbell123/dosbox-x@master,true,autotools,false,check Makefile.am for check_PROGRAMS
+games-emulation/fceumm-libretro/fceumm-libretro-1.0_pre20250913.ebuild,games-emulation,fceumm-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/flycast-libretro/flycast-libretro-2.5-r1.ebuild,games-emulation,flycast-libretro,other,github,flyinghead/flycast@v2.5,false,,false,
+games-emulation/flycast-libretro/flycast-libretro-2.6.ebuild,games-emulation,flycast-libretro,other,github,flyinghead/flycast@v2.6,false,,false,
+games-emulation/fmsx-libretro/fmsx-libretro-1.0_pre20241021.ebuild,games-emulation,fmsx-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/fuse-libretro/fuse-libretro-1.0_pre20241124.ebuild,games-emulation,fuse-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/genesis-plus-gx-libretro/genesis-plus-gx-libretro-1.0_pre20251023.ebuild,games-emulation,genesis-plus-gx-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/gopher64/gopher64-1.1.18.ebuild,games-emulation,gopher64,cargo,github,gopher64/gopher64@v1.1.18,false,,false,uncertain — Cargo inline tests not detectable
+games-emulation/gopher64/gopher64-1.1.5.ebuild,games-emulation,gopher64,cargo,github,gopher64/gopher64@v1.1.5,false,,false,uncertain — Cargo inline tests not detectable
+games-emulation/gopher64-netplay-server/gopher64-netplay-server-1.0.37.ebuild,games-emulation,gopher64-netplay-server,go,github,gopher64/gopher64-netplay-server@v1.0.37,false,,false,
+games-emulation/libretro-common-overlays/libretro-common-overlays-1_pre20250527.ebuild,games-emulation,libretro-common-overlays,none,n/a,,false,,false,N/A (no build system)
+games-emulation/libretro-database/libretro-database-1.22.1.ebuild,games-emulation,libretro-database,none,n/a,,false,,false,N/A (no build system)
+games-emulation/libretro-db/libretro-db-1.22.2.ebuild,games-emulation,libretro-db,none,n/a,,false,,false,N/A (no build system)
+games-emulation/libretro-info/libretro-info-1_pre20250615.ebuild,games-emulation,libretro-info,none,n/a,,false,,false,N/A (no build system)
+games-emulation/libretro-meta/libretro-meta-9999-r7.ebuild,games-emulation,libretro-meta,none,n/a,,false,,false,N/A (no build system)
+games-emulation/mame2003-plus-libretro/mame2003-plus-libretro-1.0_pre20251005.ebuild,games-emulation,mame2003-plus-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/mednafen-psx-hw-libretro/mednafen-psx-hw-libretro-1.0_pre20251017.ebuild,games-emulation,mednafen-psx-hw-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/mednafen-psx-libretro/mednafen-psx-libretro-1.0_pre20250620.ebuild,games-emulation,mednafen-psx-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/mupen64next-libretro/mupen64next-libretro-1.0_pre20250617.ebuild,games-emulation,mupen64next-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/mupen64plus-input-raphnetraw/mupen64plus-input-raphnetraw-1.1.0-r1.ebuild,games-emulation,mupen64plus-input-raphnetraw,none,n/a,,false,,false,N/A (no build system)
+games-emulation/mupen64plus-video-gliden64/mupen64plus-video-gliden64-4.0_p20260109.ebuild,games-emulation,mupen64plus-video-gliden64,cmake,github,gonetz/GLideN64@master,false,,false,
+games-emulation/pcsx-rearmed-libretro/pcsx-rearmed-libretro-1.0_pre20260103.ebuild,games-emulation,pcsx-rearmed-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/play/play-0.75.ebuild,games-emulation,play,cmake,github,jpd002/Play-@0.75,false,,false,
+games-emulation/ppsspp-libretro/ppsspp-libretro-1.20.3.ebuild,games-emulation,ppsspp-libretro,cmake,n/a,,false,,false,N/A (eclass=libretro)
+games-emulation/prboom-libretro/prboom-libretro-1.0_pre20241227.ebuild,games-emulation,prboom-libretro,other,n/a,,false,,false,N/A (eclass=libretro)
+games-emulation/puae-libretro/puae-libretro-1.0_pre20251102.ebuild,games-emulation,puae-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/puae2021-libretro/puae2021-libretro-1.0_pre20251102.ebuild,games-emulation,puae2021-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/retroarch/retroarch-1.22.2.ebuild,games-emulation,retroarch,other,github,libretro/RetroArch@v1.22.2,false,,false,
+games-emulation/retroarch-assets/retroarch-assets-1.22.0.ebuild,games-emulation,retroarch-assets,none,n/a,,false,,false,N/A (no build system)
+games-emulation/ryujinx/ryujinx-1.3.61.ebuild,games-emulation,ryujinx,other,unknown,,false,,true,no GitHub upstream — manual review needed
+games-emulation/swanstation-libretro/swanstation-libretro-1.0_pre20250802.ebuild,games-emulation,swanstation-libretro,cmake,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/tyrquake-libretro/tyrquake-libretro-1.0_pre20250527-r1.ebuild,games-emulation,tyrquake-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/vice-x64-libretro/vice-x64-libretro-1.0_pre20250523.ebuild,games-emulation,vice-x64-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/vice-x64sc-libretro/vice-x64sc-libretro-1.0_pre20250730.ebuild,games-emulation,vice-x64sc-libretro,other,n/a,,false,,false,N/A (eclass=libretro-core)
+games-emulation/vita3k/vita3k-20230408-r2.ebuild,games-emulation,vita3k,cmake,github,Vita3K/Vita3K@master,false,,false,
+games-emulation/xemu/xemu-0.8.134.ebuild,games-emulation,xemu,python-multi,github,xemu-project/xemu@v0.8.134,true,pytest,true,no pyproject/setup.py — verify framework manually
+games-emulation/xenia-canary/xenia-canary-20260208.ebuild,games-emulation,xenia-canary,cmake,github,xenia-canary/xenia-canary,false,,false,no resolvable git ref
+games-emulation/yuzu/yuzu-0.1734-r3.ebuild,games-emulation,yuzu,cmake,github,yuzu-mirror/mbedtls@master,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
+games-misc/render96ex/render96ex-20241202.ebuild,games-misc,render96ex,other,github,Render96/Render96ex@master,false,,false,
+games-misc/smw/smw-0.1-r1.ebuild,games-misc,smw,other,github,snesrev/smw@v0.1,false,,false,
+games-util/aprip/aprip-1.0.9.ebuild,games-util,aprip,none,n/a,,false,,false,N/A (no build system)
+games-util/cdecrypt/cdecrypt-4.8.ebuild,games-util,cdecrypt,none,n/a,,false,,false,N/A (no build system)
+games-util/hactool/hactool-1.4.0_p20231011.ebuild,games-util,hactool,none,n/a,,false,,false,N/A (no build system)
+games-util/joystickwake/joystickwake-0.4.2.ebuild,games-util,joystickwake,python,github,foresto/joystickwake@v0.4.2,false,,false,
+games-util/kelftool/kelftool-20191126.ebuild,games-util,kelftool,none,n/a,,false,,false,N/A (no build system)
+games-util/nstool/nstool-1.9.2-r1.ebuild,games-util,nstool,none,n/a,,false,,false,N/A (no build system)
+games-util/nsw2usb-con/nsw2usb-con-20250609.ebuild,games-util,nsw2usb-con,python-multi,github,djedditt/nsw2usb-con,false,,false,no resolvable git ref
+games-util/raphnet-tech-adapter-manager/raphnet-tech-adapter-manager-2.1.29-r1.ebuild,games-util,raphnet-tech-adapter-manager,other,github,raphnet/gcn64tools@v2.1.29,false,,false,
+games-util/re3-installer/re3-installer-0.2.3.ebuild,games-util,re3-installer,cmake,github,Tatsh/re3-installer@v0.2.3,false,,true,
+games-util/sm64tools/sm64tools-0.3.2_p20180902.ebuild,games-util,sm64tools,none,n/a,,false,,false,N/A (no build system)
+games-util/switch-library-manager/switch-library-manager-1.4.0.ebuild,games-util,switch-library-manager,go,github,giwty/switch-library-manager@1.4.0,true,go,false,
+games-util/wiimms-iso-tools/wiimms-iso-tools-3.05a-r2.ebuild,games-util,wiimms-iso-tools,none,n/a,,false,,false,N/A (no build system)
+games-util/wiimms-szs-tools/wiimms-szs-tools-2.42a.ebuild,games-util,wiimms-szs-tools,none,n/a,,false,,false,N/A (no build system)
+kde-misc/kate-jinja2-highlighting/kate-jinja2-highlighting-20250120.ebuild,kde-misc,kate-jinja2-highlighting,none,n/a,,false,,false,N/A (no build system)
+kde-misc/kate-stuff/kate-stuff-20250409.ebuild,kde-misc,kate-stuff,none,n/a,,false,,false,N/A (no build system)
+kde-misc/kate-wakatime/kate-wakatime-1.5.3.ebuild,kde-misc,kate-wakatime,other,github,Tatsh/kate-wakatime@v1.5.3,false,,false,
+kde-misc/kdotool/kdotool-0.2.3.ebuild,kde-misc,kdotool,cargo,github,jinliu/kdotool@v0.2.3,false,,false,uncertain — Cargo inline tests not detectable
+mail-mta/sendgmail/sendgmail-20250306.ebuild,mail-mta,sendgmail,go,github,google/gmail-oauth2-tools@master,false,,false,
+media-fonts/amiri/amiri-1.003.ebuild,media-fonts,amiri,other,n/a,,false,,false,N/A (category=media-fonts)
+media-fonts/noto/noto-20251201.ebuild,media-fonts,noto,other,n/a,,false,,false,N/A (category=media-fonts)
+media-gfx/backgroundremover/backgroundremover-0.4.1.ebuild,media-gfx,backgroundremover,python,github,nadermx/backgroundremover@v0.4.1,false,,false,
+media-gfx/flash-player-projector/flash-player-projector-32.0.0.465-r3.ebuild,media-gfx,flash-player-projector,other,unknown,,false,,false,no GitHub upstream — manual review needed
+media-gfx/pngdefry/pngdefry-1.2-r3.ebuild,media-gfx,pngdefry,other,unknown,,false,,false,no GitHub upstream — manual review needed
+media-gfx/realsr-ncnn-vulkan/realsr-ncnn-vulkan-20220728-r1.ebuild,media-gfx,realsr-ncnn-vulkan,cmake,github,nihui/realsr-ncnn-vulkan@20220728,false,,false,
+media-gfx/srmd-ncnn-vulkan/srmd-ncnn-vulkan-20220728-r1.ebuild,media-gfx,srmd-ncnn-vulkan,cmake,github,nihui/srmd-ncnn-vulkan@20220728,false,,false,
+media-libs/libspng/libspng-0.7.4-r1.ebuild,media-libs,libspng,meson,github,randy408/libspng@v0.7.4,true,meson,true,
+media-libs/vspyplugin/vspyplugin-1.4.5.ebuild,media-libs,vspyplugin,python,unknown,,false,,true,no GitHub upstream — manual review needed
+media-libs/wineasio/wineasio-1.3.0.ebuild,media-libs,wineasio,other,github,wineasio/wineasio@v1.3.0,false,,false,
+media-libs/zimg/zimg-3.0.6.ebuild,media-libs,zimg,autotools,github,sekrit-twc/zimg@release-3.0.6,true,autotools,true,check Makefile.am for check_PROGRAMS
+media-sound/clem2itunes/clem2itunes-0.1.4.ebuild,media-sound,clem2itunes,python,github,Tatsh/clem2itunes@v0.1.4,true,pytest,true,
+media-sound/flacted/flacted-0.0.3.ebuild,media-sound,flacted,python,github,Tatsh/flacted@v0.0.3,true,pytest,true,
+media-sound/librespot/librespot-0.8.0.ebuild,media-sound,librespot,cargo,github,librespot-org/librespot@v0.8.0,false,,false,uncertain — Cargo inline tests not detectable
+media-sound/ossp/ossp-1.3.3.ebuild,media-sound,ossp,cmake,github,OpenMandrivaSoftware/ossp@v1.3.3,false,,false,
+media-sound/ripcd/ripcd-0.0.1.ebuild,media-sound,ripcd,python,github,Tatsh/ripcd@v0.0.1,true,pytest,true,
+media-sound/ripcd/ripcd-0.0.2.ebuild,media-sound,ripcd,python,github,Tatsh/ripcd@v0.0.2,true,pytest,true,
+media-sound/sony-headphones-client/sony-headphones-client-1.3.2-r1.ebuild,media-sound,sony-headphones-client,cmake,github,Plutoberth/SonyHeadphonesClient@v1.3.2,false,,false,
+media-sound/yamaha-xg-soundfont/yamaha-xg-soundfont-20140604-r1.ebuild,media-sound,yamaha-xg-soundfont,none,n/a,,false,,false,N/A (no build system)
+media-video/cxadc/cxadc-20250215.ebuild,media-video,cxadc,kmod,n/a,,false,,false,N/A (kernel module)
+media-video/domesday-duplicator/domesday-duplicator-2.4.ebuild,media-video,domesday-duplicator,cmake,github,simoninns/DomesdayDuplicator@master,false,,false,
+media-video/elgato4k-linux/elgato4k-linux-0.2.5.ebuild,media-video,elgato4k-linux,cargo,github,13bm/elgato4k-linux@v0.2.5,true,cargo,false,integration tests directory
+media-video/ffms2/ffms2-5.0.ebuild,media-video,ffms2,autotools,github,FFMS/ffms2@5.0,true,autotools,false,check Makefile.am for check_PROGRAMS
+media-video/flaldf-bin/flaldf-bin-0.1b.ebuild,media-video,flaldf-bin,none,n/a,,false,,false,N/A (no build system)
+media-video/fmtconv/fmtconv-30_p20230901.ebuild,media-video,fmtconv,autotools,github,EleonoreMizo/fmtconv@master,false,autotools,false,check Makefile.am for check_PROGRAMS
+media-video/havsfunc/havsfunc-34.ebuild,media-video,havsfunc,python,github,HomeOfVapourSynthEvolution/havsfunc@master,false,,false,
+media-video/instagram-archiver/instagram-archiver-0.4.0.ebuild,media-video,instagram-archiver,python,github,Tatsh/instagram-archiver@v0.4.0,true,pytest,true,
+media-video/magewell-pro-capture/magewell-pro-capture-1.3.0.4490.ebuild,media-video,magewell-pro-capture,kmod,n/a,,false,,false,N/A (kernel module)
+media-video/mnamer/mnamer-2.6.0.ebuild,media-video,mnamer,python,github,jkwill87/mnamer@2.6.0,true,pytest,true,
+media-video/mvsfunc/mvsfunc-10_p20230321-r2.ebuild,media-video,mvsfunc,python,github,HomeOfVapourSynthEvolution/mvsfunc@master,false,,false,
+media-video/open-in-mpv/open-in-mpv-0.1.3-r1.ebuild,media-video,open-in-mpv,python,github,Tatsh/open-in-mpv@v0.1.3,true,pytest,false,
+media-video/opentimelineio/opentimelineio-0.18.1.ebuild,media-video,opentimelineio,cmake,github,AcademySoftwareFoundation/OpenTimelineIO@v0.18.1,true,cmake,true,verify BUILD_TESTING toggle in CMakeLists.txt
+media-video/patreon-archiver/patreon-archiver-0.3.0.ebuild,media-video,patreon-archiver,python,github,Tatsh/patreon-archiver@v0.3.0,true,pytest,true,
+media-video/scc-tools/scc-tools-3.5.ebuild,media-video,scc-tools,none,n/a,,false,,false,N/A (no build system)
+media-video/scenechange/scenechange-0.2.0.2-r1.ebuild,media-video,scenechange,none,n/a,,false,,false,N/A (no build system)
+media-video/vapoursynth/vapoursynth-74.ebuild,media-video,vapoursynth,meson,github,vapoursynth/vapoursynth@master,true,meson,false,
+media-video/vapoursynth-astdr/vapoursynth-astdr-4-r3.ebuild,media-video,vapoursynth-astdr,python-multi,github,dubhater/vapoursynth-astdr@v4,false,,false,
+media-video/vapoursynth-bm3d/vapoursynth-bm3d-10.ebuild,media-video,vapoursynth-bm3d,meson,github,HomeOfVapourSynthEvolution/VapourSynth-BM3D@master,false,,false,
+media-video/vapoursynth-dfmderainbow/vapoursynth-dfmderainbow-2-r2.ebuild,media-video,vapoursynth-dfmderainbow,python-multi,github,dubhater/vapoursynth-dfmderainbow@v2,false,,false,
+media-video/vapoursynth-eedi3/vapoursynth-eedi3-9.ebuild,media-video,vapoursynth-eedi3,meson,github,HomeOfVapourSynthEvolution/VapourSynth-EEDI3@master,false,,false,
+media-video/vapoursynth-fft3dfilter/vapoursynth-fft3dfilter-2.ebuild,media-video,vapoursynth-fft3dfilter,meson,github,myrsloik/VapourSynth-FFT3DFilter@master,false,,false,
+media-video/vapoursynth-fluxsmooth/vapoursynth-fluxsmooth-2-r2.ebuild,media-video,vapoursynth-fluxsmooth,autotools,github,dubhater/vapoursynth-fluxsmooth@v2,false,autotools,false,check Makefile.am for check_PROGRAMS
+media-video/vapoursynth-fsrcnn-ncnn-vulkan/vapoursynth-fsrcnn-ncnn-vulkan-20241112-r1.ebuild,media-video,vapoursynth-fsrcnn-ncnn-vulkan,cmake,github,Sg4Dylan/vapoursynth-fsrcnn-ncnn-vulkan@master,false,,false,
+media-video/vapoursynth-hqdn3d/vapoursynth-hqdn3d-20180629-r1.ebuild,media-video,vapoursynth-hqdn3d,autotools,github,Hinterwaeldlers/vapoursynth-hqdn3d@master,false,autotools,false,check Makefile.am for check_PROGRAMS
+media-video/vapoursynth-minideen/vapoursynth-minideen-2.ebuild,media-video,vapoursynth-minideen,meson,github,dubhater/vapoursynth-minideen@v2,false,,false,
+media-video/vapoursynth-msmoosh/vapoursynth-msmoosh-1.1-r1.ebuild,media-video,vapoursynth-msmoosh,autotools,github,dubhater/vapoursynth-msmoosh@v1.1,false,autotools,false,check Makefile.am for check_PROGRAMS
+media-video/vapoursynth-mvtools/vapoursynth-mvtools-26.ebuild,media-video,vapoursynth-mvtools,meson,github,dubhater/vapoursynth-mvtools@v26,false,,false,
+media-video/vapoursynth-nnedi3/vapoursynth-nnedi3-12-r1.ebuild,media-video,vapoursynth-nnedi3,autotools,github,dubhater/vapoursynth-nnedi3@v12,false,autotools,false,check Makefile.am for check_PROGRAMS
+media-video/vapoursynth-nnedi3-weights/vapoursynth-nnedi3-weights-12-r2.ebuild,media-video,vapoursynth-nnedi3-weights,none,n/a,,false,,false,N/A (no build system)
+media-video/vapoursynth-realcugan-ncnn-vulkan/vapoursynth-realcugan-ncnn-vulkan-2.ebuild,media-video,vapoursynth-realcugan-ncnn-vulkan,cmake,github,Kiyamou/VapourSynth-RealCUGAN-ncnn-Vulkan@master,false,,false,
+media-video/vapoursynth-realesrgan-ncnn-vulkan/vapoursynth-realesrgan-ncnn-vulkan-20230628.ebuild,media-video,vapoursynth-realesrgan-ncnn-vulkan,cmake,github,Tatsh/VapourSynth-Real-ESRGAN-ncnn-vulkan@master,false,,false,
+media-video/vapoursynth-realsr-ncnn-vulkan/vapoursynth-realsr-ncnn-vulkan-3-r1.ebuild,media-video,vapoursynth-realsr-ncnn-vulkan,cmake,github,Kiyamou/VapourSynth-RealSR-ncnn-Vulkan@main,false,,false,
+media-video/vapoursynth-srmd-ncnn-vulkan/vapoursynth-srmd-ncnn-vulkan-3-r2.ebuild,media-video,vapoursynth-srmd-ncnn-vulkan,cmake,github,Kiyamou/VapourSynth-SRMD-ncnn-Vulkan@master,false,,false,
+media-video/vapoursynth-waifu2x-ncnn-vulkan/vapoursynth-waifu2x-ncnn-vulkan-5-r1.ebuild,media-video,vapoursynth-waifu2x-ncnn-vulkan,cmake,github,nlzy/vapoursynth-waifu2x-ncnn-vulkan@master,false,,false,
+media-video/vcrtool/vcrtool-0.0.3.ebuild,media-video,vcrtool,python,github,Tatsh/vcrtool@v0.0.3,true,pytest,true,
+media-video/vhs-decode/vhs-decode-0.3.9.ebuild,media-video,vhs-decode,cargo,github,oyvindln/vhs-decode@v0.3.9,false,,true,uncertain — Cargo inline tests not detectable
+media-video/video2x/video2x-6.4.0.ebuild,media-video,video2x,cmake,github,k4yt3x/video2x@6.4.0,false,,false,
+media-video/video2x-qt6/video2x-qt6-6.4.0.ebuild,media-video,video2x-qt6,cmake,github,k4yt3x/video2x-qt6@6.4.0,false,,false,
+media-video/vs-jetpack/vs-jetpack-1.4.1.ebuild,media-video,vs-jetpack,python,github,Jaded-Encoding-Thaumaturgy/vs-jetpack@v1.4.1,true,pytest,true,
+media-video/vs-miscfilters-obsolete/vs-miscfilters-obsolete-2_p20220124.ebuild,media-video,vs-miscfilters-obsolete,meson,github,vapoursynth/vs-miscfilters-obsolete@master,false,,false,
+media-video/vs-removegrain/vs-removegrain-1_p20221028.ebuild,media-video,vs-removegrain,meson,github,vapoursynth/vs-removegrain@master,false,,false,
+media-video/youtube-unofficial/youtube-unofficial-0.4.0.ebuild,media-video,youtube-unofficial,python,github,Tatsh/youtube-unofficial@v0.4.0,true,pytest,true,
+media-video/ytarchive/ytarchive-0.5.0.ebuild,media-video,ytarchive,go,github,Kethsar/ytarchive@v0.5.0,false,,false,
+media-video/znedi3/znedi3-2.1_p20250517.ebuild,media-video,znedi3,none,n/a,,false,,false,N/A (no build system)
+media-video/zvbi2raw/zvbi2raw-20150529-r1.ebuild,media-video,zvbi2raw,none,n/a,,false,,false,N/A (no build system)
+mpv-plugin/blur-edges/blur-edges-20250309.ebuild,mpv-plugin,blur-edges,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/bookmarker-menu/bookmarker-menu-1.3.1_p20200921.ebuild,mpv-plugin,bookmarker-menu,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/crop/crop-20250309.ebuild,mpv-plugin,crop,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/delete-file/delete-file-20240212.ebuild,mpv-plugin,delete-file,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/mpv-copytime/mpv-copytime-20220308-r1.ebuild,mpv-plugin,mpv-copytime,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/mpv-dvd-browser/mpv-dvd-browser-20250115.ebuild,mpv-plugin,mpv-dvd-browser,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/mpv-libunity/mpv-libunity-20211123-r5.ebuild,mpv-plugin,mpv-libunity,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/mpv-lrc/mpv-lrc-20250922.ebuild,mpv-plugin,mpv-lrc,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/mpv-netrc/mpv-netrc-0.0.2-r1.ebuild,mpv-plugin,mpv-netrc,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/mpv-scroll-list/mpv-scroll-list-20250110.ebuild,mpv-plugin,mpv-scroll-list,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/reload/reload-20250207.ebuild,mpv-plugin,reload,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/shutup/shutup-20250331.ebuild,mpv-plugin,shutup,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/writeedits/writeedits-20250218.ebuild,mpv-plugin,writeedits,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-plugin/writename/writename-20250218.ebuild,mpv-plugin,writename,other,n/a,,false,,false,N/A (category=mpv-plugin)
+mpv-shader/amd-fidelityfx-cas/amd-fidelityfx-cas-20220221.ebuild,mpv-shader,amd-fidelityfx-cas,other,n/a,,false,,false,N/A (category=mpv-shader)
+mpv-shader/amd-fidelityfx-super-resolution/amd-fidelityfx-super-resolution-20220306.ebuild,mpv-shader,amd-fidelityfx-super-resolution,other,n/a,,false,,false,N/A (category=mpv-shader)
+mpv-shader/fsrcnnx/fsrcnnx-1.1.ebuild,mpv-shader,fsrcnnx,other,n/a,,false,,false,N/A (category=mpv-shader)
+mpv-shader/krig-bilateral/krig-bilateral-20231027-r1.ebuild,mpv-shader,krig-bilateral,other,n/a,,false,,false,N/A (category=mpv-shader)
+mpv-shader/nvscaler/nvscaler-20220224.ebuild,mpv-shader,nvscaler,other,n/a,,false,,false,N/A (category=mpv-shader)
+mpv-shader/ssim-downscaler/ssim-downscaler-20240905-r1.ebuild,mpv-shader,ssim-downscaler,other,n/a,,false,,false,N/A (category=mpv-shader)
+net-analyzer/http-toolkit-bin/http-toolkit-bin-1.25.2.ebuild,net-analyzer,http-toolkit-bin,other,github,"${MY_PN,,}/${MY_PN,,}-desktop",false,,false,no resolvable git ref
+net-dns/pihole/pihole-5.18.4.ebuild,net-dns,pihole,other,github,pi-hole/pi-hole@v5.18.4,false,,false,
+net-dns/pihole-ftl/pihole-ftl-5.25.2-r1.ebuild,net-dns,pihole-ftl,cmake,github,pi-hole/FTL@v5.25.2,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
+net-firewall/nftables-geoip/nftables-geoip-20240124.ebuild,net-firewall,nftables-geoip,python-multi,github,pvxe/nftables-geoip@master,false,,false,
+net-im/ripcord/ripcord-0.4.29-r5.ebuild,net-im,ripcord,other,unknown,,false,,false,no GitHub upstream — manual review needed
+net-irc/lith/lith-1.7.58.ebuild,net-irc,lith,cmake,github,LithApp/lith@v1.7.58,false,,false,
+net-mail/gmail-archiver/gmail-archiver-0.1.0.ebuild,net-mail,gmail-archiver,python,github,Tatsh/gmail-archiver@v0.1.0,true,pytest,true,
+net-mail/gmailctl/gmailctl-0.11.0.ebuild,net-mail,gmailctl,go,github,mbrt/gmailctl@v0.11.0,true,go,true,
+net-misc/curl-impersonate/curl-impersonate-1.5.5.ebuild,net-misc,curl-impersonate,autotools,github,lexiforest/curl-impersonate@v1.5.5,true,autotools,false,check Makefile.am for check_PROGRAMS
+net-misc/ipv6-config-update/ipv6-config-update-0.1.1.ebuild,net-misc,ipv6-config-update,cmake,github,Tatsh/ipv6-config-update@v0.1.1,false,,false,
+net-misc/muffet/muffet-2.11.2.ebuild,net-misc,muffet,go,github,raviqqe/muffet@v2.11.2,true,go,false,
+net-misc/phantomjs/phantomjs-2.1.1_p20241215.ebuild,net-misc,phantomjs,cmake,github,Tatsh/phantomjs@master,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
+net-misc/wayback-machine-downloader/wayback-machine-downloader-2.3.1_p20240208.ebuild,net-misc,wayback-machine-downloader,ruby,github,ShiftaDeband/wayback-machine-downloader@master,true,ruby,false,
+net-p2p/xirvik-tools/xirvik-tools-0.6.0.ebuild,net-p2p,xirvik-tools,python,github,Tatsh/xirvik-tools@v0.6.0,true,pytest,true,
+net-print/epson-backend/epson-backend-1.2.6.ebuild,net-print,epson-backend,other,unknown,,false,,false,no GitHub upstream — manual review needed
+net-print/epson-printer-utility/epson-printer-utility-1.2.2.ebuild,net-print,epson-printer-utility,other,unknown,,false,,false,no GitHub upstream — manual review needed
+net-proxy/charles/charles-5.1.ebuild,net-proxy,charles,other,unknown,,false,,false,no GitHub upstream — manual review needed
+net-vpn/f5vpn/f5vpn-7245.2023.1006.1.ebuild,net-vpn,f5vpn,other,unknown,,false,,false,no GitHub upstream — manual review needed
+net-vpn/ifup-systemd-resolved/ifup-systemd-resolved-0.0.2.ebuild,net-vpn,ifup-systemd-resolved,cmake,github,Tatsh/ifup-systemd-resolved@v0.0.2,false,,false,
+net-vpn/vpn-slice/vpn-slice-0.16.1.ebuild,net-vpn,vpn-slice,python,github,dlenski/vpn-slice@v0.16.1,false,,false,
+sci-libs/coinhsl/coinhsl-2.2.6.ebuild,sci-libs,coinhsl,autotools,github,coin-or-tools/ThirdParty-HSL,false,,false,no resolvable git ref
+sci-ml/einops/einops-0.8.2.ebuild,sci-ml,einops,python,github,arogozhnikov/einops@v0.8.2,false,,false,
+sci-ml/exllamav2/exllamav2-0.3.2.ebuild,sci-ml,exllamav2,python,github,turboderp-org/exllamav2@v0.3.2,true,pytest,false,
+sci-ml/exllamav3/exllamav3-0.0.30.ebuild,sci-ml,exllamav3,python,github,turboderp-org/exllamav3@v0.0.30,true,pytest,false,
+sci-ml/flash-attn/flash-attn-2.8.3.ebuild,sci-ml,flash-attn,python,github,Dao-AILab/flash-attention@v2.8.3,true,pytest,false,
+sys-apps/capa/capa-9.4.0.ebuild,sys-apps,capa,python,github,mandiant/capa@v9.4.0,true,pytest,true,
+sys-apps/hwview/hwview-0.0.2.ebuild,sys-apps,hwview,cmake,github,Tatsh/hwview@v0.0.2,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
+sys-apps/kylemanna-systemd-utils/kylemanna-systemd-utils-20220116-r1.ebuild,sys-apps,kylemanna-systemd-utils,other,github,kylemanna/${PN,false,,false,no resolvable git ref
+sys-apps/maxperfwiz/maxperfwiz-20250630.ebuild,sys-apps,maxperfwiz,none,n/a,,false,,false,N/A (no build system)
+sys-apps/seatools/seatools-5.1.182.ebuild,sys-apps,seatools,other,unknown,,false,,false,no GitHub upstream — manual review needed
+sys-apps/tinkup/tinkup-1.0_p20240930.ebuild,sys-apps,tinkup,python-single,github,rmull/tinkup@v1.0,false,,false,
+sys-apps/udev-usb-sync/udev-usb-sync-1.0.ebuild,sys-apps,udev-usb-sync,other,unknown,,false,,false,no GitHub upstream — manual review needed
+sys-apps/usbkill/usbkill-1.0_rc4_p20160730-r4.ebuild,sys-apps,usbkill,python,github,hephaest0s/usbkill@master,false,,false,
+sys-auth/fprintd/fprintd-1.94.5.ebuild,sys-auth,fprintd,meson,unknown,,false,,true,no GitHub upstream — manual review needed
+sys-auth/libfprint/libfprint-1.94.10.ebuild,sys-auth,libfprint,meson,unknown,,false,,true,no GitHub upstream — manual review needed
+sys-block/superdrive-enabler/superdrive-enabler-20230714.ebuild,sys-block,superdrive-enabler,other,github,onmomo/superdrive-enabler@master,false,,false,
+sys-kernel/installkernel-wsl/installkernel-wsl-0.0.5.ebuild,sys-kernel,installkernel-wsl,python,github,Tatsh/installkernel-wsl@v0.0.5,true,pytest,true,
+sys-kernel/msi-ec/msi-ec-20250804.ebuild,sys-kernel,msi-ec,kmod,n/a,,false,,false,N/A (kernel module)
+www-apps/anything-llm/anything-llm-1.9.0.ebuild,www-apps,anything-llm,cmake,github,Mintplex-Labs/anything-llm@v1.9.0,false,,false,
+www-apps/kokoro-fastapi/kokoro-fastapi-0.2.4.ebuild,www-apps,kokoro-fastapi,python,github,remsky/Kokoro-FastAPI@v0.2.4,true,pytest,true,
+www-apps/pihole-admin-lte/pihole-admin-lte-5.21-r3.ebuild,www-apps,pihole-admin-lte,other,n/a,,false,,false,N/A (eclass=webapp)
+www-apps/stash/stash-0.30.1.ebuild,www-apps,stash,go,github,stashapp/stash@v0.30.1,true,go,false,
+www-apps/tabbyapi/tabbyapi-020260120.ebuild,www-apps,tabbyapi,python,github,theroyallab/tabbyAPI@main,true,pytest,false,
+www-apps/wakapi/wakapi-2.17.3.ebuild,www-apps,wakapi,go,github,muety/wakapi@2.17.3,true,go,true,
+www-misc/browserchooser/browserchooser-0.0.1.ebuild,www-misc,browserchooser,cmake,github,Tatsh/browserchooser@v0.0.1,true,cmake,false,verify BUILD_TESTING toggle in CMakeLists.txt
+x11-misc/input-remapper/input-remapper-2.2.0.ebuild,x11-misc,input-remapper,python,github,sezanzeb/input-remapper@2.2.0,true,pytest,true,
+x11-misc/mimeo/mimeo-2023-r1.ebuild,x11-misc,mimeo,python,unknown,,false,,false,no GitHub upstream — manual review needed
+x11-misc/rom-properties/rom-properties-2.7.1.ebuild,x11-misc,rom-properties,cmake,github,GerbilSoft/rom-properties@v2.7.1,false,,true,
