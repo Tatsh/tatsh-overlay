@@ -17,6 +17,7 @@ aiofile
 aiofiles
 aiohttp
 aioimaplib
+aiomisc
 aiosmtplib
 aiosqlite
 ajstarks
@@ -928,6 +929,7 @@ intervaltree
 intltool
 intv
 ionelmc
+ipython
 irecovery
 iregex
 isaacs
@@ -1692,6 +1694,7 @@ pygithub
 pygments
 pygobject
 pygtrie
+pyinstrument
 pyjwt
 pykakasi
 pylibyaml
