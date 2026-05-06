@@ -14,3 +14,5 @@ HOMEPAGE="https://github.com/python-hyper/rfc3986"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
+
+distutils_enable_tests pytest
