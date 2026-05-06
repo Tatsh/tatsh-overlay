@@ -14,6 +14,8 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="cuda rocm"
+# Tests require a GPU (CUDA or ROCm) — not runnable in Portage.
+RESTRICT="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 # shellcheck disable=SC2016
