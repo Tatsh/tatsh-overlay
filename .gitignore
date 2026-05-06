@@ -7,3 +7,5 @@
 /.yarn/install-state.gz
 /metadata/*
 /node_modules/
+/phase*.json
+/tests-audit.csv
