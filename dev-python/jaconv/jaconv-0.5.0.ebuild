@@ -19,3 +19,5 @@ src_prepare() {
 	sed -re '/.*data_files=.*/d' -i setup.py || die
 	distutils-r1_src_prepare
 }
+
+distutils_enable_tests pytest
