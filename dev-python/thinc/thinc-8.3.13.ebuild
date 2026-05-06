@@ -41,3 +41,5 @@ RDEPEND=">=dev-python/blis-1.3.0[${PYTHON_USEDEP}]
 DEPEND="${RDEPEND}"
 BDEPEND="dev-python/cython[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
