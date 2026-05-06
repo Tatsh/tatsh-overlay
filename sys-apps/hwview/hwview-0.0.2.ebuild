@@ -12,7 +12,8 @@ SRC_URI="https://github.com/Tatsh/hwview/archive/refs/tags/v${PV}.tar.gz -> ${P}
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="kde"
+IUSE="kde test"
+RESTRICT="!test? ( test )"
 
 DEPEND="dev-qt/qtbase:6[concurrent,gui,widgets]
 	virtual/udev"
@@ -20,6 +21,7 @@ RDEPEND="${DEPEND}"
 
 src_configure() {
 	local mycmakeargs=(
+		"-DBUILD_TESTS=$(usex test)"
 		"-DHWVIEW_USE_KDE=$(usex kde)"
 	)
 	cmake_src_configure
