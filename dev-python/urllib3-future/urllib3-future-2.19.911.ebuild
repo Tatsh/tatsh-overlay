@@ -31,3 +31,5 @@ src_prepare() {
 		-i hatch_build.py || die
 	distutils-r1_src_prepare
 }
+
+distutils_enable_tests pytest
