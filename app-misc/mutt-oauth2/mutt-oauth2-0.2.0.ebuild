@@ -25,10 +25,16 @@ RDEPEND=">=dev-python/aioimaplib-2.0.1[${PYTHON_USEDEP}]
 	>=dev-python/keyring-25.7.0[${PYTHON_USEDEP}]
 	>=dev-python/niquests-3.18.6[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.15.0[${PYTHON_USEDEP}]"
-
-distutils_enable_tests pytest
+BDEPEND="test? (
+	${RDEPEND}
+	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
+	dev-python/pytest-mock[${PYTHON_USEDEP}]
+)"
 
 src_install() {
 	distutils-r1_src_install
 	doman "man/${PN}.1"
 }
+
+distutils_enable_tests pytest
