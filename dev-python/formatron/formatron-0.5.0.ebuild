@@ -34,3 +34,5 @@ src_prepare() {
 		-i src/formatron/schemas/json_schema.py || die
 	distutils-r1_src_prepare
 }
+
+distutils_enable_tests pytest
