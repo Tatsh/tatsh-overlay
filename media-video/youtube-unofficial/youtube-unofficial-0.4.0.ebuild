@@ -26,10 +26,15 @@ RDEPEND=">=dev-python/anyio-4.13.0[${PYTHON_USEDEP}]
 	>=dev-python/niquests-cache-0.0.3[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.15.0[${PYTHON_USEDEP}]
 	>=dev-python/yt-dlp-utils-0.1.0[${PYTHON_USEDEP}]"
-
-distutils_enable_tests pytest
+BDEPEND="test? (
+	${RDEPEND}
+	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pytest-mock[${PYTHON_USEDEP}]
+)"
 
 src_install() {
 	distutils-r1_src_install
 	doman "man/${PN}.1"
 }
+
+distutils_enable_tests pytest
