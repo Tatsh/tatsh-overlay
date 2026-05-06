@@ -212,3 +212,5 @@ src_unpack() {
 	cargo_src_unpack
 	default
 }
+
+distutils_enable_tests pytest
