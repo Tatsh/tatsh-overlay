@@ -24,3 +24,5 @@ RDEPEND="$(python_gen_cond_dep '
 	')
 	>=dev-python/curated-transformers-2.0.1[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/pytorch-1.12.0[${PYTHON_SINGLE_USEDEP}]"
+
+distutils_enable_tests pytest
