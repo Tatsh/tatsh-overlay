@@ -56,3 +56,5 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/regex-2022.1.18[${PYTHON_USEDEP}]
 	>=dev-python/requests-2.26.0[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
