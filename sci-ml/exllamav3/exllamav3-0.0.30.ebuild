@@ -17,6 +17,8 @@ SRC_URI="https://github.com/turboderp-org/${PN}/archive/refs/tags/v${PV}.tar.gz 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+# Tests require a GPU and large model weights — not runnable in Portage.
+RESTRICT="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 # shellcheck disable=SC2016
