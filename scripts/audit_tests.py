@@ -238,6 +238,49 @@ def find_github_for_ebuild(parser: EbuildParser, ebuild_path: Path) -> tuple[str
             if '/' in value:
                 owner, repo = value.split('/', 1)
                 return owner, repo.removesuffix('.git')
+        if m := re.search(r'<remote-id type="pypi">\s*([^<\s]+)\s*</remote-id>', text):
+            pypi_name = m.group(1).strip()
+            if gh := pypi_to_github(pypi_name):
+                return gh
+    return None
+
+
+def pypi_to_github(name: str) -> tuple[str, str] | None:
+    """Resolve a PyPI project name to a (owner, repo) GitHub tuple via the PyPI JSON API."""
+    cache = cache_path_for(f'pypi_{name}.json')
+    data: object | None = None
+    if cache.exists():
+        data = json.loads(cache.read_text())
+    else:
+        try:
+            resp = requests.get(f'{PYPI_API}/{name}/json',
+                                headers={'User-Agent': USER_AGENT},
+                                timeout=15)
+        except requests.RequestException:
+            return None
+        if not resp.ok:
+            return None
+        data = resp.json()
+        cache.parent.mkdir(parents=True, exist_ok=True)
+        cache.write_text(json.dumps(data))
+    if not isinstance(data, dict):
+        return None
+    info = data.get('info', {})
+    if not isinstance(info, dict):
+        return None
+    candidates: list[str] = []
+    project_urls = info.get('project_urls') or {}
+    if isinstance(project_urls, dict):
+        for v in project_urls.values():
+            if isinstance(v, str):
+                candidates.append(v)
+    home = info.get('home_page')
+    if isinstance(home, str):
+        candidates.append(home)
+    for url in candidates:
+        gh = github_owner_repo(url)
+        if gh:
+            return gh
     return None
 
 
