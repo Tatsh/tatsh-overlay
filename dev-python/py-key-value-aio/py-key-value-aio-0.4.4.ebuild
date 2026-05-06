@@ -21,3 +21,17 @@ RDEPEND=">=dev-python/beartype-0.20.0[${PYTHON_USEDEP}]
 	>=dev-python/anyio-4.4.0[${PYTHON_USEDEP}]
 	>=dev-python/keyring-25.6.0[${PYTHON_USEDEP}]
 	>=dev-python/cachetools-5.0.0[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+	dev-python/ast-comments[${PYTHON_USEDEP}]
+	dev-python/dirty-equals[${PYTHON_USEDEP}]
+	dev-python/docker[${PYTHON_USEDEP}]
+	dev-python/inline-snapshot[${PYTHON_USEDEP}]
+	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
+	dev-python/pytest-dotenv[${PYTHON_USEDEP}]
+	dev-python/pytest-mock[${PYTHON_USEDEP}]
+	dev-python/pytest-timeout[${PYTHON_USEDEP}]
+	dev-python/pytest-xdist[${PYTHON_USEDEP}]
+	dev-python/testcontainers[${PYTHON_USEDEP}]
+)"
+
+distutils_enable_tests pytest
