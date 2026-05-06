@@ -22,3 +22,5 @@ python_prepare_all() {
 	sed -re 's/"-Os", //' -i setup.py || die
 	distutils-r1_python_prepare_all
 }
+
+distutils_enable_tests pytest
