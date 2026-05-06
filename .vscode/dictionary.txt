@@ -177,6 +177,7 @@ brahmi
 breakpad
 breejs
 breml
+bretello
 browserchooser
 browserify
 browserslist
@@ -626,6 +627,7 @@ faccessat
 fakecrc
 fakegem
 famicom
+fancycompleter
 fastapi
 fastcgi
 fasthttp
@@ -740,6 +742,7 @@ gentoolkit
 geoip
 georgkrause
 getcanonicallocales
+getmoto
 getprototypeof
 getrandom
 getsentry
@@ -1565,6 +1568,7 @@ pcfx
 pcores
 pcre
 pcsx
+pdbpp
 peds
 pefile
 pehrson
@@ -1704,6 +1708,7 @@ pypng
 pyproject
 pypy
 pyrate
+pyrepl
 pyrescene
 pyserial
 pyside
@@ -1753,6 +1758,7 @@ qtwidgets
 quic
 quicknes
 quicktest
+quiqua
 quot
 quse
 rabbitizer
@@ -2271,6 +2277,7 @@ webuiboxedlayout
 webvr
 webxr
 wendt
+werkzeug
 werror
 wextra
 wfuse
@@ -2326,6 +2333,7 @@ xlib
 xmlbuilder
 xmldom
 xmlpath
+xmltodict
 xorg
 xpet
 xplus
@@ -2382,7 +2390,7 @@ zulko
 zvbi
 zwave
 zwitch
-zzapreti
 zyan
 zycore
 zydis
+zzapreti
