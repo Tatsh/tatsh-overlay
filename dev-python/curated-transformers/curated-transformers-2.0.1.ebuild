@@ -20,3 +20,5 @@ RDEPEND="${PYTHON_DEPS}
 	sci-ml/pytorch[${PYTHON_SINGLE_USEDEP}]"
 DEPEND="${RDEPEND}"
 BDEPEND="${PYTHON_DEPS}"
+
+distutils_enable_tests pytest
