@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=poetry
+DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{12..14} )
 inherit distutils-r1 pypi
 
@@ -26,10 +26,16 @@ RDEPEND=">=dev-python/anyio-4.13.0[${PYTHON_USEDEP}]
 	>=dev-python/pyserial-3.5[${PYTHON_USEDEP}]
 	>=dev-python/pytimeparse2-1.7.1[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.15.0[${PYTHON_USEDEP}]"
-
-distutils_enable_tests pytest
+BDEPEND="test? (
+	${RDEPEND}
+	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
+	dev-python/pytest-mock[${PYTHON_USEDEP}]
+)"
 
 src_install() {
 	distutils-r1_src_install
 	doman "man/${PN}.1"
 }
+
+distutils_enable_tests pytest
