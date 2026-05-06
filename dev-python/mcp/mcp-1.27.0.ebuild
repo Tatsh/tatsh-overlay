@@ -29,3 +29,14 @@ RDEPEND=">=dev-python/anyio-4.5[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.9.0[${PYTHON_USEDEP}]
 	>=dev-python/typing-inspection-0.4.1[${PYTHON_USEDEP}]
 	>=dev-python/uvicorn-0.31.1[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+	dev-python/dirty-equals[${PYTHON_USEDEP}]
+	dev-python/inline-snapshot[${PYTHON_USEDEP}]
+	dev-python/pytest-examples[${PYTHON_USEDEP}]
+	dev-python/pytest-flakefinder[${PYTHON_USEDEP}]
+	dev-python/pytest-pretty[${PYTHON_USEDEP}]
+	dev-python/pytest-xdist[${PYTHON_USEDEP}]
+	dev-python/trio[${PYTHON_USEDEP}]
+)"
+
+distutils_enable_tests pytest
