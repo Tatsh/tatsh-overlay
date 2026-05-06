@@ -17,3 +17,5 @@ KEYWORDS="~amd64"
 
 RDEPEND="<dev-python/catalogue-2.1.0[${PYTHON_USEDEP}]
 	>=dev-python/catalogue-2.0.3[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
