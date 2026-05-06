@@ -63,6 +63,10 @@ src_compile() {
 		github.com/StackExchange/blackbox/v2/cmd/blackbox
 }
 
+src_test() {
+	go test ./... || die
+}
+
 src_install() {
 	dobin "${PN}"
 	dobin binv2/*
