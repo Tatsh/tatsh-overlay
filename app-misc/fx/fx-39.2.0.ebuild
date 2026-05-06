@@ -106,6 +106,10 @@ src_compile() {
 	go build . || die
 }
 
+src_test() {
+	go test ./... || die
+}
+
 src_install() {
 	dobin "${PN}"
 	einstalldocs
