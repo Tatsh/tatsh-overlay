@@ -1799,6 +1799,7 @@ repeaterjs
 replaceall
 repr
 reqs
+rerunfailures
 resourcemanager
 resp
 respx
@@ -2133,6 +2134,7 @@ typer
 typeutils
 tyrquake
 tzdb
+tzlocal
 ucwords
 udalov
 udevadm
