@@ -16,3 +16,5 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/colorama-0.3.9[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
