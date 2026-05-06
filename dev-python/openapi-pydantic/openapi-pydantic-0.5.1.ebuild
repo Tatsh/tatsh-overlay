@@ -16,3 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/pydantic-1.8[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+	dev-python/openapi-spec-validator[${PYTHON_USEDEP}]
+)"
+
+distutils_enable_tests pytest
