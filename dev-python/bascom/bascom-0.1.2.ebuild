@@ -13,3 +13,10 @@ HOMEPAGE="https://pypi.org/project/bascom/"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
+
+BDEPEND="test? (
+	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pytest-mock[${PYTHON_USEDEP}]
+)"
+
+distutils_enable_tests pytest
