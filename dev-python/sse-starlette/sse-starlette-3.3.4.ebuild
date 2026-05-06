@@ -16,3 +16,6 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/anyio-4.7.0[${PYTHON_USEDEP}]"
+
+# Tests need asgi-lifespan and portend, not packaged in Gentoo.
+RESTRICT="test"

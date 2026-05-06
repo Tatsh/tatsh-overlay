@@ -73,6 +73,7 @@ asan
 asar
 asaskevich
 asciidoctor
+asgi
 asio
 asmflags
 aspromise
