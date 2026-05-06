@@ -54,3 +54,5 @@ SRC_URI+=" ${CARGO_CRATE_URIS}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+distutils_enable_tests pytest
