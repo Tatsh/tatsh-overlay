@@ -231,6 +231,10 @@ src_compile() {
 		-o skillshare ./cmd/skillshare || die
 }
 
+src_test() {
+	go test ./... || die
+}
+
 src_install() {
 	dobin skillshare
 	einstalldocs
