@@ -16,3 +16,5 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/proces-0.1.7[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
