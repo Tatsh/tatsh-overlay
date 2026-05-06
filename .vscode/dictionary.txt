@@ -1853,6 +1853,7 @@ salmoria
 samber
 sameboy
 samplerate
+samuelcolvin
 saraiki
 sasl
 sass
