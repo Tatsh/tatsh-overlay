@@ -26,6 +26,7 @@ RDEPEND=">=dev-python/anyio-4.13.0[${PYTHON_USEDEP}]
 BDEPEND="test? (
 	${RDEPEND}
 	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
 	dev-python/pytest-mock[${PYTHON_USEDEP}]
 )"
 
