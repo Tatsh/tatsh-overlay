@@ -16,3 +16,5 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/language-data-1.2[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
