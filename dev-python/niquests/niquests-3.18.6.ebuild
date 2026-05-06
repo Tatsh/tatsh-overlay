@@ -34,3 +34,5 @@ src_prepare() {
 		sed -i 's/from \.\._vendor\.kiss_headers/from kiss_headers/' {} + || die
 	distutils-r1_src_prepare
 }
+
+distutils_enable_tests pytest
