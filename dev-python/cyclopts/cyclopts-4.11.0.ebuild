@@ -21,3 +21,13 @@ RDEPEND=">=dev-python/attrs-23.1.0[${PYTHON_USEDEP}]
 	>=dev-python/rich-rst-1.3.1[${PYTHON_USEDEP}]
 	<dev-python/rich-rst-2.0.0[${PYTHON_USEDEP}]
 	>=dev-python/rich-13.6.0[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+	dev-python/pydantic[${PYTHON_USEDEP}]
+	dev-python/pytest-mock[${PYTHON_USEDEP}]
+	dev-python/pyyaml[${PYTHON_USEDEP}]
+	dev-python/syrupy[${PYTHON_USEDEP}]
+	dev-python/toml[${PYTHON_USEDEP}]
+	dev-python/trio[${PYTHON_USEDEP}]
+)"
+
+distutils_enable_tests pytest
