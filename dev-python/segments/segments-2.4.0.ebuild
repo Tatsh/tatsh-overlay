@@ -17,3 +17,5 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/csvw-1.5.6[${PYTHON_USEDEP}]
 	dev-python/regex[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
