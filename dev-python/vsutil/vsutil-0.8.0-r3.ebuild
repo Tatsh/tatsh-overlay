@@ -15,3 +15,5 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="media-video/vapoursynth[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
