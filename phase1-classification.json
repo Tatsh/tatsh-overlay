@@ -1,0 +1,571 @@
+{
+  "dev-python/aiofile/aiofile-3.9.0.ebuild": {
+    "all_deps": [
+      "markdown-pytest",
+      "pytest",
+      "aiomisc-pytest",
+      "pytest-cov",
+      "coveralls",
+      "pylama",
+      "setuptools",
+      "mypy"
+    ],
+    "known": ["dev-python/pytest", "dev-python/pytest-cov"],
+    "recommendation": "restrict-or-deselect",
+    "unknown": ["aiomisc-pytest", "markdown-pytest"],
+    "upstream": "mosquito/aiofile@master"
+  },
+  "dev-python/aioimaplib/aioimaplib-2.0.1.ebuild": {
+    "all_deps": [
+      "pytest",
+      "pytest-asyncio",
+      "pytest-rerunfailures",
+      "pytz",
+      "tzlocal",
+      "imaplib2",
+      "docutils",
+      "pyopenssl",
+      "httpx-oauth",
+      "pytest-cov"
+    ],
+    "known": [
+      "dev-python/pytest",
+      "dev-python/pytest-asyncio",
+      "dev-python/pytest-cov",
+      "dev-python/pytest-rerunfailures"
+    ],
+    "recommendation": "restrict-or-deselect",
+    "unknown": ["docutils", "httpx-oauth", "imaplib2", "pyopenssl", "pytz", "tzlocal"],
+    "upstream": "bamthomas/aioimaplib@2.0.1"
+  },
+  "dev-python/blis/blis-1.3.3.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "explosion/cython-blis@release-v1.3.3"
+  },
+  "dev-python/caio/caio-0.9.25.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "mosquito/caio@0.9.25"
+  },
+  "dev-python/catalogue/catalogue-2.1.0.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/cloudpathlib/cloudpathlib-0.23.0.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "drivendataorg/cloudpathlib@v0.23.0"
+  },
+  "dev-python/confection/confection-1.3.3.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "explosion/confection@release-v1.3.3"
+  },
+  "dev-python/csvw/csvw-3.7.0.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "cldf/csvw@v3.7.0"
+  },
+  "dev-python/curated-tokenizers/curated-tokenizers-2.0.0.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "explosion/curated-tokenizers@v2.0.0"
+  },
+  "dev-python/curated-transformers/curated-transformers-2.0.1.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "explosion/curated-transformers@v2.0.1"
+  },
+  "dev-python/cyclopts/cyclopts-4.11.0.ebuild": {
+    "all_deps": [
+      "coverage",
+      "pre-commit",
+      "pytest",
+      "pytest-cov",
+      "pytest-mock",
+      "pydantic",
+      "syrupy",
+      "toml",
+      "trio",
+      "pyyaml",
+      "mkdocs"
+    ],
+    "known": ["dev-python/pytest", "dev-python/pytest-cov", "dev-python/pytest-mock"],
+    "recommendation": "restrict-or-deselect",
+    "unknown": ["mkdocs", "pydantic", "pyyaml", "syrupy", "toml", "trio"],
+    "upstream": "BrianPugh/cyclopts@v4.11.0"
+  },
+  "dev-python/dlinfo/dlinfo-2.0.0.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/fastmcp/fastmcp-3.2.4.ebuild": {
+    "all_deps": [
+      "dirty-equals",
+      "fastmcp",
+      "fastapi",
+      "opentelemetry-sdk",
+      "inline-snapshot",
+      "ipython",
+      "pdbpp",
+      "psutil",
+      "pyinstrument",
+      "pyperclip",
+      "pytest",
+      "pytest-asyncio",
+      "pytest-cov",
+      "pytest-env",
+      "pytest-flakefinder",
+      "pytest-httpx",
+      "pytest-report",
+      "pytest-retry",
+      "pytest-timeout",
+      "pytest-xdist",
+      "ruff",
+      "ty",
+      "prek",
+      "loq",
+      "opentelemetry-exporter-otlp-proto-grpc",
+      "pytest-examples"
+    ],
+    "known": [
+      "dev-python/pytest",
+      "dev-python/pytest-asyncio",
+      "dev-python/pytest-cov",
+      "dev-python/pytest-httpx",
+      "dev-python/pytest-timeout",
+      "dev-python/pytest-xdist"
+    ],
+    "recommendation": "restrict-or-deselect",
+    "unknown": [
+      "dirty-equals",
+      "fastapi",
+      "fastmcp",
+      "inline-snapshot",
+      "ipython",
+      "loq",
+      "opentelemetry-exporter-otlp-proto-grpc",
+      "opentelemetry-sdk",
+      "pdbpp",
+      "prek",
+      "psutil",
+      "pyinstrument",
+      "pyperclip",
+      "pytest-env",
+      "pytest-examples",
+      "pytest-flakefinder",
+      "pytest-report",
+      "pytest-retry",
+      "ty"
+    ],
+    "upstream": "PrefectHQ/fastmcp@v3.2.4"
+  },
+  "dev-python/frozendict/frozendict-2.4.7.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/httpx-sse/httpx-sse-0.4.3.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "florimondmanca/httpx-sse@0.4.3"
+  },
+  "dev-python/kiss-headers/kiss-headers-2.5.0.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "jawah/kiss-headers@2.5.0"
+  },
+  "dev-python/langcodes/langcodes-3.5.1.ebuild": {
+    "all_deps": ["pytest", "pytest-cov"],
+    "known": ["dev-python/pytest", "dev-python/pytest-cov"],
+    "recommendation": "with-bdepend",
+    "unknown": [],
+    "upstream": "georgkrause/langcodes@v3.5.1"
+  },
+  "dev-python/language-data/language-data-1.4.0.ebuild": {
+    "all_deps": ["pytest", "pytest-cov"],
+    "known": ["dev-python/pytest", "dev-python/pytest-cov"],
+    "recommendation": "with-bdepend",
+    "unknown": [],
+    "upstream": "georgkrause/language_data@v1.4.0"
+  },
+  "dev-python/language-tags/language-tags-1.2.0.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/log-symbols/log-symbols-0.0.14.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/mcp/mcp-1.27.0.ebuild": {
+    "all_deps": [
+      "pyright",
+      "pytest",
+      "ruff",
+      "trio",
+      "pytest-flakefinder",
+      "pytest-xdist",
+      "pytest-examples",
+      "pytest-pretty",
+      "inline-snapshot",
+      "dirty-equals",
+      "coverage"
+    ],
+    "known": ["dev-python/pytest", "dev-python/pytest-xdist"],
+    "recommendation": "restrict-or-deselect",
+    "unknown": [
+      "dirty-equals",
+      "inline-snapshot",
+      "pyright",
+      "pytest-examples",
+      "pytest-flakefinder",
+      "pytest-pretty",
+      "trio"
+    ],
+    "upstream": "modelcontextprotocol/python-sdk@v1.27.0"
+  },
+  "dev-python/niquests-cache/niquests-cache-0.2.3.ebuild": {
+    "all_deps": [
+      "commitizen",
+      "cz-path",
+      "mypy",
+      "ruff",
+      "ty",
+      "yapf",
+      "coveralls",
+      "mock",
+      "pytest-asyncio",
+      "pytest-cov",
+      "pytest-mock",
+      "pytest"
+    ],
+    "known": [
+      "dev-python/mock",
+      "dev-python/pytest",
+      "dev-python/pytest-asyncio",
+      "dev-python/pytest-cov",
+      "dev-python/pytest-mock"
+    ],
+    "recommendation": "restrict-or-deselect",
+    "unknown": ["commitizen", "cz-path", "ty"],
+    "upstream": "Tatsh/niquests-cache@v0.2.3"
+  },
+  "dev-python/niquests-mock/niquests-mock-0.3.1.ebuild": {
+    "all_deps": ["pre-commit", "pytest", "ruff", "ty"],
+    "known": ["dev-python/pytest"],
+    "recommendation": "restrict-or-deselect",
+    "unknown": ["ty"],
+    "upstream": "0x12th/niquests-mock@v0.3.1"
+  },
+  "dev-python/niquests/niquests-3.18.6.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "jawah/niquests@v3.18.6"
+  },
+  "dev-python/num2words/num2words-0.5.14.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/openapi-pydantic/openapi-pydantic-0.5.1.ebuild": {
+    "all_deps": [
+      "pytest",
+      "pytest-cov",
+      "openapi-spec-validator",
+      "black",
+      "mypy",
+      "pre-commit",
+      "ruff"
+    ],
+    "known": ["dev-python/pytest", "dev-python/pytest-cov"],
+    "recommendation": "restrict-or-deselect",
+    "unknown": ["openapi-spec-validator"],
+    "upstream": "mike-oakley/openapi-pydantic@v0.5.1"
+  },
+  "dev-python/proces/proces-0.1.7.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/py-key-value-aio/py-key-value-aio-0.4.4.ebuild": {
+    "all_deps": [
+      "py-key-value-aio",
+      "ast-comments",
+      "basedpyright",
+      "dirty-equals",
+      "diskcache-stubs",
+      "docker",
+      "inline-snapshot",
+      "testcontainers",
+      "pytest-asyncio",
+      "pytest-dotenv",
+      "pytest-mock",
+      "pytest-timeout",
+      "pytest-xdist",
+      "pytest",
+      "ruff"
+    ],
+    "known": [
+      "dev-python/pytest",
+      "dev-python/pytest-asyncio",
+      "dev-python/pytest-mock",
+      "dev-python/pytest-timeout",
+      "dev-python/pytest-xdist"
+    ],
+    "recommendation": "restrict-or-deselect",
+    "unknown": [
+      "ast-comments",
+      "basedpyright",
+      "dirty-equals",
+      "diskcache-stubs",
+      "docker",
+      "inline-snapshot",
+      "py-key-value-aio",
+      "pytest-dotenv",
+      "testcontainers"
+    ],
+    "upstream": "strawgate/py-key-value@0.4.4"
+  },
+  "dev-python/pydantic-settings/pydantic-settings-2.14.0.ebuild": {
+    "all_deps": [
+      "coverage",
+      "pytest",
+      "pytest-examples",
+      "pytest-mock",
+      "pytest-pretty",
+      "moto",
+      "diff-cover",
+      "chardet"
+    ],
+    "known": ["dev-python/pytest", "dev-python/pytest-mock"],
+    "recommendation": "restrict-or-deselect",
+    "unknown": ["chardet", "diff-cover", "moto", "pytest-examples", "pytest-pretty"],
+    "upstream": "pydantic/pydantic-settings@v2.14.0"
+  },
+  "dev-python/pydub/pydub-0.25.1.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/pyopenjtalk/pyopenjtalk-0.4.1.ebuild": {
+    "all_deps": [
+      "cython",
+      "pysen",
+      "types-setuptools",
+      "mypy",
+      "black",
+      "click",
+      "flake8",
+      "flake8-bugbear",
+      "isort",
+      "types-decorator",
+      "importlib-metadata",
+      "pytest",
+      "scipy"
+    ],
+    "known": ["dev-python/cython", "dev-python/pytest"],
+    "recommendation": "restrict-or-deselect",
+    "unknown": [
+      "click",
+      "importlib-metadata",
+      "pysen",
+      "scipy",
+      "types-decorator",
+      "types-setuptools"
+    ],
+    "upstream": "r9y9/pyopenjtalk@v0.4.1"
+  },
+  "dev-python/python-gitlab/python-gitlab-8.2.0.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "python-gitlab/python-gitlab@v8.2.0"
+  },
+  "dev-python/pytimeparse2/pytimeparse2-1.7.1.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/rabbitizer/rabbitizer-1.16.0.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "Decompollaborate/rabbitizer@1.16.0"
+  },
+  "dev-python/rfc3986/rfc3986-1.5.0.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/rfc3986/rfc3986-2.0.0.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "dev-python/rich-rst/rich-rst-2.0.0.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "wasi-master/rich-rst@main"
+  },
+  "dev-python/segments/segments-2.4.0.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "cldf/segments@v2.4.0"
+  },
+  "dev-python/smart-open/smart-open-7.6.0.ebuild": {
+    "all_deps": [
+      "smart-open",
+      "moto",
+      "responses",
+      "pytest",
+      "pytest-rerunfailures",
+      "pytest-benchmark",
+      "pytest-timeout",
+      "pytest-xdist",
+      "awscli",
+      "pyopenssl",
+      "numpy",
+      "flake8"
+    ],
+    "known": [
+      "dev-python/numpy",
+      "dev-python/pytest",
+      "dev-python/pytest-benchmark",
+      "dev-python/pytest-rerunfailures",
+      "dev-python/pytest-timeout",
+      "dev-python/pytest-xdist",
+      "dev-python/responses"
+    ],
+    "recommendation": "restrict-or-deselect",
+    "unknown": ["awscli", "moto", "pyopenssl", "smart-open"],
+    "upstream": "piskvorky/smart_open@v7.6.0"
+  },
+  "dev-python/spacy-curated-transformers/spacy-curated-transformers-2.1.2.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "explosion/spacy-curated-transformers@release-v2.1.2"
+  },
+  "dev-python/srsly/srsly-2.5.3.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "explosion/srsly@release-v2.5.3"
+  },
+  "dev-python/thinc/thinc-8.3.13.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "explosion/thinc@v8.3.13"
+  },
+  "dev-python/uncalled-for/uncalled-for-0.3.1.ebuild": {
+    "all_deps": [
+      "codespell",
+      "loq",
+      "mypy",
+      "prek",
+      "pyright",
+      "pytest",
+      "pytest-asyncio",
+      "pytest-cov",
+      "pytest-randomly",
+      "pytest-timeout",
+      "ruff"
+    ],
+    "known": [
+      "dev-python/pytest",
+      "dev-python/pytest-asyncio",
+      "dev-python/pytest-cov",
+      "dev-python/pytest-timeout"
+    ],
+    "recommendation": "restrict-or-deselect",
+    "unknown": ["codespell", "loq", "prek", "pyright", "pytest-randomly"],
+    "upstream": "chrisguidry/uncalled-for@0.3.1"
+  },
+  "dev-python/urllib3-future/urllib3-future-2.19.911.ebuild": {
+    "all_deps": [
+      "coverage",
+      "pytest-timeout",
+      "backports.zoneinfo",
+      "tzdata",
+      "towncrier",
+      "pytest-asyncio",
+      "pytest-xdist",
+      "pytest-cov",
+      "pytest-rerunfailures"
+    ],
+    "known": [
+      "dev-python/pytest-asyncio",
+      "dev-python/pytest-cov",
+      "dev-python/pytest-rerunfailures",
+      "dev-python/pytest-timeout",
+      "dev-python/pytest-xdist"
+    ],
+    "recommendation": "restrict-or-deselect",
+    "unknown": ["backports.zoneinfo", "towncrier", "tzdata"],
+    "upstream": "jawah/urllib3.future@2.19.911"
+  },
+  "dev-python/wassima/wassima-2.0.6.ebuild": {
+    "all_deps": [],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "jawah/wassima@2.0.6"
+  },
+  "sci-ml/exllamav2/exllamav2-0.3.2.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "sci-ml/exllamav3/exllamav3-0.0.30.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "sci-ml/flash-attn/flash-attn-2.8.3.ebuild": {
+    "known": [],
+    "status": "no-pyproject",
+    "unknown": []
+  },
+  "www-apps/tabbyapi/tabbyapi-020260120.ebuild": {
+    "all_deps": ["ruff"],
+    "known": [],
+    "recommendation": "simple",
+    "unknown": [],
+    "upstream": "theroyallab/tabbyAPI@main"
+  }
+}

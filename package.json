@@ -26,7 +26,8 @@
       ".yarn/**/*.cjs",
       "Manifest",
       "dist/**",
-      "man/**"
+      "man/**",
+      "phase*.json"
     ],
     "language": "en-GB",
     "languageSettings": [

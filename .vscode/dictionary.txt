@@ -2112,6 +2112,7 @@ trimend
 trimpath
 trimstart
 trng
+trustme
 tsconfck
 tsschecker
 tsutils
