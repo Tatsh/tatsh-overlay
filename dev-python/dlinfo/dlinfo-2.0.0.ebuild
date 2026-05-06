@@ -14,3 +14,5 @@ HOMEPAGE="https://github.com/fphammerle/python-dlinfo"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+distutils_enable_tests pytest
