@@ -17,3 +17,5 @@ KEYWORDS="~amd64"
 
 RDEPEND="dev-python/docutils[${PYTHON_USEDEP}]
 	>=dev-python/rich-12.0.0[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
