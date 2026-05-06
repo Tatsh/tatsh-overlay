@@ -21,3 +21,5 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/requests-2.32.0[${PYTHON_USEDEP}]
 	>=dev-python/requests-toolbelt-1.0.0[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
