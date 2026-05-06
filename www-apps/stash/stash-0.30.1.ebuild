@@ -2377,7 +2377,7 @@ SRC_URI="https://github.com/stashapp/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${
 LICENSE="AGPL-3 MIT 0BSD Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD-2 BSD CC-BY-3.0 CC-BY-4.0 CC0-1.0 GPL-3 ISC MIT-0 MPL-2.0 public-domain PSF-2"
 SLOT="0"
 KEYWORDS="~amd64"
-RESTRICT="mirror"
+RESTRICT="mirror test"
 UI_PV="2.5"
 
 RDEPEND="media-video/ffmpeg"
