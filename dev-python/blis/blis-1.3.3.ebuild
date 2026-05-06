@@ -24,3 +24,5 @@ src_compile() {
 	export BLIS_ARCH="generic"
 	distutils-r1_src_compile
 }
+
+distutils_enable_tests pytest
