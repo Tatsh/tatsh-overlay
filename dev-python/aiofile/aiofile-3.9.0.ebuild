@@ -17,3 +17,9 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/caio-0.9.0[${PYTHON_USEDEP}]
 	<dev-python/caio-0.10.0[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+	dev-python/aiomisc-pytest[${PYTHON_USEDEP}]
+	dev-python/markdown-pytest[${PYTHON_USEDEP}]
+)"
+
+distutils_enable_tests pytest
