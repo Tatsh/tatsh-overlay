@@ -12,9 +12,18 @@ SRC_URI="https://github.com/Tatsh/browserchooser/archive/refs/tags/v${PV}.tar.gz
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 DEPEND="dev-qt/qtbase:6[gui,widgets]"
 RDEPEND="${DEPEND}"
+
+src_configure() {
+	local mycmakeargs=(
+		"-DBUILD_TESTS=$(usex test)"
+	)
+	cmake_src_configure
+}
 
 pkg_postinst() {
 	xdg_desktop_database_update
