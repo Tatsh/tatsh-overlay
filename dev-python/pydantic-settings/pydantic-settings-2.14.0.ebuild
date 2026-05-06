@@ -18,3 +18,12 @@ KEYWORDS="~amd64"
 RDEPEND=">=dev-python/pydantic-2.7.0[${PYTHON_USEDEP}]
 	>=dev-python/python-dotenv-0.21.0[${PYTHON_USEDEP}]
 	>=dev-python/typing-inspection-0.4.0[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+	dev-python/chardet[${PYTHON_USEDEP}]
+	dev-python/moto[${PYTHON_USEDEP}]
+	dev-python/pytest-examples[${PYTHON_USEDEP}]
+	dev-python/pytest-mock[${PYTHON_USEDEP}]
+	dev-python/pytest-pretty[${PYTHON_USEDEP}]
+)"
+
+distutils_enable_tests pytest
