@@ -25,3 +25,5 @@ RDEPEND=">=dev-python/regex-2022[${PYTHON_USEDEP}]
 	dev-cpp/abseil-cpp
 	dev-libs/protobuf
 	sci-ml/sentencepiece"
+
+distutils_enable_tests pytest
