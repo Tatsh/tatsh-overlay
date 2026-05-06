@@ -16,3 +16,15 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="dev-python/wrapt[${PYTHON_USEDEP}]"
+BDEPEND="test? (
+	dev-python/moto[${PYTHON_USEDEP}]
+	dev-python/numpy[${PYTHON_USEDEP}]
+	dev-python/pyopenssl[${PYTHON_USEDEP}]
+	dev-python/pytest-benchmark[${PYTHON_USEDEP}]
+	dev-python/pytest-rerunfailures[${PYTHON_USEDEP}]
+	dev-python/pytest-timeout[${PYTHON_USEDEP}]
+	dev-python/pytest-xdist[${PYTHON_USEDEP}]
+	dev-python/responses[${PYTHON_USEDEP}]
+)"
+
+distutils_enable_tests pytest
