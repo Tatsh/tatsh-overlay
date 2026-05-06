@@ -14,3 +14,5 @@ HOMEPAGE="https://pypi.org/project/pypinyin/"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+distutils_enable_tests pytest
