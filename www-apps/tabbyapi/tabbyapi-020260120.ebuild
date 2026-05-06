@@ -16,6 +16,8 @@ LICENSE="AGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="standalone"
+# Tests require a working GPU and a large model — not runnable in Portage.
+RESTRICT="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 	# shellcheck disable=SC2016
