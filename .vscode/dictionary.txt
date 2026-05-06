@@ -82,6 +82,7 @@ astikit
 astilectron
 astisub
 astits
+asttokens
 asyncio
 asynckit
 atomicgo
@@ -666,6 +667,7 @@ findname
 firestore
 fireweapon
 flacted
+flakefinder
 flashplayer
 flatbuffers
 flatmap
@@ -899,6 +901,7 @@ idna
 ifndef
 ifup
 imageio
+imaplib
 imath
 imds
 imgui
@@ -944,6 +947,7 @@ jaconv
 jakcron
 jamo
 jawah
+jazzband
 jbenet
 jcrist
 jedib
