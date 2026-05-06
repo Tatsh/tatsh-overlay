@@ -14,3 +14,5 @@ HOMEPAGE="https://github.com/Marco-Sulla/python-frozendict"
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
+
+distutils_enable_tests pytest
