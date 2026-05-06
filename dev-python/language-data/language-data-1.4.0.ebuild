@@ -16,3 +16,5 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="dev-libs/marisa[${PYTHON_USEDEP}]"
+
+distutils_enable_tests pytest
