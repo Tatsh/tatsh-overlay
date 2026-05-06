@@ -21,6 +21,9 @@ RUBY_S="asciidoctor-reveal.js-${PV}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+# Tests require asciidoctor/doctest, colorize, tilt — not packaged as Gentoo
+# ruby gems. The ebuild scrubs add_development_dependency from the gemspec.
+RESTRICT="test"
 
 ruby_add_rdepend ">=dev-ruby/asciidoctor-2.0.0 <dev-ruby/asciidoctor-3"
 

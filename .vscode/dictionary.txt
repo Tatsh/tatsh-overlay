@@ -478,6 +478,7 @@ docdir
 docinto
 docopt
 docstrings
+doctest
 dodoc
 doenvd
 doexe
