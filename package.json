@@ -58,6 +58,9 @@
   "license": "MIT",
   "markdownlint-cli2": {
     "config": {
+      "MD024": {
+        "siblings_only": true
+      },
       "MD033": {
         "allowed_elements": ["kbd"]
       },
@@ -67,7 +70,11 @@
         "line_length": 100,
         "tables": false
       }
-    }
+    },
+    "gitignore": true,
+    "globs": ["**/*.md", "**/*.mdc"],
+    "noBanner": true,
+    "showFound": true
   },
   "name": "tatsh-overlay",
   "packageManager": "yarn@4.13.0",
@@ -101,9 +108,9 @@
   },
   "repository": "git@github.com:Tatsh/tatsh-overlay.git",
   "scripts": {
-    "check-formatting": "prettier -c . && poetry run yapf -prd scripts && markdownlint-cli2 --config package.json --configPointer /markdownlint-cli2 '**/*.md' '#node_modules'",
+    "check-formatting": "prettier -c . && poetry run yapf -prd scripts && markdownlint-cli2 --config package.json --configPointer /markdownlint-cli2",
     "check-spelling": "cspell --no-progress './**/*'  './**/.*'",
-    "format": "prettier -w . && poetry run yapf -ri scripts && markdownlint-cli2 --config package.json --configPointer /markdownlint-cli2 --fix '**/*.md' '#node_modules'",
+    "format": "prettier -w . && poetry run yapf -ri scripts && markdownlint-cli2 --config package.json --configPointer /markdownlint-cli2 --fix",
     "mypy": "poetry run mypy",
     "qa": "yarn shellcheck && yarn mypy scripts && yarn ruff scripts && yarn check-spelling && yarn check-formatting",
     "ruff": "poetry run ruff check",
