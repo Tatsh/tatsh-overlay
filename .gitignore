@@ -4,9 +4,10 @@
 .cspellcache
 .directory
 .ruff_cache/
+/.claude/plans/
 /.yarn/install-state.gz
 /metadata/*
-/node_modules/
 /missing-test-deps.md
+/node_modules/
 /phase*.json
 /tests-audit.csv
