@@ -15,10 +15,11 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}-${MY_PV}"
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE="guard-pattern +x86-asm +vspipe +vsscript"
+KEYWORDS="~amd64 ~arm64 ~x86"
+IUSE="asm guard-pattern +vspipe +vsscript"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
-	vspipe? ( vsscript )"
+	vspipe? ( vsscript )
+	asm? ( || ( amd64 x86 ) )"
 
 DEPEND=">=media-libs/zimg-3.0.5
 	${PYTHON_DEPS}
@@ -36,11 +37,15 @@ src_configure() {
 	# shellcheck disable=SC2207
 	local emesonargs=(
 		$(meson_use guard-pattern enable_guard_pattern)
-		$(meson_use x86-asm enable_x86_asm)
 		$(meson_use vsscript enable_vsscript)
 		$(meson_use vspipe enable_vspipe)
 		-Denable_python_module=true
 		-Dbuild_wheel=false
 	)
+	if use amd64 || use x86; then
+		emesonargs+=( "$(meson_use asm enable_x86_asm)" )
+	else
+		emesonargs+=( -Denable_x86_asm=false )
+	fi
 	meson_src_configure
 }
