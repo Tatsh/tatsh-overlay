@@ -303,6 +303,7 @@ comby
 commandlines
 commitizen
 commondir
+concurrentqueue
 configfile
 configor
 configura
@@ -872,6 +873,7 @@ hmong
 hoek
 homebridge
 honnef
+honor
 hppa
 hqdn
 hrydgard
@@ -1081,6 +1083,7 @@ leveladj
 levn
 lexiforest
 lfreetype
+libadrenotools
 libaio
 libao
 libasnd
@@ -1091,13 +1094,13 @@ libb
 libbar
 libbz
 libc
-libc's
 libcaca
 libcdio
 libchdr
 libclang
 libco
 libcrypt
+libc's
 libcxx
 libcxxabi
 libd
@@ -1126,10 +1129,10 @@ libgudev
 libgusb
 libhac
 libhsl
-libhttps
 libidn
 libimobiledevice
 libjpeg
+liblinkernsbypass
 liblsdl
 libmad
 libmpv
@@ -1205,6 +1208,7 @@ lide
 lightrec
 lighttpd
 limbu
+linkernsbypass
 linters
 lipgloss
 listformat
@@ -1250,7 +1254,6 @@ lugaresi
 lunixbochs
 lutro
 lvulkan
-lxml
 lzma
 macemu
 macvendor
@@ -1420,6 +1423,7 @@ natefinch
 nativefiledialog
 ncnn
 ncruces
+ndebug
 nego
 neko
 neocd
@@ -1444,6 +1448,7 @@ newrules
 newscript
 newunit
 nextick
+nfde
 nfnt
 nftables
 nghttp
@@ -1602,6 +1607,7 @@ pihole
 pilrc
 pinecone
 pingcap
+pipefail
 pipewire
 pipx
 piskvorky
@@ -1665,6 +1671,7 @@ psalterpahlavi
 pstree
 psutil
 psvpfsparser
+psvpfstools
 pterm
 pthread
 puae
@@ -1781,6 +1788,7 @@ rdepend
 rdepends
 rdflib
 readdirp
+readelf
 realcugan
 realesrgan
 realsr
@@ -1796,9 +1804,11 @@ regjsgen
 regjsparser
 rehype
 rejang
+rela
 relcs
 releasesd
 rels
+relw
 relwithdebinfo
 remapper
 remeh
@@ -2041,6 +2051,7 @@ swiftshader
 sylheti
 sylotinagri
 synckit
+syst
 systemjs
 systemunitdir
 systray
