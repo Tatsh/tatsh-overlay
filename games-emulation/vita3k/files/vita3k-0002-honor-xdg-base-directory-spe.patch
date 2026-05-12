@@ -1,7 +1,7 @@
 From 6906847387fc619dcef24ca27c1d7122d6edb654 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 11 May 2026 23:47:08 -0400
-Subject: [PATCH 02/18] Honor XDG Base Directory Spec defaults for static
+Subject: [PATCH 02/19] Honor XDG Base Directory Spec defaults for static
  assets path
 
 Per the XDG Base Directory Specification, if $XDG_DATA_DIRS is unset or

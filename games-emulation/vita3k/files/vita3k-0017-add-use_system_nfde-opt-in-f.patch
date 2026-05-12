@@ -1,7 +1,7 @@
 From 7d3e1935e3d701c289b857f93532fe010fb8e952 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 10:29:20 -0400
-Subject: [PATCH 17/18] Add USE_SYSTEM_NFDE opt-in for the bundled
+Subject: [PATCH 17/19] Add USE_SYSTEM_NFDE opt-in for the bundled
  nativefiledialog-extended
 
 nativefiledialog-extended is available on Linux (Gentoo: ::guru/

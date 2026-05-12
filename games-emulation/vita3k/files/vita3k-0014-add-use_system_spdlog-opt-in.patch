@@ -1,7 +1,7 @@
 From 7726f1adf59ac0fe1a29b988c1c633904346bdcf Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 10:09:06 -0400
-Subject: [PATCH 14/18] Add USE_SYSTEM_SPDLOG opt-in for the bundled spdlog
+Subject: [PATCH 14/19] Add USE_SYSTEM_SPDLOG opt-in for the bundled spdlog
  library
 
 spdlog is widely packaged (Gentoo: dev-libs/spdlog, exporting

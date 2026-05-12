@@ -1,7 +1,7 @@
 From 337e90d6fdec261b08416474d846a3a6b031ec1a Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 10:21:29 -0400
-Subject: [PATCH 16/18] Fall back to xxhash.h inline mode when
+Subject: [PATCH 16/19] Fall back to xxhash.h inline mode when
  xxh_x86dispatch.h is absent
 
 xxh_x86dispatch.h is an internal xxHash header that isn't installed by

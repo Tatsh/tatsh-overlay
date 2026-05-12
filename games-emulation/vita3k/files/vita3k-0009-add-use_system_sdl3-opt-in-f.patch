@@ -1,7 +1,7 @@
 From f78bdcb07c2cb5b3044ba6e2c6250cbf189c34c8 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 01:56:17 -0400
-Subject: [PATCH 09/18] Add USE_SYSTEM_SDL3 opt-in for the bundled SDL3 library
+Subject: [PATCH 09/19] Add USE_SYSTEM_SDL3 opt-in for the bundled SDL3 library
 
 Distributions ship SDL3 as a regular shared library package
 (Gentoo: media-libs/libsdl3 with CMake config files). Add an opt-in for

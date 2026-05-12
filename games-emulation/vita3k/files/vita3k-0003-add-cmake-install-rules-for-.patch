@@ -1,7 +1,7 @@
 From 205adc0091357fcf296d34bed4da7e87d1c95215 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 11 May 2026 23:47:53 -0400
-Subject: [PATCH 03/18] Add CMake install() rules for FHS-style Linux packaging
+Subject: [PATCH 03/19] Add CMake install() rules for FHS-style Linux packaging
 
 Lets distributions package Vita3K with a standard `cmake --install .`
 invocation. Installs:

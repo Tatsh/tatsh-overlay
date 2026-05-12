@@ -1,7 +1,7 @@
 From a393d75810aa539a512f6af786cbd266de99d94d Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 01:19:52 -0400
-Subject: [PATCH 07/18] Add USE_SYSTEM_STB opt-in for the bundled stb header
+Subject: [PATCH 07/19] Add USE_SYSTEM_STB opt-in for the bundled stb header
  library
 
 stb is a header-only single-file public-domain library. Most Linux

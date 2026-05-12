@@ -1,0 +1,47 @@
+From 6ebe9420d8b9ed735b46d3678846eaae1db0ec4c Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 14:44:47 -0400
+Subject: [PATCH 19/19] Force the bundled xbyak; system xbyak 7.x is
+ incompatible with dynarmic
+
+dynarmic's CMakeLists.txt does `find_package(xbyak 7 CONFIG)` and prefers
+the system xbyak when found. System xbyak 7.x has tightened operand-size
+inference rules that cause Xbyak::Error "bad mem size" at runtime from
+dynarmic's reg_alloc EmitMove path, e.g.:
+
+  Xbyak::CodeGenerator::opMR (xbyak.h:2173)
+  Xbyak::CodeGenerator::opRO_MR (xbyak.h:2411)
+  Dynarmic::Backend::X64::RegAlloc::EmitMove (reg_alloc.cpp:750)
+  Dynarmic::Backend::X64::RegAlloc::ScratchImpl (reg_alloc.cpp:428)
+  Dynarmic::Backend::X64::EmitX64::EmitGetNZFromOp (emit_x64.cpp:187)
+
+The dynarmic fork shipped with Vita3K is pinned against the xbyak in its
+own externals/xbyak submodule. Set CMAKE_DISABLE_FIND_PACKAGE_xbyak ON
+before `add_subdirectory(dynarmic)` so dynarmic always falls back to
+its bundled copy regardless of what the host system has installed.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ external/CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index d967c43e..b6d28a9e 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -190,6 +190,12 @@ endif()
+ set(DYNARMIC_TESTS OFF CACHE BOOL "")
+ set(DYNARMIC_NO_BUNDLED_FMT ON CACHE BOOL "")
+ set(DYNARMIC_FRONTENDS "A32" CACHE STRING "")
++# Force the bundled xbyak: system xbyak 7.x has stricter operand-size
++# inference that triggers Xbyak::Error "bad mem size" from dynarmic's
++# reg_alloc EmitMove path at runtime. The vendored xbyak under
++# external/dynarmic/externals/xbyak is the one this fork of dynarmic is
++# pinned against.
++set(CMAKE_DISABLE_FIND_PACKAGE_xbyak ON)
+ add_subdirectory(dynarmic)
+ 
+ if(MSVC)
+-- 
+2.54.0
+

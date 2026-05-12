@@ -1,7 +1,7 @@
 From 7fc30a82455f2fafdea083c7413460a6e5d4e081 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 11 May 2026 23:36:01 -0400
-Subject: [PATCH 01/18] Allow shared system Boost; only force static for
+Subject: [PATCH 01/19] Allow shared system Boost; only force static for
  bundled distribution
 
 VITA3K_FORCE_SYSTEM_BOOST=ON previously hard-coded Boost_USE_STATIC_LIBS=ON in

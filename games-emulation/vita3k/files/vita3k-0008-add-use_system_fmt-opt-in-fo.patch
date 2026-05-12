@@ -1,7 +1,7 @@
 From 99f938ff7ed2163106e72ce1f213fa768ca9fa51 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 01:36:43 -0400
-Subject: [PATCH 08/18] Add USE_SYSTEM_FMT opt-in for the bundled fmt library
+Subject: [PATCH 08/19] Add USE_SYSTEM_FMT opt-in for the bundled fmt library
 
 The bundled `fmt` submodule pins a specific {fmt} release. Recent
 distribution packages of {fmt} (Gentoo: dev-libs/libfmt, exporting the

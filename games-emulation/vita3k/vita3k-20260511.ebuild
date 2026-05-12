@@ -109,6 +109,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0016-fall-back-to-xxhash.h-inline.patch"
 	"${FILESDIR}/${PN}-0017-add-use_system_nfde-opt-in-f.patch"
 	"${FILESDIR}/${PN}-0018-add-use_system_cubeb-opt-in-.patch"
+	"${FILESDIR}/${PN}-0019-force-the-bundled-xbyak-syst.patch"
 )
 
 src_prepare() {
