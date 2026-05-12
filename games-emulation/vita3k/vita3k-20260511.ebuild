@@ -9,7 +9,7 @@ DESCRIPTION="Experimental PlayStation Vita emulator."
 HOMEPAGE="
 	https://vita3k.org
 	https://github.com/Vita3K/Vita3K
-" 
+"
 SHA="9abe85f90ff04f397a817beef03f3fafd5e6900f"
 LIBATRAC9_SHA="82767fe38823c32536726ea798f392b0b49e66b9"
 SPIRV_CROSS_SHA="d8e3e2b141b8c8a167b2e3984736a6baacff316c"
@@ -81,10 +81,10 @@ DEPEND=">=dev-libs/boost-1.81:=
 	dev-libs/openssl
 	dev-libs/pugixml
 	dev-libs/spdlog
+	dev-libs/stb
 	dev-libs/xxhash
 	media-libs/cubeb
 	media-libs/libsdl3
-	media-libs/stb
 	media-video/ffmpeg:=
 	sys-apps/dbus
 	virtual/zlib"
