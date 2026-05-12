@@ -1,0 +1,95 @@
+From 936f6bf7bbf773f08b154955cc3e07f5541aa264 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 12:16:58 -0400
+Subject: [PATCH 18/18] Add USE_SYSTEM_CUBEB opt-in for the bundled cubeb
+ library
+
+cubeb is widely packaged (Gentoo: media-libs/cubeb, exporting
+cubeb::cubeb). Add an opt-in.
+
+The bundled distribution exposes a bare `cubeb` target that vita3k/audio
+links directly. Wrap the system imported target in an INTERFACE named
+`cubeb` so the rest of the build is unchanged.
+
+Also gate the bundled-cubeb-specific speex target_compile_definitions
+block on `NOT USE_SYSTEM_CUBEB`; the system cubeb has speex baked in
+and there is no in-tree speex target to configure.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt          | 12 ++++++++++++
+ external/CMakeLists.txt | 27 ++++++++++++++++-----------
+ 2 files changed, 28 insertions(+), 11 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 84ee8d87..352ef0ad 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -401,6 +401,18 @@ if(USE_SYSTEM_XXHASH)
+ 	endif()
+ endif()
+ 
++option(USE_SYSTEM_CUBEB "Use the system-installed cubeb library instead of the bundled submodule" OFF)
++if(USE_SYSTEM_CUBEB)
++	find_package(cubeb CONFIG REQUIRED)
++	if(TARGET cubeb::cubeb)
++		set_target_properties(cubeb::cubeb PROPERTIES IMPORTED_GLOBAL TRUE)
++	endif()
++	if(NOT TARGET cubeb)
++		add_library(cubeb INTERFACE)
++		target_link_libraries(cubeb INTERFACE cubeb::cubeb)
++	endif()
++endif()
++
+ add_subdirectory(external)
+ add_subdirectory(vita3k)
+ add_subdirectory(tools/gen-modules)
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index 642f6d26..d967c43e 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -18,6 +18,7 @@ function(check_submodules_present)
+ 	set(_VITA3K_OPTIONAL_SUBMODULES
+ 		"VITA3K_FORCE_SYSTEM_BOOST:external/boost"
+ 		"USE_SYSTEM_CAPSTONE:external/capstone"
++		"USE_SYSTEM_CUBEB:external/cubeb"
+ 		"USE_SYSTEM_FFMPEG:external/ffmpeg"
+ 		"USE_SYSTEM_FMT:external/fmt"
+ 		"USE_SYSTEM_NFDE:external/nativefiledialog-extended"
+@@ -157,18 +158,22 @@ set(BUNDLE_SPEEX TRUE CACHE BOOL "Bundle the speex library")
+ set(LAZY_LOAD_LIBS TRUE CACHE BOOL "Lazily load shared libraries")
+ set(USE_SANITIZERS FALSE CACHE BOOL "Dont't use sanitizers")
+ 
+-add_subdirectory(cubeb EXCLUDE_FROM_ALL)
++if(NOT USE_SYSTEM_CUBEB)
++	add_subdirectory(cubeb EXCLUDE_FROM_ALL)
++endif()
+ 
+-if (ARCHITECTURE STREQUAL "arm64")
+-	target_compile_definitions(speex PUBLIC
+-		#_USE_NEON
+-	)
+-elseif (ARCHITECTURE STREQUAL "x86_64")
+-	target_compile_definitions(speex PUBLIC
+-		_USE_SSE
+-		_USE_SSE2
+-	)
+-endif ()
++if(NOT USE_SYSTEM_CUBEB)
++	if (ARCHITECTURE STREQUAL "arm64")
++		target_compile_definitions(speex PUBLIC
++			#_USE_NEON
++		)
++	elseif (ARCHITECTURE STREQUAL "x86_64")
++		target_compile_definitions(speex PUBLIC
++			_USE_SSE
++			_USE_SSE2
++		)
++	endif ()
++endif()
+ 
+ if(ANDROID)
+ 	add_subdirectory(libadrenotools)
+-- 
+2.54.0
+

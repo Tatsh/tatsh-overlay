@@ -1,0 +1,71 @@
+From d9b5a75c4cd5693f4525e8058d6ed352ffd35c45 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 02:10:04 -0400
+Subject: [PATCH 10/18] Add USE_SYSTEM_CAPSTONE opt-in for the bundled Capstone
+ library
+
+Distributions ship Capstone as a regular shared library package
+(Gentoo: dev-libs/capstone, exporting capstone::capstone_shared via a
+CMake config). Add an opt-in for downstream packagers.
+
+The find_package call lives in the root CMakeLists.txt so the imported
+target is promoted to GLOBAL and the bare `capstone` alias is visible
+to the vita3k/cpu/ subdirectory that links against it.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt          | 14 ++++++++++++++
+ external/CMakeLists.txt |  5 ++++-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 15a5b397..8fe9abbb 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -318,6 +318,20 @@ if(USE_SYSTEM_SDL3)
+ 	endif()
+ endif()
+ 
++option(USE_SYSTEM_CAPSTONE "Use the system-installed Capstone library instead of the bundled submodule" OFF)
++if(USE_SYSTEM_CAPSTONE)
++	find_package(capstone CONFIG REQUIRED)
++	if(TARGET capstone::capstone_shared)
++		set_target_properties(capstone::capstone_shared PROPERTIES IMPORTED_GLOBAL TRUE)
++	endif()
++	# vita3k references the bundled Capstone's bare `capstone` target name.
++	# Wrap the system imported target so the rest of the build is unchanged.
++	if(NOT TARGET capstone)
++		add_library(capstone INTERFACE)
++		target_link_libraries(capstone INTERFACE capstone::capstone_shared)
++	endif()
++endif()
++
+ add_subdirectory(external)
+ add_subdirectory(vita3k)
+ add_subdirectory(tools/gen-modules)
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index 6db384f6..5ec54a00 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -17,6 +17,7 @@ function(check_submodules_present)
+ 	# here as additional USE_SYSTEM_* opt-ins are introduced.
+ 	set(_VITA3K_OPTIONAL_SUBMODULES
+ 		"VITA3K_FORCE_SYSTEM_BOOST:external/boost"
++		"USE_SYSTEM_CAPSTONE:external/capstone"
+ 		"USE_SYSTEM_FFMPEG:external/ffmpeg"
+ 		"USE_SYSTEM_FMT:external/fmt"
+ 		"USE_SYSTEM_SDL3:external/sdl"
+@@ -62,7 +63,9 @@ set(CMAKE_FOLDER externals)
+ option(BUILD_SHARED_LIBS "Build shared library" OFF)
+ option(CAPSTONE_ARCHITECTURE_DEFAULT "Whether architectures are enabled by default" OFF)
+ option(CAPSTONE_ARM_SUPPORT "ARM support" ON)
+-add_subdirectory(capstone EXCLUDE_FROM_ALL)
++if(NOT USE_SYSTEM_CAPSTONE)
++	add_subdirectory(capstone EXCLUDE_FROM_ALL)
++endif()
+ 
+ add_library(dirent INTERFACE)
+ 
+-- 
+2.54.0
+

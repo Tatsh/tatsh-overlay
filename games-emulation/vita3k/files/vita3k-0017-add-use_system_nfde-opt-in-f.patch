@@ -1,0 +1,59 @@
+From 7d3e1935e3d701c289b857f93532fe010fb8e952 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 10:29:20 -0400
+Subject: [PATCH 17/18] Add USE_SYSTEM_NFDE opt-in for the bundled
+ nativefiledialog-extended
+
+nativefiledialog-extended is available on Linux (Gentoo: ::guru/
+dev-libs/nativefiledialog-extended, exporting nfd::nfd via a CMake
+config). Add an opt-in.
+
+The existing NFDe::NFDe alias is preserved so vita3k/host/dialog
+target_link_libraries(... NFDe::NFDe) is unchanged. When
+USE_SYSTEM_NFDE=ON the alias points at the system imported target;
+otherwise it points at the bundled bare `nfd` target.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ external/CMakeLists.txt | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index cb5397e6..642f6d26 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -20,6 +20,7 @@ function(check_submodules_present)
+ 		"USE_SYSTEM_CAPSTONE:external/capstone"
+ 		"USE_SYSTEM_FFMPEG:external/ffmpeg"
+ 		"USE_SYSTEM_FMT:external/fmt"
++		"USE_SYSTEM_NFDE:external/nativefiledialog-extended"
+ 		"USE_SYSTEM_PUGIXML:external/pugixml"
+ 		"USE_SYSTEM_SDL3:external/sdl"
+ 		"USE_SYSTEM_SPDLOG:external/spdlog"
+@@ -529,10 +530,20 @@ endif()
+ # Use XDG desktop portals on Linux
+ set(NFD_PORTAL ON)
+ 
++option(USE_SYSTEM_NFDE "Use the system-installed nativefiledialog-extended library instead of the bundled submodule" OFF)
+ if(NOT ANDROID)
+-	# nativefiledialog-extended
+-	add_subdirectory(nativefiledialog-extended)
++	if(USE_SYSTEM_NFDE)
++		find_package(nfd CONFIG REQUIRED)
++		if(TARGET nfd::nfd)
++			set_target_properties(nfd::nfd PROPERTIES IMPORTED_GLOBAL TRUE)
++		endif()
++	else()
++		# nativefiledialog-extended
++		add_subdirectory(nativefiledialog-extended)
++	endif()
+ 
+ 	# Create alias to prevent the need of multiple changes in case the target name changes
+-	add_library(NFDe::NFDe ALIAS nfd)
++	if(NOT TARGET NFDe::NFDe)
++		add_library(NFDe::NFDe ALIAS nfd::nfd)
++	endif()
+ endif()
+-- 
+2.54.0
+

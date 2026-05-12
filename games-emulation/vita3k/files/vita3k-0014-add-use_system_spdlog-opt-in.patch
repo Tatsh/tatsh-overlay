@@ -1,0 +1,77 @@
+From 7726f1adf59ac0fe1a29b988c1c633904346bdcf Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 10:09:06 -0400
+Subject: [PATCH 14/18] Add USE_SYSTEM_SPDLOG opt-in for the bundled spdlog
+ library
+
+spdlog is widely packaged (Gentoo: dev-libs/spdlog, exporting
+spdlog::spdlog). Add an opt-in.
+
+The bundled distribution exposes a bare `spdlog` target consumed by
+vita3k/util; the system config provides the namespaced
+spdlog::spdlog imported target. Wrap it in an INTERFACE target named
+`spdlog` so the rest of the build is unchanged.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt          | 14 ++++++++++++++
+ external/CMakeLists.txt | 11 +++++++----
+ 2 files changed, 21 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 317c7fb0..bd1a9578 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -373,6 +373,20 @@ if(USE_SYSTEM_YAML_CPP)
+ 	endif()
+ endif()
+ 
++option(USE_SYSTEM_SPDLOG "Use the system-installed spdlog library instead of the bundled submodule" OFF)
++if(USE_SYSTEM_SPDLOG)
++	find_package(spdlog CONFIG REQUIRED)
++	if(TARGET spdlog::spdlog)
++		set_target_properties(spdlog::spdlog PROPERTIES IMPORTED_GLOBAL TRUE)
++	endif()
++	# vita3k consumers link to the bare `spdlog` target name as exposed by
++	# the bundled distribution.
++	if(NOT TARGET spdlog)
++		add_library(spdlog INTERFACE)
++		target_link_libraries(spdlog INTERFACE spdlog::spdlog)
++	endif()
++endif()
++
+ add_subdirectory(external)
+ add_subdirectory(vita3k)
+ add_subdirectory(tools/gen-modules)
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index 9d7b80ff..a90a0cad 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -22,6 +22,7 @@ function(check_submodules_present)
+ 		"USE_SYSTEM_FMT:external/fmt"
+ 		"USE_SYSTEM_PUGIXML:external/pugixml"
+ 		"USE_SYSTEM_SDL3:external/sdl"
++		"USE_SYSTEM_SPDLOG:external/spdlog"
+ 		"USE_SYSTEM_STB:external/stb"
+ 		"USE_SYSTEM_TRACY:external/tracy"
+ 		"USE_SYSTEM_YAML_CPP:external/yaml-cpp"
+@@ -90,10 +91,12 @@ else()
+ 	set(fmt_DIR fmt)
+ endif()
+ 
+-set(SPDLOG_WCHAR_FILENAMES ON CACHE BOOL "")
+-set(SPDLOG_NO_THREAD_ID ON CACHE BOOL "")
+-set(SPDLOG_FMT_EXTERNAL ON CACHE BOOL "")
+-add_subdirectory(spdlog EXCLUDE_FROM_ALL)
++if(NOT USE_SYSTEM_SPDLOG)
++	set(SPDLOG_WCHAR_FILENAMES ON CACHE BOOL "")
++	set(SPDLOG_NO_THREAD_ID ON CACHE BOOL "")
++	set(SPDLOG_FMT_EXTERNAL ON CACHE BOOL "")
++	add_subdirectory(spdlog EXCLUDE_FROM_ALL)
++endif()
+ 
+ add_subdirectory(substitute EXCLUDE_FROM_ALL)
+ 
+-- 
+2.54.0
+

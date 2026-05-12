@@ -1,0 +1,53 @@
+From 337e90d6fdec261b08416474d846a3a6b031ec1a Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 10:21:29 -0400
+Subject: [PATCH 16/18] Fall back to xxhash.h inline mode when
+ xxh_x86dispatch.h is absent
+
+xxh_x86dispatch.h is an internal xxHash header that isn't installed by
+every xxHash distribution (Gentoo's dev-libs/xxhash, for example, ships
+only the public headers). Use __has_include to gate the dispatch path
+and fall back to <xxhash.h> with XXH_INLINE_ALL when the dispatch header
+isn't available. XXH3_64bits, the only entry point used here, is
+available in both code paths.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ vita3k/modules/SceGxm/SceGxm.cpp      | 4 +++-
+ vita3k/renderer/src/texture/cache.cpp | 5 ++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/vita3k/modules/SceGxm/SceGxm.cpp b/vita3k/modules/SceGxm/SceGxm.cpp
+index ac1b4b10..cc2b7f08 100644
+--- a/vita3k/modules/SceGxm/SceGxm.cpp
++++ b/vita3k/modules/SceGxm/SceGxm.cpp
+@@ -21,7 +21,9 @@
+ 
+ #include <span>
+ #include <stack>
+-#if defined(__x86_64__) && !defined(__APPLE__)
++// xxh_x86dispatch.h is an internal xxHash header that isn't installed by
++// every distribution. Fall back to inline-all mode when it isn't available.
++#if defined(__x86_64__) && !defined(__APPLE__) && __has_include(<xxh_x86dispatch.h>)
+ #include <xxh_x86dispatch.h>
+ #else
+ #define XXH_INLINE_ALL
+diff --git a/vita3k/renderer/src/texture/cache.cpp b/vita3k/renderer/src/texture/cache.cpp
+index 300593b3..91bb1c81 100644
+--- a/vita3k/renderer/src/texture/cache.cpp
++++ b/vita3k/renderer/src/texture/cache.cpp
+@@ -29,7 +29,10 @@
+ #include <algorithm>
+ #include <cstring>
+ #include <numeric>
+-#if defined(__x86_64__) && !defined(__APPLE__)
++// xxh_x86dispatch.h is an internal xxHash header that isn't installed by
++// every distribution. Fall back to inline-all mode when it isn't available
++// (e.g. system xxHash without the dispatch helper).
++#if defined(__x86_64__) && !defined(__APPLE__) && __has_include(<xxh_x86dispatch.h>)
+ #include <xxh_x86dispatch.h>
+ #else
+ #define XXH_INLINE_ALL
+-- 
+2.54.0
+

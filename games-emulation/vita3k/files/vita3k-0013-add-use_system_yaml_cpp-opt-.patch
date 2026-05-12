@@ -1,0 +1,73 @@
+From 3ee4d595403719dcf1872010358d057150d1a219 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 09:59:49 -0400
+Subject: [PATCH 13/18] Add USE_SYSTEM_YAML_CPP opt-in for the bundled yaml-cpp
+ library
+
+yaml-cpp is the YAML parser Vita3K uses for config.yml. Most Linux
+distributions ship it (Gentoo: dev-cpp/yaml-cpp, exporting
+yaml-cpp::yaml-cpp). Add an opt-in.
+
+vita3k consumers reference the bare `yaml-cpp` target name as exposed
+by the bundled distribution; the system config uses the namespaced
+`yaml-cpp::yaml-cpp` imported target. An INTERFACE wrapper named
+`yaml-cpp` bridges the two so the rest of the build is unchanged.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt          | 15 +++++++++++++++
+ external/CMakeLists.txt |  5 ++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3437131c..317c7fb0 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -358,6 +358,21 @@ if(USE_SYSTEM_PUGIXML)
+ 	endforeach()
+ endif()
+ 
++option(USE_SYSTEM_YAML_CPP "Use the system-installed yaml-cpp library instead of the bundled submodule" OFF)
++if(USE_SYSTEM_YAML_CPP)
++	find_package(yaml-cpp CONFIG REQUIRED)
++	if(TARGET yaml-cpp::yaml-cpp)
++		set_target_properties(yaml-cpp::yaml-cpp PROPERTIES IMPORTED_GLOBAL TRUE)
++	endif()
++	# vita3k consumers link to the bare `yaml-cpp` target name as exposed
++	# by the bundled distribution. Wrap the system imported target so the
++	# rest of the build is unchanged.
++	if(NOT TARGET yaml-cpp)
++		add_library(yaml-cpp INTERFACE)
++		target_link_libraries(yaml-cpp INTERFACE yaml-cpp::yaml-cpp)
++	endif()
++endif()
++
+ add_subdirectory(external)
+ add_subdirectory(vita3k)
+ add_subdirectory(tools/gen-modules)
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index 5aaa1150..9d7b80ff 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -24,6 +24,7 @@ function(check_submodules_present)
+ 		"USE_SYSTEM_SDL3:external/sdl"
+ 		"USE_SYSTEM_STB:external/stb"
+ 		"USE_SYSTEM_TRACY:external/tracy"
++		"USE_SYSTEM_YAML_CPP:external/yaml-cpp"
+ 	)
+ 
+ 	foreach(module ${gitmodules})
+@@ -194,7 +195,9 @@ target_include_directories(vita-toolchain INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}
+ 
+ option(YAML_CPP_BUILD_TOOLS "Enable parse tools" OFF)
+ option(YAML_CPP_BUILD_CONTRIB "Enable contrib stuff in library" OFF)
+-add_subdirectory(yaml-cpp EXCLUDE_FROM_ALL)
++if(NOT USE_SYSTEM_YAML_CPP)
++	add_subdirectory(yaml-cpp EXCLUDE_FROM_ALL)
++endif()
+ 
+ if(USE_DISCORD_RICH_PRESENCE)
+ 	if(NOT EXISTS "${CMAKE_BINARY_DIR}/external/discord_game_sdk.zip")
+-- 
+2.54.0
+

@@ -1,0 +1,58 @@
+From a9984e69f037a60ac7715620c8bab593c5bc9c15 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 11 May 2026 23:59:18 -0400
+Subject: [PATCH 04/18] Skip empty boost submodule check when system Boost is
+ forced
+
+When VITA3K_FORCE_SYSTEM_BOOST=ON the external/boost submodule is not
+expected to be populated. check_submodules_present() should not treat
+that as a fatal error or distributions packaging Vita3K with the system
+Boost cannot configure the build.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ external/CMakeLists.txt | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index 4404d314..dc4c378a 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -11,10 +11,34 @@ function(check_submodules_present)
+ 	file(READ "${CMAKE_SOURCE_DIR}/.gitmodules" gitmodules)
+ 	string(REGEX MATCHALL "path *= *[^ \t\r\n]*" gitmodules ${gitmodules})
+ 
++	# Mapping of (system-override variable, submodule path). When the
++	# variable is set, the submodule directory is allowed to be empty
++	# because the system equivalent is used instead. Add new entries
++	# here as additional USE_SYSTEM_* opt-ins are introduced.
++	set(_VITA3K_OPTIONAL_SUBMODULES
++		"VITA3K_FORCE_SYSTEM_BOOST:external/boost"
++		"USE_SYSTEM_FFMPEG:external/ffmpeg"
++		"USE_SYSTEM_STB:external/stb"
++	)
++
+ 	foreach(module ${gitmodules})
+ 		# Get module name
+ 		string(REGEX REPLACE "path *= *" "" module ${module})
+ 
++		# Skip submodules whose corresponding system override is enabled.
++		set(_skip FALSE)
++		foreach(entry ${_VITA3K_OPTIONAL_SUBMODULES})
++			string(REGEX REPLACE "^([^:]+):.*$" "\\1" _var "${entry}")
++			string(REGEX REPLACE "^[^:]+:" "" _path "${entry}")
++			if(${_var} AND "${module}" STREQUAL "${_path}")
++				set(_skip TRUE)
++				break()
++			endif()
++		endforeach()
++		if(_skip)
++			continue()
++		endif()
++
+ 		# Stat the folder and get amount of entries
+ 		file(GLOB RESULT "${CMAKE_SOURCE_DIR}/${module}/*")
+ 		list(LENGTH RESULT RES_LEN)
+-- 
+2.54.0
+

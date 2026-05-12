@@ -1,0 +1,70 @@
+From 83cc7cf92aab0c02efbac64c687c3d7718ec3c1d Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 10:21:29 -0400
+Subject: [PATCH 15/18] Add USE_SYSTEM_XXHASH opt-in for the bundled xxHash
+ library
+
+xxHash is widely packaged (Gentoo: dev-libs/xxhash). Most distributions
+do not ship a CMake config for xxHash but a pkg-config file (libxxhash)
+is available; use it to synthesize the namespaced xxHash::xxhash target
+the rest of Vita3K consumes.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt          | 14 ++++++++++++++
+ external/CMakeLists.txt |  7 +++++--
+ 2 files changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bd1a9578..84ee8d87 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -387,6 +387,20 @@ if(USE_SYSTEM_SPDLOG)
+ 	endif()
+ endif()
+ 
++option(USE_SYSTEM_XXHASH "Use the system-installed xxHash library instead of the bundled submodule" OFF)
++if(USE_SYSTEM_XXHASH)
++	# Gentoo's xxHash ships only a pkg-config (libxxhash) and no CMake
++	# config, so go through pkg-config and synthesize the namespaced
++	# target the rest of Vita3K already consumes.
++	find_package(PkgConfig REQUIRED)
++	pkg_check_modules(VITA3K_SYS_XXHASH REQUIRED IMPORTED_TARGET libxxhash)
++	if(NOT TARGET xxHash::xxhash)
++		add_library(xxHash::xxhash INTERFACE IMPORTED GLOBAL)
++		set_target_properties(xxHash::xxhash PROPERTIES
++			INTERFACE_LINK_LIBRARIES PkgConfig::VITA3K_SYS_XXHASH)
++	endif()
++endif()
++
+ add_subdirectory(external)
+ add_subdirectory(vita3k)
+ add_subdirectory(tools/gen-modules)
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index a90a0cad..cb5397e6 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -25,6 +25,7 @@ function(check_submodules_present)
+ 		"USE_SYSTEM_SPDLOG:external/spdlog"
+ 		"USE_SYSTEM_STB:external/stb"
+ 		"USE_SYSTEM_TRACY:external/tracy"
++		"USE_SYSTEM_XXHASH:external/xxHash"
+ 		"USE_SYSTEM_YAML_CPP:external/yaml-cpp"
+ 	)
+ 
+@@ -466,8 +467,10 @@ option(XXH_X86DISPATCH_ALLOW_AVX "Allow building XXH3 with AVX even if it crashe
+ if((NOT APPLE) AND (ARCHITECTURE STREQUAL "x86_64"))
+ 	set(DISPATCH 1)
+ endif()
+-add_subdirectory(xxHash/cmake_unofficial EXCLUDE_FROM_ALL)
+-if(XXH_X86DISPATCH_ALLOW_AVX)
++if(NOT USE_SYSTEM_XXHASH)
++	add_subdirectory(xxHash/cmake_unofficial EXCLUDE_FROM_ALL)
++endif()
++if(XXH_X86DISPATCH_ALLOW_AVX AND NOT USE_SYSTEM_XXHASH)
+ 	target_compile_definitions(xxhash PRIVATE XXH_X86DISPATCH_ALLOW_AVX)
+ endif()
+ 
+-- 
+2.54.0
+

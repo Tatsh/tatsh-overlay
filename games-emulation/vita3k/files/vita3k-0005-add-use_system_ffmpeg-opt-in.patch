@@ -1,0 +1,59 @@
+From 3b8572fe010a2bb0e5be81c4dca4801effe4a36a Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 00:05:48 -0400
+Subject: [PATCH 05/18] Add USE_SYSTEM_FFMPEG opt-in to link against the system
+ FFMPEG libraries
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The existing path in external/ffmpeg downloads a prebuilt ffmpeg-core
+archive from a github release at configure time, keyed on the short git
+SHA of the submodule. This works for developer git checkouts but fails
+for source-tarball builds (no .git, empty SHA) and offline / sandboxed
+builds (no network during configure).
+
+Add USE_SYSTEM_FFMPEG at the parent level so distribution packagers do
+not need to touch the bundled ffmpeg-core submodule. When ON, locate the
+system libavformat, libavcodec, libavutil, libswscale, libswresample and
+libavfilter via pkg-config and define an `ffmpeg` INTERFACE target with
+matching properties — this is the same target name the rest of Vita3K
+already consumes via `target_link_libraries(... ffmpeg)`.
+
+Default stays OFF so the existing prebuilt-download workflow is
+preserved.
+
+No source-level patches to FFmpeg itself are applied by Vita3K (the
+bundled `ffmpeg.patch` only adjusts vcpkg portfile flags), so any
+reasonably recent system FFmpeg satisfies the API requirements.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ external/CMakeLists.txt | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index dc4c378a..aa05ff76 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -296,7 +296,16 @@ target_include_directories(vma INTERFACE
+ if(ANDROID)
+ 	set(USE_STATIC_ANDROID_FFMPEG ON)
+ endif()
+-add_subdirectory(ffmpeg)
++option(USE_SYSTEM_FFMPEG "Link against the FFMPEG already installed on the system instead of downloading the Vita3K prebuilt." OFF)
++if(USE_SYSTEM_FFMPEG)
++	find_package(PkgConfig REQUIRED)
++	pkg_check_modules(VITA3K_SYS_FFMPEG REQUIRED IMPORTED_TARGET
++		libavformat libavcodec libavutil libswscale libswresample libavfilter)
++	add_library(ffmpeg INTERFACE)
++	target_link_libraries(ffmpeg INTERFACE PkgConfig::VITA3K_SYS_FFMPEG)
++else()
++	add_subdirectory(ffmpeg)
++endif()
+ 
+ if(APPLE OR NOT FORCE_BUILD_OPENSSL_MAC)
+ 	execute_process(
+-- 
+2.54.0
+

@@ -1,0 +1,72 @@
+From 205adc0091357fcf296d34bed4da7e87d1c95215 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 11 May 2026 23:47:53 -0400
+Subject: [PATCH 03/18] Add CMake install() rules for FHS-style Linux packaging
+
+Lets distributions package Vita3K with a standard `cmake --install .`
+invocation. Installs:
+
+  /usr/bin/Vita3K                         (the emulator)
+  /usr/share/Vita3K/data/                 (fonts, images)
+  /usr/share/Vita3K/lang/                 (translations)
+  /usr/share/Vita3K/shaders-builtin/      (built-in shaders)
+  /usr/share/applications/vita3k.desktop  (XDG desktop entry)
+  /usr/share/icons/hicolor/128x128/apps/vita3k.png
+
+GNUInstallDirs makes prefix-relative paths configurable, so users can
+install elsewhere with -DCMAKE_INSTALL_PREFIX=...
+
+The static asset path is discovered at runtime via XDG_DATA_DIRS, so the
+binary in /usr/bin/Vita3K does not need a wrapper script to locate its
+data directory.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ vita3k/CMakeLists.txt | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
+
+diff --git a/vita3k/CMakeLists.txt b/vita3k/CMakeLists.txt
+index e8aa40a7..56656b49 100644
+--- a/vita3k/CMakeLists.txt
++++ b/vita3k/CMakeLists.txt
+@@ -187,6 +187,37 @@ set_target_properties(vita3k PROPERTIES OUTPUT_NAME Vita3K
+ 	LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+ 	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+ 
++# System-wide install layout for FHS-style packaging (Linux distributions,
++# Gentoo overlays, AppImage builds, etc.). Files land in conventional XDG
++# locations so the binary in /usr/bin can discover assets in
++# /usr/share/Vita3K via the XDG_DATA_DIRS lookup performed at startup.
++#
++# Every install() rule below uses COMPONENT vita3k so distribution
++# packagers can run `cmake --install . --component vita3k` to receive
++# only Vita3K's own artifacts. Vendored externals that have unrelated
++# install() rules of their own are excluded from this component (they
++# default to COMPONENT Unspecified) and are therefore skipped by the
++# --component vita3k filter.
++if(LINUX AND NOT ANDROID)
++	include(GNUInstallDirs)
++	install(TARGETS vita3k RUNTIME
++		DESTINATION ${CMAKE_INSTALL_BINDIR}
++		COMPONENT vita3k)
++	install(DIRECTORY
++		"${CMAKE_BINARY_DIR}/bin/data"
++		"${CMAKE_BINARY_DIR}/bin/lang"
++		"${CMAKE_BINARY_DIR}/bin/shaders-builtin"
++		DESTINATION "${CMAKE_INSTALL_DATADIR}/Vita3K"
++		COMPONENT vita3k)
++	install(FILES "${CMAKE_SOURCE_DIR}/appimage/vita3k.desktop"
++		DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
++		COMPONENT vita3k)
++	install(FILES "${CMAKE_SOURCE_DIR}/data/image/icon.png"
++		DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/128x128/apps"
++		RENAME vita3k.png
++		COMPONENT vita3k)
++endif()
++
+ if(APPLE)
+ 	add_custom_command(
+ 		OUTPUT Vita3K.icns
+-- 
+2.54.0
+

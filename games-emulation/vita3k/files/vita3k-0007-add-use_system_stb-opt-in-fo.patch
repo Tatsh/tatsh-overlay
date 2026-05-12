@@ -1,0 +1,44 @@
+From a393d75810aa539a512f6af786cbd266de99d94d Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 01:19:52 -0400
+Subject: [PATCH 07/18] Add USE_SYSTEM_STB opt-in for the bundled stb header
+ library
+
+stb is a header-only single-file public-domain library. Most Linux
+distributions ship it as a regular package (Gentoo: media-libs/stb,
+exposed via a pkg-config file named `stb`), so downstream packagers
+can avoid a redundant copy of the upstream headers in the build tree.
+
+When USE_SYSTEM_STB=ON, look up stb via pkg-config and have the
+INTERFACE target inherit the resulting include path; otherwise keep the
+existing bundled-submodule behavior.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ external/CMakeLists.txt | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index aa05ff76..e10573b4 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -82,8 +82,15 @@ add_subdirectory(spdlog EXCLUDE_FROM_ALL)
+ 
+ add_subdirectory(substitute EXCLUDE_FROM_ALL)
+ 
++option(USE_SYSTEM_STB "Use the system-installed stb header library instead of the bundled submodule" OFF)
+ add_library(stb INTERFACE)
+-target_include_directories(stb INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/stb")
++if(USE_SYSTEM_STB)
++	find_package(PkgConfig REQUIRED)
++	pkg_check_modules(VITA3K_SYS_STB REQUIRED IMPORTED_TARGET stb)
++	target_link_libraries(stb INTERFACE PkgConfig::VITA3K_SYS_STB)
++else()
++	target_include_directories(stb INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/stb")
++endif()
+ 
+ add_library(ddspp INTERFACE)
+ target_include_directories(ddspp INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/ddspp")
+-- 
+2.54.0
+

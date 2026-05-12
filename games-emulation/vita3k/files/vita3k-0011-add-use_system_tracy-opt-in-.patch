@@ -1,0 +1,86 @@
+From 717d6f212ebab9dfb2ff2aa77290ded7f4e89469 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 02:26:54 -0400
+Subject: [PATCH 11/18] Add USE_SYSTEM_TRACY opt-in for the bundled Tracy
+ client
+
+Distributions ship Tracy as a separate package (Gentoo: dev-cpp/tracy,
+exporting Tracy::TracyClient via a CMake config). Add an opt-in.
+
+When USE_SYSTEM_TRACY=ON, find_package(Tracy) at root scope, promote the
+imported target to GLOBAL, and create an INTERFACE wrapper named `tracy`
+(matching the bundled target name) so subdirectories can keep linking
+the same way.
+
+The TRACY_ENABLE_ON_CORE_COMPONENTS option is defined whenever Tracy is
+available (system or bundled non-Release) so the gating inside
+vita3k/CMakeLists.txt continues to enable Tracy on the core components.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt          | 16 ++++++++++++++++
+ external/CMakeLists.txt | 10 ++++++++--
+ 2 files changed, 24 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8fe9abbb..0825918c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -332,6 +332,22 @@ if(USE_SYSTEM_CAPSTONE)
+ 	endif()
+ endif()
+ 
++option(USE_SYSTEM_TRACY "Use the system-installed Tracy client library instead of the bundled submodule" OFF)
++if(USE_SYSTEM_TRACY)
++	find_package(Tracy CONFIG REQUIRED)
++	if(TARGET Tracy::TracyClient)
++		set_target_properties(Tracy::TracyClient PROPERTIES IMPORTED_GLOBAL TRUE)
++	endif()
++	# vita3k uses a bare `tracy` target with TRACY_ENABLE defined for
++	# Debug/RelWithDebInfo builds. Mirror that on an INTERFACE wrapper.
++	if(NOT TARGET tracy)
++		add_library(tracy INTERFACE)
++		target_link_libraries(tracy INTERFACE Tracy::TracyClient)
++		target_compile_definitions(tracy INTERFACE
++			$<$<CONFIG:Debug,RelWithDebInfo>:TRACY_ENABLE>)
++	endif()
++endif()
++
+ add_subdirectory(external)
+ add_subdirectory(vita3k)
+ add_subdirectory(tools/gen-modules)
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index 5ec54a00..5b82ad7d 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -22,6 +22,7 @@ function(check_submodules_present)
+ 		"USE_SYSTEM_FMT:external/fmt"
+ 		"USE_SYSTEM_SDL3:external/sdl"
+ 		"USE_SYSTEM_STB:external/stb"
++		"USE_SYSTEM_TRACY:external/tracy"
+ 	)
+ 
+ 	foreach(module ${gitmodules})
+@@ -461,12 +462,17 @@ if(XXH_X86DISPATCH_ALLOW_AVX)
+ 	target_compile_definitions(xxhash PRIVATE XXH_X86DISPATCH_ALLOW_AVX)
+ endif()
+ 
+-# Tracy
+-if(NOT (CMAKE_BUILD_TYPE STREQUAL "Release"))
++# Tracy: the TRACY_ENABLE_ON_CORE_COMPONENTS option gates whether vita3k
++# links its tracy target into core components. It is defined regardless
++# of whether the bundled or system Tracy is used, so the gating in
++# vita3k/CMakeLists.txt works in both modes.
++if(USE_SYSTEM_TRACY OR NOT (CMAKE_BUILD_TYPE STREQUAL "Release"))
+ 	option(TRACY_ENABLE_ON_CORE_COMPONENTS
+ 		"Enable and require Tracy to compile core components such as the renderer, shader recompiler and
+ 			HLE modules"
+ 		ON)
++endif()
++if(NOT USE_SYSTEM_TRACY AND NOT (CMAKE_BUILD_TYPE STREQUAL "Release"))
+ 	option(TRACY_NO_FRAME_IMAGE, ON)
+ 
+ 	add_library(tracy STATIC tracy/public/TracyClient.cpp)
+-- 
+2.54.0
+

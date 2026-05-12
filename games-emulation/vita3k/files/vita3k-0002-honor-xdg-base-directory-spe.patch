@@ -1,0 +1,59 @@
+From 6906847387fc619dcef24ca27c1d7122d6edb654 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 11 May 2026 23:47:08 -0400
+Subject: [PATCH 02/18] Honor XDG Base Directory Spec defaults for static
+ assets path
+
+Per the XDG Base Directory Specification, if $XDG_DATA_DIRS is unset or
+empty, the value /usr/local/share/:/usr/share/ should be used. The previous
+code skipped the search entirely when the environment variable was unset,
+which meant a system-wide install in /usr/share/Vita3K/ would not be found
+unless the user happened to set XDG_DATA_DIRS explicitly.
+
+Use the spec-defined defaults when the variable is unset, and check
+XDG_DATA_HOME regardless of XDG_DATA_DIRS state so user-local installs
+(e.g. `cmake --install . --prefix ~/.local`) are also discovered.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ vita3k/app/src/app_init.cpp | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
+
+diff --git a/vita3k/app/src/app_init.cpp b/vita3k/app/src/app_init.cpp
+index 42961dbb..1e799232 100644
+--- a/vita3k/app/src/app_init.cpp
++++ b/vita3k/app/src/app_init.cpp
+@@ -245,15 +245,22 @@ void init_paths(Root &root_paths) {
+         else if (env_home != NULL)
+             root_paths.set_static_assets_path(fs::path(env_home) / ".local/share" / app_name / "");
+ 
+-        if (XDG_DATA_DIRS != NULL) {
+-            auto env_paths = string_utils::split_string(XDG_DATA_DIRS, ':');
+-            for (auto &i : env_paths) {
+-                if (fs::exists(fs::path(i) / app_name)) {
+-                    root_paths.set_static_assets_path(fs::path(i) / app_name / "");
+-                    break;
+-                }
++        // Per the XDG Base Directory Specification, if $XDG_DATA_DIRS is unset
++        // or empty, the value /usr/local/share/:/usr/share/ should be used.
++        // This makes a system-wide install discoverable without requiring the
++        // user to set environment variables.
++        std::vector<std::string> env_paths;
++        if (XDG_DATA_DIRS != NULL && XDG_DATA_DIRS[0] != '\0')
++            env_paths = string_utils::split_string(XDG_DATA_DIRS, ':');
++        else
++            env_paths = { "/usr/local/share", "/usr/share" };
++        for (auto &i : env_paths) {
++            if (fs::exists(fs::path(i) / app_name)) {
++                root_paths.set_static_assets_path(fs::path(i) / app_name / "");
++                break;
+             }
+-        } else if (XDG_DATA_HOME != NULL) {
++        }
++        if (XDG_DATA_HOME != NULL) {
+             if (fs::exists(fs::path(XDG_DATA_HOME) / app_name / "data") && fs::exists(fs::path(XDG_DATA_HOME) / app_name / "lang") && fs::exists(fs::path(XDG_DATA_HOME) / app_name / "shaders-builtin"))
+                 root_paths.set_static_assets_path(fs::path(XDG_DATA_HOME) / app_name / "");
+         }
+-- 
+2.54.0
+

@@ -1,0 +1,55 @@
+From 99f938ff7ed2163106e72ce1f213fa768ca9fa51 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 01:36:43 -0400
+Subject: [PATCH 08/18] Add USE_SYSTEM_FMT opt-in for the bundled fmt library
+
+The bundled `fmt` submodule pins a specific {fmt} release. Recent
+distribution packages of {fmt} (Gentoo: dev-libs/libfmt, exporting the
+upstream-standard CMake config + the `fmt::fmt` imported target) are
+ABI-compatible at the API level Vita3K consumes.
+
+When USE_SYSTEM_FMT=ON, locate the system fmt via find_package and
+expose it as an INTERFACE library named `fmt` so the rest of Vita3K's
+build (which links `fmt` directly) is unchanged. The bundled-submodule
+path is preserved as the default.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ external/CMakeLists.txt | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index e10573b4..f7697a7a 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -18,6 +18,7 @@ function(check_submodules_present)
+ 	set(_VITA3K_OPTIONAL_SUBMODULES
+ 		"VITA3K_FORCE_SYSTEM_BOOST:external/boost"
+ 		"USE_SYSTEM_FFMPEG:external/ffmpeg"
++		"USE_SYSTEM_FMT:external/fmt"
+ 		"USE_SYSTEM_STB:external/stb"
+ 	)
+ 
+@@ -71,9 +72,16 @@ endif()
+ add_library(printf INTERFACE)
+ target_include_directories(printf INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/printf")
+ 
+-set(FMT_INSTALL ON)
+-add_subdirectory(fmt)
+-set(fmt_DIR fmt)
++option(USE_SYSTEM_FMT "Use the system-installed fmt library instead of the bundled submodule" OFF)
++if(USE_SYSTEM_FMT)
++	find_package(fmt CONFIG REQUIRED)
++	add_library(fmt INTERFACE)
++	target_link_libraries(fmt INTERFACE fmt::fmt)
++else()
++	set(FMT_INSTALL ON)
++	add_subdirectory(fmt)
++	set(fmt_DIR fmt)
++endif()
+ 
+ set(SPDLOG_WCHAR_FILENAMES ON CACHE BOOL "")
+ set(SPDLOG_NO_THREAD_ID ON CACHE BOOL "")
+-- 
+2.54.0
+

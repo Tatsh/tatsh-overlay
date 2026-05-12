@@ -1,0 +1,81 @@
+From 0dbc81dccbd2368ffcc855236dccd5d0bba6fb69 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 00:16:33 -0400
+Subject: [PATCH 06/18] codec: use public FFmpeg API instead of internal
+ headers
+
+aac.cpp: replace ffcodec(codec)->cb.decode (which requires the internal
+<libavcodec/codec_internal.h>) with avcodec_send_packet + avcodec_receive_frame.
+For one-packet-at-a-time usage the public API is functionally equivalent and
+the entire packet is consumed, so es_size_used can simply be the incoming size.
+
+mp3.cpp: replace deprecated `avcodec_close(); av_free()` with
+avcodec_free_context(&context). The replacement was added in FFmpeg 3.0 and
+avcodec_close is removed in newer releases.
+
+Both changes use only API available since FFmpeg 3.1, so they also work
+against the bundled ffmpeg-core distribution.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ vita3k/codec/src/aac.cpp | 17 ++++++++---------
+ vita3k/codec/src/mp3.cpp |  5 +----
+ 2 files changed, 9 insertions(+), 13 deletions(-)
+
+diff --git a/vita3k/codec/src/aac.cpp b/vita3k/codec/src/aac.cpp
+index ba2364a7..a69334f1 100644
+--- a/vita3k/codec/src/aac.cpp
++++ b/vita3k/codec/src/aac.cpp
+@@ -24,8 +24,6 @@ extern "C" {
+ #include <libavformat/avformat.h>
+ #include <libavutil/opt.h>
+ #include <libswresample/swresample.h>
+-
+-#include <libavcodec/codec_internal.h>
+ }
+ 
+ #include <util/log.h>
+@@ -79,18 +77,19 @@ bool AacDecoderState::send(const uint8_t *data, uint32_t size) {
+ 
+     av_frame_unref(frame);
+ 
+-    const FFCodec *ff_codec = ffcodec(codec);
+-    int got_frame;
+-    int len = ff_codec->cb.decode(context, frame, &got_frame, packet);
+-    assert(got_frame);
++    int ret = avcodec_send_packet(context, packet);
++    if (ret >= 0)
++        ret = avcodec_receive_frame(context, frame);
+ 
+     av_packet_free(&packet);
+-    if (len < 0) {
+-        LOG_WARN("Error sending Aac packet: {}.", codec_error_name(len));
++    if (ret < 0) {
++        LOG_WARN("Error decoding Aac packet: {}.", codec_error_name(ret));
+         return false;
+     }
+ 
+-    es_size_used = static_cast<uint32_t>(len);
++    // AAC packets are decoded in their entirety; the public send/receive API
++    // consumes the full packet (no partial-decode state to surface back).
++    es_size_used = size;
+ 
+     return true;
+ }
+diff --git a/vita3k/codec/src/mp3.cpp b/vita3k/codec/src/mp3.cpp
+index 28f485f6..eab86b04 100644
+--- a/vita3k/codec/src/mp3.cpp
++++ b/vita3k/codec/src/mp3.cpp
+@@ -202,8 +202,5 @@ Mp3DecoderState::Mp3DecoderState(uint32_t channels) {
+ }
+ 
+ Mp3DecoderState::~Mp3DecoderState() {
+-    avcodec_close(context);
+-    av_free(context);
+-
+-    context = nullptr;
++    avcodec_free_context(&context);
+ }
+-- 
+2.54.0
+

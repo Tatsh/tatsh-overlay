@@ -1,0 +1,91 @@
+From f78bdcb07c2cb5b3044ba6e2c6250cbf189c34c8 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 01:56:17 -0400
+Subject: [PATCH 09/18] Add USE_SYSTEM_SDL3 opt-in for the bundled SDL3 library
+
+Distributions ship SDL3 as a regular shared library package
+(Gentoo: media-libs/libsdl3 with CMake config files). Add an opt-in for
+downstream packagers to avoid a redundant copy.
+
+The find_package(SDL3) call must live in the root CMakeLists.txt rather
+than external/ because:
+
+ * SDL3's exported imported targets (SDL3::SDL3-shared etc.) are
+   created without GLOBAL scope, so they are only visible in the
+   directory tree where find_package was called.
+ * SDL3Config.cmake creates the SDL3::SDL3 umbrella alias inside a
+   function call, which makes the alias scope-local and invisible to
+   any sibling directory.
+
+Calling find_package and promoting both targets to GLOBAL in the root
+CMakeLists.txt, then creating an INTERFACE wrapper named SDL3-shared
+with a directory-scope SDL3::SDL3 alias, makes the canonical target
+name resolvable from every vita3k/* subdirectory.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt          | 24 ++++++++++++++++++++++++
+ external/CMakeLists.txt |  5 ++++-
+ 2 files changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a19253f0..15a5b397 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -294,6 +294,30 @@ if (${BUILD_APPIMAGE})
+ 	endif()
+ endif()
+ 
++# Resolve the SDL3 system-libs opt-in at the root level so the imported
++# targets (and the SDL3::SDL3 compat alias) are visible to every
++# subdirectory. find_package's imported targets are not GLOBAL by default
++# and the SDL3::SDL3 alias is created inside a function in
++# SDL3Config.cmake, so doing this inside external/CMakeLists.txt leaves
++# the targets invisible to the sibling vita3k/ tree.
++option(USE_SYSTEM_SDL3 "Use the system-installed SDL3 library instead of the bundled submodule" OFF)
++if(USE_SYSTEM_SDL3)
++	find_package(SDL3 CONFIG REQUIRED)
++	if(TARGET SDL3::SDL3-shared)
++		set_target_properties(SDL3::SDL3-shared PROPERTIES IMPORTED_GLOBAL TRUE)
++	endif()
++	if(TARGET SDL3::Headers)
++		set_target_properties(SDL3::Headers PROPERTIES IMPORTED_GLOBAL TRUE)
++	endif()
++	if(NOT TARGET SDL3-shared)
++		add_library(SDL3-shared INTERFACE)
++		target_link_libraries(SDL3-shared INTERFACE SDL3::SDL3-shared)
++	endif()
++	if(NOT TARGET SDL3::SDL3)
++		add_library(SDL3::SDL3 ALIAS SDL3-shared)
++	endif()
++endif()
++
+ add_subdirectory(external)
+ add_subdirectory(vita3k)
+ add_subdirectory(tools/gen-modules)
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index f7697a7a..6db384f6 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -19,6 +19,7 @@ function(check_submodules_present)
+ 		"VITA3K_FORCE_SYSTEM_BOOST:external/boost"
+ 		"USE_SYSTEM_FFMPEG:external/ffmpeg"
+ 		"USE_SYSTEM_FMT:external/fmt"
++		"USE_SYSTEM_SDL3:external/sdl"
+ 		"USE_SYSTEM_STB:external/stb"
+ 	)
+ 
+@@ -132,7 +133,9 @@ target_include_directories(imgui PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/imgui"
+ add_library(miniz STATIC miniz/miniz.c miniz/miniz.h)
+ target_include_directories(miniz PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/miniz")
+ 
+-add_subdirectory(sdl)
++if(NOT USE_SYSTEM_SDL3)
++	add_subdirectory(sdl)
++endif()
+ 
+ # Cubeb setup, from https://github.com/RPCS3/rpcs3/blob/master/3rdparty/cubeb/CMakeLists.txt
+ set(BUILD_SHARED_LIBS FALSE CACHE BOOL "Don't build shared libs")
+-- 
+2.54.0
+
