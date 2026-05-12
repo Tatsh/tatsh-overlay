@@ -1,7 +1,7 @@
 From 936f6bf7bbf773f08b154955cc3e07f5541aa264 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 12:16:58 -0400
-Subject: [PATCH 18/19] Add USE_SYSTEM_CUBEB opt-in for the bundled cubeb
+Subject: [PATCH 18/20] Add USE_SYSTEM_CUBEB opt-in for the bundled cubeb
  library
 
 cubeb is widely packaged (Gentoo: media-libs/cubeb, exporting

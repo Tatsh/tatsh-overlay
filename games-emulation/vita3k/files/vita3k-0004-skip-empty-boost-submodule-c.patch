@@ -1,7 +1,7 @@
 From a9984e69f037a60ac7715620c8bab593c5bc9c15 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Mon, 11 May 2026 23:59:18 -0400
-Subject: [PATCH 04/19] Skip empty boost submodule check when system Boost is
+Subject: [PATCH 04/20] Skip empty boost submodule check when system Boost is
  forced
 
 When VITA3K_FORCE_SYSTEM_BOOST=ON the external/boost submodule is not

@@ -1,7 +1,7 @@
 From 3b8572fe010a2bb0e5be81c4dca4801effe4a36a Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 00:05:48 -0400
-Subject: [PATCH 05/19] Add USE_SYSTEM_FFMPEG opt-in to link against the system
+Subject: [PATCH 05/20] Add USE_SYSTEM_FFMPEG opt-in to link against the system
  FFMPEG libraries
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8

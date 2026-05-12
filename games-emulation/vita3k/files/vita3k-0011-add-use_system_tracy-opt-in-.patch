@@ -1,7 +1,7 @@
 From 717d6f212ebab9dfb2ff2aa77290ded7f4e89469 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 02:26:54 -0400
-Subject: [PATCH 11/19] Add USE_SYSTEM_TRACY opt-in for the bundled Tracy
+Subject: [PATCH 11/20] Add USE_SYSTEM_TRACY opt-in for the bundled Tracy
  client
 
 Distributions ship Tracy as a separate package (Gentoo: dev-cpp/tracy,

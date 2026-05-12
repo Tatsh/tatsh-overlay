@@ -1,7 +1,7 @@
 From 0dbc81dccbd2368ffcc855236dccd5d0bba6fb69 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 00:16:33 -0400
-Subject: [PATCH 06/19] codec: use public FFmpeg API instead of internal
+Subject: [PATCH 06/20] codec: use public FFmpeg API instead of internal
  headers
 
 aac.cpp: replace ffcodec(codec)->cb.decode (which requires the internal

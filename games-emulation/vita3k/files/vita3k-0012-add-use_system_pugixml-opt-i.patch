@@ -1,7 +1,7 @@
 From 4bce547b527a9e1dcab43f0bb811fcd348ed491e Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 03:14:54 -0400
-Subject: [PATCH 12/19] Add USE_SYSTEM_PUGIXML opt-in for the bundled pugixml
+Subject: [PATCH 12/20] Add USE_SYSTEM_PUGIXML opt-in for the bundled pugixml
  library
 
 pugixml is a small XML parser ubiquitously packaged on Linux

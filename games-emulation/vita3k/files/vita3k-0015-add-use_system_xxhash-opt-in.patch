@@ -1,7 +1,7 @@
 From 83cc7cf92aab0c02efbac64c687c3d7718ec3c1d Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 10:21:29 -0400
-Subject: [PATCH 15/19] Add USE_SYSTEM_XXHASH opt-in for the bundled xxHash
+Subject: [PATCH 15/20] Add USE_SYSTEM_XXHASH opt-in for the bundled xxHash
  library
 
 xxHash is widely packaged (Gentoo: dev-libs/xxhash). Most distributions

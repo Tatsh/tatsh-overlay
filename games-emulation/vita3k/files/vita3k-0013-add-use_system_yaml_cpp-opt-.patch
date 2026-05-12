@@ -1,7 +1,7 @@
 From 3ee4d595403719dcf1872010358d057150d1a219 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 09:59:49 -0400
-Subject: [PATCH 13/19] Add USE_SYSTEM_YAML_CPP opt-in for the bundled yaml-cpp
+Subject: [PATCH 13/20] Add USE_SYSTEM_YAML_CPP opt-in for the bundled yaml-cpp
  library
 
 yaml-cpp is the YAML parser Vita3K uses for config.yml. Most Linux

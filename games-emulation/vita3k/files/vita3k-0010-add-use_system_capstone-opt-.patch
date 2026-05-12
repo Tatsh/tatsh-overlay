@@ -1,7 +1,7 @@
 From d9b5a75c4cd5693f4525e8058d6ed352ffd35c45 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 02:10:04 -0400
-Subject: [PATCH 10/19] Add USE_SYSTEM_CAPSTONE opt-in for the bundled Capstone
+Subject: [PATCH 10/20] Add USE_SYSTEM_CAPSTONE opt-in for the bundled Capstone
  library
 
 Distributions ship Capstone as a regular shared library package

@@ -1,0 +1,58 @@
+From 4c836b37d4367ae3993c04c44fd4a734e001c004 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 15:45:45 -0400
+Subject: [PATCH 20/20] build: ensure NDEBUG for RelWithDebInfo when downstream
+ strips it
+
+CMake's default RelWithDebInfo flags include `-DNDEBUG`, which elides
+`assert()` calls. Several call sites in the shader translator and HLE
+modules use `assert(false ...)` or `assert(<precondition>)` as TODO
+markers / unreachable-path guards rather than true invariants, and rely
+on NDEBUG to keep the emulator running on unimplemented paths.
+
+Some downstream packagers (notably Gentoo's `cmake.eclass`) clear
+`CMAKE_<LANG>_FLAGS_RELWITHDEBINFO` and substitute the user's
+`CFLAGS`/`CXXFLAGS`, which may not contain `-DNDEBUG`. In that case the
+emulator aborts at runtime on paths the developers had intentionally
+marked as unimplemented.
+
+Inject `-DNDEBUG` into the RelWithDebInfo flag variables only when it
+is not already present, leaving Debug and Release builds untouched (the
+former intentionally keeps asserts active; the latter already has the
+flag in its defaults). The check is regex-anchored to whitespace so a
+substring match in another flag name cannot suppress the injection.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 352ef0ad..1c7da0f9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,6 +9,21 @@ endif()
+ 
+ project(Vita3K)
+ 
++# Ensure NDEBUG is defined for RelWithDebInfo builds. CMake's default
++# RelWithDebInfo flags include -DNDEBUG, but some downstream packagers
++# (e.g. Gentoo's cmake.eclass) clear CMAKE_<LANG>_FLAGS_RELWITHDEBINFO and
++# substitute the user's CFLAGS/CXXFLAGS, which may not contain -DNDEBUG. A
++# number of assert() call sites in the shader translator and HLE modules are
++# TODO markers / unreachable-path guards rather than real invariants and
++# depend on NDEBUG eliding them; without it the emulator aborts at runtime on
++# unimplemented paths. Debug builds intentionally keep asserts active.
++foreach(_lang C CXX)
++    if(NOT CMAKE_${_lang}_FLAGS_RELWITHDEBINFO MATCHES "(^| )-DNDEBUG( |$)")
++        set(CMAKE_${_lang}_FLAGS_RELWITHDEBINFO
++            "${CMAKE_${_lang}_FLAGS_RELWITHDEBINFO} -DNDEBUG")
++    endif()
++endforeach()
++
+ # Detects the amount of processors of the host machine and forwards the result to CPU_COUNT
+ include(ProcessorCount)
+ ProcessorCount(CPU_COUNT)
+-- 
+2.54.0
+

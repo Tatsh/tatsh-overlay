@@ -110,6 +110,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0017-add-use_system_nfde-opt-in-f.patch"
 	"${FILESDIR}/${PN}-0018-add-use_system_cubeb-opt-in-.patch"
 	"${FILESDIR}/${PN}-0019-force-the-bundled-xbyak-syst.patch"
+	"${FILESDIR}/${PN}-0020-build-ensure-ndebug-for-relw.patch"
 )
 
 src_prepare() {

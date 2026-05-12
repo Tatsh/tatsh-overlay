@@ -1,7 +1,7 @@
 From 6ebe9420d8b9ed735b46d3678846eaae1db0ec4c Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Tue, 12 May 2026 14:44:47 -0400
-Subject: [PATCH 19/19] Force the bundled xbyak; system xbyak 7.x is
+Subject: [PATCH 19/20] Force the bundled xbyak; system xbyak 7.x is
  incompatible with dynarmic
 
 dynarmic's CMakeLists.txt does `find_package(xbyak 7 CONFIG)` and prefers
