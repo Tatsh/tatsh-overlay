@@ -13,7 +13,7 @@ SRC_URI="https://github.com/libretro/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.
 S="${WORKDIR}/${MY_P}"
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="alsa cg cpu_flags_x86_sse dbus egl ffmpeg flac freetype gamemode gles gles3 kms
 	libcaca libusb materialui openal +opengl opengl_core +ozone
 	parport plain_drm pulseaudio qt6 rgui +sdl sixel subtitles ssl stripes
@@ -39,6 +39,7 @@ REQUIRED_USE="
 "
 
 RDEPEND="
+	dev-libs/libchdr
 	games-emulation/libretro-common-overlays
 	games-emulation/libretro-database
 	games-emulation/libretro-info
@@ -100,11 +101,17 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-libchdr_flac-unconditionally.patch"
+	"${FILESDIR}/${PN}-0001-makefile.common-add-have_sys.patch"
+	"${FILESDIR}/${PN}-0002-chd_stream-guard-dvd-chd-sup.patch"
 )
 
 src_prepare() {
 	default
+
+	# De-vendor libchdr: drop bundled headers and sources so the system
+	# library (dev-libs/libchdr) is used via the HAVE_SYSTEM_LIBCHDR=1
+	# Makefile toggle added in our 0001 patch.
+	rm -rf libretro-common/include/libchdr libretro-common/formats/libchdr || die
 
 	# RetroArch's configure is shell script, not autoconf one
 	# However it tries to mimic autoconf configure options
@@ -185,4 +192,12 @@ src_configure() {
 		"$(use_enable xrandr)" \
 		"$(use_enable xv xvideo)" \
 		"$(use_enable zlib)"
+}
+
+src_compile() {
+	emake HAVE_SYSTEM_LIBCHDR=1
+}
+
+src_install() {
+	emake HAVE_SYSTEM_LIBCHDR=1 DESTDIR="${D}" install
 }

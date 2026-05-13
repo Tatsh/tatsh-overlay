@@ -1654,6 +1654,7 @@ posflag
 posthog
 postinst
 postrm
+poststop
 potator
 ppsspp
 prboom
@@ -1661,6 +1662,7 @@ prcbuild
 preinst
 premake
 preshed
+prestart
 println
 priv
 proc
