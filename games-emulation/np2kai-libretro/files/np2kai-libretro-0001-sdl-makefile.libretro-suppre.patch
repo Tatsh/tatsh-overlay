@@ -1,0 +1,44 @@
+From 7bf31f448294b313ad2b7749945128219f357c6c Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 13 May 2026 02:31:18 -0400
+Subject: [PATCH] sdl/Makefile.libretro: suppress
+ -Werror=incompatible-pointer-types
+
+GCC 14 promoted incompatible-pointer-types from warning to error,
+which breaks the libretro build on Linux: np2kai's I/O handler
+functions use REG8 (UINT8) for parameters and return values while
+the IOOUT/IOINP typedefs in io/iocore.h declare UINT. The signatures
+are technically incompatible but ABI-compatible on every platform
+the libretro core targets, and proper cleanup would mean editing
+~50 function signatures across cbus/*.c.
+
+Upstream already suppresses this warning for libnx (Switch) and
+webOS builds; extend the same treatment to the generic Linux path
+until upstream cleans up the signatures.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ Makefile.libretro | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/Makefile.libretro b/Makefile.libretro
+index 77f4ef0..fcd62e0 100755
+--- a/Makefile.libretro
++++ b/Makefile.libretro
+@@ -708,6 +708,13 @@ ifneq (,$(or $(findstring webos,$(CROSS_COMPILE)),$(findstring starfish,$(CROSS_
+ 	CFLAGS += -Wno-incompatible-pointer-types
+ endif
+ 
++# GCC 14+ promoted incompatible-pointer-types from warning to error.
++# np2kai's I/O handler functions use REG8 (UINT8) for parameters and
++# returns while the IOOUT/IOINP typedefs declare UINT, which is
++# technically a function-pointer-type mismatch but ABI-compatible.
++# Until upstream cleans up the signatures, downgrade to warning.
++CFLAGS += -Wno-incompatible-pointer-types
++
+ CFLAGS += -DNP2KAI_GIT_TAG=\"$(GIT_TAG)\" -DNP2KAI_GIT_HASH=\"$(GIT_HASH)\"
+ CXXFLAGS += -DNP2KAI_GIT_TAG=\"$(GIT_TAG)\" -DNP2KAI_GIT_HASH=\"$(GIT_HASH)\"
+ 
+-- 
+2.54.0
+
