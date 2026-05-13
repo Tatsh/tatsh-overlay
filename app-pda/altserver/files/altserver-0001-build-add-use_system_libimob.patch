@@ -1,0 +1,150 @@
+From 250655dce4f44c41252057346be62b5875863c84 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 21:40:59 -0400
+Subject: [PATCH 1/2] build: add USE_SYSTEM_LIBIMOBILEDEVICE opt-in for distro
+ packagers
+
+Distribution packagers (Gentoo, Fedora, Debian, etc.) typically prefer
+to link against the system libimobiledevice stack rather than the
+vendored sources under libraries/, both to avoid duplicating work the
+distribution's own libimobiledevice maintainer already does and to
+inherit security updates from a single source.
+
+The default build is unchanged: with USE_SYSTEM_LIBIMOBILEDEVICE unset,
+the vendored libraries/libimobiledevice, libraries/libimobiledevice-glue,
+libraries/libusbmuxd, and libraries/libplist sources still compile into
+local libimobiledevice.a and libplist.a archives and the binary still
+links -static.
+
+When USE_SYSTEM_LIBIMOBILEDEVICE=1 is exported into make's environment:
+
+  * libimobiledevice-files.mak switches the include and src lists to
+    empty for the vendored sources and resolves cflags/libs via
+    pkg-config against libimobiledevice-1.0, libimobiledevice-glue-1.0,
+    libusbmuxd-2.0 and libplist-2.0.
+  * libimobiledevice.mak skips the local .a builds and provides phony
+    no-op targets so the root Makefile's existing dependency wiring
+    keeps working without further changes.
+  * The root Makefile drops -static from LDFLAGS (incompatible with
+    dynamic system libraries) and appends the pkg-config-supplied
+    libimobiledevice / libplist link flags.
+
+No public symbols, runtime behavior, or default-build artifacts change.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ Makefile                                      | 17 +++++++++++++++++
+ .../libimobiledevice-files.mak                | 19 ++++++++++++++++++-
+ .../libimobiledevice.mak                      | 18 +++++++++++++++++-
+ 3 files changed, 52 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 0d3ce07..182ce7b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -117,10 +117,27 @@ $(main_objs) : lib_AltSign lib_libimobiledevice lib_dnssd_loader
+ 
+ $(main_objs) : EXTRA_FLAGS := -I$(main_patched_root) -I$(ROOT_DIR)/src -fpermissive -include "common.h" $(INC_CFLAGS)
+ 
++ifeq ($(USE_SYSTEM_LIBIMOBILEDEVICE),1)
++# Distribution build: link dynamically against the system libimobiledevice
++# stack via pkg-config. -static is incompatible with shared system libraries
++# and the local libimobiledevice.a / libplist.a archives are not produced.
++# Boost.System has been header-only since Boost 1.69 (2018) so distros no
++# longer ship libboost_system.so; -lboost_system is omitted here.
++LDFLAGS = -lssl -lcrypto -lpthread -lcorecrypto_static -lzip -lm -lz -lcpprest -lboost_filesystem -lstdc++ -lssl -lcrypto -luuid $(libimobiledevice_ldlibs) $(libplist_ldlibs)
++else
+ LDFLAGS = -static -lssl -lcrypto -lpthread -lcorecrypto_static -lzip -lm -lz -lcpprest -lboost_system -lboost_filesystem -lstdc++ -lssl -lcrypto -luuid
++endif
+ 
++ifeq ($(USE_SYSTEM_LIBIMOBILEDEVICE),1)
++# Distro build: libimobiledevice.a and libplist.a are no longer produced (the
++# system shared libraries take their place via $(libimobiledevice_ldlibs) and
++# $(libplist_ldlibs) in LDFLAGS). Drop them from the link inputs.
++$(BUILD_DIR)/$(PROGRAM):: $(main_objs) $(BUILD_DIR)/AltSign.a $(BUILD_DIR)/dnssd_loader.a
++	$(CC) -o $@ $^ $(LDFLAGS)
++else
+ $(BUILD_DIR)/$(PROGRAM):: $(main_objs) $(BUILD_DIR)/libimobiledevice.a $(BUILD_DIR)/AltSign.a $(BUILD_DIR)/libplist.a $(BUILD_DIR)/dnssd_loader.a
+ 	$(CC) -o $@ $^ $(LDFLAGS)
++endif
+ 
+ .PHONY: clean all
+ clean:: lib_libimobiledevice_clean lib_AltSign_clean lib_dnssd_loader_clean
+diff --git a/makefiles/libimobiledevice-build/libimobiledevice-files.mak b/makefiles/libimobiledevice-build/libimobiledevice-files.mak
+index ddadbdd..b14bcc8 100644
+--- a/makefiles/libimobiledevice-build/libimobiledevice-files.mak
++++ b/makefiles/libimobiledevice-build/libimobiledevice-files.mak
+@@ -1,8 +1,25 @@
++# Distribution packagers can opt into linking against the system libimobiledevice
++# stack (libimobiledevice, libimobiledevice-glue, libusbmuxd, libplist) by
++# exporting USE_SYSTEM_LIBIMOBILEDEVICE=1 before invoking make. When set, the
++# vendored sources under libraries/* are not compiled and pkg-config supplies
++# the include paths and link flags from the system installation.
++ifeq ($(USE_SYSTEM_LIBIMOBILEDEVICE),1)
++libimobiledevice_src :=
++libimobiledevice_include := $(shell pkg-config --cflags libimobiledevice-1.0 libimobiledevice-glue-1.0 libusbmuxd-2.0)
++libimobiledevice_ldlibs := $(shell pkg-config --libs libimobiledevice-1.0 libimobiledevice-glue-1.0 libusbmuxd-2.0)
++
++libplist_src :=
++libplist_include := $(shell pkg-config --cflags libplist-2.0)
++libplist_ldlibs := $(shell pkg-config --libs libplist-2.0)
++else
+ libimobiledevice_src += $(wildcard $(LIB_DIR)/libimobiledevice/src/*.c) $(wildcard $(LIB_DIR)/libimobiledevice/common/*.c)
+ libimobiledevice_src += $(wildcard $(LIB_DIR)/libimobiledevice-glue/src/*.c)
+ libimobiledevice_src += $(wildcard $(LIB_DIR)/libusbmuxd/src/*.c)
+ libimobiledevice_src += $(wildcard $(LIB_DIR)/libusbmuxd/common/*.c)
+ libimobiledevice_include := -I$(LIB_DIR)/libimobiledevice/include -I$(LIB_DIR)/libimobiledevice-glue/include -I$(LIB_DIR)/libimobiledevice -I$(LIB_DIR)/libusbmuxd/include
++libimobiledevice_ldlibs :=
+ 
+ libplist_include := -I$(LIB_DIR)/libplist/include
+-libplist_src := $(wildcard $(LIB_DIR)/libplist/src/*.c) $(LIB_DIR)/libplist/libcnary/node.c $(LIB_DIR)/libplist/libcnary/node_list.c
+\ No newline at end of file
++libplist_src := $(wildcard $(LIB_DIR)/libplist/src/*.c) $(LIB_DIR)/libplist/libcnary/node.c $(LIB_DIR)/libplist/libcnary/node_list.c
++libplist_ldlibs :=
++endif
+\ No newline at end of file
+diff --git a/makefiles/libimobiledevice-build/libimobiledevice.mak b/makefiles/libimobiledevice-build/libimobiledevice.mak
+index e28f3b7..19c01ed 100644
+--- a/makefiles/libimobiledevice-build/libimobiledevice.mak
++++ b/makefiles/libimobiledevice-build/libimobiledevice.mak
+@@ -20,6 +20,21 @@ $(BUILD_DIR)/objs/%.cpp.o : $(MAIN_DIR)/%.cpp
+ 
+ include $(ROOT_DIR)/libimobiledevice-files.mak
+ 
++ifeq ($(USE_SYSTEM_LIBIMOBILEDEVICE),1)
++# When linking against the system libimobiledevice stack the local archives are
++# not produced. Provide phony targets so the root Makefile's dependency wiring
++# (which still names libimobiledevice.a / libplist.a) succeeds as a no-op.
++.PHONY: $(BUILD_DIR)/libimobiledevice.a $(BUILD_DIR)/libplist.a
++$(BUILD_DIR)/libimobiledevice.a $(BUILD_DIR)/libplist.a:
++	@:
++
++clean::
++.PHONY : clean
++
++all :: $(BUILD_DIR)/libplist.a
++all :: $(BUILD_DIR)/libimobiledevice.a
++.PHONY : all
++else
+ libimobiledevice_obj := $(libimobiledevice_src:$(MAIN_DIR)/%=$(BUILD_DIR)/objs/%.o)
+ $(libimobiledevice_obj) : EXTRA_FLAGS := -I$(ROOT_DIR) $(libimobiledevice_include) $(libplist_include) -I$(LIB_DIR)/libimobiledevice/common -I$(LIB_DIR)/libusbmuxd/common
+ $(BUILD_DIR)/libimobiledevice.a : $(libimobiledevice_obj)
+@@ -31,7 +46,7 @@ $(BUILD_DIR)/libplist.a : $(libplist_obj)
+ 	ar rcs $@ $^
+ 
+ 
+-#allsrc += $(libimobiledevice_src) 
++#allsrc += $(libimobiledevice_src)
+ #allsrc += $(libplist_src)
+ #allobj = $(addsuffix .o, $(allsrc))
+ 
+@@ -45,5 +60,6 @@ clean::
+ all :: $(BUILD_DIR)/libplist.a
+ all :: $(BUILD_DIR)/libimobiledevice.a
+ .PHONY : all
++endif
+ 
+ .DEFAULT_GOAL := all
+-- 
+2.54.0
+

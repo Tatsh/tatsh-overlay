@@ -1,0 +1,13 @@
+[Unit]
+Description=AltServer for AltStore
+After=network.target usbmuxd.service
+Wants=usbmuxd.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/AltServer
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

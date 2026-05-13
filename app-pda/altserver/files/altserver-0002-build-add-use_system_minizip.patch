@@ -1,0 +1,106 @@
+From cb3830e57cecd7f351908e3615e742f4d2240f9b Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 22:02:39 -0400
+Subject: [PATCH 2/2] build: add USE_SYSTEM_MINIZIP opt-in for distro packagers
+
+The vendored minizip under upstream_repo/AltSign/Dependencies/minizip
+was imported from zlib's contrib/ before commit 6a0bf08 (2017) which
+renamed the CRC table element type from unsigned long to z_crc_t.
+Distributions that ship a modern system minizip (Gentoo's
+sys-libs/zlib[minizip], Debian's libminizip-dev) provide a
+type-correct, regularly maintained implementation.
+
+When USE_SYSTEM_MINIZIP=1 is exported into make's environment:
+
+  * AltSign.mak empties minizip_src so the vendored zip.c, unzip.c
+    and ioapi.c are not compiled.
+  * AltSign.mak's CFLAGS routes through `pkg-config --cflags minizip`
+    and an extra -I${includedir}/minizip so the quoted
+    `#include "zip.h"` / `#include "unzip.h"` in
+    upstream_repo/AltSign/Archiver.cpp continue to resolve. The
+    standard minizip pkg-config file exports only the parent of the
+    minizip/ subdir, mirroring the Gentoo/Debian on-disk layout.
+  * The root Makefile resolves $(MINIZIP_LDLIBS) via
+    `pkg-config --libs minizip` so the final link sees -lminizip.
+
+The default build is unchanged. Sub-make variable assignments do not
+propagate to a parent invocation, so MINIZIP_LDLIBS is defined at
+root scope rather than inside the AltSign sub-make.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ Makefile                            | 14 +++++++++++++-
+ makefiles/AltSign-build/AltSign.mak | 14 ++++++++++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 182ce7b..6ad0334 100644
+--- a/Makefile
++++ b/Makefile
+@@ -47,6 +47,16 @@ include $(ROOT_DIR)/makefiles/libimobiledevice-build/libimobiledevice-files.mak
+ include $(ROOT_DIR)/makefiles/AltSign-build/AltSign-files.mak
+ include $(ROOT_DIR)/makefiles/dnssd_loader-build/dnssd_loader-files.mak
+ 
++# Resolve system minizip link flags here at the root scope so the final link
++# command sees them. The AltSign sub-make only consumes the include flags
++# during compilation; sub-make variable assignments do not propagate back to
++# the parent invocation.
++ifeq ($(USE_SYSTEM_MINIZIP),1)
++MINIZIP_LDLIBS := $(shell pkg-config --libs minizip)
++else
++MINIZIP_LDLIBS :=
++endif
++
+ #libimobiledevice_include := -I$(LIB_DIR)/libimobiledevice/include -I$(LIB_DIR)/libimobiledevice -I$(LIB_DIR)/libusbmuxd/include
+ #libplist_include := -I$(LIB_DIR)/libplist/include
+ #altsign_include := -I$(BUILD_DIR)/AltSign_patched
+@@ -121,9 +131,11 @@ ifeq ($(USE_SYSTEM_LIBIMOBILEDEVICE),1)
+ # Distribution build: link dynamically against the system libimobiledevice
+ # stack via pkg-config. -static is incompatible with shared system libraries
+ # and the local libimobiledevice.a / libplist.a archives are not produced.
++# $(MINIZIP_LDLIBS) is populated above when USE_SYSTEM_MINIZIP=1; it is empty
++# otherwise so the vendored minizip objects in AltSign.a satisfy the link.
+ # Boost.System has been header-only since Boost 1.69 (2018) so distros no
+ # longer ship libboost_system.so; -lboost_system is omitted here.
+-LDFLAGS = -lssl -lcrypto -lpthread -lcorecrypto_static -lzip -lm -lz -lcpprest -lboost_filesystem -lstdc++ -lssl -lcrypto -luuid $(libimobiledevice_ldlibs) $(libplist_ldlibs)
++LDFLAGS = -lssl -lcrypto -lpthread -lcorecrypto_static -lzip -lm -lz -lcpprest -lboost_filesystem -lstdc++ -lssl -lcrypto -luuid $(libimobiledevice_ldlibs) $(libplist_ldlibs) $(MINIZIP_LDLIBS)
+ else
+ LDFLAGS = -static -lssl -lcrypto -lpthread -lcorecrypto_static -lzip -lm -lz -lcpprest -lboost_system -lboost_filesystem -lstdc++ -lssl -lcrypto -luuid
+ endif
+diff --git a/makefiles/AltSign-build/AltSign.mak b/makefiles/AltSign-build/AltSign.mak
+index 827df93..d80ac02 100644
+--- a/makefiles/AltSign-build/AltSign.mak
++++ b/makefiles/AltSign-build/AltSign.mak
+@@ -12,7 +12,17 @@ LDID_NEWROOT := $(BUILD_DIR)/ldid_patched
+ 
+ include $(MAIN_DIR)/makefiles/AltWindowsShim.mak
+ 
++# When USE_SYSTEM_MINIZIP=1 is set, route through the system minizip headers
++# and library instead of compiling the vendored copy under
++# $(MINIZIP_ROOT). The system pkg-config Cflags resolves to the parent of
++# .../minizip/, so an additional -I.../minizip is required for the AltSign
++# sources whose quoted #include "zip.h" / "unzip.h" expect that prefix.
++ifeq ($(USE_SYSTEM_MINIZIP),1)
++MINIZIP_CFLAGS := $(shell pkg-config --cflags minizip) -I$(shell pkg-config --variable=includedir minizip)/minizip
++CFLAGS += -I$(ALTSIGN_ROOT) $(MINIZIP_CFLAGS) -I$(LDID_ROOT) -mno-sse
++else
+ CFLAGS += -I$(ALTSIGN_ROOT) -I$(MINIZIP_ROOT) -I$(LDID_ROOT) -mno-sse
++endif
+ #CFLAGS += -DLDID_NOTOOLS # will lose some symbol if enable this
+ 
+ CXXFLAGS = $(CFLAGS) -std=c++17
+@@ -42,7 +52,11 @@ ldid_src := $(ldid_newfiles)
+ preprocess : $(altsign_newfiles) $(ldid_newfiles)
+ .PHONY : preprocess
+ 
++ifeq ($(USE_SYSTEM_MINIZIP),1)
++minizip_src :=
++else
+ minizip_src := $(MINIZIP_ROOT)/ioapi.c $(MINIZIP_ROOT)/zip.c $(MINIZIP_ROOT)/unzip.c
++endif
+ 
+ objs += $(altsign_src:$(BUILD_DIR)/%=$(BUILD_DIR)/objs/%.o)
+ objs += $(ldid_src:$(BUILD_DIR)/%=$(BUILD_DIR)/objs/%.o)
+-- 
+2.54.0
+

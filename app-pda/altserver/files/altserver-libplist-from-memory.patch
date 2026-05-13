@@ -1,0 +1,64 @@
+Adapt plist_from_memory() call sites in upstream_repo for libplist >= 2.7.
+
+libplist 2.7 added a fourth out-parameter (plist_format_t *format) to
+plist_from_memory. The vendored AltSign and AltServer sources from
+rileytestut/AltServer-Windows pre-date this signature change. Distro
+builds linking against the system libplist fail with "no matching
+function for call to 'plist_from_memory'".
+
+Pass NULL for the new format argument at each call site; the call
+remains source-compatible with libplist 2.7 and newer. Older bundled
+libplist builds are no longer relevant for this overlay since the
+ebuild now requires the system libplist via pkg-config.
+
+--- a/upstream_repo/AltSign/Application.cpp
++++ b/upstream_repo/AltSign/Application.cpp
+@@ -68,7 +68,7 @@
+ 	auto plistData = readFile(path.string().c_str());
+ 
+     plist_t plist = nullptr;
+-    plist_from_memory((const char *)plistData.data(), (int)plistData.size(), &plist);
++    plist_from_memory((const char *)plistData.data(), (int)plistData.size(), &plist, NULL);
+     if (plist == nullptr)
+     {
+         throw SignError(SignErrorCode::InvalidApp);
+@@ -197,7 +197,7 @@
+ 		auto rawEntitlements = this->entitlementsString();
+ 
+ 		plist_t plist = nullptr;
+-		plist_from_memory((const char*)rawEntitlements.data(), (int)rawEntitlements.size(), &plist);
++		plist_from_memory((const char*)rawEntitlements.data(), (int)rawEntitlements.size(), &plist, NULL);
+ 
+ 		if (plist != nullptr)
+ 		{
+--- a/upstream_repo/AltSign/ProvisioningProfile.cpp
++++ b/upstream_repo/AltSign/ProvisioningProfile.cpp
+@@ -279,7 +279,7 @@
+     pointer = advanceToNextItem(pointer);
+     
+     plist_t parsedPlist = nullptr;
+-    plist_from_memory((const char *)pointer, (unsigned int)length, &parsedPlist);
++    plist_from_memory((const char *)pointer, (unsigned int)length, &parsedPlist, NULL);
+     
+     if (parsedPlist == nullptr)
+     {
+--- a/upstream_repo/AltServer/AltServerApp.cpp
++++ b/upstream_repo/AltServer/AltServerApp.cpp
+@@ -1333,7 +1333,7 @@
+ 		auto data = readFile(infoPlistPath.string().c_str());
+ 
+ 		plist_t plist = nullptr;
+-		plist_from_memory((const char*)data.data(), (int)data.size(), &plist);
++		plist_from_memory((const char*)data.data(), (int)data.size(), &plist, NULL);
+ 		if (plist == nullptr)
+ 		{
+ 			throw InstallError(InstallErrorCode::MissingInfoPlist);
+@@ -1370,7 +1370,7 @@
+         auto data = readFile(infoPlistPath.string().c_str());
+         
+         plist_t plist = nullptr;
+-        plist_from_memory((const char *)data.data(), (int)data.size(), &plist);
++        plist_from_memory((const char *)data.data(), (int)data.size(), &plist, NULL);
+         if (plist == nullptr)
+         {
+             throw InstallError(InstallErrorCode::MissingInfoPlist);
