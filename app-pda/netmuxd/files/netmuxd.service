@@ -1,0 +1,12 @@
+[Unit]
+Description=netmuxd USB iOS device multiplexer
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/netmuxd --disable-unix
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
