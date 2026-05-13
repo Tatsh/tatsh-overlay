@@ -1,0 +1,45 @@
+From 817fe27b074ff46f59bad6806250a7d74ff47711 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 13 May 2026 02:47:12 -0400
+Subject: [PATCH] libretro/Makefile: add SYSTEM_MINIZ opt-in for system miniz
+
+When SYSTEM_MINIZ=1 is passed to make, use pkg-config for miniz
+cflags/libs and filter the bundled deps/miniz/miniz.c out of
+SOURCES_C so the core links against the system library instead
+of compiling the vendored copy.
+
+Defaults to off so existing build configurations are unaffected.
+Distributors (e.g., Gentoo) need this so security fixes to miniz
+reach the core without rebuilding from the bundled copy.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ Makefile | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 0bd2c94..4a64d48 100644
+--- a/Makefile
++++ b/Makefile
+@@ -338,10 +338,17 @@ endif
+ 
+ include Makefile.common
+ 
++ifeq ($(SYSTEM_MINIZ), 1)
++   INCLUDES += $(shell pkg-config --cflags miniz)
++   LDFLAGS  += $(shell pkg-config --libs miniz)
++   SOURCES_C := $(filter-out $(DEPS_DIR)/miniz/miniz.c,$(SOURCES_C))
++else
++   INCLUDES += -I$(DEPS_DIR)/miniz
++endif
++
+ OBJECTS := $(SOURCES_C:.c=.o) $(SOURCES_CXX:.cpp=.o)
+ 
+ INCLUDES += -I$(CORE_DIR) -I$(SOURCE_DIR)
+-INCLUDES += -I$(DEPS_DIR)/miniz
+ 
+ CFLAGS   += -DGS_DISABLE_DISASSEMBLER -DGS_DISABLE_VGMRECORDER -Wall -fno-exceptions -D__LIBRETRO__ $(INCLUDES) $(fpic)
+ CXXFLAGS += -DGS_DISABLE_DISASSEMBLER -DGS_DISABLE_VGMRECORDER -Wall -fno-exceptions -D__LIBRETRO__ $(INCLUDES) $(fpic)
+-- 
+2.54.0
+

@@ -516,6 +516,7 @@ dpulseaudio
 dreamcast
 drelcs
 drevc
+drhelius
 drivendataorg
 dset
 dsirit
