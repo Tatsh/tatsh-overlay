@@ -1,0 +1,70 @@
+From 68191a492c104bb08f4da0f7a45534d4c8d73149 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 13 May 2026 01:59:38 -0400
+Subject: [PATCH 2/2] Makefile.common: add SYSTEM_FLAC opt-in to link against
+ system libFLAC
+
+When SYSTEM_FLAC=1 is passed to make, the libretro core links against
+the system libFLAC via pkg-config rather than compiling the bundled
+deps/flac-1.3.3 sources from libchdr. Defaults to off so existing build
+configurations are unaffected.
+
+libchdr's own sources (libchdr_flac.c) continue to be built either way
+since they wrap the FLAC API regardless of source.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ Makefile.common | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile.common b/Makefile.common
+index 9705e51ba..00163d9e4 100644
+--- a/Makefile.common
++++ b/Makefile.common
+@@ -14,9 +14,12 @@ INCLUDE_DIRS := $(CORE_DIR) \
+ 	$(LIBRETRO_COMM_DIR)/include \
+ 	$(SOURCE_DIR)/musashi \
+ 	$(LIBCHDR_DIR)/include \
+-	$(LZMA_DIR)/include \
+-	$(FLAC_DIR)/include \
++	$(LZMA_DIR)/include
++
++ifneq ($(SYSTEM_FLAC), 1)
++INCLUDE_DIRS += $(FLAC_DIR)/include \
+ 	$(FLAC_DIR)/src/include
++endif
+ 
+ ifneq ($(SYSTEM_ZLIB), 1)
+ INCLUDE_DIRS += $(ZLIB_DIR)
+@@ -65,7 +68,14 @@ ifeq ($(ENABLE_CHD), 1)
+ 		$(LIBCHDR_DIR)/src/libchdr_huffman.c \
+ 		$(LIBCHDR_DIR)/src/libchdr_flac.c \
+ 		$(LIBCHDR_DIR)/src/libchdr_cdrom.c \
+-		$(FLAC_DIR)/src/stream_decoder.c \
++		$(LZMA_DIR)/src/LzmaEnc.c \
++		$(LZMA_DIR)/src/LzFind.c \
++		$(LZMA_DIR)/src/LzmaDec.c
++ifeq ($(SYSTEM_FLAC), 1)
++	FLAGS += $(shell pkg-config --cflags flac)
++	LIBS  += $(shell pkg-config --libs flac)
++else
++	SOURCES_C += $(FLAC_DIR)/src/stream_decoder.c \
+ 		$(FLAC_DIR)/src/format.c \
+ 		$(FLAC_DIR)/src/bitreader.c \
+ 		$(FLAC_DIR)/src/crc.c \
+@@ -73,10 +83,8 @@ ifeq ($(ENABLE_CHD), 1)
+ 		$(FLAC_DIR)/src/lpc.c \
+ 		$(FLAC_DIR)/src/cpu.c \
+ 		$(FLAC_DIR)/src/md5.c \
+-		$(FLAC_DIR)/src/fixed.c \
+-		$(LZMA_DIR)/src/LzmaEnc.c \
+-		$(LZMA_DIR)/src/LzFind.c \
+-		$(LZMA_DIR)/src/LzmaDec.c
++		$(FLAC_DIR)/src/fixed.c
++endif
+ endif
+ 
+ ifeq ($(ENABLE_ZLIB), 1)
+-- 
+2.54.0
+
