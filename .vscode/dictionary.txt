@@ -1,3 +1,4 @@
+MINIZ
 aashutoshrathi
 aatl
 abloop
@@ -1344,6 +1345,7 @@ minimatch
 minimist
 minipass
 miniupnpc
+miniz
 minizip
 minizlib
 mintplex

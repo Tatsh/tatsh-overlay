@@ -1,0 +1,60 @@
+From 92091b89f352aa465f8b59fa0151aa979474813e Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 13 May 2026 02:42:03 -0400
+Subject: [PATCH] libretro,Cartridge.cpp: add SYSTEM_MINIZ opt-in for system
+ miniz
+
+The libretro core's only consumer of miniz is Cartridge.cpp's ZIP
+reading path, which uses the standard mz_zip_reader_* API. That API
+is stable across miniz v1.x (vendored copy) and v3.x (dev-libs/miniz
+on Gentoo), so we can de-vendor without API changes.
+
+When SYSTEM_MINIZ=1 is passed to make, switch Cartridge.cpp to
+#include <miniz/miniz.h> and link against the system library via
+pkg-config. Default is unchanged: include the bundled miniz.c source
+inline (legacy build path).
+
+Distributors need this so security fixes to miniz reach the core
+without rebuilding from the 2012-era bundled copy.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ platforms/libretro/Makefile | 5 +++++
+ src/Cartridge.cpp           | 4 ++++
+ 2 files changed, 9 insertions(+)
+
+diff --git a/platforms/libretro/Makefile b/platforms/libretro/Makefile
+index 9665ea1..d40af1f 100644
+--- a/platforms/libretro/Makefile
++++ b/platforms/libretro/Makefile
+@@ -194,6 +194,11 @@ endif
+ 
+ LDFLAGS += $(LIBM)
+ 
++ifeq ($(SYSTEM_MINIZ), 1)
++   CXXFLAGS += -DGEARBOY_USE_SYSTEM_MINIZ $(shell pkg-config --cflags miniz)
++   LDFLAGS  += $(shell pkg-config --libs miniz)
++endif
++
+ ifeq ($(DEBUG), 1)
+    CXXFLAGS += -O0 -g
+ else
+diff --git a/src/Cartridge.cpp b/src/Cartridge.cpp
+index 2365a1d..4fc8344 100644
+--- a/src/Cartridge.cpp
++++ b/src/Cartridge.cpp
+@@ -21,7 +21,11 @@
+ #include <algorithm>
+ #include <ctype.h>
+ #include "Cartridge.h"
++#ifdef GEARBOY_USE_SYSTEM_MINIZ
++#include <miniz/miniz.h>
++#else
+ #include "miniz/miniz.c"
++#endif
+ 
+ Cartridge::Cartridge()
+ {
+-- 
+2.54.0
+
