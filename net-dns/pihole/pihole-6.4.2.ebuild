@@ -65,14 +65,14 @@ src_install() {
 	insinto "/usr/$(get_libdir)/${PN}/Templates"
 	doins -r advanced/Templates/*
 
-	newbashcomp advanced/bash-completion/${PN}.bash "${PN}"
+	newbashcomp "advanced/bash-completion/${PN}.bash" "${PN}"
 
 	if use cron; then
 		insinto /etc/cron.d
 		newins "advanced/Templates/${PN}.cron" "${PN}"
 	fi
 
-	doman manpages/${PN}*
+	doman "manpages/${PN}"*
 	einstalldocs
 
 	dobin "${PN}"
