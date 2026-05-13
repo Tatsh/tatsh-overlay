@@ -1,7 +1,7 @@
 From 68191a492c104bb08f4da0f7a45534d4c8d73149 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
 Date: Wed, 13 May 2026 01:59:38 -0400
-Subject: [PATCH 2/2] Makefile.common: add SYSTEM_FLAC opt-in to link against
+Subject: [PATCH 2/3] Makefile.common: add SYSTEM_FLAC opt-in to link against
  system libFLAC
 
 When SYSTEM_FLAC=1 is passed to make, the libretro core links against

@@ -15,6 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 DEPEND="
+	dev-libs/libchdr
 	media-libs/flac:=
 	virtual/zlib"
 RDEPEND="${DEPEND}
@@ -23,6 +24,15 @@ RDEPEND="${DEPEND}
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-makefile.common-add-system_z.patch"
 	"${FILESDIR}/${PN}-0002-makefile.common-add-system_f.patch"
+	"${FILESDIR}/${PN}-0003-makefile.common-add-system_l.patch"
 )
 
-MYEMAKEARGS=( "SYSTEM_FLAC=1" "SYSTEM_ZLIB=1" )
+MYEMAKEARGS=( "SYSTEM_FLAC=1" "SYSTEM_LIBCHDR=1" "SYSTEM_ZLIB=1" )
+
+src_prepare() {
+	libretro-core_src_prepare
+
+	# De-vendor libchdr: drop bundled libchdr (and its deps/lzma) so the
+	# system library (dev-libs/libchdr) is used via SYSTEM_LIBCHDR=1.
+	rm -rf "${S}/../../libchdr" || die
+}

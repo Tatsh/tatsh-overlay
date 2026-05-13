@@ -1,0 +1,78 @@
+From 2ffe08568457fa32e1321f7a17d76476b6b5c5d0 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 13 May 2026 14:38:47 -0400
+Subject: [PATCH 3/3] Makefile.common: add SYSTEM_LIBCHDR opt-in to use system
+ libchdr
+
+When SYSTEM_LIBCHDR=1 is passed to make, the libretro core links
+against the system libchdr (dev-libs/libchdr) via pkg-config rather
+than compiling the bundled libchdr/src/libchdr_*.c sources and the
+LZMA SDK from libchdr/deps/lzma-19.00.
+
+Defaults to off so existing build configurations are unaffected.
+When on, the SYSTEM_FLAC inner toggle is also bypassed since FLAC
+decoding is handled inside system libchdr; only the standalone
+ENABLE_ZLIB block (junzip.c) remains active and continues to honor
+SYSTEM_ZLIB independently.
+
+Distributors (e.g., Gentoo via dev-libs/libchdr in ::guru) need this
+so security fixes to libchdr reach the core without rebuilding from
+the bundled copy.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ Makefile.common | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile.common b/Makefile.common
+index 00163d9e4..1cf0fd7a8 100644
+--- a/Makefile.common
++++ b/Makefile.common
+@@ -12,10 +12,11 @@ FLAGS += -D__LIBRETRO__ -DNO_CLI -DHAVE_SYS_TIME_H -DHAVE_GETTIMEOFDAY -DHAVE_ST
+ INCLUDE_DIRS := $(CORE_DIR) \
+ 	$(SOURCE_DIR) \
+ 	$(LIBRETRO_COMM_DIR)/include \
+-	$(SOURCE_DIR)/musashi \
+-	$(LIBCHDR_DIR)/include \
+-	$(LZMA_DIR)/include
++	$(SOURCE_DIR)/musashi
+ 
++ifneq ($(SYSTEM_LIBCHDR), 1)
++INCLUDE_DIRS += $(LIBCHDR_DIR)/include \
++	$(LZMA_DIR)/include
+ ifneq ($(SYSTEM_FLAC), 1)
+ INCLUDE_DIRS += $(FLAC_DIR)/include \
+ 	$(FLAC_DIR)/src/include
+@@ -24,6 +25,7 @@ endif
+ ifneq ($(SYSTEM_ZLIB), 1)
+ INCLUDE_DIRS += $(ZLIB_DIR)
+ endif
++endif
+ 
+ OBJECTS_S :=
+ 
+@@ -62,7 +64,12 @@ SOURCES_C := $(SOURCE_DIR)/osdcore.c \
+ ifeq ($(ENABLE_CHD), 1)
+ 	# chd also requires zlib
+ 	ENABLE_ZLIB = 1
+-	FLAGS += -DENABLE_CHD=1 -DHAVE_LROUND -D_7ZIP_ST -DFLAC__HAS_OGG=0 -DFLAC__NO_DLL -DPACKAGE_VERSION=\"1.3.3\"
++	FLAGS += -DENABLE_CHD=1
++ifeq ($(SYSTEM_LIBCHDR), 1)
++	FLAGS += $(shell pkg-config --cflags libchdr)
++	LIBS  += $(shell pkg-config --libs libchdr)
++else
++	FLAGS += -DHAVE_LROUND -D_7ZIP_ST -DFLAC__HAS_OGG=0 -DFLAC__NO_DLL -DPACKAGE_VERSION=\"1.3.3\"
+ 	SOURCES_C +=  	$(LIBCHDR_DIR)/src/libchdr_chd.c \
+ 		$(LIBCHDR_DIR)/src/libchdr_bitstream.c \
+ 		$(LIBCHDR_DIR)/src/libchdr_huffman.c \
+@@ -86,6 +93,7 @@ else
+ 		$(FLAC_DIR)/src/fixed.c
+ endif
+ endif
++endif
+ 
+ ifeq ($(ENABLE_ZLIB), 1)
+ 	FLAGS += -DENABLE_ZLIB=1
+-- 
+2.54.0
+
