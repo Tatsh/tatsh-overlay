@@ -518,6 +518,7 @@ drevc
 drivendataorg
 dset
 dsirit
+dskip
 dslackw
 dsplit
 dsystemd
@@ -1094,13 +1095,13 @@ libb
 libbar
 libbz
 libc
-libc's
 libcaca
 libcdio
 libchdr
 libclang
 libco
 libcrypt
+libc's
 libcxx
 libcxxabi
 libd
@@ -1186,6 +1187,7 @@ libtomcrypt
 libtommath
 libtoolchain
 libudev
+libunistring
 libunity
 libunwind
 liburing
@@ -1292,6 +1294,7 @@ matttproud
 mawen
 maxcountryman
 maxperfwiz
+mbed
 mbedcrypto
 mbedtls
 mborgerson
@@ -1912,6 +1915,7 @@ sentencepiece
 serde
 sergi
 serialport
+setc
 setfcap
 setgid
 setimmediate
