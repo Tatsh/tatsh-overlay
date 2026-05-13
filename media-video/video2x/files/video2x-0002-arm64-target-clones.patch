@@ -1,0 +1,124 @@
+--- a/include/libvideo2x/version_dispatch.h
++++ b/include/libvideo2x/version_dispatch.h
+@@ -0,0 +1,20 @@
++#pragma once
++
++// x86-64 micro-arch function multi-versioning.
++//
++// On x86-64 targets, expands to a [[gnu::target_clones]] attribute that asks
++// GCC to emit AVX-512 (x86-64-v4), AVX2 (x86-64-v3) and baseline ("default")
++// clones of the annotated function, with an IFUNC dispatcher chosen at load
++// time based on CPU features.
++//
++// On non-x86 targets (e.g. aarch64) the feature modifiers "arch=x86-64-v?" are
++// rejected by the compiler's attribute parser, so this macro expands to
++// nothing -- the function compiles as a single unspecialized definition, which
++// is what the "default" clone would have selected at runtime anyway.
++
++#if defined(__x86_64__)
++#  define V2X_MULTIVERSION_X86_64 \
++    [[gnu::target_clones("arch=x86-64-v4", "arch=x86-64-v3", "default")]]
++#else
++#  define V2X_MULTIVERSION_X86_64
++#endif
+--- a/src/avutils.cpp
++++ b/src/avutils.cpp
+@@ -11,6 +11,7 @@
+ 
+ #include "conversions.h"
+ #include "logger_manager.h"
++#include "version_dispatch.h"
+ 
+ namespace video2x {
+ namespace avutils {
+@@ -136,7 +137,7 @@
+     return best_pix_fmt;
+ }
+ 
+-[[gnu::target_clones("arch=x86-64-v4", "arch=x86-64-v3", "default")]]
++V2X_MULTIVERSION_X86_64
+ float get_frame_diff(AVFrame* frame1, AVFrame* frame2) {
+     if (!frame1 || !frame2) {
+         logger()->error("Invalid frame(s) provided for comparison");
+--- a/src/conversions.cpp
++++ b/src/conversions.cpp
+@@ -6,12 +6,13 @@
+ #include <spdlog/spdlog.h>
+ 
+ #include "logger_manager.h"
++#include "version_dispatch.h"
+ 
+ namespace video2x {
+ namespace conversions {
+ 
+ // Convert AVFrame format
+-[[gnu::target_clones("arch=x86-64-v4", "arch=x86-64-v3", "default")]]
++V2X_MULTIVERSION_X86_64
+ AVFrame* convert_avframe_pix_fmt(AVFrame* src_frame, AVPixelFormat pix_fmt) {
+     AVFrame* dst_frame = av_frame_alloc();
+     if (dst_frame == nullptr) {
+@@ -68,7 +69,7 @@
+ }
+ 
+ // Convert AVFrame to ncnn::Mat by copying the data
+-[[gnu::target_clones("arch=x86-64-v4", "arch=x86-64-v3", "default")]]
++V2X_MULTIVERSION_X86_64
+ ncnn::Mat avframe_to_ncnn_mat(AVFrame* frame) {
+     AVFrame* converted_frame = nullptr;
+ 
+@@ -108,7 +109,7 @@
+ }
+ 
+ // Convert ncnn::Mat to AVFrame with a specified pixel format (this part is unchanged)
+-[[gnu::target_clones("arch=x86-64-v4", "arch=x86-64-v3", "default")]]
++V2X_MULTIVERSION_X86_64
+ AVFrame* ncnn_mat_to_avframe(const ncnn::Mat& mat, AVPixelFormat pix_fmt) {
+     int ret;
+ 
+--- a/src/encoder.cpp
++++ b/src/encoder.cpp
+@@ -11,6 +11,7 @@
+ #include "avutils.h"
+ #include "conversions.h"
+ #include "libvideo2x/fsutils.h"
++#include "version_dispatch.h"
+ 
+ namespace video2x {
+ namespace encoder {
+@@ -267,7 +268,7 @@
+     return 0;
+ }
+ 
+-[[gnu::target_clones("arch=x86-64-v4", "arch=x86-64-v3", "default")]]
++V2X_MULTIVERSION_X86_64
+ int Encoder::write_frame(AVFrame* frame, int64_t frame_idx) {
+     AVFrame* converted_frame = nullptr;
+     int ret;
+@@ -339,7 +340,7 @@
+     return 0;
+ }
+ 
+-[[gnu::target_clones("arch=x86-64-v4", "arch=x86-64-v3", "default")]]
++V2X_MULTIVERSION_X86_64
+ int Encoder::flush() {
+     int ret;
+     AVPacket* enc_pkt = av_packet_alloc();
+--- a/src/libvideo2x.cpp
++++ b/src/libvideo2x.cpp
+@@ -13,6 +13,7 @@
+ #include "logger_manager.h"
+ #include "processor.h"
+ #include "processor_factory.h"
++#include "version_dispatch.h"
+ 
+ namespace video2x {
+ 
+@@ -29,7 +30,7 @@
+       hw_device_type_(hw_device_type),
+       benchmark_(benchmark) {}
+ 
+-[[gnu::target_clones("arch=x86-64-v4", "arch=x86-64-v3", "default")]]
++V2X_MULTIVERSION_X86_64
+ int VideoProcessor::process(
+     const std::filesystem::path in_fname,
+     const std::filesystem::path out_fname
