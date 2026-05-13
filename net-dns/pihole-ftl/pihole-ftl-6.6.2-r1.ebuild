@@ -28,11 +28,17 @@ PATCHES=(
 )
 
 FILECAPS=(
-	'cap_net_bind_service,cap_net_admin,cap_net_raw,cap_sys_nice,cap_chown,cap_sys_time' usr/bin/pihole-FTL
+	'cap_net_bind_service,cap_net_admin,cap_net_raw,cap_sys_nice,cap_ipc_lock,cap_chown,cap_sys_time' usr/bin/pihole-FTL
 )
 
 src_prepare() {
 	sed -re 's/-Werror //g' -i src/CMakeLists.txt || die
+	# Adapt the upstream v6 OpenRC service file to Gentoo's split layout:
+	# pihole-core installs the prestart/poststop helpers under
+	# /usr/$(get_libdir)/pihole/Templates rather than the upstream-default
+	# flat /opt/pihole directory.
+	cp "${FILESDIR}/${P}.openrc" "${T}/pihole-FTL" || die
+	sed -r -e "s/@LIBDIR@/$(get_libdir)/g" -i "${T}/pihole-FTL" || die
 	cmake_src_prepare
 }
 
@@ -56,6 +62,6 @@ src_compile() {
 
 src_install() {
 	cmake_src_install
-	doinitd "${FILESDIR}/pihole-FTL"
+	newinitd "${T}/pihole-FTL" pihole-FTL
 	systemd_dounit "${FILESDIR}/pihole-FTL.service"
 }
