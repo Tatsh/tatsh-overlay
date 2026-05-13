@@ -1,0 +1,90 @@
+From bec70d21c80b7b5c695b34eb89fd11fb07d51246 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 13 May 2026 02:11:24 -0400
+Subject: [PATCH] Makefile,*.{c,h}: honor HOST_ZLIB for libblastem.so build
+
+The HOST_ZLIB toggle was already supported for the standalone emulator
+binary, but the libblastem.so target's LDFLAGS:=-lm override bypassed
+the pkg-config branch entirely, so HOST_ZLIB had no effect there.
+
+Extend the libblastem.$(SO) Makefile branch to honor HOST_ZLIB:
+add pkg-config cflags/libs when on, fall back to -I./zlib so the
+bundled deps/zlib copy keeps working when off.
+
+Switch the three sites that previously hardcoded "zlib/zlib.h"
+(event_log.h, png.c, zip.c) to <zlib.h> so a single include style
+works for both bundled and system layouts. The bundled case still
+resolves because -I./zlib is added in the !HOST_ZLIB branch.
+
+Distributors (e.g., Gentoo) need this so the core links against the
+system zlib and picks up security fixes automatically rather than
+embedding a frozen copy.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ Makefile    | 6 ++++++
+ event_log.h | 2 +-
+ png.c       | 2 +-
+ zip.c       | 2 +-
+ 4 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 0dddc9f..dd4199f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -111,7 +111,13 @@ CFLAGS+= -I$(SDL_INCLUDE_PATH)
+ 
+ else
+ ifeq ($(MAKECMDGOALS),libblastem.$(SO))
++ifdef HOST_ZLIB
++CFLAGS+= $(shell pkg-config --cflags zlib)
++LDFLAGS:=-lm $(shell pkg-config --libs zlib)
++else
++CFLAGS+= -I./zlib
+ LDFLAGS:=-lm
++endif
+ else
+ CFLAGS:=$(shell pkg-config --cflags-only-I $(LIBS)) $(CFLAGS)
+ LDFLAGS:=-lm $(shell pkg-config --libs $(LIBS))
+diff --git a/event_log.h b/event_log.h
+index cd9ac28..45756f0 100644
+--- a/event_log.h
++++ b/event_log.h
+@@ -20,7 +20,7 @@ enum {
+ };
+ 
+ #include "serialize.h"
+-#include "zlib/zlib.h"
++#include <zlib.h>
+ typedef struct {
+ 	size_t storage;
+ 	uint8_t *socket_buffer;
+diff --git a/png.c b/png.c
+index 3716f30..9a86920 100644
+--- a/png.c
++++ b/png.c
+@@ -2,7 +2,7 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
+-#include "zlib/zlib.h"
++#include <zlib.h>
+ 
+ static const char png_magic[] = {0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n'};
+ static const char ihdr[] = {'I', 'H', 'D', 'R'};
+diff --git a/zip.c b/zip.c
+index 4b990aa..81cd23a 100644
+--- a/zip.c
++++ b/zip.c
+@@ -5,7 +5,7 @@
+ #include "util.h"
+ #include "zip.h"
+ #ifndef DISABLE_ZLIB
+-#include "zlib/zlib.h"
++#include <zlib.h>
+ #endif
+ 
+ static const char cdfd_magic[4] = {'P', 'K', 1, 2};
+-- 
+2.54.0
+
