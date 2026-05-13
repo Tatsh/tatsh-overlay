@@ -99,6 +99,10 @@ DEPEND="${RDEPEND}
 	xrandr? ( x11-libs/libXrandr )
 	virtual/pkgconfig"
 
+PATCHES=(
+	"${FILESDIR}/${PN}-0001-libchdr_flac-unconditionally.patch"
+)
+
 src_prepare() {
 	default
 
