@@ -1,4 +1,5 @@
 MINIZ
+SPIR
 aashutoshrathi
 aatl
 abloop
@@ -1960,6 +1961,7 @@ sizedwaitgroup
 skeema
 skia
 skillshare
+slangp
 slirp
 slongfield
 smaniotto
