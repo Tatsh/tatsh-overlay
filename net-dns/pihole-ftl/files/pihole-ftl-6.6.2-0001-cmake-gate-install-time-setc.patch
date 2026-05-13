@@ -1,0 +1,66 @@
+From 91558773ce7e9004488117f84402c5797ddce3d7 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 12 May 2026 22:37:10 -0400
+Subject: [PATCH] cmake: gate install-time setcap and self-verify behind
+ opt-out flag
+
+The install rules currently invoke setcap and run `pihole-FTL verify`
+against ${CMAKE_INSTALL_PREFIX}/bin/pihole-FTL unconditionally when
+`make install` runs. Distribution packagers stage the binary into
+DESTDIR and:
+
+  * apply file capabilities via their own merge-time mechanism
+    (e.g. fcaps.eclass on Gentoo, debhelper's dh_setcap on Debian);
+  * cannot run setcap as the build user inside their build sandbox;
+  * may run `make install` with a CMAKE_INSTALL_PREFIX of /usr while
+    the actual staged binary lives in DESTDIR/usr/bin/pihole-FTL --
+    the live-path verify either fails to find the new binary or runs
+    the previously-installed one, which is misleading at best.
+
+Wrap both install(CODE ...) calls in a new SKIP_INSTALL_PRIVILEGED_STEPS
+option that defaults to OFF (preserving current behaviour for the
+official install.sh flow) and can be turned ON by distribution
+packagers via -DSKIP_INSTALL_PRIVILEGED_STEPS=ON.
+
+No public behaviour change for the default `make install` path.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ src/CMakeLists.txt | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index b35cd73..6d430a9 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -425,8 +425,22 @@ add_custom_command(TARGET pihole-FTL POST_BUILD COMMENT "Appending sha256sum to
+ install(TARGETS pihole-FTL
+         RUNTIME DESTINATION bin
+         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+-find_program(SETCAP setcap)
+-# After installing the binary, we set the capabilities on the binary ...
+-install(CODE "execute_process(COMMAND ${SETCAP} CAP_NET_BIND_SERVICE,CAP_NET_RAW,CAP_NET_ADMIN,CAP_SYS_NICE,CAP_CHOWN,CAP_SYS_TIME+eip \${CMAKE_INSTALL_PREFIX}/bin/pihole-FTL)")
+-# ... and verify the binary integrity
+-install(CODE "execute_process(COMMAND \${CMAKE_INSTALL_PREFIX}/bin/pihole-FTL verify)")
++
++# Distribution packagers stage the binary into DESTDIR and apply file
++# capabilities via the distribution's own mechanism (e.g. fcaps.eclass on
++# Gentoo). Running setcap and the live-path "pihole-FTL verify" check during
++# `make install` is incompatible with that workflow because both operate on
++# ${CMAKE_INSTALL_PREFIX}/bin/pihole-FTL rather than the staged
++# DESTDIR copy, require root for setcap, and may even run a different
++# binary than the one just built. Allow opting out via
++# -DSKIP_INSTALL_PRIVILEGED_STEPS=ON.
++option(SKIP_INSTALL_PRIVILEGED_STEPS
++    "Skip the install-time setcap and verify steps (for distribution builds)"
++    OFF)
++if(NOT SKIP_INSTALL_PRIVILEGED_STEPS)
++    find_program(SETCAP setcap)
++    # After installing the binary, we set the capabilities on the binary ...
++    install(CODE "execute_process(COMMAND ${SETCAP} CAP_NET_BIND_SERVICE,CAP_NET_RAW,CAP_NET_ADMIN,CAP_SYS_NICE,CAP_CHOWN,CAP_SYS_TIME+eip \${CMAKE_INSTALL_PREFIX}/bin/pihole-FTL)")
++    # ... and verify the binary integrity
++    install(CODE "execute_process(COMMAND \${CMAKE_INSTALL_PREFIX}/bin/pihole-FTL verify)")
++endif()
+-- 
+2.54.0
+
