@@ -1,5 +1,3 @@
-MINIZ
-SPIR
 aashutoshrathi
 aatl
 abloop
@@ -244,6 +242,7 @@ cham
 chardet
 charenc
 charmbracelet
+checkconfig
 checkpath
 checkreqs
 cheevos
@@ -447,7 +446,6 @@ dinothawr
 dinstall
 directx
 diropts
-disabl
 discid
 discordrpc
 displaynames
@@ -506,7 +504,6 @@ dosym
 dotall
 dotenv
 dother
-dotio
 dotize
 douceur
 dounit
@@ -602,7 +599,6 @@ esbuild
 eselect
 espeak
 espeakng
-espen
 espree
 esprima
 esrecurse
@@ -908,16 +904,13 @@ hyperscript
 iancoleman
 ianlancetaylor
 icudt
-ideviceinstaller
 idna
 ifndef
 ifup
 imageio
 imaplib
-imath
 imds
 imgui
-imobiledevice
 implemnting
 implot
 imsc
@@ -1020,7 +1013,6 @@ kayahli
 kbnf
 kcompletion
 kcoreaddons
-kdenlive
 kdir
 kdotool
 keepdir
@@ -1098,13 +1090,13 @@ libb
 libbar
 libbz
 libc
-libc's
 libcaca
 libcdio
 libchdr
 libclang
 libco
 libcrypt
+libc's
 libcxx
 libcxxabi
 libd
@@ -1552,8 +1544,6 @@ ospi
 ossemul
 osspd
 otelhttp
-otio
-oversand
 oxffaa
 oyvindln
 pacct
@@ -1733,7 +1723,6 @@ pyrate
 pyrepl
 pyrescene
 pyserial
-pyside
 pysocks
 pytest
 pythonhosted
@@ -1834,6 +1823,7 @@ reqs
 rerunfailures
 resourcemanager
 resp
+respawn
 respx
 retroachievements
 retroarch
@@ -1877,7 +1867,6 @@ runkids
 rusha
 russross
 rustc
-rustflags
 rwcarlsen
 ryanuber
 ryszard
@@ -1998,6 +1987,7 @@ spammy
 spaolacci
 speakeasy
 spimdisasm
+spir
 spirv
 splitdebug
 splt
@@ -2301,7 +2291,6 @@ webengine
 webidl
 webp
 webpassword
-websocketpp
 webtheme
 webuiboxedlayout
 webvr
@@ -2407,7 +2396,6 @@ zeid
 zencoder
 zenkaku
 zenyd
-zeroconf
 zerofill
 zerolog
 zilliz
