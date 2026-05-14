@@ -54,7 +54,6 @@ apikey
 appdirs
 appengine
 appico
-appimage
 applescript
 aprip
 aproba
@@ -152,7 +151,6 @@ bincomp
 bincookie
 bincue
 bindir
-bindist
 binja
 binv
 bitrock
@@ -838,7 +836,6 @@ gravitydb
 grayed
 greenboost
 groupcache
-gstreamer
 gtksourceview
 guessit
 guidefor
@@ -1170,7 +1167,6 @@ libshell
 libsixel
 libslirp
 libsndfile
-libsodium
 libspng
 libstdc
 libtasn
@@ -1749,13 +1745,11 @@ qrencode
 qtbase
 qtconcurrent
 qtcore
-qtdbus
 qtdeclarative
 qtgui
 qtkeychain
 qtmin
 qtmultimedia
-qtnetwork
 qtpositioning
 qtsensors
 qtserialport
@@ -1837,7 +1831,6 @@ rfdc
 rgui
 rimraf
 ripcd
-ripdb
 riscv
 riverwalk
 rivo
@@ -2153,7 +2146,6 @@ tunables
 turboderp
 tuxu
 tweenjs
-twemoji
 typebox
 typedarray
 typer
