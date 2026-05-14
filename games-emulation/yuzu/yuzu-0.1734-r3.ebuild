@@ -30,10 +30,9 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+compatibility-reporting +cubeb llvm-libunwind qt5 +qt6 +web-service webengine"
+IUSE="+compatibility-reporting +cubeb llvm-libunwind +web-service webengine"
 
-REQUIRED_USE="compatibility-reporting? ( web-service )
-	|| ( qt5? ( !webengine ) qt6? ( !qt5 ) )"
+REQUIRED_USE="compatibility-reporting? ( web-service )"
 
 DEPEND=">=app-arch/zstd-1.5.0:=
 	>=dev-libs/xbyak-6.03:=
@@ -49,17 +48,9 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	media-libs/VulkanMemoryAllocator:=
 	dev-util/vulkan-utility-libraries
 	dev-util/glslang
-	qt5? (
-		dev-qt/qtcore
-		dev-qt/qtdbus
-		dev-qt/qtmultimedia:5
-		dev-qt/qtwidgets
-	)
-	qt6? (
-		dev-qt/qtbase
-		dev-qt/qtmultimedia:6
-		webengine? ( dev-qt/qtwebengine:6 )
-	)
+	dev-qt/qtbase
+	dev-qt/qtmultimedia:6
+	webengine? ( dev-qt/qtwebengine:6 )
 	media-libs/libsdl2
 	media-libs/libva
 	media-libs/opus
@@ -131,7 +122,7 @@ src_configure() {
 		-DCMAKE_DISABLE_PRECOMPILE_HEADERS=OFF  # FIXME
 		-DENABLE_COMPATIBILITY_LIST_DOWNLOAD=OFF
 		"-DENABLE_CUBEB=$(usex cubeb)"
-		"-DENABLE_QT6=$(usex qt6)"
+		-DENABLE_QT6=ON
 		"-DENABLE_WEB_SERVICE=$(usex web-service)"
 		-DGIT_BRANCH="${PN}"
 		-DGIT_DESC="${PV}"
