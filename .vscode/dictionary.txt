@@ -750,6 +750,8 @@ getrandom
 getsentry
 ghodss
 gickup
+gidgethub
+gidgetlab
 gileshuang
 gitea
 githubv
@@ -1087,13 +1089,13 @@ libb
 libbar
 libbz
 libc
+libc's
 libcaca
 libcdio
 libchdr
 libclang
 libco
 libcrypt
-libc's
 libcxx
 libcxxabi
 libd
