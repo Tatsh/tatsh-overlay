@@ -178,6 +178,7 @@ breakpad
 breejs
 breml
 bretello
+brettcannon
 browserchooser
 browserify
 browserslist
