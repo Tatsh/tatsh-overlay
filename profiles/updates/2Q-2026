@@ -22,3 +22,4 @@ move games-emulation/ppsspp-libretro games-emulation/libretro-ppsspp
 move games-emulation/prboom-libretro games-emulation/libretro-prboom
 move games-emulation/prosystem-libretro games-emulation/libretro-prosystem
 move games-emulation/puae-libretro games-emulation/libretro-puae
+move games-emulation/puae2021-libretro games-emulation/libretro-puae2021
