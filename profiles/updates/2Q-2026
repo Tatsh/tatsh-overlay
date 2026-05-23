@@ -4,3 +4,4 @@ move games-emulation/bsnes-mercury-performance-libretro games-emulation/libretro
 move games-emulation/flycast-libretro games-emulation/libretro-flycast
 move games-emulation/fmsx-libretro games-emulation/libretro-fmsx
 move games-emulation/freeintv-libretro games-emulation/libretro-freeintv
+move games-emulation/fuse-libretro games-emulation/libretro-fuse
