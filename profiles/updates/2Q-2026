@@ -9,3 +9,4 @@ move games-emulation/gambatte-libretro games-emulation/libretro-gambatte
 move games-emulation/gearboy-libretro games-emulation/libretro-gearboy
 move games-emulation/gearsystem-libretro games-emulation/libretro-gearsystem
 move games-emulation/genesis-plus-gx-libretro games-emulation/libretro-genesis-plus-gx
+move games-emulation/handy-libretro games-emulation/libretro-handy
