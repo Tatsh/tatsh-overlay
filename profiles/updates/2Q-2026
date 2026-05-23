@@ -1,3 +1,4 @@
 move games-emulation/atari800-libretro games-emulation/libretro-atari800
 move games-emulation/blastem-libretro games-emulation/libretro-blastem
 move games-emulation/bsnes-mercury-performance-libretro games-emulation/libretro-bsnes-mercury-performance
+move games-emulation/flycast-libretro games-emulation/libretro-flycast
