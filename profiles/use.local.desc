@@ -97,29 +97,6 @@ games-emulation/retroarch-assets: materialui - Enable materialui assets
 games-emulation/retroarch-assets: ozone - Emable ozone assets
 games-emulation/retroarch-assets: rgui - Enable rgui assets
 games-emulation/retroarch-assets: xmb - Enable xmb assets
-games-emulation/retroarch: cg - Enable Cg shader support
-games-emulation/retroarch: egl - Enable EGL context support
-games-emulation/retroarch: freetype - Enable FreeType support
-games-emulation/retroarch: gamemode - Enable gamemode support
-games-emulation/retroarch: gles3 - Enable GLES3 support
-games-emulation/retroarch: gles - Enable GLES support
-games-emulation/retroarch: kms - Enable KMS context support
-games-emulation/retroarch: libusb - Enable LibUSB HID support
-games-emulation/retroarch: materialui - Enable MaterialUI menu
-games-emulation/retroarch: opengl_core - Enable OpenGL core support
-games-emulation/retroarch: ozone - Enable ozone menu
-games-emulation/retroarch: parport - Enable parallel port support
-games-emulation/retroarch: plain_drm - Enable plain DRM support
-games-emulation/retroarch: qt6 - Enable QT6 support
-games-emulation/retroarch: rgui - Enable rgui menu
-games-emulation/retroarch: sdl - Enable SDL2 backend
-games-emulation/retroarch: sixel - Enable libsixel support
-games-emulation/retroarch: stripes - Enable stripes menu
-games-emulation/retroarch: subtitles - Enable subtitles support
-games-emulation/retroarch: tinyalsa - Enable TinyALSA support
-games-emulation/retroarch: vulkan - Enable vulkan support
-games-emulation/retroarch: xmb - Enable XMB menu
-games-emulation/retroarch: xrandr - Enable xrandr support
 games-emulation/rpcs3: faudio - Enable audio rendering with app-emulation/faudio
 games-emulation/rpcs3: joystick - Enable support for input devices with evdev
 games-emulation/rpcs3: llvm - LLVM recompiler support
