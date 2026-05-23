@@ -26,3 +26,4 @@ move games-emulation/puae2021-libretro games-emulation/libretro-puae2021
 move games-emulation/stella2014-libretro games-emulation/libretro-stella2014
 move games-emulation/swanstation-libretro games-emulation/libretro-swanstation
 move games-emulation/tyrquake-libretro games-emulation/libretro-tyrquake
+move games-emulation/vbam-libretro games-emulation/libretro-vbam
