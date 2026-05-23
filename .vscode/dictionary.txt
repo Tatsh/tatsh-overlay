@@ -1645,6 +1645,7 @@ postinst
 postrm
 poststop
 potator
+pppps
 ppsspp
 prboom
 prcbuild
