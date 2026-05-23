@@ -3,7 +3,7 @@
 
 EAPI=8
 LIBRETRO_REPO_NAME="libretro/mupen64plus-libretro-nx"
-LIBRETRO_COMMIT_SHA="0346d3ef26016bb4de604cf918d004bd791447ee"
+LIBRETRO_COMMIT_SHA="98c1b0d877542b01314b3b04272282ba223b65b3"
 LIBRETRO_CORE_NAME="mupen64plus_next"
 
 inherit libretro-core
@@ -20,6 +20,8 @@ RDEPEND="media-libs/mesa:0=
 DEPEND="${RDEPEND}
 	dev-lang/nasm:0=
 	games-emulation/libretro-info"
+
+PATCHES=( "${FILESDIR}/${PN}-0001-asm_defines-disable-lto.patch" )
 
 src_compile() {
 	MYEMAKEARGS=(

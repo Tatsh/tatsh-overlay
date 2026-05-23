@@ -1,0 +1,30 @@
+Force asm_defines.o to be compiled without LTO and without optimization.
+
+Upstream's mupen64plus-core/src/asm_defines/asm_defines.c relies on
+const-struct memory layout to embed "@ASM_DEFINE name 0xVALUE" strings
+into the resulting .o file, which a strings|awk pipeline then extracts
+into headers consumed by the new_dynarec nasm/gas assembler sources.
+
+The file's own comment requires it to be compiled without LTO and without
+"Global Optimizations".  The current Makefile applies project-wide CFLAGS
+(which include -flto=auto -O3 -fvisibility=hidden -fomit-frame-pointer)
+to this object, allowing the compiler to elide the struct symbols.  The
+resulting .o no longer contains the @ASM_DEFINE strings (or contains
+them only partially), the generated header is empty, and nasm later
+fails with "unable to open include file 'asm_defines_nasm.h'".
+
+Add a dedicated rule that compiles this specific .o with -O0 -fno-lto
+and -fvisibility=default while keeping all -I/-D flags intact.
+
+--- a/Makefile
++++ b/Makefile
+@@ -700,6 +700,9 @@
+ $(AWK_DEST_DIR)/asm_defines_nasm.h: $(ASM_DEFINES_OBJ)
+ 	$(STRINGS) "$<" | $(TR) -d '\r' | $(AWK) -v dest_dir="$(AWK_DEST_DIR)" -f $(CORE_DIR)/tools/gen_asm_defines.awk
+
++$(ASM_DEFINES_OBJ): $(AWK_DEST_DIR)/asm_defines.c
++	$(CC) $(CPPFLAGS) $(filter-out -flto% -O% -fvisibility=hidden,$(CFLAGS)) -O0 -fno-lto -fvisibility=default -c $< -o $@
++
+ %.o: %.asm $(AWK_DEST_DIR)/asm_defines_gas.h
+ 	$(NASM) -i$(AWK_DEST_DIR)/ $(ASFLAGS) $< -o $@
+
