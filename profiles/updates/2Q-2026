@@ -13,3 +13,4 @@ move games-emulation/handy-libretro games-emulation/libretro-handy
 move games-emulation/mame2003-plus-libretro games-emulation/libretro-mame2003-plus
 move games-emulation/mednafen-ngp-libretro games-emulation/libretro-mednafen-ngp
 move games-emulation/mednafen-psx-hw-libretro games-emulation/libretro-mednafen-psx-hw
+move games-emulation/mednafen-psx-libretro games-emulation/libretro-mednafen-psx
