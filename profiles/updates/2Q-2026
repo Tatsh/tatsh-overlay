@@ -30,3 +30,4 @@ move games-emulation/vbam-libretro games-emulation/libretro-vbam
 move games-emulation/vice-x64-libretro games-emulation/libretro-vice-x64
 move games-emulation/vice-x64sc-libretro games-emulation/libretro-vice-x64sc
 move games-emulation/virtualjaguar-libretro games-emulation/libretro-virtualjaguar
+move games-emulation/yabause-libretro games-emulation/libretro-yabause
