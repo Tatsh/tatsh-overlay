@@ -24,3 +24,4 @@ move games-emulation/prosystem-libretro games-emulation/libretro-prosystem
 move games-emulation/puae-libretro games-emulation/libretro-puae
 move games-emulation/puae2021-libretro games-emulation/libretro-puae2021
 move games-emulation/stella2014-libretro games-emulation/libretro-stella2014
+move games-emulation/swanstation-libretro games-emulation/libretro-swanstation
