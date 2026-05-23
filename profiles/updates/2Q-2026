@@ -20,3 +20,4 @@ move games-emulation/np2kai-libretro games-emulation/libretro-np2kai
 move games-emulation/pcsx-rearmed-libretro games-emulation/libretro-pcsx-rearmed
 move games-emulation/ppsspp-libretro games-emulation/libretro-ppsspp
 move games-emulation/prboom-libretro games-emulation/libretro-prboom
+move games-emulation/prosystem-libretro games-emulation/libretro-prosystem
