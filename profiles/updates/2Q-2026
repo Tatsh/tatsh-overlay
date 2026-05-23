@@ -7,3 +7,4 @@ move games-emulation/freeintv-libretro games-emulation/libretro-freeintv
 move games-emulation/fuse-libretro games-emulation/libretro-fuse
 move games-emulation/gambatte-libretro games-emulation/libretro-gambatte
 move games-emulation/gearboy-libretro games-emulation/libretro-gearboy
+move games-emulation/gearsystem-libretro games-emulation/libretro-gearsystem
