@@ -15,7 +15,6 @@ move games-emulation/mednafen-ngp-libretro games-emulation/libretro-mednafen-ngp
 move games-emulation/mednafen-psx-hw-libretro games-emulation/libretro-mednafen-psx-hw
 move games-emulation/mednafen-psx-libretro games-emulation/libretro-mednafen-psx
 move games-emulation/mednafen-vb-libretro games-emulation/libretro-mednafen-vb
-move games-emulation/mupen64next-libretro games-emulation/libretro-mupen64next
 move games-emulation/np2kai-libretro games-emulation/libretro-np2kai
 move games-emulation/pcsx-rearmed-libretro games-emulation/libretro-pcsx-rearmed
 move games-emulation/ppsspp-libretro games-emulation/libretro-ppsspp
