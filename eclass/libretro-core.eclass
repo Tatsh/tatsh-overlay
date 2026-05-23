@@ -17,14 +17,17 @@ inherit flag-o-matic libretro
 IUSE+="custom-cflags debug"
 
 _PN_UNDERLINES=${PN//-/_}
+_PN_UNDERLINES=${_PN_UNDERLINES%_libretro}
+_PN_UNDERLINES=${_PN_UNDERLINES#libretro_}
 # @ECLASS_VARIABLE: LIBRETRO_CORE_NAME
 # @DESCRIPTION:
 # Name of this Libretro core. The libretro-core_src_install() phase function
 # will install the shared library "${S}/${LIBRETRO_CORE_NAME}_libretro.so" as a
-# Libretro core. Defaults to the name of the current package excluding the
-# "-libretro" suffix and replacing dashes by underlines (e.g., "foo_bar" for
-# the package "foo-bar-libretro").
-: "${LIBRETRO_CORE_NAME:=${_PN_UNDERLINES%_libretro}}"
+# Libretro core. Defaults to the name of the current package excluding either
+# the "-libretro" suffix or the "libretro-" prefix and replacing dashes by
+# underlines (e.g., "foo_bar" for the package "foo-bar-libretro" or
+# "libretro-foo-bar").
+: "${LIBRETRO_CORE_NAME:=${_PN_UNDERLINES}}"
 
 # @ECLASS_VARIABLE: LIBRETRO_CORE_LIB_FILE
 # @DESCRIPTION:
