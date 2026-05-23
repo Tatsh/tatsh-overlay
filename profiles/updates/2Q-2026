@@ -28,3 +28,4 @@ move games-emulation/swanstation-libretro games-emulation/libretro-swanstation
 move games-emulation/tyrquake-libretro games-emulation/libretro-tyrquake
 move games-emulation/vbam-libretro games-emulation/libretro-vbam
 move games-emulation/vice-x64-libretro games-emulation/libretro-vice-x64
+move games-emulation/vice-x64sc-libretro games-emulation/libretro-vice-x64sc

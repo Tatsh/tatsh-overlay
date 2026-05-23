@@ -17,11 +17,10 @@ KEYWORDS="~amd64 ~arm64 ~x86"
 RDEPEND="games-emulation/libretro-info"
 
 src_compile() {
-	# Extracting the EMUTYPE from PN (e.g. vice-x64-libretro -> x64)
-	EMUTYPE=${PN#vice-}
-	EMUTYPE=${EMUTYPE%-libretro}
+	# Extracting the EMUTYPE from PN (e.g. libretro-vice-x64sc -> x64sc)
+	local emutype=${PN#libretro-vice-}
 	MYEMAKEARGS=(
-		EMUTYPE="${EMUTYPE}"
+		EMUTYPE="${emutype}"
 	)
 	libretro-core_src_compile
 }
