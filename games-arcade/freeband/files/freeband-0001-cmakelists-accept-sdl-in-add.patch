@@ -1,0 +1,37 @@
+From 29efe1af3f7a84e0c8d85eaa76d85b4756b2fffd Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sat, 23 May 2026 03:50:58 -0400
+Subject: [PATCH] CMakeLists: accept sdl in addition to sdl12_compat
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Gentoo doesn't ship sdl12_compat (libsdl-org/sdl12-compat) as a
+distinct package — it ships SDL 1.2 directly as media-libs/libsdl
+(pkgconfig name 'sdl'). Extend pkg_check_modules to accept either,
+so the build works on systems with just media-libs/libsdl installed.
+
+(Project is archived; this is a downstream compatibility patch for
+Gentoo packaging.)
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index fe04f28..39293b5 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -29,7 +29,7 @@ endif()
+ find_package(FreeGLUT REQUIRED)
+ find_package(OpenGL REQUIRED)
+ pkg_check_modules(PORTAUDIO portaudio-2.0 REQUIRED IMPORTED_TARGET GLOBAL)
+-pkg_check_modules(SDL12_COMPAT sdl12_compat REQUIRED IMPORTED_TARGET GLOBAL)
++pkg_check_modules(SDL12_COMPAT sdl12_compat sdl REQUIRED IMPORTED_TARGET GLOBAL)
+ pkg_check_modules(SDL_IMAGE SDL_image REQUIRED IMPORTED_TARGET GLOBAL)
+ pkg_check_modules(SDL_TTF SDL_ttf REQUIRED IMPORTED_TARGET GLOBAL)
+ pkg_check_modules(SNDFILE sndfile REQUIRED IMPORTED_TARGET GLOBAL)
+-- 
+2.54.0
+

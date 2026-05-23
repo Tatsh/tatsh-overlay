@@ -276,6 +276,7 @@ cliui
 clonedeep
 clonehero
 cloudpathlib
+cmakelists
 cmakerc
 cmdpack
 cmocka
@@ -704,7 +705,9 @@ fphammerle
 fprint
 fprintd
 frankban
+freeband
 freechaf
+freeglut
 freeintv
 freetype
 fribidi
