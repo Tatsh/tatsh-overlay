@@ -11,3 +11,4 @@ move games-emulation/gearsystem-libretro games-emulation/libretro-gearsystem
 move games-emulation/genesis-plus-gx-libretro games-emulation/libretro-genesis-plus-gx
 move games-emulation/handy-libretro games-emulation/libretro-handy
 move games-emulation/mame2003-plus-libretro games-emulation/libretro-mame2003-plus
+move games-emulation/mednafen-ngp-libretro games-emulation/libretro-mednafen-ngp
