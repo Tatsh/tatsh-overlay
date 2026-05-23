@@ -1,1 +1,2 @@
 move games-emulation/atari800-libretro games-emulation/libretro-atari800
+move games-emulation/blastem-libretro games-emulation/libretro-blastem
