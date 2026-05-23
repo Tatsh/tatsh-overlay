@@ -27,28 +27,27 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
 IUSE="
 	bsnes-mercury dolphin dosbox fceumm flycast fmsx fuse genesis-plus-gx mame2003-plus mednafen-psx mednafen-psx-hw
-	mupen64 pcsx-rearmed ppsspp prboom puae puae2021 snes9x swanstation tyrquake vice-x64 vice-x64sc"
+	pcsx-rearmed ppsspp prboom puae puae2021 snes9x swanstation tyrquake vice-x64 vice-x64sc"
 
 RDEPEND="
-	bsnes-mercury? ( games-emulation/bsnes-mercury-performance-libretro )
-	!x86? ( dolphin? ( games-emulation/dolphin-libretro ) )
+	bsnes-mercury? ( games-emulation/libretro-bsnes-mercury-performance )
+	!x86? ( dolphin? ( games-emulation/libretro-dolphin ) )
 	dosbox? ( games-emulation/libretro-dosbox )
-	fceumm? ( games-emulation/fceumm-libretro )
-	flycast? ( games-emulation/flycast-libretro )
-	fmsx? ( games-emulation/fmsx-libretro )
-	fuse? ( games-emulation/fuse-libretro )
-	genesis-plus-gx? ( games-emulation/genesis-plus-gx-libretro )
-	mame2003-plus? ( games-emulation/mame2003-plus-libretro )
-	mednafen-psx? ( games-emulation/mednafen-psx-libretro )
-	mednafen-psx-hw? ( games-emulation/mednafen-psx-hw-libretro )
-	mupen64? ( games-emulation/mupen64next-libretro )
-	pcsx-rearmed? ( games-emulation/pcsx-rearmed-libretro )
-	ppsspp? ( games-emulation/ppsspp-libretro )
-	prboom? ( games-emulation/prboom-libretro )
-	puae? ( games-emulation/puae-libretro )
-	puae2021? ( games-emulation/puae2021-libretro )
+	fceumm? ( games-emulation/libretro-fceumm )
+	flycast? ( games-emulation/libretro-flycast )
+	fmsx? ( games-emulation/libretro-fmsx )
+	fuse? ( games-emulation/libretro-fuse )
+	genesis-plus-gx? ( games-emulation/libretro-genesis-plus-gx )
+	mame2003-plus? ( games-emulation/libretro-mame2003-plus )
+	mednafen-psx? ( games-emulation/libretro-mednafen-psx )
+	mednafen-psx-hw? ( games-emulation/libretro-mednafen-psx-hw )
+	pcsx-rearmed? ( games-emulation/libretro-pcsx-rearmed )
+	ppsspp? ( games-emulation/libretro-ppsspp )
+	prboom? ( games-emulation/libretro-prboom )
+	puae? ( games-emulation/libretro-puae )
+	puae2021? ( games-emulation/libretro-puae2021 )
 	snes9x? ( games-emulation/libretro-snes9x )
-	!x86? ( swanstation? ( games-emulation/swanstation-libretro ) )
-	tyrquake? ( games-emulation/tyrquake-libretro )
-	vice-x64? ( games-emulation/vice-x64-libretro )
-	vice-x64sc? ( games-emulation/vice-x64sc-libretro )"
+	!x86? ( swanstation? ( games-emulation/libretro-swanstation ) )
+	tyrquake? ( games-emulation/libretro-tyrquake )
+	vice-x64? ( games-emulation/libretro-vice-x64 )
+	vice-x64sc? ( games-emulation/libretro-vice-x64sc )"
