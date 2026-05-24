@@ -29,6 +29,8 @@ RDEPEND="${DEPEND}"
 BDEPEND="${PYTHON_DEPS}
 	$(python_gen_any_dep 'dev-python/cython[${PYTHON_USEDEP}]')"
 
+PATCHES=( "${FILESDIR}/${PN}-74-decouple-wheel.patch" )
+
 python_check_deps() {
 	python_has_version "dev-python/cython[${PYTHON_USEDEP}]"
 }

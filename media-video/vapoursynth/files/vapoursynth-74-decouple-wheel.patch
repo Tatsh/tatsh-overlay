@@ -1,0 +1,52 @@
+Allow enable_vspipe and enable_python_module without building a wheel.
+
+Upstream's meson.build assumes "build_wheel=false" means a packaging
+build where vspipe and the Python module are not wanted, and silently
+overrides the user-supplied -Denable_vspipe / -Denable_python_module
+back to false.  For a Gentoo system install we want everything --
+shared libraries, headers, pkgconfig, the Python extension module, and
+the vspipe binary -- without producing a wheel.  Drop the override so
+the explicit -D options are honoured.
+
+The install_subdir('include', ...) call inside the python module block
+is only meaningful for wheels (it bundles the C-API headers into the
+wheel root), so guard it with `if build_wheel` -- otherwise meson dies
+because install_dir = [] is not a valid string for install_subdir().
+For non-wheel builds the headers are already installed via
+install_headers() under the earlier `if not build_wheel` block.
+
+--- a/meson.build
++++ b/meson.build
+@@ -14,11 +14,6 @@
+ enable_python_module = get_option('enable_python_module')
+ build_wheel = get_option('build_wheel')
+
+-if not build_wheel
+-    enable_vspipe = false
+-    enable_python_module = false
+-endif
+-
+ cxx = meson.get_compiler('cpp')
+
+ if cxx.get_argument_syntax() == 'gcc'
+@@ -267,12 +262,14 @@ if enable_core
+             subdir: 'vapoursynth',
+         )
+
+-        install_subdir(
+-            'include',
+-            exclude_directories: 'cython',
+-            exclude_files: ['VapourSynth.h', 'VSHelper.h'],
+-            install_dir: install_dir,
+-        )
++        if build_wheel
++            install_subdir(
++                'include',
++                exclude_directories: 'cython',
++                exclude_files: ['VapourSynth.h', 'VSHelper.h'],
++                install_dir: install_dir,
++            )
++        endif
+     endif
+
+     if build_wheel and cxx.get_argument_syntax() == 'msvc'
