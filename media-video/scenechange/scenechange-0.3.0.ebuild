@@ -33,6 +33,7 @@ src_prepare() {
 
 src_install() {
 	cmake_src_install
+	# shellcheck disable=SC2329
 	install_py_module() {
 		python_domodule "${S}/temporalsoften2.py"
 	}
