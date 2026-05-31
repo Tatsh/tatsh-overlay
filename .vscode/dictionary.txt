@@ -1700,6 +1700,7 @@ pydub
 pyelftools
 pyflirt
 pyfmt
+pyfordpass
 pyftdi
 pygfxd
 pygithub
