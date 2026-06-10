@@ -18,6 +18,7 @@ RESTRICT="!test? ( test )"
 DEPEND="app-pda/libplist
 	dev-libs/openssl"
 RDEPEND="${DEPEND}"
+BDEPEND="dev-cpp/argparse"
 
 src_configure() {
 	local mycmakeargs=(
