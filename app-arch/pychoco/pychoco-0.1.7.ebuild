@@ -3,7 +3,7 @@
 
 EAPI=8
 PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
-DISTUTILS_USE_PEP517=poetry
+DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1
 
 DESCRIPTION="Minimal choco command for use on non-Windows platforms."
