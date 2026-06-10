@@ -4,21 +4,19 @@
 EAPI=8
 
 DISTUTILS_SINGLE_IMPL=true
-
 DISTUTILS_USE_PEP517=setuptools
-
 PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 
 inherit distutils-r1
 
 DESCRIPTION="Joystick-aware screen waker."
-HOMEPAGE="https://github.com/foresto/joystickwake"
-SRC_URI="https://github.com/foresto/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://codeberg.org/forestix/joystickwake"
+SRC_URI="https://codeberg.org/forestix/joystickwake/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~ppc64 ~x86"
-IUSE="X"
 
 # shellcheck disable=SC2016
-RDEPEND="$(python_gen_cond_dep 'dev-python/pyudev[${PYTHON_USEDEP}]')
-	X? ( $(python_gen_cond_dep 'dev-python/python-xlib[${PYTHON_USEDEP}]') )"
+RDEPEND="$(python_gen_cond_dep 'dev-python/pyudev[${PYTHON_USEDEP}]')"
+
+S="${WORKDIR}/${PN}"
