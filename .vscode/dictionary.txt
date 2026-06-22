@@ -8,6 +8,7 @@ addwrite
 adlam
 adoc
 aesni
+afaics
 afero
 agentkeepalive
 agnivade
@@ -39,6 +40,7 @@ amiri
 ampproject
 anacrolix
 analyzer
+anari
 andrewbranch
 andreyvit
 androidndk
@@ -76,6 +78,7 @@ asgi
 asio
 asmflags
 aspromise
+assimp
 astc
 astdr
 asticode
@@ -97,6 +100,7 @@ audioop
 authlib
 authorware
 autoconfig
+automagic
 automodule
 autotools
 avcodec
@@ -152,6 +156,7 @@ bincookie
 bincue
 bindir
 binja
+binpkgs
 binv
 bitrock
 bitwidth
@@ -177,6 +182,7 @@ brahmi
 breakpad
 breejs
 breml
+brep
 bretello
 brettcannon
 browserchooser
@@ -190,6 +196,7 @@ btzy
 bubbletea
 buginese
 buhid
+buildonly
 builtinflac
 builtinmbedtls
 builtinzlib
@@ -217,6 +224,7 @@ carian
 cascadia
 catus
 cbor
+ccbin
 ccflags
 ccgo
 ccmd
@@ -235,6 +243,8 @@ certifi
 cespare
 cffi
 cflags
+cgns
+cgnslib
 chailove
 chakma
 cham
@@ -324,6 +334,7 @@ corejs
 coretemp
 corlett's
 cosmiconfig
+cpack
 cplugins
 cppflags
 cpprestsdk
@@ -350,6 +361,9 @@ csvlens
 csvw
 ctest
 cuda
+cudaarchs
+cudahostcxx
+cudahostld
 cugan
 cuid
 cunet
@@ -478,6 +492,7 @@ dobashcomp
 dobin
 docdir
 docinto
+docompress
 docopt
 docstrings
 doctest
@@ -505,6 +520,7 @@ dotall
 dotenv
 dother
 dotize
+doubleconversion
 douceur
 dounit
 dpdb
@@ -515,6 +531,7 @@ dreamcast
 drelcs
 drevc
 drhelius
+dris
 drivendataorg
 dset
 dsirit
@@ -533,6 +550,7 @@ dvcpkg
 dvec
 dversion
 dvita
+dvtk
 dvulkan
 dwith
 dxbox
@@ -561,6 +579,7 @@ eend
 eerror
 eeyore
 egit
+eigen
 einfo
 einops
 einstalldocs
@@ -584,10 +603,12 @@ entuwii
 envify
 envoyproxy
 envpprof
+epfreix
 eprefix
 epreifx
 epytest
 epython
+eqawarn
 equery
 erfgoed
 erikgeiser
@@ -621,6 +642,7 @@ exeinto
 exes
 existance
 exllamav
+exprtk
 extglob
 extradoc
 extrainstall
@@ -660,6 +682,7 @@ ffms
 ffprobe
 fftw
 fidelityfx
+fides
 filecaps
 filelist
 filelock
@@ -670,6 +693,7 @@ finalhandler
 finalizationregistry
 findlast
 findname
+findpegtl
 firestore
 fireweapon
 flacted
@@ -729,6 +753,7 @@ funcs
 funcy
 fuzzysearch
 fxamacker
+fxcfg
 gailly
 gambatte
 gamecube
@@ -737,6 +762,7 @@ gandarez
 gcfg
 gcflags
 gcrypt
+gdal
 gdkchan
 gearboy
 gearsystem
@@ -747,6 +773,7 @@ gensync
 gentoolkit
 geoip
 georgkrause
+geovis
 getcanonicallocales
 getmoto
 getprototypeof
@@ -910,9 +937,11 @@ icudt
 idna
 ifndef
 ifup
+iges
 imageio
 imaplib
 imds
+imex
 imgui
 implemnting
 implot
@@ -921,6 +950,7 @@ includedir
 inconshreveable
 inflight
 infodir
+infovis
 inih
 inputremapper
 insinto
@@ -932,7 +962,19 @@ interconverter
 intervaltree
 intltool
 intv
+ioadios
+iocgns
+ioffmpeg
+iogdal
+iolas
+iompi
 ionelmc
+ioocct
+ioodbc
+iopdal
+iosql
+ioss
+ioxml
 ipython
 irecovery
 iregex
@@ -955,6 +997,7 @@ jackspeak
 jaconv
 jakcron
 jamo
+jardir
 jawah
 jazzband
 jbenet
@@ -1038,7 +1081,9 @@ kharoshthi
 khudawadi
 kikakui
 kisielk
+kissfft
 kitgen
+kitware
 kiyamou
 klauspost
 kmod
@@ -1046,6 +1091,7 @@ knadh
 knownhosts
 koanf
 kodi
+kokkos
 kokoro
 konloch
 konsorten
@@ -1057,12 +1103,14 @@ ktrysmt
 kubun
 kuler
 kwidgetsaddons
+kwiml
 kwin
 kwsites
 kxmlgui
 kylelemons
 kylemanna
 labbe's
+labeled
 ladjs
 lancedb
 langchain
@@ -1127,6 +1175,7 @@ libgreenboost
 libgudev
 libgusb
 libhac
+libharu
 libhsl
 libidn
 libimob
@@ -1147,6 +1196,7 @@ libpicofe
 libpietendo
 libpit
 libplist
+libproj
 libpsl
 libpulse
 libpumpkin
@@ -1179,6 +1229,7 @@ libtasn
 libtatsu
 libtemporalsoften
 libtermcap
+libtheora
 libtom
 libtomcrypt
 libtommath
@@ -1204,6 +1255,7 @@ libz
 libzip
 libzrif
 libzvbi
+licensedir
 lide
 lightrec
 lighttpd
@@ -1308,6 +1360,7 @@ melonds
 membarrier
 memberlist
 memcpy
+memkind
 mende
 menelkir
 meowpc
@@ -1363,6 +1416,7 @@ mockoidc
 modargs
 modelcontextprotocol
 modernc
+modeset
 modlist
 modpost
 moduleinto
@@ -1457,8 +1511,10 @@ nghttp
 nihongo
 nihstro
 nihui
+ninjaopts
 niquests
 nlohmann
+nlohmannjson
 nltk
 nlzy
 nnedi
@@ -1477,6 +1533,7 @@ nopt
 nosetests
 nosleep
 nosniff
+notgit
 noto
 notofonts
 nowrap
@@ -1497,12 +1554,18 @@ numpy
 numpydoc
 nurio
 nvcc
+nvidiactl
+nvlink
 nvme
 nvmedit
+nvswitch
+nvswitchctl
 nxengine
 objdump
 objx
 occivink
+occt
+octree
 ogham
 olchiki
 oldhungarian
@@ -1525,7 +1588,9 @@ onroerend
 onsi
 ontroller
 openal
+opencascade
 opencensus
+openexr
 openfortivpn
 opengles
 openharmony
@@ -1533,6 +1598,7 @@ openlara
 openocd
 openrc
 opentimelineio
+openvdb
 optflags
 optio
 optionator
@@ -1543,6 +1609,7 @@ orjson
 osmanya
 osname
 ospi
+ospray
 ossemul
 osspd
 otelhttp
@@ -1577,9 +1644,11 @@ pcfx
 pcores
 pcre
 pcsx
+pdal
 pdbpp
 peds
 pefile
+pegtl
 pehrson
 pelletier
 petamoriken
@@ -1596,6 +1665,7 @@ phasher
 philhofer
 phonemizer
 phpstan
+pickability
 picocolors
 picodrive
 picomatch
@@ -1654,6 +1724,7 @@ prboom
 prcbuild
 preinst
 premake
+prerm
 preshed
 prestart
 println
@@ -1746,6 +1817,7 @@ qdbus
 qdrant
 qfile
 qlist
+qmldir
 qpack
 qpxtool
 qrcode
@@ -1761,6 +1833,7 @@ qtmultimedia
 qtpositioning
 qtsensors
 qtserialport
+qtshadertools
 qtsvg
 qttestbrowser
 qttools
@@ -1796,12 +1869,15 @@ realesrgan
 realsr
 recompiler
 redent
+redering
 redumper
 referer
 reflectwalk
 reflow
 refractoring
 regexpu
+regextype
+regjar
 regjsgen
 regjsparser
 rehype
@@ -1853,6 +1929,7 @@ rogpeppe
 rollup
 romain
 romaji
+romio
 roni
 rootcerts
 rpcli
@@ -1865,6 +1942,7 @@ rtmp
 ruamel
 runewidth
 runkids
+runpath
 rusha
 russross
 rustc
@@ -2016,6 +2094,7 @@ statigz
 stdc
 stdlib
 stdr
+stdthread
 stepmania
 stfc
 stfc's
@@ -2103,6 +2182,7 @@ tgbdual
 thaana
 tham
 thehandy
+theora
 thepowdertoy
 theroyallab
 thewh
@@ -2142,6 +2222,7 @@ tostringtag
 tqdm
 trac
 treeverse
+triangulator
 trimend
 trimpath
 trimstart
@@ -2169,6 +2250,7 @@ udevdir
 udeveof
 udevof
 udiff
+udmabuf
 udpa
 udvare
 ugaritic
@@ -2208,6 +2290,7 @@ urlpattern
 usbkill
 usbmuxd
 usedep
+usemove
 usepkg
 useragent
 userspace
@@ -2232,6 +2315,8 @@ vendored
 vendoring
 vercmp
 verweij
+vgpu
+vgpuctl
 vhosts
 videobuf
 videocore
@@ -2241,12 +2326,16 @@ vimfiles
 vimrc
 virtualjaguar
 virtualwebauthn
+virtualx
+virtx
+viskores
 vitaquake
 vite
 vitejs
 volk
 vosf
 voyageai
+vpic
 vpnc
 vsaa
 vsexprtools
@@ -2263,6 +2352,10 @@ vsutil
 vsxx
 vsznedi
 vtclean
+vtkhdf
+vtkm
+vtksys
+vtkviskores
 vulkanmemoryallocator
 waifu
 waivable
@@ -2321,6 +2414,7 @@ wordadd
 wordwrapjs
 wrappy
 wrapt
+writable
 writedup
 writeedits
 writename
@@ -2329,6 +2423,7 @@ wunused
 wweula
 wxpython
 wxwidgets
+xamples
 xanzy
 xattr
 xbmc
@@ -2339,6 +2434,7 @@ xcomposite
 xcursor
 xdamage
 xdist
+xdmf
 xemu
 xenova
 xerrors
