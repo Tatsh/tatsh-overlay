@@ -1,0 +1,19 @@
+diff --git a/CMake/FindPEGTL.cmake b/CMake/FindPEGTL.cmake
+index f9a8846..f9ac9ca 100644
+--- a/CMake/FindPEGTL.cmake
++++ b/CMake/FindPEGTL.cmake
+@@ -24,7 +24,13 @@ message(STATUS "Searching for PEGTL")
+ find_package(PEGTL CONFIG REQUIRED)
+ if(TARGET taocpp::pegtl)
+     message(STATUS "Searching for PEGTL - found target taocpp::pegtl")
+-    set_target_properties(taocpp::pegtl PROPERTIES IMPORTED_GLOBAL TRUE)
++    # CMake 4 forbids promoting an imported target to global scope from a
++    # child directory; consumers such as f3d call find_package(VTK) inside a
++    # function. Only promote if not already global to avoid a hard error.
++    get_target_property(_vtk_pegtl_global taocpp::pegtl IMPORTED_GLOBAL)
++    if(NOT _vtk_pegtl_global)
++      set_target_properties(taocpp::pegtl PROPERTIES IMPORTED_GLOBAL TRUE)
++    endif()
+     if(NOT TARGET PEGTL::PEGTL)
+        add_library(PEGTL::PEGTL IMPORTED INTERFACE)
+        target_link_libraries(PEGTL::PEGTL INTERFACE taocpp::pegtl)
