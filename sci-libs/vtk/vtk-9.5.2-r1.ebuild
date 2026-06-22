@@ -67,6 +67,7 @@ REQUIRED_USE="
 
 # eigen, nlohmann_json, pegtl and utfcpp are referenced in the cmake files
 # and need to be available when VTK consumers configure the dependencies.
+# shellcheck disable=SC2016
 RDEPEND="
 	app-arch/lz4:=
 	app-arch/xz-utils
@@ -888,7 +889,9 @@ src_test() {
 
 	# The build system prepends /usr/$(get_libdir) to the RUNPATH instead of appending.
 	# Set LD_LIBRARY_PATH to use the just build libraries.
-	local -x LD_LIBRARY_PATH="${BUILD_DIR}/$(get_libdir)${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+	local libdir
+	libdir="$(get_libdir)"
+	local -x LD_LIBRARY_PATH="${BUILD_DIR}/${libdir}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
 	# export VTK_SMP_BACKEND_IN_USE="STDThread"
 
@@ -978,8 +981,9 @@ src_test() {
 	fi
 
 	# TODO Why?
-	local -x CC="$(tc-getCC)"
-	local -x CXX="$(tc-getCXX)"
+	local -x CC CXX
+	CC="$(tc-getCC)"
+	CXX="$(tc-getCXX)"
 
 	virtx cmake_src_test -j1
 }
