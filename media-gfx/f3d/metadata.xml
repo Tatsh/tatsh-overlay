@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
@@ -15,10 +15,12 @@
 	</longdescription>
 	<use>
 		<flag name="alembic">Support for Alembic (.abc) files via <pkg>media-gfx/alembic</pkg></flag>
-		<flag name="assimp">Support for FBX, DAE, OFF, DXF, X and 3MF files via <pkg>media-libs/assimp</pkg></flag>
+		<flag name="assimp">Support for FBX, DAE, OFF, DXF, X and 3MF files via <pkg
+			>media-libs/assimp</pkg></flag>
 		<flag name="exr">Support for OpenEXR images via <pkg>media-libs/openexr</pkg></flag>
 		<flag name="hdf">Support for VTKHDF, ExodusII and NetCDF file formats</flag>
-		<flag name="occt">Support for STEP, IGES, BREP and XBF files via <pkg>sci-libs/opencascade</pkg></flag>
+		<flag name="occt">Support for STEP, IGES, BREP and XBF files via <pkg
+			>sci-libs/opencascade</pkg></flag>
 		<flag name="pdal">Support for point cloud file formats via PDAL</flag>
 		<flag name="vdb">Support for OpenVDB (.vdb) files</flag>
 		<flag name="webp">Support for WebP images via <pkg>media-libs/libwebp</pkg></flag>
