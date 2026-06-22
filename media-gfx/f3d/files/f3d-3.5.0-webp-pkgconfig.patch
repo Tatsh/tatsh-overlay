@@ -1,0 +1,23 @@
+diff --git a/vtkext/private/module/CMakeLists.txt b/vtkext/private/module/CMakeLists.txt
+index 55484dc..6bab5f5 100644
+--- a/vtkext/private/module/CMakeLists.txt
++++ b/vtkext/private/module/CMakeLists.txt
+@@ -131,7 +131,8 @@ if(F3D_MODULE_EXR)
+ endif()
+ 
+ if(F3D_MODULE_WEBP)
+-  find_package(WebP REQUIRED)
++  find_package(PkgConfig REQUIRED)
++  pkg_check_modules(WebP REQUIRED IMPORTED_TARGET libwebp)
+   list(APPEND classes vtkF3DWebPReader)
+ endif()
+ 
+@@ -163,7 +164,7 @@ endif()
+ 
+ # webp
+ if(F3D_MODULE_WEBP)
+-  vtk_module_link(f3d::vtkextPrivate PRIVATE WebP::webp)
++  vtk_module_link(f3d::vtkextPrivate PRIVATE PkgConfig::WebP)
+ endif()
+ 
+ # imgui
