@@ -7,11 +7,8 @@ PYTHON_COMPAT=( python3_{11..14} )
 
 inherit cmake python-single-r1 xdg
 
-DESCRIPTION="Fast and minimalist 3D viewer"
-HOMEPAGE="
-	https://f3d.app/
-	https://github.com/f3d-app/f3d
-"
+DESCRIPTION="Fast and minimalist 3D viewer."
+HOMEPAGE="https://f3d.app/ https://github.com/f3d-app/f3d"
 SRC_URI="https://github.com/f3d-app/f3d/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 S="${WORKDIR}/${PN}-${PV}"
 
