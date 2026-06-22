@@ -58,19 +58,19 @@ Follow this order in ebuilds:
 - Always include `[${PYTHON_USEDEP}]` for Python library dependencies in `RDEPEND`.
 - Sort dependencies alphabetically within each dependency variable.
 
+## `DESCRIPTION`
+
+- End the description with a period.
+
 ## `HOMEPAGE`
 
-- For packages with multiple relevant URLs, use a multi-line format:
+- Use a single-line, space-separated format, even when there are multiple URLs:
 
   ```bash
-  HOMEPAGE="
-      https://example.com/docs/
-      https://github.com/org/repo
-      https://pypi.org/project/name/
-  "
+  HOMEPAGE="https://example.com/docs/ https://github.com/org/repo"
   ```
 
-- For packages with a single URL, use single-line format.
+- Do not split URLs across multiple lines.
 
 ## Python packages (`distutils-r1`)
 
