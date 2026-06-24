@@ -1,6 +1,7 @@
 aashutoshrathi
 aatl
 abloop
+acinclude
 aclocal
 adbsync
 addpredict
@@ -425,6 +426,7 @@ decompollaborate
 decrypter
 deepmerge
 defense
+defun
 defusedxml
 deinterlace
 deinterlacing
@@ -555,6 +557,7 @@ dvulkan
 dwith
 dxbox
 dxemu
+dxenia
 dyld
 dynaconf
 dynarec
@@ -1234,6 +1237,7 @@ libtom
 libtomcrypt
 libtommath
 libtoolchain
+libucl
 libudev
 libunistring
 libunity
@@ -1600,6 +1604,7 @@ openrc
 opentimelineio
 openvdb
 optflags
+opti
 optio
 optionator
 optparse
@@ -2136,6 +2141,7 @@ sylheti
 sylotinagri
 synckit
 syst
+syste
 systemjs
 systemunitdir
 systray
