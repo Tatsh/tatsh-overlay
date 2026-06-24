@@ -1,0 +1,177 @@
+From b5b8fdb9c1a9482b25cdb9819f6de8aa335f7d53 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 18:41:31 -0500
+Subject: [PATCH 08/23] Add USE_SYSTEM_CAPSTONE option for system libcapstone
+
+- third_party/CMakeLists.txt: link system capstone (pkg-config) when
+  USE_SYSTEM_CAPSTONE is set, else build the bundled copy.
+- src/xenia/base/capstone_include.h: new wrapper selecting <capstone/...>
+  headers when XENIA_USE_SYSTEM_CAPSTONE is defined.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ src/xenia/base/capstone_include.h          | 13 ++++
+ src/xenia/cpu/backend/x64/x64_assembler.cc |  3 +-
+ src/xenia/cpu/backend/x64/x64_backend.cc   |  3 +-
+ src/xenia/debug/ui/debug_window.cc         |  3 +-
+ third_party/CMakeLists.txt                 | 79 ++++++++++++----------
+ 5 files changed, 60 insertions(+), 41 deletions(-)
+ create mode 100644 src/xenia/base/capstone_include.h
+
+diff --git a/src/xenia/base/capstone_include.h b/src/xenia/base/capstone_include.h
+new file mode 100644
+index 000000000..10274fb05
+--- /dev/null
++++ b/src/xenia/base/capstone_include.h
+@@ -0,0 +1,13 @@
++// Wrapper so Xenia can use either bundled capstone or system libcapstone (XENIA_USE_SYSTEM_CAPSTONE).
++#ifndef XENIA_BASE_CAPSTONE_INCLUDE_H_
++#define XENIA_BASE_CAPSTONE_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_CAPSTONE
++#include <capstone/capstone.h>
++#include <capstone/x86.h>
++#else
++#include "third_party/capstone/include/capstone/capstone.h"
++#include "third_party/capstone/include/capstone/x86.h"
++#endif
++
++#endif  // XENIA_BASE_CAPSTONE_INCLUDE_H_
+diff --git a/src/xenia/cpu/backend/x64/x64_assembler.cc b/src/xenia/cpu/backend/x64/x64_assembler.cc
+index 8643c4fb0..8dbb6a70b 100644
+--- a/src/xenia/cpu/backend/x64/x64_assembler.cc
++++ b/src/xenia/cpu/backend/x64/x64_assembler.cc
+@@ -11,8 +11,7 @@
+ 
+ #include <climits>
+ 
+-#include "third_party/capstone/include/capstone/capstone.h"
+-#include "third_party/capstone/include/capstone/x86.h"
++#include "xenia/base/capstone_include.h"
+ #include "xenia/base/profiling.h"
+ #include "xenia/base/reset_scope.h"
+ #include "xenia/base/string.h"
+diff --git a/src/xenia/cpu/backend/x64/x64_backend.cc b/src/xenia/cpu/backend/x64/x64_backend.cc
+index eabfb41d0..e4d16fcf0 100644
+--- a/src/xenia/cpu/backend/x64/x64_backend.cc
++++ b/src/xenia/cpu/backend/x64/x64_backend.cc
+@@ -10,8 +10,7 @@
+ #include "xenia/cpu/backend/x64/x64_backend.h"
+ 
+ #include <cstddef>
+-#include "third_party/capstone/include/capstone/capstone.h"
+-#include "third_party/capstone/include/capstone/x86.h"
++#include "xenia/base/capstone_include.h"
+ 
+ #include "xenia/base/exception_handler.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/debug/ui/debug_window.cc b/src/xenia/debug/ui/debug_window.cc
+index efe28b2c0..55be9a161 100644
+--- a/src/xenia/debug/ui/debug_window.cc
++++ b/src/xenia/debug/ui/debug_window.cc
+@@ -11,8 +11,7 @@
+ 
+ #include <cinttypes>
+ 
+-#include "third_party/capstone/include/capstone/capstone.h"
+-#include "third_party/capstone/include/capstone/x86.h"
++#include "xenia/base/capstone_include.h"
+ #include "third_party/imgui/imgui.h"
+ #include "third_party/imgui/imgui_internal.h"
+ #include "xenia/base/clock.h"
+diff --git a/third_party/CMakeLists.txt b/third_party/CMakeLists.txt
+index 3bf14d54c..1eeb3b69e 100644
+--- a/third_party/CMakeLists.txt
++++ b/third_party/CMakeLists.txt
+@@ -39,44 +39,53 @@ target_include_directories(aes_128 PUBLIC aes_128)
+ # ==============================================================================
+ # capstone
+ # ==============================================================================
+-add_library(capstone STATIC
+-  capstone/cs.c
+-  capstone/MCInst.c
+-  capstone/MCInstPrinter.c
+-  capstone/MCInstrDesc.c
+-  capstone/MCRegisterInfo.c
+-  capstone/SStream.c
+-  capstone/utils.c
+-  capstone/Mapping.c
+-)
+-# Architecture-specific capstone files
+-if(XE_TARGET_AARCH64)
+-  file(GLOB _capstone_arch_c "capstone/arch/AArch64/*.c")
+-  file(GLOB _capstone_arch_h "capstone/arch/AArch64/*.h")
+-  file(GLOB _capstone_arch_inc "capstone/arch/AArch64/*.inc")
+-  target_sources(capstone PRIVATE ${_capstone_arch_c} ${_capstone_arch_h} ${_capstone_arch_inc})
+-  target_compile_definitions(capstone PRIVATE
+-    CAPSTONE_HAS_ARM64
+-    CAPSTONE_HAS_AARCH64
+-    CAPSTONE_USE_SYS_DYN_MEM
+-  )
++if(USE_SYSTEM_CAPSTONE)
++  find_package(PkgConfig REQUIRED)
++  pkg_check_modules(CAPSTONE REQUIRED capstone)
++  add_library(capstone INTERFACE)
++  target_include_directories(capstone SYSTEM INTERFACE ${CAPSTONE_INCLUDE_DIRS})
++  target_link_libraries(capstone INTERFACE ${CAPSTONE_LDFLAGS})
++  target_compile_options(capstone INTERFACE ${CAPSTONE_CFLAGS_OTHER})
+ else()
+-  file(GLOB _capstone_x86_c "capstone/arch/X86/*.c")
+-  file(GLOB _capstone_x86_h "capstone/arch/X86/*.h")
+-  file(GLOB _capstone_x86_inc "capstone/arch/X86/*.inc")
+-  list(FILTER _capstone_x86_c EXCLUDE REGEX "X86ATTInstPrinter\\.c$")
+-  list(FILTER _capstone_x86_inc EXCLUDE REGEX "reduce\\.inc$")
+-  target_sources(capstone PRIVATE ${_capstone_x86_c} ${_capstone_x86_h} ${_capstone_x86_inc})
+-  target_compile_definitions(capstone PRIVATE
+-    CAPSTONE_X86_ATT_DISABLE
+-    CAPSTONE_HAS_X86
+-    CAPSTONE_USE_SYS_DYN_MEM
++  add_library(capstone STATIC
++    capstone/cs.c
++    capstone/MCInst.c
++    capstone/MCInstPrinter.c
++    capstone/MCInstrDesc.c
++    capstone/MCRegisterInfo.c
++    capstone/SStream.c
++    capstone/utils.c
++    capstone/Mapping.c
+   )
++  # Architecture-specific capstone files
++  if(XE_TARGET_AARCH64)
++    file(GLOB _capstone_arch_c "capstone/arch/AArch64/*.c")
++    file(GLOB _capstone_arch_h "capstone/arch/AArch64/*.h")
++    file(GLOB _capstone_arch_inc "capstone/arch/AArch64/*.inc")
++    target_sources(capstone PRIVATE ${_capstone_arch_c} ${_capstone_arch_h} ${_capstone_arch_inc})
++    target_compile_definitions(capstone PRIVATE
++      CAPSTONE_HAS_ARM64
++      CAPSTONE_HAS_AARCH64
++      CAPSTONE_USE_SYS_DYN_MEM
++    )
++  else()
++    file(GLOB _capstone_x86_c "capstone/arch/X86/*.c")
++    file(GLOB _capstone_x86_h "capstone/arch/X86/*.h")
++    file(GLOB _capstone_x86_inc "capstone/arch/X86/*.inc")
++    list(FILTER _capstone_x86_c EXCLUDE REGEX "X86ATTInstPrinter\\.c$")
++    list(FILTER _capstone_x86_inc EXCLUDE REGEX "reduce\\.inc$")
++    target_sources(capstone PRIVATE ${_capstone_x86_c} ${_capstone_x86_h} ${_capstone_x86_inc})
++    target_compile_definitions(capstone PRIVATE
++      CAPSTONE_X86_ATT_DISABLE
++      CAPSTONE_HAS_X86
++      CAPSTONE_USE_SYS_DYN_MEM
++    )
++  endif()
++  target_include_directories(capstone PUBLIC capstone/include PRIVATE capstone)
++  # Force all capstone sources to compile as C
++  file(GLOB_RECURSE _capstone_all_c "capstone/*.c")
++  set_source_files_properties(${_capstone_all_c} PROPERTIES LANGUAGE C)
+ endif()
+-target_include_directories(capstone PUBLIC capstone/include PRIVATE capstone)
+-# Force all capstone sources to compile as C
+-file(GLOB_RECURSE _capstone_all_c "capstone/*.c")
+-set_source_files_properties(${_capstone_all_c} PROPERTIES LANGUAGE C)
+ 
+ # ==============================================================================
+ # cxxopts (header-only)
+-- 
+2.54.0
+

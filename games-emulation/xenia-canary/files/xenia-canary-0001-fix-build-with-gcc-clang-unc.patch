@@ -1,9 +1,46 @@
+From c8e42173ff91b2e39a0f5e0416d8bed68b27feae Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 11 Feb 2026 10:21:15 -0500
+Subject: [PATCH 01/23] Fix build with GCC (Clang unchanged)
+
+Add compiler guards and small changes so xenia-canary builds with GCC
+while keeping Clang behavior unchanged.
+
+- memory.cc: Guard movdir64b usage so the Clang path is unchanged;
+  GCC uses an alternate implementation (or skips) where the intrinsic
+  differs.
+- memory.h: Use const_cast for _mm_stream_load_si128 source pointers;
+  GCC's intrinsic takes a non-const pointer although the load does
+  not modify the source.
+- kernel_state.h: Give the anonymous struct inside KernelVersion a
+  name (e.g. parts) so both Clang and GCC accept it; GCC does not
+  support the anonymous struct extension used there.
+- command_processor.h: Do not force-inline the virtual
+  WriteRegisterRangeFromRing on GCC (omit XE_FORCEINLINE when
+  __GNUC__). The definition lives in a .cc file, so inlining fails
+  with "function body not available" when callers in headers try
+  to inline it.
+- xbdm_misc.cc: Use KernelVersion.parts only where needed for the
+  new named struct.
+
+Builds verified with both Clang and GCC.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+(cherry picked from commit ea1a25fab7b05b16e6c75acd29b3a0472991c1f7)
+---
+ src/xenia/base/memory.cc           |  2 +-
+ src/xenia/base/memory.h            | 13 +++++++++----
+ src/xenia/gpu/command_processor.h  |  6 ++++++
+ src/xenia/kernel/kernel_state.h    | 23 ++++++++++++-----------
+ src/xenia/kernel/xbdm/xbdm_misc.cc |  2 +-
+ 5 files changed, 29 insertions(+), 17 deletions(-)
+
 diff --git a/src/xenia/base/memory.cc b/src/xenia/base/memory.cc
-index 8d9cb3dc6..b9494f151 100644
+index 7f135c0b8..e0902c69a 100644
 --- a/src/xenia/base/memory.cc
 +++ b/src/xenia/base/memory.cc
-@@ -34,7 +34,7 @@ using xe::swcache::CacheLine;
- 
+@@ -35,7 +35,7 @@ using xe::swcache::CacheLine;
+ #if XE_ARCH_AMD64
  static constexpr unsigned NUM_CACHELINES_IN_PAGE = 4096 / sizeof(CacheLine);
  
 -#if defined(__clang__)
@@ -36,10 +73,10 @@ index 8ef40bbff..f14111352 100644
    destination->xmms[0] = first;
    destination->xmms[1] = second;
 diff --git a/src/xenia/gpu/command_processor.h b/src/xenia/gpu/command_processor.h
-index f2bf000d4..9a25e27d7 100644
+index 9fce69114..42afe1ea6 100644
 --- a/src/xenia/gpu/command_processor.h
 +++ b/src/xenia/gpu/command_processor.h
-@@ -201,7 +201,13 @@ class CommandProcessor {
+@@ -235,7 +235,13 @@ class CommandProcessor {
    virtual void WriteRegistersFromMem(uint32_t start_index, uint32_t* base,
                                       uint32_t num_registers);
  
@@ -54,10 +91,10 @@ index f2bf000d4..9a25e27d7 100644
                                            uint32_t num_registers);
  
 diff --git a/src/xenia/kernel/kernel_state.h b/src/xenia/kernel/kernel_state.h
-index 8095c3fa7..170d617cb 100644
+index 32da7ddbe..f7ff01b36 100644
 --- a/src/xenia/kernel/kernel_state.h
 +++ b/src/xenia/kernel/kernel_state.h
-@@ -147,23 +147,24 @@ struct DPCImpersonationScope {
+@@ -142,23 +142,24 @@ struct DPCImpersonationScope {
    uint8_t previous_irql_;
  };
  
@@ -94,10 +131,10 @@ index 8095c3fa7..170d617cb 100644
  };
  
 diff --git a/src/xenia/kernel/xbdm/xbdm_misc.cc b/src/xenia/kernel/xbdm/xbdm_misc.cc
-index 264b3d50c..abc678c6b 100644
+index e371c0009..841a91f63 100644
 --- a/src/xenia/kernel/xbdm/xbdm_misc.cc
 +++ b/src/xenia/kernel/xbdm/xbdm_misc.cc
-@@ -205,7 +205,7 @@ dword_result_t DmGetSystemInfo_entry(pointer_t<XBDM_SYSTEM_INFO> info) {
+@@ -220,7 +220,7 @@ dword_result_t DmGetSystemInfo_entry(pointer_t<XBDM_SYSTEM_INFO> info) {
    info->base_kernel_version.qfe = info->kernel_version.qfe = 0;
  
    info->base_kernel_version.build = kBaseKernelBuildVersion;
@@ -106,3 +143,6 @@ index 264b3d50c..abc678c6b 100644
  
    return XBDM_SUCCESSFUL;
  }
+-- 
+2.54.0
+

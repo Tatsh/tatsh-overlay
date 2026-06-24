@@ -1,0 +1,53 @@
+From 55f677c83a3206322100699cd6f988d53a2d0d9e Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 24 Jun 2026 14:47:27 -0400
+Subject: [PATCH 23/23] Add USE_SYSTEM_SPIRV_TOOLS option for system SPIR-V
+ Tools
+
+spirv_tools_context.cc uses SPIR-V Tools (libspirv) but upstream's CMake never
+links it. Link the system SPIRV-Tools (pkg-config) and select <spirv-tools/...>
+headers when USE_SYSTEM_SPIRV_TOOLS is set, else the bundled copy.
+
+Co-authored-by: Claude <noreply@anthropic.com>
+---
+ src/xenia/ui/vulkan/CMakeLists.txt        | 7 +++++++
+ src/xenia/ui/vulkan/spirv_tools_context.h | 4 ++++
+ 2 files changed, 11 insertions(+)
+
+diff --git a/src/xenia/ui/vulkan/CMakeLists.txt b/src/xenia/ui/vulkan/CMakeLists.txt
+index 8836d4d45..f3ffd3b75 100644
+--- a/src/xenia/ui/vulkan/CMakeLists.txt
++++ b/src/xenia/ui/vulkan/CMakeLists.txt
+@@ -7,6 +7,13 @@ target_include_directories(xenia-ui-vulkan PRIVATE
+   ${PROJECT_SOURCE_DIR}/third_party/glslang
+ )
+ target_link_libraries(xenia-ui-vulkan PUBLIC xenia-base xenia-ui)
++if(USE_SYSTEM_SPIRV_TOOLS)
++  # spirv_tools_context.cc uses SPIR-V Tools (libspirv); link the system library.
++  find_package(PkgConfig REQUIRED)
++  pkg_check_modules(SPIRV_TOOLS REQUIRED SPIRV-Tools)
++  target_include_directories(xenia-ui-vulkan SYSTEM PRIVATE ${SPIRV_TOOLS_INCLUDE_DIRS})
++  target_link_libraries(xenia-ui-vulkan PUBLIC ${SPIRV_TOOLS_LDFLAGS})
++endif()
+ xe_target_defaults(xenia-ui-vulkan)
+ 
+ if(XENIA_BUILD_MISC)
+diff --git a/src/xenia/ui/vulkan/spirv_tools_context.h b/src/xenia/ui/vulkan/spirv_tools_context.h
+index 2ffea1ebd..8120f6320 100644
+--- a/src/xenia/ui/vulkan/spirv_tools_context.h
++++ b/src/xenia/ui/vulkan/spirv_tools_context.h
+@@ -13,7 +13,11 @@
+ #include <cstdint>
+ #include <string>
+ 
++#ifdef XENIA_USE_SYSTEM_SPIRV_TOOLS
++#include <spirv-tools/libspirv.h>
++#else
+ #include "third_party/SPIRV-Tools/include/spirv-tools/libspirv.h"
++#endif
+ #include "xenia/base/platform.h"
+ 
+ #if XE_PLATFORM_LINUX
+-- 
+2.54.0
+

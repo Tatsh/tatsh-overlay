@@ -1,0 +1,31 @@
+From 20fe8fb3cdcff5c96e90e771489acbfd84c075b6 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 11 Feb 2026 09:27:48 -0500
+Subject: [PATCH 21/23] System date library support
+
+(cherry picked from commit de87644eac86dbb12b3ff1c255dcc0c94b6a8445)
+---
+ src/xenia/base/chrono.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/src/xenia/base/chrono.h b/src/xenia/base/chrono.h
+index 9812d1253..d5a2a44c2 100644
+--- a/src/xenia/base/chrono.h
++++ b/src/xenia/base/chrono.h
+@@ -13,7 +13,13 @@
+ #include <chrono>
+ #include <cstdint>
+ 
++#if defined(XENIA_FORCE_BUNDLED_DATE)
+ #include "third_party/date/include/date/tz.h"
++#elif defined(XENIA_USE_SYSTEM_DATE)
++#include <date/tz.h>
++#else
++#include "third_party/date/include/date/tz.h"
++#endif
+ 
+ #include "xenia/base/clock.h"
+ 
+-- 
+2.54.0
+

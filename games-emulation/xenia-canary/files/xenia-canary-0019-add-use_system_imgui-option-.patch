@@ -1,0 +1,264 @@
+From 44a8d32576afbd14d4c3e65d498e1cd63190ceae Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 20:56:18 -0500
+Subject: [PATCH 19/23] Add USE_SYSTEM_IMGUI option for system imgui
+
+- third_party/CMakeLists.txt: link system imgui (pkg-config) when
+  USE_SYSTEM_IMGUI is set, else build the bundled copy.
+- src/xenia/base/imgui_include.h and imgui_internal_include.h: new wrappers
+  selecting <imgui/imgui.h> / <imgui/imgui_internal.h> when XENIA_USE_SYSTEM_IMGUI
+  is defined.
+- Route imgui includes throughout src through the wrappers.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ src/xenia/app/emulator_window.cc        |  2 +-
+ src/xenia/base/imgui_include.h          | 11 +++++++++++
+ src/xenia/base/imgui_internal_include.h | 11 +++++++++++
+ src/xenia/debug/ui/debug_window.cc      |  4 ++--
+ src/xenia/gpu/trace_viewer.cc           |  2 +-
+ src/xenia/hid/hid_demo.cc               |  2 +-
+ src/xenia/ui/imgui_dialog.cc            |  2 +-
+ src/xenia/ui/imgui_drawer.cc            |  2 +-
+ src/xenia/ui/imgui_drawer.h             |  2 +-
+ src/xenia/ui/imgui_guest_notification.h |  2 +-
+ src/xenia/ui/imgui_host_notification.h  |  2 +-
+ src/xenia/ui/imgui_notification.h       |  2 +-
+ src/xenia/ui/window.cc                  |  2 +-
+ src/xenia/ui/window_demo.cc             |  2 +-
+ third_party/CMakeLists.txt              | 25 +++++++++++++++++--------
+ 15 files changed, 52 insertions(+), 21 deletions(-)
+ create mode 100644 src/xenia/base/imgui_include.h
+ create mode 100644 src/xenia/base/imgui_internal_include.h
+
+diff --git a/src/xenia/app/emulator_window.cc b/src/xenia/app/emulator_window.cc
+index 5bf09f977..5baba25a0 100644
+--- a/src/xenia/app/emulator_window.cc
++++ b/src/xenia/app/emulator_window.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/app/emulator_window.h"
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "third_party/stb/stb_image_write.h"
+ #if defined(__clang__)
+ #pragma clang diagnostic push
+diff --git a/src/xenia/base/imgui_include.h b/src/xenia/base/imgui_include.h
+new file mode 100644
+index 000000000..73f40b3ce
+--- /dev/null
++++ b/src/xenia/base/imgui_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled imgui or system (XENIA_USE_SYSTEM_IMGUI).
++#ifndef XENIA_BASE_IMGUI_INCLUDE_H_
++#define XENIA_BASE_IMGUI_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_IMGUI
++#include <imgui/imgui.h>
++#else
++#include "third_party/imgui/imgui.h"
++#endif
++
++#endif  // XENIA_BASE_IMGUI_INCLUDE_H_
+diff --git a/src/xenia/base/imgui_internal_include.h b/src/xenia/base/imgui_internal_include.h
+new file mode 100644
+index 000000000..10680fff6
+--- /dev/null
++++ b/src/xenia/base/imgui_internal_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled imgui_internal.h or system (XENIA_USE_SYSTEM_IMGUI).
++#ifndef XENIA_BASE_IMGUI_INTERNAL_INCLUDE_H_
++#define XENIA_BASE_IMGUI_INTERNAL_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_IMGUI
++#include <imgui/imgui_internal.h>
++#else
++#include "third_party/imgui/imgui_internal.h"
++#endif
++
++#endif  // XENIA_BASE_IMGUI_INTERNAL_INCLUDE_H_
+diff --git a/src/xenia/debug/ui/debug_window.cc b/src/xenia/debug/ui/debug_window.cc
+index 55be9a161..352f9a1ce 100644
+--- a/src/xenia/debug/ui/debug_window.cc
++++ b/src/xenia/debug/ui/debug_window.cc
+@@ -12,8 +12,8 @@
+ #include <cinttypes>
+ 
+ #include "xenia/base/capstone_include.h"
+-#include "third_party/imgui/imgui.h"
+-#include "third_party/imgui/imgui_internal.h"
++#include "xenia/base/imgui_include.h"
++#include "xenia/base/imgui_internal_include.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/fuzzy.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/gpu/trace_viewer.cc b/src/xenia/gpu/trace_viewer.cc
+index 1af05462d..baca79d99 100644
+--- a/src/xenia/gpu/trace_viewer.cc
++++ b/src/xenia/gpu/trace_viewer.cc
+@@ -12,7 +12,7 @@
+ #include <cinttypes>
+ 
+ #include "third_party/half/include/half.hpp"
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/filesystem.h"
+diff --git a/src/xenia/hid/hid_demo.cc b/src/xenia/hid/hid_demo.cc
+index d22170cb1..4b84c493f 100644
+--- a/src/xenia/hid/hid_demo.cc
++++ b/src/xenia/hid/hid_demo.cc
+@@ -17,7 +17,7 @@
+ #include <vector>
+ 
+ #include "xenia/base/fmt_include.h"
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/cvar.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/ui/imgui_dialog.cc b/src/xenia/ui/imgui_dialog.cc
+index c5e490be9..16584e111 100644
+--- a/src/xenia/ui/imgui_dialog.cc
++++ b/src/xenia/ui/imgui_dialog.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/ui/imgui_dialog.h"
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/ui/imgui_drawer.h"
+ 
+diff --git a/src/xenia/ui/imgui_drawer.cc b/src/xenia/ui/imgui_drawer.cc
+index 385963af4..e005db9e1 100644
+--- a/src/xenia/ui/imgui_drawer.cc
++++ b/src/xenia/ui/imgui_drawer.cc
+@@ -13,7 +13,7 @@
+ #include <cstring>
+ #include <ranges>
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/ui/imgui_drawer.h b/src/xenia/ui/imgui_drawer.h
+index 6c32a225b..8d1db2ef3 100644
+--- a/src/xenia/ui/imgui_drawer.h
++++ b/src/xenia/ui/imgui_drawer.h
+@@ -17,7 +17,7 @@
+ #include <span>
+ #include <vector>
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/hid/input_system.h"
+ #include "xenia/ui/immediate_drawer.h"
+ #include "xenia/ui/presenter.h"
+diff --git a/src/xenia/ui/imgui_guest_notification.h b/src/xenia/ui/imgui_guest_notification.h
+index 1e6ae57a2..b664de791 100644
+--- a/src/xenia/ui/imgui_guest_notification.h
++++ b/src/xenia/ui/imgui_guest_notification.h
+@@ -10,7 +10,7 @@
+ #ifndef XENIA_UI_IMGUI_GUEST_NOTIFICATION_H_
+ #define XENIA_UI_IMGUI_GUEST_NOTIFICATION_H_
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/ui/imgui_dialog.h"
+ #include "xenia/ui/imgui_notification.h"
+ 
+diff --git a/src/xenia/ui/imgui_host_notification.h b/src/xenia/ui/imgui_host_notification.h
+index aa0ef5de7..c96e6684f 100644
+--- a/src/xenia/ui/imgui_host_notification.h
++++ b/src/xenia/ui/imgui_host_notification.h
+@@ -10,7 +10,7 @@
+ #ifndef XENIA_UI_IMGUI_HOST_NOTIFICATION_H_
+ #define XENIA_UI_IMGUI_HOST_NOTIFICATION_H_
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/ui/imgui_dialog.h"
+ #include "xenia/ui/imgui_drawer.h"
+ #include "xenia/ui/imgui_notification.h"
+diff --git a/src/xenia/ui/imgui_notification.h b/src/xenia/ui/imgui_notification.h
+index 6dc631481..20cb7ce30 100644
+--- a/src/xenia/ui/imgui_notification.h
++++ b/src/xenia/ui/imgui_notification.h
+@@ -10,7 +10,7 @@
+ #ifndef XENIA_UI_IMGUI_NOTIFICATION_H_
+ #define XENIA_UI_IMGUI_NOTIFICATION_H_
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/ui/imgui_dialog.h"
+ #include "xenia/ui/imgui_drawer.h"
+ 
+diff --git a/src/xenia/ui/window.cc b/src/xenia/ui/window.cc
+index e543d36f5..d4c7721d4 100644
+--- a/src/xenia/ui/window.cc
++++ b/src/xenia/ui/window.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/ui/window.h"
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/ui/window_demo.cc b/src/xenia/ui/window_demo.cc
+index 0d1e97a9a..72e0aaf85 100644
+--- a/src/xenia/ui/window_demo.cc
++++ b/src/xenia/ui/window_demo.cc
+@@ -9,7 +9,7 @@
+ 
+ #include <cstring>
+ 
+-#include "third_party/imgui/imgui.h"
++#include "xenia/base/imgui_include.h"
+ #include "xenia/base/clock.h"
+ #include "xenia/base/logging.h"
+ #include "xenia/base/profiling.h"
+diff --git a/third_party/CMakeLists.txt b/third_party/CMakeLists.txt
+index 5cc3880ad..b44535502 100644
+--- a/third_party/CMakeLists.txt
++++ b/third_party/CMakeLists.txt
+@@ -203,14 +203,23 @@ endif()
+ # ==============================================================================
+ # imgui
+ # ==============================================================================
+-add_library(imgui STATIC
+-  imgui/imgui.cpp
+-  imgui/imgui_demo.cpp
+-  imgui/imgui_draw.cpp
+-  imgui/imgui_tables.cpp
+-  imgui/imgui_widgets.cpp
+-)
+-target_include_directories(imgui PUBLIC imgui PRIVATE stb)
++if(USE_SYSTEM_IMGUI)
++  find_package(PkgConfig REQUIRED)
++  pkg_check_modules(IMGUI REQUIRED imgui)
++  add_library(imgui INTERFACE)
++  target_include_directories(imgui SYSTEM INTERFACE ${IMGUI_INCLUDE_DIRS})
++  target_link_libraries(imgui INTERFACE ${IMGUI_LDFLAGS})
++  target_compile_options(imgui INTERFACE ${IMGUI_CFLAGS_OTHER})
++else()
++  add_library(imgui STATIC
++    imgui/imgui.cpp
++    imgui/imgui_demo.cpp
++    imgui/imgui_draw.cpp
++    imgui/imgui_tables.cpp
++    imgui/imgui_widgets.cpp
++  )
++  target_include_directories(imgui PUBLIC imgui PRIVATE stb)
++endif()
+ 
+ # ==============================================================================
+ # mspack
+-- 
+2.54.0
+

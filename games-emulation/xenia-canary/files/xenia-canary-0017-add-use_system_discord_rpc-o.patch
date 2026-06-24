@@ -1,0 +1,132 @@
+From 1eb5a528b031c0d926d776c5efdd1dd4c81b2e8d Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 9 Feb 2026 00:22:28 -0500
+Subject: [PATCH 17/23] Add USE_SYSTEM_DISCORD_RPC option for system
+ discord-rpc
+
+- third_party/CMakeLists.txt: link system discord-rpc (find_path/find_library)
+  when USE_SYSTEM_DISCORD_RPC is set, else build the bundled copy.
+- src/xenia/base/discord_rpc_include.h: new wrapper selecting <discord_rpc.h>
+  when XENIA_USE_SYSTEM_DISCORD_RPC is defined.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ src/xenia/app/discord/discord_presence.cc |  2 +-
+ src/xenia/base/discord_rpc_include.h      | 11 ++++
+ third_party/CMakeLists.txt                | 68 +++++++++++++----------
+ 3 files changed, 50 insertions(+), 31 deletions(-)
+ create mode 100644 src/xenia/base/discord_rpc_include.h
+
+diff --git a/src/xenia/app/discord/discord_presence.cc b/src/xenia/app/discord/discord_presence.cc
+index 4140a9076..63e0dba3d 100644
+--- a/src/xenia/app/discord/discord_presence.cc
++++ b/src/xenia/app/discord/discord_presence.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "discord_presence.h"
+ #include <ctime>
+-#include "third_party/discord-rpc/include/discord_rpc.h"
++#include "xenia/base/discord_rpc_include.h"
+ #include "xenia/base/string.h"
+ 
+ // TODO: This library has been deprecated in favor of Discord's GameSDK.
+diff --git a/src/xenia/base/discord_rpc_include.h b/src/xenia/base/discord_rpc_include.h
+new file mode 100644
+index 000000000..4993fdf99
+--- /dev/null
++++ b/src/xenia/base/discord_rpc_include.h
+@@ -0,0 +1,11 @@
++// Wrapper so Xenia can use either bundled discord-rpc or system (XENIA_USE_SYSTEM_DISCORD_RPC).
++#ifndef XENIA_BASE_DISCORD_RPC_INCLUDE_H_
++#define XENIA_BASE_DISCORD_RPC_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_DISCORD_RPC
++#include <discord_rpc.h>
++#else
++#include "third_party/discord-rpc/include/discord_rpc.h"
++#endif
++
++#endif  // XENIA_BASE_DISCORD_RPC_INCLUDE_H_
+diff --git a/third_party/CMakeLists.txt b/third_party/CMakeLists.txt
+index 03bfaac82..94f640798 100644
+--- a/third_party/CMakeLists.txt
++++ b/third_party/CMakeLists.txt
+@@ -114,37 +114,45 @@ target_include_directories(dxbc PUBLIC dxbc)
+ # ==============================================================================
+ # discord-rpc
+ # ==============================================================================
+-add_library(discord-rpc STATIC
+-  discord-rpc/src/connection.h
+-  discord-rpc/src/discord_rpc.cpp
+-  discord-rpc/src/msg_queue.h
+-  discord-rpc/src/rpc_connection.cpp
+-  discord-rpc/src/rpc_connection.h
+-  discord-rpc/src/serialization.cpp
+-  discord-rpc/src/serialization.h
+-)
+-if(XE_TARGET_X86_64)
+-  target_compile_definitions(discord-rpc PRIVATE RAPIDJSON_SSE42)
+-elseif(XE_TARGET_ARM64)
+-  target_compile_definitions(discord-rpc PRIVATE RAPIDJSON_NEON)
+-endif()
+-target_include_directories(discord-rpc PUBLIC discord-rpc/include PRIVATE rapidjson/include)
+-if(WIN32)
+-  target_sources(discord-rpc PRIVATE
+-    discord-rpc/src/connection_win.cpp
+-    discord-rpc/src/discord_register_win.cpp
+-  )
+-elseif(APPLE)
+-  target_sources(discord-rpc PRIVATE
+-    discord-rpc/src/connection_unix.cpp
+-    discord-rpc/src/discord_register_osx.m
+-  )
+-  target_link_libraries(discord-rpc PRIVATE "-framework AppKit")
+-elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-  target_sources(discord-rpc PRIVATE
+-    discord-rpc/src/connection_unix.cpp
+-    discord-rpc/src/discord_register_linux.cpp
++if(USE_SYSTEM_DISCORD_RPC)
++  find_path(DISCORD_RPC_INCLUDE_DIR NAMES discord_rpc.h REQUIRED)
++  find_library(DISCORD_RPC_LIBRARY NAMES discord-rpc REQUIRED)
++  add_library(discord-rpc INTERFACE)
++  target_include_directories(discord-rpc SYSTEM INTERFACE ${DISCORD_RPC_INCLUDE_DIR})
++  target_link_libraries(discord-rpc INTERFACE ${DISCORD_RPC_LIBRARY})
++else()
++  add_library(discord-rpc STATIC
++    discord-rpc/src/connection.h
++    discord-rpc/src/discord_rpc.cpp
++    discord-rpc/src/msg_queue.h
++    discord-rpc/src/rpc_connection.cpp
++    discord-rpc/src/rpc_connection.h
++    discord-rpc/src/serialization.cpp
++    discord-rpc/src/serialization.h
+   )
++  if(XE_TARGET_X86_64)
++    target_compile_definitions(discord-rpc PRIVATE RAPIDJSON_SSE42)
++  elseif(XE_TARGET_ARM64)
++    target_compile_definitions(discord-rpc PRIVATE RAPIDJSON_NEON)
++  endif()
++  target_include_directories(discord-rpc PUBLIC discord-rpc/include PRIVATE rapidjson/include)
++  if(WIN32)
++    target_sources(discord-rpc PRIVATE
++      discord-rpc/src/connection_win.cpp
++      discord-rpc/src/discord_register_win.cpp
++    )
++  elseif(APPLE)
++    target_sources(discord-rpc PRIVATE
++      discord-rpc/src/connection_unix.cpp
++      discord-rpc/src/discord_register_osx.m
++    )
++    target_link_libraries(discord-rpc PRIVATE "-framework AppKit")
++  elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
++    target_sources(discord-rpc PRIVATE
++      discord-rpc/src/connection_unix.cpp
++      discord-rpc/src/discord_register_linux.cpp
++    )
++  endif()
+ endif()
+ 
+ # ==============================================================================
+-- 
+2.54.0
+

@@ -1,26 +1,28 @@
+From 3d2178decaf8eba40c6b93889f1a18e620e5ddf6 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
-Date: Mon, 9 Feb 2026 00:00:00 -0500
-Subject: [PATCH] Guard zarchive sha_256.h include when using system zarchive
+Date: Mon, 9 Feb 2026 00:22:35 -0500
+Subject: [PATCH 20/23] Zarchive sha 256 guard system
 
-When XENIA_USE_SYSTEM_ZARCHIVE is set, third_party/zarchive is not
-present; sha_256 is internal to libzarchive and not needed by emulator.cc.
-
+Co-authored-by: Cursor <cursoragent@cursor.com>
+(cherry picked from commit c2e86dc1e521a1d8b14c3c1bd05dd47680e29a4c)
 ---
- src/xenia/emulator.cc | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ src/xenia/emulator.cc | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/src/xenia/emulator.cc b/src/xenia/emulator.cc
+index 29e10bb00..0fd70c222 100644
 --- a/src/xenia/emulator.cc
 +++ b/src/xenia/emulator.cc
 @@ -15,7 +15,9 @@
- #include "config.h"
  #include "xenia/base/fmt_include.h"
  #include "third_party/tabulate/single_include/tabulate/tabulate.hpp"
  #include "xenia/base/zarchive_include.h"
--#include "third_party/zarchive/src/sha_256.h"
 +#if !defined(XENIA_USE_SYSTEM_ZARCHIVE)
-+#include "third_party/zarchive/src/sha_256.h"
+ #include "third_party/zarchive/src/sha_256.h"
 +#endif
  #include "xenia/apu/audio_system.h"
  #include "xenia/base/assert.h"
  #include "xenia/base/byte_stream.h"
+-- 
+2.54.0
+

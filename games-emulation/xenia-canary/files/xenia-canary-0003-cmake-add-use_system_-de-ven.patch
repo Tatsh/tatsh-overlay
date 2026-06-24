@@ -1,0 +1,50 @@
+From 5b4d295ad61f32a8c5cb57c82ff35bd31d85e13c Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 23 Jun 2026 19:01:34 -0400
+Subject: [PATCH 03/23] CMake: add USE_SYSTEM_* de-vendoring infrastructure
+
+Adds a central block that reads USE_SYSTEM_<LIB> from -D or the environment,
+sets the XENIA_USE_SYSTEM_<LIB> preprocessor define, and exposes a cache
+variable each third_party block checks to link the system library instead of
+the bundled copy.
+
+Co-authored-by: Claude <noreply@anthropic.com>
+---
+ CMakeLists.txt | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 30febc4b7..b5a7b7dbf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -37,6 +37,27 @@ message(STATUS "Target architecture: XE_TARGET_AARCH64=${XE_TARGET_AARCH64} XE_T
+ option(XENIA_BUILD_TESTS "Build test suites" OFF)
+ option(XENIA_BUILD_MISC "Build misc subprojects (trace viewers, shader compiler, vfs-dump, demos)" OFF)
+ 
++# ==============================================================================
++# System library options (distro / Gentoo de-vendoring)
++#
++# Each USE_SYSTEM_<LIB> may be set with -DUSE_SYSTEM_<LIB>=ON. When enabled, the
++# matching third_party/CMakeLists.txt block links the system library instead of
++# building the bundled copy, and the XENIA_USE_SYSTEM_<LIB> preprocessor define
++# selects the system headers in the src/xenia/base/*_include.h wrappers.
++# ==============================================================================
++set(XE_SYSTEM_LIBS
++  XXHASH FMT ZSTD ZARCHIVE GLSLANG SPIRV_TOOLS CAPSTONE SNAPPY PUGIXML ZLIB_NG
++  CXXOPTS XBYAK TOMLPLUSPLUS UTFCPP VULKAN_HEADERS VULKAN_MEMORY_ALLOCATOR
++  DISCORD_RPC IMGUI DATE
++)
++foreach(_lib ${XE_SYSTEM_LIBS})
++  option(USE_SYSTEM_${_lib} "Use system ${_lib}" OFF)
++  if(USE_SYSTEM_${_lib})
++    add_compile_definitions(XENIA_USE_SYSTEM_${_lib})
++    message(STATUS "xenia: using system library ${_lib}")
++  endif()
++endforeach()
++
+ # Toggle profiler
+ add_compile_definitions(XE_OPTION_PROFILING=0)
+ add_compile_definitions(XE_OPTION_PROFILING_UI=0)
+-- 
+2.54.0
+

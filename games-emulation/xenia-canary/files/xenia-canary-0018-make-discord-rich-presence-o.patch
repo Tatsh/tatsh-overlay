@@ -1,0 +1,180 @@
+From bf75f7bc4e894300d5a911c19757ddf6459f50c6 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 23 Jun 2026 19:29:55 -0400
+Subject: [PATCH 18/23] Make Discord rich presence optional
+ (XENIA_BUILD_DISCORD)
+
+Upstream now always compiles in Discord support. Add a XENIA_BUILD_DISCORD
+CMake option (default ON) so distributions can build without dev-libs/discord-rpc:
+
+- CMakeLists.txt: define XE_BUILD_DISCORD when the option is on.
+- src/xenia/CMakeLists.txt: only add the app/discord subdirectory when enabled.
+- src/xenia/app/CMakeLists.txt: only link discord-rpc / xenia-app-discord when
+  enabled.
+- src/xenia/app/xenia_main.cc: guard the Discord include, cvar and call sites
+  with XE_BUILD_DISCORD.
+
+Co-authored-by: Claude <noreply@anthropic.com>
+---
+ CMakeLists.txt               |  4 ++++
+ src/xenia/CMakeLists.txt     |  4 +++-
+ src/xenia/app/CMakeLists.txt |  5 +++--
+ src/xenia/app/xenia_main.cc  | 12 ++++++++++++
+ third_party/CMakeLists.txt   |  2 ++
+ 5 files changed, 24 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3bda623ee..aeff84ffd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -36,6 +36,10 @@ message(STATUS "Target architecture: XE_TARGET_AARCH64=${XE_TARGET_AARCH64} XE_T
+ # Options
+ option(XENIA_BUILD_TESTS "Build test suites" OFF)
+ option(XENIA_BUILD_MISC "Build misc subprojects (trace viewers, shader compiler, vfs-dump, demos)" OFF)
++option(XENIA_BUILD_DISCORD "Build Discord rich presence support" ON)
++if(XENIA_BUILD_DISCORD)
++  add_compile_definitions(XE_BUILD_DISCORD)
++endif()
+ 
+ # ==============================================================================
+ # System library options (distro / Gentoo de-vendoring)
+diff --git a/src/xenia/CMakeLists.txt b/src/xenia/CMakeLists.txt
+index e410c0e30..673747b97 100644
+--- a/src/xenia/CMakeLists.txt
++++ b/src/xenia/CMakeLists.txt
+@@ -36,7 +36,9 @@ if(NOT APPLE)
+ endif()
+ add_subdirectory(vfs)
+ add_subdirectory(debug/ui)
+-add_subdirectory(app/discord)
++if(XENIA_BUILD_DISCORD)
++  add_subdirectory(app/discord)
++endif()
+ add_subdirectory(app)
+ 
+ # SDL-based modules (not Android)
+diff --git a/src/xenia/app/CMakeLists.txt b/src/xenia/app/CMakeLists.txt
+index adee3b30c..7159d0275 100644
+--- a/src/xenia/app/CMakeLists.txt
++++ b/src/xenia/app/CMakeLists.txt
+@@ -69,7 +69,6 @@ target_link_libraries(xenia-app PRIVATE
+   capstone
+   fmt
+   dxbc
+-  discord-rpc
+   imgui
+   libavcodec
+   libavutil
+@@ -89,12 +88,14 @@ endif()
+ 
+ # Non-Android specific (always true for Windows/Linux)
+ target_link_libraries(xenia-app PRIVATE
+-  xenia-app-discord
+   xenia-apu-sdl
+   xenia-debug-ui
+   xenia-helper-sdl
+   xenia-hid-sdl
+ )
++if(XENIA_BUILD_DISCORD)
++  target_link_libraries(xenia-app PRIVATE xenia-app-discord)
++endif()
+ 
+ # Architecture-specific backend
+ if(XE_TARGET_X86_64)
+diff --git a/src/xenia/app/xenia_main.cc b/src/xenia/app/xenia_main.cc
+index ab9437330..7fdf7d8fe 100644
+--- a/src/xenia/app/xenia_main.cc
++++ b/src/xenia/app/xenia_main.cc
+@@ -14,7 +14,9 @@
+ #include <string>
+ #include <thread>
+ 
++#ifdef XE_BUILD_DISCORD
+ #include "xenia/app/discord/discord_presence.h"
++#endif
+ #include "xenia/app/emulator_window.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/cvar.h"
+@@ -128,7 +130,9 @@ DEFINE_transient_bool(portable, true,
+ 
+ DECLARE_bool(debug);
+ 
++#ifdef XE_BUILD_DISCORD
+ DEFINE_bool(discord, true, "Enable Discord rich presence", "General");
++#endif
+ 
+ DECLARE_int32(window_size_x);
+ DECLARE_int32(window_size_y);
+@@ -530,10 +534,12 @@ bool EmulatorApp::OnInitialize() {
+   cache_root = std::filesystem::absolute(cache_root);
+   XELOGI("Host cache root: {}", cache_root);
+ 
++#ifdef XE_BUILD_DISCORD
+   if (cvars::discord) {
+     discord::DiscordPresence::Initialize();
+     discord::DiscordPresence::NotPlaying();
+   }
++#endif
+ 
+   // Create the emulator but don't initialize so we can setup the window.
+   emulator_ =
+@@ -560,9 +566,11 @@ bool EmulatorApp::OnInitialize() {
+ void EmulatorApp::OnDestroy() {
+   ShutdownEmulatorThreadFromUIThread();
+ 
++#ifdef XE_BUILD_DISCORD
+   if (cvars::discord) {
+     discord::DiscordPresence::Shutdown();
+   }
++#endif
+ 
+   Profiler::Dump();
+   // The profiler needs to shut down before the graphics context.
+@@ -708,10 +716,12 @@ void EmulatorApp::EmulatorThread() {
+   }
+ 
+   emulator_->on_launch.AddListener([&](auto title_id, const auto& game_title) {
++#ifdef XE_BUILD_DISCORD
+     if (cvars::discord) {
+       discord::DiscordPresence::PlayingTitle(
+           game_title.empty() ? "Unknown Title" : std::string(game_title));
+     }
++#endif
+     app_context().CallInUIThread([this]() { emulator_window_->UpdateTitle(); });
+     emulator_thread_event_->Set();
+   });
+@@ -728,9 +738,11 @@ void EmulatorApp::EmulatorThread() {
+   });
+ 
+   emulator_->on_terminate.AddListener([]() {
++#ifdef XE_BUILD_DISCORD
+     if (cvars::discord) {
+       discord::DiscordPresence::NotPlaying();
+     }
++#endif
+   });
+ 
+   // Enable emulator input now that the emulator is properly loaded.
+diff --git a/third_party/CMakeLists.txt b/third_party/CMakeLists.txt
+index 94f640798..5cc3880ad 100644
+--- a/third_party/CMakeLists.txt
++++ b/third_party/CMakeLists.txt
+@@ -114,6 +114,7 @@ target_include_directories(dxbc PUBLIC dxbc)
+ # ==============================================================================
+ # discord-rpc
+ # ==============================================================================
++if(XENIA_BUILD_DISCORD)
+ if(USE_SYSTEM_DISCORD_RPC)
+   find_path(DISCORD_RPC_INCLUDE_DIR NAMES discord_rpc.h REQUIRED)
+   find_library(DISCORD_RPC_LIBRARY NAMES discord-rpc REQUIRED)
+@@ -154,6 +155,7 @@ else()
+     )
+   endif()
+ endif()
++endif()  # XENIA_BUILD_DISCORD
+ 
+ # ==============================================================================
+ # fmt
+-- 
+2.54.0
+

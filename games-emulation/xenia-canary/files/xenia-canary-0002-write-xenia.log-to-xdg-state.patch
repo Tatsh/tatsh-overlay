@@ -1,5 +1,25 @@
+From cd6d59b00e36df851c00e0b2f37651615c65617f Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Wed, 11 Feb 2026 12:09:11 -0500
+Subject: [PATCH 02/23] Write xenia.log to XDG state dir (~/.local/state or
+ XDG_STATE_HOME)
+
+Add GetStateFolder() and use it for the default log path on Linux:
+- Use XDG_STATE_HOME if set, else ~/.local/state
+- Create parent directory if needed
+- Other platforms unchanged (executable folder)
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+(cherry picked from commit e53d38ee4a546f3bf4f2a7ea5564c3033df51f0e)
+---
+ src/xenia/base/filesystem.h        |  3 +++
+ src/xenia/base/filesystem_posix.cc | 17 +++++++++++++++++
+ src/xenia/base/filesystem_win.cc   |  4 ++++
+ src/xenia/base/logging.cc          |  9 +++++++--
+ 4 files changed, 31 insertions(+), 2 deletions(-)
+
 diff --git a/src/xenia/base/filesystem.h b/src/xenia/base/filesystem.h
-index 5dc3de7e7..683b4064d 100644
+index e3e206b3e..42f416777 100644
 --- a/src/xenia/base/filesystem.h
 +++ b/src/xenia/base/filesystem.h
 @@ -40,6 +40,9 @@ std::filesystem::path GetExecutableFolder();
@@ -13,10 +33,10 @@ index 5dc3de7e7..683b4064d 100644
  // This can be used to ensure the destination path for a new file exists before
  // attempting to create it.
 diff --git a/src/xenia/base/filesystem_posix.cc b/src/xenia/base/filesystem_posix.cc
-index 3c8729700..cc7a5e75e 100644
+index 0a759f1f4..81e7fc592 100644
 --- a/src/xenia/base/filesystem_posix.cc
 +++ b/src/xenia/base/filesystem_posix.cc
-@@ -75,6 +75,23 @@ std::filesystem::path GetUserFolder() {
+@@ -96,6 +96,23 @@ std::filesystem::path GetUserFolder() {
    return std::filesystem::path(home) / ".local" / "share";
  }
  
@@ -56,10 +76,10 @@ index 7a50d8b12..415d4f646 100644
    auto handle = CreateFileW(path.c_str(), 0, 0, nullptr, CREATE_ALWAYS,
                              FILE_ATTRIBUTE_NORMAL, nullptr);
 diff --git a/src/xenia/base/logging.cc b/src/xenia/base/logging.cc
-index aa7bdbe84..d773956ae 100644
+index d2dc834d4..e40b29319 100644
 --- a/src/xenia/base/logging.cc
 +++ b/src/xenia/base/logging.cc
-@@ -440,9 +440,14 @@ void InitializeLogging(const std::string_view app_name) {
+@@ -445,9 +445,14 @@ void InitializeLogging(const std::string_view app_name) {
  #else
    FILE* log_file = nullptr;
    if (cvars::log_file.empty()) {
@@ -76,3 +96,6 @@ index aa7bdbe84..d773956ae 100644
      log_file = xe::filesystem::OpenFile(file_path, "wt");
    } else {
      xe::filesystem::CreateParentFolder(cvars::log_file);
+-- 
+2.54.0
+

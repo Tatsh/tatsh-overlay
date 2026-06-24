@@ -1,0 +1,193 @@
+From 0c0ac90227fe0c050ff8335d7fc1402341ca824b Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 8 Feb 2026 18:24:44 -0500
+Subject: [PATCH 06/23] Add USE_SYSTEM_ZSTD and USE_SYSTEM_ZARCHIVE options
+
+- third_party/CMakeLists.txt: link system libzstd / zarchive (pkg-config) when
+  the matching option is set, else build the bundled copies.
+- src/xenia/base/zarchive_include.h: new wrapper selecting <zarchive/...>
+  headers when XENIA_USE_SYSTEM_ZARCHIVE is defined.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ src/xenia/base/zarchive_include.h             | 15 ++++
+ src/xenia/emulator.cc                         |  3 +-
+ src/xenia/vfs/devices/disc_zarchive_device.cc |  2 +-
+ src/xenia/vfs/devices/disc_zarchive_device.h  |  2 +-
+ src/xenia/vfs/devices/disc_zarchive_entry.cc  |  2 +-
+ third_party/CMakeLists.txt                    | 78 ++++++++++++-------
+ 6 files changed, 67 insertions(+), 35 deletions(-)
+ create mode 100644 src/xenia/base/zarchive_include.h
+
+diff --git a/src/xenia/base/zarchive_include.h b/src/xenia/base/zarchive_include.h
+new file mode 100644
+index 000000000..d2f974453
+--- /dev/null
++++ b/src/xenia/base/zarchive_include.h
+@@ -0,0 +1,15 @@
++// Wrapper so Xenia can use either bundled zarchive or system lib (XENIA_USE_SYSTEM_ZARCHIVE).
++#ifndef XENIA_BASE_ZARCHIVE_INCLUDE_H_
++#define XENIA_BASE_ZARCHIVE_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_ZARCHIVE
++#include <zarchive/zarchivecommon.h>
++#include <zarchive/zarchivereader.h>
++#include <zarchive/zarchivewriter.h>
++#else
++#include "third_party/zarchive/include/zarchive/zarchivecommon.h"
++#include "third_party/zarchive/include/zarchive/zarchivereader.h"
++#include "third_party/zarchive/include/zarchive/zarchivewriter.h"
++#endif
++
++#endif  // XENIA_BASE_ZARCHIVE_INCLUDE_H_
+diff --git a/src/xenia/emulator.cc b/src/xenia/emulator.cc
+index 3d81d63eb..29e10bb00 100644
+--- a/src/xenia/emulator.cc
++++ b/src/xenia/emulator.cc
+@@ -14,8 +14,7 @@
+ #include "config.h"
+ #include "xenia/base/fmt_include.h"
+ #include "third_party/tabulate/single_include/tabulate/tabulate.hpp"
+-#include "third_party/zarchive/include/zarchive/zarchivecommon.h"
+-#include "third_party/zarchive/include/zarchive/zarchivewriter.h"
++#include "xenia/base/zarchive_include.h"
+ #include "third_party/zarchive/src/sha_256.h"
+ #include "xenia/apu/audio_system.h"
+ #include "xenia/base/assert.h"
+diff --git a/src/xenia/vfs/devices/disc_zarchive_device.cc b/src/xenia/vfs/devices/disc_zarchive_device.cc
+index 31cf263f9..1ac2a3969 100644
+--- a/src/xenia/vfs/devices/disc_zarchive_device.cc
++++ b/src/xenia/vfs/devices/disc_zarchive_device.cc
+@@ -14,7 +14,7 @@
+ #include "xenia/base/math.h"
+ #include "xenia/vfs/devices/disc_zarchive_entry.h"
+ 
+-#include "third_party/zarchive/include/zarchive/zarchivereader.h"
++#include "xenia/base/zarchive_include.h"
+ 
+ namespace xe {
+ namespace vfs {
+diff --git a/src/xenia/vfs/devices/disc_zarchive_device.h b/src/xenia/vfs/devices/disc_zarchive_device.h
+index 8ea3188a2..8a92c853d 100644
+--- a/src/xenia/vfs/devices/disc_zarchive_device.h
++++ b/src/xenia/vfs/devices/disc_zarchive_device.h
+@@ -16,7 +16,7 @@
+ #include "xenia/base/mapped_memory.h"
+ #include "xenia/vfs/device.h"
+ 
+-#include "third_party/zarchive/include/zarchive/zarchivereader.h"
++#include "xenia/base/zarchive_include.h"
+ 
+ namespace xe {
+ namespace vfs {
+diff --git a/src/xenia/vfs/devices/disc_zarchive_entry.cc b/src/xenia/vfs/devices/disc_zarchive_entry.cc
+index 3047d49c9..746766a3c 100644
+--- a/src/xenia/vfs/devices/disc_zarchive_entry.cc
++++ b/src/xenia/vfs/devices/disc_zarchive_entry.cc
+@@ -12,7 +12,7 @@
+ #include "xenia/base/math.h"
+ #include "xenia/vfs/devices/disc_zarchive_file.h"
+ 
+-#include "third_party/zarchive/include/zarchive/zarchivereader.h"
++#include "xenia/base/zarchive_include.h"
+ 
+ namespace xe {
+ namespace vfs {
+diff --git a/third_party/CMakeLists.txt b/third_party/CMakeLists.txt
+index c6b5acb4b..7e230b060 100644
+--- a/third_party/CMakeLists.txt
++++ b/third_party/CMakeLists.txt
+@@ -253,42 +253,60 @@ endif()
+ # ==============================================================================
+ # zstd
+ # ==============================================================================
+-file(GLOB_RECURSE _zstd_common "zstd/lib/common/*.c" "zstd/lib/common/*.h")
+-list(FILTER _zstd_common EXCLUDE REGEX "threading\\.c$")
+-file(GLOB_RECURSE _zstd_compress "zstd/lib/compress/*.c" "zstd/lib/compress/*.h")
+-file(GLOB_RECURSE _zstd_decompress "zstd/lib/decompress/*.c" "zstd/lib/decompress/*.h")
+-add_library(zstd STATIC
+-  zstd/lib/zstd.h
+-  ${_zstd_common}
+-  ${_zstd_compress}
+-  ${_zstd_decompress}
+-)
+-target_include_directories(zstd PUBLIC zstd/lib PRIVATE zstd/lib/common)
+-target_compile_definitions(zstd PRIVATE
+-  XXH_NAMESPACE=ZSTD_
+-  ZSTD_LEGACY_SUPPORT=0
+-)
+-if(XE_TARGET_X86_64 AND NOT MSVC)
+-  enable_language(ASM)
+-  target_sources(zstd PRIVATE zstd/lib/decompress/huf_decompress_amd64.S)
++if(USE_SYSTEM_ZSTD)
++  find_package(PkgConfig REQUIRED)
++  pkg_check_modules(ZSTD REQUIRED libzstd)
++  add_library(zstd INTERFACE)
++  target_include_directories(zstd SYSTEM INTERFACE ${ZSTD_INCLUDE_DIRS})
++  target_link_libraries(zstd INTERFACE ${ZSTD_LDFLAGS})
++  target_compile_options(zstd INTERFACE ${ZSTD_CFLAGS_OTHER})
+ else()
+-  target_compile_definitions(zstd PRIVATE ZSTD_DISABLE_ASM)
++  file(GLOB_RECURSE _zstd_common "zstd/lib/common/*.c" "zstd/lib/common/*.h")
++  list(FILTER _zstd_common EXCLUDE REGEX "threading\\.c$")
++  file(GLOB_RECURSE _zstd_compress "zstd/lib/compress/*.c" "zstd/lib/compress/*.h")
++  file(GLOB_RECURSE _zstd_decompress "zstd/lib/decompress/*.c" "zstd/lib/decompress/*.h")
++  add_library(zstd STATIC
++    zstd/lib/zstd.h
++    ${_zstd_common}
++    ${_zstd_compress}
++    ${_zstd_decompress}
++  )
++  target_include_directories(zstd PUBLIC zstd/lib PRIVATE zstd/lib/common)
++  target_compile_definitions(zstd PRIVATE
++    XXH_NAMESPACE=ZSTD_
++    ZSTD_LEGACY_SUPPORT=0
++  )
++  if(XE_TARGET_X86_64 AND NOT MSVC)
++    enable_language(ASM)
++    target_sources(zstd PRIVATE zstd/lib/decompress/huf_decompress_amd64.S)
++  else()
++    target_compile_definitions(zstd PRIVATE ZSTD_DISABLE_ASM)
++  endif()
+ endif()
+ 
+ # ==============================================================================
+ # zarchive
+ # ==============================================================================
+-add_library(zarchive STATIC
+-  zarchive/include/zarchive/zarchivecommon.h
+-  zarchive/include/zarchive/zarchivereader.h
+-  zarchive/include/zarchive/zarchivewriter.h
+-  zarchive/src/zarchivereader.cpp
+-  zarchive/src/zarchivewriter.cpp
+-  zarchive/src/sha_256.c
+-  zarchive/src/sha_256.h
+-)
+-target_include_directories(zarchive PUBLIC zarchive/include PRIVATE zstd/lib)
+-target_link_libraries(zarchive PUBLIC zstd)
++if(USE_SYSTEM_ZARCHIVE)
++  find_package(PkgConfig REQUIRED)
++  pkg_check_modules(ZARCHIVE REQUIRED zarchive)
++  add_library(zarchive INTERFACE)
++  target_include_directories(zarchive SYSTEM INTERFACE ${ZARCHIVE_INCLUDE_DIRS})
++  target_link_libraries(zarchive INTERFACE ${ZARCHIVE_LDFLAGS})
++  target_compile_options(zarchive INTERFACE ${ZARCHIVE_CFLAGS_OTHER})
++else()
++  add_library(zarchive STATIC
++    zarchive/include/zarchive/zarchivecommon.h
++    zarchive/include/zarchive/zarchivereader.h
++    zarchive/include/zarchive/zarchivewriter.h
++    zarchive/src/zarchivereader.cpp
++    zarchive/src/zarchivewriter.cpp
++    zarchive/src/sha_256.c
++    zarchive/src/sha_256.h
++  )
++  target_include_directories(zarchive PUBLIC zarchive/include PRIVATE zstd/lib)
++  target_link_libraries(zarchive PUBLIC zstd)
++endif()
+ 
+ # ==============================================================================
+ # zlib-ng
+-- 
+2.54.0
+

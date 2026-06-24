@@ -1,0 +1,196 @@
+From c514858a4d63ad31351259c015181c9879e996e4 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 9 Feb 2026 00:21:21 -0500
+Subject: [PATCH 07/23] Use system glslang (USE_SYSTEM_GLSLANG)
+
+- third_party/CMakeLists.txt: link glslang::SPIRV / glslang::glslang from the
+  system CMake package when USE_SYSTEM_GLSLANG is set, else build the bundled
+  SPIR-V subset.
+- src/xenia/base/glslang_include.h: new wrapper selecting <glslang/SPIRV/...>
+  headers when XENIA_USE_SYSTEM_GLSLANG is defined.
+- Replace direct third_party/glslang includes in the GPU/SPIR-V translator.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ src/xenia/base/glslang_include.h              | 15 ++++++++++
+ src/xenia/gpu/shader_compiler_main.cc         |  2 +-
+ src/xenia/gpu/spirv_builder.h                 |  2 +-
+ src/xenia/gpu/spirv_shader_translator.cc      |  2 +-
+ src/xenia/gpu/spirv_shader_translator_alu.cc  |  2 +-
+ .../gpu/spirv_shader_translator_fetch.cc      |  2 +-
+ .../gpu/spirv_shader_translator_memexport.cc  |  2 +-
+ src/xenia/gpu/spirv_shader_translator_rb.cc   |  2 +-
+ .../gpu/vulkan/vulkan_render_target_cache.cc  |  2 +-
+ third_party/CMakeLists.txt                    | 30 ++++++++++++-------
+ 10 files changed, 42 insertions(+), 19 deletions(-)
+ create mode 100644 src/xenia/base/glslang_include.h
+
+diff --git a/src/xenia/base/glslang_include.h b/src/xenia/base/glslang_include.h
+new file mode 100644
+index 000000000..59a5f8f5b
+--- /dev/null
++++ b/src/xenia/base/glslang_include.h
+@@ -0,0 +1,15 @@
++// Wrapper so Xenia can use either bundled glslang SPIRV subset or system glslang (XENIA_USE_SYSTEM_GLSLANG).
++#ifndef XENIA_BASE_GLSLANG_INCLUDE_H_
++#define XENIA_BASE_GLSLANG_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_GLSLANG
++#include <glslang/SPIRV/GLSL.std.450.h>
++#include <glslang/SPIRV/SpvBuilder.h>
++#include <glslang/SPIRV/disassemble.h>
++#else
++#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "third_party/glslang/SPIRV/SpvBuilder.h"
++#include "third_party/glslang/SPIRV/disassemble.h"
++#endif
++
++#endif  // XENIA_BASE_GLSLANG_INCLUDE_H_
+diff --git a/src/xenia/gpu/shader_compiler_main.cc b/src/xenia/gpu/shader_compiler_main.cc
+index d36ff49d4..7f6f2c6e8 100644
+--- a/src/xenia/gpu/shader_compiler_main.cc
++++ b/src/xenia/gpu/shader_compiler_main.cc
+@@ -12,7 +12,7 @@
+ #include <string>
+ #include <utility>
+ 
+-#include "third_party/glslang/SPIRV/disassemble.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/console_app_main.h"
+ #include "xenia/base/cvar.h"
+diff --git a/src/xenia/gpu/spirv_builder.h b/src/xenia/gpu/spirv_builder.h
+index e85b8f892..ef28c84ae 100644
+--- a/src/xenia/gpu/spirv_builder.h
++++ b/src/xenia/gpu/spirv_builder.h
+@@ -15,7 +15,7 @@
+ #include <utility>
+ #include <vector>
+ 
+-#include "third_party/glslang/SPIRV/SpvBuilder.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ 
+ namespace xe {
+diff --git a/src/xenia/gpu/spirv_shader_translator.cc b/src/xenia/gpu/spirv_shader_translator.cc
+index c24423a46..0c0c650cf 100644
+--- a/src/xenia/gpu/spirv_shader_translator.cc
++++ b/src/xenia/gpu/spirv_shader_translator.cc
+@@ -13,7 +13,7 @@
+ #include <cstdint>
+ 
+ #include "xenia/base/fmt_include.h"
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/logging.h"
+ #include "xenia/base/math.h"
+diff --git a/src/xenia/gpu/spirv_shader_translator_alu.cc b/src/xenia/gpu/spirv_shader_translator_alu.cc
+index ad8414e0f..a329f527d 100644
+--- a/src/xenia/gpu/spirv_shader_translator_alu.cc
++++ b/src/xenia/gpu/spirv_shader_translator_alu.cc
+@@ -13,7 +13,7 @@
+ #include <cmath>
+ #include <cstdint>
+ 
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+ #include "xenia/gpu/spirv_compatibility.h"
+diff --git a/src/xenia/gpu/spirv_shader_translator_fetch.cc b/src/xenia/gpu/spirv_shader_translator_fetch.cc
+index b0bb95615..dfbdb45c0 100644
+--- a/src/xenia/gpu/spirv_shader_translator_fetch.cc
++++ b/src/xenia/gpu/spirv_shader_translator_fetch.cc
+@@ -13,7 +13,7 @@
+ #include <cmath>
+ 
+ #include "xenia/base/fmt_include.h"
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+ #include "xenia/gpu/gpu_flags.h"
+diff --git a/src/xenia/gpu/spirv_shader_translator_memexport.cc b/src/xenia/gpu/spirv_shader_translator_memexport.cc
+index 127b174f3..e054a4c54 100644
+--- a/src/xenia/gpu/spirv_shader_translator_memexport.cc
++++ b/src/xenia/gpu/spirv_shader_translator_memexport.cc
+@@ -9,7 +9,7 @@
+ 
+ #include "xenia/gpu/spirv_shader_translator.h"
+ 
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+ #include "xenia/gpu/spirv_compatibility.h"
+diff --git a/src/xenia/gpu/spirv_shader_translator_rb.cc b/src/xenia/gpu/spirv_shader_translator_rb.cc
+index 3e0ca7574..76938f251 100644
+--- a/src/xenia/gpu/spirv_shader_translator_rb.cc
++++ b/src/xenia/gpu/spirv_shader_translator_rb.cc
+@@ -11,7 +11,7 @@
+ 
+ #include <cstdint>
+ 
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/math.h"
+ #include "xenia/gpu/draw_util.h"
+diff --git a/src/xenia/gpu/vulkan/vulkan_render_target_cache.cc b/src/xenia/gpu/vulkan/vulkan_render_target_cache.cc
+index 67f6d2d32..2598b2756 100644
+--- a/src/xenia/gpu/vulkan/vulkan_render_target_cache.cc
++++ b/src/xenia/gpu/vulkan/vulkan_render_target_cache.cc
+@@ -13,7 +13,7 @@
+ #include <cstdint>
+ #include <cstring>
+ 
+-#include "third_party/glslang/SPIRV/GLSL.std.450.h"
++#include "xenia/base/glslang_include.h"
+ #include "xenia/base/assert.h"
+ #include "xenia/base/cvar.h"
+ #include "xenia/base/logging.h"
+diff --git a/third_party/CMakeLists.txt b/third_party/CMakeLists.txt
+index 7e230b060..3bf14d54c 100644
+--- a/third_party/CMakeLists.txt
++++ b/third_party/CMakeLists.txt
+@@ -156,17 +156,25 @@ endif()
+ # glslang-spirv (not needed on macOS — no Vulkan/SPIR-V backend)
+ # ==============================================================================
+ if(NOT APPLE)
+-  file(GLOB _glslang_spirv_cpp "glslang/SPIRV/*.cpp")
+-  file(GLOB _glslang_spirv_h "glslang/SPIRV/*.h")
+-  file(GLOB _glslang_spirv_hpp "glslang/SPIRV/*.hpp11")
+-  list(FILTER _glslang_spirv_cpp EXCLUDE REGEX "GlslangToSpv\\.cpp$")
+-  add_library(glslang-spirv STATIC
+-    ${_glslang_spirv_cpp}
+-    ${_glslang_spirv_h}
+-    ${_glslang_spirv_hpp}
+-    glslang/glslang/Include/visibility.h
+-  )
+-  target_include_directories(glslang-spirv PUBLIC glslang)
++  if(USE_SYSTEM_GLSLANG)
++    # System glslang exposes its SPIR-V builder via the glslang::SPIRV target
++    # (CMake package config). It transitively pulls glslang and SPIRV-Tools.
++    find_package(glslang CONFIG REQUIRED)
++    add_library(glslang-spirv INTERFACE)
++    target_link_libraries(glslang-spirv INTERFACE glslang::SPIRV glslang::glslang)
++  else()
++    file(GLOB _glslang_spirv_cpp "glslang/SPIRV/*.cpp")
++    file(GLOB _glslang_spirv_h "glslang/SPIRV/*.h")
++    file(GLOB _glslang_spirv_hpp "glslang/SPIRV/*.hpp11")
++    list(FILTER _glslang_spirv_cpp EXCLUDE REGEX "GlslangToSpv\\.cpp$")
++    add_library(glslang-spirv STATIC
++      ${_glslang_spirv_cpp}
++      ${_glslang_spirv_h}
++      ${_glslang_spirv_hpp}
++      glslang/glslang/Include/visibility.h
++    )
++    target_include_directories(glslang-spirv PUBLIC glslang)
++  endif()
+ endif()
+ 
+ # ==============================================================================
+-- 
+2.54.0
+

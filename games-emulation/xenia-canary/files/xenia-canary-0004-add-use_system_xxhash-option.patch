@@ -1,0 +1,70 @@
+From 959dcbfa51bdac698ffdf3dc5f6b04de504a6afb Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 9 Feb 2026 00:19:20 -0500
+Subject: [PATCH 04/23] Add USE_SYSTEM_XXHASH option for system libxxhash
+
+- third_party/CMakeLists.txt: link system libxxhash (pkg-config) when
+  USE_SYSTEM_XXHASH is set, else build the bundled copy.
+- src/xenia/base/xxhash.h: include <xxhash.h> with XXH_STATIC_LINKING_ONLY
+  when XENIA_USE_SYSTEM_XXHASH is defined.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ src/xenia/base/xxhash.h    |  6 ++++++
+ third_party/CMakeLists.txt | 17 +++++++++++++----
+ 2 files changed, 19 insertions(+), 4 deletions(-)
+
+diff --git a/src/xenia/base/xxhash.h b/src/xenia/base/xxhash.h
+index 30960e8d5..4de81eeaa 100644
+--- a/src/xenia/base/xxhash.h
++++ b/src/xenia/base/xxhash.h
+@@ -10,6 +10,11 @@
+ #ifndef XENIA_BASE_XXHASH_H_
+ #define XENIA_BASE_XXHASH_H_
+ 
++#ifdef XENIA_USE_SYSTEM_XXHASH
++/* Expose XXH3_state_s definition so stack-allocated XXH3_state_t is valid. */
++#define XXH_STATIC_LINKING_ONLY
++#include <xxhash.h>
++#else
+ #define XXH_INLINE_ALL
+ 
+ // Can't use XXH_X86DISPATCH because XXH is calculated on multiple threads,
+@@ -17,5 +22,6 @@
+ // synchronization) to XXH_g_dispatch at the first call.
+ 
+ #include "third_party/xxhash/xxhash.h"
++#endif
+ 
+ #endif  // XENIA_BASE_XXHASH_H_
+diff --git a/third_party/CMakeLists.txt b/third_party/CMakeLists.txt
+index fcdca8bbf..34810c86e 100644
+--- a/third_party/CMakeLists.txt
++++ b/third_party/CMakeLists.txt
+@@ -227,10 +227,19 @@ target_include_directories(snappy PUBLIC snappy)
+ # ==============================================================================
+ # xxhash
+ # ==============================================================================
+-add_library(xxhash STATIC
+-  xxhash/xxhash.c
+-)
+-target_include_directories(xxhash PUBLIC xxhash)
++if(USE_SYSTEM_XXHASH)
++  find_package(PkgConfig REQUIRED)
++  pkg_check_modules(XXHASH REQUIRED libxxhash)
++  add_library(xxhash INTERFACE)
++  target_include_directories(xxhash SYSTEM INTERFACE ${XXHASH_INCLUDE_DIRS})
++  target_link_libraries(xxhash INTERFACE ${XXHASH_LDFLAGS})
++  target_compile_options(xxhash INTERFACE ${XXHASH_CFLAGS_OTHER})
++else()
++  add_library(xxhash STATIC
++    xxhash/xxhash.c
++  )
++  target_include_directories(xxhash PUBLIC xxhash)
++endif()
+ 
+ # ==============================================================================
+ # zstd
+-- 
+2.54.0
+

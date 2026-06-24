@@ -1,0 +1,104 @@
+From 38a8526fb09b19a99de7a08f150256ce4f41bca8 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Mon, 9 Feb 2026 00:21:33 -0500
+Subject: [PATCH 15/23] Use system utfcpp (USE_SYSTEM_UTFCPP, header-only)
+
+- CMakeLists.txt: when USE_SYSTEM_UTFCPP is set, detect whether the header is
+  installed as <utf8cpp/utf8.h> (Gentoo) and define
+  XENIA_USE_SYSTEM_UTFCPP_UTF8CPP_HEADER accordingly.
+- src/xenia/base/utfcpp_include.h: new wrapper selecting the system header when
+  XENIA_USE_SYSTEM_UTFCPP is defined.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ CMakeLists.txt                  |  9 +++++++++
+ src/xenia/base/cvar.cc          |  2 +-
+ src/xenia/base/string.cc        |  2 +-
+ src/xenia/base/utf8.cc          |  2 +-
+ src/xenia/base/utfcpp_include.h | 15 +++++++++++++++
+ 5 files changed, 27 insertions(+), 3 deletions(-)
+ create mode 100644 src/xenia/base/utfcpp_include.h
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b5a7b7dbf..3bda623ee 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -58,6 +58,15 @@ foreach(_lib ${XE_SYSTEM_LIBS})
+   endif()
+ endforeach()
+ 
++# utfcpp installs its header either as <utf8.h> or under <utf8cpp/utf8.h>
++# (the latter on Gentoo and other distros). Detect which and tell the wrapper.
++if(USE_SYSTEM_UTFCPP)
++  find_path(XE_UTF8CPP_DIR NAMES utf8cpp/utf8.h)
++  if(XE_UTF8CPP_DIR)
++    add_compile_definitions(XENIA_USE_SYSTEM_UTFCPP_UTF8CPP_HEADER)
++  endif()
++endif()
++
+ # Toggle profiler
+ add_compile_definitions(XE_OPTION_PROFILING=0)
+ add_compile_definitions(XE_OPTION_PROFILING_UI=0)
+diff --git a/src/xenia/base/cvar.cc b/src/xenia/base/cvar.cc
+index 3289df94f..158bbc161 100644
+--- a/src/xenia/base/cvar.cc
++++ b/src/xenia/base/cvar.cc
+@@ -13,7 +13,7 @@
+ #if defined(_MSVC_LANG) && _MSVC_LANG > __cplusplus
+ #define UTF_CPP_CPLUSPLUS _MSVC_LANG
+ #endif
+-#include "third_party/utfcpp/source/utf8.h"
++#include "xenia/base/utfcpp_include.h"
+ 
+ #include "xenia/base/console.h"
+ #include "xenia/base/logging.h"
+diff --git a/src/xenia/base/string.cc b/src/xenia/base/string.cc
+index dbd6b5f5d..4ec89487e 100644
+--- a/src/xenia/base/string.cc
++++ b/src/xenia/base/string.cc
+@@ -24,7 +24,7 @@
+ #if defined(_MSVC_LANG) && _MSVC_LANG > __cplusplus
+ #define UTF_CPP_CPLUSPLUS _MSVC_LANG
+ #endif
+-#include "third_party/utfcpp/source/utf8.h"
++#include "xenia/base/utfcpp_include.h"
+ 
+ namespace utfcpp = utf8;
+ 
+diff --git a/src/xenia/base/utf8.cc b/src/xenia/base/utf8.cc
+index 9305f1f28..10c3107bf 100644
+--- a/src/xenia/base/utf8.cc
++++ b/src/xenia/base/utf8.cc
+@@ -16,7 +16,7 @@
+ #if defined(_MSVC_LANG) && _MSVC_LANG > __cplusplus
+ #define UTF_CPP_CPLUSPLUS _MSVC_LANG
+ #endif
+-#include "third_party/utfcpp/source/utf8.h"
++#include "xenia/base/utfcpp_include.h"
+ 
+ namespace utfcpp = utf8;
+ 
+diff --git a/src/xenia/base/utfcpp_include.h b/src/xenia/base/utfcpp_include.h
+new file mode 100644
+index 000000000..3c283fa40
+--- /dev/null
++++ b/src/xenia/base/utfcpp_include.h
+@@ -0,0 +1,15 @@
++// Wrapper so Xenia can use either bundled utfcpp (utf8-cpp) or system (XENIA_USE_SYSTEM_UTFCPP). Header-only.
++#ifndef XENIA_BASE_UTFCPP_INCLUDE_H_
++#define XENIA_BASE_UTFCPP_INCLUDE_H_
++
++#ifdef XENIA_USE_SYSTEM_UTFCPP
++#ifdef XENIA_USE_SYSTEM_UTFCPP_UTF8CPP_HEADER
++#include <utf8cpp/utf8.h>
++#else
++#include <utf8.h>
++#endif
++#else
++#include "third_party/utfcpp/source/utf8.h"
++#endif
++
++#endif  // XENIA_BASE_UTFCPP_INCLUDE_H_
+-- 
+2.54.0
+

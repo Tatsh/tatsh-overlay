@@ -1,0 +1,55 @@
+From 11ea4738b5f58a69fce980e329d284fb52a61948 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Tue, 23 Jun 2026 19:54:53 -0400
+Subject: [PATCH 22/23] Use system SDL2 on Linux
+
+Upstream links system SDL2 via pkg-config but system_gnulinux.cc still included
+the bundled third_party/SDL2 header, which is not shipped when SDL2 is
+de-vendored. Switch it to <SDL.h> and add the system SDL2 include path to
+xenia-base on Linux/macOS.
+
+Co-authored-by: Cursor <cursoragent@cursor.com>
+---
+ src/xenia/base/CMakeLists.txt     | 9 +++++++++
+ src/xenia/base/system_gnulinux.cc | 5 +++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/src/xenia/base/CMakeLists.txt b/src/xenia/base/CMakeLists.txt
+index 1f7a88d01..e381986e8 100644
+--- a/src/xenia/base/CMakeLists.txt
++++ b/src/xenia/base/CMakeLists.txt
+@@ -10,6 +10,15 @@ if(_base_exclude AND _base_srcs)
+   set_target_properties(xenia-base PROPERTIES SOURCES "${_base_srcs}")
+ endif()
+ target_link_libraries(xenia-base PUBLIC fmt)
++
++# system_gnulinux.cc includes <SDL.h>; provide the system SDL2 include path on
++# Linux/macOS (Windows uses the bundled SDL2 headers).
++if(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR APPLE)
++  find_package(PkgConfig REQUIRED)
++  pkg_check_modules(SDL2_BASE REQUIRED sdl2)
++  target_include_directories(xenia-base SYSTEM PRIVATE ${SDL2_BASE_INCLUDE_DIRS})
++endif()
++
+ xe_target_defaults(xenia-base)
+ 
+ if(XENIA_BUILD_TESTS)
+diff --git a/src/xenia/base/system_gnulinux.cc b/src/xenia/base/system_gnulinux.cc
+index 1615eed0d..429ab0c6a 100644
+--- a/src/xenia/base/system_gnulinux.cc
++++ b/src/xenia/base/system_gnulinux.cc
+@@ -18,8 +18,9 @@
+ #include "xenia/base/string.h"
+ #include "xenia/base/system.h"
+ 
+-// Use headers in third party to not depend on system sdl headers for building
+-#include "third_party/SDL2/include/SDL.h"
++// Use system SDL on Linux (SDL2 include dirs added to xenia-base in CMake);
++// the bundled headers are only needed on Windows.
++#include <SDL.h>
+ 
+ namespace xe {
+ 
+-- 
+2.54.0
+
