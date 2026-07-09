@@ -137,6 +137,7 @@ batak
 bbolt
 bdepend
 beartype
+beautysh
 beautifulsoup
 becheran
 benbjohnson
@@ -1299,6 +1300,7 @@ logutils
 longdescription
 loong
 loras
+lovesegfault
 lowresnx
 lsdvd
 lssecret
