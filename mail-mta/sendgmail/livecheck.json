@@ -1,3 +1,5 @@
 {
-  "go_sum_uri": "https://raw.githubusercontent.com/google/gmail-oauth2-tools/@SHA@/go/sendgmail/go.sum"
+  "dist_github_release": "__distfiles__",
+  "dist_github_repository": "Tatsh/tatsh-overlay",
+  "gomodule": true
 }
