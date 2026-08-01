@@ -1,6 +1,9 @@
 {
   "dependencies": {
-    "generator-code": "^1.11.5",
-    "yo": "^6.0.0"
-  }
+    "generator-code": "^1.12.0",
+    "yo": "^7.0.1"
+  },
+  "name": "yo",
+  "private": true,
+  "version": "7.0.1"
 }
