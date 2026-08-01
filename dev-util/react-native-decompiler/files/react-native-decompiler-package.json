@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "react-native-decompiler": "^0.2.4"
-  }
+  },
+  "name": "react-native-decompiler",
+  "private": true,
+  "version": "0.2.4"
 }
