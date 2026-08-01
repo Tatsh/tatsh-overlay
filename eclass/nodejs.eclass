@@ -57,6 +57,25 @@ NODEJS_FILES="babel.config.js babel.config.json bin cli.js dist index.js lib nod
 # Can be either files, or directories.
 # Example: NODEJS_EXTRA_FILES="rigger.js modules"
 
+# @ECLASS_VARIABLE: NODEJS_KEEP_DEV_FILES
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# If set to a non-empty value, enpm_clean skips nodejs_remove_dev, which
+# strips documentation, tests and other development files from the installed
+# tree.
+#
+# nodejs_remove_dev matches on file and directory names alone, so it removes
+# paths that some packages legitimately ship as runtime code. Known examples:
+#
+#   - rxjs exports the operator dist/cjs/internal/operators/sample.js, which
+#     matches the 'sample.*' file rule.
+#   - @zwave-js/core exports build/cjs/test/, which matches the '*/test'
+#     directory rule.
+#
+# Set this when a package fails at runtime with MODULE_NOT_FOUND after being
+# installed. Note that enpm_clean still runs the package manager's own
+# production prune when this is set.
+
 # @VARIABLE: MYNPMARGS
 # @DEFAULT_UNSET
 # @DESCRIPTION:
@@ -340,6 +359,11 @@ enpm_clean() {
             fi
             ;;
     esac
+
+    if [[ -n ${NODEJS_KEEP_DEV_FILES} ]]; then
+        einfo "NODEJS_KEEP_DEV_FILES is set, keeping development files"
+        return
+    fi
 
     nodejs_files="${NODEJS_FILES} ${NODEJS_EXTRA_FILES}"
 
