@@ -22,6 +22,7 @@ aioimaplib
 aiomisc
 aiosmtplib
 aiosqlite
+airtap
 ajstarks
 akavel
 akefile
@@ -66,6 +67,7 @@ argcomplete
 argparse
 armon
 armstorage
+armv
 arogozhnikov
 arraybuffer
 arrayish
@@ -100,6 +102,7 @@ audioio
 audioop
 authlib
 authorware
+autoclean
 autoconfig
 automagic
 automodule
@@ -295,6 +298,7 @@ cmocka
 cmrc
 cmsis
 codeberg
+codeclimate
 codegen
 codem
 codeman
@@ -315,6 +319,7 @@ colorstring
 comby
 commandlines
 commitizen
+commitlintrc
 commondir
 concurrentqueue
 configfile
@@ -499,6 +504,7 @@ docompress
 docopt
 docstrings
 doctest
+dodir
 dodoc
 doenvd
 doexe
@@ -602,6 +608,7 @@ emutype
 encodeurl
 enet
 eninja
+enpm
 enrollments
 entuwii
 envify
@@ -758,6 +765,7 @@ funcy
 fuzzysearch
 fxamacker
 fxcfg
+félix
 gailly
 gambatte
 gamecube
@@ -932,6 +940,7 @@ huandu
 huggingface
 humanfs
 humanwhocodes
+huskyrc
 hwmon
 hwview
 hyperscript
@@ -995,6 +1004,7 @@ isplainobject
 isystem
 itertools
 iuse
+iwholename
 jackaudio
 jackc
 jackspeak
@@ -1031,7 +1041,9 @@ joystickwake
 jridgewell
 jsbi
 jsbn
+jscs
 jsesc
+jshintignore
 jsoncpp
 jsonfile
 jsonify
@@ -1267,6 +1279,7 @@ lighttpd
 limbu
 linkernsbypass
 linters
+lintstagedrc
 lipgloss
 listformat
 listr
@@ -1418,6 +1431,7 @@ mlabbe
 mmap
 mnamer
 mobilephone
+mocharc
 mockoidc
 modargs
 modelcontextprotocol
@@ -1467,6 +1481,8 @@ myeconfargs
 myemakeargs
 mygoargs
 mymakeargs
+mynpmargs
+mynpmargstype
 mypy
 mytree
 nabataean
@@ -1544,7 +1560,9 @@ noto
 notofonts
 nowrap
 npapi
+npmargs
 npmcli
+npmignore
 npmlog
 nspr
 nstool
@@ -1564,9 +1582,11 @@ nvidiactl
 nvlink
 nvme
 nvmedit
+nvmrc
 nvswitch
 nvswitchctl
 nxengine
+nycrc
 objdump
 objx
 occivink
@@ -1949,6 +1969,7 @@ rtmp
 ruamel
 runewidth
 runkids
+runkit
 runpath
 rusha
 russross
@@ -2236,6 +2257,7 @@ trimpath
 trimstart
 trng
 trustme
+tscache
 tsconfck
 tsschecker
 tsutils
