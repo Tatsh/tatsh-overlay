@@ -2344,6 +2344,7 @@ vektra
 vemulator
 vendored
 vendoring
+venv
 vercmp
 verweij
 vgpu
