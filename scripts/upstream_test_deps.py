@@ -11,9 +11,6 @@ emitted recommendation is a starting point, not a final answer.
 """
 from __future__ import annotations
 
-from collections.abc import Iterable
-from functools import lru_cache
-from pathlib import Path
 import argparse
 import csv
 import json
@@ -22,9 +19,12 @@ import os
 import re
 import sys
 import time
-import tomllib
+from collections.abc import Iterable
+from functools import lru_cache
+from pathlib import Path
 
 import requests
+import tomllib
 
 logger = logging.getLogger('upstream_test_deps')
 
@@ -77,9 +77,7 @@ def gentoo_has(category_pn: str) -> bool:
     if (GENTOO_REPO / category_pn).is_dir():
         return True
     overlay = Path(__file__).resolve().parent.parent
-    if (overlay / category_pn).is_dir():
-        return True
-    return False
+    return (overlay / category_pn).is_dir()
 
 
 def fetch_pyproject(owner: str, repo: str, ref: str, token: str | None) -> str | None:
@@ -148,15 +146,15 @@ def extract_test_deps(pyproject_text: str) -> list[str]:
         opt = project.get('optional-dependencies', {})
         if isinstance(opt, dict):
             for group_name, group_val in opt.items():
-                if group_name.lower() in {'test', 'tests', 'testing', 'dev'}:
-                    if isinstance(group_val, list):
-                        _add_from_list(group_val)
+                if (group_name.lower() in {'test', 'tests', 'testing', 'dev'}
+                        and isinstance(group_val, list)):
+                    _add_from_list(group_val)
     dep_groups = data.get('dependency-groups', {})
     if isinstance(dep_groups, dict):
         for group_name, group_val in dep_groups.items():
-            if group_name.lower() in {'test', 'tests', 'testing', 'dev'}:
-                if isinstance(group_val, list):
-                    _add_from_list(group_val)
+            if (group_name.lower() in {'test', 'tests', 'testing', 'dev'}
+                    and isinstance(group_val, list)):
+                _add_from_list(group_val)
     hatch = data.get('tool', {}).get('hatch', {})
     if isinstance(hatch, dict):
         envs = hatch.get('envs', {})
@@ -174,9 +172,9 @@ def extract_test_deps(pyproject_text: str) -> list[str]:
         dev_deps = pdm.get('dev-dependencies', {})
         if isinstance(dev_deps, dict):
             for group_name, group_val in dev_deps.items():
-                if group_name.lower() in {'test', 'tests', 'testing', 'dev'}:
-                    if isinstance(group_val, list):
-                        _add_from_list(group_val)
+                if (group_name.lower() in {'test', 'tests', 'testing', 'dev'}
+                        and isinstance(group_val, list)):
+                    _add_from_list(group_val)
     seen: set[str] = set()
     deduped = []
     for d in out:

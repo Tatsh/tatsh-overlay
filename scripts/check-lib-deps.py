@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-from functools import lru_cache
-from typing import Iterable, Iterator, Tuple
 import re
 import subprocess as sp
 import sys
+from collections.abc import Iterable, Iterator
+from functools import lru_cache
 
 import portage
 
@@ -34,7 +34,7 @@ def is_elf(exe: str) -> bool:
         return False
 
 
-@lru_cache()
+@lru_cache
 def qfile(filename: str) -> str:
     return sp.run(('qfile', filename), check=True, capture_output=True, text=True).stdout
 
@@ -53,27 +53,25 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
             except sp.CalledProcessError:
                 continue
             try:
-                lib_package = [
-                    y for y in lines if ('-libs/' in y or y.startswith('dev-qt/')
-                                         or y.startswith('dev-cpp/') or re.match(
-                                             r'^(?:app-pda/lib(?:irecovery|plist)|net-misc/curl|'
-                                             r'media-sound/(?:pulseaudio|mpg123)|'
-                                             r'media-video/(ffmpeg|pipewire)|'
-                                             r'app-arch/(?:zstd|libarchive|lz4)|'
-                                             r'app-emulation/faudio|'
-                                             r'dev-util/glslang|net-wireless/bluez|sys-apps/dbus|'
-                                             r'app-accessibility/at-spi2-atk|net-print/cups|'
-                                             r'sys-apps/util-linux|app-crypt/mit-krb5)', y))
-                ][0].split(':')[0]
-            except IndexError:
+                lib_package = next(
+                    y for y in lines
+                    if ('-libs/' in y or y.startswith(('dev-qt/', 'dev-cpp/')) or re.match(
+                        r'^(?:app-pda/lib(?:irecovery|plist)|net-misc/curl|'
+                        r'media-sound/(?:pulseaudio|mpg123)|'
+                        r'media-video/(ffmpeg|pipewire)|'
+                        r'app-arch/(?:zstd|libarchive|lz4)|'
+                        r'app-emulation/faudio|'
+                        r'dev-util/glslang|net-wireless/bluez|sys-apps/dbus|'
+                        r'app-accessibility/at-spi2-atk|net-print/cups|'
+                        r'sys-apps/util-linux|app-crypt/mit-krb5)', y))).split(':')[0]
+            except StopIteration:
                 continue
             if lib_package == package_name:
                 continue
         try:
-            ebuild = [
-                y for y in (P.findname(x) for x in P.match(package_name)) if 'db/repos/tatsh' in y
-            ][0]
-        except IndexError:
+            ebuild = next(
+                y for y in (P.findname(x) for x in P.match(package_name)) if 'db/repos/tatsh' in y)
+        except StopIteration:
             raise RuntimeError(f'Unable to determine ebuild for {package_name}')
         with open(ebuild) as f:
             lines_s = f.read()
@@ -81,7 +79,7 @@ def find_missing_deps(package_name: str, libs: Iterable[str]) -> Iterator[str]:
                 yield lib_package
 
 
-def find_missing_deps0(package_name: str, exes: Iterable[str]) -> Iterator[Tuple[str, list[str]]]:
+def find_missing_deps0(package_name: str, exes: Iterable[str]) -> Iterator[tuple[str, list[str]]]:
     for exe in exes:
         yield (exe,
                list(

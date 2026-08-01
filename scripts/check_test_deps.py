@@ -8,21 +8,21 @@ manually before any edit.
 """
 from __future__ import annotations
 
-from pathlib import Path
 import argparse
 import csv
 import logging
 import os
 import re
 import sys
-import tomllib
+from pathlib import Path
 
 import requests
+import tomllib
 
 logger = logging.getLogger('check_test_deps')
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from upstream_test_deps import KNOWN_PACKAGE_MAP, gentoo_has  # noqa: E402
+from upstream_test_deps import KNOWN_PACKAGE_MAP, gentoo_has
 
 GITHUB_RAW = 'https://raw.githubusercontent.com'
 USER_AGENT = 'tatsh-overlay-audit/1.0'
@@ -114,9 +114,11 @@ COSMETIC_PLUGINS = {
 
 def known_plugins_in_deps(deps: list[str]) -> list[str]:
     """Return only the deps in the known-plugin map (minus cosmetic ones)."""
-    return sorted(
-        set(d for d in deps
-            if d in KNOWN_PACKAGE_MAP and KNOWN_PACKAGE_MAP[d] and d not in COSMETIC_PLUGINS))
+    return sorted({
+        d
+        for d in deps
+        if d in KNOWN_PACKAGE_MAP and KNOWN_PACKAGE_MAP[d] and d not in COSMETIC_PLUGINS
+    })
 
 
 def ebuild_has_dep(ebuild_text: str, category_pn: str) -> bool:

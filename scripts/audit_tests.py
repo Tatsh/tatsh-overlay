@@ -18,10 +18,6 @@ review before edits.
 """
 from __future__ import annotations
 
-from collections.abc import Iterable, Sequence
-from dataclasses import dataclass
-from pathlib import Path
-from urllib.parse import urlparse
 import argparse
 import csv
 import json
@@ -30,13 +26,17 @@ import os
 import re
 import sys
 import time
+from collections.abc import Iterable, Sequence
+from dataclasses import dataclass
+from pathlib import Path
+from urllib.parse import urlparse
 
 import requests
 
 logger = logging.getLogger('audit_tests')
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from ebuild_parser import EbuildParser  # noqa: E402
+from ebuild_parser import EbuildParser
 
 CACHE_DIR = Path(os.environ.get('XDG_CACHE_HOME', str(
     Path.home() / '.cache'))) / 'tatsh-overlay-audit'
@@ -301,7 +301,7 @@ def is_na(category: str, eclasses: Sequence[str], build_system: str) -> tuple[bo
     eclass_set = set(eclasses)
     overlap = eclass_set & NA_INHERIT
     if overlap:
-        return True, f'eclass={sorted(overlap)[0]}'
+        return True, f'eclass={min(overlap)}'
     if build_system == 'none':
         return True, 'no build system'
     if build_system == 'kmod':
@@ -325,9 +325,7 @@ def already_handles_tests(parser: EbuildParser) -> bool:
     if isinstance(restrict, str) and re.search(r'\btest\b', restrict):
         return True
     iuse = parser.get_variable('IUSE')
-    if isinstance(iuse, str) and re.search(r'\btest\b', iuse):
-        return True
-    return False
+    return bool(isinstance(iuse, str) and re.search(r'\btest\b', iuse))
 
 
 def detect_upstream_tests(build_system: str, paths: Iterable[str]) -> tuple[bool, str, str]:
@@ -337,8 +335,7 @@ def detect_upstream_tests(build_system: str, paths: Iterable[str]) -> tuple[bool
     """
     paths_list = list(paths)
     has_tests_dir = any(
-        p == 'tests' or p == 'test' or p.startswith('tests/') or p.startswith('test/')
-        for p in paths_list)
+        p in {'tests', 'test'} or p.startswith(('tests/', 'test/')) for p in paths_list)
     has_pyproject = 'pyproject.toml' in paths_list
     has_setup_py = 'setup.py' in paths_list
     has_tox = 'tox.ini' in paths_list
@@ -539,7 +536,7 @@ def main() -> int:
             t0 = time.monotonic()
             try:
                 result = audit_ebuild(ebuild, overlay_root, args.token)
-            except Exception as exc:  # noqa: BLE001
+            except Exception as exc:
                 rel = str(ebuild.relative_to(overlay_root))
                 logger.exception('error processing %s', rel)
                 result = AuditResult(ebuild=rel,

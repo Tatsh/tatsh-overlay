@@ -1,10 +1,8 @@
-#!/usr/bin/env python
 from __future__ import annotations
 
-from collections.abc import Sequence
-from dataclasses import dataclass, field
-from typing import Collection, Iterator
 import re
+from collections.abc import Collection, Iterator, Sequence
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -63,7 +61,7 @@ class EbuildParser:
         while i < len(lines):
             line = lines[i]
             stripped = line.strip()
-            if not stripped or stripped.startswith('#') or stripped.startswith('inherit'):
+            if not stripped or stripped.startswith(('#', 'inherit')):
                 i += 1
                 continue
             if m := re.match(r'^([A-Z_][A-Z0-9_]*)=(.*)$', stripped):

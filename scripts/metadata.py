@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-from pathlib import Path
-from urllib.parse import urlparse
 import subprocess as sp
 import sys
+from pathlib import Path
+from urllib.parse import urlparse
 
 import portage
 
