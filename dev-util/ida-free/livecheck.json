@@ -1,5 +1,4 @@
 {
-  "regex": "Latest available.*>v([^<]+)<",
-  "type": "regex",
-  "url": "https://hex-rays.com/ida-free/"
+  "no_auto_update": true,
+  "type": "ida-free"
 }
