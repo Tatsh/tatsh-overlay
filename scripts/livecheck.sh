@@ -12,12 +12,7 @@ exceptions=(
     -e net-dns/pihole-ftl
     -e www-apps/pihole-admin-lte
     # Inaccurate.
-    -e app-emulation/basiliskii
-    -e app-emulation/sheepshaver
-    -e dev-db/prisma-engines
     -e dev-python/thinc
-    -e dev-qt/qtwebkit
-    -e games-arcade/stepmania
     -e games-emulation/cemu
     -e games-emulation/mupen64plus-video-gliden64
     -e games-emulation/rpcs3
