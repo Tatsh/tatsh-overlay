@@ -1,3 +1,7 @@
 {
-  "go_sum_uri": "https://raw.githubusercontent.com/stashapp/stash/v@PV@/go.sum"
+  "dist_github_release": "__distfiles__",
+  "dist_github_repository": "Tatsh/tatsh-overlay",
+  "gomodule": true,
+  "nodejs": true,
+  "nodejs_path": "ui/v2.5"
 }

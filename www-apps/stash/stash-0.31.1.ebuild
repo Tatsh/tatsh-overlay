@@ -8,7 +8,7 @@ inherit go-module nodejs
 DESCRIPTION="An organiser for your special videos, written in Go."
 HOMEPAGE="https://github.com/stashapp/stash https://docs.stashapp.cc/"
 SRC_URI="https://github.com/stashapp/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-deps.tar.xz
+	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-vendor.tar.xz
 	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 LICENSE="AGPL-3 MIT 0BSD Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD-2 BSD CC-BY-3.0 CC-BY-4.0 CC0-1.0 GPL-3 ISC MIT-0 MPL-2.0 public-domain PSF-2"
 SLOT="0"
