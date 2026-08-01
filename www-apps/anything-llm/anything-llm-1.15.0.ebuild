@@ -24,7 +24,7 @@ RESTRICT="strip"
 DEPEND="dev-db/prisma-engines
 	dev-libs/glib
 	media-libs/vips
-	>=sci-libs/onnxruntime-1.23.2[nodejs]"
+	>=sci-libs/onnxruntime-1.23.2"
 RDEPEND="net-libs/nodejs:="
 
 src_compile() {
