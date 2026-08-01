@@ -1,26 +1,21 @@
-From d93aade8fa96d3566ecea42f55e221aac79f3ea2 Mon Sep 17 00:00:00 2001
 From: Andrew Udvare <audvare@gmail.com>
-Date: Sat, 16 Dec 2023 19:43:16 -0500
 Subject: [PATCH] makefile: remove ui steps
 
+The ebuild builds the React UI itself, so drop the ui targets from the
+release and generate targets.
 ---
- Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 4058ecf7..24717b21 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -47,7 +47,7 @@ GO_BUILD_TAGS += sqlite_stat4
- export CGO_ENABLED := 1
+@@ -54,7 +54,7 @@
+ endif
  
  .PHONY: release
 -release: pre-ui generate ui build-release
 +release: generate build-release
  
  # targets to set various build flags
- 
-@@ -278,7 +278,7 @@ endif
+ # use combinations on the make command-line to configure a build, e.g.:
+@@ -279,7 +279,7 @@
  
  # Regenerates GraphQL files
  .PHONY: generate
@@ -29,6 +24,3 @@ index 4058ecf7..24717b21 100644
  
  .PHONY: generate-ui
  generate-ui:
--- 
-2.43.0
-

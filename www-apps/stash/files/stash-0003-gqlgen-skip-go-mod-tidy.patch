@@ -1,0 +1,19 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] gqlgen: skip go mod tidy
+
+go mod tidy resolves the full module graph, including test dependencies of
+dependencies, which is not available in the offline build environment.
+---
+--- a/gqlgen.yml
++++ b/gqlgen.yml
+@@ -10,6 +10,10 @@
+ 
+ struct_tag: gqlgen
+ 
++# gqlgen runs `go mod tidy` after generating, which needs to resolve the full
++# module graph over the network. The build already has every module it needs.
++skip_mod_tidy: true
++
+ autobind:
+   - github.com/stashapp/stash/internal/api
+   - github.com/stashapp/stash/pkg/models
