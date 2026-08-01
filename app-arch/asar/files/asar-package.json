@@ -1,9 +1,8 @@
 {
   "dependencies": {
-    "@electron/asar": "^4.0.1"
+    "@electron/asar": "^4.2.1"
   },
-  "license": "MIT",
-  "main": "index.js",
-  "name": "node-asar",
-  "version": "1.0.0"
+  "name": "asar",
+  "private": true,
+  "version": "4.2.1"
 }
