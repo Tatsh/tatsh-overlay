@@ -1,6 +1,8 @@
 {
+  "dist_github_release": "__distfiles__",
+  "dist_github_repository": "Tatsh/tatsh-overlay",
+  "nodejs": true,
   "regex": "/package/react-native-decompiler/v/([^\"]+)\"",
   "type": "regex",
-  "url": "https://www.npmjs.com/package/react-native-decompiler?activeTab=versions",
-  "yarn_base_package": "react-native-decompiler"
+  "url": "https://www.npmjs.com/package/react-native-decompiler?activeTab=versions"
 }

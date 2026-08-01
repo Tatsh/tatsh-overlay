@@ -1,3 +1,5 @@
 {
-  "yarn_base_package": "@electron/asar"
+  "dist_github_release": "__distfiles__",
+  "dist_github_repository": "Tatsh/tatsh-overlay",
+  "nodejs": true
 }

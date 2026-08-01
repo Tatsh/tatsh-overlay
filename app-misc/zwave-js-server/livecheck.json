@@ -1,4 +1,5 @@
 {
-  "yarn_base_package": "@zwave-js/server",
-  "yarn_packages": ["zwave-js"]
+  "dist_github_release": "__distfiles__",
+  "dist_github_repository": "Tatsh/tatsh-overlay",
+  "nodejs": true
 }

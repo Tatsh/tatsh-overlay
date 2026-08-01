@@ -1,4 +1,5 @@
 {
-  "yarn_base_package": "prettier",
-  "yarn_packages": ["prettier-plugin-ini", "prettier-plugin-sort-json", "prettier-plugin-toml"]
+  "dist_github_release": "__distfiles__",
+  "dist_github_repository": "Tatsh/tatsh-overlay",
+  "nodejs": true
 }
