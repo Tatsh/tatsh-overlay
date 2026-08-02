@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/prosystem-libretro"
-LIBRETRO_COMMIT_SHA="3f465db9c82fc6764cd90c53fc66eb630e0b3710"
+LIBRETRO_COMMIT_SHA="363b6dfbd3e240762e022c2b4897b4fe55722be3"
 inherit libretro-core
 
 DESCRIPTION="ProSystem libretro port (Atari 7800)"
