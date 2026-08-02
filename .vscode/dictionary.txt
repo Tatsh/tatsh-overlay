@@ -1269,6 +1269,7 @@ libv
 libva
 libvk
 libvorbis
+libvsscript
 libvulkan
 libwebp
 libxcb
