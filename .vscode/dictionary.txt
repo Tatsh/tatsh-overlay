@@ -1280,6 +1280,7 @@ libz
 libzip
 libzrif
 libzstd
+libzstdwapper
 libzvbi
 licensedir
 lide
@@ -2544,6 +2545,7 @@ zerolog
 zilliz
 zimg
 zint
+zlibwrapper
 znedi
 zoneinfo
 zstd
@@ -2551,6 +2553,7 @@ zulko
 zvbi
 zwave
 zwitch
+zwrap
 zyan
 zycore
 zydis
