@@ -36,24 +36,24 @@ REQUIRED_USE="compatibility-reporting? ( web-service )"
 
 DEPEND=">=app-arch/zstd-1.5.0:=
 	>=dev-libs/xbyak-6.03:=
-	>=media-video/ffmpeg-4.3
-	app-arch/lz4
-	cubeb? ( media-libs/cubeb )
-	dev-cpp/cpp-httplib
+	>=media-video/ffmpeg-4.3:=
+	app-arch/lz4:=
+	cubeb? ( media-libs/cubeb:= )
+	dev-cpp/cpp-httplib:=
 	dev-libs/boost:=[context]
-	dev-libs/dynarmic
+	dev-libs/dynarmic:=
 	>=dev-libs/libfmt-9.1.0:=
-	dev-libs/libzip
+	dev-libs/libzip:=
 	dev-libs/openssl:=
 	media-libs/VulkanMemoryAllocator:=
 	dev-util/vulkan-utility-libraries
-	dev-util/glslang
-	dev-qt/qtbase
-	dev-qt/qtmultimedia:6
-	webengine? ( dev-qt/qtwebengine:6 )
-	media-libs/libsdl2
-	media-libs/libva
-	media-libs/opus
+	dev-util/glslang:=
+	dev-qt/qtbase:6=
+	dev-qt/qtmultimedia:6=
+	webengine? ( dev-qt/qtwebengine:6= )
+	media-libs/libsdl2:=
+	media-libs/libva:=
+	media-libs/opus:=
 	net-libs/enet:=
 	virtual/zlib
 	virtual/libusb:=
