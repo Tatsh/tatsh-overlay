@@ -9,7 +9,7 @@ inherit mpv-plugin toolchain-funcs
 
 DESCRIPTION="Set mpv to quiet when stdout/stdout is not a TTY."
 HOMEPAGE="https://github.com/AN3223/dotfiles"
-SHA="779e9295f6f98165daaa10d1602523ac40c1512b"
+SHA="4413db6c1b47aa70ffce40c5a91158e518881718"
 SRC_URI="https://github.com/AN3223/dotfiles/archive/${SHA}.tar.gz -> AN3223-dotfiles-${SHA:0:7}.tar.gz"
 S="${WORKDIR}/dotfiles-${SHA}/.config/mpv/scripts"
 LICENSE="all-rights-reserved"
