@@ -7,7 +7,7 @@ inherit cmake flag-o-matic
 
 DESCRIPTION="Community fork of QtWebKit."
 HOMEPAGE="https://github.com/movableink/webkit"
-SHA="1ab4d21d082e89fe1837c0279467a6da18c78cf0"
+SHA="e5d2c3f3fd2bf2c392d7c7b212e8d1490ff8fe2b"
 SRC_URI="https://github.com/movableink/webkit/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
 
 S="${WORKDIR}/webkit-${SHA}"
@@ -39,7 +39,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-fix-header.patch"
 	"${FILESDIR}/${PN}-fix-linking.patch"
 	"${FILESDIR}/${PN}-size.patch"
-	"${FILESDIR}/${PN}-pr-53.patch"
 	"${FILESDIR}/${PN}-fix-qttestbrowser-build.patch"
 )
 
