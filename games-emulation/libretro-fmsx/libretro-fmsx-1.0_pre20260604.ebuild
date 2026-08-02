@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/fmsx-libretro"
-LIBRETRO_COMMIT_SHA="9eb5f25df5397212a3e3088ca1a64db0740bbe5f"
+LIBRETRO_COMMIT_SHA="f013e213458e06d9df718e4bc4b09d46f88aa899"
 
 inherit libretro-core
 
