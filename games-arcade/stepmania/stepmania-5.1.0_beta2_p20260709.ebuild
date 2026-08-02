@@ -6,7 +6,7 @@ EAPI=8
 inherit cmake desktop wrapper xdg
 
 DESCRIPTION="Advanced rhythm game. Designed for both home and arcade use"
-SHA="d55acb1ba26f1c5b5e3048d6d6c0bd116625216f"
+SHA="21bb8dcd6c7e3782f23d5f4e01b6ee4c82cccc71"
 HOMEPAGE="https://www.stepmania.com/"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 
