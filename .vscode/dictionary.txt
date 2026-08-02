@@ -880,6 +880,7 @@ graphviz
 gravitydb
 grayed
 greenboost
+griffelib
 groupcache
 gtksourceview
 guessit
@@ -1036,6 +1037,7 @@ jnsahaj
 joblib
 joda
 joncampbell
+joserfc
 josharian
 joystickwake
 jridgewell
