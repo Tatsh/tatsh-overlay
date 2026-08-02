@@ -8,37 +8,33 @@ DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
 
 CRATES="
-	aho-corasick@1.1.3
-	autocfg@1.5.0
-	bit-set@0.5.3
-	bit-vec@0.6.3
-	bstr@1.12.0
-	fancy-regex@0.13.0
+	aho-corasick@1.1.4
+	bit-set@0.8.0
+	bit-vec@0.8.0
+	bstr@1.13.0
+	fancy-regex@0.17.0
 	heck@0.5.0
-	indoc@2.0.6
-	libc@0.2.177
-	memchr@2.7.6
-	memoffset@0.9.1
-	once_cell@1.21.3
-	portable-atomic@1.11.1
-	proc-macro2@1.0.101
-	pyo3@0.26.0
-	pyo3-build-config@0.26.0
-	pyo3-ffi@0.26.0
-	pyo3-macros@0.26.0
-	pyo3-macros-backend@0.26.0
-	quote@1.0.41
-	regex@1.12.2
-	regex-automata@0.4.13
-	regex-syntax@0.8.8
-	rustc-hash@2.1.1
-	serde@1.0.228
-	serde_core@1.0.228
-	serde_derive@1.0.228
-	syn@2.0.107
-	target-lexicon@0.13.3
-	unicode-ident@1.0.19
-	unindent@0.2.4
+	libc@0.2.189
+	memchr@2.8.3
+	once_cell@1.21.4
+	portable-atomic@1.14.0
+	proc-macro2@1.0.107
+	pyo3@0.28.3
+	pyo3-build-config@0.28.3
+	pyo3-ffi@0.28.3
+	pyo3-macros@0.28.3
+	pyo3-macros-backend@0.28.3
+	quote@1.0.47
+	regex@1.13.1
+	regex-automata@0.4.16
+	regex-syntax@0.8.11
+	rustc-hash@2.1.3
+	serde_core@1.0.229
+	serde_derive@1.0.229
+	syn@2.0.119
+	syn@3.0.3
+	target-lexicon@0.13.5
+	unicode-ident@1.0.24
 "
 
 inherit cargo distutils-r1 pypi
