@@ -42,4 +42,6 @@ DEPEND="${RDEPEND}"
 BDEPEND="dev-python/cython[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]"
 
+PATCHES=( "${FILESDIR}/${P}-cython3-noexcept.patch" )
+
 distutils_enable_tests pytest

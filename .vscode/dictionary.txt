@@ -274,6 +274,7 @@ chromecast
 chromedp
 chzyer
 cimport
+cimports
 circbuf
 circl
 circonus
@@ -1549,6 +1550,7 @@ noaccess
 nodedir
 nodelib
 nodemon
+noexcept
 noextract
 nofetch
 nolegacy
