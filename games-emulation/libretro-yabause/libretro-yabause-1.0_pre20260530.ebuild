@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/yabause"
-LIBRETRO_COMMIT_SHA="7cb15b8f9eea5a6fa7cae34468a6989522bcba75"
+LIBRETRO_COMMIT_SHA="8926b0c6c347f8c5c755911ddb0ac695420ffbf8"
 inherit libretro-core
 
 DESCRIPTION="Yabause libretro port (Sega Saturn)"
@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 DEPEND="
-	dev-libs/libchdr
+	media-libs/libchdr
 	media-libs/flac:=
 	virtual/zlib"
 RDEPEND="${DEPEND}
@@ -33,6 +33,6 @@ src_prepare() {
 	libretro-core_src_prepare
 
 	# De-vendor libchdr: drop bundled libchdr (and its deps/lzma) so the
-	# system library (dev-libs/libchdr) is used via SYSTEM_LIBCHDR=1.
+	# system library (media-libs/libchdr) is used via SYSTEM_LIBCHDR=1.
 	rm -rf "${S}/../../libchdr" || die
 }
