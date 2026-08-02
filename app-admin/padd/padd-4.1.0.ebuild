@@ -15,10 +15,6 @@ KEYWORDS="~amd64 ~ppc64"
 
 RDEPEND="app-shells/bash:0"
 
-PATCHES=(
-	"${FILESDIR}/${PN}-0001-more-path-fixes.patch"
-)
-
 src_install() {
 	newbin "${PN}.sh" "${PN}"
 }
