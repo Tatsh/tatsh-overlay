@@ -12,10 +12,10 @@ DESCRIPTION="A lightweight LLVM python binding for writing JIT compilers"
 HOMEPAGE="https://llvmlite.readthedocs.io/en/latest/ https://pypi.org/project/llvmlite/"
 
 LICENSE="BSD-2"
-SLOT="0/0.47.0"
+SLOT="0/0.48.0"
 KEYWORDS="~amd64"
 
-BDEPEND="llvm-core/llvm:20"
+BDEPEND="llvm-core/llvm:22"
 RDEPEND="${BDEPEND}"
 DEPEND="${RDEPEND}"
 
@@ -24,21 +24,21 @@ src_prepare() {
 	cmake_src_prepare
 	cd .. || die
 	# Disable their use of CMake because we do the build ourselves with the eclass.
-	sed -re 's/^(\s+)build_library_files\(\)/\1pass/' -i setup.py
+	sed -re 's/^(\s+)build_library_files\(\)/\1pass/' -i setup.py || die
 	distutils-r1_src_prepare
 }
 
 python_configure() {
 	cd ffi || die
 	local mycmakeargs=(
-		"-DCMAKE_PREFIX_PATH=${EPREFIX}/usr/lib/llvm/20"
+		"-DCMAKE_PREFIX_PATH=${EPREFIX}/usr/lib/llvm/22"
 		-DLLVMLITE_SHARED=ON
 	)
 	cmake_src_configure
 }
 
 python_compile() {
-	export "CMAKE_PREFIX_PATH=${EPREFIX}/usr/lib/llvm/20/lib/cmake"
+	export "CMAKE_PREFIX_PATH=${EPREFIX}/usr/lib/llvm/22/lib/cmake"
 	cd ffi || die
 	cmake_src_compile
 	cd .. || die
