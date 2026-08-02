@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/mame2003-plus-libretro"
-LIBRETRO_COMMIT_SHA="870e8ba3fa4e6635e2eb9d85c939589498659c32"
+LIBRETRO_COMMIT_SHA="d6bf36f65f36853120d7e97cdf4fa3720de66728"
 inherit libretro-core
 
 DESCRIPTION="MAME (0.78) with extra features for libretro."
