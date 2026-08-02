@@ -3,11 +3,11 @@
 
 EAPI=8
 
-inherit linux-mod-r1 systemd udev
+inherit linux-mod-r1 systemd toolchain-funcs udev
 
 DESCRIPTION="CX2388x direct ADC capture driver."
 HOMEPAGE="https://github.com/happycube/cxadc-linux3"
-SHA="f1569ab64b4817400e561956896f9bfba492e594"
+SHA="c6f3b23e431cdda2e939d73008e643b54bda56b7"
 SRC_URI="https://github.com/happycube/cxadc-linux3/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}-linux3-${SHA}"
 LICENSE="GPL-2"
@@ -18,17 +18,13 @@ MAKEOPTS+=" -j1"
 
 DOCS=( README.md "Tips-&-Notes.md" )
 
-src_prepare() {
-	echo 'leveladj:' >> Makefile
-	# shellcheck disable=SC2016
-	echo -e '\tcc $(CFLAGS) -o cxleveladj leveladj.c' >> Makefile
-	default
-}
-
 src_compile() {
 	local modlist=( "${PN}" )
-	local modargs=( KDIR="${KERNEL_DIR}" clean default leveladj )
+	# Upstream builds the module via the 'cxadc' target; leveladj and levelmon
+	# are ordinary userspace binaries built below.
+	local modargs=( KDIR="${KERNEL_DIR}" "${PN}" )
 	linux-mod-r1_src_compile
+	emake CC="$(tc-getCC)" CFLAGS="${CFLAGS}" leveladj levelmon
 }
 
 src_install() {
@@ -38,5 +34,6 @@ src_install() {
 	doins "${PN}.conf"
 	dobin utils/c*
 	newbin leveladj cxleveladj
+	newbin levelmon cxlevelmon
 	systemd_dounit "${PN}nc.service"
 }

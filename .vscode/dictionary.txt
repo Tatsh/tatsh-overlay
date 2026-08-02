@@ -378,6 +378,7 @@ cupaloy
 cuse
 cxadc
 cxleveladj
+cxlevelmon
 cxxfilt
 cxxflags
 cxxopts
@@ -1146,6 +1147,7 @@ ledongthuc
 leichtgewicht
 lepcha
 leveladj
+levelmon
 levn
 lexiforest
 lfreetype
