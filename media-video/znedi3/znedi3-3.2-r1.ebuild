@@ -5,10 +5,11 @@ EAPI=8
 
 DESCRIPTION="nnedi3 filter."
 HOMEPAGE="https://github.com/sekrit-twc/znedi3"
-SHA="4da715722628ebb5864508fbab3bc567d2bfd1be"
+SHA="e2016a0ca8cc438ec3e5d0cccafc565092d1a3a5"
 GRAPHENGINE_SHA="f06d7cb4d589ea4657f01b13613efb7437c8ecda"
 VSXX_SHA="de38f0e128c85782494ae00565698a2b25e87869"
-SRC_URI="https://github.com/sekrit-twc/znedi3/archive/${SHA}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/sekrit-twc/znedi3/archive/${SHA}.tar.gz
+	-> ${P}-${SHA:0:8}.gh.tar.gz
 	https://github.com/sekrit-twc/graphengine/archive/${GRAPHENGINE_SHA}.tar.gz -> ${P}-graphengine-${GRAPHENGINE_SHA:0:7}.tar.gz
 	https://github.com/sekrit-twc/vsxx/archive/${VSXX_SHA}.tar.gz -> ${P}-vsxx-${VSXX_SHA:0:7}.tar.gz"
 S="${WORKDIR}/${PN}-${SHA}"
