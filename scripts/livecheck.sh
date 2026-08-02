@@ -1,35 +1,16 @@
 #!/usr/bin/env bash
 cd "$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)/.." || exit 1
 exceptions=(
-    # Needs handler
-    -e dev-util/ida-free
-    # Keep stable version
-    -e games-arcade/outfox
-    # Not yet.
-    -e app-admin/padd
-    -e games-emulation/gopher64
-    -e net-dns/pihole
-    -e net-dns/pihole-ftl
-    -e www-apps/pihole-admin-lte
-    # Inaccurate.
+    # Cannot uupdate yet.
     -e dev-python/thinc
+    # Inaccurate.
     -e games-emulation/cemu
+    # Needs a patch to use zstd from pkg-config not CMake.
     -e games-emulation/mupen64plus-video-gliden64
-    -e games-emulation/rpcs3
+    # Upgrade handled incorrectly.
     -e media-video/vapoursynth
     # Weird tag livecheck cannot handle.
     -e games-emulation/fuse-libretro
     -e games-emulation/pcsx-rearmed-libretro
-    # Deprecated method to package these.
-    -e app-arch/asar
-    -e app-arch/asar
-    -e app-misc/zwave-js-server
-    -e dev-build/node-gyp
-    -e dev-util/prettier
-    -e dev-util/react-native-decompiler
-    -e dev-util/vscode-vsce
-    -e dev-util/yo
-    -e www-apps/anything-llm
-    -e www-apps/stash
 )
 livecheck "${exceptions[@]}" "$@"
