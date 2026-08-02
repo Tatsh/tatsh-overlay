@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/beetle-ngp-libretro"
-LIBRETRO_COMMIT_SHA="0c81ce8991a47aac5d0a7d1ae53de75bc7ddf847"
+LIBRETRO_COMMIT_SHA="a50d5ac288a81f2104ddf43195a4efdd15c72227"
 inherit libretro-core
 
 DESCRIPTION="Beetle NGP libretro port (SNK Neo Geo Pocket / Pocket Color, Mednafen fork)"
