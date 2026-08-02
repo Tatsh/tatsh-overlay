@@ -1,11 +1,21 @@
+Upstream deliberately does not install the project ("py-modules = []") because
+it is run from a checkout. We do install it, so turn on package discovery.
+
+Use setuptools' automatic discovery rather than an explicit package list: the
+set of backends changes between snapshots (exllamav2 was dropped in favour of
+exllamav3), and a hardcoded list breaks the build every time that happens.
+
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -7,8 +7,7 @@ requires = [
+@@ -6,9 +6,8 @@
+ ]
  build-backend = "setuptools.build_meta"
- 
+
 -# We're not building the project itself
- [tool.setuptools]
+-[tool.setuptools]
 -py-modules = []
-+packages = ["tabbyapi", "tabbyapi.backends", "tabbyapi.common", "tabbyapi.backends.exllamav2", "tabbyapi.backends.exllamav3", "tabbyapi.backends.infinity", "tabbyapi.endpoints", "tabbyapi.endpoints.Kobold", "tabbyapi.endpoints.Kobold.types", "tabbyapi.endpoints.Kobold.utils", "tabbyapi.endpoints.OAI", "tabbyapi.endpoints.OAI.types", "tabbyapi.endpoints.OAI.utils", "tabbyapi.endpoints.core", "tabbyapi.endpoints.core.types", "tabbyapi.endpoints.core.utils"]
- 
++[tool.setuptools.packages.find]
++include = ["tabbyapi*"]
+
  [project]
+ name = "tabbyAPI"

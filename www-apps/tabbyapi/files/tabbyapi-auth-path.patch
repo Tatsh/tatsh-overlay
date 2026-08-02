@@ -1,20 +1,17 @@
+Store the generated API tokens under /var/lib/tabbyapi instead of the current
+working directory, which is not writable for the service user.
+
+Upstream now routes both the read and the write through the module-level
+AUTH_FILE constant, so pointing that at the state directory is enough.
+
 --- a/tabbyapi/common/auth.py
 +++ b/tabbyapi/common/auth.py
-@@ -56,7 +56,7 @@ async def load_auth_keys(disable_from_config: bool):
- 
-     yaml = YAML(typ=["rt", "safe"])
-     try:
--        async with aiofiles.open("api_tokens.yml", "r", encoding="utf8") as auth_file:
-+        async with aiofiles.open("/var/lib/tabbyapi/api_tokens.yml", "r", encoding="utf8") as auth_file:
-             contents = await auth_file.read()
-             auth_keys_dict = yaml.load(contents)
-             AUTH_KEYS = AuthKeys.model_validate(auth_keys_dict)
-@@ -66,7 +66,7 @@ async def load_auth_keys(disable_from_config: bool):
-         )
-         AUTH_KEYS = new_auth_keys
- 
--        async with aiofiles.open("api_tokens.yml", "w", encoding="utf8") as auth_file:
-+        async with aiofiles.open("/var/lib/tabbyapi/api_tokens.yml", "w", encoding="utf8") as auth_file:
-             string_stream = io.StringIO()
-             yaml.dump(AUTH_KEYS.model_dump(), string_stream)
- 
+@@ -18,7 +18,7 @@
+ from tabbyapi.common.logger import xlogger
+ from tabbyapi.common.utils import coalesce
+
+-AUTH_FILE = "api_tokens.yml"
++AUTH_FILE = "/var/lib/tabbyapi/api_tokens.yml"
+
+ # Seconds between checks for changes to the auth file
+ AUTH_FILE_POLL_INTERVAL = 2.0

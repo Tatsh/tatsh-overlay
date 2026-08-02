@@ -7,9 +7,9 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{12..14} )
 inherit distutils-r1 systemd
 
-DESCRIPTION="An OAI compatible exllamav2 API that's both lightweight and fast."
+DESCRIPTION="An OAI compatible exllamav3 API that's both lightweight and fast."
 HOMEPAGE="https://github.com/theroyallab/tabbyAPI"
-COMMIT="996bc8dbe141d5c233978ef7cc50cb6351498bb9"
+COMMIT="29680f496b57e3ed1a496c580677d2d67ac729b8"
 SRC_URI="https://github.com/theroyallab/tabbyAPI/archive/${COMMIT}.tar.gz -> ${P}-${COMMIT:0:7}.tar.gz"
 S="${WORKDIR}/tabbyAPI-${COMMIT}"
 LICENSE="AGPL-3"
@@ -49,7 +49,6 @@ RDEPEND="${PYTHON_DEPS}
 		dev-python/uvloop[${PYTHON_USEDEP}]
 	')
 	sci-ml/pytorch[${PYTHON_SINGLE_USEDEP}]
-	sci-ml/exllamav2[${PYTHON_SINGLE_USEDEP}]
 	sci-ml/exllamav3[${PYTHON_SINGLE_USEDEP}]
 	sci-ml/huggingface_hub[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/tokenizers-0.21.0[${PYTHON_SINGLE_USEDEP}]"
