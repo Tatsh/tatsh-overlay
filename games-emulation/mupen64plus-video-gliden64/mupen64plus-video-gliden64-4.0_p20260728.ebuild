@@ -7,7 +7,7 @@ inherit cmake
 
 DESCRIPTION="A new generation, open-source graphics plugin for N64 emulators."
 HOMEPAGE="https://github.com/gonetz/GLideN64"
-SHA="89617ddc015d75adb760dbc1a8ce4c40ad1b7b6a"
+SHA="020b6ab5de1f13d8e673c0a23529f1de1e507c9d"
 SRC_URI="https://github.com/gonetz/GLideN64/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
 
 S="${WORKDIR}/GLideN64-${SHA}"
@@ -16,7 +16,8 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-DEPEND="media-libs/freetype
+DEPEND="app-arch/zstd
+	media-libs/freetype
 	media-libs/libglvnd[X]
 	media-libs/libpng
 	virtual/zlib"
@@ -26,7 +27,12 @@ CMAKE_BUILD_TYPE=Release
 
 src_prepare() {
 	cmake_src_prepare
-	rm -rf src/GLideNHQ/inc
+	rm -rf src/GLideNHQ/inc || die
+	# app-arch/zstd ships pkg-config metadata but no CMake package config, and
+	# installs only a shared library.
+	sed -e 's/FIND_PACKAGE( ZSTD REQUIRED )/find_package(PkgConfig REQUIRED)\n    pkg_check_modules(ZSTD REQUIRED IMPORTED_TARGET libzstd)/' \
+		-e 's/zstd::libzstd_static/PkgConfig::ZSTD/' \
+		-i src/GLideNHQ/CMakeLists.txt || die
 }
 
 src_configure() {

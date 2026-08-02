@@ -1279,6 +1279,7 @@ libyaml
 libz
 libzip
 libzrif
+libzstd
 libzvbi
 licensedir
 lide
