@@ -11,7 +11,7 @@ inherit mpv-plugin
 
 DESCRIPTION="Crop the current video in a visual manner."
 HOMEPAGE="https://github.com/occivink/mpv-scripts"
-SHA="65aa1da29570e9c21b49292725ec5dd719ab6bb4"
+SHA="01f3e99558915bb715b614d7f4b052230360eb21"
 SRC_URI="https://github.com/occivink/mpv-scripts/archive/${SHA}.tar.gz -> occivink-mpv-scripts-${SHA:0:7}.tar.gz"
 S="${WORKDIR}/mpv-scripts-${SHA}/scripts"
 LICENSE="GPL-3"
