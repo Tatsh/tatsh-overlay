@@ -7,12 +7,10 @@ inherit cmake
 
 DESCRIPTION="Library manager for C/C++ (tool only)."
 HOMEPAGE="https://github.com/microsoft/vcpkg-tool https://vcpkg.io/en/index.html"
-format-date() {
-  local input="$1"
-  IFS='.' read -r year month day <<< "$input"
-  printf '%04d-%02d-%02d' "$year" "$month" "$day"
-}
-MY_PV="$(format-date "${PV}")"
+# Upstream tags are zero-padded dates. Build the tag with ver_cut rather than a
+# here-string: here-strings need a temp file, which the sandbox denies during
+# the depend phase, silently yielding an empty version.
+MY_PV="$(printf '%04d-%02d-%02d' "$(ver_cut 1)" "$(ver_cut 2)" "$(ver_cut 3)")"
 SRC_URI="https://github.com/microsoft/${PN}/archive/refs/tags/${MY_PV}.tar.gz -> ${P}.tar.gz"
 
 S="${WORKDIR}/${PN}-${MY_PV}"
