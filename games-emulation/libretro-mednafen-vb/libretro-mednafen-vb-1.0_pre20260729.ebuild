@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/beetle-vb-libretro"
-LIBRETRO_COMMIT_SHA="1275bd7bddf2166be5a10e45c26c5c2a61370658"
+LIBRETRO_COMMIT_SHA="3f53a40bf8aa18777514fd4b220960427e312a3f"
 inherit libretro-core
 
 DESCRIPTION="Beetle VB libretro port (Nintendo Virtual Boy, Mednafen fork)"
