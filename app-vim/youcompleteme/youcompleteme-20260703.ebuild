@@ -7,7 +7,7 @@ inherit python-single-r1
 
 DESCRIPTION="A code-completion engine for Vim."
 HOMEPAGE="https://github.com/ycm-core/YouCompleteMe"
-SHA="131b1827354871a4e984c1660b6af0fefca755c3"
+SHA="d4c91430b70a21ce471c8572400b647d313995b4"
 MY_PN="YouCompleteMe"
 SRC_URI="https://github.com/ycm-core/${MY_PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${MY_PN}-${SHA}"
