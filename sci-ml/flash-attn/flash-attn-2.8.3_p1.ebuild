@@ -63,6 +63,13 @@ src_compile() {
 	export FLASH_ATTENTION_FORCE_BUILD=TRUE "MAX_JOBS=$(makeopts_jobs)"
 	if use cuda; then
 		cuda_add_sandbox
+		# nvcc only supports a limited range of host compilers, and torch's
+		# extension builder refuses to run when the default one is too new.
+		local cuda_bindir
+		cuda_bindir="$(cuda_gccdir)" || die "cuda_gccdir failed"
+		export CUDAHOSTCXX="${cuda_bindir}/g++"
+		export NVCC_CCBIN="${CUDAHOSTCXX}"
+		export CC="${cuda_bindir}/gcc" CXX="${CUDAHOSTCXX}"
 		export BUILD_TARGET=cuda
 	fi
 	use rocm && export BUILD_TARGET=rocm

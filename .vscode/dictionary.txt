@@ -775,6 +775,7 @@ gambatte
 gamecube
 gamemode
 gandarez
+gccdir
 gcfg
 gcflags
 gcrypt
