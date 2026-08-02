@@ -24,11 +24,13 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-src_prepare() {
-	cmake_src_prepare
-	# Drop temporalsoften2.py from the CMake doc install; we install the
-	# wrapper into every enabled Python implementation's site-packages below.
-	sed -i '\|temporalsoften2\.py|d' src/CMakeLists.txt || die
+src_configure() {
+	local mycmakeargs=(
+		# Compile against the VapourSynth headers from the dependency rather
+		# than downloading VapourSynth4.h at configure time.
+		-DSCENECHANGE_FETCH_VAPOURSYNTH_HEADERS=OFF
+	)
+	cmake_src_configure
 }
 
 src_install() {
@@ -36,7 +38,7 @@ src_install() {
 	# shellcheck disable=SC2329
 	install_py_module() {
 		# shellcheck disable=SC2317
-		python_domodule "${S}/temporalsoften2.py"
+		python_domodule "${S}/${PN}"
 	}
 	python_foreach_impl install_py_module
 }

@@ -545,6 +545,7 @@ drevc
 drhelius
 dris
 drivendataorg
+dscenechange
 dset
 dsirit
 dskip
