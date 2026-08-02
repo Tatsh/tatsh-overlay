@@ -7,7 +7,7 @@ inherit desktop
 
 DESCRIPTION="PumpkinOS is a re-implementation of PalmOS."
 HOMEPAGE="https://github.com/migueletto/PumpkinOS https://pmig96.wordpress.com/category/palmos/"
-SHA="c892e282d154d2598fc5c6185403ca1b11132bd9"
+SHA="c81ee9eacfdd52cb0e0bea878fbce3d027df20ed"
 MY_PN="PumpkinOS"
 SRC_URI="https://github.com/migueletto/${MY_PN}/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 
@@ -55,7 +55,7 @@ src_install() {
 	local libdir
 	libdir="${EPREFIX}/usr/$(get_libdir)/${MY_PN}"
 	insinto "/usr/$(get_libdir)/${MY_PN}"
-	doins -r script/*_linux.*
+	doins -r script/*
 	cp pumpkin bin/*.so "${D}/usr/$(get_libdir)/${MY_PN}"
 	cat > pumpkin-bin <<EOF
 #!/usr/bin/env bash
@@ -67,7 +67,7 @@ if ! [ -d "\${storage_dir}/vfs" ]; then
 fi
 mkdir -p "\${storage_dir}/vfs/app_storage" "\${storage_dir}/registry" "\${storage_dir}/log"
 cd "\$storage_dir" || exit 1
-"${libdir}/pumpkin" -d 1 -s "${libdir}/libscriptlua.so" "${libdir}/pumpkin_linux.lua"
+"${libdir}/pumpkin" -d 1 -s "${libdir}/libscriptlua.so" "${libdir}/pumpkin.lua"
 EOF
 	newbin ./pumpkin-bin pumpkin
 	insinto "/usr/$(get_libdir)/${MY_PN}/vfs"

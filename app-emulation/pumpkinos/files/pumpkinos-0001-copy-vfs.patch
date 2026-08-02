@@ -1,24 +1,16 @@
-diff --git a/script/pumpkin_linux.lua b/script/pumpkin_linux.lua
-index fde411a..42d96e2 100644
---- a/script/pumpkin_linux.lua
-+++ b/script/pumpkin_linux.lua
-@@ -14,7 +14,19 @@ if not wp then
-   return
+Mount the per-user VFS by absolute path.
+
+The launcher installed by the ebuild copies the read-only system VFS into
+$HOME/.local/share/PumpkinOS on first run. Referring to it absolutely means the
+emulator works regardless of the working directory it is started from.
+
+--- a/script/pumpkin.lua
++++ b/script/pumpkin.lua
+@@ -53,7 +53,7 @@
+   fullrefresh = true
  end
  
 -pit.mount("./vfs/", "/")
-+--- Check if a file or directory exists in this path
-+function exists(file)
-+   local ok, err, code = os.rename(file, file)
-+   if not ok then
-+      if code == 13 then
-+         -- Permission denied, but it exists
-+         return true
-+      end
-+   end
-+   return ok, err
-+end
-+
 +pit.mount(os.getenv('HOME') .. '/.local/share/PumpkinOS/vfs/', "/")
  
  pumpkin = pit.loadlib("libos")
