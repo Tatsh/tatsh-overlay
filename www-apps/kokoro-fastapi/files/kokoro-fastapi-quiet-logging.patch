@@ -1,6 +1,21 @@
---- a/api/src/main.py	2025-10-20 00:56:13.277693594 -0400
-+++ b/api/src/main.py	2025-10-20 00:57:52.820314517 -0400
-@@ -25,13 +25,9 @@
+Log to stderr at WARNING by default so the service does not flood the journal.
+
+Upstream added an API_LOG_LEVEL environment variable, so the level stays
+overridable; only the default and the ANSI colour codes (which are noise in
+the journal) are changed here.
+
+--- a/api/src/main.py
++++ b/api/src/main.py
+@@ -23,19 +23,15 @@
+ def setup_logger():
+     """Configure loguru logger with custom formatting"""
+     valid_levels = ["TRACE", "DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR", "CRITICAL"]
+-    level = os.getenv("API_LOG_LEVEL", "DEBUG").upper()
++    level = os.getenv("API_LOG_LEVEL", "WARNING").upper()
+     if level not in valid_levels:
+-        level = "DEBUG"
++        level = "WARNING"
+     print(f"Global API loguru logger level: {level}")
      config = {
          "handlers": [
              {
@@ -10,10 +25,8 @@
 -                "<fg #4169E1>{module}:{line}</fg #4169E1> | "
 -                "{message}",
 -                "colorize": True,
--                "level": "DEBUG",
 +                "sink": sys.stderr,
 +                "format": "{module}:{line} | {message}",
-+                "level": "WARNING",
+                 "level": level,
              },
          ],
-     }

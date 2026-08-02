@@ -1,12 +1,21 @@
---- a/pyproject.toml	2025-10-18 23:32:47.188529524 -0400
-+++ b/pyproject.toml	2025-10-18 23:33:10.252060081 -0400
-@@ -87,8 +87,7 @@
+Upstream installs the modules under api/src as top-level packages (core,
+inference, routers, ...), which would collide with unrelated distributions in
+site-packages. src_prepare moves api/src to kokoro_fastapi, so point setuptools
+at that instead.
+
+The package list is explicit rather than discovered because api/src also holds
+the builds, models and voices data directories, which are installed under
+/var/lib/kokoro-fastapi instead.
+
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -128,8 +128,7 @@
  build-backend = "setuptools.build_meta"
- 
+
  [tool.setuptools]
--package-dir = {"" = "api/src"}
--packages.find = {where = ["api/src"], namespaces = true}
+-package-dir = { "" = "api/src" }
+-packages.find = { where = ["api/src"], namespaces = true }
 +packages = ["kokoro_fastapi", "kokoro_fastapi.core", "kokoro_fastapi.inference", "kokoro_fastapi.routers", "kokoro_fastapi.services", "kokoro_fastapi.services.text_processing", "kokoro_fastapi.structures"]
- 
+
  [tool.pytest.ini_options]
  testpaths = ["api/tests", "ui/tests"]
