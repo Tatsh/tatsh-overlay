@@ -7,7 +7,8 @@ DISTUTILS_USE_PEP517=maturin
 DISTUTILS_EXT=1
 PYTHON_COMPAT=( python3_1{0..4} )
 
-CRATES="bitflags@1.3.2
+CRATES="
+	bitflags@1.3.2
 	cfg-if@1.0.4
 	daachorse@1.0.0
 	getrandom@0.1.16
@@ -22,11 +23,11 @@ CRATES="bitflags@1.3.2
 	ppv-lite86@0.2.21
 	proc-macro-hack@0.5.20+deprecated
 	proc-macro2@1.0.105
+	pyo3@0.28.2
 	pyo3-build-config@0.28.2
 	pyo3-ffi@0.28.2
-	pyo3-macros-backend@0.28.2
 	pyo3-macros@0.28.2
-	pyo3@0.28.2
+	pyo3-macros-backend@0.28.2
 	quote@1.0.43
 	rand@0.7.3
 	rand_chacha@0.2.2
@@ -37,11 +38,12 @@ CRATES="bitflags@1.3.2
 	syn@1.0.109
 	syn@2.0.114
 	target-lexicon@0.13.4
-	text2num@2.6.3
+	text2num@2.6.5
 	unicode-ident@1.0.22
 	wasi@0.9.0+wasi-snapshot-preview1
+	zerocopy@0.8.33
 	zerocopy-derive@0.8.33
-	zerocopy@0.8.33"
+"
 
 inherit cargo distutils-r1 pypi
 
