@@ -7,7 +7,7 @@ inherit python-r1
 
 DESCRIPTION="Generates nftables maps of geolocation IP address blocks."
 HOMEPAGE="https://github.com/pvxe/nftables-geoip"
-SHA="252b1ac57059b35e4d286e0a0d06a5da77bcd743"
+SHA="87239547814b242f9ae61c7ecfcc3487d35f7e9c"
 SRC_URI="https://github.com/pvxe/nftables-geoip/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
 S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="GPL-2"
