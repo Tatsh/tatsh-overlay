@@ -393,6 +393,7 @@ damerau
 dannav
 danwakefield
 darm
+dasbus
 dashjs
 dask
 dataclasses
@@ -1792,6 +1793,7 @@ pyaaf
 pyarrow
 pyasn
 pybind
+pycairo
 pycargoebuild
 pychoco
 pycparser

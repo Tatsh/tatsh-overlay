@@ -15,17 +15,26 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="dev-python/pydantic[${PYTHON_USEDEP}]
-	dev-python/pydbus[${PYTHON_USEDEP}]
-	dev-python/pygobject[${PYTHON_USEDEP}]
+DEPEND="dev-python/dasbus[${PYTHON_USEDEP}]
 	dev-python/evdev[${PYTHON_USEDEP}]
+	dev-python/packaging[${PYTHON_USEDEP}]
 	dev-python/psutil[${PYTHON_USEDEP}]
+	dev-python/pycairo[${PYTHON_USEDEP}]
+	dev-python/pydantic[${PYTHON_USEDEP}]
+	dev-python/pygobject[${PYTHON_USEDEP}]
 	x11-libs/gtksourceview:4"
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${PN}-no-data-files.patch" )
-
-distutils_enable_tests unittest
+src_prepare() {
+	# Upstream migrated from setup.py to pyproject.toml but shipped no
+	# [build-system] table; PEP 517 implies setuptools when it is absent.
+	cat >> pyproject.toml <<-EOF || die
+		[build-system]
+		requires = ["setuptools"]
+		build-backend = "setuptools.build_meta"
+	EOF
+	distutils-r1_src_prepare
+}
 
 src_install() {
 	distutils-r1_src_install
@@ -44,3 +53,5 @@ src_install() {
 	insinto "/usr/share/${PN}"
 	doins "data/${PN}-large.png" "data/${PN}.glade" "data/${PN}.svg" data/style.css
 }
+
+distutils_enable_tests unittest
