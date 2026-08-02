@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/pcsx_rearmed"
-LIBRETRO_COMMIT_SHA="32e2193bcc9d937d9b1a16db43258aef51cddae8"
+LIBRETRO_COMMIT_SHA="da2cb8ecd17fd0932ab6d94774c0522beebce6e3"
 
 inherit libretro-core
 
@@ -13,10 +13,9 @@ HOMEPAGE="https://github.com/libretro/pcsx_rearmed"
 LIBPICOFE_SHA="dd11f2d723162eb1cf8e6db9f40de7db0d0b6bba"
 SRC_URI="https://github.com/${LIBRETRO_REPO_NAME}/archive/${LIBRETRO_COMMIT_SHA}.tar.gz -> ${P}-${LIBRETRO_COMMIT_SHA:0:7}.tar.gz
 	https://github.com/notaz/libpicofe/archive/${LIBPICOFE_SHA}.tar.gz -> libpicofe-${LIBPICOFE_SHA:0:7}.tar.gz "
-KEYWORDS="~amd64 ~arm64 ~x86"
-
 LICENSE="GPL-2"
 SLOT="0"
+KEYWORDS="~amd64 ~arm64 ~x86"
 
 DEPEND="media-libs/libpng:0
 	media-libs/libsdl
