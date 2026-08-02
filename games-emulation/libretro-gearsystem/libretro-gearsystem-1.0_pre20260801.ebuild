@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="drhelius/Gearsystem"
-LIBRETRO_COMMIT_SHA="4819f8a7f2d3ba5c6d4562055bc5de0cdc612cbd"
+LIBRETRO_COMMIT_SHA="130d4c91583248b8703e334cb2f1cf5bb84c3e8d"
 inherit libretro-core
 
 DESCRIPTION="Gearsystem libretro port (Sega Master System / Game Gear / SG-1000)"
