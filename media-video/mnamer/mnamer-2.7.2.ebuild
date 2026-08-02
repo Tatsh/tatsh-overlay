@@ -21,6 +21,4 @@ RDEPEND="dev-python/appdirs[${PYTHON_USEDEP}]
 	dev-python/teletype[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 
-PATCHES=( "${FILESDIR}/${PN}-291.patch" )
-
 distutils_enable_tests pytest
