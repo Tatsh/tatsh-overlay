@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -7,9 +7,18 @@ if [[ ${PV} = *9999* ]] ; then
 	EGIT_REPO_URI="https://github.com/sekrit-twc/zimg"
 	inherit git-r3
 else
-	SRC_URI="https://github.com/sekrit-twc/zimg/archive/release-${PV}.tar.gz -> ${P}.tar.gz"
+	# Snapshot of master: media-video/vapoursynth-78 uses the
+	# chromatic_adaptation graph builder parameter, which is not in any
+	# release as of 3.0.6.
+	COMMIT="1ad1895d5ff0bbe69c61243f9996aede713d1b5f"
+	# graphengine is a submodule, so it is absent from the GitHub archive.
+	GRAPHENGINE_COMMIT="cb5b2ce13384ec2491f0c37256ea210034799f69"
+	SRC_URI="https://github.com/sekrit-twc/zimg/archive/${COMMIT}.tar.gz
+		-> ${P}.gh.tar.gz
+		https://github.com/sekrit-twc/graphengine/archive/${GRAPHENGINE_COMMIT}.tar.gz
+		-> graphengine-${GRAPHENGINE_COMMIT:0:8}.gh.tar.gz"
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~loong ~mips ~ppc ~ppc64 ~riscv ~sparc ~x86"
-	S="${WORKDIR}/${PN}-release-${PV}/"
+	S="${WORKDIR}/${PN}-${COMMIT}"
 fi
 inherit autotools multilib-minimal
 
@@ -22,11 +31,11 @@ IUSE="debug static-libs test"
 RESTRICT="!test? ( test )"
 DEPEND="test? ( dev-cpp/gtest )"
 
-PATCHES=(
-	"${FILESDIR}/system-gtest.patch"
-)
-
 src_prepare() {
+	if [[ ${PV} != *9999* ]]; then
+		rmdir graphengine || die
+		mv "${WORKDIR}/graphengine-${GRAPHENGINE_COMMIT}" graphengine || die
+	fi
 	default
 	eautoreconf
 }
