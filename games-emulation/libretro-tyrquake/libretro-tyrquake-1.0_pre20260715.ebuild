@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/tyrquake"
-LIBRETRO_COMMIT_SHA="5c09044ee01770610fbeafaceeb1d49453b6bf4f"
+LIBRETRO_COMMIT_SHA="e57bb11597e8a00380f30f2627d219da960cf69a"
 
 inherit libretro-core
 
