@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Prevents you from committing sensitive info to a git repository."
 HOMEPAGE="https://github.com/awslabs/git-secrets"
-SHA="5357e18bc27b42a827b6780564ea873a72ca1f01"
+SHA="7d6b970cbd3c216353cb22b383b70c150140662e"
 SRC_URI="https://github.com/awslabs/git-secrets/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}-${SHA}"
 
