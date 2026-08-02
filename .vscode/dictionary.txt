@@ -1577,6 +1577,7 @@ numberformat
 numpy
 numpydoc
 nurio
+nusb
 nvcc
 nvidiactl
 nvlink
