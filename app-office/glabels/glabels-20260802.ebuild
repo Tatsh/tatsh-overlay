@@ -7,7 +7,7 @@ inherit cmake xdg
 
 DESCRIPTION="glabels label designer (now in Qt)."
 HOMEPAGE="https://github.com/j-evins/glabels-qt"
-SHA="d1ee78e58aef92b526244955da0b4302edbc43e1"
+SHA="2a92bfffc739436a046a38e0a8cd8302e64bad10"
 SRC_URI="https://github.com/j-evins/${PN}-qt/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
 
 S="${WORKDIR}/${PN}-qt-${SHA}"
