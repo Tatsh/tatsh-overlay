@@ -8,13 +8,15 @@ inherit cmake desktop xdg
 DESCRIPTION="Wii U emulator."
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
 MY_PN="Cemu"
+SHA="1706e5f37910fc6962ee54a41b219a53c1eed8b4"
 GLSLANG_SHA="7200bc12a8979d13b22cd52de80ffb7d41939615"
 IMGUI_PV="1.88"
-SRC_URI="https://github.com/cemu-project/Cemu/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/cemu-project/Cemu/archive/${SHA}.tar.gz
+	-> ${P}-${SHA:0:8}.gh.tar.gz
 	https://github.com/ocornut/imgui/archive/refs/tags/v${IMGUI_PV}.tar.gz -> ${PN}-imgui-${IMGUI_PV}.tar.gz
 	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> glslang-${GLSLANG_SHA:0:7}.tar.gz"
 
-S="${WORKDIR}/${MY_PN}-${PV}"
+S="${WORKDIR}/${MY_PN}-${SHA}"
 
 LICENSE="MPL-2.0 ISC"
 SLOT="0"
@@ -48,6 +50,7 @@ BDEPEND="media-libs/glm"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0002-remove-default-from-system-g.patch"
+	"${FILESDIR}/${PN}-wxwidgets-3.2-compat.patch"
 )
 
 src_prepare() {

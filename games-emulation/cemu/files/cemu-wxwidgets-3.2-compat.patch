@@ -1,0 +1,259 @@
+Build against wxWidgets 3.2 as well as 3.3.
+
+Cemu raised its requirement to wxWidgets 3.3 in 08609591ae, but only 3.2 is
+packaged in Gentoo so far. The differences are small enough to bridge:
+
+  * wxString::FromUTF8() gained a std::string_view overload in 3.3. The
+    (pointer, length) and (const std::string&) overloads exist in both
+    releases, so the affected call sites use those and need no version check.
+  * wxInfoDC and wxScrollHelper::DoPrepareReadOnlyDC() are new in 3.3, and
+    wxString::wc_string() is 3.3's name for ToStdWstring(). Guard those with
+    wxCHECK_VERSION so the 3.3 code paths are picked up automatically once
+    x11-libs/wxGTK:3.3 is available.
+
+The find_package() minimum is lowered rather than pinned, so 3.3 continues to
+satisfy it.
+
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2026-08-02 18:51:52.252716791 -0400
++++ b/CMakeLists.txt	2026-08-02 18:51:52.285160446 -0400
+@@ -233,7 +233,7 @@
+ endif()
+ 
+ if (ENABLE_WXWIDGETS)
+-	find_package(wxWidgets 3.3 REQUIRED COMPONENTS base core gl propgrid xrc)
++	find_package(wxWidgets 3.2 REQUIRED COMPONENTS base core gl propgrid xrc)
+ endif()
+ 
+ if (ENABLE_CUBEB)
+diff -ruN a/src/gui/wxgui/CemuApp.cpp b/src/gui/wxgui/CemuApp.cpp
+--- a/src/gui/wxgui/CemuApp.cpp	2026-08-02 18:51:52.255147151 -0400
++++ b/src/gui/wxgui/CemuApp.cpp	2026-08-02 18:51:52.285353439 -0400
+@@ -258,7 +258,7 @@
+ 
+ std::string TranslationCallback(std::string_view msgId)
+ {
+-	return wxGetTranslation(wxString::FromUTF8(msgId)).utf8_string();
++	return wxGetTranslation(wxString::FromUTF8(msgId.data(), msgId.size())).utf8_string();
+ }
+ 
+ bool CemuApp::OnInit()
+diff -ruN a/src/gui/wxgui/components/TextList.cpp b/src/gui/wxgui/components/TextList.cpp
+--- a/src/gui/wxgui/components/TextList.cpp	2026-08-02 18:51:52.257251092 -0400
++++ b/src/gui/wxgui/components/TextList.cpp	2026-08-02 18:51:52.285471256 -0400
+@@ -27,8 +27,12 @@
+ 	m_font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
+ 	this->wxWindowBase::SetBackgroundStyle(wxBG_STYLE_PAINT);
+ 
++#if wxCHECK_VERSION(3, 3, 0)
+ 	wxInfoDC dc(this);
+ 	this->DoPrepareReadOnlyDC(dc);
++#else
++	wxClientDC dc(this);
++#endif
+ 	dc.SetFont(m_font);
+ 	m_line_height = dc.GetCharHeight();
+ 	m_char_width = dc.GetCharWidth();
+diff -ruN a/src/gui/wxgui/GraphicPacksWindow2.cpp b/src/gui/wxgui/GraphicPacksWindow2.cpp
+--- a/src/gui/wxgui/GraphicPacksWindow2.cpp	2026-08-02 18:59:43.303361222 -0400
++++ b/src/gui/wxgui/GraphicPacksWindow2.cpp	2026-08-02 18:59:43.335615912 -0400
+@@ -96,10 +96,10 @@
+ 			const auto parent_node = node;
+ 			if (i < (tokens.size() - 1))
+ 			{
+-				node = FindTreeItem(parent_node, wxString::FromUTF8(token));
++				node = FindTreeItem(parent_node, wxString::FromUTF8(token.data(), token.size()));
+ 				if (!node.IsOk())
+ 				{
+-					node = m_graphic_pack_tree->AppendItem(parent_node, wxString::FromUTF8(token));
++					node = m_graphic_pack_tree->AppendItem(parent_node, wxString::FromUTF8(token.data(), token.size()));
+ 				}
+ 			}
+ 			else
+@@ -108,7 +108,7 @@
+ 				// if a node with same name already exists, add a number suffix
+ 				for (sint32 s = 0; s < 999; s++)
+ 				{
+-					wxString nodeName = wxString::FromUTF8(token);
++					wxString nodeName = wxString::FromUTF8(token.data(), token.size());
+ 					if (s > 0)
+ 						nodeName.append(formatWxString(" #{}", s + 1));
+ 
+diff -ruN a/src/gui/wxgui/input/InputAPIAddWindow.cpp b/src/gui/wxgui/input/InputAPIAddWindow.cpp
+--- a/src/gui/wxgui/input/InputAPIAddWindow.cpp	2026-08-02 19:05:41.823734548 -0400
++++ b/src/gui/wxgui/input/InputAPIAddWindow.cpp	2026-08-02 19:05:41.874406590 -0400
+@@ -43,7 +43,7 @@
+ 				continue;
+ 
+ 			const auto provider = *p.begin();
+-			m_input_api->Append(wxString::FromUTF8(provider->api_name()), new wxTypeData(provider->api()));
++			m_input_api->Append(wxString::FromUTF8(std::string(provider->api_name())), new wxTypeData(provider->api()));
+ 		}
+ 
+ 		m_input_api->Bind(wxEVT_CHOICE, &InputAPIAddWindow::on_api_selected, this);
+@@ -150,7 +150,7 @@
+ bool InputAPIAddWindow::has_custom_settings() const
+ {
+ 	const auto selection = m_input_api->GetStringSelection();
+-	return selection == wxString::FromUTF8(to_string(InputAPI::DSUClient));
++	return selection == wxString::FromUTF8(std::string(to_string(InputAPI::DSUClient)));
+ }
+ 
+ std::unique_ptr<ControllerProviderSettings> InputAPIAddWindow::get_settings() const
+@@ -174,7 +174,7 @@
+ 
+     const auto selection = m_input_api->GetStringSelection();
+ 	// keyboard is a special case, as theres only one device supported atm
+-	if (selection == wxString::FromUTF8(to_string(InputAPI::Keyboard)))
++	if (selection == wxString::FromUTF8(std::string(to_string(InputAPI::Keyboard))))
+ 	{
+ 		const auto controllers = InputManager::instance().get_api_provider(InputAPI::Keyboard)->get_controllers();
+ 		if (!controllers.empty())
+diff -ruN a/src/gui/wxgui/input/InputSettings2.cpp b/src/gui/wxgui/input/InputSettings2.cpp
+--- a/src/gui/wxgui/input/InputSettings2.cpp	2026-08-02 19:05:41.828554294 -0400
++++ b/src/gui/wxgui/input/InputSettings2.cpp	2026-08-02 19:05:41.874777999 -0400
+@@ -354,7 +354,7 @@
+ 		has_controllers = !emulated_controller->get_controllers().empty();
+ 
+ 		const auto emulated_type = emulated_controller->type();
+-		int index = page_data.m_emulated_controller->Append(wxString::FromUTF8(emulated_controller->type_to_string(emulated_type)));
++		int index = page_data.m_emulated_controller->Append(wxString::FromUTF8(std::string(emulated_controller->type_to_string(emulated_type))));
+ 		page_data.m_emulated_controller->SetSelection(index);
+ 
+ 		const auto controller_selection = page_data.m_controllers->GetStringSelection();
+@@ -764,7 +764,7 @@
+ 	const auto selected_value = emulated_controllers->GetStringSelection();
+ 	if(selected != wxNOT_FOUND)
+ 	{
+-		is_gamepad_selected = selected_value == wxString::FromUTF8(EmulatedController::type_to_string(EmulatedController::Type::VPAD));
++		is_gamepad_selected = selected_value == wxString::FromUTF8(std::string(EmulatedController::type_to_string(EmulatedController::Type::VPAD)));
+ 		is_wpad_selected = !is_gamepad_selected && selected != 0;
+ 	}
+ 
+@@ -774,13 +774,13 @@
+ 	emulated_controllers->AppendString(_("Disabled"));
+ 
+ 	if (vpad_count < InputManager::kMaxVPADControllers || is_gamepad_selected)
+-		emulated_controllers->Append(wxString::FromUTF8(EmulatedController::type_to_string(EmulatedController::Type::VPAD)));
++		emulated_controllers->Append(wxString::FromUTF8(std::string(EmulatedController::type_to_string(EmulatedController::Type::VPAD))));
+ 
+ 	if (wpad_count < InputManager::kMaxWPADControllers || is_wpad_selected)
+ 	{
+-		emulated_controllers->AppendString(wxString::FromUTF8(EmulatedController::type_to_string(EmulatedController::Type::Pro)));
+-		emulated_controllers->AppendString(wxString::FromUTF8(EmulatedController::type_to_string(EmulatedController::Type::Classic)));
+-		emulated_controllers->AppendString(wxString::FromUTF8(EmulatedController::type_to_string(EmulatedController::Type::Wiimote)));
++		emulated_controllers->AppendString(wxString::FromUTF8(std::string(EmulatedController::type_to_string(EmulatedController::Type::Pro))));
++		emulated_controllers->AppendString(wxString::FromUTF8(std::string(EmulatedController::type_to_string(EmulatedController::Type::Classic))));
++		emulated_controllers->AppendString(wxString::FromUTF8(std::string(EmulatedController::type_to_string(EmulatedController::Type::Wiimote))));
+ 	}
+ 
+ 	emulated_controllers->SetStringSelection(selected_value);
+diff -ruN a/src/gui/wxgui/input/panels/ClassicControllerInputPanel.cpp b/src/gui/wxgui/input/panels/ClassicControllerInputPanel.cpp
+--- a/src/gui/wxgui/input/panels/ClassicControllerInputPanel.cpp	2026-08-02 19:05:41.832863849 -0400
++++ b/src/gui/wxgui/input/panels/ClassicControllerInputPanel.cpp	2026-08-02 19:05:41.874987184 -0400
+@@ -103,7 +103,7 @@
+ 
+ void ClassicControllerInputPanel::add_button_row(wxGridBagSizer *sizer, sint32 row, sint32 column, const ClassicController::ButtonId &button_id) {
+ 	sizer->Add(
+-		new wxStaticText(this, wxID_ANY, wxGetTranslation(wxString::FromUTF8(ClassicController::get_button_name(button_id)))),
++		new wxStaticText(this, wxID_ANY, wxGetTranslation(wxString::FromUTF8(std::string(ClassicController::get_button_name(button_id))))),
+ 		wxGBPosition(row, column),
+ 		wxDefaultSpan,
+ 		wxALL | wxALIGN_CENTER_VERTICAL, 5);
+diff -ruN a/src/gui/wxgui/input/panels/ProControllerInputPanel.cpp b/src/gui/wxgui/input/panels/ProControllerInputPanel.cpp
+--- a/src/gui/wxgui/input/panels/ProControllerInputPanel.cpp	2026-08-02 19:05:41.837377489 -0400
++++ b/src/gui/wxgui/input/panels/ProControllerInputPanel.cpp	2026-08-02 19:05:41.875124047 -0400
+@@ -101,7 +101,7 @@
+ 
+ void ProControllerInputPanel::add_button_row(wxGridBagSizer *sizer, sint32 row, sint32 column, const ProController::ButtonId &button_id) {
+ 	sizer->Add(
+-		new wxStaticText(this, wxID_ANY, wxGetTranslation(wxString::FromUTF8(ProController::get_button_name(button_id)))),
++		new wxStaticText(this, wxID_ANY, wxGetTranslation(wxString::FromUTF8(std::string(ProController::get_button_name(button_id))))),
+ 		wxGBPosition(row, column),
+ 		wxDefaultSpan,
+ 		wxALL | wxALIGN_CENTER_VERTICAL, 5);
+diff -ruN a/src/gui/wxgui/input/panels/VPADInputPanel.cpp b/src/gui/wxgui/input/panels/VPADInputPanel.cpp
+--- a/src/gui/wxgui/input/panels/VPADInputPanel.cpp	2026-08-02 19:05:41.841815920 -0400
++++ b/src/gui/wxgui/input/panels/VPADInputPanel.cpp	2026-08-02 19:05:41.875246081 -0400
+@@ -157,7 +157,7 @@
+ }
+ 
+ void VPADInputPanel::add_button_row(wxGridBagSizer *sizer, sint32 row, sint32 column, const VPADController::ButtonId &button_id) {
+-	add_button_row(sizer, row, column, button_id, wxGetTranslation(wxString::FromUTF8(VPADController::get_button_name(button_id))));
++	add_button_row(sizer, row, column, button_id, wxGetTranslation(wxString::FromUTF8(std::string(VPADController::get_button_name(button_id)))));
+ }
+ 
+ void VPADInputPanel::add_button_row(wxGridBagSizer *sizer, sint32 row, sint32 column,
+diff -ruN a/src/gui/wxgui/input/panels/WiimoteInputPanel.cpp b/src/gui/wxgui/input/panels/WiimoteInputPanel.cpp
+--- a/src/gui/wxgui/input/panels/WiimoteInputPanel.cpp	2026-08-02 19:05:41.846170394 -0400
++++ b/src/gui/wxgui/input/panels/WiimoteInputPanel.cpp	2026-08-02 19:05:41.875384900 -0400
+@@ -122,7 +122,7 @@
+ 			continue;
+ 
+ 		m_item_sizer->Add(
+-			new wxStaticText(this, wxID_ANY, wxGetTranslation(wxString::FromUTF8(WiimoteController::get_button_name(id)))),
++			new wxStaticText(this, wxID_ANY, wxGetTranslation(wxString::FromUTF8(std::string(WiimoteController::get_button_name(id))))),
+ 			wxGBPosition(row, column),
+ 			wxDefaultSpan,
+ 			wxALL | wxALIGN_CENTER_VERTICAL, 5);
+@@ -158,7 +158,7 @@
+ 
+ void WiimoteInputPanel::add_button_row(sint32 row, sint32 column, const WiimoteController::ButtonId &button_id) {
+ 	m_item_sizer->Add(
+-		new wxStaticText(this, wxID_ANY, wxGetTranslation(wxString::FromUTF8(WiimoteController::get_button_name(button_id)))),
++		new wxStaticText(this, wxID_ANY, wxGetTranslation(wxString::FromUTF8(std::string(WiimoteController::get_button_name(button_id))))),
+ 		wxGBPosition(row, column),
+ 		wxDefaultSpan,
+ 		wxALL | wxALIGN_CENTER_VERTICAL, 5);
+diff -ruN a/src/gui/wxgui/MainWindow.cpp b/src/gui/wxgui/MainWindow.cpp
+--- a/src/gui/wxgui/MainWindow.cpp	2026-08-02 19:10:24.680182526 -0400
++++ b/src/gui/wxgui/MainWindow.cpp	2026-08-02 19:10:24.717623445 -0400
+@@ -1572,7 +1572,7 @@
+ void MainWindow::AsyncSetTitle(std::string_view windowTitle)
+ {
+ 	wxCommandEvent set_title_event(wxEVT_SET_WINDOW_TITLE);
+-	set_title_event.SetString(wxString::FromUTF8(windowTitle));
++	set_title_event.SetString(wxString::FromUTF8(std::string(windowTitle)));
+ 	g_mainFrame->QueueEvent(set_title_event.Clone());
+ }
+ 
+diff -ruN a/src/gui/wxgui/PadViewFrame.cpp b/src/gui/wxgui/PadViewFrame.cpp
+--- a/src/gui/wxgui/PadViewFrame.cpp	2026-08-02 19:10:24.684460801 -0400
++++ b/src/gui/wxgui/PadViewFrame.cpp	2026-08-02 19:10:24.717965634 -0400
+@@ -237,6 +237,6 @@
+ void PadViewFrame::AsyncSetTitle(std::string_view windowTitle)
+ {
+ 	wxCommandEvent set_title_event(wxEVT_SET_WINDOW_TITLE);
+-	set_title_event.SetString(wxString::FromUTF8(windowTitle));
++	set_title_event.SetString(wxString::FromUTF8(std::string(windowTitle)));
+ 	QueueEvent(set_title_event.Clone());
+ }
+diff -ruN a/src/gui/wxgui/TitleManager.cpp b/src/gui/wxgui/TitleManager.cpp
+--- a/src/gui/wxgui/TitleManager.cpp	2026-08-02 19:10:24.689282678 -0400
++++ b/src/gui/wxgui/TitleManager.cpp	2026-08-02 19:10:24.718156043 -0400
+@@ -382,7 +382,11 @@
+ 	if (openFileDialog.ShowModal() == wxID_CANCEL || openFileDialog.GetPath().IsEmpty())
+ 		return;
+ 
++#if wxCHECK_VERSION(3, 3, 0)
+ 	fs::path filePath(openFileDialog.GetPath().wc_string());
++#else
++	fs::path filePath(openFileDialog.GetPath().ToStdWstring());
++#endif
+ 	try
+ 	{
+ 		filePath = filePath.parent_path();
+diff -ruN a/src/gui/wxgui/wxWindowSystem.cpp b/src/gui/wxgui/wxWindowSystem.cpp
+--- a/src/gui/wxgui/wxWindowSystem.cpp	2026-08-02 18:59:43.308962251 -0400
++++ b/src/gui/wxgui/wxWindowSystem.cpp	2026-08-02 18:59:43.335801477 -0400
+@@ -62,8 +62,8 @@
+ 	if (title.empty())
+ 		caption = wxASCII_STR(wxMessageBoxCaptionStr);
+ 	else
+-		caption = wxString::FromUTF8(title);
+-	wxMessageBox(wxString::FromUTF8(message), caption, wxOK | wxCENTRE | wxICON_ERROR);
++		caption = wxString::FromUTF8(title.data(), title.size());
++	wxMessageBox(wxString::FromUTF8(message.data(), message.size()), caption, wxOK | wxCENTRE | wxICON_ERROR);
+ }
+ 
+ WindowSystem::WindowInfo& WindowSystem::GetWindowInfo()
