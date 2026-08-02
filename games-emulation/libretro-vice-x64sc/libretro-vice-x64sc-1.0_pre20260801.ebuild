@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/vice-libretro"
-LIBRETRO_COMMIT_SHA="e9f8ac034ddef3025f0567768f7af8219f7cfdb8"
+LIBRETRO_COMMIT_SHA="c8c242db75a559246d6d51017e6dd4ecd75d6a9f"
 
 inherit libretro-core
 
