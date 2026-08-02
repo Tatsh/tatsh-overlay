@@ -3,7 +3,7 @@
 
 EAPI=8
 LIBRETRO_REPO_NAME="libretro/swanstation"
-LIBRETRO_COMMIT_SHA="4d309c05fd7bdc503d91d267bd542edb8d192b09"
+LIBRETRO_COMMIT_SHA="5430a4a53b89fa5827c97b84ada29d23317245bc"
 
 inherit libretro-core cmake
 
