@@ -11,8 +11,9 @@ inherit distutils-r1
 
 DESCRIPTION="Holy's ported AviSynth functions for VapourSynth"
 HOMEPAGE="https://github.com/HomeOfVapourSynthEvolution/havsfunc"
-SHA="da4340f1a1b462cbc4ef543178e4c35f15813e7d"
-SRC_URI="https://github.com/HomeOfVapourSynthEvolution/havsfunc/archive/${SHA}.tar.gz -> ${P}.tar.gz"
+SHA="9a0683adae21506fbd93da2f3b71ec1e6d36bf11"
+SRC_URI="https://github.com/HomeOfVapourSynthEvolution/havsfunc/archive/${SHA}.tar.gz
+	-> ${P}-${SHA:0:8}.gh.tar.gz"
 S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="GPL-2"
 SLOT="0"
