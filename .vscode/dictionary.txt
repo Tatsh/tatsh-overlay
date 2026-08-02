@@ -2425,9 +2425,11 @@ webauthn
 webcomponents
 webcrypto
 webengine
+webhome
 webidl
 webp
 webpassword
+webroot
 webtheme
 webuiboxedlayout
 webvr
