@@ -6,11 +6,11 @@ EAPI=8
 inherit linux-mod-r1 systemd udev
 
 DESCRIPTION="Hacky thing for Ollama."
-HOMEPAGE="https://gitlab.com/IsolatedOctopi/nvidia_greenboost"
-SHA="eaee6c29e85c89ad32dc665b9508ce3ae280ac05"
-MY_PN="${PN//-/_}"
-SRC_URI="https://gitlab.com/IsolatedOctopi/${MY_PN}/-/archive/${SHA}/${MY_PN}-${SHA}.tar.gz"
-S="${WORKDIR}/${MY_PN}-${SHA}"
+# Upstream renamed the project from nvidia_greenboost to greenboost.
+HOMEPAGE="https://gitlab.com/IsolatedOctopi/greenboost"
+MY_PN="greenboost"
+SRC_URI="https://gitlab.com/IsolatedOctopi/${MY_PN}/-/archive/v${PV}/${MY_PN}-v${PV}.tar.gz"
+S="${WORKDIR}/${MY_PN}-v${PV}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -20,13 +20,33 @@ RDEPEND="x11-drivers/nvidia-drivers
 
 src_compile() {
 	local modlist=( greenboost )
-	local modargs=( KDIR="${KERNEL_DIR}" clean all )
+	# No "clean" target here: it has no ordering dependency on "all", so a
+	# parallel make can delete greenboost_cuda_v12.o between the shim's compile
+	# and link steps. The tree is freshly unpacked anyway.
+	local modargs=( KDIR="${KERNEL_DIR}" all )
 	linux-mod-r1_src_compile
 }
 
 src_install() {
 	linux-mod-r1_src_install
-	dolib.so libgreenboost_cuda.so
+
+	# Everything "make all" produces. The audit shim is also installed under
+	# the 32-bit path the loader looks in for i386 CUDA clients.
+	dolib.so libgreenboost_cuda.so libgreenboost_audit.so \
+		libgreenboost_netd_capture.so
+	if [[ -f libgreenboost_vmm_override.so ]]; then
+		dolib.so libgreenboost_vmm_override.so
+	fi
+	if [[ -f libgreenboost_audit32.so ]]; then
+		into /usr
+		insinto /usr/lib/i386-linux-gnu
+		newins libgreenboost_audit32.so libgreenboost_audit.so
+	fi
+	dobin greenboost-netd
+	if [[ -f greenboost-ebpf-trace ]]; then
+		dobin greenboost-ebpf-trace
+	fi
+	systemd_dounit greenboost-netd.service greenboost-boot-guard.service
 
 	cat > greenboost.conf << EOF
 options greenboost physical_vram_gb=23 virtual_vram_gb=40 safety_reserve_gb=9 nvme_swap_gb=92 nvme_pool_gb=82 pcores_max_cpu=15 golden_cpu_min=0 golden_cpu_max=3 pcores_only=0

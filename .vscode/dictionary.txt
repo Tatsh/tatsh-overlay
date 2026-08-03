@@ -582,6 +582,7 @@ eastasianwidth
 easyjson
 eautoreconf
 ebegin
+ebpf
 ebuilds
 ecbd
 eclass
@@ -1517,6 +1518,7 @@ nego
 neko
 neocd
 nestopia
+netd
 netlink
 netmuxd
 netnode
