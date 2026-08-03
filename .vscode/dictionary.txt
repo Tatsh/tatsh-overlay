@@ -663,6 +663,7 @@ extglob
 extradoc
 extrainstall
 exzap
+ezpwd
 faad
 fabiocaccamo
 faccessat
@@ -1560,6 +1561,7 @@ nodemon
 noexcept
 noextract
 nofetch
+noisereduce
 nolegacy
 noncommercial
 nonrenewal
@@ -2040,6 +2042,7 @@ setfcap
 setgid
 setimmediate
 setpcap
+setproctitle
 setprototypeof
 setuid
 setuptools
