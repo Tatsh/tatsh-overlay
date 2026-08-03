@@ -10,10 +10,8 @@ PYPI_NO_NORMALIZE=1
 inherit distutils-r1 pypi
 
 DESCRIPTION="Creates JSON report compatible with atom.io's linter message format"
-HOMEPAGE="
-	https://github.com/wandel/pytest-atom
-	https://pypi.org/project/pytest-report/
-"
+# The author deleted github.com/wandel/pytest-atom; PyPI is all that is left.
+HOMEPAGE="https://pypi.org/project/pytest-report/"
 
 LICENSE="MIT"
 SLOT="0"

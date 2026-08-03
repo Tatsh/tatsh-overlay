@@ -7,6 +7,5 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="pypi">pytest-report</remote-id>
-		<remote-id type="github">wandel/pytest-atom</remote-id>
 	</upstream>
 </pkgmetadata>
