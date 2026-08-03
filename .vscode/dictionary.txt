@@ -987,6 +987,7 @@ intervaltree
 intltool
 intv
 ioadios
+iocb
 iocgns
 ioffmpeg
 iogdal
@@ -2470,6 +2471,7 @@ wineasio
 wineshell
 wingetty
 winio
+wint
 wireshark
 wiswa
 woile

@@ -15,8 +15,10 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
+# Upstream pins caio~=0.9.0, but 0.9.x no longer compiles (it assigns a pointer
+# to iocb.aio_data, which -Wint-conversion rejects) and 0.10 works unchanged.
 RDEPEND=">=dev-python/caio-0.9.0[${PYTHON_USEDEP}]
-	<dev-python/caio-0.10.0[${PYTHON_USEDEP}]"
+	<dev-python/caio-0.11.0[${PYTHON_USEDEP}]"
 BDEPEND="test? (
 	dev-python/aiomisc-pytest[${PYTHON_USEDEP}]
 	dev-python/markdown-pytest[${PYTHON_USEDEP}]
