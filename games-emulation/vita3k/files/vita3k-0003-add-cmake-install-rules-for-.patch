@@ -29,7 +29,7 @@ diff --git a/vita3k/CMakeLists.txt b/vita3k/CMakeLists.txt
 index e8aa40a7..56656b49 100644
 --- a/vita3k/CMakeLists.txt
 +++ b/vita3k/CMakeLists.txt
-@@ -187,6 +187,37 @@ set_target_properties(vita3k PROPERTIES OUTPUT_NAME Vita3K
+@@ -187,6 +187,39 @@ set_target_properties(vita3k PROPERTIES OUTPUT_NAME Vita3K
  	LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
  	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
  
@@ -51,16 +51,18 @@ index e8aa40a7..56656b49 100644
 +		COMPONENT vita3k)
 +	install(DIRECTORY
 +		"${CMAKE_BINARY_DIR}/bin/data"
-+		"${CMAKE_BINARY_DIR}/bin/lang"
++		"${CMAKE_BINARY_DIR}/bin/translations"
 +		"${CMAKE_BINARY_DIR}/bin/shaders-builtin"
 +		DESTINATION "${CMAKE_INSTALL_DATADIR}/Vita3K"
 +		COMPONENT vita3k)
-+	install(FILES "${CMAKE_SOURCE_DIR}/appimage/vita3k.desktop"
++	install(FILES "${CMAKE_SOURCE_DIR}/dist/linux/org.vita3k.vita3k.desktop"
 +		DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
 +		COMPONENT vita3k)
-+	install(FILES "${CMAKE_SOURCE_DIR}/data/image/icon.png"
-+		DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/128x128/apps"
-+		RENAME vita3k.png
++	install(FILES "${CMAKE_SOURCE_DIR}/dist/linux/org.vita3k.vita3k.metainfo.xml"
++		DESTINATION "${CMAKE_INSTALL_DATADIR}/metainfo"
++		COMPONENT vita3k)
++	install(FILES "${CMAKE_SOURCE_DIR}/dist/image/org.vita3k.vita3k.svg"
++		DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps"
 +		COMPONENT vita3k)
 +endif()
 +

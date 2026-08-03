@@ -3,68 +3,71 @@
 
 EAPI=8
 
-inherit cmake xdg-utils
+inherit cmake plocale xdg-utils
+
+# Qt UI translations, shipped in i18n/qt as vita3k_<tag>.ts.
+PLOCALES="en"
 
 DESCRIPTION="Experimental PlayStation Vita emulator."
 HOMEPAGE="
 	https://vita3k.org
 	https://github.com/Vita3K/Vita3K
 "
-SHA="9abe85f90ff04f397a817beef03f3fafd5e6900f"
+SHA="eb6e44baeac58ce404f689a412488661f53f1578"
 LIBATRAC9_SHA="82767fe38823c32536726ea798f392b0b49e66b9"
 SPIRV_CROSS_SHA="d8e3e2b141b8c8a167b2e3984736a6baacff316c"
-VULKANMEMORYALLOCATOR_HPP_SHA="2059f0fdd73492b03d60a90c73e5038224b99093"
-VULKANMEMORYALLOCATOR_HPP_VULKAN_HEADERS_SHA="952f776f6573aafbb62ea717d871cd1d6816c387"
+VULKANMEMORYALLOCATOR_HPP_SHA="3843082eaa6a6f67e6780715fcd602fc81942c9c"
+VULKANMEMORYALLOCATOR_HPP_VULKAN_HEADERS_SHA="19725e4d48082fe78e26622b15d3080ccd54112b"
 VULKANMEMORYALLOCATOR_HPP_VULKANMEMORYALLOCATOR_SHA="c788c52156f3ef7bc7ab769cb03c110a53ac8fcb"
 BETTER_ENUMS_SHA="c35576bed0295689540b39873126129adfa0b4c8"
-CONCURRENTQUEUE_SHA="6dd38b8a1dbaa7863aa907045f32308a56a6ff5d"
-DIRENT_SHA="39c1f1bc98ef3326237d03006f35d7dd44620e43"
+CONCURRENTQUEUE_SHA="9afb99746f0f5fc94ac8aef737053ae0481ba8d1"
+DIRENT_SHA="31db6474b5231c180bd4618c8c90e43af50c86d0"
 DLMALLOC_SHA="e98f4ee160380d7c39dc1f04e7488bcf0770d391"
 _DYNARMIC_SHA="86458a0bd369d63ba4c2ef812cacbb6c9080c065"
 GLSLANG_SHA="fc9889c889561c5882e83819dcaffef5ed45529b"
-GOOGLETEST_SHA="6910c9d9165801d8827d628cb72eb7ea9dd538c5"
+GOOGLETEST_SHA="52eb8108c5bdec04579160ae17225d66034bd723"
 IMGUI_SHA="cb16568fca5297512ff6a8f3b877f461c4323fbe"
 IMGUI_CLUB_SHA="53a2df3dd1b19dd321beb0897a0d1b9f87e5429c"
 LIBADRENOTOOLS_SHA="8fae8ce254dfc1344527e05301e43f37dea2df80"
 LIBADRENOTOOLS_LIB_LINKERNSBYPASS_SHA="aa3975893d83ef1bc84c321ec60c65fbf1287887"
 LIBFAT16_SHA="d9a890b712dcdb46d3d33230997efc59f5ad8d62"
 PRINTF_SHA="c75def6db38f9978c55e8d27227858df911cd727"
-PSVPFSTOOLS_SHA="ab1aa9b36388843f6a9f8dc86b1746f1f2a7e557"
+PSVPFSTOOLS_SHA="e21df9a74852433f48d6593b8ef203dc7c424e05"
 PSVPFSTOOLS_LIBB64_SHA="3896b7a74c70baed0e2f6039a1dbd723e5d5cc8f"
 PSVPFSTOOLS_LIBZRIF_SHA="7d1e69bee7d2f08ea5754eff4463c041aacd49af"
-PSVPFSTOOLS_PSVPFSPARSER_SHA="4094450bcaac2256236d61ae3a730425ae47bd39"
+PSVPFSTOOLS_PSVPFSPARSER_SHA="d14381f871a69009bd18b2aaec2213a6738bebba"
 PSVPFSTOOLS_ZLIB_SHA="cb210089eb06453199578993566012493f6f7d21"
 SUBSTITUTE_SHA="319da6b563d8da689f3b9df2fbb839edd41a1943"
-VITA_TOOLCHAIN_SHA="77f17b979678e7af0acfe708dc97a45ca6fd55e2"
+VITA_TOOLCHAIN_SHA="43fc1e3c686a1fc035eca583fdfeaa5e6419a61a"
 VITA_TOOLCHAIN_PSP2RELA_SHA="9e0f4913866431aef48967cfb7667b085e79428b"
 
 SRC_URI="https://github.com/Vita3K/Vita3K/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz
-	https://github.com/Vita3K/LibAtrac9/archive/${LIBATRAC9_SHA}.tar.gz -> ${PN}-LibAtrac9-82767fe.tar.gz
-	https://github.com/KhronosGroup/SPIRV-Cross/archive/${SPIRV_CROSS_SHA}.tar.gz -> ${PN}-SPIRV-Cross-d8e3e2b.tar.gz
-	https://github.com/YaaZ/VulkanMemoryAllocator-Hpp/archive/${VULKANMEMORYALLOCATOR_HPP_SHA}.tar.gz -> ${PN}-VulkanMemoryAllocator-Hpp-2059f0f.tar.gz
-	https://github.com/KhronosGroup/Vulkan-Headers/archive/${VULKANMEMORYALLOCATOR_HPP_VULKAN_HEADERS_SHA}.tar.gz -> ${PN}-VulkanMemoryAllocator-Hpp-Vulkan-Headers-952f776.tar.gz
-	https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/${VULKANMEMORYALLOCATOR_HPP_VULKANMEMORYALLOCATOR_SHA}.tar.gz -> ${PN}-VulkanMemoryAllocator-Hpp-VulkanMemoryAllocator-c788c52.tar.gz
-	https://github.com/aantron/better-enums/archive/${BETTER_ENUMS_SHA}.tar.gz -> ${PN}-better-enums-c35576b.tar.gz
-	https://github.com/cameron314/concurrentqueue/archive/${CONCURRENTQUEUE_SHA}.tar.gz -> ${PN}-concurrentqueue-6dd38b8.tar.gz
-	https://github.com/tronkko/dirent/archive/${DIRENT_SHA}.tar.gz -> ${PN}-dirent-39c1f1b.tar.gz
-	https://github.com/Vita3K/dlmalloc/archive/${DLMALLOC_SHA}.tar.gz -> ${PN}-dlmalloc-e98f4ee.tar.gz
-	https://github.com/Vita3K/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-86458a0.tar.gz
-	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> ${PN}-glslang-fc9889c.tar.gz
-	https://github.com/google/googletest/archive/${GOOGLETEST_SHA}.tar.gz -> ${PN}-googletest-6910c9d.tar.gz
-	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> ${PN}-imgui-cb16568.tar.gz
-	https://github.com/ocornut/imgui_club/archive/${IMGUI_CLUB_SHA}.tar.gz -> ${PN}-imgui_club-53a2df3.tar.gz
-	https://github.com/bylaws/libadrenotools/archive/${LIBADRENOTOOLS_SHA}.tar.gz -> ${PN}-libadrenotools-8fae8ce.tar.gz
-	https://github.com/bylaws/liblinkernsbypass/archive/${LIBADRENOTOOLS_LIB_LINKERNSBYPASS_SHA}.tar.gz -> ${PN}-libadrenotools-lib-linkernsbypass-aa39758.tar.gz
-	https://github.com/Vita3K/libfat16/archive/${LIBFAT16_SHA}.tar.gz -> ${PN}-libfat16-d9a890b.tar.gz
-	https://github.com/Vita3K/printf/archive/${PRINTF_SHA}.tar.gz -> ${PN}-printf-c75def6.tar.gz
-	https://github.com/Vita3K/psvpfstools/archive/${PSVPFSTOOLS_SHA}.tar.gz -> ${PN}-psvpfstools-ab1aa9b.tar.gz
-	https://github.com/korewawatchful/libb64/archive/${PSVPFSTOOLS_LIBB64_SHA}.tar.gz -> ${PN}-psvpfstools-libb64-3896b7a.tar.gz
-	https://github.com/KorewaWatchful/libzrif/archive/${PSVPFSTOOLS_LIBZRIF_SHA}.tar.gz -> ${PN}-psvpfstools-libzrif-7d1e69b.tar.gz
-	https://github.com/Vita3K/psvpfsparser/archive/${PSVPFSTOOLS_PSVPFSPARSER_SHA}.tar.gz -> ${PN}-psvpfstools-psvpfsparser-4094450.tar.gz
-	https://github.com/korewawatchful/zlib/archive/${PSVPFSTOOLS_ZLIB_SHA}.tar.gz -> ${PN}-psvpfstools-zlib-cb21008.tar.gz
-	https://github.com/Vita3K/substitute/archive/${SUBSTITUTE_SHA}.tar.gz -> ${PN}-substitute-319da6b.tar.gz
-	https://github.com/vitasdk/vita-toolchain/archive/${VITA_TOOLCHAIN_SHA}.tar.gz -> ${PN}-vita-toolchain-77f17b9.tar.gz
-	https://github.com/Princess-of-Sleeping/psp2rela/archive/${VITA_TOOLCHAIN_PSP2RELA_SHA}.tar.gz -> ${PN}-vita-toolchain-psp2rela-9e0f491.tar.gz
+	https://github.com/Vita3K/LibAtrac9/archive/${LIBATRAC9_SHA}.tar.gz -> ${PN}-LibAtrac9-${LIBATRAC9_SHA:0:7}.tar.gz
+	https://github.com/KhronosGroup/SPIRV-Cross/archive/${SPIRV_CROSS_SHA}.tar.gz -> ${PN}-SPIRV-Cross-${SPIRV_CROSS_SHA:0:7}.tar.gz
+	https://github.com/YaaZ/VulkanMemoryAllocator-Hpp/archive/${VULKANMEMORYALLOCATOR_HPP_SHA}.tar.gz -> ${PN}-VulkanMemoryAllocator-Hpp-${VULKANMEMORYALLOCATOR_HPP_SHA:0:7}.tar.gz
+	https://github.com/KhronosGroup/Vulkan-Headers/archive/${VULKANMEMORYALLOCATOR_HPP_VULKAN_HEADERS_SHA}.tar.gz -> ${PN}-VulkanMemoryAllocator-Hpp-Vulkan-Headers-${VULKANMEMORYALLOCATOR_HPP_VULKAN_HEADERS_SHA:0:7}.tar.gz
+	https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/${VULKANMEMORYALLOCATOR_HPP_VULKANMEMORYALLOCATOR_SHA}.tar.gz -> ${PN}-VulkanMemoryAllocator-Hpp-VulkanMemoryAllocator-${VULKANMEMORYALLOCATOR_HPP_VULKANMEMORYALLOCATOR_SHA:0:7}.tar.gz
+	https://github.com/aantron/better-enums/archive/${BETTER_ENUMS_SHA}.tar.gz -> ${PN}-better-enums-${BETTER_ENUMS_SHA:0:7}.tar.gz
+	https://github.com/cameron314/concurrentqueue/archive/${CONCURRENTQUEUE_SHA}.tar.gz -> ${PN}-concurrentqueue-${CONCURRENTQUEUE_SHA:0:7}.tar.gz
+	https://github.com/tronkko/dirent/archive/${DIRENT_SHA}.tar.gz -> ${PN}-dirent-${DIRENT_SHA:0:7}.tar.gz
+	https://github.com/Vita3K/dlmalloc/archive/${DLMALLOC_SHA}.tar.gz -> ${PN}-dlmalloc-${DLMALLOC_SHA:0:7}.tar.gz
+	https://github.com/Vita3K/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
+	https://github.com/KhronosGroup/glslang/archive/${GLSLANG_SHA}.tar.gz -> ${PN}-glslang-${GLSLANG_SHA:0:7}.tar.gz
+	https://github.com/google/googletest/archive/${GOOGLETEST_SHA}.tar.gz -> ${PN}-googletest-${GOOGLETEST_SHA:0:7}.tar.gz
+	https://github.com/ocornut/imgui/archive/${IMGUI_SHA}.tar.gz -> ${PN}-imgui-${IMGUI_SHA:0:7}.tar.gz
+	https://github.com/ocornut/imgui_club/archive/${IMGUI_CLUB_SHA}.tar.gz -> ${PN}-imgui_club-${IMGUI_CLUB_SHA:0:7}.tar.gz
+	https://github.com/bylaws/libadrenotools/archive/${LIBADRENOTOOLS_SHA}.tar.gz -> ${PN}-libadrenotools-${LIBADRENOTOOLS_SHA:0:7}.tar.gz
+	https://github.com/bylaws/liblinkernsbypass/archive/${LIBADRENOTOOLS_LIB_LINKERNSBYPASS_SHA}.tar.gz -> ${PN}-libadrenotools-lib-linkernsbypass-${LIBADRENOTOOLS_LIB_LINKERNSBYPASS_SHA:0:7}.tar.gz
+	https://github.com/Vita3K/libfat16/archive/${LIBFAT16_SHA}.tar.gz -> ${PN}-libfat16-${LIBFAT16_SHA:0:7}.tar.gz
+	https://github.com/Vita3K/printf/archive/${PRINTF_SHA}.tar.gz -> ${PN}-printf-${PRINTF_SHA:0:7}.tar.gz
+	https://github.com/Vita3K/psvpfstools/archive/${PSVPFSTOOLS_SHA}.tar.gz -> ${PN}-psvpfstools-${PSVPFSTOOLS_SHA:0:7}.tar.gz
+	https://github.com/korewawatchful/libb64/archive/${PSVPFSTOOLS_LIBB64_SHA}.tar.gz -> ${PN}-psvpfstools-libb64-${PSVPFSTOOLS_LIBB64_SHA:0:7}.tar.gz
+	https://github.com/KorewaWatchful/libzrif/archive/${PSVPFSTOOLS_LIBZRIF_SHA}.tar.gz -> ${PN}-psvpfstools-libzrif-${PSVPFSTOOLS_LIBZRIF_SHA:0:7}.tar.gz
+	https://github.com/Vita3K/psvpfsparser/archive/${PSVPFSTOOLS_PSVPFSPARSER_SHA}.tar.gz -> ${PN}-psvpfstools-psvpfsparser-${PSVPFSTOOLS_PSVPFSPARSER_SHA:0:7}.tar.gz
+	https://github.com/korewawatchful/zlib/archive/${PSVPFSTOOLS_ZLIB_SHA}.tar.gz -> ${PN}-psvpfstools-zlib-${PSVPFSTOOLS_ZLIB_SHA:0:7}.tar.gz
+	https://github.com/Vita3K/substitute/archive/${SUBSTITUTE_SHA}.tar.gz -> ${PN}-substitute-${SUBSTITUTE_SHA:0:7}.tar.gz
+	https://github.com/vitasdk/vita-toolchain/archive/${VITA_TOOLCHAIN_SHA}.tar.gz -> ${PN}-vita-toolchain-${VITA_TOOLCHAIN_SHA:0:7}.tar.gz
+	https://github.com/Princess-of-Sleeping/psp2rela/archive/${VITA_TOOLCHAIN_PSP2RELA_SHA}.tar.gz -> ${PN}-vita-toolchain-psp2rela-${VITA_TOOLCHAIN_PSP2RELA_SHA:0:7}.tar.gz
 "
 
 S="${WORKDIR}/Vita3K-${SHA}"
@@ -92,7 +95,6 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-allow-shared-system-boost-on.patch"
-	"${FILESDIR}/${PN}-0002-honor-xdg-base-directory-spe.patch"
 	"${FILESDIR}/${PN}-0003-add-cmake-install-rules-for-.patch"
 	"${FILESDIR}/${PN}-0004-skip-empty-boost-submodule-c.patch"
 	"${FILESDIR}/${PN}-0005-add-use_system_ffmpeg-opt-in.patch"
@@ -194,6 +196,12 @@ src_configure() {
 
 src_install() {
 	DESTDIR="${D}" cmake --install "${BUILD_DIR}" --component vita3k || die
+	# shellcheck disable=SC2329
+	rm_disabled_locale() {
+		# shellcheck disable=SC2317
+		rm "${ED}/usr/share/Vita3K/translations/vita3k_${1//-/_}.qm" || die
+	}
+	plocale_for_each_disabled_locale rm_disabled_locale
 	einstalldocs
 }
 

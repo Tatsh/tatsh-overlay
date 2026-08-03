@@ -1735,6 +1735,8 @@ pkgr
 pkgs
 platformdirs
 plister
+plocale
+plocales
 plugdev
 pluggy
 pluginutils
