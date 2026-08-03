@@ -20,6 +20,7 @@ KEYWORDS="~amd64"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 # hid comes from dev-python/hidapi, uinput from dev-python/python-uinput.
+# shellcheck disable=SC2016
 RDEPEND="${PYTHON_DEPS}
 	$(python_gen_cond_dep '
 		dev-python/hidapi[${PYTHON_USEDEP}]
