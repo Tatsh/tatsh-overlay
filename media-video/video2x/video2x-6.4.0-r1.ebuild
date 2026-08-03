@@ -26,7 +26,7 @@ DEPEND="dev-libs/boost:=
 	media-gfx/realesrgan-ncnn-vulkan:=
 	media-libs/opencv:=
 	media-video/ffmpeg:=
-	dev-libs/libfmt
+	dev-libs/libfmt:=
 	media-libs/vulkan-loader"
 
 PATCHES=(

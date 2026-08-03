@@ -15,8 +15,8 @@ KEYWORDS="~amd64"
 IUSE="test +tools"
 RESTRICT="!test? ( test )"
 
-DEPEND="app-pda/libplist
-	dev-libs/openssl"
+DEPEND="app-pda/libplist:=
+	dev-libs/openssl:="
 RDEPEND="${DEPEND}"
 BDEPEND="dev-cpp/argparse"
 

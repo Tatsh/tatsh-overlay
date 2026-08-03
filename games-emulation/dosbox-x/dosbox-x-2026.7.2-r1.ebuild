@@ -23,7 +23,7 @@ DEPEND="debug? ( sys-libs/ncurses:0= )
 	freetype? ( media-libs/freetype )
 	fluidsynth? (
 		media-sound/fluid-soundfont
-		media-sound/fluidsynth
+		media-sound/fluidsynth:=
 	)
 	mt-32? ( media-libs/munt-mt32emu )
 	screenshots? ( media-libs/libpng:0= )

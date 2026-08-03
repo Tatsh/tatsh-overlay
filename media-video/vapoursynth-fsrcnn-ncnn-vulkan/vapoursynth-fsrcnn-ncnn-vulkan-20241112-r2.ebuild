@@ -16,5 +16,5 @@ KEYWORDS="~amd64"
 
 DEPEND="dev-libs/ncnn
 	media-libs/vulkan-loader
-	media-libs/opencv"
+	media-libs/opencv:="
 RDEPEND="${DEPEND}"

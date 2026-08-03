@@ -24,14 +24,14 @@ KEYWORDS="~amd64"
 IUSE="+cubeb discord +sdl +vulkan"
 
 DEPEND="app-arch/zarchive
-	app-arch/zstd
+	app-arch/zstd:=
 	cubeb? ( media-libs/cubeb )
-	dev-libs/boost
+	dev-libs/boost:=
 	dev-libs/glib
 	dev-libs/hidapi
 	>=dev-libs/libfmt-9.1.0:=
-	dev-libs/libzip
-	dev-libs/openssl
+	dev-libs/libzip:=
+	dev-libs/openssl:=
 	dev-libs/pugixml
 	dev-libs/rapidjson
 	dev-libs/wayland
@@ -43,7 +43,7 @@ DEPEND="app-arch/zarchive
 	vulkan? ( dev-util/vulkan-headers )
 	x11-libs/gtk+:3[wayland]
 	x11-libs/libX11
-	x11-libs/wxGTK:3.2-gtk3[opengl]
+	x11-libs/wxGTK:3.2-gtk3=[opengl]
 	virtual/libusb"
 RDEPEND="${DEPEND}"
 BDEPEND="media-libs/glm"

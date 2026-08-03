@@ -26,7 +26,7 @@ REQUIRED_USE="|| ( ao openal alsa pulseaudio oss )
 DEPEND="dev-libs/glib
 	media-libs/fontconfig
 	media-libs/freetype
-	media-libs/harfbuzz
+	media-libs/harfbuzz:=
 	media-libs/libsdl2
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf

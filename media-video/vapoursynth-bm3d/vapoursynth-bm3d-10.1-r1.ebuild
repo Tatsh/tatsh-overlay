@@ -13,7 +13,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="media-video/vapoursynth sci-libs/fftw"
+DEPEND="media-video/vapoursynth sci-libs/fftw:="
 RDEPEND="${DEPEND}"
 
 src_configure() {

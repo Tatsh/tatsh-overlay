@@ -61,7 +61,7 @@ DEPEND="dev-libs/glib
 	alsa? ( media-libs/alsa-lib )
 	pulseaudio? ( media-libs/libpulse )
 	jack? ( virtual/jack )
-	io-uring? ( sys-libs/liburing )
+	io-uring? ( sys-libs/liburing:= )
 	xattr? ( sys-apps/attr )"
 RDEPEND="${DEPEND} ${PYTHON_DEPS}"
 # shellcheck disable=SC2016

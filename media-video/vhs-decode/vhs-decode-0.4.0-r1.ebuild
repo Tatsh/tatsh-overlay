@@ -59,7 +59,7 @@ IUSE="gtk"
 
 # As of 0.4.0 the C++ TBC tools live in media-video/tbc-tools; what remains
 # here is the Python and Rust decoder suite.
-DEPEND="sci-libs/fftw"
+DEPEND="sci-libs/fftw:="
 RDEPEND="${DEPEND}
 	${PYTHON_DEPS}
 	dev-python/numpy[${PYTHON_USEDEP}]

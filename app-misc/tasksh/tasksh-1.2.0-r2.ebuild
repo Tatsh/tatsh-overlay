@@ -17,7 +17,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-DEPEND="sys-libs/readline"
+DEPEND="sys-libs/readline:="
 RDEPEND="${DEPEND}"
 
 src_prepare() {

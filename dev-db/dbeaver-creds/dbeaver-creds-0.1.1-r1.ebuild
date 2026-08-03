@@ -22,7 +22,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	>=dev-libs/openssl-3.0
+	>=dev-libs/openssl-3.0:=
 	>=dev-python/click-8.3.2[${PYTHON_USEDEP}]
 "
 DEPEND="${RDEPEND}"

@@ -22,7 +22,7 @@ DEPEND="app-arch/brotli:=
 	dev-libs/nss:=
 	llvm-runtimes/libcxx:=
 	net-libs/nghttp2:=
-	app-arch/zstd
+	app-arch/zstd:=
 	net-libs/libpsl
 	virtual/zlib"
 RDEPEND="${DEPEND}"

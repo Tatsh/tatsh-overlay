@@ -14,5 +14,5 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="media-video/vapoursynth
-	sci-libs/fftw"
+	sci-libs/fftw:="
 RDEPEND="${DEPEND}"

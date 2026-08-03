@@ -19,7 +19,7 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 DEPEND="app-arch/zstd
 	media-libs/freetype
 	media-libs/libglvnd[X]
-	media-libs/libpng
+	media-libs/libpng:=
 	virtual/zlib"
 RDEPEND="${DEPEND}"
 CMAKE_USE_DIR="${S}/src"

@@ -17,11 +17,11 @@ REQUIRED_USE="pvr? ( astc )
 	|| ( cli gtk kde xfce )"
 RESTRICT="!test? ( test )"
 
-DEPEND="dev-libs/libfmt
-	dev-libs/nettle
+DEPEND="dev-libs/libfmt:=
+	dev-libs/nettle:=
 	dev-libs/pugixml
-	media-libs/libjpeg-turbo
-	media-libs/libpng
+	media-libs/libjpeg-turbo:=
+	media-libs/libpng:=
 	net-misc/curl
 	sys-libs/libseccomp
 	virtual/zlib
@@ -36,7 +36,7 @@ DEPEND="dev-libs/libfmt
 	nls? ( sys-devel/gettext )
 	xfce? ( xfce-base/tumbler[curl] )
 	xml? ( dev-libs/tinyxml2 )
-	zstd? ( app-arch/zstd )"
+	zstd? ( app-arch/zstd:= )"
 RDEPEND="${DEPEND}"
 
 PATCHES=(

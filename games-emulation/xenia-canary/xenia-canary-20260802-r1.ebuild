@@ -50,7 +50,7 @@ REQUIRED_USE="cpu_flags_x86_avx"
 
 DEPEND="app-arch/brotli
 	app-arch/bzip2
-	app-arch/snappy
+	app-arch/snappy:=
 	app-arch/zarchive
 	app-arch/zstd
 	dev-cpp/tomlplusplus

@@ -25,7 +25,7 @@ KEYWORDS="~amd64 ~x86"
 BDEPEND="${PYTHON_DEPS}
 	dev-lang/nasm"
 DEPEND=">=media-video/vapoursynth-74
-	>=sci-libs/fftw-3.3.4"
+	>=sci-libs/fftw-3.3.4:="
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}/${P}-system-headers.patch" )

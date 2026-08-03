@@ -19,17 +19,17 @@ IUSE="X video"
 DEPEND="dev-db/sqlite
 	dev-libs/hyphen
 	dev-libs/icu:=
-	dev-libs/libgcrypt
-	dev-libs/libtasn1
-	dev-libs/libxml2
+	dev-libs/libgcrypt:=
+	dev-libs/libtasn1:=
+	dev-libs/libxml2:=
 	dev-libs/libxslt
 	dev-qt/qtbase:6[X?,gui,network,widgets]
 	dev-qt/qtpositioning:6
 	dev-qt/qtsensors:6
-	media-libs/harfbuzz
-	media-libs/libjpeg-turbo
-	media-libs/libpng
-	media-libs/libwebp
+	media-libs/harfbuzz:=
+	media-libs/libjpeg-turbo:=
+	media-libs/libpng:=
+	media-libs/libwebp:=
 	media-libs/woff2
 	virtual/zlib"
 RDEPEND="${DEPEND}"

@@ -22,7 +22,7 @@ IUSE="+alsa +crash-handler debug +gles2 +gpl +jpeg +mp3 +networking +ogg
 DEPEND="X? ( x11-libs/libX11 )
 	alsa? ( media-libs/alsa-lib )
 	jack? ( virtual/jack )
-	jpeg? ( media-libs/libjpeg-turbo )
+	jpeg? ( media-libs/libjpeg-turbo:= )
 	mp3? ( media-libs/libmad )
 	ogg? ( media-libs/libogg media-libs/libvorbis )
 	pulseaudio? ( media-libs/libpulse )
@@ -31,12 +31,12 @@ DEPEND="X? ( x11-libs/libX11 )
 	xrandr? ( x11-libs/libXrandr )
 	dev-libs/glib
 	dev-libs/libpcre
-	dev-libs/libtomcrypt
+	dev-libs/libtomcrypt:=
 	dev-libs/libtommath
-	media-libs/glew
+	media-libs/glew:=
 	media-libs/glu
 	media-libs/libglvnd[X?]
-	media-libs/libjpeg-turbo
+	media-libs/libjpeg-turbo:=
 	media-libs/libpng
 	media-video/ffmpeg
 	virtual/zlib

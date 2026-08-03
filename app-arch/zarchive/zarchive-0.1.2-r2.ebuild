@@ -17,4 +17,4 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="app-arch/zstd"
+DEPEND="app-arch/zstd:="
