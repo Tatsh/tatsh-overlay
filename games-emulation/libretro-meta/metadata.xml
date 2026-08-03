@@ -22,7 +22,6 @@
 		<flag name="ppsspp">Sony PSP (ppsspp)</flag>
 		<flag name="prboom">Doom (PrBoom)</flag>
 		<flag name="puae">Commodore - Amiga (P-UAE)</flag>
-		<flag name="puae2021">Commodore - Amiga (P-UAE)</flag>
 		<flag name="snes9x">Nintendo - SNES / SFC (Snes9x - Current)</flag>
 		<flag name="swanstation">Sony Playstation (swanstation)</flag>
 		<flag name="tyrquake">Quake (TyrQuake)</flag>

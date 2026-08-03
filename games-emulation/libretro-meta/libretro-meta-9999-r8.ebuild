@@ -27,7 +27,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
 IUSE="
 	bsnes-mercury dolphin dosbox fceumm flycast fmsx fuse genesis-plus-gx mame2003-plus mednafen-psx mednafen-psx-hw
-	pcsx-rearmed ppsspp prboom puae puae2021 snes9x swanstation tyrquake vice-x64 vice-x64sc"
+	pcsx-rearmed ppsspp prboom puae snes9x swanstation tyrquake vice-x64 vice-x64sc"
 
 RDEPEND="
 	bsnes-mercury? ( games-emulation/libretro-bsnes-mercury-performance )
@@ -45,7 +45,6 @@ RDEPEND="
 	ppsspp? ( games-emulation/libretro-ppsspp )
 	prboom? ( games-emulation/libretro-prboom )
 	puae? ( games-emulation/libretro-puae )
-	puae2021? ( games-emulation/libretro-puae2021 )
 	snes9x? ( games-emulation/libretro-snes9x )
 	!x86? ( swanstation? ( games-emulation/libretro-swanstation ) )
 	tyrquake? ( games-emulation/libretro-tyrquake )
