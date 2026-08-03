@@ -1,0 +1,44 @@
+Strip a .git suffix only at the end of a repository name.
+
+replace('.git', '') removes the substring anywhere, so a repository whose name
+legitimately contains it is mangled. notofonts/notofonts.github.io became
+notofonts/notofontshub.io, and every tags/branches API call 404ed, breaking
+media-fonts/noto.
+
+https://github.com/Tatsh/livecheck
+diff -ruN a/livecheck/main.py b/livecheck/main.py
+--- a/livecheck/main.py	2026-08-02 22:15:06.700600678 -0400
++++ b/livecheck/main.py	2026-08-02 22:15:06.715266815 -0400
+@@ -210,7 +210,7 @@
+             if not parent_git_url:
+                 return None
+             parent_repo = '/'.join(
+-                [x for x in urlparse(parent_git_url).path.replace('.git', '').split('/') if x][:2])
++                [x for x in urlparse(parent_git_url).path.removesuffix('.git').split('/') if x][:2])
+             r = await get_content(f'https://api.github.com/repos/{parent_repo}/contents/'
+                                   f'{nested_path}?ref={parent_sha}')
+         elif isinstance(item, tuple):
+diff -ruN a/livecheck/special/bitbucket.py b/livecheck/special/bitbucket.py
+--- a/livecheck/special/bitbucket.py	2026-08-02 22:15:06.697941127 -0400
++++ b/livecheck/special/bitbucket.py	2026-08-02 22:15:06.715152670 -0400
+@@ -44,7 +44,7 @@
+ 
+     workspace, repository = parsed.path.strip('/').split('/')[:2]
+ 
+-    return workspace, repository.replace('.git', '')
++    return workspace, repository.removesuffix('.git')
+ 
+ 
+ async def get_latest_bitbucket_package(url: str, cpv: str,
+diff -ruN a/livecheck/special/github.py b/livecheck/special/github.py
+--- a/livecheck/special/github.py	2026-08-02 22:15:06.695224826 -0400
++++ b/livecheck/special/github.py	2026-08-02 22:15:06.715041157 -0400
+@@ -80,7 +80,7 @@
+         p = [x for x in u.path.split('/') if x]
+         if len(p) < 2:  # noqa: PLR2004
+             return '', '', ''
+-        r = p[1].replace('.git', '')
++        r = p[1].removesuffix('.git')
+         return f'https://{d}/{p[0]}/{r}', p[0], r
+     return '', '', ''
+ 
