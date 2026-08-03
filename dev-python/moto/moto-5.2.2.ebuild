@@ -12,7 +12,7 @@ DESCRIPTION="A library that allows you to easily mock out tests based on AWS inf
 HOMEPAGE="
 	https://github.com/getmoto/moto
 	https://pypi.org/project/moto/
-	http://docs.getmoto.org/en/latest/
+	https://docs.getmoto.org/en/latest/
 "
 
 LICENSE="Apache-2.0"

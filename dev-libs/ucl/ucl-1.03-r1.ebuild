@@ -6,8 +6,8 @@ EAPI=8
 inherit autotools flag-o-matic
 
 DESCRIPTION="The UCL Compression Library."
-HOMEPAGE="http://www.oberhumer.com/opensource/ucl/"
-SRC_URI="http://www.oberhumer.com/opensource/ucl/download/${P}.tar.gz"
+HOMEPAGE="https://www.oberhumer.com/opensource/ucl/"
+SRC_URI="https://www.oberhumer.com/opensource/ucl/download/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
