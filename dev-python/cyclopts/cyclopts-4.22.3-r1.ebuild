@@ -19,7 +19,7 @@ RDEPEND=">=dev-python/attrs-23.1.0[${PYTHON_USEDEP}]
 	>=dev-python/docstring-parser-0.15[${PYTHON_USEDEP}]
 	<dev-python/docstring-parser-4.0[${PYTHON_USEDEP}]
 	>=dev-python/rich-rst-1.3.1[${PYTHON_USEDEP}]
-	<dev-python/rich-rst-2.0.0[${PYTHON_USEDEP}]
+	<dev-python/rich-rst-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/rich-13.6.0[${PYTHON_USEDEP}]"
 BDEPEND="test? (
 	dev-python/pydantic[${PYTHON_USEDEP}]
