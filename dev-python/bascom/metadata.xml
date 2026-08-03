@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="pypi">bascom</remote-id>
+		<remote-id type="github">Tatsh/bascom</remote-id>
 	</upstream>
 </pkgmetadata>

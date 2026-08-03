@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="pypi">pytest-repeat</remote-id>
+		<remote-id type="github">pytest-dev/pytest-repeat</remote-id>
 	</upstream>
 </pkgmetadata>

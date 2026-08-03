@@ -5,6 +5,8 @@ EAPI=8
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
+PYPI_VERIFY_REPO="https://github.com/numba/numba"
+
 inherit distutils-r1 flag-o-matic pypi
 
 DESCRIPTION="NumPy aware dynamic Python compiler using LLVM"

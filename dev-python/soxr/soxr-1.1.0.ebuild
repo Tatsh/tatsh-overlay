@@ -7,6 +7,8 @@ DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=scikit-build-core
 PYTHON_COMPAT=( python3_1{2,3,4,5} )
 
+PYPI_VERIFY_REPO="https://github.com/dofuuz/python-soxr"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="High quality, one-dimensional sample-rate conversion library"

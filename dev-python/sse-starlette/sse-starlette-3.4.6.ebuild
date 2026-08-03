@@ -6,6 +6,8 @@ EAPI=8
 PYTHON_COMPAT=( python3_{10..15} )
 DISTUTILS_USE_PEP517=setuptools
 
+PYPI_VERIFY_REPO="https://github.com/sysid/sse-starlette"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="SSE plugin for Starlette."

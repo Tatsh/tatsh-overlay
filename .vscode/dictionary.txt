@@ -516,6 +516,7 @@ dodir
 dodoc
 doenvd
 doexe
+dofuuz
 doicon
 doinitd
 doins
@@ -1355,6 +1356,7 @@ lzma
 macemu
 macvendor
 macvendordb
+madpah
 magewell
 magiconair
 magnavox
@@ -1989,6 +1991,7 @@ robfig
 robotstxt
 robpike
 rocm
+rogdham
 rogpeppe
 rollup
 romain
@@ -2131,6 +2134,7 @@ spacepacket
 spacy
 spammy
 spaolacci
+spatialaudio
 speakeasy
 spimdisasm
 spir
@@ -2202,6 +2206,7 @@ swiftshader
 sylheti
 sylotinagri
 synckit
+sysid
 syst
 syste
 systemjs
@@ -2310,6 +2315,7 @@ tuxu
 tweenjs
 typebox
 typedarray
+typeddjango
 typer
 typeutils
 tyrquake

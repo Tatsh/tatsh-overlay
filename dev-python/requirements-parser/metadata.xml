@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="pypi">requirements-parser</remote-id>
+		<remote-id type="github">madpah/requirements-parser</remote-id>
 	</upstream>
 </pkgmetadata>

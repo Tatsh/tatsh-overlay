@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="pypi">sounddevice</remote-id>
+		<remote-id type="github">spatialaudio/python-sounddevice</remote-id>
 	</upstream>
 </pkgmetadata>

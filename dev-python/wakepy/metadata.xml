@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="pypi">wakepy</remote-id>
+		<remote-id type="github">wakepy/wakepy</remote-id>
 	</upstream>
 </pkgmetadata>

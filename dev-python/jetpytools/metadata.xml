@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="pypi">jetpytools</remote-id>
+		<remote-id type="github">Jaded-Encoding-Thaumaturgy/jetpytools</remote-id>
 	</upstream>
 </pkgmetadata>

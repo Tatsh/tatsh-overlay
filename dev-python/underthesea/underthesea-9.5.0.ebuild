@@ -7,6 +7,8 @@ PYTHON_COMPAT=( python3_{11..14} )
 DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_USE_PEP517=setuptools
 
+PYPI_VERIFY_REPO="https://github.com/undertheseanlp/underthesea"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Vietnamese NLP Toolkit."

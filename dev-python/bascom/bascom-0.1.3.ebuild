@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{10..15} )
 
+PYPI_VERIFY_REPO="https://github.com/Tatsh/bascom"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Core library used in Tatsh projects."

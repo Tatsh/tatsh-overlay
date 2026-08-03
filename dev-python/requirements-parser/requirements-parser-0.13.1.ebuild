@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=poetry
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
+PYPI_VERIFY_REPO="https://github.com/madpah/requirements-parser"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Python module for parsing Pip requirement files."

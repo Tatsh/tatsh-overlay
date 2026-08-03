@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_1{0..5} )
 
+PYPI_VERIFY_REPO="https://github.com/openai/openai-python"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="OpenAI Python library."

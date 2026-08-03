@@ -5,6 +5,8 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=uv-build
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
+PYPI_VERIFY_REPO="https://github.com/typeddjango/django-stubs"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Monkey-patching and extensions for django-stubs."
