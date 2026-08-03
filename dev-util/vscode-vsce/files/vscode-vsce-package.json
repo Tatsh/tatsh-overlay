@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "@vscode/vsce": "^3.9.2"
+    "@vscode/vsce": "3.9.3-4"
   },
   "name": "vscode-vsce",
   "private": true,
-  "version": "3.9.2"
+  "version": "3.9.3-4"
 }
