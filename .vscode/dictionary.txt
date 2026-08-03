@@ -523,6 +523,7 @@ domexception
 domhandler
 domodule
 domutils
+donnxruntime
 dorules
 dosbin
 dosbox
@@ -553,6 +554,7 @@ dslackw
 dsplit
 dsystemd
 dubhater
+dubhatervapoursynth
 dudev
 dunder
 duplexpair
@@ -915,6 +917,7 @@ hdfs
 helpuri
 hephaest
 hexops
+hidraw
 higan
 hinterwaeldlers
 hiro
@@ -1859,6 +1862,7 @@ pyudev
 pyusb
 pyxdg
 pyyaml
+pyzmq
 qatom
 qcoro
 qcustomplot
@@ -2217,6 +2221,7 @@ teakra
 teatest
 tediousjs
 teex
+teletextintegration
 temasek
 temoto
 temporalsoften
@@ -2561,6 +2566,7 @@ zlibwrapper
 znedi
 zoneinfo
 zstd
+zstd's
 zulko
 zvbi
 zwave

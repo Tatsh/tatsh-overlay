@@ -1,0 +1,39 @@
+Keep the vendored runtimes out of /usr/bin.
+
+The vendored vhs-teletext tree is Python source, not executables, so it moves
+to the data dir; the compiled-in lookup path follows it. The vendored
+VhsDecodeAutoAudioAlign is a .NET application that upstream runs through mono,
+which Gentoo does not ship, so it is not installed at all.
+
+diff -ur a/src/audio-align/CMakeLists.txt b/src/audio-align/CMakeLists.txt
+--- a/src/audio-align/CMakeLists.txt	2026-08-03 01:05:20.997767958 -0400
++++ b/src/audio-align/CMakeLists.txt	2026-08-03 01:05:21.012506208 -0400
+@@ -26,7 +26,6 @@
+ )
+ 
+ install(TARGETS tbc-audio-align)
+-install(DIRECTORY "${_audio_align_vendor_dir}/" DESTINATION ${CMAKE_INSTALL_BINDIR}/vendor/vhs_decode_auto_audio_align)
+ 
+ if(BUILD_TESTING)
+     add_executable(test-audio-align-runtime
+diff -ur a/src/ld-process-vbi/CMakeLists.txt b/src/ld-process-vbi/CMakeLists.txt
+--- a/src/ld-process-vbi/CMakeLists.txt	2026-08-03 01:05:20.994944680 -0400
++++ b/src/ld-process-vbi/CMakeLists.txt	2026-08-03 01:05:21.012403987 -0400
+@@ -14,7 +14,7 @@
+ target_link_libraries(ld-process-vbi PRIVATE Qt::Core lddecode-library)
+ set(_teletext_vendor_dir "${CMAKE_CURRENT_SOURCE_DIR}/vendor/vhs-teletext")
+ target_compile_definitions(ld-process-vbi PRIVATE
+-    TELETEXT_VENDOR_DIR="${_teletext_vendor_dir}"
++    TELETEXT_VENDOR_DIR="${CMAKE_INSTALL_FULL_DATADIR}/tbc-tools/vendor/vhs-teletext"
+ )
+ 
+ add_custom_command(TARGET ld-process-vbi POST_BUILD
+@@ -25,7 +25,7 @@
+ )
+ 
+ install(TARGETS ld-process-vbi)
+-install(DIRECTORY "${_teletext_vendor_dir}/" DESTINATION ${CMAKE_INSTALL_BINDIR}/vendor/vhs-teletext)
++install(DIRECTORY "${_teletext_vendor_dir}/" DESTINATION ${CMAKE_INSTALL_DATADIR}/tbc-tools/vendor/vhs-teletext)
+ 
+ if(BUILD_TESTING)
+     add_test(

@@ -1,0 +1,29 @@
+Do not update the mime, desktop and icon caches from the install step.
+
+They run against CMAKE_INSTALL_PREFIX rather than DESTDIR, so they write to the
+live filesystem instead of the image, which trips the sandbox. Gentoo already
+refreshes all three from xdg.eclass's pkg_postinst.
+
+--- a/src/ld-analyse/CMakeLists.txt
++++ b/src/ld-analyse/CMakeLists.txt
+@@ -136,20 +136,6 @@
+ 	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/install/ld-analyse.desktop
+ 		DESTINATION share/applications)
+ 	
+-	# Post-install: update caches (only if update-* commands are available)
+-	# These are safe to fail and won't hang
+-	install(CODE "execute_process(COMMAND which update-mime-database OUTPUT_QUIET ERROR_QUIET RESULT_VARIABLE _have_update_mime)")
+-	install(CODE "if(NOT _have_update_mime)
+-		execute_process(COMMAND update-mime-database \${CMAKE_INSTALL_PREFIX}/share/mime OUTPUT_QUIET ERROR_QUIET)
+-	endif()")
+-	install(CODE "execute_process(COMMAND which update-desktop-database OUTPUT_QUIET ERROR_QUIET RESULT_VARIABLE _have_update_desktop)")
+-	install(CODE "if(NOT _have_update_desktop)
+-		execute_process(COMMAND update-desktop-database \${CMAKE_INSTALL_PREFIX}/share/applications OUTPUT_QUIET ERROR_QUIET)
+-	endif()")
+-	install(CODE "execute_process(COMMAND which gtk-update-icon-cache OUTPUT_QUIET ERROR_QUIET RESULT_VARIABLE _have_gtk_icon)")
+-	install(CODE "if(NOT _have_gtk_icon)
+-		execute_process(COMMAND gtk-update-icon-cache -f -t \${CMAKE_INSTALL_PREFIX}/share/icons/hicolor OUTPUT_QUIET ERROR_QUIET)
+-	endif()")
+ else()
+ 	install(
+ 			TARGETS ld-analyse
