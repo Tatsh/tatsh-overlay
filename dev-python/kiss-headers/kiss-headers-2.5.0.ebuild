@@ -12,7 +12,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="Object-oriented HTTP and IMAP (structured) headers"
 HOMEPAGE="
-	https://jawah.github.io/kiss-headers
+	https://jawah.github.io/kiss-headers/
 	https://github.com/jawah/kiss-headers
 	https://pypi.org/project/kiss-headers/
 "

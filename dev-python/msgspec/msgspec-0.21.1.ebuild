@@ -11,7 +11,7 @@ inherit distutils-r1
 
 DESCRIPTION="Fast serialization and validation library."
 HOMEPAGE="https://pypi.org/project/msgspec/"
-SRC_URI="https://github.com/jcrist/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.gh.tar.gz"
+SRC_URI="https://github.com/msgspec/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
