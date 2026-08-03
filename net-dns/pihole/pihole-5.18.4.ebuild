@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit bash-completion-r1 systemd
+inherit shell-completion systemd
 
 DESCRIPTION="Network-wide ad blocking (core)."
 HOMEPAGE="https://pi-hole.net/"

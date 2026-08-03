@@ -4,7 +4,7 @@
 EAPI=8
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 DISTUTILS_USE_PEP517=setuptools
-inherit bash-completion-r1 distutils-r1
+inherit distutils-r1 shell-completion
 
 DESCRIPTION="Open files by MIME-type or file name using regular expressions."
 HOMEPAGE="https://xyne.dev/projects/mimeo/"
