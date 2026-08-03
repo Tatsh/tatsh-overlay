@@ -13,10 +13,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-qt/qtcore
-	dev-qt/qtgui
-	dev-qt/qtwidgets
-	virtual/libusb"
+RDEPEND="virtual/libusb"
 BDEPEND="app-arch/unzip"
 
 PATCHES=( "${FILESDIR}/${PN}-fixes.patch" )
