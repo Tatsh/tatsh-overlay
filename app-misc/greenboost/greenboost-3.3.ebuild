@@ -1,4 +1,4 @@
-# Copyright 2019-2022 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -6,17 +6,17 @@ EAPI=8
 inherit linux-mod-r1 systemd udev
 
 DESCRIPTION="Hacky thing for Ollama."
-# Upstream renamed the project from nvidia_greenboost to greenboost.
 HOMEPAGE="https://gitlab.com/IsolatedOctopi/greenboost"
-MY_PN="greenboost"
-SRC_URI="https://gitlab.com/IsolatedOctopi/${MY_PN}/-/archive/v${PV}/${MY_PN}-v${PV}.tar.gz"
-S="${WORKDIR}/${MY_PN}-v${PV}"
+SRC_URI="https://gitlab.com/IsolatedOctopi/${PN}/-/archive/v${PV}/${PN}-v${PV}.tar.bz2"
+S="${WORKDIR}/${PN}-v${PV}"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="x11-drivers/nvidia-drivers
-	sci-ml/ollama[cuda]"
+	sci-ml/ollama"
+
+PATCHES=( "${FILESDIR}/${P}-no-dma-buf-priority.patch" )
 
 src_compile() {
 	local modlist=( greenboost )
