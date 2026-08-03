@@ -9,7 +9,7 @@ PYTHON_COMPAT=( pypy3 python3_1{0,1,2,3,4} )
 
 inherit distutils-r1
 
-EGIT_REPO_URI="https://gitlab.com/dslackw/${PN}"
+EGIT_REPO_URI="https://gitlab.com/dslackw/colored"
 
 DESCRIPTION="Very simple Python library for color and formatting in terminal"
 HOMEPAGE="https://gitlab.com/dslackw/colored"
