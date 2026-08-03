@@ -6,6 +6,8 @@ EAPI=8
 PYTHON_COMPAT=( python3_{11..14} )
 DISTUTILS_USE_PEP517=setuptools
 
+PYPI_VERIFY_REPO="https://github.com/georgkrause/language_data"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Supplementary data about languages used by the langcodes module."

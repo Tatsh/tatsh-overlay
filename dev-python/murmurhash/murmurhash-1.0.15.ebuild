@@ -6,6 +6,8 @@ EAPI=8
 PYTHON_COMPAT=( python3_{10..15} )
 DISTUTILS_USE_PEP517=setuptools
 
+PYPI_VERIFY_REPO="https://github.com/explosion/murmurhash"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Cython bindings for MurmurHash"

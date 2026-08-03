@@ -5,6 +5,8 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{12..15} )
+PYPI_VERIFY_REPO="https://github.com/Tatsh/minchoc"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Minimal, Chocolatey-compatible NuGet server in a Django app."

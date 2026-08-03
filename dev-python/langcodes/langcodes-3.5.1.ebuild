@@ -6,6 +6,8 @@ EAPI=8
 PYTHON_COMPAT=( python3_{10..14} )
 DISTUTILS_USE_PEP517=setuptools
 
+PYPI_VERIFY_REPO="https://github.com/georgkrause/langcodes"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Tools for labeling human languages with IETF language tags."

@@ -6,6 +6,8 @@ EAPI=8
 PYTHON_COMPAT=( python3_{10..14} )
 DISTUTILS_USE_PEP517=setuptools
 
+PYPI_VERIFY_REPO="https://github.com/piskvorky/smart_open"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Utils for streaming large files (S3, HDFS, GCS, Azure, gzip, bz2, zst)."

@@ -6,6 +6,8 @@ EAPI=8
 PYTHON_COMPAT=( python3_{10..15} )
 DISTUTILS_USE_PEP517=setuptools
 DISTUTILS_EXT=1
+PYPI_VERIFY_REPO="https://github.com/explosion/srsly"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Modern high-performance serialization utilities for Python."

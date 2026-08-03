@@ -4,6 +4,8 @@
 EAPI=8
 PYTHON_COMPAT=( python3_{10..14} )
 DISTUTILS_USE_PEP517=hatchling
+PYPI_VERIFY_REPO="https://github.com/Tatsh/gmail-archiver"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Locally archive Gmail emails."

@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{11..15} )
 
+PYPI_VERIFY_REPO="https://github.com/python-gitlab/python-gitlab"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Python wrapper for the GitLab REST and GraphQL APIs"

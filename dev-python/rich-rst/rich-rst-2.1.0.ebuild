@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{11,12,13,14,15} )
 
+PYPI_VERIFY_REPO="https://github.com/wasi-master/rich-rst"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="A beautiful reStructuredText renderer for rich."

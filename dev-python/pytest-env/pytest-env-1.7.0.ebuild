@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{10..15} )
 
+PYPI_VERIFY_REPO="https://github.com/pytest-dev/pytest-env"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Pytest plugin to set environment variables for tests"

@@ -4,6 +4,8 @@
 EAPI=8
 PYTHON_COMPAT=( python3_{10..14} )
 DISTUTILS_USE_PEP517=hatchling
+PYPI_VERIFY_REPO="https://github.com/Tatsh/mutt-oauth2"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Packaged, maintained version of contributed mutt_oauth2.py script."

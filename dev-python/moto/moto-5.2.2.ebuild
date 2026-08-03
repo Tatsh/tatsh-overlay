@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{10..15} )
 
+PYPI_VERIFY_REPO="https://github.com/getmoto/moto"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="A library that allows you to easily mock out tests based on AWS infrastructure"

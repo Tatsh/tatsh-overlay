@@ -8,6 +8,8 @@ PYTHON_COMPAT=( python3_{11..15} )
 
 PYPI_PN=dbeaver_creds
 
+PYPI_VERIFY_REPO="https://github.com/Tatsh/dbeaver-creds"
+
 inherit cmake distutils-r1 pypi
 
 DESCRIPTION="Recover your DBeaver saved credentials."

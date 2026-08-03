@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{11..14} )
 
+PYPI_VERIFY_REPO="https://github.com/Tatsh/deltona"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="A lot of uncategorised utilities."
@@ -69,7 +71,7 @@ BDEPEND="
 	)
 "
 
-EPYTEST_PLUGINS=( pytest-asyncio-1 pytest-mock-3 )
+EPYTEST_PLUGINS=( pytest-asyncio pytest-mock )
 distutils_enable_tests pytest
 
 src_install() {

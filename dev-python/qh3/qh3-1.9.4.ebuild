@@ -193,6 +193,8 @@ CRATES="
 	zerovec-derive@0.11.3
 "
 
+PYPI_VERIFY_REPO="https://github.com/jawah/qh3"
+
 inherit cargo distutils-r1 pypi
 
 DESCRIPTION="A lightweight and fast implementation of QUIC and HTTP/3"

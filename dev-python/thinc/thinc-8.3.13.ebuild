@@ -7,6 +7,8 @@ DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{10..15} )
 
+PYPI_VERIFY_REPO="https://github.com/explosion/thinc"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Functional take on deep learning, compatible with your favorite libraries"

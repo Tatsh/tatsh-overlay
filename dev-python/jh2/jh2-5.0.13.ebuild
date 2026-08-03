@@ -30,6 +30,8 @@ CRATES="
 	unicode-ident@1.0.24
 "
 
+PYPI_VERIFY_REPO="https://github.com/jawah/h2"
+
 inherit cargo distutils-r1 pypi
 
 DESCRIPTION="HTTP/2 State-Machine based protocol implementation"

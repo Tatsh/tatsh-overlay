@@ -7,6 +7,8 @@ DISTUTILS_USE_PEP517=hatchling
 EPYTEST_PLUGINS=( hypothesis )
 PYTHON_COMPAT=( python3_{11..15} )
 
+PYPI_VERIFY_REPO="https://github.com/lovesegfault/beautysh"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="A Bash beautifier for the masses."

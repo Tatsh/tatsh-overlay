@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{11..14} )
 
+PYPI_VERIFY_REPO="https://github.com/Tatsh/wiswa-mcp"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="FastMCP server exposing Wiswa settings discovery for AI assistants."

@@ -7,6 +7,8 @@ PYTHON_COMPAT=( python3_{10..15} )
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
 
+PYPI_VERIFY_REPO="https://github.com/explosion/cython-blis"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="The Blis BLAS-like linear algebra library, as a self-contained C-extension."

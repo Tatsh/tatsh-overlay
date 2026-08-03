@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=poetry
 PYTHON_COMPAT=( python3_{10..14} )
 
+PYPI_VERIFY_REPO="https://github.com/python-openapi/openapi-spec-validator"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="OpenAPI 2.0 (aka Swagger) and OpenAPI 3 spec validator"

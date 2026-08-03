@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{10..15} )
 
+PYPI_VERIFY_REPO="https://github.com/pytest-dev/pytest-randomly"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Pytest plugin to randomly order tests and control random.seed"

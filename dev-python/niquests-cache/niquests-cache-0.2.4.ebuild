@@ -6,6 +6,8 @@ EAPI=8
 DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{11..15} )
 
+PYPI_VERIFY_REPO="https://github.com/Tatsh/niquests-cache"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Cached niquests sessions with pluggable storage backends"

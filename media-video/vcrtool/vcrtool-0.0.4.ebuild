@@ -5,6 +5,8 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{12..14} )
+PYPI_VERIFY_REPO="https://github.com/Tatsh/vcrtool"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Control a JLIP device such as a VCR."

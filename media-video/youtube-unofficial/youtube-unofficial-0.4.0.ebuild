@@ -5,6 +5,8 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{10..14} )
+PYPI_VERIFY_REPO="https://github.com/Tatsh/youtube-unofficial"
+
 inherit distutils-r1 pypi
 
 DESCRIPTION="Access parts of your account unavailable through normal YouTube API access."
