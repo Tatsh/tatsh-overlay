@@ -19,15 +19,13 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
+# Upstream also blocks botocore 1.35.45/1.35.46, werkzeug 2.2.0/2.2.1 and
+# responses 0.25.5. None of those have ever been in the tree, so the blockers
+# can never match anything.
 RDEPEND=">=dev-python/boto3-1.9.201[${PYTHON_USEDEP}]
 	>=dev-python/botocore-1.20.88[${PYTHON_USEDEP}]
-	!~dev-python/botocore-1.35.45[${PYTHON_USEDEP}]
-	!~dev-python/botocore-1.35.46[${PYTHON_USEDEP}]
 	>=dev-python/cryptography-35.0.0[${PYTHON_USEDEP}]
 	>=dev-python/requests-2.5[${PYTHON_USEDEP}]
 	dev-python/xmltodict[${PYTHON_USEDEP}]
 	>=dev-python/werkzeug-0.5[${PYTHON_USEDEP}]
-	!~dev-python/werkzeug-2.2.0[${PYTHON_USEDEP}]
-	!~dev-python/werkzeug-2.2.1[${PYTHON_USEDEP}]
-	>=dev-python/responses-0.15.0[${PYTHON_USEDEP}]
-	!~dev-python/responses-0.25.5[${PYTHON_USEDEP}]"
+	>=dev-python/responses-0.15.0[${PYTHON_USEDEP}]"
