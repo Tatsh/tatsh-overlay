@@ -61,10 +61,10 @@ SRC_URI="https://github.com/Vita3K/Vita3K/archive/${SHA}.tar.gz -> ${P}-${SHA:0:
 	https://github.com/Vita3K/libfat16/archive/${LIBFAT16_SHA}.tar.gz -> ${PN}-libfat16-${LIBFAT16_SHA:0:7}.tar.gz
 	https://github.com/Vita3K/printf/archive/${PRINTF_SHA}.tar.gz -> ${PN}-printf-${PRINTF_SHA:0:7}.tar.gz
 	https://github.com/Vita3K/psvpfstools/archive/${PSVPFSTOOLS_SHA}.tar.gz -> ${PN}-psvpfstools-${PSVPFSTOOLS_SHA:0:7}.tar.gz
-	https://github.com/korewawatchful/libb64/archive/${PSVPFSTOOLS_LIBB64_SHA}.tar.gz -> ${PN}-psvpfstools-libb64-${PSVPFSTOOLS_LIBB64_SHA:0:7}.tar.gz
-	https://github.com/KorewaWatchful/libzrif/archive/${PSVPFSTOOLS_LIBZRIF_SHA}.tar.gz -> ${PN}-psvpfstools-libzrif-${PSVPFSTOOLS_LIBZRIF_SHA:0:7}.tar.gz
+	https://github.com/imWatchful/libb64/archive/${PSVPFSTOOLS_LIBB64_SHA}.tar.gz -> ${PN}-psvpfstools-libb64-${PSVPFSTOOLS_LIBB64_SHA:0:7}.tar.gz
+	https://github.com/imWatchful/libzrif/archive/${PSVPFSTOOLS_LIBZRIF_SHA}.tar.gz -> ${PN}-psvpfstools-libzrif-${PSVPFSTOOLS_LIBZRIF_SHA:0:7}.tar.gz
 	https://github.com/Vita3K/psvpfsparser/archive/${PSVPFSTOOLS_PSVPFSPARSER_SHA}.tar.gz -> ${PN}-psvpfstools-psvpfsparser-${PSVPFSTOOLS_PSVPFSPARSER_SHA:0:7}.tar.gz
-	https://github.com/korewawatchful/zlib/archive/${PSVPFSTOOLS_ZLIB_SHA}.tar.gz -> ${PN}-psvpfstools-zlib-${PSVPFSTOOLS_ZLIB_SHA:0:7}.tar.gz
+	https://github.com/imWatchful/zlib/archive/${PSVPFSTOOLS_ZLIB_SHA}.tar.gz -> ${PN}-psvpfstools-zlib-${PSVPFSTOOLS_ZLIB_SHA:0:7}.tar.gz
 	https://github.com/Vita3K/substitute/archive/${SUBSTITUTE_SHA}.tar.gz -> ${PN}-substitute-${SUBSTITUTE_SHA:0:7}.tar.gz
 	https://github.com/vitasdk/vita-toolchain/archive/${VITA_TOOLCHAIN_SHA}.tar.gz -> ${PN}-vita-toolchain-${VITA_TOOLCHAIN_SHA:0:7}.tar.gz
 	https://github.com/Princess-of-Sleeping/psp2rela/archive/${VITA_TOOLCHAIN_PSP2RELA_SHA}.tar.gz -> ${PN}-vita-toolchain-psp2rela-${VITA_TOOLCHAIN_PSP2RELA_SHA:0:7}.tar.gz

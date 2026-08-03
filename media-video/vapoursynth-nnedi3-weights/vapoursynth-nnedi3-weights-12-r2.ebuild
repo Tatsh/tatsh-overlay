@@ -4,8 +4,8 @@
 EAPI=8
 
 DESCRIPTION="nnedi3 weights.bin file"
-HOMEPAGE="https://github.com/dubhater/vapoursynth-nnedi3"
-SRC_URI="https://github.com/dubhater/${PN/-weights}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/dubhatervapoursynth/vapoursynth-nnedi3"
+SRC_URI="https://github.com/dubhatervapoursynth/${PN/-weights}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${P/-weights}"
 LICENSE="GPL-2"
 SLOT="0"

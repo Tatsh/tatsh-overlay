@@ -7,6 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="pypi">msgspec</remote-id>
-		<remote-id type="github">jcrist/msgspec</remote-id>
+		<remote-id type="github">msgspec/msgspec</remote-id>
 	</upstream>
 </pkgmetadata>

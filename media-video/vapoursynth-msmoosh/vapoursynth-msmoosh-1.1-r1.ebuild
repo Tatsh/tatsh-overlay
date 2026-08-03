@@ -6,8 +6,8 @@ EAPI=8
 inherit autotools
 
 DESCRIPTION="MSharpen and MSmooth for VapourSynth"
-HOMEPAGE="https://github.com/dubhater/vapoursynth-msmoosh"
-SRC_URI="https://github.com/dubhater/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/dubhatervapoursynth/vapoursynth-msmoosh"
+SRC_URI="https://github.com/dubhatervapoursynth/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

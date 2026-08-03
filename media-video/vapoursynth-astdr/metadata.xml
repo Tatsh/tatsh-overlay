@@ -6,6 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">dubhater/vapoursynth-astdr</remote-id>
+		<remote-id type="github">dubhatervapoursynth/vapoursynth-astdr</remote-id>
 	</upstream>
 </pkgmetadata>

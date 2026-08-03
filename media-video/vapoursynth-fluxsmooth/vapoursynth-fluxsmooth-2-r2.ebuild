@@ -6,8 +6,8 @@ EAPI=8
 inherit autotools
 
 DESCRIPTION="A filter for smoothing of fluctuations"
-HOMEPAGE="https://github.com/dubhater/vapoursynth-fluxsmooth"
-SRC_URI="https://github.com/dubhater/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/dubhatervapoursynth/vapoursynth-fluxsmooth"
+SRC_URI="https://github.com/dubhatervapoursynth/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="public-domain"
 SLOT="0"

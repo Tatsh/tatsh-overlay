@@ -253,8 +253,8 @@ NUGETS="avalonia@11.0.0
 inherit check-reqs desktop dotnet-pkg xdg
 
 DESCRIPTION="Experimental Nintendo Switch Emulator written in C#"
-HOMEPAGE="https://ryujinx.app/ https://git.ryujinx.app/ryubing/ryujinx/"
-SRC_URI="https://git.ryujinx.app/ryubing/${PN}/archive/Canary-${PV}.tar.gz -> ${P}.tar.gz
+HOMEPAGE="https://ryujinx.app/ https://git.ryujinx.app/projects/Ryubing"
+SRC_URI="https://git.ryujinx.app/projects/Ryubing/archive/Canary-${PV}.tar.gz -> ${P}.tar.gz
 	https://git.ryujinx.app/projects/-/packages/nuget/ryujinx.libhac/0.20.0-alpha.103/files/89 -> ${PN}.libhac.0.20.0-alpha.103.nupkg
 	${NUGET_URIS}"
 S="${WORKDIR}/ryubing"

@@ -6,7 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">brettcannon/gidgethub</remote-id>
+		<remote-id type="github">gidgethub/gidgethub</remote-id>
 		<remote-id type="pypi">gidgethub</remote-id>
 	</upstream>
 </pkgmetadata>

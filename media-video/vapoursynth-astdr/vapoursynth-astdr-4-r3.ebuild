@@ -7,8 +7,8 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit python-r1
 
 DESCRIPTION="Derainbow function for VapourSynth."
-HOMEPAGE="https://github.com/dubhater/vapoursynth-astdr"
-SRC_URI="https://github.com/dubhater/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/dubhatervapoursynth/vapoursynth-astdr"
+SRC_URI="https://github.com/dubhatervapoursynth/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="all-rights-reserved"
 SLOT="0"

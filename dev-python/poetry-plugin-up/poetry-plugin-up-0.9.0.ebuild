@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="A plugin that allows the export of locked packages to various formats"
-HOMEPAGE="https://github.com/MousaZeidBaker/poetry-plugin-up"
+HOMEPAGE="https://github.com/mousabaker/poetry-plugin-up"
 
 LICENSE="MIT"
 SLOT="0"

@@ -6,8 +6,8 @@ EAPI=8
 inherit flag-o-matic meson
 
 DESCRIPTION="Spatial denoising filter for pourSynth"
-HOMEPAGE="https://github.com/dubhater/vapoursynth-minideen"
-SRC_URI="https://github.com/dubhater/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/dubhatervapoursynth/vapoursynth-minideen"
+SRC_URI="https://github.com/dubhatervapoursynth/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="ISC"
 SLOT="0"

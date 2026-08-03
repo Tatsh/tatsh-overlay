@@ -6,6 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">dubhater/vapoursynth-nnedi3</remote-id>
+		<remote-id type="github">dubhatervapoursynth/vapoursynth-nnedi3</remote-id>
 	</upstream>
 </pkgmetadata>

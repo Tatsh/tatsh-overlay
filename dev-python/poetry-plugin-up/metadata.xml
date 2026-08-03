@@ -6,7 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">MousaZeidBaker/poetry-plugin-up</remote-id>
+		<remote-id type="github">mousabaker/poetry-plugin-up</remote-id>
 		<remote-id type="pypi">poetry-plugin-up</remote-id>
 	</upstream>
 </pkgmetadata>

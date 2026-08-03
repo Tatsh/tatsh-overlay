@@ -10,7 +10,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="An async GitHub API library"
 HOMEPAGE="
-	https://github.com/brettcannon/gidgethub
+	https://github.com/gidgethub/gidgethub
 	https://pypi.org/project/gidgethub/
 "
 

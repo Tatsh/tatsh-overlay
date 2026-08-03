@@ -11,6 +11,6 @@
     performance and user-friendly interface.
   </longdescription>
   <upstream>
-    <bugs-to>https://git.ryujinx.app/ryubing/ryujinx/-/issues</bugs-to>
+    <bugs-to>https://git.ryujinx.app/projects/Ryubing/-/issues</bugs-to>
   </upstream>
 </pkgmetadata>

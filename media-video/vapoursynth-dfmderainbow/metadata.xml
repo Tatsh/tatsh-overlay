@@ -6,6 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">dubhater/vapoursynth-dfmderainbow</remote-id>
+		<remote-id type="github">dubhatervapoursynth/vapoursynth-dfmderainbow</remote-id>
 	</upstream>
 </pkgmetadata>

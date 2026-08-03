@@ -11,7 +11,7 @@ inherit distutils-r1 pypi
 DESCRIPTION="Doing dirty (but extremely useful) things with equals"
 HOMEPAGE="
 	https://github.com/samuelcolvin/dirty-equals
-	https://dirty-equals.helpmanual.io/
+	https://dirty-equals.helpmanual.io/latest/
 	https://pypi.org/project/dirty-equals/
 "
 

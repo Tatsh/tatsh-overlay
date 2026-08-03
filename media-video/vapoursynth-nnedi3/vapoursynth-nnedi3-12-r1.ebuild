@@ -6,8 +6,8 @@ EAPI=8
 inherit autotools
 
 DESCRIPTION="nnedi3 filter for VapourSynth"
-HOMEPAGE="https://github.com/dubhater/vapoursynth-nnedi3"
-SRC_URI="https://github.com/dubhater/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="https://github.com/dubhatervapoursynth/vapoursynth-nnedi3"
+SRC_URI="https://github.com/dubhatervapoursynth/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"

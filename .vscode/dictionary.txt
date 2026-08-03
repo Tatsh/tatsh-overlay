@@ -1012,6 +1012,7 @@ ioxml
 ipython
 irecovery
 iregex
+iroco
 isaacs
 isatty
 isbinaryfile
@@ -1471,6 +1472,7 @@ modpost
 moduleinto
 mojimoji
 mousa
+mousabaker
 movableink
 moviepy
 mpfr

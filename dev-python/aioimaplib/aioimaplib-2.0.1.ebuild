@@ -10,7 +10,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="Python asyncio IMAP4rev1 client library"
 HOMEPAGE="
-	https://github.com/bamthomas/aioimaplib
+	https://github.com/iroco-co/aioimaplib
 	https://pypi.org/project/aioimaplib/
 "
 

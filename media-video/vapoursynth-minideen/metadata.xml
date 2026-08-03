@@ -6,6 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">dubhater/vapoursynth-minideen</remote-id>
+		<remote-id type="github">dubhatervapoursynth/vapoursynth-minideen</remote-id>
 	</upstream>
 </pkgmetadata>
