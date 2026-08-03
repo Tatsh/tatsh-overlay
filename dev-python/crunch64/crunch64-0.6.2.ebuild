@@ -76,7 +76,7 @@ CRATES="aho-corasick@1.1.3
 	windows_x86_64_msvc@0.53.0"
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=maturin
-PYTHON_COMPAT=( python3_1{1,2,3,4} )
+PYTHON_COMPAT=( python3_1{1,2,3,4,5} )
 inherit cargo distutils-r1
 
 DESCRIPTION="Common N64 compression formats implemented in Rust (library only)."

@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=flit
 
-PYTHON_COMPAT=( pypy3 python3_1{0,1,2,3,4} )
+PYTHON_COMPAT=( pypy3 python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1
 

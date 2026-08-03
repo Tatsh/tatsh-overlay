@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=maturin
 DISTUTILS_EXT=1
-PYTHON_COMPAT=( python3_1{0..4} )
+PYTHON_COMPAT=( python3_1{0..5} )
 
 CRATES="
 	bitflags@1.3.2

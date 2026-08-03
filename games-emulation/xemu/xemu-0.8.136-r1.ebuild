@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 PYTHON_REQ_USE="ncurses,readline"
 
 inherit fcaps flag-o-matic pax-utils python-r1 toolchain-funcs xdg-utils

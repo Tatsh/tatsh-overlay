@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{12,13,14} )
+PYTHON_COMPAT=( python3_{12,13,14,15} )
 inherit meson python-single-r1
 
 DESCRIPTION="Motion compensation, etc for VapourSynth."

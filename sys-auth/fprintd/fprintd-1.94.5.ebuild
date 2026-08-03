@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit meson python-single-r1 systemd
 
 DESCRIPTION="D-Bus service to access fingerprint readers"

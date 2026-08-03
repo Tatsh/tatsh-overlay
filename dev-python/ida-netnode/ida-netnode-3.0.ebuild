@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Humane API for storing and accessing persistent data in IDA Pro databases."

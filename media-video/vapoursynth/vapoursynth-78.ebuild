@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{2,3,4} )
+PYTHON_COMPAT=( python3_1{2,3,4,5} )
 
 inherit meson python-r1
 

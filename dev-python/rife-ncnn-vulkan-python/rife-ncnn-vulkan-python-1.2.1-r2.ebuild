@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_1{0,1,2,3,4} )
+PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit cmake pypi python-r1
 
 DESCRIPTION="A Python FFI of nihui/rife-ncnn-vulkan achieved with SWIG."

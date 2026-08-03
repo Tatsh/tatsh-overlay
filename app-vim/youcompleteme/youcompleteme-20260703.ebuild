@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-PYTHON_COMPAT=( python3_1{0..4} )
+PYTHON_COMPAT=( python3_1{0..5} )
 inherit python-single-r1
 
 DESCRIPTION="A code-completion engine for Vim."

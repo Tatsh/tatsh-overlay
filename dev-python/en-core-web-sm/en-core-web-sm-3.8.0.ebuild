@@ -3,7 +3,7 @@
 
 EAPI=8
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0..4} )
+PYTHON_COMPAT=( python3_1{0..5} )
 inherit distutils-r1
 
 DESCRIPTION="English pipeline optimized for CPU."
