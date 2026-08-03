@@ -1,0 +1,11 @@
+# Nintendo Switch 2 Pro Controller (2066, 2067, 2069) and NSO GameCube
+# controller (2073).
+#
+# Access is granted to the input group rather than world (the upstream README
+# suggests MODE="0666") because the enabler already requires membership of that
+# group.
+SUBSYSTEM=="usb", ATTR{idVendor}=="057e", ATTR{idProduct}=="2066|2067|2069|2073", MODE="0660", GROUP="input"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="2066|2067|2069|2073", MODE="0660", GROUP="input"
+
+# Switch the controller into HID mode as soon as it is plugged in.
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="057e", ATTR{idProduct}=="2066|2067|2069|2073", RUN+="/usr/bin/nsw2-controller-enabler"
