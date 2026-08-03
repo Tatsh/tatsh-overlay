@@ -4,6 +4,7 @@ abloop
 acinclude
 aclocal
 adbsync
+addopts
 addpredict
 addwrite
 adlam
@@ -33,6 +34,7 @@ alessio
 alexedwards
 aliftype
 alitto
+allarches
 allenc
 alsa
 altserver
@@ -405,6 +407,7 @@ dataserv
 datastax
 dateformat
 datepicker
+datetimes
 dateutil
 davecgh
 davidmz
@@ -808,6 +811,8 @@ gickup
 gidgethub
 gidgetlab
 gileshuang
+gitbundle
+gitdb
 gitea
 githubv
 gitpython
@@ -2098,6 +2103,7 @@ slongfield
 smaniotto
 smat
 smetrics
+smmap
 smsplus
 sndfile
 sndh
