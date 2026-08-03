@@ -12,11 +12,11 @@ inherit distutils-r1
 DESCRIPTION="Joystick-aware screen waker."
 HOMEPAGE="https://codeberg.org/forestix/joystickwake"
 SRC_URI="https://codeberg.org/forestix/joystickwake/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/${PN}"
+
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~ppc64 ~x86"
 
 # shellcheck disable=SC2016
 RDEPEND="$(python_gen_cond_dep 'dev-python/pyudev[${PYTHON_USEDEP}]')"
-
-S="${WORKDIR}/${PN}"

@@ -85,8 +85,8 @@ SRC_URI="https://github.com/decompals/${PN}/archive/refs/tags/${PV}.tar.gz -> ${
 	${CARGO_CRATE_URIS}
 "
 
+S="${WORKDIR}/${P}/lib"
+
 LICENSE="MIT Apache-2.0-with-LLVM-exceptions MIT Unicode-3.0"
 SLOT="0"
 KEYWORDS="~amd64"
-
-S="${WORKDIR}/${P}/lib"
