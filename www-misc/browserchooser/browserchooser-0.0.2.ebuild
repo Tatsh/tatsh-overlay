@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake xdg-utils
 
 DESCRIPTION="Pick a browser to use for a URL opened from a non-browser."
 HOMEPAGE="https://github.com/Tatsh/browserchooser"
