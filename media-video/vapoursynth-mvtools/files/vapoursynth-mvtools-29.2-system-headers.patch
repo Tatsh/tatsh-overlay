@@ -1,0 +1,17 @@
+Find the VapourSynth headers through pkg-config.
+
+vs.get_include() points inside the Python package, which is where the pip
+wheel keeps its headers. Gentoo installs them to /usr/include/vapoursynth
+instead, so ask pkg-config where they are.
+
+--- a/meson.build
++++ b/meson.build
+@@ -11,7 +11,7 @@
+ py = import('python').find_installation(pure: false)
+ 
+ incdir = include_directories(
+-    run_command(py, '-c', 'import vapoursynth as vs; print(vs.get_include())', check: true).stdout().strip(),
++    dependency('vapoursynth').get_variable(pkgconfig: 'includedir') / 'vapoursynth',
+ )
+ 
+ libs = []
