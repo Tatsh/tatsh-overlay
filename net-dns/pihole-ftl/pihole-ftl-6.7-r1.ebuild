@@ -14,9 +14,9 @@ LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="dev-libs/gmp
-	dev-libs/libunistring
-	dev-libs/nettle
+DEPEND="dev-libs/gmp:=
+	dev-libs/libunistring:=
+	dev-libs/nettle:=
 	net-dns/libidn2
 	sys-libs/libtermcap-compat
 	sys-libs/readline:="

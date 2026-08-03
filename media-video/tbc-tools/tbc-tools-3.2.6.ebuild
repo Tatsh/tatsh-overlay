@@ -30,7 +30,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 # option to build without it.
 DEPEND="dev-qt/qtbase:6[gui,sql,widgets]
 	dev-qt/qtsvg:6
-	sci-libs/fftw:3.0
+	sci-libs/fftw:3.0=
 	|| ( sci-libs/onnxruntime sci-libs/onnxruntime-bin )"
 # tbc-video-export is a bundled Python application driving ffmpeg, and
 # ld-process-vbi shells out to the bundled vhs-teletext for teletext export.

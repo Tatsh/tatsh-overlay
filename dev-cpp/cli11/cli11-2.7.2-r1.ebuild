@@ -21,7 +21,7 @@ RESTRICT="!test? ( test )"
 
 DEPEND="test? (
 	<dev-cpp/catch-3:0
-	dev-libs/boost
+	dev-libs/boost:=
 )"
 
 DOCS=( README.md CHANGELOG.md )

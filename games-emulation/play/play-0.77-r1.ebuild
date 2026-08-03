@@ -36,17 +36,17 @@ KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
 IUSE="libretro vulkan"
 
 DEPEND="app-arch/bzip2
-	app-arch/zstd
+	app-arch/zstd:=
 	dev-db/sqlite
-	dev-libs/icu
+	dev-libs/icu:=
 	dev-libs/libevdev
-	dev-libs/openssl
+	dev-libs/openssl:=
 	dev-qt/qtbase:6[X,gui,widgets]
 	media-libs/libglvnd
 	media-libs/glu
 	media-libs/openal
 	net-misc/curl
-	virtual/zlib
+	virtual/zlib:=
 	vulkan? ( media-libs/vulkan-loader )"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-cpp/nlohmann_json"

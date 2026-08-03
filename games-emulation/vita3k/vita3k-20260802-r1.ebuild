@@ -77,20 +77,20 @@ KEYWORDS="~amd64"
 
 DEPEND=">=dev-libs/boost-1.81:=
 	dev-cpp/tracy
-	dev-cpp/yaml-cpp
+	dev-cpp/yaml-cpp:=
 	dev-libs/capstone:=
 	dev-libs/libfmt:=
 	dev-libs/nativefiledialog-extended
-	dev-libs/openssl
+	dev-libs/openssl:=
 	dev-libs/pugixml
-	dev-libs/spdlog
+	dev-libs/spdlog:=
 	dev-libs/stb
 	dev-libs/xxhash
 	media-libs/cubeb
 	media-libs/libsdl3
 	media-video/ffmpeg:=
 	sys-apps/dbus
-	virtual/zlib"
+	virtual/zlib:="
 RDEPEND="${DEPEND}"
 
 PATCHES=(

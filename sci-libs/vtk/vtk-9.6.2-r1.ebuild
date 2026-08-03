@@ -149,7 +149,7 @@ DEPEND="
 	${RDEPEND}
 	dev-cpp/cli11
 	test? (
-		media-libs/glew
+		media-libs/glew:=
 		x11-libs/libXcursor
 		rendering? ( media-libs/freeglut )
 	)

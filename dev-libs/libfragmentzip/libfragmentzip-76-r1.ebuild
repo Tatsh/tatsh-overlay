@@ -15,10 +15,10 @@ LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-DEPEND="dev-libs/libzip
+DEPEND="dev-libs/libzip:=
 	net-misc/curl
 	dev-libs/tihmstar-libgeneral
-	virtual/zlib"
+	virtual/zlib:="
 RDEPEND="${DEPEND}"
 
 PATCHES=( "${FILESDIR}/configure-ac.patch" )

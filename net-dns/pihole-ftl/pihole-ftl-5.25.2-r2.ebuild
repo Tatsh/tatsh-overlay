@@ -13,10 +13,10 @@ LICENSE="EUPL-1.2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="dev-libs/gmp
-	dev-libs/nettle
+DEPEND="dev-libs/gmp:=
+	dev-libs/nettle:=
 	net-dns/libidn
-	sys-libs/readline
+	sys-libs/readline:=
 	sys-libs/libtermcap-compat"
 RDEPEND="${DEPEND}"
 BDEPEND="app-editors/vim-core" # needed for xxd

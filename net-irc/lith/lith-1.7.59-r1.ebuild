@@ -14,11 +14,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="dev-libs/qcoro
-	dev-libs/qtkeychain
+	dev-libs/qtkeychain:=
 	dev-qt/qtbase:6[dbus,gui,network,widgets,xml]
 	dev-qt/qtdeclarative:6
 	dev-qt/qtmultimedia:6
-	dev-libs/qtkeychain
+	dev-libs/qtkeychain:=
 	dev-qt/qtwebsockets:6"
 RDEPEND="${DEPEND}"
 
