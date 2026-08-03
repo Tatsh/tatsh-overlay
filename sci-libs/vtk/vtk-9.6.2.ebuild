@@ -161,9 +161,6 @@ PATCHES=(
 	"${FILESDIR}/${PN}-9.3.0-java.patch"
 
 	"${FILESDIR}/${PN}-9.4.2-pegtl-3.x.patch"
-	"${FILESDIR}/${PN}-9.4.2-ThirdParty-libfmt-12.patch"
-	"${FILESDIR}/${PN}-9.5.0-cuda-13-1.patch"
-	"${FILESDIR}/${PN}-9.5.0-cuda-13-2.patch"
 	"${FILESDIR}/${PN}-9.5.2-findpegtl-imported-global.patch"
 )
 
@@ -490,7 +487,8 @@ src_configure() {
 		-DVTK_MODULE_ENABLE_VTK_pegtl="YES"
 		-DVTK_MODULE_ENABLE_VTK_png="YES"
 		-DVTK_MODULE_ENABLE_VTK_pugixml="YES"
-		-DVTK_MODULE_ENABLE_VTK_scn="$(usex test "YES" "NO")"
+		# VTK::CommonCore requires this unconditionally as of 9.6.
+		-DVTK_MODULE_ENABLE_VTK_scn="YES"
 		-DVTK_MODULE_ENABLE_VTK_sqlite="YES"
 		-DVTK_MODULE_ENABLE_VTK_theora="$(usex minimal "NO" "YES")"
 		-DVTK_MODULE_ENABLE_VTK_tiff="YES"
@@ -508,6 +506,7 @@ src_configure() {
 		-DVTK_MODULE_USE_EXTERNAL_VTK_fast_float=OFF
 		-DVTK_MODULE_USE_EXTERNAL_VTK_exprtk=OFF
 		-DVTK_MODULE_USE_EXTERNAL_VTK_ioss=OFF
+		-DVTK_MODULE_USE_EXTERNAL_VTK_scn=OFF
 		-DVTK_MODULE_USE_EXTERNAL_VTK_token=OFF
 		-DVTK_MODULE_USE_EXTERNAL_VTK_verdict=OFF
 		-DVTK_MODULE_USE_EXTERNAL_VTK_vtkviskores=OFF
@@ -803,8 +802,6 @@ src_configure() {
 			-DVTK_MODULE_ENABLE_VTK_ViewsCore="YES"
 
 			-DVTK_MODULE_USE_EXTERNAL_VTK_cli11="YES"
-			# not packaged in Gentoo
-			-DVTK_MODULE_USE_EXTERNAL_VTK_scn=OFF
 		)
 	else
 		mycmakeargs+=( -DVTK_BUILD_TESTING=OFF )
