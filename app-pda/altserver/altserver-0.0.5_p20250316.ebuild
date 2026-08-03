@@ -29,7 +29,7 @@ DEPEND="app-pda/libimobiledevice
 	dev-libs/libzip
 	dev-libs/openssl
 	sys-apps/util-linux
-	sys-libs/zlib[minizip]
+	virtual/minizip:=
 	virtual/zlib"
 RDEPEND="${DEPEND}"
 BDEPEND="llvm-core/clang
