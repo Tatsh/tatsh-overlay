@@ -4,7 +4,7 @@
 EAPI=8
 
 PYTHON_COMPAT=( python3_{12,13,14} )
-inherit meson python-any-r1
+inherit meson python-single-r1
 
 DESCRIPTION="Motion compensation, etc for VapourSynth."
 HOMEPAGE="https://github.com/dubhatervapoursynth/vapoursynth-mvtools"
@@ -19,13 +19,19 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-# meson needs an interpreter for python.find_installation(), but nothing here
-# imports the VapourSynth module: the patch below takes the headers from
-# pkg-config instead.
-BDEPEND="${PYTHON_DEPS}
-	dev-lang/nasm"
-DEPEND=">=media-video/vapoursynth-74
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
+BDEPEND="dev-lang/nasm"
+# As of R78 VapourSynth installs its headers, libraries and plugin directory
+# inside the Python package, and the build locates them through
+# "import vapoursynth; vapoursynth.get_include()". The module therefore has to
+# be built for the same implementation as this package.
+# shellcheck disable=SC2016
+DEPEND="${PYTHON_DEPS}
+	$(python_gen_cond_dep '>=media-video/vapoursynth-78[${PYTHON_USEDEP}]')
 	>=sci-libs/fftw-3.3.4:="
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${P}-system-headers.patch" )
+pkg_setup() {
+	python-single-r1_pkg_setup
+}
