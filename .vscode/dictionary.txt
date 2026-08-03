@@ -2274,6 +2274,7 @@ toidentifier
 tomcrypt
 tomli
 tomlkit
+tomllib
 tomlplusplus
 tommath
 toolbelt

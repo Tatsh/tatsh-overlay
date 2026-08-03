@@ -17,8 +17,10 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
+# tomllib covers this from 3.11 on.
+# shellcheck disable=SC2016
 RDEPEND="dev-python/pyyaml[${PYTHON_USEDEP}]
-	dev-python/tomli[${PYTHON_USEDEP}]"
+	$(python_gen_cond_dep 'dev-python/tomli[${PYTHON_USEDEP}]' python3_10)"
 EPYTEST_IGNORE=( "tests/test_cpylint.py" )
 
 distutils_enable_tests pytest
