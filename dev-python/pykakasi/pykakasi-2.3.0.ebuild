@@ -23,4 +23,5 @@ BDEPEND="test? (
 	dev-python/pytest-benchmark[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-benchmark pytest-cov )
 distutils_enable_tests pytest

@@ -21,4 +21,5 @@ RDEPEND="${PYTHON_DEPS}
 DEPEND="${RDEPEND}"
 BDEPEND="${PYTHON_DEPS}"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

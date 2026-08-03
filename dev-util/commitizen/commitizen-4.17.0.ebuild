@@ -38,4 +38,5 @@ BDEPEND="test? (
 	dev-python/pytest-xdist[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-cov pytest-freezer pytest-mock pytest-regressions pytest-xdist )
 distutils_enable_tests pytest

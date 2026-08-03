@@ -20,4 +20,5 @@ RDEPEND="dev-python/click[${PYTHON_USEDEP}]
 	>=dev-python/regex-2021.8.3[${PYTHON_USEDEP}]
 	dev-python/tqdm[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

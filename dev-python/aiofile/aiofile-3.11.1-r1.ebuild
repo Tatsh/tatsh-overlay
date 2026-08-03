@@ -24,4 +24,5 @@ BDEPEND="test? (
 	dev-python/markdown-pytest[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

@@ -26,4 +26,5 @@ RDEPEND=">=dev-python/regex-2022[${PYTHON_USEDEP}]
 	dev-libs/protobuf
 	sci-ml/sentencepiece"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

@@ -23,4 +23,5 @@ RDEPEND="
 	>=dev-python/six-1.12.0[${PYTHON_USEDEP}]
 "
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

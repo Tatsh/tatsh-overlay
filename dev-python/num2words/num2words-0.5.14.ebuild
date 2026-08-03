@@ -17,4 +17,5 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/docopt-0.6.2[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

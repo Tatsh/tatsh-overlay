@@ -17,4 +17,5 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/proces-0.1.7[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

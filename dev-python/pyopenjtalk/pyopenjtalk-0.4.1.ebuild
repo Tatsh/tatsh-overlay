@@ -21,4 +21,5 @@ RDEPEND=">=dev-python/numpy-1.20.0[${PYTHON_USEDEP}]
 BDEPEND="dev-python/cython[${PYTHON_USEDEP}]
 	test? ( dev-python/scipy[${PYTHON_USEDEP}] )"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

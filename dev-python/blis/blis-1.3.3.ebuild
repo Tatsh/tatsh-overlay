@@ -25,4 +25,5 @@ src_compile() {
 	distutils-r1_src_compile
 }
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

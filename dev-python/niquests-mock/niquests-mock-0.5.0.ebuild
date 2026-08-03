@@ -21,4 +21,5 @@ KEYWORDS="~amd64"
 RDEPEND=">=dev-python/niquests-3.17.0[${PYTHON_USEDEP}]
 	>=dev-python/orjson-3.10.18[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

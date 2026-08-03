@@ -30,4 +30,5 @@ src_prepare() {
 	distutils-r1_src_prepare
 }
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

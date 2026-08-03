@@ -256,4 +256,5 @@ python_prepare_all() {
 	distutils-r1_python_prepare_all
 }
 
+EPYTEST_PLUGINS=( pytest-instafail pytest-sugar )
 distutils_enable_tests pytest

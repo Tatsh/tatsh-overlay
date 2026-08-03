@@ -26,4 +26,5 @@ RDEPEND=">=dev-python/wxpython-4.1.1-r2[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	dev-python/mypy-extensions[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

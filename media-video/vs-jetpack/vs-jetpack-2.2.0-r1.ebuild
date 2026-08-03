@@ -23,4 +23,5 @@ RDEPEND="dev-python/jetpytools[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	media-video/vapoursynth[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

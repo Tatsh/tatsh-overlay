@@ -16,6 +16,7 @@ KEYWORDS="~amd64"
 
 RDEPEND="dev-python/tqdm[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
 
 src_prepare() {

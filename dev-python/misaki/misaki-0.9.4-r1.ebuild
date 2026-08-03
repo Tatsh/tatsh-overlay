@@ -55,4 +55,5 @@ RDEPEND="$(python_gen_cond_dep '
 	l10n_en? ( dev-python/spacy-curated-transformers[${PYTHON_SINGLE_USEDEP}] )
 	l10n_vi? ( dev-python/spacy-curated-transformers[${PYTHON_SINGLE_USEDEP}] )"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

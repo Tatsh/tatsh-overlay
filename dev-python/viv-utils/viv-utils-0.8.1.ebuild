@@ -31,4 +31,5 @@ RDEPEND="
 	)
 "
 
+EPYTEST_PLUGINS=( pytest-instafail pytest-sugar )
 distutils_enable_tests pytest

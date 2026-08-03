@@ -103,4 +103,5 @@ LICENSE="GPL-3 Apache-2.0-with-LLVM-exceptions BSD MIT Unicode-3.0
 SLOT="0"
 KEYWORDS="~amd64"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

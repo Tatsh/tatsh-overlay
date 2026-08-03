@@ -19,4 +19,5 @@ BDEPEND="test? (
 	dev-python/pytest-cov[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-cov )
 distutils_enable_tests pytest

@@ -27,4 +27,5 @@ BDEPEND="test? (
 	dev-python/responses[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-benchmark pytest-rerunfailures pytest-timeout pytest-xdist )
 distutils_enable_tests pytest

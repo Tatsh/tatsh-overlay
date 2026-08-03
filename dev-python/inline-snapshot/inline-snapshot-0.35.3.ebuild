@@ -26,4 +26,5 @@ RDEPEND=">=dev-python/asttokens-2.0.5[${PYTHON_USEDEP}]
 # shellcheck disable=SC2016
 RDEPEND+=" $(python_gen_cond_dep '>=dev-python/tomli-2.0.0[${PYTHON_USEDEP}]' python3_10)"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

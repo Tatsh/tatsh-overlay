@@ -37,4 +37,5 @@ src_install() {
 	doman "man/${PN}.1"
 }
 
+EPYTEST_PLUGINS=( pytest-mock )
 distutils_enable_tests pytest

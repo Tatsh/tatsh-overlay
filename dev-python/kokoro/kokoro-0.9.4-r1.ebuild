@@ -28,4 +28,5 @@ RDEPEND="$(python_gen_cond_dep '
 
 PATCHES=( "${FILESDIR}/${PN}-270.patch" )
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

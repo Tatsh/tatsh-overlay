@@ -23,4 +23,5 @@ python_prepare_all() {
 	distutils-r1_python_prepare_all
 }
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

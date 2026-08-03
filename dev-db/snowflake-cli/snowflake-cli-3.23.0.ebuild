@@ -41,4 +41,5 @@ python_install() {
 	distutils-r1_python_install
 }
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

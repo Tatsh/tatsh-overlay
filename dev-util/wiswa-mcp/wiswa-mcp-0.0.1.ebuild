@@ -31,4 +31,5 @@ BDEPEND="test? (
 	dev-python/pytest-mock[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-asyncio pytest-cov pytest-mock )
 distutils_enable_tests pytest

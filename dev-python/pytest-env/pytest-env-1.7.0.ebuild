@@ -21,4 +21,5 @@ KEYWORDS="~amd64"
 RDEPEND=">=dev-python/pytest-9.0.2[${PYTHON_USEDEP}]
 	>=dev-python/python-dotenv-1.2.2[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

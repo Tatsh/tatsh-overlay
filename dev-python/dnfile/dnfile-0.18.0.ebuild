@@ -17,4 +17,5 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/pefile-2019.4.18[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

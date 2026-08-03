@@ -69,6 +69,7 @@ BDEPEND="
 	)
 "
 
+EPYTEST_PLUGINS=( pytest-asyncio-1 pytest-mock-3 )
 distutils_enable_tests pytest
 
 src_install() {

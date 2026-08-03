@@ -30,4 +30,5 @@ BDEPEND="test? (
 	dev-python/requests-mock[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-mock )
 distutils_enable_tests pytest

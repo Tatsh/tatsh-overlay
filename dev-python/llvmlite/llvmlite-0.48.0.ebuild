@@ -47,4 +47,5 @@ python_compile() {
 	distutils-r1_python_compile
 }
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

@@ -30,4 +30,5 @@ BDEPEND="test? (
 	dev-python/pytest-mock[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-django pytest-mock )
 distutils_enable_tests pytest

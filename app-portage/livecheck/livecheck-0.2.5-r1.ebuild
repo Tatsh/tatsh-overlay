@@ -31,4 +31,5 @@ DEPEND="${RDEPEND}"
 
 PATCHES=( "${FILESDIR}/${PN}-0.2.5-git-suffix.patch" )
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

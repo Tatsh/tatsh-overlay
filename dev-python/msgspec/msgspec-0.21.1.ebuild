@@ -23,6 +23,7 @@ RDEPEND="dev-python/pyyaml[${PYTHON_USEDEP}]
 	$(python_gen_cond_dep 'dev-python/tomli[${PYTHON_USEDEP}]' python3_10)"
 EPYTEST_IGNORE=( "tests/test_cpylint.py" )
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
 
 BDEPEND+="
@@ -34,6 +35,5 @@ BDEPEND+="
 
 python_test() {
 	rm -rf "${PN}" || die
-	local -x PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
 	epytest -m 'not mypy and not pyright'
 }

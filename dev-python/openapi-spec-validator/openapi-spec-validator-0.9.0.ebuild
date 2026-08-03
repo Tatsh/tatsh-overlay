@@ -31,4 +31,5 @@ RDEPEND=">=dev-python/jsonschema-4.24.0[${PYTHON_USEDEP}]
 	>=dev-python/pydantic-settings-2.0.0[${PYTHON_USEDEP}]
 	<dev-python/pydantic-settings-3.0.0[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

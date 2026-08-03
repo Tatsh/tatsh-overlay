@@ -88,4 +88,5 @@ src_prepare() {
 	distutils-r1_src_prepare
 }
 
+EPYTEST_PLUGINS=( pytest-asyncio pytest-cov pytest-env pytest-examples pytest-flakefinder pytest-httpx pytest-report pytest-retry pytest-timeout pytest-xdist )
 distutils_enable_tests pytest

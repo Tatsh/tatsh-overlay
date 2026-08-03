@@ -41,4 +41,5 @@ pkg_postinst() {
 	einfo
 }
 
+EPYTEST_PLUGINS=( pytest-asyncio pytest-cov pytest-mock )
 distutils_enable_tests pytest

@@ -21,6 +21,7 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
 
 distutils_enable_sphinx docs \

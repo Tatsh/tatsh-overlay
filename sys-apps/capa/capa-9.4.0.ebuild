@@ -53,4 +53,5 @@ python_install_all() {
 	doins sigs/*.sig
 }
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

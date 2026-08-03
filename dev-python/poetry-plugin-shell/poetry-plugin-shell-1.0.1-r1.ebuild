@@ -27,4 +27,5 @@ DEPEND="
 	)
 "
 
+EPYTEST_PLUGINS=( pytest-mock )
 distutils_enable_tests pytest

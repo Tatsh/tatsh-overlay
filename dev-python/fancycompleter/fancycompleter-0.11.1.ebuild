@@ -21,4 +21,5 @@ KEYWORDS="~amd64"
 # shellcheck disable=SC2016
 RDEPEND="$(python_gen_cond_dep '>=dev-python/pyrepl-0.11.3[${PYTHON_USEDEP}]' python3_{10,11,12})"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

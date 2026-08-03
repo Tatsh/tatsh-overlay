@@ -14,4 +14,5 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

@@ -17,4 +17,5 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/colorama-0.3.9[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

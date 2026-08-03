@@ -30,4 +30,5 @@ BDEPEND="test? (
 	dev-python/tzlocal[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-asyncio pytest-cov pytest-rerunfailures )
 distutils_enable_tests pytest

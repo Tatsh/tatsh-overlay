@@ -20,4 +20,5 @@ DEPEND="media-libs/soxr"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-python/nanobind[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

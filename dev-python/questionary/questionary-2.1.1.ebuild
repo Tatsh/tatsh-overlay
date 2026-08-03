@@ -18,4 +18,5 @@ KEYWORDS="~amd64"
 
 RDEPEND="dev-python/prompt-toolkit[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

@@ -18,4 +18,5 @@ KEYWORDS="~amd64"
 RDEPEND=">=dev-python/flask-2.2.5[${PYTHON_USEDEP}]
 	>=dev-python/sqlalchemy-2.0.16[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

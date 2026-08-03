@@ -34,4 +34,5 @@ BDEPEND="test? (
 	dev-python/testcontainers[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-asyncio pytest-dotenv pytest-mock pytest-timeout pytest-xdist )
 distutils_enable_tests pytest

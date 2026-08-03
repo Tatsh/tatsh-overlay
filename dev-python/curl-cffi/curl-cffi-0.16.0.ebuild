@@ -21,4 +21,5 @@ RDEPEND="dev-python/cffi[${PYTHON_USEDEP}]
 
 PATCHES=( "${FILESDIR}/${PN}-0001-system-libs.patch" )
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

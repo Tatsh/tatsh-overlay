@@ -27,4 +27,5 @@ BDEPEND="test? (
 	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-asyncio )
 distutils_enable_tests pytest

@@ -22,4 +22,5 @@ RDEPEND=">=dev-python/fancycompleter-0.11.0[${PYTHON_USEDEP}]
 	dev-python/pygments[${PYTHON_USEDEP}]"
 BDEPEND="dev-python/setuptools-scm[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

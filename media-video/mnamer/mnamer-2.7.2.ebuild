@@ -21,4 +21,5 @@ RDEPEND="dev-python/appdirs[${PYTHON_USEDEP}]
 	dev-python/teletype[${PYTHON_USEDEP}]
 	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

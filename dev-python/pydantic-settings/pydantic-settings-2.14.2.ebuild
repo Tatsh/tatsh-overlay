@@ -26,4 +26,5 @@ BDEPEND="test? (
 	dev-python/pytest-pretty[${PYTHON_USEDEP}]
 )"
 
+EPYTEST_PLUGINS=( pytest-examples pytest-mock pytest-pretty )
 distutils_enable_tests pytest

@@ -18,4 +18,5 @@ KEYWORDS="~amd64"
 RDEPEND="media-video/ffmpeg
 	dev-python/audioop-lts[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
