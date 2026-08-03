@@ -143,6 +143,7 @@ beartype
 beautysh
 beautifulsoup
 becheran
+beenje
 benbjohnson
 beorn
 bfcodec
@@ -431,6 +432,7 @@ debiancompat
 debugpy
 decamelize
 decli
+decompals
 decompollaborate
 decrypter
 deepmerge
@@ -734,6 +736,7 @@ fomit
 fontawesome
 fontconfig
 foreachasync
+forestix
 foresto
 formatjs
 formatron

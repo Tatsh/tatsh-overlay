@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="pypi">spacy</remote-id>
+		<remote-id type="github">explosion/spaCy</remote-id>
 	</upstream>
 </pkgmetadata>

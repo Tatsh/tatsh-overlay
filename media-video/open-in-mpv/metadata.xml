@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">Tatsh/open-in-mpv</remote-id>
+		<remote-id type="pypi">open-in-mpv</remote-id>
 	</upstream>
 </pkgmetadata>

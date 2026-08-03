@@ -7,5 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">Tatsh/ripcd</remote-id>
+		<remote-id type="pypi">ripcd</remote-id>
 	</upstream>
 </pkgmetadata>
