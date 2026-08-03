@@ -15,4 +15,4 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-python/dnspython[${PYTHON_USEDEP}] net-dns/bind-tools"
+RDEPEND="dev-python/dnspython[${PYTHON_USEDEP}] net-dns/bind"
