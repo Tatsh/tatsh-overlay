@@ -1,3 +1,4 @@
+app-arch/bfcodec: tools - Install jbt and unjbt.
 app-cdr/qpxtool: internal-wt - Use internal CD/DVD writing implementation instead of cdrecord.
 app-cdr/qpxtool: liteon-probe - Enable device probing in Lite-On plugin.
 app-cdr/redumper: clang - Use Clang compiler (workaround).
@@ -37,10 +38,6 @@ games-arcade/stepmania: parallel-port - Enable parallel port-based input devices
 games-arcade/stepmania: profiling - Enable profiling.
 games-arcade/stepmania: wav - Enable WAV file support.
 games-arcade/stepmania: xrandr - Enable XRandR support.
-games-emulation/86box: dynrec - Enable dynamic recompiler
-games-emulation/86box: fluidsynth - Use media-sound/fluidsynth for MIDI emulation
-games-emulation/86box: mt-32 - Use media-libs/munt-mt32emu for MT-32 emulation
-games-emulation/86box: new-dynrec - Use the PCem v15 ("new") dynamic recompiler
 games-emulation/bsnes-hd: libretro - Build libretro core
 games-emulation/cemu: cubeb - Enable cubeb audio support
 games-emulation/cemu: discord - Enable rich Discord presence
@@ -58,7 +55,8 @@ games-emulation/dosbox-x: screenshots - Screenshots and movie recording
 games-emulation/dosbox-x: slirp - Enable libslirp support
 games-emulation/dosbox-x: unaligned - Enable unaligned memory access
 games-emulation/dosbox-x: xbrz - Enable support for xBRZ pixel scaler
-games-emulation/flycast-libretro: gles - Use simplified OpenGLES instead of full-scale OpenGL
+games-emulation/libretro-flycast: gles - Use simplified OpenGLES instead of full-scale OpenGL
+games-emulation/libretro-mednafen-psx-hw: cdrom - Enable physical CDROM support
 games-emulation/libretro-meta: bsnes-mercury - Nintendo - SNES / SFC (bsnes-mercury)
 games-emulation/libretro-meta: dolphin - Nintendo Gamecube/Wii (dolphin)
 games-emulation/libretro-meta: dosbox - DOS (DOSBox)
@@ -67,45 +65,32 @@ games-emulation/libretro-meta: flycast - Sega - Dreamcast/NAOMI (Flycast)
 games-emulation/libretro-meta: fmsx - Microsoft - MSX (fMSX)
 games-emulation/libretro-meta: fuse - ZX Spectrum (Fuse)
 games-emulation/libretro-meta: genesis-plus-gx - Sega Genesis / Megadrive (genesis_plus_gx)
+games-emulation/libretro-meta: mame2003-plus - Arcade (MAME 2003 Plus)
 games-emulation/libretro-meta: mednafen-psx-hw - Sony - Playstation (Beetle PSX HW)
 games-emulation/libretro-meta: mednafen-psx - Sony - PlayStation (Beetle PSX)
-games-emulation/libretro-meta: mupen64 - Nintendo 64 (mupen64-next)
 games-emulation/libretro-meta: pcsx-rearmed - Sony - PlayStation (PCSX ReARMed)
 games-emulation/libretro-meta: ppsspp - Sony PSP (ppsspp)
-games-emulation/libretro-meta: puae2021 - Commodore - Amiga (P-UAE)
+games-emulation/libretro-meta: prboom - Doom (PrBoom)
 games-emulation/libretro-meta: puae - Commodore - Amiga (P-UAE)
 games-emulation/libretro-meta: snes9x - Nintendo - SNES / SFC (Snes9x - Current)
 games-emulation/libretro-meta: swanstation - Sony Playstation (swanstation)
 games-emulation/libretro-meta: tyrquake - Quake (TyrQuake)
 games-emulation/libretro-meta: vice-x64 - Commodore 8-bit (vice)
 games-emulation/libretro-meta: vice-x64sc - Commodore 8-bit (vice)
-games-emulation/mednafen-psx-hw-libretro: cdrom - Enable physical CDROM support
-games-emulation/mupen64next-libretro: gles2 - Enable GLES2 support
-games-emulation/mupen64next-libretro: gles3 - Enable GLES3 support
-games-emulation/mupen64next-libretro: rpi2 - Build for Raspberry Pi 2
-games-emulation/mupen64next-libretro: rpi3_64 - Build for Raspberry Pi 3 (64-bit)
-games-emulation/mupen64next-libretro: rpi3 - Build for Raspberry Pi 3
-games-emulation/mupen64next-libretro: rpi4_64 - Build for Raspberry Pi 4 (64-bit)
-games-emulation/mupen64next-libretro: rpi4 - Build for Raspberry Pi 4
-games-emulation/mupen64next-libretro: rpi - Build for Raspberry Pi
+games-emulation/libretro-ppsspp: gbm - Use the Graphics Buffer Manager for EGL on KMS.
+games-emulation/libretro-ppsspp: gles2 - Enable GLES2 support.
+games-emulation/libretro-ppsspp: system-ffmpeg - Use system ffmpeg.
 games-emulation/play: libretro - Build libretro core
 games-emulation/play: vulkan - Enable Vulkan graphics library support
-games-emulation/ppsspp-libretro: gbm - Use the Graphics Buffer Manager for EGL on KMS.
-games-emulation/ppsspp-libretro: gles2 - Enable GLES2 support.
-games-emulation/ppsspp-libretro: system-ffmpeg - Use system ffmpeg.
 games-emulation/retroarch-assets: materialui - Enable materialui assets
 games-emulation/retroarch-assets: ozone - Emable ozone assets
 games-emulation/retroarch-assets: rgui - Enable rgui assets
 games-emulation/retroarch-assets: xmb - Enable xmb assets
-games-emulation/rpcs3: faudio - Enable audio rendering with app-emulation/faudio
-games-emulation/rpcs3: joystick - Enable support for input devices with evdev
-games-emulation/rpcs3: llvm - LLVM recompiler support
-games-emulation/rpcs3: system-ffmpeg - Use system ffmpeg library
-games-emulation/rpcs3: vulkan - Enable Vulkan graphics library support
 games-emulation/xemu: aio - Add support for AIO
 games-emulation/xemu: io-uring - Enable efficient I/O via sys-libs/liburing
 games-emulation/xemu: malloc-trim - Enable malloc_trim() support
 games-emulation/xemu: membarrier - Enable membarrier syscall support
+games-emulation/xenia-canary: discord - Build with Discord presence support
 games-emulation/yuzu: compatibility-reporting - Enable compatibility reporting
 games-emulation/yuzu: cubeb - Build with cubeb audio backend
 games-emulation/yuzu: webengine - Use  for embedded web browser
@@ -178,12 +163,18 @@ media-fonts/noto: pau-cin-hau - Install font for Pau Cin Hau script
 media-fonts/noto: phagspa - Install for 'Phags-pa script
 media-fonts/noto: runic - Install Runic font
 media-fonts/noto: symbols - Install Symbols fonts
+media-gfx/f3d: alembic - Support for Alembic (.abc) files via
+media-gfx/f3d: assimp - Support for FBX, DAE, OFF, DXF, X and 3MF files via
+media-gfx/f3d: exr - Support for OpenEXR images via
+media-gfx/f3d: hdf - Support for VTKHDF, ExodusII and NetCDF file formats
+media-gfx/f3d: occt - Support for STEP, IGES, BREP and XBF files via
+media-gfx/f3d: pdal - Support for point cloud file formats via PDAL
+media-gfx/f3d: vdb - Support for OpenVDB (.vdb) files
+media-gfx/f3d: webp - Support for WebP images via
 media-video/magewell-pro-capture: weave - Do not enable deinterlacing. Warning: this stops "mwcap-control --video-output-deinterlace ..." from working.
-media-video/opentimelineio: tools - Install extra tools
+media-video/tbc-tools: teletext - Enable teletext export in ld-process-vbi
+media-video/vapoursynth: asm - Enable assembler code for x86 CPUs (requires ). Only valid on amd64 or x86.
 media-video/vapoursynth: guard-pattern - Adds 32 bytes on the left and the right sides of each frame, fills them with a certain value, and checks their integrity after each filter. It can be used to detect buggy filters that write a little outside the frame.
-media-video/vapoursynth: vspipe - Build vspipe command.
-media-video/vapoursynth: vsscript - Enable VSScript.
-media-video/vapoursynth: x86-asm - Enable assembler code for x86 CPUs (requires ).
 mpv-plugin/blur-edges: autoload - Auto-load the plugin
 mpv-plugin/bookmarker-menu: autoload - Auto-load the plugin
 mpv-plugin/crop: autoload - Auto-load the plugin
@@ -199,7 +190,21 @@ mpv-plugin/writeedits: autoload - Auto-load the plugin
 mpv-plugin/writename: autoload - Auto-load the plugin
 net-dns/pihole: cron - Installs cron job
 net-misc/curl-impersonate: clients - Install the curl wrapper scripts
-sci-libs/onnxruntime: nodejs - Build Node.js library.
+sci-libs/vtk: all-modules - Build all modules
+sci-libs/vtk: boost - Add support for boost
+sci-libs/vtk: cgns - Build support to handle CGNS data files
+sci-libs/vtk: gdal - Support for gdal formatted data
+sci-libs/vtk: imaging - Building Imaging modules
+sci-libs/vtk: logging - Build the logging module
+sci-libs/vtk: opencascade - Enable OpenCASCADE support
+sci-libs/vtk: openvdb - Build support to handle VDB data files
+sci-libs/vtk: pdal - Build support to handle point cloud data files
+sci-libs/vtk: rendering - Building Redering modules
+sci-libs/vtk: tbb - Use  to handle smp support
+sci-libs/vtk: views - Building Views modules
+sci-libs/vtk: vtkm - Build the viskores accelerations modules
+sci-libs/vtk: vtkm - Build the vtkm accelerations modules
+sci-libs/vtk: web - Install web component
 sci-ml/flash-attn: rocm - Enable ROCm support.
 sys-apps/kylemanna-systemd-utils: amazon - Install Amazon Cloud Drive service
 sys-apps/kylemanna-systemd-utils: btrfs - Install units for btrfs
