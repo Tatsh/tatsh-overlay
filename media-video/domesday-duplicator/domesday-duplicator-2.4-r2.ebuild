@@ -11,7 +11,7 @@ HOMEPAGE="https://github.com/simoninns/DomesdayDuplicator"
 # gui-app submodule; the parent now only carries docs, firmware and hardware
 # designs, none of which this package installs.
 MY_PN="DomesdayDuplicator"
-SHA="8036eaf1acce3c675b38c07c275d7a03c718d3a4"
+SHA="ac980a093dced39e4e8ad04fe7c8f0f324d13751"
 SRC_URI="https://github.com/simoninns/${MY_PN}-gui-app/archive/${SHA}.tar.gz
 	-> ${P}-${SHA:0:8}.gh.tar.gz"
 S="${WORKDIR}/${MY_PN}-gui-app-${SHA}"
