@@ -24,7 +24,7 @@ RDEPEND=">=media-video/ffms2-2.23.1
 	>=media-video/fmtconv-20
 	>=media-video/mvsfunc-8[${PYTHON_USEDEP}]
 	>=media-video/scenechange-0.2.0-r2
-	>=media-video/vapoursynth-37[vspipe]
+	>=media-video/vapoursynth-37
 	>=media-video/vapoursynth-mvtools-17
 	>=media-video/vapoursynth-nnedi3-11
 	dev-python/vsutil[${PYTHON_USEDEP}]
