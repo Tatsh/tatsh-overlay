@@ -4,7 +4,7 @@
 EAPI=8
 
 RUBY_FAKEGEM_GEMSPEC="${PN//-/_}.gemspec"
-USE_RUBY="ruby31 ruby32 ruby33 ruby34"
+USE_RUBY="ruby32 ruby33 ruby34 ruby40"
 
 inherit ruby-fakegem
 
