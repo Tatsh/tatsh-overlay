@@ -17,7 +17,6 @@
 		<flag name="mame2003-plus">Arcade (MAME 2003 Plus)</flag>
 		<flag name="mednafen-psx">Sony - PlayStation (Beetle PSX)</flag>
 		<flag name="mednafen-psx-hw">Sony - Playstation (Beetle PSX HW)</flag>
-		<flag name="mupen64">Nintendo 64 (mupen64-next)</flag>
 		<flag name="pcsx-rearmed">Sony - PlayStation (PCSX ReARMed)</flag>
 		<flag name="ppsspp">Sony PSP (ppsspp)</flag>
 		<flag name="prboom">Doom (PrBoom)</flag>

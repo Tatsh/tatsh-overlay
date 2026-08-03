@@ -14,7 +14,5 @@
 		<flag name="asm">Enable assembler code for x86 CPUs (requires <pkg
 			>dev-lang/yasm</pkg>). Only valid on amd64 or x86.
 		</flag>
-		<flag name="vsscript">Enable VSScript.</flag>
-		<flag name="vspipe">Build vspipe command.</flag>
 	</use>
 </pkgmetadata>
