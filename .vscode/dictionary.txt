@@ -1251,6 +1251,7 @@ libslirp
 libsndfile
 libspng
 libstdc
+libsuinput
 libtasn
 libtatsu
 libtemporalsoften
@@ -1825,6 +1826,7 @@ pygithub
 pygments
 pygobject
 pygtrie
+pyinput
 pyinstrument
 pyjwt
 pykakasi
@@ -2306,6 +2308,7 @@ udmabuf
 udpa
 udvare
 ugaritic
+uinput
 uips
 umpv
 unalz
