@@ -21,5 +21,5 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/pytest-2.7.1[${PYTHON_USEDEP}]"
 
-EPYTEST_PLUGINS=()
+EPYTEST_PLUGINS=( "${PN}" )
 distutils_enable_tests pytest

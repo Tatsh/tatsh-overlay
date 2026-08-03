@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{10..14} )
+PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
@@ -23,4 +23,5 @@ RDEPEND=">=dev-python/httpx-0.28[${PYTHON_USEDEP}]
 	>=dev-python/pytest-9[${PYTHON_USEDEP}]
 	<dev-python/pytest-10[${PYTHON_USEDEP}]"
 
+EPYTEST_PLUGINS=( "${PN}" )
 distutils_enable_tests pytest

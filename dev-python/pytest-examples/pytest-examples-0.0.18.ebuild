@@ -22,5 +22,5 @@ RDEPEND=">=dev-python/black-23[${PYTHON_USEDEP}]
 	>=dev-python/pytest-7[${PYTHON_USEDEP}]
 	>=dev-util/ruff-0.5.0"
 
-EPYTEST_PLUGINS=()
+EPYTEST_PLUGINS=( "${PN}" )
 distutils_enable_tests pytest
