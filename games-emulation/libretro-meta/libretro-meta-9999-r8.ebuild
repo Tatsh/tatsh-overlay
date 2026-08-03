@@ -24,7 +24,7 @@ SLOT="0"
 #	thepowdertoy uzem vba-next vbam vecx vemulator vice-x128 vice-xcbm2 vice-xcbm5x0 \
 #	vice-xpet vice-xplus4 vice-xscpu64 vice-xvic virtualjaguar vitaquake2 vitaquake3 x1 xrick yabause"
 
-KEYWORDS="~amd64 ~arm64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="
 	bsnes-mercury dolphin dosbox fceumm flycast fmsx fuse genesis-plus-gx mame2003-plus mednafen-psx mednafen-psx-hw
 	pcsx-rearmed ppsspp prboom puae snes9x swanstation tyrquake vice-x64 vice-x64sc"
