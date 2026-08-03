@@ -15,9 +15,9 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
+# 1.3.3 dropped srsly: it is neither in install_requires nor imported anywhere.
 RDEPEND="<dev-python/pydantic-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/pydantic-1.7.4[${PYTHON_USEDEP}]
-	<dev-python/srsly-3.0.0[${PYTHON_USEDEP}]
-	>=dev-python/srsly-2.4.0[${PYTHON_USEDEP}]"
+	>=dev-python/typing-extensions-4.0[${PYTHON_USEDEP}]"
 
 distutils_enable_tests pytest
