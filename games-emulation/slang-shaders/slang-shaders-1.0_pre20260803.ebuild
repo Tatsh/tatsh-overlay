@@ -5,7 +5,7 @@ EAPI=8
 
 inherit vcs-snapshot
 
-LIBRETRO_COMMIT_SHA="92409405bb60a51a41a9c309ced591bcb1499fa1"
+LIBRETRO_COMMIT_SHA="21a88cea700e3affc823ee62f4cef8de8779b691"
 
 DESCRIPTION="Vulkan/SPIR-V GPU shader collection for RetroArch (slang/slangp)"
 HOMEPAGE="https://github.com/libretro/slang-shaders"
