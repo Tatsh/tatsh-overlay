@@ -7,8 +7,9 @@ inherit desktop wrapper wxwidgets xdg
 
 DESCRIPTION="Clone of Guitar Hero and similar games."
 HOMEPAGE="https://clonehero.net/"
-SRC_URI="https://github.com/clonehero-game/releases/releases/download/V${PV}/CloneHero-linux.tar.xz -> ${P}.tar.xz"
-S="${WORKDIR}/clonehero-linux"
+SRC_URI="https://github.com/clonehero-game/releases/releases/download/v${PV}-final/Linux.x86_64-Standalone.tar
+	-> ${P}.tar"
+S="${WORKDIR}/Linux - Standalone"
 LICENSE="Clone-Hero"
 SLOT="0"
 KEYWORDS="~amd64"
