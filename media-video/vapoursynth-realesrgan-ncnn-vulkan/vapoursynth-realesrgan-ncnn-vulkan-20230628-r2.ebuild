@@ -18,6 +18,8 @@ KEYWORDS="~amd64"
 DEPEND="dev-libs/ncnn:= media-libs/vulkan-loader media-video/vapoursynth"
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${PN}-cmake-minimum-required.patch" )
+
 src_configure() {
 	local mycmakeargs=(
 		"-DVAPOURSYNTH_INCLUDE_DIR=${EPREFIX}/usr/include/vapoursynth"
