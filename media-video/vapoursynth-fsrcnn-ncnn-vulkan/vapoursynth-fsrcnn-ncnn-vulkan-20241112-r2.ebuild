@@ -15,6 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="dev-libs/ncnn
+	media-video/vapoursynth
 	media-libs/vulkan-loader
 	media-libs/opencv:="
 RDEPEND="${DEPEND}"
