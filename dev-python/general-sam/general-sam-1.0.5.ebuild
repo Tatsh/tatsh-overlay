@@ -33,8 +33,6 @@ CRATES="
 	unicode-ident@1.0.24
 "
 
-PYPI_VERIFY_REPO="https://github.com/ModelTC/general-sam-py"
-
 inherit cargo distutils-r1 pypi
 
 DESCRIPTION="General Suffix Automaton implementation in Python."
