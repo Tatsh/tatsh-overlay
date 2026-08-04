@@ -15,4 +15,3 @@ KEYWORDS="~amd64"
 
 DEPEND="media-video/vapoursynth sci-libs/fftw:="
 RDEPEND="${DEPEND}"
-

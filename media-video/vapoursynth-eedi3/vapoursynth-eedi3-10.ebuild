@@ -17,4 +17,3 @@ DEPEND="media-video/vapoursynth
 	dev-libs/boost
 	virtual/opencl"
 RDEPEND="dev-libs/opencl-icd-loader"
-
