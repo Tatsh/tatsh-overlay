@@ -26,5 +26,8 @@ src_prepare() {
 	rmdir src/libshared || die
 	mv "../libshared-${LIBSHARED_SHA}" src/libshared || die
 	touch src/commit.h
+	# CMake 4 removed support for CMP0037 OLD. The tests do not define a
+	# reserved target name, so the policy request is simply unnecessary.
+	sed -i -e '/cmake_policy(SET CMP0037 OLD)/d' test/CMakeLists.txt || die
 	cmake_src_prepare
 }
