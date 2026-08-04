@@ -32,8 +32,13 @@ RDEPEND="${DEPEND}"
 
 src_prepare() {
 	mkdir -p .deps || die
-	cp "${DISTDIR}/${P}-deps.tar.xz" .deps/ares-deps-linux-universal.tar.xz || die
 	mv "${WORKDIR}/ares-deps-linux-universal" .deps/ || die
-	printf '%s' 0272b4b25bf9dc58891e2528e79f1155b37a961a50fae7980fce9f39ebe29833 > .deps/.dependency_prebuilt_universal.sha256 || die
+	# _check_dependencies() only skips its own download when this marker matches
+	# the hash in deps.json. Read it from there rather than repeating it here,
+	# so bumping the bundle cannot leave the two disagreeing.
+	local hash
+	hash=$(sed -n 's/.*"linux-universal": "\([0-9a-f]\{64\}\)".*/\1/p' deps.json | head -n1)
+	[[ -n ${hash} ]] || die 'Could not read the ares-deps hash from deps.json'
+	printf '%s' "${hash}" > .deps/.dependency_prebuilt_universal.sha256 || die
 	cmake_src_prepare
 }
