@@ -6,5 +6,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">Tatsh/scenechange</remote-id>
+		<remote-id type="pypi">vapoursynth-scenechange</remote-id>
 	</upstream>
 </pkgmetadata>
