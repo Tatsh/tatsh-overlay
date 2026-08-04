@@ -754,6 +754,7 @@ fperms
 fphammerle
 fprint
 fprintd
+frameserver
 frankban
 freeband
 freechaf

@@ -53,3 +53,25 @@ src_configure() {
 	fi
 	meson_src_configure
 }
+
+src_install() {
+	meson_src_install
+
+	# R78 keeps the C headers and the pkgconfig file inside the Python package,
+	# where nothing but vapoursynth.get_include() looks for them. Install them
+	# where every other consumer expects to find them as well.
+	insinto "/usr/include/${PN}"
+	doins include/*.h
+
+	cat > "${T}/${PN}.pc" <<-PC || die
+		prefix=${EPREFIX}/usr
+		includedir=\${prefix}/include/${PN}
+
+		Name: ${PN}
+		Description: A frameserver for the 21st century
+		Version: ${PV}
+		Cflags: -I\${includedir}
+	PC
+	insinto "/usr/$(get_libdir)/pkgconfig"
+	doins "${T}/${PN}.pc"
+}
