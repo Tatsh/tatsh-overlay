@@ -18,8 +18,3 @@ DEPEND="media-video/vapoursynth
 	virtual/opencl"
 RDEPEND="dev-libs/opencl-icd-loader"
 
-src_configure() {
-	export PYTHONPATH="${T}:${PYTHONPATH}"
-	echo "def get_include(): return '${ESYSROOT}/usr/include/vapoursynth'" > "${T}/vapoursynth.py" || die
-	meson_src_configure
-}
