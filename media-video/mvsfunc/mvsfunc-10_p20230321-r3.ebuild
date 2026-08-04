@@ -3,6 +3,7 @@
 
 EAPI=8
 
+DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_USE_PEP517=setuptools
 
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
@@ -18,6 +19,6 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=media-video/vapoursynth-37[${PYTHON_USEDEP}]
+RDEPEND=">=media-video/vapoursynth-37[${PYTHON_SINGLE_USEDEP}]
 	media-video/fmtconv
 	media-video/vapoursynth-bm3d"

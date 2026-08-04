@@ -4,7 +4,7 @@
 EAPI=8
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
-inherit python-r1
+inherit python-single-r1
 
 DESCRIPTION="Derainbow function for VapourSynth."
 HOMEPAGE="https://github.com/dubhatervapoursynth/vapoursynth-astdr"
@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-RDEPEND="media-video/vapoursynth[${PYTHON_USEDEP}]
+RDEPEND="media-video/vapoursynth[${PYTHON_SINGLE_USEDEP}]
 	media-video/vapoursynth-hqdn3d
 	media-video/vapoursynth-mvtools
 	media-video/vs-removegrain
@@ -24,6 +24,10 @@ RDEPEND="media-video/vapoursynth[${PYTHON_USEDEP}]
 DOCS=( readme.rst )
 
 src_install() {
-	python_foreach_impl python_domodule ASTDR.py
+	python_domodule ASTDR.py
 	einstalldocs
+}
+
+pkg_setup() {
+	python-single-r1_pkg_setup
 }

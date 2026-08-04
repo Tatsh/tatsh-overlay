@@ -3,6 +3,7 @@
 
 EAPI=8
 
+DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_USE_PEP517=hatchling
 
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
@@ -22,13 +23,13 @@ RESTRICT="mirror"
 
 RDEPEND=">=media-video/ffms2-2.23.1
 	>=media-video/fmtconv-20
-	>=media-video/mvsfunc-8[${PYTHON_USEDEP}]
+	>=media-video/mvsfunc-8[${PYTHON_SINGLE_USEDEP}]
 	>=media-video/scenechange-0.2.0-r2
 	>=media-video/vapoursynth-37
 	>=media-video/vapoursynth-mvtools-17
 	>=media-video/vapoursynth-nnedi3-11
-	dev-python/vsutil[${PYTHON_USEDEP}]
-	media-video/vs-jetpack[${PYTHON_USEDEP}]
+	dev-python/vsutil[${PYTHON_SINGLE_USEDEP}]
+	media-video/vs-jetpack[${PYTHON_SINGLE_USEDEP}]
 	media-video/vapoursynth-eedi3
 	media-video/vapoursynth-fft3dfilter
 	media-video/vs-miscfilters-obsolete

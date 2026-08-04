@@ -5,7 +5,9 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_1{2,3,4,5} )
 
-inherit meson python-r1
+# Upstream builds one stable-ABI module (vapoursynth.abi3.so), so there is
+# nothing to repeat per implementation.
+inherit meson python-single-r1
 
 DESCRIPTION="A video processing framework with simplicity in mind."
 HOMEPAGE="https://www.vapoursynth.com/ https://github.com/vapoursynth/vapoursynth"
@@ -30,10 +32,10 @@ DEPEND=">=media-libs/zimg-3.0.6_p20260721
 RDEPEND="${DEPEND}"
 # shellcheck disable=SC2016
 BDEPEND="${PYTHON_DEPS}
-	$(python_gen_any_dep 'dev-python/cython[${PYTHON_USEDEP}]')"
+	$(python_gen_cond_dep 'dev-python/cython[${PYTHON_USEDEP}]')"
 
-python_check_deps() {
-	python_has_version "dev-python/cython[${PYTHON_USEDEP}]"
+pkg_setup() {
+	python-single-r1_pkg_setup
 }
 
 src_configure() {

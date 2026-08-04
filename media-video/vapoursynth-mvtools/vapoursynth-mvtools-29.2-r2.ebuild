@@ -28,7 +28,7 @@ BDEPEND="dev-lang/nasm"
 # be built for the same implementation as this package.
 # shellcheck disable=SC2016
 DEPEND="${PYTHON_DEPS}
-	$(python_gen_cond_dep '>=media-video/vapoursynth-78[${PYTHON_USEDEP}]')
+	>=media-video/vapoursynth-78[${PYTHON_SINGLE_USEDEP}]
 	>=sci-libs/fftw-3.3.4:="
 RDEPEND="${DEPEND}"
 
