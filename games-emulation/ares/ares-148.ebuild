@@ -8,7 +8,7 @@ inherit cmake
 DESCRIPTION="Multi-system emulator focusing on accuracy and preservation."
 HOMEPAGE="https://github.com/ares-emulator/ares https://ares-emu.net/"
 SRC_URI="https://github.com/ares-emulator/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/ares-emulator/ares-deps/releases/download/2025-10-27/ares-deps-linux-universal.tar.xz -> ${P}-deps.tar.xz"
+	https://github.com/ares-emulator/ares-deps/releases/download/2026-04-23/ares-deps-linux-universal.tar.xz -> ${P}-deps.tar.xz"
 
 LICENSE="MPL-2.0 MIT BSD public-domain ZLIB BSD-2 Apache-2.0"
 SLOT="0"
