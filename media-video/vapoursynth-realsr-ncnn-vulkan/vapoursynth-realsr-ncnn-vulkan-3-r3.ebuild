@@ -14,7 +14,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="dev-libs/ncnn:= media-libs/vulkan-loader"
+DEPEND="dev-libs/ncnn:= media-libs/vulkan-loader media-video/vapoursynth"
 RDEPEND="${DEPEND}"
 BDEPEND="app-arch/7zip"
 
