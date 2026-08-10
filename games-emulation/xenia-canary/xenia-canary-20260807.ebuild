@@ -7,7 +7,7 @@ inherit cmake desktop flag-o-matic toolchain-funcs
 
 DESCRIPTION="Xbox 360 emulator research project (Canary version)."
 HOMEPAGE="https://github.com/xenia-canary/xenia-canary https://xenia.jp/"
-SHA="131503f68d4b34811154437ae224960ba15b5007"
+SHA="b98037bed29b14439e7e5978c6333f1e926e5240"
 AES_128_SHA="7e3ac3bb6b478187472b4ac6f1698eb203e8e90b"
 FIDELITYFX_CAS_SHA="9fabcc9a2c45f958aff55ddfda337e74ef894b7f"
 FIDELITYFX_FSR_SHA="a21ffb8f6c13233ba336352bdff293894c706575"
