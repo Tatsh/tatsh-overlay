@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "@zwave-js/server": "^3.10.0",
+    "@zwave-js/server": "^3.10.1",
     "zwave-js": "^15.26.0"
   },
   "name": "zwave-js-server",
   "private": true,
-  "version": "3.10.0"
+  "version": "3.10.1"
 }
