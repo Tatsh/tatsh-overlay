@@ -50,6 +50,7 @@ andreyvit
 androidndk
 andybalholm
 anmitsu
+anomalyco
 ansiterm
 antchfx
 antihax
@@ -1653,6 +1654,7 @@ ontroller
 openal
 opencascade
 opencensus
+opencode
 openexr
 openfortivpn
 opengles
