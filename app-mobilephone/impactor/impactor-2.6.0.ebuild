@@ -979,7 +979,8 @@ src_compile() {
 }
 
 src_install() {
-	local dir="$(cargo_target_dir)"
+	local dir
+	dir="$(cargo_target_dir)"
 	newbin "${dir}"/plumeimpactor impactor
 	dobin "${dir}"/plumesign
 
