@@ -35,8 +35,8 @@ RDEPEND="
 	)
 	git? (
 		>=dev-python/gitpython-3.1.46[${PYTHON_USEDEP}]
+		dev-python/gidgethub[${PYTHON_USEDEP}]
 		>=dev-python/keyring-25.7.0[${PYTHON_USEDEP}]
-		>=dev-python/pygithub-2.9.1[${PYTHON_USEDEP}]
 	)
 	media? (
 		>=dev-python/keyring-25.7.0[${PYTHON_USEDEP}]
