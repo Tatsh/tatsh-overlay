@@ -405,14 +405,14 @@ type = ["mypy (>=1.14.1)"]
 
 [[package]]
 name = "portage"
-version = "3.0.81.2"
+version = "3.0.81.3"
 description = "Portage is the package management and distribution system for Gentoo"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "portage-3.0.81.2-py3-none-any.whl", hash = "sha256:645ab5536ed01c053cdffd57cd5ada3682b115c0c9ff14ef786eb0d1b16872f7"},
-    {file = "portage-3.0.81.2.tar.gz", hash = "sha256:f9a5e17dc367db5161f7654e42b5c99dcbe124b1155b7d601de82971cd737b39"},
+    {file = "portage-3.0.81.3-py3-none-any.whl", hash = "sha256:dc691ce3b583bfd7697bd882afefa922f1ce6a3602a6a13a2c78bfdcc6a39aac"},
+    {file = "portage-3.0.81.3.tar.gz", hash = "sha256:781eb2caee4c29b1d858c195a8b44efd3c47ba5912a43ac9103cc3b19bf418eb"},
 ]
 
 [[package]]
