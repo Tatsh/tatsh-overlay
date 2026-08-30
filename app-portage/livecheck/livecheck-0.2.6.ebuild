@@ -31,7 +31,5 @@ RDEPEND=">=dev-python/anyio-4.13.0[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.15.0[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
 
-PATCHES=( "${FILESDIR}/${PN}-0.2.5-git-suffix.patch" )
-
 EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
