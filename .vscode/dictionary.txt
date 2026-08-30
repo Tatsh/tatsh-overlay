@@ -240,6 +240,7 @@ cugan
 cuid
 cunet
 cuse
+cuyler
 cxadc
 cxleveladj
 cxlevelmon
