@@ -423,6 +423,7 @@ einstalldocs
 elbasan
 eleonore
 elgato
+eloader
 elog
 emable
 emake
