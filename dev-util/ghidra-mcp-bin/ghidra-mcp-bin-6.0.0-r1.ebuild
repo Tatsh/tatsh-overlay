@@ -3,6 +3,8 @@
 
 EAPI=8
 
+# Upstream ships a single archive per release rather than one per Ghidra
+# version; this is the version recorded in its extension.properties.
 GHIDRA_PV="12.1.2"
 GHIDRA_EXT_NAME="GhidraMCP"
 MY_PN="${PN%-bin}"
