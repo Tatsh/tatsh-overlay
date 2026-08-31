@@ -3,6 +3,8 @@
 
 EAPI=8
 
+# Newest Ghidra upstream's 1.0111 release ships an archive for. They differ
+# only in the version= property, which ghidra-extension.eclass rewrites anyway.
 GHIDRA_PV="12.1.2"
 GHIDRA_EXT_NAME="Ps3GhidraScripts"
 
