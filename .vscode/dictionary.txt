@@ -686,6 +686,7 @@ jamo
 jardir
 jawah
 jazzband
+jdeps
 jeepney
 jetpytools
 jiaaro
