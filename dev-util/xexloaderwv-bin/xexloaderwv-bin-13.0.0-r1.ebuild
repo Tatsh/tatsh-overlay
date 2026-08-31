@@ -4,7 +4,9 @@
 EAPI=8
 
 # Upstream tags every release after the Ghidra version it was built against;
-# ${PV} is the plugin version recorded in extension.properties.
+# ${PV} is the plugin version recorded in extension.properties. Ghidra compares
+# that property against its own version, so upstream's archive never matched
+# any Ghidra release; ghidra-extension.eclass rewrites it.
 GHIDRA_PV="12.1.2"
 GHIDRA_EXT_NAME="XEXLoaderWV"
 MY_PN="${PN%-bin}"
