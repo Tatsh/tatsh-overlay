@@ -3,9 +3,12 @@
 
 EAPI=8
 
-# Upstream publishes one prebuilt archive per supported Ghidra release, and an
-# archive is only valid for the exact Ghidra version it was built against.
-GHIDRA_PV="12.1.2"
+# Upstream publishes one prebuilt archive per supported Ghidra release. They
+# differ only in the version= property; the 12.1.2 and 12.1.3 archives of this
+# tag contain byte-identical bytecode. The newest is taken so that the file
+# fetched needs the least adjusting, but ghidra-extension.eclass retargets
+# whichever archive this is at the installed Ghidra regardless.
+GHIDRA_PV="12.1.3"
 GHIDRA_EXT_NAME="ghidra-emotionengine-reloaded"
 MY_PN="${PN%-bin}"
 
