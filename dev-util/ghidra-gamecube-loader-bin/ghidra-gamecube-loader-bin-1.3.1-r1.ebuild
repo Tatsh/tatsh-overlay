@@ -3,15 +3,16 @@
 
 EAPI=8
 
-# Upstream's 1.3.1 release only ships an archive built against Ghidra 12.1, and
-# an extension archive is only valid for the exact Ghidra version it was built
-# against. This archive was therefore produced out of tree from the 1.3.1 tag
-# with GHIDRA_INSTALL_DIR pointing at Ghidra ${GHIDRA_PV}:
+# Upstream's 1.3.1 release only ships an archive built against Ghidra 12.1.
+# This archive was produced out of tree from the 1.3.1 tag with
+# GHIDRA_INSTALL_DIR pointing at Ghidra ${GHIDRA_PV}:
 #
 #   gradle buildExtension
 #
 # and uploaded to the __distfiles__ release. The build pulls org.lz4:lz4-java
-# from Maven Central, which is why it cannot run inside Portage.
+# from Maven Central, which is why it cannot run inside Portage. It does not
+# need redoing for every Ghidra release: ghidra-extension.eclass retargets the
+# archive at the installed Ghidra and verifies that it still links against it.
 GHIDRA_PV="12.1.2"
 GHIDRA_EXT_NAME="GameCubeLoader"
 
