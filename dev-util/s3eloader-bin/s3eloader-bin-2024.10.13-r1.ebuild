@@ -14,7 +14,11 @@ EAPI=8
 #   gradle buildExtension
 #
 # and uploaded to the __distfiles__ release. The patch is kept here so the
-# archive can be reproduced; it is not applied at build time.
+# archive can be reproduced; it is not applied at build time. The archive does
+# not need rebuilding for every Ghidra release: ghidra-extension.eclass
+# retargets it at the installed Ghidra and verifies that it still links against
+# it. It will need redoing whenever that check starts failing, which is what
+# the ImporterSettings change below did to the 11.2 build.
 GHIDRA_PV="12.1.2"
 GHIDRA_EXT_NAME="S3ELoader"
 
