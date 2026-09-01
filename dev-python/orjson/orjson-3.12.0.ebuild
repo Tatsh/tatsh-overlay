@@ -27,6 +27,7 @@ LICENSE+="
 "
 SLOT="0"
 KEYWORDS="amd64 arm arm64 ~loong ~mips ppc ~ppc64 ~riscv ~s390 ~sparc x86"
+IUSE="verify-provenance"
 
 BDEPEND="
 	>=dev-util/maturin-1.7.8[${PYTHON_USEDEP}]
