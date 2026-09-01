@@ -18,5 +18,10 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
+src_prepare() {
+	rm -fR tests
+	distutils-r1_src_prepare
+}
+
 EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
