@@ -16,8 +16,6 @@ KEYWORDS="~amd64"
 RDEPEND="x11-drivers/nvidia-drivers
 	sci-ml/ollama"
 
-PATCHES=( "${FILESDIR}/${P}-no-dma-buf-priority.patch" )
-
 src_compile() {
 	local modlist=( greenboost )
 	# No "clean" target here: it has no ordering dependency on "all", so a
