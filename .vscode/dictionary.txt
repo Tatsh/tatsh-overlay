@@ -852,6 +852,7 @@ librespot
 libretro
 libretrodb
 librife
+librosa
 librw
 libsamplerate
 libscriptlua
