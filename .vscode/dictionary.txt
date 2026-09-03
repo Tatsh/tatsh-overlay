@@ -5,6 +5,7 @@ adbsync
 addopts
 addpredict
 addwrite
+adefossez
 adlam
 adoc
 aesni
