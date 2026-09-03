@@ -109,6 +109,7 @@ blastem
 blis
 bluemsx
 bluez
+bmcfee
 bnes
 bomberman
 boringssl
@@ -1377,6 +1378,7 @@ remsky
 renderutil
 reqs
 rerunfailures
+resampy
 resp
 respawn
 respx
