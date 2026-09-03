@@ -1,0 +1,163 @@
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+DISTUTILS_EXT=1
+DISTUTILS_USE_PEP517=maturin
+PYTHON_COMPAT=( python3_{12..14} )
+RUST_MIN_VER="1.80"
+
+CRATES="
+	aho-corasick@1.1.4
+	anyhow@1.0.100
+	arrayvec@0.7.6
+	audiopus_sys@0.2.2
+	autocfg@1.5.0
+	bitflags@1.3.2
+	bitflags@2.10.0
+	bytemuck@1.24.0
+	byteorder@1.5.0
+	bytes@1.11.0
+	cc@1.2.51
+	cfg-if@1.0.4
+	cmake@0.1.57
+	crossbeam-deque@0.8.6
+	crossbeam-epoch@0.9.18
+	crossbeam-utils@0.8.21
+	either@1.15.0
+	encoding_rs@0.8.35
+	errno@0.3.14
+	extended@0.1.0
+	find-msvc-tools@0.1.6
+	futures-core@0.3.31
+	futures-io@0.3.31
+	futures-macro@0.3.31
+	futures-sink@0.3.31
+	futures-task@0.3.31
+	futures-util@0.3.31
+	getrandom@0.2.16
+	heck@0.5.0
+	indoc@2.0.7
+	itoa@1.0.17
+	kaudio@0.2.1
+	lazy_static@1.5.0
+	libc@0.2.179
+	lock_api@0.4.14
+	log@0.4.29
+	matrixmultiply@0.3.10
+	memchr@2.7.6
+	memoffset@0.9.1
+	mio@1.1.1
+	ndarray@0.17.1
+	num-complex@0.4.6
+	num-integer@0.1.46
+	num-traits@0.2.19
+	numpy@0.27.1
+	ogg@0.9.2
+	once_cell@1.21.3
+	opus@0.3.1
+	parking_lot@0.12.5
+	parking_lot_core@0.9.12
+	pin-project@1.1.10
+	pin-project-internal@1.1.10
+	pin-project-lite@0.2.16
+	pin-utils@0.1.0
+	pkg-config@0.3.32
+	portable-atomic@1.13.0
+	portable-atomic-util@0.2.4
+	ppv-lite86@0.2.21
+	primal-check@0.3.4
+	proc-macro2@1.0.105
+	pyo3@0.27.2
+	pyo3-build-config@0.27.2
+	pyo3-ffi@0.27.2
+	pyo3-macros@0.27.2
+	pyo3-macros-backend@0.27.2
+	quote@1.0.43
+	rand@0.8.5
+	rand_chacha@0.3.1
+	rand_core@0.6.4
+	rawpointer@0.2.1
+	rayon@1.11.0
+	rayon-core@1.13.0
+	realfft@3.5.0
+	redox_syscall@0.5.18
+	regex@1.12.2
+	regex-automata@0.4.13
+	regex-syntax@0.8.8
+	rubato@0.15.0
+	rustc-hash@2.1.1
+	rustfft@6.4.1
+	rustversion@1.0.22
+	scopeguard@1.2.0
+	serde@1.0.228
+	serde_core@1.0.228
+	serde_derive@1.0.228
+	serde_json@1.0.149
+	shlex@1.3.0
+	signal-hook-registry@1.4.8
+	slab@0.4.11
+	smallvec@1.15.1
+	socket2@0.6.1
+	strength_reduce@0.2.4
+	symphonia@0.5.5
+	symphonia-bundle-flac@0.5.5
+	symphonia-bundle-mp3@0.5.5
+	symphonia-codec-aac@0.5.5
+	symphonia-codec-adpcm@0.5.5
+	symphonia-codec-alac@0.5.5
+	symphonia-codec-pcm@0.5.5
+	symphonia-codec-vorbis@0.5.5
+	symphonia-core@0.5.5
+	symphonia-format-caf@0.5.5
+	symphonia-format-isomp4@0.5.5
+	symphonia-format-mkv@0.5.5
+	symphonia-format-ogg@0.5.5
+	symphonia-format-riff@0.5.5
+	symphonia-metadata@0.5.5
+	symphonia-utils-xiph@0.5.5
+	syn@2.0.114
+	target-lexicon@0.13.4
+	thiserror@2.0.17
+	thiserror-impl@2.0.17
+	tokio@1.49.0
+	tokio-macros@2.6.0
+	tokio-util@0.6.10
+	transpose@0.2.3
+	unicode-ident@1.0.22
+	unindent@0.2.4
+	wasi@0.11.1+wasi-snapshot-preview1
+	windows-link@0.2.1
+	windows-sys@0.60.2
+	windows-sys@0.61.2
+	windows-targets@0.53.5
+	windows_aarch64_gnullvm@0.53.1
+	windows_aarch64_msvc@0.53.1
+	windows_i686_gnu@0.53.1
+	windows_i686_gnullvm@0.53.1
+	windows_i686_msvc@0.53.1
+	windows_x86_64_gnu@0.53.1
+	windows_x86_64_gnullvm@0.53.1
+	windows_x86_64_msvc@0.53.1
+	zerocopy@0.8.32
+	zerocopy-derive@0.8.32
+	zmij@1.0.12
+"
+
+inherit cargo distutils-r1 pypi
+
+DESCRIPTION="Python bindings to read and write audio files."
+HOMEPAGE="https://pypi.org/project/sphn/ https://github.com/LaurentMazare/sphn"
+SRC_URI+="
+	${CARGO_CRATE_URIS}
+"
+
+LICENSE="MIT"
+LICENSE+=" Apache-2.0"
+SLOT="0"
+KEYWORDS="~amd64"
+
+DEPEND="media-libs/opus"
+RDEPEND="${DEPEND}"
+BDEPEND="virtual/pkgconfig"

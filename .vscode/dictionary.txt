@@ -952,6 +952,7 @@ matplotlib
 mawen
 maxcountryman
 maxperfwiz
+mazare
 mbed
 mbedcrypto
 mbedtls
@@ -1489,6 +1490,7 @@ soxr
 spacy
 spammy
 spatialaudio
+sphn
 spimdisasm
 spir
 spirv
