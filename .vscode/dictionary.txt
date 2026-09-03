@@ -172,6 +172,7 @@ chost
 chrisguidry
 chriskiehl
 chrissimpkins
+chrisstaite
 cimport
 citi
 citra
@@ -644,6 +645,7 @@ imex
 imgui
 implemnting
 implot
+incdir
 includedir
 infovis
 inih
@@ -756,6 +758,7 @@ kxmlgui
 kylemanna
 labbe's
 labeled
+lameenc
 langcodes
 langdir
 lapack
@@ -821,6 +824,7 @@ libjpeg
 liblinkernsbypass
 liblsdl
 libmad
+libmp
 libmpv
 libmspack
 libnnedi
