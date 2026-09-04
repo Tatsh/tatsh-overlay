@@ -20,6 +20,8 @@ KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/catalogue-2.0.6[${PYTHON_USEDEP}]
 	<dev-python/catalogue-2.1.0[${PYTHON_USEDEP}]
+	>=dev-python/click-8.2.1[${PYTHON_USEDEP}]
+	<dev-python/click-9.0.0[${PYTHON_USEDEP}]
 	>=dev-python/confection-1.3.2[${PYTHON_USEDEP}]
 	<dev-python/confection-2.0.0[${PYTHON_USEDEP}]
 	>=dev-python/cymem-2.0.2[${PYTHON_USEDEP}]
@@ -53,8 +55,10 @@ RDEPEND=">=dev-python/catalogue-2.0.6[${PYTHON_USEDEP}]
 	>=dev-python/weasel-1.0.0[${PYTHON_USEDEP}]
 	<dev-python/weasel-2.0.0[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}"
-BDEPEND="dev-python/cython[${PYTHON_USEDEP}]
-	dev-python/numpy[${PYTHON_USEDEP}]"
+BDEPEND=">=dev-python/cython-3.0[${PYTHON_USEDEP}]
+	<dev-python/cython-4.0[${PYTHON_USEDEP}]
+	>=dev-python/numpy-2.0.0[${PYTHON_USEDEP}]
+	<dev-python/numpy-3.0.0[${PYTHON_USEDEP}]"
 
 EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
