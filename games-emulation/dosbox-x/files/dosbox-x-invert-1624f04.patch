@@ -1,30 +1,32 @@
---- b/src/output/output_opengl.cpp
-+++ a/src/output/output_opengl.cpp
-@@ -199,11 +199,7 @@
+diff --git a/src/output/output_opengl.cpp b/src/output/output_opengl.cpp
+--- a/src/output/output_opengl.cpp
++++ b/src/output/output_opengl.cpp
+@@ -211,12 +211,7 @@
  
  #if DOSBOXMENU_TYPE == DOSBOXMENU_SDLDRAW
      /* scale the menu bar if the window is large enough */
-+    {
 -    /* SDL drawn menus cannot coexist with 3Dfx emulation. In fact, there is a serious
 -     * bug in SDL1 builds that rapidly expands the vertical size of the menu every frame. */
--    if (Voodoo_OGL_GetWidth() != 0 && Voodoo_OGL_GetHeight() != 0 && Voodoo_OGL_Active() && sdl.desktop.prevent_fullscreen) {
+-    
+-    if (Voodoo_OGL_GetWidth() != 0 && Voodoo_OGL_GetHeight() != 0 && Voodoo_OGL_Active() && sdl.desktop.prevent_fullscreen && isModeswitchSet) {
 -    }
 -    else {
++    {
          int cw = fixedWidth, ch = fixedHeight;
          int scale = 1;
  
-@@ -259,12 +255,8 @@
+@@ -272,12 +267,8 @@
  #if DOSBOXMENU_TYPE == DOSBOXMENU_SDLDRAW
      if (mainMenu.isVisible() && !sdl.desktop.fullscreen) 
      {
-+        windowHeight += mainMenu.menuBox.h;
-+        sdl.clip.y += mainMenu.menuBox.h;
--        if (Voodoo_OGL_GetWidth() != 0 && Voodoo_OGL_GetHeight() != 0 && Voodoo_OGL_Active() && sdl.desktop.prevent_fullscreen) {
+-        if (Voodoo_OGL_GetWidth() != 0 && Voodoo_OGL_GetHeight() != 0 && Voodoo_OGL_Active() && sdl.desktop.prevent_fullscreen && isModeswitchSet ) {
 -        }
 -        else {
 -            windowHeight += mainMenu.menuBox.h;
 -            sdl.clip.y += mainMenu.menuBox.h;
 -        }
++        windowHeight += mainMenu.menuBox.h;
++        sdl.clip.y += mainMenu.menuBox.h;
      }
  #endif
  

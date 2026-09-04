@@ -7,7 +7,7 @@ inherit autotools
 
 DESCRIPTION="Cross-platform DOS emulation package."
 HOMEPAGE="https://dosbox-x.com/"
-MY_PV="2025.10.07"
+MY_PV="2026.08.31"
 SRC_URI="https://github.com/joncampbell123/${PN}/archive/refs/tags/${PN}-v${MY_PV}.tar.gz"
 
 S="${WORKDIR}/${PN}-${PN}-v${MY_PV}"
