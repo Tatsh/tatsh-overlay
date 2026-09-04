@@ -3,7 +3,7 @@
 
 EAPI=8
 LIBRETRO_REPO_NAME="libretro/fuse-libretro"
-LIBRETRO_COMMIT_SHA="a183c374f5f11f505e523351bb26b825565a6c81"
+LIBRETRO_COMMIT_SHA="7d9826bdc1e4faf658293fa94a16cea81fd26bba"
 
 inherit libretro-core
 
