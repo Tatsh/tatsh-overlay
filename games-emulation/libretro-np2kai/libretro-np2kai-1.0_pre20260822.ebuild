@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/np2kai"
-LIBRETRO_COMMIT_SHA="76b354b72b7541115c8c5a79f14538370e65e1d4"
+LIBRETRO_COMMIT_SHA="ac05f003bf44f58a235f5b31de0cd42dabdbf1a8"
 inherit libretro-core
 
 DESCRIPTION="Neko Project II kai libretro port (NEC PC-9801 / PC-9821)"
