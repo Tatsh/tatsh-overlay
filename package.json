@@ -21,6 +21,7 @@
       "*.har",
       "*.lock",
       "*.patch",
+      ".claude/settings.local.json",
       ".git/**",
       ".vscode/extensions.json",
       ".yarn/**/*.cjs",
@@ -110,6 +111,7 @@
   "scripts": {
     "check-formatting": "prettier -c . && poetry run yapf -prd scripts && markdownlint-cli2 --config package.json --configPointer /markdownlint-cli2",
     "check-spelling": "cspell --no-progress './**/*'  './**/.*'",
+    "dict:update": "rm -f .vscode/dictionary.txt && cspell lint --no-progress --no-summary --unique --words-only './**/*' './**/.*' | LC_ALL=C tr '[:upper:]' '[:lower:]' | LC_ALL=C sort -u > .vscode/dictionary.txt",
     "format": "prettier -w . && poetry run yapf -ri scripts && markdownlint-cli2 --config package.json --configPointer /markdownlint-cli2 --fix",
     "mypy": "poetry run mypy",
     "qa": "yarn shellcheck && yarn mypy scripts && yarn ruff scripts && yarn check-spelling && yarn check-formatting",

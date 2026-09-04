@@ -1,5 +1,8 @@
 *.lock
 .shellcheckrc
+/.claude/settings.local.json
 /.mypy_cache/
 /.pytest_cache/
+/.sbclaude-venv/
 /.venv/
+/.wiswa-ci/

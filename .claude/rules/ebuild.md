@@ -93,6 +93,15 @@ Every package must have a `metadata.xml` with:
 After creating or modifying an ebuild, run `ebuild <path> manifest` to generate/update the
 Manifest file. Do not manually edit Manifest files.
 
+## Spelling dictionary
+
+When `yarn qa` reports unknown words, run `yarn dict:update` to regenerate
+`.vscode/dictionary.txt`. Do not hand-edit the dictionary.
+
+- The script deletes the dictionary and rebuilds it from scratch, so it also drops words that are
+  no longer used anywhere. Review the diff and keep the removals — that is the point.
+- It must be run from the repository root.
+
 ## Naming
 
 - Follow Gentoo naming conventions for categories and package names.

@@ -370,7 +370,6 @@ dosym
 dotenv
 dother
 dotize
-doubleconversion
 dounit
 dport
 dproject
@@ -447,7 +446,6 @@ epreifx
 epytest
 epython
 eqawarn
-equery
 erfgoed
 eroot
 eselect
@@ -488,7 +486,6 @@ fcaps
 fceu
 fceumm
 felis
-félix
 ffms
 fftw
 fidelityfx
@@ -540,6 +537,7 @@ fulfill
 funcs
 funcy
 fxcfg
+félix
 gailly
 gambatte
 gamecube
@@ -560,6 +558,7 @@ geovis
 getmoto
 getrandom
 ghidra
+ghidra's
 gickup
 gidgethub
 gidgetlab
@@ -784,12 +783,12 @@ libayatana
 libb
 libbar
 libbz
+libc's
 libcdio
 libchdr
 libclang
 libco
 libcrypt
-libc's
 libcxx
 libcxxabi
 libd
@@ -978,7 +977,6 @@ mesens
 metaflac
 metainfo
 metapackage
-metaprogramming
 mgba
 mgree
 miao
@@ -1151,7 +1149,6 @@ openfortivpn
 openlara
 openocd
 openrc
-opentimelineio
 openvdb
 optflags
 opti
@@ -1206,7 +1203,6 @@ pietendo
 piftl
 pihole
 pilrc
-pipefail
 pipewire
 pipx
 piskvorky
@@ -1216,7 +1212,6 @@ pixman
 pkgcheck
 pkgdev
 pkgmetadata
-pkgs
 platformdirs
 plocale
 plocales
@@ -1286,7 +1281,6 @@ pyflirt
 pyfordpass
 pyftdi
 pygfxd
-pygithub
 pygments
 pygobject
 pygtrie
@@ -1313,8 +1307,6 @@ pyrescene
 pyserial
 pysocks
 pytest
-pythonhosted
-pythonpycacheprefix
 pytimeparse
 pytorch
 pytz
@@ -1366,7 +1358,6 @@ rcheevos
 rdepend
 rdepends
 rdflib
-readelf
 realcugan
 realesrgan
 realsr
@@ -1431,6 +1422,7 @@ samuelcolvin
 saraiki
 saurashtra
 savoirfairelinux
+sbclaude
 scenechange
 schalnat
 scikit
@@ -1515,7 +1507,6 @@ ssource
 ssse
 starkits
 starlette
-startswith
 stashapp
 stashapp's
 stdc
@@ -1590,6 +1581,9 @@ timebombs
 timsainb
 tink
 tinkup
+tinycmmc
+tinygettext
+tinygettext's
 tinyxml
 tirhuta
 tisserand
@@ -1793,7 +1787,6 @@ xxhash
 yabause
 yapf
 yasm
-yaspin
 yata
 ycmd
 ytarchive
