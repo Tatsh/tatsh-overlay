@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/Gearboy"
-LIBRETRO_COMMIT_SHA="368521ef59f3a0e600346ba22041b05331188275"
+LIBRETRO_COMMIT_SHA="a83b0c5d42b881e9490734c1fd7942f841b91895"
 inherit libretro-core
 
 DESCRIPTION="Gearboy libretro port (Nintendo Game Boy / Game Boy Color)"
