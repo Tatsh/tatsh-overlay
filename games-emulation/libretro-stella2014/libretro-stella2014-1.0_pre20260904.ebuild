@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/stella2014-libretro"
-LIBRETRO_COMMIT_SHA="4a7da82595d27b8df7af1ecb467a64b642a41bc9"
+LIBRETRO_COMMIT_SHA="7d1361e407e63f29e52892655069e5fb4096e691"
 inherit libretro-core
 
 DESCRIPTION="Stella 2014 libretro port (Atari 2600 VCS)"
