@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/bsnes-mercury"
-LIBRETRO_COMMIT_SHA="d83bf7ab607e09131731b3a81825f986f91c1f84"
+LIBRETRO_COMMIT_SHA="79d7f9de218b6ffa65a80bbdc5828532bc239232"
 
 inherit libretro-core
 
