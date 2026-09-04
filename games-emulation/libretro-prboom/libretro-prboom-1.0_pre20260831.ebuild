@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/libretro-prboom"
-LIBRETRO_COMMIT_SHA="689f2b8007fa5712290bdd9faf7015a6bd13803d"
+LIBRETRO_COMMIT_SHA="daa9b7304bfba1b521d7ad2413d5be1251dbc7a7"
 
 inherit libretro libretro-core
 
