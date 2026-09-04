@@ -19,7 +19,7 @@ declare -A GIT_CRATES=(
 	[tiberius]='https://github.com/prisma/tiberius;59db57960a14b422fb3a1309aa4aa47880896ff8;tiberius-%commit%'
 	[tokio-postgres]='https://github.com/prisma/rust-postgres;278641fa1a08b7e7d35841342ab4426c5b063d9a;rust-postgres-%commit%/tokio-postgres'
 )
-RUST_MIN_VER="1.92.0"
+RUST_MIN_VER="1.97.1"
 
 inherit cargo
 
