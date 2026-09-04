@@ -74,7 +74,6 @@ RDEPEND="
 	dev-cpp/eigen:=
 	dev-cpp/nlohmann_json
 	dev-db/sqlite:3
-	dev-libs/double-conversion:=
 	dev-libs/expat
 	dev-libs/jsoncpp:=
 	>=dev-libs/libfmt-8.1.1:=
@@ -358,7 +357,7 @@ pkg_setup() {
 
 # Note: The following libraries are marked as internal by kitware
 #	and can currently not unbundled:
-#	diy2, exodusII, fides, h5part, kissfft, loguru, verdict, vpic,
+#	diy2, exodusII, fides, h5hut, kissfft, loguru, verdict, vpic,
 #	viskores, xdmf{2,3}, zfp
 # TODO: exprtk, ioss
 # Note: As of v9.2.2 we no longer drop bundled libraries, when using system
@@ -456,7 +455,6 @@ src_configure() {
 		-DVTK_MODULE_ENABLE_VTK_cgns="$(usex cgns "YES" "NO")"
 		# -DVTK_MODULE_ENABLE_VTK_cli11
 		# -DVTK_MODULE_ENABLE_VTK_dy2
-		-DVTK_MODULE_ENABLE_VTK_doubleconversion="YES"
 		-DVTK_MODULE_ENABLE_VTK_eigen="YES"
 		# -DVTK_MODULE_ENABLE_VTK_exodusII
 		-DVTK_MODULE_ENABLE_VTK_expat="YES"
@@ -700,7 +698,7 @@ src_configure() {
 			-DVTK_MODULE_ENABLE_VTK_IOParallelNetCDF="$(usex netcdf "YES" "NO")"
 			-DVTK_MODULE_ENABLE_VTK_IOParallelXML="YES"
 			-DVTK_MODULE_ENABLE_VTK_ParallelMPI="YES"
-			-DVTK_MODULE_ENABLE_VTK_h5part="YES"
+			-DVTK_MODULE_ENABLE_VTK_h5hut="YES"
 			-DVTK_MODULE_USE_EXTERNAL_VTK_verdict=OFF
 		)
 		use imaging && mycmakeargs+=( -DVTK_MODULE_ENABLE_VTK_IOMPIImage="YES" )
