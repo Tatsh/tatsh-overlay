@@ -31,8 +31,7 @@ RDEPEND="${PYTHON_DEPS}
 		dev-python/typing-extensions[${PYTHON_USEDEP}]
 		dev-libs/marisa[${PYTHON_USEDEP}]
 	')
-	>=sci-ml/pytorch-2.6.0[${PYTHON_SINGLE_USEDEP}]
-	sci-ml/caffe2[flash,${PYTHON_SINGLE_USEDEP}]
+	>=sci-ml/pytorch-2.13.0[flash,${PYTHON_SINGLE_USEDEP}]
 	sci-ml/flash-attn[${PYTHON_SINGLE_USEDEP}]
 	>=sci-ml/tokenizers-0.21.1[${PYTHON_SINGLE_USEDEP}]"
 DEPEND="${RDEPEND}"
