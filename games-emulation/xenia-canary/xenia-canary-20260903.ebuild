@@ -7,7 +7,7 @@ inherit cmake desktop flag-o-matic toolchain-funcs
 
 DESCRIPTION="Xbox 360 emulator research project (Canary version)."
 HOMEPAGE="https://github.com/xenia-canary/xenia-canary https://xenia.jp/"
-SHA="b98037bed29b14439e7e5978c6333f1e926e5240"
+SHA="4d8b3d650e8709f85bb6c6df05e561a5903eca84"
 AES_128_SHA="7e3ac3bb6b478187472b4ac6f1698eb203e8e90b"
 FIDELITYFX_CAS_SHA="9fabcc9a2c45f958aff55ddfda337e74ef894b7f"
 FIDELITYFX_FSR_SHA="a21ffb8f6c13233ba336352bdff293894c706575"
@@ -143,6 +143,15 @@ src_prepare() {
 	EOF
 
 	cmake_src_prepare
+
+	# The use_system_fmt patch routes bundled fmt includes through
+	# src/xenia/base/fmt_include.h, but upstream keeps adding new sources that
+	# include third_party/fmt directly. Catch those here rather than growing
+	# the patch a hunk at a time. The wrapper itself must keep its own includes.
+	grep -rl 'third_party/fmt/include' src \
+		| grep -v '^src/xenia/base/fmt_include\.h$' \
+		| xargs -r sed -i \
+			-e 's|"third_party/fmt/include/fmt/[a-z]*\.h"|"xenia/base/fmt_include.h"|' || die
 }
 
 src_configure() {

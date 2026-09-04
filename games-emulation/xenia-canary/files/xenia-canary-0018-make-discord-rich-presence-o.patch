@@ -65,8 +65,8 @@ index adee3b30c..7159d0275 100644
    imgui
    libavcodec
    libavutil
-@@ -89,12 +88,14 @@ endif()
- 
+@@ -89,13 +88,15 @@ endif()
+
  # Non-Android specific (always true for Windows/Linux)
  target_link_libraries(xenia-app PRIVATE
 -  xenia-app-discord
@@ -74,6 +74,7 @@ index adee3b30c..7159d0275 100644
    xenia-debug-ui
    xenia-helper-sdl
    xenia-hid-sdl
+   xenia-hid-keyboard
  )
 +if(XENIA_BUILD_DISCORD)
 +  target_link_libraries(xenia-app PRIVATE xenia-app-discord)

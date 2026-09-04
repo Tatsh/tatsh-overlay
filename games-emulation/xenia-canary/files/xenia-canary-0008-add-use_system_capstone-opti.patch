@@ -55,14 +55,16 @@ diff --git a/src/xenia/cpu/backend/x64/x64_backend.cc b/src/xenia/cpu/backend/x6
 index eabfb41d0..e4d16fcf0 100644
 --- a/src/xenia/cpu/backend/x64/x64_backend.cc
 +++ b/src/xenia/cpu/backend/x64/x64_backend.cc
-@@ -10,8 +10,7 @@
+@@ -10,10 +10,9 @@
  #include "xenia/cpu/backend/x64/x64_backend.h"
- 
+
+ #include <array>
  #include <cstddef>
+
 -#include "third_party/capstone/include/capstone/capstone.h"
 -#include "third_party/capstone/include/capstone/x86.h"
 +#include "xenia/base/capstone_include.h"
- 
+
  #include "xenia/base/exception_handler.h"
  #include "xenia/base/logging.h"
 diff --git a/src/xenia/debug/ui/debug_window.cc b/src/xenia/debug/ui/debug_window.cc
