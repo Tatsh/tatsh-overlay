@@ -10,7 +10,7 @@ else
 	# Snapshot of master: media-video/vapoursynth-78 uses the
 	# chromatic_adaptation graph builder parameter, which is not in any
 	# release as of 3.0.6.
-	COMMIT="1ad1895d5ff0bbe69c61243f9996aede713d1b5f"
+	COMMIT="67e0603271c080e22c8429856dd4a8a56587e61e"
 	# graphengine is a submodule, so it is absent from the GitHub archive.
 	GRAPHENGINE_COMMIT="cb5b2ce13384ec2491f0c37256ea210034799f69"
 	SRC_URI="https://github.com/sekrit-twc/zimg/archive/${COMMIT}.tar.gz
