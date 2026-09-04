@@ -10,14 +10,15 @@ HOMEPAGE="https://github.com/flyinghead/flycast"
 SRC_URI="
 	https://github.com/flyinghead/flycast/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/libsdl-org/SDL/archive/00d4f1c2c4ad2dc95d26b18743541f57b1dca56d.tar.gz -> ${P}-core_deps_SDL.tar.gz
-	https://github.com/KhronosGroup/Vulkan-Headers/archive/85c2334e92e215cce34e8e0ed8b2dce4700f4a50.tar.gz -> ${P}-core_deps_Vulkan-Headers.tar.gz
-	https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/6eb62e1515072827db992c2befd80b71b2d04329.tar.gz -> ${P}-core_deps_VulkanMemoryAllocator.tar.gz
+	https://github.com/KhronosGroup/Vulkan-Headers/archive/b5c8f996196ba4aa6d8f97e52b5d3b6e70f7e4e2.tar.gz -> ${P}-core_deps_Vulkan-Headers.tar.gz
+	https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/1d8f600fd424278486eade7ed3e877c99f0846b1.tar.gz -> ${P}-core_deps_VulkanMemoryAllocator.tar.gz
 	https://github.com/flyinghead/mingw-breakpad/archive/1ab24bcc817ebe629bf77daa53529d02361cb1e9.tar.gz -> ${P}-core_deps_breakpad.tar.gz
 	https://github.com/KhronosGroup/glslang/archive/fc9889c889561c5882e83819dcaffef5ed45529b.tar.gz -> ${P}-core_deps_glslang.tar.gz
 	https://github.com/flyinghead/libchdr/archive/5f82799f2c8cad1e9cd26d39a0f8d36369a5534b.tar.gz -> ${P}-core_deps_libchdr.tar.gz
 	https://github.com/vinniefalco/LuaBridge/archive/5d21e35633a1f87ed08af115b07d3386096f792b.tar.gz -> ${P}-core_deps_luabridge.tar.gz
 	https://github.com/flyinghead/asio/archive/d3402006e84efb6114ff93e4f2b8508412ed80d5.tar.gz -> ${P}-core_deps_asio.tar.gz
-	https://github.com/flyinghead/asio/archive/d3402006e84efb6114ff93e4f2b8508412ed80d5.tar.gz -> ${P}-core_deps_asio.tar.gz
+	https://github.com/flyinghead/tinygettext/archive/41572a67f96013691685a38f0032f3c97aa34f79.tar.gz -> ${P}-core_deps_tinygettext.tar.gz
+	https://github.com/Grumbel/tinycmmc/archive/9a51e13802d930feb7261ba8876940659b258cb7.tar.gz -> ${P}-core_deps_tinygettext_external_tinycmmc.tar.gz
 	https://github.com/herumi/xbyak/archive/0d67fd1530016b7c56f3cd74b3fca920f4c3e2b4.tar.gz -> ${P}-core_deps_xbyak.tar.gz"
 S="${WORKDIR}/flycast-${PV}"
 LICENSE="GPL-2"
@@ -55,6 +56,9 @@ src_unpack() {
 		core_deps_libchdr
 		core_deps_luabridge
 		core_deps_asio
+		core_deps_tinygettext
+		# tinygettext's own submodule; must follow it so the target dir exists.
+		core_deps_tinygettext_external_tinycmmc
 		core_deps_xbyak
 	)
 
