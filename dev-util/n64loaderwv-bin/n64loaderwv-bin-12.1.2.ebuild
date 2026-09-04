@@ -4,11 +4,11 @@
 EAPI=8
 
 # Upstream tags every release after the Ghidra version it was built against and
-# carries no version of its own, so this is dated after the release archive.
-# The tag is therefore also the newest Ghidra upstream has built against, and
-# lags dev-util/ghidra; ghidra-extension.eclass retargets the archive at the
+# carries no version of its own, so ${PV} is that Ghidra version. The tag is
+# therefore also the newest Ghidra upstream has built against, and lags
+# dev-util/ghidra; ghidra-extension.eclass retargets the archive at the
 # installed Ghidra rather than waiting for upstream to catch up.
-GHIDRA_PV="12.1.2"
+GHIDRA_PV="${PV}"
 GHIDRA_EXT_NAME="N64LoaderWV"
 MY_PN="${PN%-bin}"
 
