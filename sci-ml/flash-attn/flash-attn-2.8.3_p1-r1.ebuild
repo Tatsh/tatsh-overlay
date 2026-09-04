@@ -23,9 +23,8 @@ RDEPEND="${PYTHON_DEPS}
 	$(python_gen_cond_dep '
 		sci-ml/einops[${PYTHON_USEDEP}]
 	')
-	cuda? ( sci-ml/caffe2[cuda,flash] )
-	rocm? ( sci-ml/caffe2[rocm] )
-	sci-ml/pytorch[${PYTHON_SINGLE_USEDEP}]"
+	>=sci-ml/pytorch-2.13.0[${PYTHON_SINGLE_USEDEP},cuda?,rocm?]
+	cuda? ( >=sci-ml/pytorch-2.13.0[flash] )"
 DEPEND="dev-libs/cutlass ${RDEPEND}"
 # shellcheck disable=SC2016
 BDEPEND="${PYTHON_DEPS}
