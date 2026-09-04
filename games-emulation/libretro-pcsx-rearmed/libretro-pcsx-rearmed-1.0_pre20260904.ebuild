@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/pcsx_rearmed"
-LIBRETRO_COMMIT_SHA="05c4dbfa8e4d994820b278345316ce8cbed4209f"
+LIBRETRO_COMMIT_SHA="ea5adc36aee7c82466b4c9ab435cae282e8a60a0"
 
 inherit libretro-core
 
