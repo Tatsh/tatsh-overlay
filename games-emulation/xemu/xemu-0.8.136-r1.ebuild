@@ -45,6 +45,7 @@ RESTRICT="!test? ( test )"
 
 DEPEND="dev-libs/glib
 	dev-libs/openssl
+	dev-cpp/tomlplusplus
 	dev-libs/xxhash
 	media-libs/libepoxy
 	media-libs/libglvnd[X]
