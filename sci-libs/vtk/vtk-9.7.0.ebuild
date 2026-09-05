@@ -419,7 +419,6 @@ src_configure() {
 		-DVTK_BUILD_DOCUMENTATION=OFF
 		-DVTK_BUILD_EXAMPLES="$(usex examples)"
 
-		# no package in the tree: https://github.com/LLNL/conduit
 		-DVTK_ENABLE_CATALYST=OFF
 		-DVTK_ENABLE_KITS=OFF
 		-DVTK_ENABLE_LOGGING="$(usex logging)"
@@ -539,11 +538,18 @@ src_configure() {
 			# TODO: some of these are tied to the VTK_ENABLE_REMOTE_MODULES
 			# option. Check whether we can download them clean and enable
 			# them.
+			# no package in the tree: https://github.com/LLNL/conduit
+			-DVTK_MODULE_ENABLE_VTK_conduit="NO"
 			-DVTK_MODULE_ENABLE_VTK_DomainsMicroscopy="NO"
 			-DVTK_MODULE_ENABLE_VTK_fides="NO"
+			-DVTK_MODULE_ENABLE_VTK_FiltersONNX="NO"
 			-DVTK_MODULE_ENABLE_VTK_FiltersOpenTURNS="NO"
 			-DVTK_MODULE_ENABLE_VTK_IOADIOS2="NO"
 			-DVTK_MODULE_ENABLE_VTK_IOFides="NO"
+			-DVTK_MODULE_ENABLE_VTK_IOIFC="NO"
+			# writer uses the pre-OpenVDB-11 NanoVDB API
+			-DVTK_MODULE_ENABLE_VTK_IONanoVDB="NO"
+			-DVTK_MODULE_ENABLE_VTK_IOUSD="NO"
 
 			-DVTK_MODULE_ENABLE_VTK_RenderingOpenVR="NO"
 			-DVTK_MODULE_ENABLE_VTK_RenderingOpenXR="NO"
