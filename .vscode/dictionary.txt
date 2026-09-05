@@ -88,6 +88,7 @@ beartype
 beautifulsoup
 beautysh
 beenje
+behavior
 bethington
 bfcodec
 bhaiksuki
@@ -136,7 +137,6 @@ byteswap
 byteswapped
 cacerts
 cachetools
-caffe
 calloc
 canadianaboriginal
 capa
@@ -665,6 +665,7 @@ iocb
 iocgns
 ioffmpeg
 iogdal
+ioifc
 iolas
 iompi
 ionelmc
@@ -673,6 +674,7 @@ ioodbc
 iopdal
 iosql
 ioss
+iousd
 ioxml
 ipython
 irecovery
@@ -911,6 +913,7 @@ lith
 livecheck
 livechecks
 llvmlite
+lmdb
 lmod
 loaderwv
 localmount
@@ -921,6 +924,7 @@ loong
 loras
 lovesegfault
 lowresnx
+lraspp
 lsdvd
 lssecret
 lstdc
@@ -999,6 +1003,7 @@ mkorenkov
 mkwineprefix
 mlabbe
 mnamer
+mobilenet
 mobilephone
 mocharc
 modargs
@@ -1113,7 +1118,9 @@ numpydoc
 nurio
 nusb
 nvcc
+nvccflags
 nvidiactl
+nvjpeg
 nvlink
 nvme
 nvmrc
@@ -1536,6 +1543,7 @@ swanstation
 swiftshader
 sylheti
 sylotinagri
+sympy
 sysid
 syst
 syste
@@ -1784,6 +1792,7 @@ xtst
 xvic
 xvideo
 xxhash
+xywhr
 yabause
 yapf
 yasm
