@@ -1,0 +1,63 @@
+Convert the legacy [tool.flit.metadata] table to the standard [project] table.
+flit_core 4 removed support for the old table, so the package fails to build
+with any flit_core newer than 3.x.
+
+diff --git a/pyproject.toml b/pyproject.toml
+index e90693b..564bbf6 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,21 +1,21 @@
+ [build-system]
+-requires = ["flit_core <4"]
++requires = ["flit_core >=3.9,<5"]
+ build-backend = "flit_core.buildapi"
+ 
+-[tool.flit.metadata]
+-module = "gidgethub"
+-author = "Brett Cannon"
+-author-email = "brett@python.org"
+-requires = [
++[project]
++name = "gidgethub"
++authors = [{name = "Brett Cannon", email = "brett@python.org"}]
++readme = "README.rst"
++license = "Apache-2.0"
++license-files = ["LICENSE"]
++keywords = ["github", "sans-io", "async"]
++requires-python = ">=3.8"
++dependencies = [
+     "uritemplate>=3.0.1",
+-    "PyJWT[crypto]>=2.4.0"
++    "PyJWT[crypto]>=2.4.0",
+ ]
+-requires-python = ">=3.8"
+-license = "Apache"
+-keywords = "github sans-io async"
+-description-file = "README.rst"
+-classifiers = ["Intended Audience :: Developers",
+-    "License :: OSI Approved :: Apache Software License",
++classifiers = [
++    "Intended Audience :: Developers",
+     "Development Status :: 5 - Production/Stable",
+     "Programming Language :: Python :: 3 :: Only",
+     "Programming Language :: Python :: 3.8",
+@@ -25,8 +25,9 @@ classifiers = ["Intended Audience :: Developers",
+     "Programming Language :: Python :: 3.12",
+     "Programming Language :: Python :: 3.13",
+ ]
++dynamic = ["version", "description"]
+ 
+-[tool.flit.metadata.requires-extra]
++[project.optional-dependencies]
+ test = ["importlib-resources", "pytest>=5.4.1", "pytest-asyncio", "pytest-tornasync"]
+ doc = ["sphinx>=4.0.0", "sphinx-rtd-theme>=0.5.2"]
+ # The 'dev' target should contain all dependencies listed in any extras coming
+@@ -37,7 +38,7 @@ aiohttp = ["aiohttp"]
+ tornado = ["tornado"]
+ httpx = ["httpx>=0.16.1"]
+ 
+-[tool.flit.metadata.urls]
++[project.urls]
+ Documentation = "https://gidgethub.readthedocs.io"
+ Repository = "https://github.com/brettcannon/gidgethub"
+ 
