@@ -90,6 +90,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0009-uncomment-acpi-build.c.patch"
 	"${FILESDIR}/${PN}-0010-fix-number-of-registered-aud.patch"
 	"${FILESDIR}/${PN}-0011-fix-boot.patch"
+	"${FILESDIR}/${PN}-0012-not-for-upstream-do-not-inst.patch"
 )
 DOCS=( README.md )
 
@@ -182,10 +183,7 @@ src_compile() {
 
 src_install() {
 	default
-	rm -R \
-		"${D}/usr/"{lib,lib64} \
-		"${D}/usr/bin/"{glslang,spirv}* \
-		"${D}/usr/share/qemu" || die
+	rm -R "${D}/usr/share/qemu" || die
 }
 
 src_test() {

@@ -1,0 +1,58 @@
+From 1f6a0493b1b5ce4a66ebaf491f22be42133cf190 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sun, 6 Sep 2026 06:13:39 -0400
+Subject: [PATCH 12/12] not for upstream: do not install subproject artifacts
+
+xemu only needs the static libraries from the imgui, SPIRV-Reflect and
+glslang subprojects. Installing their executables and archives puts files
+in the image that have to be deleted again, and whether any of them show up
+at all depends on which of these libraries happen to be available on the
+build host.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ meson.build                   | 7 +++++--
+ subprojects/imgui/meson.build | 2 +-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 82e5f5a..4fbfe3c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2398,7 +2398,8 @@ if vulkan.found()
+   if not libglslang.found()
+     # FIXME: Get spirv-tools to enable opt.
+     glslang_opts = cmake.subproject_options()
+-    glslang_opts.add_cmake_defines({'ENABLE_OPT': false, 'ENABLE_HLSL': false})
++    glslang_opts.add_cmake_defines({'ENABLE_OPT': false, 'ENABLE_HLSL': false,
++                                    'GLSLANG_ENABLE_INSTALL': false})
+     glslang_subpro = cmake.subproject('glslang', options: glslang_opts)
+     libglslang = declare_dependency(link_with: [
+           glslang_subpro.target('glslang'),
+@@ -2421,7 +2422,9 @@ if vulkan.found()
+                             dependencies: vulkan)
+ 
+   spirv_reflect_opts = cmake.subproject_options()
+-  spirv_reflect_opts.add_cmake_defines({'SPIRV_REFLECT_STATIC_LIB': 'ON'})
++  spirv_reflect_opts.add_cmake_defines({'SPIRV_REFLECT_STATIC_LIB': 'ON',
++                                        'SPIRV_REFLECT_EXECUTABLE': 'OFF',
++                                        'SPIRV_REFLECT_INSTALL': 'OFF'})
+   spirv_reflect_subproj = cmake.subproject('SPIRV-Reflect', options: spirv_reflect_opts)
+   spirv_reflect = declare_dependency(include_directories: spirv_reflect_subproj.include_directories('spirv-reflect-static'),
+                                      link_with: spirv_reflect_subproj.target('spirv-reflect-static'),
+diff --git a/subprojects/imgui/meson.build b/subprojects/imgui/meson.build
+index e2f7992..11a9ad7 100644
+--- a/subprojects/imgui/meson.build
++++ b/subprojects/imgui/meson.build
+@@ -122,7 +122,7 @@ imgui = library(
+   gnu_symbol_visibility: 'hidden',
+   dependencies: dependencies,
+   include_directories: include_dirs,
+-  install: true,
++  install: false,
+ )
+ 
+ if host_machine.system() == 'windows'
+-- 
+2.55.0
+
