@@ -1,14 +1,12 @@
 !/metadata/layout.conf
 !/metadata/pkgcheck.conf
+*.log
 .*~
 .cspellcache
 .directory
-.ruff_cache/
+/.*_cache/
 /.claude/plans/
 /.wiswa-ci/
 /.yarn/install-state.gz
 /metadata/*
-/missing-test-deps.md
 /node_modules/
-/phase*.json
-/tests-audit.csv
