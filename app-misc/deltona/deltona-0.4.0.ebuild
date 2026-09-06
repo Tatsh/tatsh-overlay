@@ -27,7 +27,11 @@ RDEPEND="
 	>=dev-python/pathspec-1.0.4[${PYTHON_USEDEP}]
 	>=dev-python/tomlkit-0.14.0[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.15.0[${PYTHON_USEDEP}]
-	admin? ( >=dev-python/paramiko-4.0.0[${PYTHON_USEDEP}] )
+	admin? (
+		>=dev-python/paramiko-4.0.0[${PYTHON_USEDEP}]
+		>=dev-python/platformdirs-4.9.6[${PYTHON_USEDEP}]
+		>=dev-python/watchdog-6.0.0[${PYTHON_USEDEP}]
+	)
 	desktop? (
 		>=dev-python/pydbus-0.6.0[${PYTHON_USEDEP}]
 		dev-python/pygobject:3[${PYTHON_USEDEP}]
