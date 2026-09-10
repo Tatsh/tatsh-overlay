@@ -47,6 +47,7 @@ asan
 asar
 asciidoctor
 asgi
+ashuttl
 asio
 asmflags
 assimp
@@ -903,6 +904,7 @@ lide
 lightrec
 lighttpd
 limbu
+linecast
 linkernsbypass
 linters
 lintstagedrc
@@ -1310,6 +1312,7 @@ pyrescene
 pyserial
 pysocks
 pytest
+pythonpath
 pytimeparse
 pytorch
 pytz
@@ -1606,6 +1609,7 @@ triangulator
 trimpath
 trng
 trustme
+truststore
 tscache
 tsschecker
 tunables
@@ -1614,6 +1618,7 @@ tuxu
 typeddjango
 typer
 tyrquake
+tzdata
 tzdb
 tzlocal
 ucwords
