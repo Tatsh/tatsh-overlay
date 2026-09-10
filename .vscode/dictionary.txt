@@ -455,6 +455,7 @@ espeakng
 esrgan
 esysroot
 ethteck
+evalex
 evdev
 evins
 ewarn
@@ -1630,6 +1631,7 @@ udevdir
 udeveof
 udevof
 udmabuf
+udojava
 udvare
 ugaritic
 uinput
