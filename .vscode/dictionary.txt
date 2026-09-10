@@ -89,7 +89,6 @@ beartype
 beautifulsoup
 beautysh
 beenje
-behavior
 bethington
 bfcodec
 bhaiksuki
@@ -205,7 +204,6 @@ colored
 colorful
 colorlog
 colorspace
-comby
 commandlines
 commitizen
 commitlintrc
@@ -283,7 +281,6 @@ ddisable
 ddrivers
 deark
 deband
-debiancompat
 debugpy
 decli
 decompals
@@ -322,6 +319,7 @@ discid
 discordrpc
 disruptorplus
 distdir
+distfile
 distfiles
 distname
 distutils
@@ -798,7 +796,6 @@ libcxxabi
 libd
 libdrm
 libepoxy
-libev
 libevdev
 libexec
 libexecdir
@@ -915,9 +912,9 @@ lith
 livecheck
 livechecks
 llvmlite
-lmdb
 lmod
 loaderwv
+loadspec
 localmount
 lodepng
 loguru
@@ -926,7 +923,6 @@ loong
 loras
 lovesegfault
 lowresnx
-lraspp
 lsdvd
 lssecret
 lstdc
@@ -1005,7 +1001,6 @@ mkorenkov
 mkwineprefix
 mlabbe
 mnamer
-mobilenet
 mobilephone
 mocharc
 modargs
@@ -1120,9 +1115,7 @@ numpydoc
 nurio
 nusb
 nvcc
-nvccflags
 nvidiactl
-nvjpeg
 nvlink
 nvme
 nvmrc
@@ -1546,7 +1539,6 @@ swanstation
 swiftshader
 sylheti
 sylotinagri
-sympy
 sysid
 syst
 syste
@@ -1796,7 +1788,6 @@ xtst
 xvic
 xvideo
 xxhash
-xywhr
 yabause
 yapf
 yasm
