@@ -11,6 +11,7 @@
   </upstream>
   <use>
     <flag name="admin">Administrative utilities like smv and reset-tpm-enrollments</flag>
+    <flag name="chrome">Tools for Chromium-based browsers</flag>
     <flag name="desktop">Desktop utilities like umpv and mpv-sbs</flag>
     <flag name="git">Git utilities like git-open and merge-dependabot-prs</flag>
     <flag name="media">Media utilities like wait-for-disc and add-info-json</flag>

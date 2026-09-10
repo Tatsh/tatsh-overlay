@@ -15,7 +15,7 @@ HOMEPAGE="https://github.com/Tatsh/deltona"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="admin desktop git media string wine www"
+IUSE="admin chrome desktop git media string wine www"
 
 RDEPEND="
 	>=dev-python/anyio-4.13.0[${PYTHON_USEDEP}]
@@ -25,12 +25,18 @@ RDEPEND="
 	>=dev-python/click-8.3.2[${PYTHON_USEDEP}]
 	>=dev-python/niquests-3.18.6[${PYTHON_USEDEP}]
 	>=dev-python/pathspec-1.0.4[${PYTHON_USEDEP}]
+	dev-python/rich[${PYTHON_USEDEP}]
 	>=dev-python/tomlkit-0.14.0[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.15.0[${PYTHON_USEDEP}]
 	admin? (
 		>=dev-python/paramiko-4.0.0[${PYTHON_USEDEP}]
 		>=dev-python/platformdirs-4.9.6[${PYTHON_USEDEP}]
 		>=dev-python/watchdog-6.0.0[${PYTHON_USEDEP}]
+	)
+	chrome? (
+		dev-python/cryptography[${PYTHON_USEDEP}]
+		>=dev-python/keyring-25.7.0[${PYTHON_USEDEP}]
+		dev-python/watchdog[${PYTHON_USEDEP}]
 	)
 	desktop? (
 		>=dev-python/pydbus-0.6.0[${PYTHON_USEDEP}]
