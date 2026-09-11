@@ -430,6 +430,7 @@ eigen
 einfo
 einops
 einstalldocs
+ejavac
 elbasan
 eleonore
 elgato
@@ -470,6 +471,8 @@ exes
 existance
 exllamav
 exprtk
+extensionmanager
+extname
 extradoc
 extrainstall
 exzap
@@ -698,6 +701,7 @@ jaconv
 jakcron
 jamo
 jardir
+javac
 jawah
 jazzband
 jdeps
