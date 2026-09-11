@@ -1,0 +1,25 @@
+Implement Exporter.canExportDomainObject(Class) for Ghidra 12.
+
+Upstream has been dormant since 2021. Ghidra 12 made canExportDomainObject()
+take the class rather than an instance, and made it abstract, so this exporter
+no longer compiles. Upstream's own prebuilt archives predate the change and do
+not implement it either, which means calling it on them raises an
+AbstractMethodError.
+
+The exporter handles programs and nothing else, as the export() method below
+already asserts.
+
+--- a/src/main/java/orbis/loader/emc/IplExporter.java	2026-09-11 15:12:50.821473500 -0400
++++ b/src/main/java/orbis/loader/emc/IplExporter.java	2026-09-11 15:13:36.712058895 -0400
+@@ -34,6 +34,11 @@
+     }
+ 
+     @Override
++    public boolean canExportDomainObject(Class<? extends DomainObject> domainObjectClass) {
++        return Program.class.isAssignableFrom(domainObjectClass);
++    }
++
++    @Override
+ 	public boolean export(File file, DomainObject domainObj, AddressSetView addrSet,
+ 			TaskMonitor monitor) throws IOException, ExporterException {
+         if (!(domainObj instanceof Program)) {
