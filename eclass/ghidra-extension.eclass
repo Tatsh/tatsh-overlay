@@ -162,11 +162,35 @@ _ghidra-extension_retarget() {
 		die "${ECLASS}: failed to set version= in extension.properties"
 }
 
+# @FUNCTION: _ghidra-extension_ghidra_packages
+# @INTERNAL
+# @DESCRIPTION:
+# Echoes every Java package that Ghidra's own modules provide, one per line.
+# Ghidra builds each module into lib/<module name>.jar and installs that
+# module's third-party dependencies beside it under their own names, so this is
+# the set of packages that are Ghidra's API rather than a library Ghidra
+# happens to bundle. Other installed extensions are skipped: an extension must
+# not be allowed to link against another extension.
+_ghidra-extension_ghidra_packages() {
+	local dir name jars=()
+	for dir in "${ESYSROOT}${GHIDRA_HOME}"/Ghidra/*/*/; do
+		[[ ${dir} == */Ghidra/Extensions/* ]] && continue
+		name="$(basename "${dir}")"
+		[[ -f ${dir}lib/${name}.jar ]] && jars+=( "${dir}lib/${name}.jar" )
+	done
+	(( ${#jars[@]} )) || die "${ECLASS}: found no Ghidra module jars"
+
+	local jar
+	for jar in "${jars[@]}"; do
+		unzip -Z1 "${jar}" '*.class'
+	done | sed -n 's|/[^/]*\.class$||p' | tr / . | sort -u
+}
+
 # @FUNCTION: _ghidra-extension_check_linkage
 # @INTERNAL
 # @DESCRIPTION:
-# Verifies with jdeps that every class the extension's jars reference resolves
-# against the installed Ghidra's jars plus the JDK. This is the real
+# Verifies with jdeps that every class the extension's own jars reference
+# resolves against the installed Ghidra's jars plus the JDK. This is the real
 # compatibility constraint that the version= property only pretends to express.
 # A no-op for extensions that ship no jars, such as script-only ones.
 _ghidra-extension_check_linkage() {
@@ -174,14 +198,39 @@ _ghidra-extension_check_linkage() {
 	readarray -d '' jars < <(find lib -name '*.jar' -print0 2>/dev/null)
 	(( ${#jars[@]} )) || return 0
 
-	local classpath
-	classpath="$(find "${ESYSROOT}${GHIDRA_HOME}" -name '*.jar' -printf '%p:')" || die
-	[[ ${classpath} ]] || die "${ECLASS}: found no Ghidra jars to link against"
+	local packages="${T}/ghidra-packages"
+	_ghidra-extension_ghidra_packages > "${packages}" || die
+
+	local ghidra_cp
+	ghidra_cp="$(find "${ESYSROOT}${GHIDRA_HOME}" -name '*.jar' \
+		-not -path '*/Ghidra/Extensions/*' -printf '%p:')" || die
+	[[ ${ghidra_cp} ]] || die "${ECLASS}: found no Ghidra jars to link against"
 
 	# jdeps reports findings on stdout and exits 0 either way, so the output
 	# itself is the verdict.
-	local jar missing
+	local jar other classpath deps missing
 	for jar in "${jars[@]}"; do
+		# Only code written against Ghidra can break against a different
+		# Ghidra. Third-party jars vendored into an extension reference no
+		# Ghidra package, and routinely reference optional dependencies they do
+		# not ship, which would otherwise be reported as incompatibilities.
+		deps="$(jdeps --multi-release 21 -verbose:package "${jar}" 2>/dev/null |
+			awk '/^[[:space:]]/ { print $3 }' | sort -u)" || die "jdeps failed on ${jar}"
+		if ! grep -qxF -f "${packages}" <<<"${deps}"; then
+			einfo "Skipping ${jar}, it does not use Ghidra's API"
+			continue
+		fi
+
+		# Ghidra puts every jar in a module's lib/ on the classpath, so a
+		# reference from one of an extension's jars into another resolves at
+		# runtime and is not an incompatibility with Ghidra. The jar under
+		# analysis is left off its own classpath, otherwise jdeps reports it as
+		# a split package.
+		classpath="${ghidra_cp}"
+		for other in "${jars[@]}"; do
+			[[ ${other} == "${jar}" ]] || classpath+="${other}:"
+		done
+
 		einfo "Checking ${jar} against Ghidra ${1}"
 		missing="$(jdeps --multi-release 21 --class-path "${classpath}" \
 			--missing-deps "${jar}" 2>/dev/null)" || die "jdeps failed on ${jar}"
