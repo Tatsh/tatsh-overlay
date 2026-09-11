@@ -219,10 +219,6 @@ _ghidra-extension_build_module() {
 	mkdir -p lib || die
 	jar --create --file "lib/${GHIDRA_EXT_NAME}.jar" -C "${classes}" . || die
 
-	# Ghidra's Gradle plugin fills this in when it assembles an extension. The
-	# version= placeholder is left to _ghidra-extension_retarget.
-	sed -i "s/@extname@/${GHIDRA_EXT_NAME}/" extension.properties || die
-
 	# Upstream's own archives contain everything but the sources.
 	rm -r src || die
 }
@@ -248,14 +244,23 @@ _ghidra-extension_get_ghidra_version() {
 # Rewrites the version= property in extension.properties to the installed
 # Ghidra version, so Ghidra's extension manager reports the extension as
 # matching. Ghidra never consults this value when loading an extension.
+#
+# Also sets name=, which is what the extension manager lists the extension
+# under. In a source tree it is the @extname@ placeholder that Ghidra's Gradle
+# plugin substitutes; in a prebuilt archive it already holds the module name
+# this sets it to, so rewriting it is a no-op there.
 _ghidra-extension_retarget() {
 	local version="${1}"
 
 	[[ -f extension.properties ]] || die "${ECLASS}: no extension.properties in ${PWD}"
+	[[ ${GHIDRA_EXT_NAME} ]] || die "${ECLASS}: GHIDRA_EXT_NAME must be set"
 
-	sed -i "s/^version=.*$/version=${version}/" extension.properties || die
+	sed -i -e "s/^version=.*$/version=${version}/" \
+		-e "s/^name=.*$/name=${GHIDRA_EXT_NAME}/" extension.properties || die
 	grep -qx "version=${version}" extension.properties ||
 		die "${ECLASS}: failed to set version= in extension.properties"
+	grep -qx "name=${GHIDRA_EXT_NAME}" extension.properties ||
+		die "${ECLASS}: failed to set name= in extension.properties"
 }
 
 # @FUNCTION: _ghidra-extension_ghidra_packages
