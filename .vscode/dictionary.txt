@@ -475,6 +475,7 @@ existance
 exllamav
 exprtk
 extensionmanager
+extldflags
 extname
 extradoc
 extrainstall
@@ -1079,6 +1080,7 @@ neko
 neocd
 nestopia
 netd
+netgo
 netlink
 netmuxd
 netnode
@@ -1090,6 +1092,7 @@ newar
 newbashcomp
 newbin
 newexe
+newfishcomp
 newicon
 newinitd
 newins
@@ -1097,6 +1100,7 @@ newjar
 newrules
 newscript
 newunit
+newzshcomp
 nextgeniuspro
 nfde
 nftables
@@ -1186,6 +1190,7 @@ osname
 ospi
 ospray
 ossemul
+ossf
 osspd
 oyvindln
 pacct
