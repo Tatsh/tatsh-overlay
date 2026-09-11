@@ -8,6 +8,7 @@ addwrite
 adefossez
 adlam
 adoc
+adubbz
 aesni
 afaics
 ahom
@@ -1832,6 +1833,8 @@ xrandr
 xrender
 xrick
 xscpu
+xsltproc
+xtlid
 xtst
 xvic
 xvideo
