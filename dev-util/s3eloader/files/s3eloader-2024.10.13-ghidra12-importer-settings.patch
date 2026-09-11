@@ -1,0 +1,33 @@
+--- a/src/main/java/s3eloader/S3ELoaderLoader.java
++++ b/src/main/java/s3eloader/S3ELoaderLoader.java
+@@ -104,12 +104,14 @@
+ 	}
+ 
+ 	@Override
+-	protected void load(ByteProvider provider, LoadSpec loadSpec, List<Option> options,
+-			Program program, TaskMonitor monitor, MessageLog log)
++	protected void load(Program program, ghidra.app.util.opinion.Loader.ImporterSettings settings)
+ 			throws CancelledException, IOException {
+ 
+-		// TODO: Load the bytes from 'provider' into the 'program'.
+-		
++		// Ghidra 12.0 API: parameters are bundled in the ImporterSettings record.
++		ByteProvider provider = settings.provider();
++		TaskMonitor monitor = settings.monitor();
++		MessageLog log = settings.log();
++
+ 		FlatProgramAPI api = new FlatProgramAPI(program, monitor);
+ 		
+ 		Memory memory = program.getMemory();
+@@ -280,9 +282,9 @@
+ 
+ 	@Override
+ 	public List<Option> getDefaultOptions(ByteProvider provider, LoadSpec loadSpec,
+-			DomainObject domainObject, boolean isLoadIntoProgram) {
++			DomainObject domainObject, boolean loadIntoProgram, boolean isLoadIntoProgram) {
+ 		List<Option> list =
+-			super.getDefaultOptions(provider, loadSpec, domainObject, isLoadIntoProgram);
++			super.getDefaultOptions(provider, loadSpec, domainObject, loadIntoProgram, isLoadIntoProgram);
+ 
+ 		// TODO: If this loader has custom options, add them to 'list'
+ 		//list.add(new Option("Option name goes here", "Default option value goes here"));
