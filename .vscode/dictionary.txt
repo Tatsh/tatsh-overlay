@@ -104,6 +104,7 @@ bindir
 bindist
 binja
 binpkgs
+binutils
 binv
 bitrock
 bitwidth
@@ -295,6 +296,7 @@ defusedxml
 deinterlace
 deinterlacing
 demangle
+demanglegnu
 demucs
 denable
 dengine
@@ -324,7 +326,6 @@ discid
 discordrpc
 disruptorplus
 distdir
-distfile
 distfiles
 distname
 distutils
@@ -832,6 +833,7 @@ libgusb
 libhac
 libharu
 libhsl
+libiberty
 libidn
 libimob
 libimobiledevice
@@ -1658,6 +1660,7 @@ uinput
 uips
 umpv
 unalz
+uncc
 uncompromisable
 underthesea
 undertheseanlp
