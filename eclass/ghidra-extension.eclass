@@ -39,6 +39,17 @@
 # bytecode), minor releases have not, so GHIDRA_PV_MIN/GHIDRA_PV_MAX default to
 # a single minor series and should be widened only after re-testing.
 #
+# An ebuild that fetches upstream's sources instead of one of those archives
+# gets the whole build for free: if the unpacked tree has a src/main/java
+# directory, this eclass compiles it against the installed Ghidra, builds and
+# indexes the module's help, and assembles lib/${GHIDRA_EXT_NAME}.jar the way
+# Ghidra's own Gradle plugin does. Gradle cannot be used from an ebuild because
+# it resolves Ghidra's jars, its own distribution and any declared dependency
+# over the network. Prefer this: the extension is then compiled against exactly
+# the Ghidra it will run under, which is the mismatch everything above works
+# around. Upstreams that pull dependencies from Maven and do not vendor them
+# still need their prebuilt archive.
+#
 # Ghidra compiles any data/languages/*.slaspec on first use and writes the
 # resulting .sla back into the extension's own directory. That works for a
 # per-user install but fails once the extension is root-owned under /usr, so
@@ -51,13 +62,14 @@ case ${EAPI} in
 esac
 
 # @ECLASS_VARIABLE: GHIDRA_PV
-# @REQUIRED
+# @DEFAULT_UNSET
 # @PRE_INHERIT
 # @DESCRIPTION:
 # Exact version of dev-util/ghidra that the distributed archive was built
-# against. Documentation only as far as this eclass is concerned; ebuilds
-# generally also interpolate it into SRC_URI, which is why it must be set
-# before inheriting. It does not constrain the dependency: see GHIDRA_PV_MIN
+# against. Documentation only as far as this eclass is concerned; ebuilds that
+# fetch a prebuilt archive interpolate it into SRC_URI, which is why it must be
+# set before inheriting. Ebuilds that build from source have no such version
+# and leave it unset. It does not constrain the dependency: see GHIDRA_PV_MIN
 # and GHIDRA_PV_MAX.
 
 # @ECLASS_VARIABLE: GHIDRA_PV_MIN
@@ -82,7 +94,7 @@ esac
 
 if [[ ! ${_GHIDRA_EXTENSION_ECLASS} ]]; then
 
-inherit edo java-pkg-2
+inherit edo java-pkg-2 java-utils-2
 
 EXPORT_FUNCTIONS src_prepare src_compile src_install
 
@@ -97,8 +109,6 @@ GHIDRA_HOME="/usr/share/ghidra"
 # Sets the global output variables provided by this eclass. Must be called once
 # in global scope.
 _ghidra-extension_set_globals() {
-	[[ ${GHIDRA_PV} ]] || die "${ECLASS}: GHIDRA_PV must be set before inherit"
-
 	: "${GHIDRA_PV_MIN:=12.1}"
 	: "${GHIDRA_PV_MAX:=12.2}"
 
@@ -129,6 +139,92 @@ ghidra-extension_src_prepare() {
 	done
 
 	return 0
+}
+
+# @FUNCTION: _ghidra-extension_classpath
+# @INTERNAL
+# @DESCRIPTION:
+# Echoes a classpath of every jar the installed Ghidra provides, followed by
+# any jar the extension itself vendors in lib/. Extensions are left out: one
+# extension must not be built or checked against another, which would make the
+# result depend on what happens to be installed.
+_ghidra-extension_classpath() {
+	local classpath
+	classpath="$(find "${ESYSROOT}${GHIDRA_HOME}" -name '*.jar' \
+		-not -path '*/Ghidra/Extensions/*' -printf '%p:')" || die
+	[[ ${classpath} ]] || die "${ECLASS}: found no Ghidra jars"
+
+	local jar
+	for jar in lib/*.jar; do
+		[[ -f ${jar} ]] && classpath+="${jar}:"
+	done
+
+	echo "${classpath}"
+}
+
+# @FUNCTION: _ghidra-extension_build_module
+# @INTERNAL
+# @DESCRIPTION:
+# Builds lib/${GHIDRA_EXT_NAME}.jar from the module's own sources, the way
+# Ghidra's Gradle plugin does: compile src/main/java, add src/main/resources,
+# and add the module's help, both processed into a help set and indexed for
+# full-text search. Gradle itself is not usable here because it resolves
+# Ghidra's jars and any declared dependencies over the network; both are
+# already on disk.
+_ghidra-extension_build_module() {
+	local classpath
+	classpath="$(_ghidra-extension_classpath)" || die
+
+	local sources=()
+	readarray -d '' sources < <(find src/main/java -name '*.java' -print0)
+	(( ${#sources[@]} )) || die "${ECLASS}: no sources under src/main/java"
+
+	# Compile for the Java release Ghidra compiles its own modules with, which
+	# it records. Without this ejavac asks java-config for the values, and
+	# java-config reports "Couldn't find a VM dep" for a package that does not
+	# depend on a VM through the usual Java virtuals.
+	local -x JAVA_PKG_WANT_SOURCE JAVA_PKG_WANT_TARGET
+	JAVA_PKG_WANT_SOURCE="$(sed -n 's/^application\.java\.compiler=//p' \
+		"${ESYSROOT}${GHIDRA_HOME}/Ghidra/application.properties")" || die
+	[[ ${JAVA_PKG_WANT_SOURCE} ]] ||
+		die "${ECLASS}: no application.java.compiler in Ghidra's application.properties"
+	JAVA_PKG_WANT_TARGET="${JAVA_PKG_WANT_SOURCE}"
+
+	local classes="${T}/classes"
+	ejavac -d "${classes}" -encoding UTF-8 -proc:none -classpath "${classpath}" \
+		"${sources[@]}"
+
+	[[ -d src/main/resources ]] && { cp -r src/main/resources/. "${classes}" || die; }
+
+	if [[ -d src/main/help/help ]]; then
+		local -x JAVA_HOME XDG_CONFIG_HOME="${T}/config"
+		local -x _JAVA_OPTIONS="-Djava.io.tmpdir=${T}"
+		JAVA_HOME="$(java-config -O)" || die
+		mkdir -p "${XDG_CONFIG_HOME}" || die
+
+		# Generates the help set, map and table of contents.
+		edo java -cp "${classpath}" help.GHelpBuilder \
+			-n "${GHIDRA_EXT_NAME}" -o "${classes}/help" src/main/help/help
+		cp -r src/main/help/help/. "${classes}/help" || die
+
+		# The full-text search index, which GHelpBuilder does not produce.
+		local javahelp
+		javahelp="$(find "${ESYSROOT}${GHIDRA_HOME}" -name 'javahelp-*.jar' | head -n1)" || die
+		[[ ${javahelp} ]] || die "${ECLASS}: no javahelp jar in the Ghidra installation"
+		edo java -cp "${javahelp}" com.sun.java.help.search.Indexer \
+			-db "${classes}/help/${GHIDRA_EXT_NAME}_JavaHelpSearch" \
+			-sourcepath src/main/help/help/ topics
+	fi
+
+	mkdir -p lib || die
+	jar --create --file "lib/${GHIDRA_EXT_NAME}.jar" -C "${classes}" . || die
+
+	# Ghidra's Gradle plugin fills this in when it assembles an extension. The
+	# version= placeholder is left to _ghidra-extension_retarget.
+	sed -i "s/@extname@/${GHIDRA_EXT_NAME}/" extension.properties || die
+
+	# Upstream's own archives contain everything but the sources.
+	rm -r src || die
 }
 
 # @FUNCTION: _ghidra-extension_get_ghidra_version
@@ -245,11 +341,15 @@ _ghidra-extension_check_linkage() {
 
 # @FUNCTION: ghidra-extension_src_compile
 # @DESCRIPTION:
-# Retargets the extension at the installed Ghidra, verifies that it actually
-# links against it, and precompiles every data/languages/*.slaspec with
-# Ghidra's sleigh compiler so that Ghidra never has to write into the read-only
-# installed extension directory.
+# Builds the extension from its sources if the ebuild fetched sources rather
+# than one of upstream's prebuilt archives, which is what a src/main/java
+# directory means. Then retargets the extension at the installed Ghidra,
+# verifies that it actually links against it, and precompiles every
+# data/languages/*.slaspec with Ghidra's sleigh compiler so that Ghidra never
+# has to write into the read-only installed extension directory.
 ghidra-extension_src_compile() {
+	[[ -d src/main/java ]] && _ghidra-extension_build_module
+
 	local ghidra_version
 	ghidra_version="$(_ghidra-extension_get_ghidra_version)" || die
 
