@@ -182,7 +182,8 @@ _ghidra-extension_ghidra_packages() {
 
 	local jar
 	for jar in "${jars[@]}"; do
-		unzip -Z1 "${jar}" '*.class'
+		# Resource-only modules ship a jar with no classes at all.
+		unzip -Z1 "${jar}" '*.class' 2>/dev/null
 	done | sed -n 's|/[^/]*\.class$||p' | tr / . | sort -u
 }
 
