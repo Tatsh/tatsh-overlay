@@ -33,6 +33,7 @@ amiri
 analyzer
 anari
 anomalyco
+antoniovazquezblanco
 antonmedv
 anyio
 appdirs
@@ -152,6 +153,7 @@ cdecrypt
 cdpatch
 cdrecord
 cdrom
+cdrtools
 cemu
 certifi
 cffi
@@ -284,6 +286,7 @@ deark
 deband
 debugpy
 decli
+declspec
 decompals
 decompollaborate
 defense
@@ -303,6 +306,7 @@ desmume
 destdir
 devname
 devtype
+dfetchcontent
 dfilter
 dfmderainbow
 dgit
@@ -330,6 +334,7 @@ dlibretro
 dlibrw
 dlinfo
 dlith
+dllexport
 dllvmlite
 dlmalloc
 dlsym
@@ -354,6 +359,7 @@ dodoc
 doenvd
 doexe
 dofuuz
+doheader
 doicon
 doinitd
 doins
@@ -546,6 +552,7 @@ gccdir
 gcflags
 gcrypt
 gdal
+gdiextract
 gdkchan
 gearboy
 gearsystem
@@ -775,6 +782,7 @@ lepcha
 leveladj
 levelmon
 lexiforest
+lflags
 lfreetype
 libadrenotools
 libaio
@@ -884,6 +892,7 @@ liburing
 libusb
 libusbmuxd
 libva
+libvgmstream
 libvk
 libvorbis
 libvsscript
@@ -932,6 +941,7 @@ luabridge
 luajit
 lutro
 lvulkan
+lzham
 lzma
 macemu
 macvendor
@@ -985,6 +995,7 @@ mgba
 mgree
 miao
 michaeldfallen
+mido
 migueletto
 miguelgrinberg
 minchoc
@@ -1077,6 +1088,7 @@ newjar
 newrules
 newscript
 newunit
+nextgeniuspro
 nfde
 nftables
 nghttp
@@ -1294,8 +1306,10 @@ pyinstrument
 pyjwt
 pykakasi
 pylibyaml
+pylzham
 pymatting
 pynput
+pyopencl
 pyopenjtalk
 pyopenssl
 pypamtest
@@ -1452,6 +1466,7 @@ setproctitle
 setuid
 setuptools
 sezanzeb
+sflags
 shagkur
 sharada
 shellcheck
@@ -1484,6 +1499,7 @@ socketfile
 softfloat
 softmmu
 sompeng
+soname
 sorasompeng
 sortedcontainers
 sounddevice
@@ -1495,12 +1511,14 @@ soxr
 spacy
 spammy
 spatialaudio
+speex
 sphn
 spimdisasm
 spir
 spirv
 splitdebug
 splt
+spvr
 spvremapper
 sqlalchemy
 sqlfluff
@@ -1573,6 +1591,7 @@ texinfo
 tgbdual
 thaana
 tham
+thealexbarney
 theora
 thepowdertoy
 theroyallab
@@ -1676,6 +1695,7 @@ vendoring
 venv
 vercmp
 verweij
+vgmstream
 vgpu
 vgpuctl
 videobuf
