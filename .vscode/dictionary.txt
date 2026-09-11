@@ -701,7 +701,7 @@ jaconv
 jakcron
 jamo
 jardir
-javac
+javahelp
 jawah
 jazzband
 jdeps
