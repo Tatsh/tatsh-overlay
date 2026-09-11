@@ -434,7 +434,6 @@ ejavac
 elbasan
 eleonore
 elgato
-eloader
 elog
 emable
 emake
@@ -566,6 +565,7 @@ gentoolkit
 geoip
 georgkrause
 geovis
+getjar
 getmoto
 getrandom
 ghidra
