@@ -1,0 +1,17 @@
+Do not check GitHub for a newer version of the extension itself.
+
+Portage manages this installation. A successful self-update would install a
+second copy into the user's settings directory that shadows the packaged one,
+and the check runs on every dialog open, listing the assets of every release,
+which exhausts the anonymous GitHub API rate limit and logs errors.
+
+--- a/src/main/java/extensionmanager/ExtensionManagerPlugin.java	2026-08-28 05:26:50.000000000 -0400
++++ b/src/main/java/extensionmanager/ExtensionManagerPlugin.java	2026-09-11 11:03:39.866961063 -0400
+@@ -61,7 +61,6 @@
+ 	}
+ 
+ 	private void openExtensionManager() {
+-		tool.execute(new SelfUpdateTask());
+ 		if (extensionManagerDialog == null) {
+ 			extensionManagerDialog = new ExtensionManagerDialog(tool);
+ 		}

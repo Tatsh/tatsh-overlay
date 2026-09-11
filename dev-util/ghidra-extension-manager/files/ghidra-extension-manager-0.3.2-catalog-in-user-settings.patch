@@ -1,0 +1,49 @@
+Keep the downloaded catalog in the user's own Ghidra settings directory.
+
+The extension is installed system wide and is therefore read-only, so
+refreshing the catalog into its own data/ directory fails for every user that
+is not root. Only the copy that ships with the extension is read from there,
+and only until a newer one has been downloaded.
+
+--- a/src/main/java/extensionmanager/catalog/CatalogUtils.java	2026-08-28 05:26:50.000000000 -0400
++++ b/src/main/java/extensionmanager/catalog/CatalogUtils.java	2026-09-11 11:03:36.211968684 -0400
+@@ -26,7 +26,11 @@
+ 
+ 	private static Catalog catalog;
+ 
+-	private static File getCatalogFile() {
++	/**
++	 * The copy of the catalog that ships with the extension. It is read-only
++	 * when the extension is installed system wide.
++	 */
++	private static File getPackagedCatalogFile() {
+ 		try {
+ 			ResourceFile resourceFile = Application.getModuleDataFile("catalog.json");
+ 			return resourceFile.getFile(true);
+@@ -38,10 +42,25 @@
+ 		return null;
+ 	}
+ 
++	/**
++	 * The downloaded catalog, kept in the user's own settings directory so that
++	 * updating it never needs write access to the extension itself.
++	 */
++	private static File getUserCatalogFile() {
++		return new File(Application.getUserSettingsDirectory(), "extensionmanager-catalog.json");
++	}
++
++	private static File getCatalogFile() {
++		File userFile = getUserCatalogFile();
++		if (userFile.isFile())
++			return userFile;
++		return getPackagedCatalogFile();
++	}
++
+ 	public static boolean update() {
+ 		log.trace("Updating catalog...");
+ 		try {
+-			File file = getCatalogFile();
++			File file = getUserCatalogFile();
+ 			URL url = new URI(
+ 					"https://github.com/antoniovazquezblanco/GhidraExtensionManagerRepository/releases/download/latest/catalog.json")
+ 					.toURL();
