@@ -573,6 +573,7 @@ getmoto
 getrandom
 ghidra
 ghidra's
+ghidraorbis
 gickup
 gidgethub
 gidgetlab
