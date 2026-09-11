@@ -14,11 +14,26 @@ inherit ghidra-extension
 DESCRIPTION="Ghidra extension exposing program data over MCP for AI-assisted analysis."
 HOMEPAGE="https://github.com/bethington/ghidra-mcp"
 SRC_URI="https://github.com/bethington/${MY_PN}/releases/download/v${PV}/${GHIDRA_EXT_NAME}-${PV}.zip
-	-> ${P}.zip"
+	-> ${P}.zip
+	scripts? ( https://github.com/bethington/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
+		-> ${MY_PN}-${PV}.tar.gz )"
 S="${WORKDIR}/${GHIDRA_EXT_NAME}"
 
 LICENSE="Apache-2.0"
 KEYWORDS="~amd64"
+# Upstream's release archive contains the extension alone. The scripts live in
+# the repository and are fetched from there.
+IUSE="scripts"
+
+src_install() {
+	if use scripts; then
+		# Ghidra adds a module's own ghidra_scripts directory to the script
+		# directories it offers in the Script Manager.
+		cp -r "${WORKDIR}/${MY_PN}-${PV}/ghidra_scripts" . || die
+	fi
+
+	ghidra-extension_src_install
+}
 
 pkg_postinst() {
 	elog "The extension runs an embedded HTTP server inside Ghidra. To drive it"

@@ -8,4 +8,8 @@
 	<upstream>
 		<remote-id type="github">bethington/ghidra-mcp</remote-id>
 	</upstream>
+	<use>
+		<flag name="scripts">Install the Ghidra scripts from upstream's repository, which its
+			release archive does not contain</flag>
+	</use>
 </pkgmetadata>
