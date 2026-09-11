@@ -25,6 +25,7 @@ alcaro
 aliftype
 allarches
 allenc
+alloca
 alsa
 altserver
 altsign
@@ -297,6 +298,7 @@ deinterlace
 deinterlacing
 demangle
 demanglegnu
+demangler
 demucs
 denable
 dengine
@@ -314,6 +316,7 @@ dfmderainbow
 dgit
 dglslang
 dgtk
+dhave
 dheadless
 dhwview
 dialog
@@ -559,7 +562,6 @@ gdiextract
 gdkchan
 gearboy
 gearsystem
-geer
 genconfig
 gendisc
 gentoolkit
@@ -1543,6 +1545,7 @@ stdc
 stdlib
 stdthread
 stdump
+stdump's
 stepmania
 stfc
 stfc's
