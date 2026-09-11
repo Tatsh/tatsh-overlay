@@ -171,6 +171,7 @@ checkconfig
 checkpath
 checkreqs
 cheevos
+cheke
 chishm
 chksums
 choco
@@ -538,6 +539,7 @@ freechaf
 freeglut
 freeintv
 freetype
+frida
 frob
 frozendict
 fsetid
@@ -613,6 +615,7 @@ graphviz
 gravitydb
 grayed
 greenboost
+greenpy
 griffelib
 gtksourceview
 guessit
@@ -1032,6 +1035,7 @@ modlist
 modpost
 moduleinto
 mojimoji
+mooncat
 mousabaker
 movableink
 moviepy
@@ -1073,6 +1077,7 @@ nandinagari
 nanobind
 naskh
 nasm
+nativeaot
 nativefiledialog
 ncnn
 ndebug
@@ -1565,6 +1570,7 @@ suidsgid
 suntec
 supafaust
 superdrive
+superfx
 superg
 supergrafx
 supp
@@ -1756,6 +1762,7 @@ waker
 warang
 warangciti
 warnflags
+washi
 wasi
 wassima
 watara
@@ -1834,6 +1841,7 @@ yapf
 yasm
 yata
 ycmd
+yetmorecode
 ytarchive
 yuzu
 zarchive
