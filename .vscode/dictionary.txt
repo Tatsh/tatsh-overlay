@@ -41,6 +41,8 @@ anyio
 appdirs
 appico
 appindicator
+appium
+appium's
 aprip
 argcomplete
 argparse
@@ -907,6 +909,7 @@ libusb
 libusbmuxd
 libva
 libvgmstream
+libvips
 libvk
 libvorbis
 libvsscript
@@ -1520,6 +1523,7 @@ softfloat
 softmmu
 sompeng
 soname
+sonames
 sorasompeng
 sortedcontainers
 sounddevice
@@ -1672,6 +1676,7 @@ udmabuf
 udojava
 udvare
 ugaritic
+uiautomator
 uinput
 uips
 umpv
