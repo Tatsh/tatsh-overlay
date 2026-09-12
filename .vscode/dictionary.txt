@@ -67,6 +67,7 @@ astc
 astdr
 astrelsky
 asttokens
+asyncer
 asyncio
 atomicparsley
 atrac
@@ -94,6 +95,7 @@ barbieri
 bascom
 basepack
 baserom
+basicsr
 basiliskii
 bassa
 bassavah
@@ -282,6 +284,7 @@ cython
 dakrk
 dallow
 dalsa
+danielgatis
 darm
 dasbus
 dask
@@ -1029,6 +1032,7 @@ lith
 livecheck
 livechecks
 llvmlite
+lmdb
 lmod
 loaderwv
 loadspec
@@ -1102,6 +1106,7 @@ mechacon
 mednafen
 meetei
 megadrive
+megvii
 melonds
 membarrier
 memkind
@@ -1194,6 +1199,7 @@ mytree
 mywave
 nabataean
 nadermx
+nafnet
 nall
 namedtuples
 nandinagari
@@ -1254,6 +1260,7 @@ nofetch
 noisereduce
 nolegacy
 noncommercial
+nonlinear
 nonrenewal
 nontransferability
 nosetests
@@ -1570,6 +1577,7 @@ rels
 relw
 relwithdebinfo
 remapper
+rembg
 removegrain
 remsky
 renderbag
@@ -1783,6 +1791,7 @@ teagle
 teakra
 teletextintegration
 temasek
+tensorboard
 terak
 termcolor
 testfloat
