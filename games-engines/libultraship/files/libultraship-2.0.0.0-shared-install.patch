@@ -1,0 +1,66 @@
+Build a shared library and install it.
+
+Upstream only ever consumes libultraship as a CMake subdirectory (Starship and
+SpaghettiKart both carry it as a git submodule), so it declares no install()
+rules and hardcodes STATIC. Drop the STATIC so BUILD_SHARED_LIBS decides, give
+the target a VERSION/SOVERSION, and install the library plus the public headers.
+
+The bundled ImGui, stb and monocypher remain static and are linked into the
+shared library, so their symbols are absorbed and only libultraship itself has
+to be installed. Upstream ships no CMake package config, so consumers link it
+the plain way, with -lultraship.
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 01a11c3..83b23da 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -19,7 +19,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+     set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
+ endif()
+ 
+-project(libultraship LANGUAGES C CXX)
++project(libultraship VERSION 2.0.0 LANGUAGES C CXX)
+ 
+ set(_lus_version_epoch_default "2")
+ set(_lus_version_major_default "0")
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index ae0607b..82dc593 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -1,12 +1,13 @@
+ include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/cvars.cmake)
+ 
+-add_library(libultraship STATIC)
++add_library(libultraship)
+ set_target_properties(libultraship PROPERTIES PREFIX "")
+ set_property(TARGET libultraship PROPERTY CXX_STANDARD 20)
+ # Need to set C11 for libgfxd (_Alignas)
+ set_property(TARGET libultraship PROPERTY C_STANDARD 11)
+ set_target_properties(libultraship PROPERTIES ENABLE_EXPORTS TRUE)
+ set_target_properties(libultraship PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
++set_target_properties(libultraship PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
+ find_package(Python3 REQUIRED COMPONENTS Interpreter)
+ 
+ set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+@@ -274,3 +275,21 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU|Clang")
+     endif()
+ endif()
+ 
++
++# =========== Install =============
++# Upstream only ever consumes this as a subdirectory, so it ships no install
++# rules at all. The bundled ImGui, stb and monocypher are linked in statically
++# and their symbols end up inside the shared library, so only this one library
++# and the public headers need to be installed.
++include(GNUInstallDirs)
++
++install(TARGETS libultraship
++    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
++    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++)
++
++install(DIRECTORY ${INCLUDE_DIR}/
++    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libultraship
++    FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
++)
