@@ -33,7 +33,7 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=ON
-		-DLZFSE_DISABLE_TESTS=$(usex test OFF ON)
+		"-DLZFSE_DISABLE_TESTS=$(usex test OFF ON)"
 	)
 
 	cmake_src_configure
