@@ -214,6 +214,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	elog "Run ${PN} and point it at a standard, compressed NTSC-U Majora's"
 	elog "Mask ROM. Its own assets are installed in /usr/share/${PN}."
 }
