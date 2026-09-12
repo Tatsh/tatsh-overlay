@@ -31,11 +31,13 @@ src_prepare() {
 	default
 
 	# Gentoo's app-arch/bzip2 ships no pkg-config file.
+	# shellcheck disable=SC2016
 	sed -i -e 's|$(shell $(PKG_CONFIG) --libs bzip2)|-lbz2|' \
 		-e 's|$(shell $(PKG_CONFIG) --cflags bzip2)||' Makefile || die
 
 	# Upstream lists the libraries before the objects, which fails to link
 	# under --as-needed.
+	# shellcheck disable=SC2016
 	sed -i -e 's|$(LDFLAGS) $(LIB) $^|$(LDFLAGS) $^ $(LIB)|' Makefile || die
 }
 
