@@ -1,0 +1,75 @@
+Build the configuration GUI against Qt6 instead of Qt5.
+
+Qt5 has been removed from the Gentoo tree. The C++ sources already compile
+unmodified against Qt6; only the build system hardcodes Qt5 library names, the
+Qt5 include path and the unprefixed moc/uic/pyuic5 binaries. Make all of those
+overridable and default them to Qt6.
+
+Also fix a latent dependency bug: dialog.cpp includes device_selector.hpp,
+which includes the generated ui_device_selector.hpp, but only
+device_selector.cpp declared that dependency. This never bit upstream because
+the generated files are checked into the repository; it fails as soon as they
+are regenerated. Depend on the whole generated set from every object instead.
+
+diff --git a/new_gui/Makefile b/new_gui/Makefile
+index 2ccaa5c..11f1849 100644
+--- a/new_gui/Makefile
++++ b/new_gui/Makefile
+@@ -6,8 +6,14 @@ ifneq ($(M),)
+ ARCH_FLAG = -m$(M)
+ endif
+ 
++MOC ?= moc
++UIC ?= uic
++PYUIC ?= pyuic6
++
++QT_LIBS ?= -lQt6Core -lQt6Widgets -lQt6Gui
++
+ CXXFLAGS = -fpic -std=c++20 -ggdb $(ARCH_FLAG)
+-LDFLAGS = $(ARCH_FLAG) -lQt5Core -lQt5Widgets -lQt5Gui -fpic -lpipewire-0.3
++LDFLAGS = $(ARCH_FLAG) $(QT_LIBS) -fpic -lpipewire-0.3
+ 
+ BUILD_DIR = ../build$(M)
+ COMMON_OBJS := dialog.o device_selector.o device_chooser.o
+@@ -25,18 +31,19 @@ $(BUILD_DIR)/libpwasio_gui.so: $(call objs,$(COMMON_OBJS) gui.o)
+ 	$(CXX) -o $@ -shared $(LDFLAGS) $^ $(BUILD_DIR)/$(ASIO_DLL_MODULE).so
+ endif
+ 
+-device_selector.cpp: ui_device_selector.hpp
+-dialog.cpp: ui_dialog.hpp
+ 
+-QT_CFLAGS = -isystem /usr/include/qt
++QT_CFLAGS ?= -isystem /usr/include/qt6 \
++	-isystem /usr/include/qt6/QtCore \
++	-isystem /usr/include/qt6/QtGui \
++	-isystem /usr/include/qt6/QtWidgets
+ PW_CFLAGS = -isystem /usr/include/pipewire-0.3 -isystem /usr/include/spa-0.2
+ 
+-dialog.cpp: dialog.moc
+-device_selector.cpp: device_selector.moc
+-device_chooser.cpp: device_chooser.moc
+-gui.cpp: gui_priv.moc
++# Every translation unit pulls in the generated headers transitively, so make
++# them all depend on the full set rather than guessing per-file edges.
++GENERATED = ui_dialog.hpp ui_device_selector.hpp \
++	dialog.moc device_selector.moc device_chooser.moc gui_priv.moc
+ 
+-$(BUILD_DIR)/%.o: %.cpp
++$(BUILD_DIR)/%.o: %.cpp $(GENERATED)
+ 	@$(shell mkdir -p $(BUILD_DIR))
+ 	$(CXX) -c -o $@ $(CXXFLAGS) $(QT_CFLAGS) $(PW_CFLAGS) $<
+ 
+@@ -45,10 +52,10 @@ $(BUILD_DIR)/pw_helper.o: ../pw_helper.cpp
+ 	$(CXX) -c -o $@ $(CXXFLAGS) $(PW_CFLAGS) $<
+ 
+ %.moc: %.hpp
+-	moc -o $@ $<
++	$(MOC) -o $@ $<
+ 
+ ui_%.py: %.ui
+-	pyuic5 $< -o $@
++	$(PYUIC) $< -o $@
+ 
+ ui_%.hpp: %.ui
+-	uic $< -o $@
++	$(UIC) $< -o $@
