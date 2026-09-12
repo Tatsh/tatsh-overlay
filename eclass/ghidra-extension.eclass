@@ -50,6 +50,13 @@
 # around. Upstreams that pull dependencies from Maven and do not vendor them
 # still need their prebuilt archive.
 #
+# Kotlin sources under src/main/java are compiled too, with kotlinc, before
+# javac runs on whatever Java is left; kotlinc is handed the whole directory so
+# it can resolve Kotlin references into those Java sources. An ebuild whose
+# module has any .kt files must BDEPEND on dev-lang/kotlin-bin. Ghidra loads an
+# extension's lib/*.jar and nothing else, so kotlin-stdlib.jar is copied in
+# beside the module's own jar rather than depended on at runtime.
+#
 # Ghidra compiles any data/languages/*.slaspec on first use and writes the
 # resulting .sla back into the extension's own directory. That works for a
 # per-user install but fails once the extension is root-owned under /usr, so
@@ -102,6 +109,12 @@ EXPORT_FUNCTIONS src_prepare src_compile src_install
 # @DESCRIPTION:
 # Directory dev-util/ghidra installs into.
 GHIDRA_HOME="/usr/share/ghidra"
+
+# @ECLASS_VARIABLE: KOTLIN_HOME
+# @DESCRIPTION:
+# Directory dev-lang/kotlin-bin installs into. Only used when the module has
+# Kotlin sources.
+KOTLIN_HOME="/usr/share/kotlin-bin"
 
 # @FUNCTION: _ghidra-extension_set_globals
 # @INTERNAL
@@ -183,9 +196,11 @@ _ghidra-extension_build_module() {
 	local classpath
 	classpath="$(_ghidra-extension_classpath)" || die
 
-	local sources=()
+	local sources=() kt_sources=()
 	readarray -d '' sources < <(find src/main/java -name '*.java' -print0)
-	(( ${#sources[@]} )) || die "${ECLASS}: no sources under src/main/java"
+	readarray -d '' kt_sources < <(find src/main/java -name '*.kt' -print0)
+	(( ${#sources[@]} + ${#kt_sources[@]} )) ||
+		die "${ECLASS}: no sources under src/main/java"
 
 	# Compile for the Java release Ghidra compiles its own modules with, which
 	# it records. Without this ejavac asks java-config for the values, and
@@ -199,8 +214,30 @@ _ghidra-extension_build_module() {
 	JAVA_PKG_WANT_TARGET="${JAVA_PKG_WANT_SOURCE}"
 
 	local classes="${T}/classes"
-	ejavac -d "${classes}" -encoding UTF-8 -proc:none -classpath "${classpath}" \
-		"${sources[@]}"
+
+	if (( ${#kt_sources[@]} )); then
+		# kotlinc is given the whole source directory rather than the .kt
+		# files: it reads the .java ones too, which it needs to resolve
+		# references from Kotlin into Java that javac has not compiled yet.
+		# It emits nothing for them, so javac still runs below.
+		edo kotlinc -classpath "${classpath}" -d "${classes}" -nowarn \
+			src/main/java
+
+		# Everything Kotlin emits calls into kotlin.jvm.internal, so the
+		# runtime library has to travel with the extension: Ghidra loads an
+		# extension's lib/*.jar and nothing else.
+		mkdir -p lib || die
+		cp "${ESYSROOT}${KOTLIN_HOME}/lib/kotlin-stdlib.jar" lib/ || die
+
+		# Later stages, javac in particular, resolve against what Kotlin just
+		# produced.
+		classpath="${classes}:${ESYSROOT}${KOTLIN_HOME}/lib/kotlin-stdlib.jar:${classpath}"
+	fi
+
+	if (( ${#sources[@]} )); then
+		ejavac -d "${classes}" -encoding UTF-8 -proc:none \
+			-classpath "${classpath}" "${sources[@]}"
+	fi
 
 	[[ -d src/main/resources ]] && { cp -r src/main/resources/. "${classes}" || die; }
 
