@@ -1,0 +1,30 @@
+diff --git a/sdl12main.c b/sdl12main.c
+index db6d76d..d57bb97 100644
+--- a/sdl12main.c
++++ b/sdl12main.c
+@@ -89,7 +89,12 @@ static char* GetDataPath(char* path, int n, const char* fname) {
+ #else
+ 	char pathsep = '/';
+ #endif //_WIN32
++#ifdef CCLESTE_DATA_DIR
++	(void)pathsep;
++	snprintf(path, n, CCLESTE_DATA_DIR "/%s", fname);
++#else
+ 	snprintf(path, n, "data%c%s", pathsep, fname);
++#endif //CCLESTE_DATA_DIR
+ #endif //_3DS
+ 
+ 	return path;
+@@ -275,7 +280,11 @@ int main(int argc, char** argv) {
+ 	SDL_CHECK(SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) == 0);
+ #if SDL_MAJOR_VERSION >= 2
+ 	SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
+-	SDL_GameControllerAddMappingsFromRW(SDL_RWFromFile("gamecontrollerdb.txt", "rb"), 1);
++	{
++		char gcdbpath[4096];
++		GetDataPath(gcdbpath, sizeof gcdbpath, "gamecontrollerdb.txt");
++		SDL_GameControllerAddMappingsFromRW(SDL_RWFromFile(gcdbpath, "rb"), 1);
++	}
+ #endif
+ 	int videoflag = SDL_SWSURFACE | SDL_HWPALETTE;
+ #ifdef _3DS
