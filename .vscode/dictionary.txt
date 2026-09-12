@@ -784,6 +784,7 @@ jakcron
 jamo
 janestreet
 jardir
+javac
 javahelp
 jawah
 jazzband
@@ -851,6 +852,7 @@ kodi
 kokkos
 kokoro
 konloch
+kotlinc
 koun
 kparts
 krig
@@ -1267,6 +1269,7 @@ nosetests
 notgit
 noto
 notofonts
+nowarn
 npapi
 npmargs
 npmignore
