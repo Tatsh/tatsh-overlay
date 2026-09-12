@@ -1,0 +1,103 @@
+Build the standalone executable alongside the library.
+
+Torch is consumed in two forms: a static library linked into the parent
+project, and a standalone executable that packs assets. Both are built from the
+same source list and differ only in the STANDALONE define, but upstream makes
+them mutually exclusive through USE_STANDALONE. The parent therefore has to
+configure and build the whole project a second time through ExternalProject,
+which re-resolves every dependency from scratch, ignores the options it was
+given and fetches its dependencies over the network.
+
+Add the executable as a second target in the same configure instead.
+
+libgfxd is only reachable under STANDALONE, so its fetch has to leave the
+USE_STANDALONE branch too, and it must stop being folded into the shared source
+list: each of its uc_*.c files selects a microcode and then includes uc.c, so
+compiling them in a scope that already defines one, as the including project
+does, leaves two defined at once, and gbi.h then redefines gsMoveMem and emits
+switches with duplicate cases. Give it its own target and undefine the
+microcode macros for it.
+
+--- a/torch/CMakeLists.txt
++++ b/torch/CMakeLists.txt
+@@ -41,24 +41,34 @@
+     endif()
+ endif()
+ 
+-if(USE_STANDALONE)
+-    # Link libgfxd
+-    # Because libgfxd is not a CMake project, we have to manually fetch it and add it to the build
+-    FetchContent_Declare(
+-        libgfxd
+-        GIT_REPOSITORY https://github.com/glankk/libgfxd.git
+-        GIT_TAG 96fd3b849f38b3a7c7b7f3ff03c5921d328e6cdf
+-    )
++# libgfxd is needed by the STANDALONE compilation, which the torch-cli target
++# below performs from this same directory, so always make it available.
++FetchContent_Declare(
++    libgfxd
++    GIT_REPOSITORY https://github.com/glankk/libgfxd.git
++    GIT_TAG 96fd3b849f38b3a7c7b7f3ff03c5921d328e6cdf
++)
+ 
+-    FetchContent_GetProperties(libgfxd)
++FetchContent_GetProperties(libgfxd)
+ 
+-    if(NOT libgfxd_POPULATED)
+-        FetchContent_MakeAvailable(libgfxd)
+-        include_directories(${libgfxd_SOURCE_DIR})
+-        set(LGFXD_SRC gfxd.c uc_f3d.c uc_f3db.c uc_f3dex.c uc_f3dexb.c uc_f3dex2.c)
+-        foreach (LGFXD_FILE ${LGFXD_SRC})
+-            list(APPEND LGFXD_FILES "${libgfxd_SOURCE_DIR}/${LGFXD_FILE}")
+-        endforeach()
++if(NOT libgfxd_POPULATED)
++    FetchContent_MakeAvailable(libgfxd)
++    set(LGFXD_SRC gfxd.c uc_f3d.c uc_f3db.c uc_f3dex.c uc_f3dexb.c uc_f3dex2.c)
++    foreach (LGFXD_FILE ${LGFXD_SRC})
++        list(APPEND LGFXD_FILES "${libgfxd_SOURCE_DIR}/${LGFXD_FILE}")
++    endforeach()
++
++    # Each of these selects a microcode itself and then includes uc.c, so it
++    # must not inherit one from the project including us: with two defined at
++    # once gbi.h redefines gsMoveMem and the generated switches get duplicate
++    # cases. A parent add_definitions() cannot be undone with a target
++    # property, so undefine them in the compile options, which are placed
++    # after the definitions on the command line.
++    add_library(gfxd STATIC ${LGFXD_FILES})
++    target_include_directories(gfxd PUBLIC ${libgfxd_SOURCE_DIR})
++    if(NOT MSVC)
++        target_compile_options(gfxd PRIVATE
++            -UF3D_GBI -UF3DLP_GBI -UF3DEX_GBI -UF3DEX_GBI_2 -UF3DEX_GBI_PL)
+     endif()
+ endif()
+ # Source files
+@@ -68,7 +78,7 @@
+ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+ file(GLOB_RECURSE CXX_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/lib/strhash64/*.cpp)
+ file(GLOB C_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c ${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.c ${CMAKE_CURRENT_SOURCE_DIR}/lib/libmio0/*.c ${CMAKE_CURRENT_SOURCE_DIR}/lib/libyay0/*.c)
+-set(SRC_DIR ${CXX_FILES} ${C_FILES} ${LGFXD_FILES})
++set(SRC_DIR ${CXX_FILES} ${C_FILES} )
+ 
+ if(BUILD_SM64)
+     add_definitions(-DSM64_SUPPORT)
+@@ -279,3 +289,20 @@
+     target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+     target_include_directories(${PROJECT_NAME} PUBLIC ${yaml-cpp_SOURCE_DIR}/include)
+ endif()
++
++# Torch is consumed in two forms: a static library linked into the parent
++# project, and a standalone executable that packs assets. Both build from the
++# same sources and differ only in the STANDALONE define, so build both here.
++if(NOT USE_STANDALONE)
++    add_executable(${PROJECT_NAME}-cli ${SRC_DIR})
++    target_compile_definitions(${PROJECT_NAME}-cli PRIVATE STANDALONE)
++    target_link_libraries(${PROJECT_NAME}-cli PRIVATE
++        gfxd spdlog::spdlog tinyxml2 yaml-cpp N64Graphics BinaryTools)
++    target_include_directories(${PROJECT_NAME}-cli PRIVATE
++        ${CMAKE_CURRENT_SOURCE_DIR}
++        ${CMAKE_CURRENT_SOURCE_DIR}/lib
++        ${CMAKE_CURRENT_SOURCE_DIR}/src
++        ${yaml-cpp_SOURCE_DIR}/include)
++else()
++    target_link_libraries(${PROJECT_NAME} PRIVATE gfxd)
++endif()

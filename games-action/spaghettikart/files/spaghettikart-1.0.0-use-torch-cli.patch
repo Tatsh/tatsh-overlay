@@ -1,0 +1,51 @@
+Use the torch-cli target instead of a second Torch build.
+
+Torch is added with add_subdirectory() and linked into the game, then built all
+over again through ExternalProject purely to obtain the standalone executable
+that packs assets. That second build is configured from scratch: it does not
+inherit the options this project sets and it re-resolves every dependency,
+fetching them over the network at build time.
+
+torch/ now builds that executable as torch-cli beside the library, so refer to
+it directly.
+
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -666,23 +666,14 @@
+ )
+ 
+ if(NOT CMAKE_SYSTEM_NAME STREQUAL "NintendoSwitch")
+-  include(ExternalProject)
+-  ExternalProject_Add(TorchExternal
+-    PREFIX TorchExternal
+-    SOURCE_DIR ${CMAKE_SOURCE_DIR}/torch
+-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/torch
+-)
+-
+-  ExternalProject_Get_Property(TorchExternal install_dir)
+-  if (MSVC)
+-    set(TORCH_EXECUTABLE ${install_dir}/src/TorchExternal-build/$<CONFIGURATION>/torch)
+-  else()
+-    set(TORCH_EXECUTABLE ${install_dir}/src/TorchExternal-build/torch)
+-  endif()
++  # torch/ already builds the torch-cli executable next to the library it is
++  # linked against, so use that rather than configuring and building the whole
++  # of Torch a second time.
++  set(TORCH_EXECUTABLE $<TARGET_FILE:torch-cli>)
+ 
+   add_custom_target(
+     ExtractAssets
+-    DEPENDS TorchExternal
++    DEPENDS torch-cli
+     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+     COMMAND ${TORCH_EXECUTABLE} header -o baserom.us.z64
+     COMMAND ${TORCH_EXECUTABLE} o2r baserom.us.z64 --additional-files meta/mods.toml
+@@ -693,7 +684,7 @@
+ 
+   add_custom_target(
+     GenerateO2R
+-    DEPENDS TorchExternal
++    DEPENDS torch-cli
+     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+     COMMAND ${TORCH_EXECUTABLE} pack assets spaghetti.o2r o2r
+     COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/spaghetti.o2r" "${CMAKE_BINARY_DIR}/spaghetti.o2r"
