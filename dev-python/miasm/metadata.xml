@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<use>
+		<flag name="llvm">Enable the LLVM based jitter via dev-python/llvmlite</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">cea-sec/miasm</remote-id>
+		<remote-id type="pypi">miasm</remote-id>
+	</upstream>
+</pkgmetadata>
