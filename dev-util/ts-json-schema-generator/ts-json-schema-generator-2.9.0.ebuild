@@ -18,7 +18,8 @@ RDEPEND="net-libs/nodejs"
 
 src_install() {
 	nodejs-mod_src_install
-	local bin="/usr/$(get_libdir)/node_modules/${PN}/node_modules/${PN}/bin/${PN}.js"
+	local bin
+	bin="/usr/$(get_libdir)/node_modules/${PN}/node_modules/${PN}/bin/${PN}.js"
 	fperms 0755 "${bin}"
 	dosym "../$(get_libdir)/node_modules/${PN}/node_modules/${PN}/bin/${PN}.js" \
 		"/usr/bin/${PN}"
