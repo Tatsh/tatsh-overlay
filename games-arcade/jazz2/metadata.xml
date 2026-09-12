@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<longdescription>
+		Jazz² Resurrection is a reimplementation of Jazz Jackrabbit 2. It
+		supports the Shareware Demo, Holiday Hare '98, The Secret Files and
+		Christmas Chronicles, and parts of the JJ2+ extension and MLLE. The
+		original game's data files are required and are not included.
+	</longdescription>
+	<use>
+		<flag name="angelscript">Enable scripting with
+			<pkg>dev-libs/angelscript</pkg>, used by JJ2+ levels</flag>
+		<flag name="openmpt">Play tracker module music with
+			<pkg>media-libs/libopenmpt</pkg></flag>
+	</use>
+	<upstream>
+		<remote-id type="github">deathkiller/jazz2-native</remote-id>
+	</upstream>
+</pkgmetadata>
