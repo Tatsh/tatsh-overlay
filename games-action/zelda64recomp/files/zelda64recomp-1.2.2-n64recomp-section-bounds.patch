@@ -1,0 +1,54 @@
+Do not index the section list before checking the index is in range.
+
+The section index comes straight from the ELF symbol and can be a special
+index such as SHN_ABS, which is not a real section. elf.cpp binds a reference
+to context.sections[section_index] before performing its own bounds check a few
+lines later, and the branch taken when that check fails goes on to use the
+reference anyway. Both are undefined behaviour, and a libstdc++ built with
+_GLIBCXX_ASSERTIONS, which is the default for GCC on Gentoo, aborts on the
+first one while recompiling the patches.
+
+Hold a pointer instead, set only when the index is valid, and skip recording
+the function address when there is no section to record it in.
+
+--- a/lib/N64ModernRuntime/N64Recomp/src/elf.cpp
++++ b/lib/N64ModernRuntime/N64Recomp/src/elf.cpp
+@@ -90,7 +90,13 @@
+                 }
+             }
+ 
+-            auto& section = context.sections[section_index];
++            // section_index is taken straight from the symbol and can be a
++            // special ELF index such as SHN_ABS, which is not a real section.
++            // Binding a reference to it before the bounds check below, which
++            // is upstream's own, is undefined behaviour.
++            N64Recomp::Section* section = section_index < context.sections.size()
++                ? &context.sections[section_index]
++                : nullptr;
+ 
+             // Check if this symbol is a function or has no type (like a regular glabel would)
+             // Symbols with no type have a dummy entry created so that their symbol can be looked up for function calls
+@@ -106,10 +112,10 @@
+                     auto section_offset = value - elf_file.sections[section_index]->get_address();
+                     uint32_t vram = static_cast<uint32_t>(value);
+                     uint32_t num_instructions = type == ELFIO::STT_FUNC ? size / 4 : 0;
+-                    uint32_t rom_address = static_cast<uint32_t>(section_offset + section.rom_addr);
++                    uint32_t rom_address = static_cast<uint32_t>(section_offset + section->rom_addr);
+                     const uint32_t* words = reinterpret_cast<const uint32_t*>(context.rom.data() + rom_address);
+ 
+-                    section.function_addrs.push_back(vram);
++                    section->function_addrs.push_back(vram);
+                     context.functions_by_vram[vram].push_back(context.functions.size());
+ 
+                     // Find the entrypoint by rom address in case it doesn't have vram as its value
+@@ -148,7 +154,9 @@
+                 } else {
+                     // TODO is this case needed anymore?
+                     uint32_t vram = static_cast<uint32_t>(value);
+-                    section.function_addrs.push_back(vram);
++                    if (section != nullptr) {
++                        section->function_addrs.push_back(vram);
++                    }
+                     context.functions_by_vram[vram].push_back(context.functions.size());
+                     context.functions.emplace_back(
+                         vram,
