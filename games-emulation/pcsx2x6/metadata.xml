@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<longdescription>
+		A fork of PCSX2 adding emulation of NAMCO System 246 and 256 arcade hardware. Installs its
+		executable as pcsx2x6-qt and its resources under
+		/usr/share/pcsx2x6, so it can be installed alongside
+		games-emulation/pcsx2.
+	</longdescription>
+	<use>
+		<flag name="clang">Build with <pkg>llvm-core/clang</pkg>, which is
+			the only compiler upstream supports</flag>
+		<flag name="sndio">Enable support for the
+			<pkg>media-sound/sndio</pkg> backend</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">PS2Homebrew-arcade/pcsx2x6</remote-id>
+	</upstream>
+</pkgmetadata>
