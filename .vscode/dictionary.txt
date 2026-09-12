@@ -58,6 +58,7 @@ arogozhnikov
 asan
 asar
 asciidoctor
+asciinema
 asgi
 ashutosh
 ashuttl
@@ -180,6 +181,7 @@ cgnslib
 chailove
 chakma
 cham
+changeme
 chaoticgd
 chardet
 chatnet
@@ -242,6 +244,7 @@ cooperspencer
 copytime
 corecrypto
 corlett's
+cowlib
 cpack
 cparser
 cpio
@@ -253,6 +256,8 @@ cpython
 cramjam
 crashpad
 crashplan
+createdb
+createuser
 creds
 crfsuite
 croco
@@ -518,6 +523,7 @@ eqawarn
 erfgoed
 ergrelet
 eroot
+esbuild
 eselect
 espeak
 espeakng
