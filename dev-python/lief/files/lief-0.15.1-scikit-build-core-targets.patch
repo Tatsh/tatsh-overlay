@@ -1,0 +1,19 @@
+Use the build.targets setting name.
+
+scikit-build-core renamed cmake.targets to build.targets in 0.10 and refuses
+the old name outright. LIEF pins 0.9.8 in build-requirements.txt, but nothing
+enforces that pin when the backend runs against the installed copy, so the
+build fails with "Use build.targets instead of cmake.targets". The other
+cmake.* settings used here were not renamed.
+
+--- a/backend/setup.py
++++ b/backend/setup.py
+@@ -106,7 +106,7 @@
+         "wheel.py-api":  config.build.py_api,
+         "cmake.source-dir": SRC_DIR.as_posix(),
+         "cmake.build-type": config.build.build_type,
+-        "cmake.targets": config.build.targets,
++        "build.targets": config.build.targets,
+         "cmake.args": [
+             *config.cmake_generator,
+             *config.get_cmake_args(is_editable),
