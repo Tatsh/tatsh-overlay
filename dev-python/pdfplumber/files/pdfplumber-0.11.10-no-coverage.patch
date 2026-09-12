@@ -1,0 +1,19 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Do not force coverage reporting when running the tests
+
+setup.cfg puts --cov in addopts, so pytest refuses to start unless pytest-cov
+is installed. Coverage is a developer concern, not something a distribution
+build needs, and requiring the plugin just to run the suite is needless.
+
+diff --git a/setup.cfg b/setup.cfg
+index 5b88387..fdc7a89 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -10,7 +10,6 @@ ignore =
+     E704
+ 
+ [tool:pytest]
+-addopts=--cov=pdfplumber --cov-report xml:coverage.xml --cov-report term
+ 
+ [tool.isort]
+ profile = "black"
