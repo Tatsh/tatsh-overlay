@@ -206,6 +206,7 @@ cldf
 clearbluejar
 clem
 clienthax
+climits
 clonehero
 cloudpathlib
 cmakelists
@@ -301,6 +302,7 @@ dbusmenu
 dbusmock
 dcall
 dccleste
+dcheck
 dcitra
 dcli
 dcmake
@@ -366,6 +368,7 @@ distfiles
 distname
 distutils
 djava
+dlazy
 dlenski
 dlibretro
 dlibrw
@@ -421,6 +424,7 @@ dotenv
 dother
 dotize
 dounit
+dpackage
 dport
 dproject
 dpulseaudio
@@ -449,6 +453,7 @@ dvita
 dvtk
 dvulkan
 dwarfstack
+dwayland
 dwith
 dxbox
 dxemu
@@ -576,6 +581,7 @@ flyinghead
 fmsx
 fmtconv
 fmtlib
+fmts
 fomit
 fontconfig
 forestix
@@ -823,6 +829,7 @@ kayahli
 kbnf
 kcompletion
 kcoreaddons
+kddockwidgets
 kdir
 kdotool
 keepdir
@@ -1325,6 +1332,7 @@ openocd
 openpyxl
 openrc
 openvdb
+optfeature
 optflags
 opti
 optio
@@ -1406,6 +1414,8 @@ pluggy
 plumeimpactor
 plumesign
 plutoberth
+plutosvg
+plutovg
 pmap
 pngdefry
 pocketcdg
@@ -1550,6 +1560,7 @@ randers
 raphnet
 rapidcsv
 rapidjson
+rapidyaml
 raviqqe
 rawio
 rcheevos
@@ -1662,6 +1673,7 @@ setuid
 setuptools
 sezanzeb
 sflags
+shaderc
 shagkur
 sharada
 shazam
@@ -1693,6 +1705,7 @@ smmap
 smsplus
 sndfile
 sndh
+sndio
 snes
 snesrev
 sniffio
@@ -1716,6 +1729,7 @@ spaghettify
 spammy
 spatialaudio
 spaz
+speedrun
 speex
 sphn
 spimdisasm
@@ -1736,6 +1750,7 @@ ssource
 ssse
 starkits
 starlette
+starslayer
 stashapp
 stashapp's
 stdc
@@ -1770,6 +1785,7 @@ swiftshader
 sylheti
 sylotinagri
 syms
+sysconf
 sysid
 syst
 syste
@@ -1956,6 +1972,7 @@ vtkhdf
 vtkm
 vtksys
 vtkviskores
+vtune
 vulkanmemoryallocator
 waifu
 waivable
