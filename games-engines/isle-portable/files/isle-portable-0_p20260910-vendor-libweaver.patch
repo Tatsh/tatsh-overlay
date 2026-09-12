@@ -1,0 +1,47 @@
+Build libweaver from supplied sources rather than downloading it.
+
+libweaver is not a real external package: it is five source files lifted out of
+isledecomp/SIEdit at a pinned commit, which 3rdparty/CMakeLists.txt compiles
+into a static library itself. Upstream only does that when DOWNLOAD_DEPENDENCIES
+is on, and otherwise expects find_package(libweaver) to succeed, which nothing
+provides.
+
+The download cannot simply be redirected: FetchContent_Populate() called with
+the arguments inline, rather than with a name declared earlier, is a direct
+populate that ignores both FETCHCONTENT_SOURCE_DIR_<name> and
+FETCHCONTENT_FULLY_DISCONNECTED, so it fetches over the network at configure
+time regardless. Drop it and take the source directory as a substituted path
+instead.
+
+--- a/3rdparty/CMakeLists.txt
++++ b/3rdparty/CMakeLists.txt
+@@ -57,13 +57,11 @@
+ )
+ target_include_directories(libsmacker PUBLIC ${libsmacker_SOURCE_DIR})
+ 
+-if(DOWNLOAD_DEPENDENCIES)
+-    include(FetchContent)
+-    FetchContent_Populate(
+-        libweaver
+-        URL https://github.com/isledecomp/SIEdit/archive/abb6d47139d7a03c5c1bad9b89e2267849e27904.tar.gz
+-        URL_MD5 d786156fd9a2c5c755e27fd5c5a9ee28
+-    )
++# libweaver is not a real external package: it is five sources lifted out of
++# isledecomp/SIEdit, which this file compiles into a static library itself.
++# The sources are supplied out of band, so no download is needed.
++set(libweaver_SOURCE_DIR "@LIBWEAVER_SOURCE_DIR@")
++if(TRUE)
+     add_library(libweaver STATIC
+         ${libweaver_SOURCE_DIR}/lib/core.cpp
+         ${libweaver_SOURCE_DIR}/lib/file.cpp
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -303,7 +303,7 @@
+     target_link_libraries(Isle::iniparser INTERFACE iniparser-static)
+   endif()
+ 
+-  find_package(libweaver REQUIRED)
++  # libweaver is built from vendored sources in 3rdparty/ instead.
+ endif()
+ 
+ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
