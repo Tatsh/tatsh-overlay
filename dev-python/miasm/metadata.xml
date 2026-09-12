@@ -6,7 +6,12 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<use>
-		<flag name="llvm">Enable the LLVM based jitter via dev-python/llvmlite</flag>
+		<flag name="cparser">Enable the C type parser via
+			<pkg>dev-python/pycparser</pkg></flag>
+		<flag name="graph">Render control flow graphs with
+			<pkg>dev-python/graphviz</pkg></flag>
+		<flag name="llvm">Build the LLVM jitter via
+			<pkg>dev-python/llvmlite</pkg></flag>
 	</use>
 	<upstream>
 		<remote-id type="github">cea-sec/miasm</remote-id>
