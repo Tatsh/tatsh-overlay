@@ -282,6 +282,7 @@ cyclopts
 cygne
 cymem
 cython
+daedalusx
 dakrk
 dallow
 dalsa
