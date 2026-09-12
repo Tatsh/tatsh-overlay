@@ -203,6 +203,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	elog "Run ${PN} and point it at a standard, compressed NTSC-U Mystical"
 	elog "Ninja Starring Goemon ROM. Its own assets are installed in"
 	elog "/usr/share/${PN}."
