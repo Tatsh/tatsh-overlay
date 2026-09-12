@@ -1,0 +1,35 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Make the s (server) command optional
+
+commands/__init__.py imports every command eagerly, and s_command pulls in
+gradio and asyncer. Those are needed by nothing else, so without them the
+whole CLI fails to start rather than just the one command that needs them.
+
+cli.py already degrades gracefully when click is missing; this applies the
+same treatment to the server command.
+
+diff --git a/rembg/commands/__init__.py b/rembg/commands/__init__.py
+index a6091b3..45d4fff 100644
+--- a/rembg/commands/__init__.py
++++ b/rembg/commands/__init__.py
+@@ -5,11 +5,18 @@ from .d_command import d_command
+ from .i_command import i_command
+ from .m_command import m_command
+ from .p_command import p_command
+-from .s_command import s_command
++
++try:
++    from .s_command import s_command
++except ImportError:
++    # Needs gradio and asyncer, which the other commands do not.
++    s_command = None
+ 
+ command_functions.append(b_command)
+ command_functions.append(d_command)
+ command_functions.append(i_command)
+ command_functions.append(m_command)
+ command_functions.append(p_command)
+-command_functions.append(s_command)
++
++if s_command is not None:
++    command_functions.append(s_command)

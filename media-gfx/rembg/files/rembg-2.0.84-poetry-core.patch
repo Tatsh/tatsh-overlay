@@ -1,0 +1,23 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Build with poetry-core directly
+
+poetry-dynamic-versioning only exists to derive the version from git tags. The
+sdist already carries the resolved version in pyproject.toml, and __version__
+is read back from the installed metadata, so the plain poetry-core backend
+produces an identical result without the extra build dependency.
+
+diff --git a/pyproject.toml b/pyproject.toml
+index d0ccd3c..76e9bc9 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -85,8 +85,8 @@ dev = ["bandit", "black", "flake8", "imagehash", "isort", "mypy", "pytest"]
+ rembg = "rembg.cli:main"
+ 
+ [build-system]
+-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+-build-backend = "poetry_dynamic_versioning.backend"
++requires = ["poetry-core>=1.0.0"]
++build-backend = "poetry.core.masonry.api"
+ 
+ [tool.poetry-dynamic-versioning]
+ enable = false
