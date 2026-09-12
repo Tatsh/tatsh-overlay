@@ -74,5 +74,7 @@ src_configure() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	elog "This needs the data files from an original LEGO Island install."
 }
