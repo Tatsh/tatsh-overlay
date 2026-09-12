@@ -179,6 +179,8 @@ chakma
 cham
 chaoticgd
 chardet
+chatnet
+chatnets
 checkconfig
 checkpath
 checkreqs
@@ -762,6 +764,7 @@ ircama
 irecovery
 iregex
 iroco
+irssi
 isledecomp
 isodate
 isrc
@@ -940,6 +943,7 @@ libpsl
 libpulse
 libpumpkin
 libpwasio
+libquasselc
 libr
 libreal
 librealcugan
@@ -1041,6 +1045,7 @@ luajit
 lunasvg
 lutro
 lvulkan
+lxml
 lycheeverse
 lzexe
 lzfse
@@ -1169,6 +1174,7 @@ muvsfunc
 mvsfunc
 mvtools
 mwcap
+mwilliamson
 mycmakeargs
 myeconfargs
 myemakeargs
@@ -1339,6 +1345,7 @@ pcsx
 pdal
 pdbpp
 pdepend
+pdfminer
 peds
 pefile
 pegtl
@@ -1351,6 +1358,7 @@ phags
 phagspa
 phantomjs
 phasher
+phhusson
 phonemizer
 pickability
 picodrive
@@ -1509,6 +1517,8 @@ qtwayland
 qtwebengine
 qtwebkit
 qtwebsockets
+quassel
+quasselc
 quic
 quicknes
 quiqua
@@ -1605,6 +1615,7 @@ saramibreak
 saurashtra
 savoirfairelinux
 sbclaude
+scanny
 scenechange
 schalnat
 scikit
@@ -1995,6 +2006,7 @@ xiph
 xirvik
 xkbcommon
 xlib
+xlsxwriter
 xmltodict
 xorg
 xpet
