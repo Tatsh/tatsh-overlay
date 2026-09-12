@@ -1,0 +1,44 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] build: respect CFLAGS/LDFLAGS and install the libquasselc.so symlink
+
+Two build-system problems:
+
+* CFLAGS was assigned with := , discarding any flags the caller set, and the
+  link rule never passed LDFLAGS at all.
+* quasselc.pc advertises "Libs: -L${libdir} -lquasselc", but install only ever
+  put libquasselc.so.0 in place. Without the unversioned symlink, -lquasselc
+  cannot be resolved, so every consumer of the .pc file fails to link.
+
+Upstream: https://github.com/phhusson/QuasselC (no activity since 2017-01)
+
+diff --git a/Makefile b/Makefile
+index 88f8845..536ea15 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2,7 +2,8 @@ prefix ?= /usr/local
+ libdir ?= $(prefix)/lib
+ includedir ?= $(prefix)/include
+ 
+-CFLAGS:=-Wall -g -Wextra $(shell pkg-config glib-2.0 --cflags) -Wswitch-enum -std=gnu11 -O2 -fPIC
++CFLAGS ?= -g -O2
++CFLAGS += -Wall -Wextra $(shell pkg-config glib-2.0 --cflags) -Wswitch-enum -std=gnu11 -fPIC
+ SO_VERSION = 0
+ VERSION = 0
+ INSTALL = install
+@@ -15,7 +16,7 @@ lib_objects=setters.o getters.o main.o cmds.o negotiation.o io.o symbols.o
+ all: bot libquasselc.so.$(VERSION) quasselc.pc
+ 
+ libquasselc.so.$(VERSION): $(lib_objects)
+-	$(CC) -shared -o $@ -Wl,-soname,libquasselc.so.$(SO_VERSION) $^ $(LDLIBS)
++	$(CC) -shared $(CFLAGS) $(LDFLAGS) -o $@ -Wl,-soname,libquasselc.so.$(SO_VERSION) $^ $(LDLIBS)
+ 
+ bot: bot.o display.o libquasselc.so.$(VERSION)
+ 	$(CC) -o $@ $^ $(LDLIBS) $(BOTLIBS)
+@@ -32,6 +33,7 @@ quasselc.pc: quasselc.pc.in
+ install: libquasselc.so.$(VERSION) quasselc.pc
+ 	$(INSTALL) -d $(DESTDIR)$(libdir)
+ 	$(INSTALL) libquasselc.so.$(VERSION) $(DESTDIR)$(libdir)
++	ln -sf libquasselc.so.$(VERSION) $(DESTDIR)$(libdir)/libquasselc.so
+ 	$(INSTALL) -d $(DESTDIR)$(libdir)/pkgconfig
+ 	$(INSTALL) -m 0644 quasselc.pc $(DESTDIR)$(libdir)/pkgconfig
+ 	$(INSTALL) -d $(DESTDIR)$(includedir)/quasselc
