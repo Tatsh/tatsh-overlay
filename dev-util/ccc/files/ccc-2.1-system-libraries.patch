@@ -1,0 +1,51 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Use system RapidJSON and GoogleTest
+
+Both are vendored under thirdparty/ as whole copies, and both are packaged.
+The sources include them as <rapidjson/...> and <gtest/gtest.h>, so the system
+copies are found with no include path of their own.
+
+The two license files under thirdparty/ are dropped from RELEASE_CONTENTS with
+them, so nothing refers to directories that no longer exist.
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index fb3f25d..c83492d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -75,7 +75,6 @@ add_library(ccc STATIC
+ 	src/ccc/util.cpp
+ 	src/ccc/util.h
+ )
+-target_link_libraries(ccc rapidjson)
+ 
+ add_library(ccc_mips STATIC
+ 	src/mips/insn.cpp
+@@ -112,7 +111,7 @@ target_link_libraries(uncc ccc ccc_platform ccc_versioninfo demanglegnu)
+ 
+ add_executable(tests src/tests.cpp ${TEST_SOURCES})
+ target_include_directories(tests PUBLIC src/)
+-target_link_libraries(tests ccc ccc_platform ccc_versioninfo demanglegnu gtest)
++target_link_libraries(tests ccc ccc_platform ccc_versioninfo demanglegnu GTest::gtest)
+ add_test(NAME tests COMMAND tests ${CMAKE_SOURCE_DIR}/testdata)
+ 
+ if(WIN32)
+@@ -125,10 +124,7 @@ endif()
+ 
+ add_subdirectory(thirdparty/demanglegnu EXCLUDE_FROM_ALL)
+ 
+-set(gtest_force_shared_crt on)
+-add_subdirectory(thirdparty/googletest EXCLUDE_FROM_ALL)
+-
+-add_subdirectory(thirdparty/rapidjson EXCLUDE_FROM_ALL)
++find_package(GTest REQUIRED)
+ 
+ # All the files to be included in a release.
+ set(RELEASE_CONTENTS
+@@ -141,7 +137,5 @@ set(RELEASE_CONTENTS
+ 	"${CMAKE_SOURCE_DIR}/License.txt"
+ 	"${CMAKE_SOURCE_DIR}/thirdparty/demanglegnu/DemanglerLicenseGPL.txt"
+ 	"${CMAKE_SOURCE_DIR}/thirdparty/demanglegnu/DemanglerLicenseLGPL.txt"
+-	"${CMAKE_SOURCE_DIR}/thirdparty/googletest/GoogleTestLicense.txt"
+-	"${CMAKE_SOURCE_DIR}/thirdparty/rapidjson/RapidJSONLicense.txt"
+ )
+ include(cmake/release_crafter.cmake)

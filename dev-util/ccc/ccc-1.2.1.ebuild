@@ -22,23 +22,10 @@ KEYWORDS="~amd64"
 IUSE="test"
 RESTRICT="!test? ( test )"
 
-src_prepare() {
-	cmake_src_prepare
-
-	# alloca.c only includes stdlib.h when told the header exists, so without
-	# this free() and abort() are implicitly declared, which GCC 14 rejects.
-	# Upstream defines it in the 2.x copy of the same demangler.
-	sed -i 's/-DHAVE_STRING_H=1)$/-DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1)/' \
-		demanglegnu/CMakeLists.txt || die
-	grep -q HAVE_STDLIB_H demanglegnu/CMakeLists.txt ||
-		die "failed to define HAVE_STDLIB_H"
-
-	# Upstream stamps the version from the git tag, which a release tarball has
-	# no way to report.
-	sed -i 's/^\tset(GIT_TAG "")$/\tset(GIT_TAG "v'"${PV}"'")/' \
-		cmake/version_finder.cmake || die
-	grep -q "v${PV}" cmake/version_finder.cmake || die "failed to set the version"
-}
+PATCHES=(
+	"${FILESDIR}/${P}-alloca-stdlib.patch"
+	"${FILESDIR}/${P}-version.patch"
+)
 
 src_install() {
 	# Upstream defines no install rules. Only stdump is installed, under a name

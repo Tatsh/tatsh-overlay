@@ -1,0 +1,20 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Tell the demangler that stdlib.h exists
+
+alloca.c only includes stdlib.h when HAVE_STDLIB_H is defined, so without it
+free() and abort() are implicitly declared, which GCC 14 rejects outright.
+Upstream already defines it in the 2.x copy of the same demangler.
+
+diff --git a/demanglegnu/CMakeLists.txt b/demanglegnu/CMakeLists.txt
+index e1a90ab..bc81126 100644
+--- a/demanglegnu/CMakeLists.txt
++++ b/demanglegnu/CMakeLists.txt
+@@ -14,7 +14,7 @@ add_library(demanglegnu STATIC
+ 	xstrdup.c
+ )
+ include_directories(.)
+-target_compile_definitions(demanglegnu PRIVATE -DHAVE_STRING_H=1)
++target_compile_definitions(demanglegnu PRIVATE -DHAVE_STRING_H=1 -DHAVE_STDLIB_H=1)
+ if(APPLE)
+ 	target_compile_options(demanglegnu PRIVATE -Wno-implicit-function-declaration)
+ endif()

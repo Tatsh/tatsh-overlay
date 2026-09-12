@@ -21,24 +21,15 @@ RESTRICT="!test? ( test )"
 DEPEND="dev-libs/rapidjson
 	test? ( dev-cpp/gtest )"
 
+PATCHES=(
+	"${FILESDIR}/${P}-system-libraries.patch"
+	"${FILESDIR}/${P}-version.patch"
+)
+
 src_prepare() {
 	cmake_src_prepare
 
-	# Both are vendored as whole copies and both are packaged. The sources
-	# include them as <rapidjson/...> and <gtest/gtest.h>, so the system copies
-	# are found without any include path of their own.
-	sed -i -e '/add_subdirectory(thirdparty\/rapidjson EXCLUDE_FROM_ALL)/d' \
-		-e '/^target_link_libraries(ccc rapidjson)$/d' \
-		-e 's|^add_subdirectory(thirdparty/googletest EXCLUDE_FROM_ALL)$|find_package(GTest REQUIRED)|' \
-		-e 's/\bgtest)$/GTest::gtest)/' CMakeLists.txt || die
 	rm -r thirdparty/rapidjson thirdparty/googletest || die
-
-	# Upstream stamps the version from the git tag, which a release tarball has
-	# no way to report, leaving the tools calling themselves a development
-	# version.
-	sed -i 's/^\tset(GIT_TAG "")$/\tset(GIT_TAG "v'"${PV}"'")/' \
-		cmake/version_finder.cmake || die
-	grep -q "v${PV}" cmake/version_finder.cmake || die "failed to set the version"
 }
 
 src_install() {
