@@ -17,6 +17,7 @@ KEYWORDS="~amd64"
 
 # Upstream also lists docutils-stubs and types-docutils as runtime
 # dependencies, but they only ship type stubs and are not imported.
+# shellcheck disable=SC2016
 RDEPEND="
 	>=dev-python/black-24[${PYTHON_USEDEP}]
 	>=dev-python/click-8[${PYTHON_USEDEP}]
