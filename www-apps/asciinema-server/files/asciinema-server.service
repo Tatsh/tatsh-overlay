@@ -1,0 +1,37 @@
+[Unit]
+Description=asciinema server
+Documentation=https://docs.asciinema.org/manual/server/self-hosting/
+After=network-online.target
+Wants=network-online.target
+After=postgresql.service
+
+[Service]
+Type=exec
+User=asciinema
+Group=asciinema
+WorkingDirectory=/var/lib/asciinema-server
+EnvironmentFile=/etc/asciinema-server/server.env
+ExecStartPre=/usr/libexec/asciinema-server/bin/migrate
+ExecStart=/usr/libexec/asciinema-server/bin/server
+Restart=on-failure
+RestartSec=5
+
+StateDirectory=asciinema-server
+RuntimeDirectory=asciinema-server
+
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target

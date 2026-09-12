@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<longdescription>
+		The server behind asciinema.org, for hosting and sharing terminal
+		session recordings. It needs PostgreSQL, and its settings are read
+		from /etc/asciinema-server/server.env.
+	</longdescription>
+	<upstream>
+		<bugs-to>https://github.com/asciinema/asciinema-server/issues</bugs-to>
+		<doc>https://docs.asciinema.org/manual/server/</doc>
+		<remote-id type="github">asciinema/asciinema-server</remote-id>
+	</upstream>
+</pkgmetadata>

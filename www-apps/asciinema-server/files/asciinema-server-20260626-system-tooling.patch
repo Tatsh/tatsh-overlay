@@ -1,0 +1,46 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Use the system tooling and runtime rather than fetching them
+
+Three changes for building inside a distribution:
+
+The :esbuild and :tailwind tasks download a binary of the pinned version on
+first use. Both libraries accept a `path`, so take it from the environment,
+falling back to whatever is on PATH. dev-util/esbuild and dev-util/tailwindcss
+provide them.
+
+include_erts: false keeps the release from copying the Erlang runtime into
+itself. dev-lang/erlang is a dependency of the package and supplies it, so
+bundling an 11 MB second copy only makes it harder to update.
+
+diff --git a/config/config.exs b/config/config.exs
+index a765ef7..76c1534 100644
+--- a/config/config.exs
++++ b/config/config.exs
+@@ -136,6 +136,7 @@ librejs_license_end = "/* @license-end */"
+ 
+ config :esbuild,
+   version: "0.21.5",
++  path: System.get_env("ESBUILD_PATH") || "esbuild",
+   default: [
+     args:
+       ~w(js/app.js js/iframe.js --bundle --target=es2022 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*) ++
+@@ -153,6 +154,7 @@ config :esbuild,
+ 
+ config :tailwind,
+   version: "3.4.3",
++  path: System.get_env("TAILWIND_PATH") || "tailwindcss",
+   default: [
+     args: ~w(
+       --config=tailwind.config.js
+diff --git a/mix.exs b/mix.exs
+index d9783b4..1de0b2f 100644
+--- a/mix.exs
++++ b/mix.exs
+@@ -12,6 +12,7 @@ defmodule Asciinema.MixProject do
+       deps: deps(),
+       releases: [
+         asciinema: [
++          include_erts: false,
+           config_providers: [
+             {Config.Reader, {:system, "RELEASE_ROOT", "/etc/custom.exs"}}
+           ]
