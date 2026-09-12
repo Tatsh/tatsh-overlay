@@ -1,0 +1,34 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Do not strip the extension during the build
+
+A Release build makes both the scikit-build-core backend and nanobind strip
+the extension module themselves. That defeats the package manager's own
+stripping and debug-symbol splitting, leaving no separate debug info at all.
+
+Build RelWithDebInfo instead, and stop the backend passing install.strip to
+CMake regardless of the build type.
+
+diff --git a/backend/config.py b/backend/config.py
+index 82815b7..fcb0c52 100644
+--- a/backend/config.py
++++ b/backend/config.py
+@@ -214,7 +214,7 @@ class Config:
+ 
+     @property
+     def strip(self) -> str:
+-        return str(self._config.build.build_type.lower() == "release")
++        return "false"
+ 
+     @property
+     def build_dir(self) -> str:
+diff --git a/config-default.toml b/config-default.toml
+index 519bc04..6e34917 100644
+--- a/config-default.toml
++++ b/config-default.toml
+@@ -1,5 +1,5 @@
+ [lief.build]
+-type          = "Release"
++type          = "RelWithDebInfo"
+ cache         = true
+ ninja         = true
+ parallel-jobs = 0
