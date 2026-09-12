@@ -126,15 +126,23 @@ _ghidra-extension_set_globals
 
 # @FUNCTION: ghidra-extension_src_prepare
 # @DESCRIPTION:
-# Runs java-pkg-2_src_prepare, then removes build-system and CI files that
-# upstreams routinely ship inside the extension archive but which have no
-# runtime role.
+# Applies PATCHES, runs java-pkg-2_src_prepare, then removes build-system and
+# CI files that upstreams routinely ship inside the extension archive but which
+# have no runtime role.
 ghidra-extension_src_prepare() {
+	# In EAPI 8 java-utils-2_src_prepare runs eapply_user and nothing else, so
+	# PATCHES would be silently ignored. Apply it here, before eapply_user, in
+	# the order default_src_prepare would have.
+	if [[ ${PATCHES[@]} ]]; then
+		eapply "${PATCHES[@]}"
+	fi
+
 	java-pkg-2_src_prepare
 
 	local cruft
-	for cruft in .github gradle gradlew gradlew.bat build.gradle \
-		settings.gradle certification.manifest lib/*-src.zip; do
+	for cruft in .github gradle gradlew gradlew.bat gradle.properties \
+		build.gradle build.gradle.kts settings.gradle settings.gradle.kts \
+		certification.manifest lib/*-src.zip; do
 		[[ -e ${cruft} ]] && { rm -r "${cruft}" || die; }
 	done
 
