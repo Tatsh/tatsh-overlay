@@ -1,0 +1,27 @@
+Define the two debug hooks the Linux port never implemented.
+
+PMAP/main.c is compiled against PMAP/platform.h, where PlatDebugInit() and
+PlatDebugDeinit() are declared as real functions, but PMAP-linux only defines
+the COM port and message helpers, so linking fails with undefined references.
+
+diff --git a/PMAP-linux/platform-linux.c b/PMAP-linux/platform-linux.c
+index b9a0bd7..6087bcc 100644
+--- a/PMAP-linux/platform-linux.c
++++ b/PMAP-linux/platform-linux.c
+@@ -100,6 +100,16 @@ void PlatShowMessageB(const char *format, ...)
+ }
+ 
+ 
++// PlatDPrintf() is redirected to PlatShowEMessage() by platform.h, so there is
++// no debug output file to manage here.
++void PlatDebugInit(void)
++{
++}
++
++void PlatDebugDeinit(void)
++{
++}
++
+ int pstricmp(const char *s1, const char *s2)
+ {
+     char s1char, s2char;
