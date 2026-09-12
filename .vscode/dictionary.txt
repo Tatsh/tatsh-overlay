@@ -309,6 +309,7 @@ dcmake
 dconfig
 dcpp
 dcrc
+ddaedalus
 ddaemon
 ddeveloper
 ddisable
