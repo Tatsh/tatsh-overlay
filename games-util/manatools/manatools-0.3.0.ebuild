@@ -30,29 +30,17 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+# These apply to third_party/sf2cute, which only exists once the submodule
+# archive has been moved into place below, so cmake_src_prepare runs last.
+PATCHES=(
+	"${FILESDIR}/${P}-sf2cute-no-install.patch"
+	"${FILESDIR}/${P}-sf2cute-cstdint.patch"
+)
+
 src_prepare() {
 	rm -rf third_party/mio third_party/sf2cute || die
 	mv "${WORKDIR}/mio-${MIO_COMMIT}" third_party/mio || die
 	mv "${WORKDIR}/sf2cute-${SF2CUTE_COMMIT}" third_party/sf2cute || die
-
-	# sf2cute is a vendored build dependency, so none of it should be
-	# installed. Its header install rule is broken here anyway: it reads
-	# ${CMAKE_SOURCE_DIR}/include, which is manatools' source tree rather than
-	# its own. Everything from the install section to the end of the file goes.
-	sed -i -e '/^# Install and Export sf2cute$/,$d' \
-		third_party/sf2cute/CMakeLists.txt || die
-	# Drop the now-dangling comment banner the section started with.
-	sed -i -e '${/^#=\+$/d}' third_party/sf2cute/CMakeLists.txt || die
-
-	# sf2cute uses the fixed-width integer types without including <cstdint>,
-	# which GCC 16 no longer provides transitively.
-	local f
-	while IFS= read -r -d '' f; do
-		grep -q '#include <cstdint>' "${f}" && continue
-		grep -qE '\b(u?int(8|16|32|64)_t)\b' "${f}" || continue
-		sed -i -e '0,/^#include </s//#include <cstdint>\n#include </' "${f}" || die
-	done < <(find third_party/sf2cute/include third_party/sf2cute/src -type f \
-		\( -name '*.hpp' -o -name '*.cpp' -o -name '*.h' \) -print0)
 
 	cmake_src_prepare
 }

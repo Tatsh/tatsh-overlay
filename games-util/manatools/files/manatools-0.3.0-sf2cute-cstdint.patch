@@ -1,0 +1,391 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Include <cstdint> in the vendored sf2cute where it is used
+
+sf2cute uses the fixed-width integer types in headers that never include
+<cstdint>, relying on it arriving transitively. GCC 16 no longer provides it
+that way, so every such file fails to compile.
+
+diff --git a/third_party/sf2cute/include/sf2cute/generator_item.hpp b/third_party/sf2cute/include/sf2cute/generator_item.hpp
+index 530a859..8f960a2 100644
+--- a/third_party/sf2cute/include/sf2cute/generator_item.hpp
++++ b/third_party/sf2cute/include/sf2cute/generator_item.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_GENERATOR_ITEM_HPP_
+ #define SF2CUTE_GENERATOR_ITEM_HPP_
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <algorithm>
+ 
+diff --git a/third_party/sf2cute/include/sf2cute/modulator.hpp b/third_party/sf2cute/include/sf2cute/modulator.hpp
+index 4cd0f4d..920f004 100644
+--- a/third_party/sf2cute/include/sf2cute/modulator.hpp
++++ b/third_party/sf2cute/include/sf2cute/modulator.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_MODULATOR_HPP_
+ #define SF2CUTE_MODULATOR_HPP_
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <algorithm>
+ #include <utility>
+diff --git a/third_party/sf2cute/include/sf2cute/modulator_item.hpp b/third_party/sf2cute/include/sf2cute/modulator_item.hpp
+index a256ec9..33eae5f 100644
+--- a/third_party/sf2cute/include/sf2cute/modulator_item.hpp
++++ b/third_party/sf2cute/include/sf2cute/modulator_item.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_MODULATOR_ITEM_HPP_
+ #define SF2CUTE_MODULATOR_ITEM_HPP_
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <algorithm>
+ 
+diff --git a/third_party/sf2cute/include/sf2cute/preset.hpp b/third_party/sf2cute/include/sf2cute/preset.hpp
+index e4b27ea..c3ce333 100644
+--- a/third_party/sf2cute/include/sf2cute/preset.hpp
++++ b/third_party/sf2cute/include/sf2cute/preset.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_PRESET_HPP_
+ #define SF2CUTE_PRESET_HPP_
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <algorithm>
+ #include <memory>
+diff --git a/third_party/sf2cute/include/sf2cute/sample.hpp b/third_party/sf2cute/include/sf2cute/sample.hpp
+index bd9f806..024bb16 100644
+--- a/third_party/sf2cute/include/sf2cute/sample.hpp
++++ b/third_party/sf2cute/include/sf2cute/sample.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_SAMPLE_HPP_
+ #define SF2CUTE_SAMPLE_HPP_
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <algorithm>
+ #include <memory>
+diff --git a/third_party/sf2cute/include/sf2cute/types.hpp b/third_party/sf2cute/include/sf2cute/types.hpp
+index 7932e34..a55c723 100644
+--- a/third_party/sf2cute/include/sf2cute/types.hpp
++++ b/third_party/sf2cute/include/sf2cute/types.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_TYPES_HPP_
+ #define SF2CUTE_TYPES_HPP_
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <utility>
+ #include <tuple>
+diff --git a/third_party/sf2cute/src/sf2cute/byteio.hpp b/third_party/sf2cute/src/sf2cute/byteio.hpp
+index 4b9e1b7..10ce4b5 100644
+--- a/third_party/sf2cute/src/sf2cute/byteio.hpp
++++ b/third_party/sf2cute/src/sf2cute/byteio.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_BYTEIO_HPP_
+ #define SF2CUTE_BYTEIO_HPP_
+ 
++#include <cstdint>
+ #include <stdint.h>
+ 
+ namespace sf2cute {
+diff --git a/third_party/sf2cute/src/sf2cute/file_writer.cpp b/third_party/sf2cute/src/sf2cute/file_writer.cpp
+index 4ffde6b..292d080 100644
+--- a/third_party/sf2cute/src/sf2cute/file_writer.cpp
++++ b/third_party/sf2cute/src/sf2cute/file_writer.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "file_writer.hpp"
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <string>
+ #include <unordered_map>
+diff --git a/third_party/sf2cute/src/sf2cute/modulator.cpp b/third_party/sf2cute/src/sf2cute/modulator.cpp
+index cce2293..2b09622 100644
+--- a/third_party/sf2cute/src/sf2cute/modulator.cpp
++++ b/third_party/sf2cute/src/sf2cute/modulator.cpp
+@@ -3,6 +3,7 @@
+ ///
+ /// @author gocha <https://github.com/gocha>
+ 
++#include <cstdint>
+ #include <sf2cute/modulator.hpp>
+ 
+ #include <stdint.h>
+diff --git a/third_party/sf2cute/src/sf2cute/modulator_item.cpp b/third_party/sf2cute/src/sf2cute/modulator_item.cpp
+index e9a6240..f3901e4 100644
+--- a/third_party/sf2cute/src/sf2cute/modulator_item.cpp
++++ b/third_party/sf2cute/src/sf2cute/modulator_item.cpp
+@@ -3,6 +3,7 @@
+ ///
+ /// @author gocha <https://github.com/gocha>
+ 
++#include <cstdint>
+ #include <sf2cute/modulator_item.hpp>
+ 
+ namespace sf2cute {
+diff --git a/third_party/sf2cute/src/sf2cute/preset.cpp b/third_party/sf2cute/src/sf2cute/preset.cpp
+index f2681a9..feadd20 100644
+--- a/third_party/sf2cute/src/sf2cute/preset.cpp
++++ b/third_party/sf2cute/src/sf2cute/preset.cpp
+@@ -3,6 +3,7 @@
+ ///
+ /// @author gocha <https://github.com/gocha>
+ 
++#include <cstdint>
+ #include <sf2cute/preset.hpp>
+ 
+ #include <algorithm>
+diff --git a/third_party/sf2cute/src/sf2cute/riff.cpp b/third_party/sf2cute/src/sf2cute/riff.cpp
+index 6a2f7f4..61e8c38 100644
+--- a/third_party/sf2cute/src/sf2cute/riff.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff.cpp
+@@ -7,6 +7,7 @@
+ 
+ #include "riff.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_ibag_chunk.cpp b/third_party/sf2cute/src/sf2cute/riff_ibag_chunk.cpp
+index de0dcad..c1052b1 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_ibag_chunk.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff_ibag_chunk.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "riff_ibag_chunk.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_ibag_chunk.hpp b/third_party/sf2cute/src/sf2cute/riff_ibag_chunk.hpp
+index 7223f5c..7b2cb4d 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_ibag_chunk.hpp
++++ b/third_party/sf2cute/src/sf2cute/riff_ibag_chunk.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_RIFF_IBAG_CHUNK_HPP_
+ #define SF2CUTE_RIFF_IBAG_CHUNK_HPP_
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_igen_chunk.cpp b/third_party/sf2cute/src/sf2cute/riff_igen_chunk.cpp
+index e294c3e..d4245d7 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_igen_chunk.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff_igen_chunk.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "riff_igen_chunk.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <algorithm>
+ #include <memory>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_igen_chunk.hpp b/third_party/sf2cute/src/sf2cute/riff_igen_chunk.hpp
+index 51a008e..095df53 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_igen_chunk.hpp
++++ b/third_party/sf2cute/src/sf2cute/riff_igen_chunk.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_RIFF_IGEN_CHUNK_HPP_
+ #define SF2CUTE_RIFF_IGEN_CHUNK_HPP_
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_imod_chunk.cpp b/third_party/sf2cute/src/sf2cute/riff_imod_chunk.cpp
+index b0cf068..4e504d7 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_imod_chunk.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff_imod_chunk.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "riff_imod_chunk.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_imod_chunk.hpp b/third_party/sf2cute/src/sf2cute/riff_imod_chunk.hpp
+index bef9940..99e75a6 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_imod_chunk.hpp
++++ b/third_party/sf2cute/src/sf2cute/riff_imod_chunk.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_RIFF_IMOD_CHUNK_HPP_
+ #define SF2CUTE_RIFF_IMOD_CHUNK_HPP_
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_inst_chunk.cpp b/third_party/sf2cute/src/sf2cute/riff_inst_chunk.cpp
+index 5b37913..f2d9f2c 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_inst_chunk.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff_inst_chunk.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "riff_inst_chunk.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <algorithm>
+ #include <memory>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_inst_chunk.hpp b/third_party/sf2cute/src/sf2cute/riff_inst_chunk.hpp
+index d9e2d70..8a1d714 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_inst_chunk.hpp
++++ b/third_party/sf2cute/src/sf2cute/riff_inst_chunk.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_RIFF_INST_CHUNK_HPP_
+ #define SF2CUTE_RIFF_INST_CHUNK_HPP_
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_pbag_chunk.cpp b/third_party/sf2cute/src/sf2cute/riff_pbag_chunk.cpp
+index 5f6d3ec..54c7d6e 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_pbag_chunk.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff_pbag_chunk.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "riff_pbag_chunk.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_pbag_chunk.hpp b/third_party/sf2cute/src/sf2cute/riff_pbag_chunk.hpp
+index 09ff44c..554a302 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_pbag_chunk.hpp
++++ b/third_party/sf2cute/src/sf2cute/riff_pbag_chunk.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_RIFF_PBAG_CHUNK_HPP_
+ #define SF2CUTE_RIFF_PBAG_CHUNK_HPP_
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_pgen_chunk.cpp b/third_party/sf2cute/src/sf2cute/riff_pgen_chunk.cpp
+index 4eb9baa..277b4d0 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_pgen_chunk.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff_pgen_chunk.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "riff_pgen_chunk.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <algorithm>
+ #include <memory>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_pgen_chunk.hpp b/third_party/sf2cute/src/sf2cute/riff_pgen_chunk.hpp
+index 841b46f..16510c8 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_pgen_chunk.hpp
++++ b/third_party/sf2cute/src/sf2cute/riff_pgen_chunk.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_RIFF_PGEN_CHUNK_HPP_
+ #define SF2CUTE_RIFF_PGEN_CHUNK_HPP_
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_phdr_chunk.cpp b/third_party/sf2cute/src/sf2cute/riff_phdr_chunk.cpp
+index e1ea755..5f1c05e 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_phdr_chunk.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff_phdr_chunk.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "riff_phdr_chunk.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_phdr_chunk.hpp b/third_party/sf2cute/src/sf2cute/riff_phdr_chunk.hpp
+index ebc2300..796e019 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_phdr_chunk.hpp
++++ b/third_party/sf2cute/src/sf2cute/riff_phdr_chunk.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_RIFF_PHDR_CHUNK_HPP_
+ #define SF2CUTE_RIFF_PHDR_CHUNK_HPP_
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_pmod_chunk.cpp b/third_party/sf2cute/src/sf2cute/riff_pmod_chunk.cpp
+index 4773b26..faa6c07 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_pmod_chunk.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff_pmod_chunk.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "riff_pmod_chunk.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_pmod_chunk.hpp b/third_party/sf2cute/src/sf2cute/riff_pmod_chunk.hpp
+index 351cd72..c9c6d4a 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_pmod_chunk.hpp
++++ b/third_party/sf2cute/src/sf2cute/riff_pmod_chunk.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_RIFF_PMOD_CHUNK_HPP_
+ #define SF2CUTE_RIFF_PMOD_CHUNK_HPP_
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_shdr_chunk.cpp b/third_party/sf2cute/src/sf2cute/riff_shdr_chunk.cpp
+index 07a0d2a..53385a5 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_shdr_chunk.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff_shdr_chunk.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "riff_shdr_chunk.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_shdr_chunk.hpp b/third_party/sf2cute/src/sf2cute/riff_shdr_chunk.hpp
+index 02be998..47a46a3 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_shdr_chunk.hpp
++++ b/third_party/sf2cute/src/sf2cute/riff_shdr_chunk.hpp
+@@ -6,6 +6,7 @@
+ #ifndef SF2CUTE_RIFF_SHDR_CHUNK_HPP_
+ #define SF2CUTE_RIFF_SHDR_CHUNK_HPP_
+ 
++#include <cstdint>
+ #include <algorithm>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/riff_smpl_chunk.cpp b/third_party/sf2cute/src/sf2cute/riff_smpl_chunk.cpp
+index 42dbb0f..9b2c095 100644
+--- a/third_party/sf2cute/src/sf2cute/riff_smpl_chunk.cpp
++++ b/third_party/sf2cute/src/sf2cute/riff_smpl_chunk.cpp
+@@ -5,6 +5,7 @@
+ 
+ #include "riff_smpl_chunk.hpp"
+ 
++#include <cstdint>
+ #include <stdint.h>
+ #include <memory>
+ #include <string>
+diff --git a/third_party/sf2cute/src/sf2cute/sample.cpp b/third_party/sf2cute/src/sf2cute/sample.cpp
+index 0078e0f..d7b4692 100644
+--- a/third_party/sf2cute/src/sf2cute/sample.cpp
++++ b/third_party/sf2cute/src/sf2cute/sample.cpp
+@@ -3,6 +3,7 @@
+ ///
+ /// @author gocha <https://github.com/gocha>
+ 
++#include <cstdint>
+ #include <sf2cute/sample.hpp>
+ 
+ #include <stdint.h>
