@@ -239,6 +239,7 @@ copytime
 corecrypto
 corlett's
 cpack
+cparser
 cpio
 cplugins
 cppflags
@@ -502,6 +503,7 @@ epytest
 epython
 eqawarn
 erfgoed
+ergrelet
 eroot
 eselect
 espeak
@@ -1789,6 +1791,8 @@ tgbdual
 thaana
 tham
 thealexbarney
+themida
+themida's
 theora
 thepowdertoy
 theroyallab
@@ -1872,6 +1876,7 @@ unistd
 unjbt
 unkeyworded
 unlzexe
+unmutate
 unpreferred
 unshield
 upconv
