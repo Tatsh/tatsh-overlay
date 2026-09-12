@@ -1,0 +1,190 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Add an FHS and XDG layout for desktop builds
+
+Upstream is laid out as a portable application: setBasePath() resolves every
+path against the current working directory, and the install rules drop Data,
+Roms, SaveGames and SaveStates into one self contained DaedalusX64 folder. The
+binary is not installed at all, it is run from the build tree.
+
+That cannot be installed into a shared prefix, where /usr is read only and the
+working directory is wherever the user happened to launch from.
+
+With -DDAEDALUS_FHS=ON the executable is installed to bindir, the shipped
+read only assets to datadir/DaedalusX64, and DAEDALUS_DATA_DIR is compiled in
+so setBasePath() can find them. Writable paths then resolve under
+$XDG_CONFIG_HOME for things the user edits (Preferences.ini, controller.txt,
+ControllerConfigs) and $XDG_DATA_HOME for state (Roms, SaveGames, SaveStates
+and the debugging dumps), each falling back to the directory the
+specification defines when the variable is unset.
+
+A user copy always takes precedence over the installed one, so an edited
+language file or controller config still works.
+
+The PSP, 3DS and Vita paths are untouched: none of this is reached unless
+DAEDALUS_DATA_DIR is defined, which only the new option does.
+
+diff --git a/Source/CMakeLists.txt b/Source/CMakeLists.txt
+index 041208e..a3f7d74 100644
+--- a/Source/CMakeLists.txt
++++ b/Source/CMakeLists.txt
+@@ -364,7 +364,23 @@ add_definitions(-D_USE_MATH_DEFINES)
+ endif(CTR)
+ 	
+ 	## Install and setup basic directories
+-	install(DIRECTORY ${PROJECT_BINARY_DIR}/../Data/ DESTINATION DaedalusX64)
+-	install(DIRECTORY DESTINATION DaedalusX64/Roms)
+-	install(DIRECTORY DESTINATION DaedalusX64/SaveGames)
+-	install(DIRECTORY DESTINATION DaedalusX64/SaveStates)
++	if(DAEDALUS_FHS)
++		# Read only assets go where the rest of the system keeps them, and
++		# Paths.cpp resolves the writable ones under the XDG directories, so
++		# there is nothing to create here: no Roms, SaveGames or SaveStates
++		# directory belongs in a shared prefix.
++		include(GNUInstallDirs)
++		# Paths.cpp is compiled into the Utility object library, not into the
++		# executable, so the definition has to go there to reach it.
++		target_compile_definitions(Utility PRIVATE
++			DAEDALUS_DATA_DIR="${CMAKE_INSTALL_FULL_DATADIR}/DaedalusX64")
++		install(TARGETS daedalus RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
++		install(DIRECTORY ${PROJECT_SOURCE_DIR}/Data/
++				DESTINATION ${CMAKE_INSTALL_DATADIR}/DaedalusX64
++				PATTERN "Roms" EXCLUDE)
++	else()
++		install(DIRECTORY ${PROJECT_BINARY_DIR}/../Data/ DESTINATION DaedalusX64)
++		install(DIRECTORY DESTINATION DaedalusX64/Roms)
++		install(DIRECTORY DESTINATION DaedalusX64/SaveGames)
++		install(DIRECTORY DESTINATION DaedalusX64/SaveStates)
++	endif()
+diff --git a/Source/SysGL/CMakeLists.txt b/Source/SysGL/CMakeLists.txt
+index e3516ba..51e1e92 100644
+--- a/Source/SysGL/CMakeLists.txt
++++ b/Source/SysGL/CMakeLists.txt
+@@ -7,7 +7,10 @@ target_include_directories(SysGL PUBLIC ${GLEW_INCLUDE_DIRS})
+ target_include_directories(SysGL PUBLIC ${SDL2_INCLUDE_DIRS})
+ target_include_directories(SysGL PUBLIC ${SDL2_TTF_INCLUDE_DIRS})
+ 
++if(NOT DAEDALUS_FHS)
++# Source/SysPosix/CMakeLists.txt places this under datadir for FHS builds.
+ install(FILES ${PROJECT_SOURCE_DIR}/Source/SysGL/HLEGraphics/n64.psh DESTINATION DaedalusX64)
++endif()
+ 
+ if(DAEDALUS_PROFILE_GRAPHICS_GL)
+ target_compile_options(SysGL PRIVATE -pg)
+diff --git a/Source/SysPosix/CMakeLists.txt b/Source/SysPosix/CMakeLists.txt
+index 6fcefc2..4dc6c7f 100644
+--- a/Source/SysPosix/CMakeLists.txt
++++ b/Source/SysPosix/CMakeLists.txt
+@@ -6,6 +6,22 @@ add_subdirectory(Utility)
+ list(APPEND sys_libraries "dl")
+ set(sys_libraries ${sys_libraries} PARENT_SCOPE)
+ 
++if(DAEDALUS_FHS)
++# The executable is installed as a target by Source/CMakeLists.txt, and the
++# files under Data/ come with the rest of that directory, so only the shader
++# is left to place. Everything lands in datadir, which is where setBasePath()
++# looks.
++include(GNUInstallDirs)
++        if(DAEDALUS_GL)
++install(FILES ${PROJECT_SOURCE_DIR}/Source/SysGL/HLEGraphics/n64.psh
++        DESTINATION ${CMAKE_INSTALL_DATADIR}/DaedalusX64)
++        endif(DAEDALUS_GL)
++
++        if(DAEDALUS_GLES)
++install(FILES ${PROJECT_SOURCE_DIR}/Source/SysGLES/HLEGraphics/n64.psh
++        DESTINATION ${CMAKE_INSTALL_DATADIR}/DaedalusX64)
++        endif(DAEDALUS_GLES)
++else()
+ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/../daedalus DESTINATION DaedalusX64
+         PERMISSIONS OWNER_EXECUTE OWNER_WRITE OWNER_READ)
+ 
+@@ -20,6 +36,7 @@ install(FILES ${PROJECT_SOURCE_DIR}/Source/SysGLES/HLEGraphics/n64.psh DESTINATI
+ install(FILES ${PROJECT_BINARY_DIR}/../Data/roms.ini DESTINATION DaedalusX64)
+ install(FILES ${PROJECT_BINARY_DIR}/../Data/readme.txt DESTINATION DaedalusX64)
+ install(FILES ${PROJECT_BINARY_DIR}/../Data/copying.txt DESTINATION DaedalusX64)
++endif()
+ 
+ set(daed_libs ${daed_libs} PARENT_SCOPE)
+ set(plat_main SysPosix/main.cpp PARENT_SCOPE)
+diff --git a/Source/Utility/Paths.cpp b/Source/Utility/Paths.cpp
+index 06a00de..6cab4a3 100644
+--- a/Source/Utility/Paths.cpp
++++ b/Source/Utility/Paths.cpp
+@@ -31,10 +31,68 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ const std::filesystem::path baseDir = "sdmc:/3ds/DaedalusX64";
+ #elif defined(DAEDALUS_VITA)
+ const std::filesystem::path baseDir = "ux0:/data";
+-#else
++#elif !defined(DAEDALUS_DATA_DIR)
+ const std::filesystem::path baseDir = std::filesystem::current_path();
+ #endif
+ 
++#ifdef DAEDALUS_DATA_DIR
++#include <cstdlib>
++
++namespace
++{
++    // $XDG_<name>_HOME, or its specified default when unset, per the XDG Base
++    // Directory Specification.
++    std::filesystem::path xdgDir(const char* variable, const char* fallback)
++    {
++        if (const char* value = std::getenv(variable); value && *value)
++        {
++            return std::filesystem::path(value) / "DaedalusX64";
++        }
++        if (const char* home = std::getenv("HOME"); home && *home)
++        {
++            return std::filesystem::path(home) / fallback / "DaedalusX64";
++        }
++        return std::filesystem::current_path() / "DaedalusX64";
++    }
++
++    // Everything the user is expected to edit lives in the config directory;
++    // saves, ROMs and debugging output are state and live in the data one.
++    bool isConfiguration(const std::filesystem::path& path)
++    {
++        const std::string name = path.string();
++        return name == "Preferences.ini" || name == "controller.txt" ||
++               name.compare(0, 17, "ControllerConfigs") == 0;
++    }
++}
++
++std::filesystem::path setBasePath(const std::filesystem::path& path)
++{
++    const std::filesystem::path userPath =
++        (isConfiguration(path) ? xdgDir("XDG_CONFIG_HOME", ".config")
++                               : xdgDir("XDG_DATA_HOME", ".local/share")) / path;
++
++    // Anything the user has of their own wins, so that a copied out language
++    // file or controller config overrides the installed one.
++    if (std::filesystem::exists(userPath))
++    {
++        return userPath;
++    }
++
++    // Otherwise fall back to the read only copy installed with the program.
++    const std::filesystem::path systemPath =
++        std::filesystem::path(DAEDALUS_DATA_DIR) / path;
++    if (std::filesystem::exists(systemPath))
++    {
++        return systemPath;
++    }
++
++    // Neither exists, so it is about to be written: make room for it.
++    std::filesystem::create_directories(
++        path.has_extension() ? userPath.parent_path() : userPath);
++    return userPath;
++}
++#else
++
+ // TODO Create directory structure here
+ 
+ std::filesystem::path setBasePath(const std::filesystem::path& path)
+@@ -47,4 +105,5 @@ std::filesystem::path setBasePath(const std::filesystem::path& path)
+     }
+     std::cout << "Path set for:" << path << "to:" << combinedPath << std::endl;
+     return combinedPath;
+-}
+\ No newline at end of file
++}
++#endif
+\ No newline at end of file

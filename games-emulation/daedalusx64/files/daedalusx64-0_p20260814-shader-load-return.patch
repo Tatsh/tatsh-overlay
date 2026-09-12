@@ -1,0 +1,26 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Return a value when the shader file cannot be opened
+
+loadShader() only returns from inside the if(shader_file.is_open()) block, so
+the path taken when the file is missing runs off the end of a function
+returning bool. That is undefined behaviour, and GCC warns about it with
+-Wreturn-type; whatever happens to be in the return register decides whether
+the caller believes the shader loaded.
+
+That is exactly the case worth getting right, because it is the one taken when
+n64.psh cannot be found.
+
+diff --git a/Source/SysGL/HLEGraphics/RendererGL.cpp b/Source/SysGL/HLEGraphics/RendererGL.cpp
+index 0806add..b76c7ff 100644
+--- a/Source/SysGL/HLEGraphics/RendererGL.cpp
++++ b/Source/SysGL/HLEGraphics/RendererGL.cpp
+@@ -111,6 +111,9 @@ bool loadShader(const std::filesystem::path& shader_path)
+ 
+ 	return true;
+ 	}
++
++	std::cerr << "ERROR: Could not open shader source " << shader_path << std::endl;
++	return false;
+ }
+ 
+ bool initgl()
