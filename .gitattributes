@@ -6,3 +6,4 @@ app-pda/altserver/files/altserver-libplist-from-memory.patch binary
 games-arcade/stepmania/files/stepmania-libtom-use-pkgconfig.patch binary
 media-video/tbc-tools/files/tbc-tools-3.2.8-no-install-cache-update.patch binary
 dev-util/ghidraorbis/files/*.patch binary
+games-emulation/daedalusx64/files/daedalusx64-0_p20260814-language-path.patch binary
