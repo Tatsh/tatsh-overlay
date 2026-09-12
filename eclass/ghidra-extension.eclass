@@ -133,7 +133,7 @@ ghidra-extension_src_prepare() {
 	# In EAPI 8 java-utils-2_src_prepare runs eapply_user and nothing else, so
 	# PATCHES would be silently ignored. Apply it here, before eapply_user, in
 	# the order default_src_prepare would have.
-	if [[ ${PATCHES[@]} ]]; then
+	if [[ -n ${PATCHES[*]} ]]; then
 		eapply "${PATCHES[@]}"
 	fi
 
