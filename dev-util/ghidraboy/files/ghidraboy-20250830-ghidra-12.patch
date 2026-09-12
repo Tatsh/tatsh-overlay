@@ -1,0 +1,163 @@
+Port the loader to the Ghidra 12 importer API.
+
+Ghidra 12 replaced the long argument lists on AbstractProgramLoader with a
+single Loader.ImporterSettings record: loadProgram() and loadProgramInto() take
+it instead of (provider, name, project, path, loadSpec, options, log, consumer,
+monitor), createProgram() and createDefaultMemoryBlocks() derive everything but
+the base address from it, loadInto() takes (program, settings), and
+getDefaultOptions() gained a fifth mirrorFsLayout argument. Loaded also grew a
+(domainObject, settings) constructor, which is used here. All of these are
+mechanical; no behaviour changes.
+
+ghidra.util.HashUtilities was removed outright, so Sha256 now hashes with
+java.security.MessageDigest. HashUtilities.getHash() returned lowercase hex and
+HexFormat does too, so the digests still match the boot ROM table in
+BootRomUtils, whose entries are matched against Sha256.parse()'s [0-9a-z]{64}.
+
+Upstream is archived, so this cannot be sent anywhere.
+
+diff --git a/src/main/java/fi/gekkio/ghidraboy/GameBoyLoader.java b/src/main/java/fi/gekkio/ghidraboy/GameBoyLoader.java
+index 2e9e81c..f6a7348 100644
+--- a/src/main/java/fi/gekkio/ghidraboy/GameBoyLoader.java
++++ b/src/main/java/fi/gekkio/ghidraboy/GameBoyLoader.java
+@@ -17,10 +17,8 @@ import ghidra.app.util.MemoryBlockUtils;
+ import ghidra.app.util.Option;
+ import ghidra.app.util.OptionUtils;
+ import ghidra.app.util.bin.ByteProvider;
+-import ghidra.app.util.importer.MessageLog;
+ import ghidra.app.util.opinion.*;
+ import ghidra.framework.model.DomainObject;
+-import ghidra.framework.model.Project;
+ import ghidra.program.database.function.OverlappingFunctionException;
+ import ghidra.program.model.address.AddressOverflowException;
+ import ghidra.program.model.address.AddressSet;
+@@ -31,7 +29,6 @@ import ghidra.program.model.symbol.SourceType;
+ import ghidra.program.model.util.CodeUnitInsertionException;
+ import ghidra.util.exception.CancelledException;
+ import ghidra.util.exception.InvalidInputException;
+-import ghidra.util.task.TaskMonitor;
+ 
+ import java.io.IOException;
+ import java.util.ArrayList;
+@@ -76,8 +73,8 @@ public class GameBoyLoader extends AbstractProgramLoader {
+     }
+ 
+     @Override
+-    public List<Option> getDefaultOptions(ByteProvider provider, LoadSpec loadSpec, DomainObject domainObject, boolean isLoadIntoProgram) {
+-        var result = super.getDefaultOptions(provider, loadSpec, domainObject, isLoadIntoProgram);
++    public List<Option> getDefaultOptions(ByteProvider provider, LoadSpec loadSpec, DomainObject domainObject, boolean isLoadIntoProgram, boolean mirrorFsLayout) {
++        var result = super.getDefaultOptions(provider, loadSpec, domainObject, isLoadIntoProgram, mirrorFsLayout);
+         result.add(new Option(OPT_HW_BLOCKS, true));
+         result.add(new Option(OPT_DATA_TYPES, true));
+         try {
+@@ -98,14 +95,15 @@ public class GameBoyLoader extends AbstractProgramLoader {
+     }
+ 
+     @Override
+-    protected List<Loaded<Program>> loadProgram(ByteProvider provider, String loadedName, Project project, String projectFolderPath, LoadSpec loadSpec, List<Option> options, MessageLog log, Object consumer, TaskMonitor monitor) throws IOException, CancelledException {
++    protected List<Loaded<Program>> loadProgram(Loader.ImporterSettings settings) throws IOException, LoadException, CancelledException {
+         var result = new ArrayList<Loaded<Program>>();
+-        var pair = loadSpec.getLanguageCompilerSpec();
++        var options = settings.options();
++        var log = settings.log();
++        var pair = settings.loadSpec().getLanguageCompilerSpec();
+         var language = getLanguageService().getLanguage(pair.languageID);
+-        var compiler = language.getCompilerSpecByID(pair.compilerSpecID);
+ 
+         var baseAddress = language.getAddressFactory().getDefaultAddressSpace().getAddress(0);
+-        var program = createProgram(provider, loadedName, baseAddress, getName(), language, compiler, consumer);
++        var program = createProgram(baseAddress, settings);
+         var success = false;
+         try {
+             var kind = OptionUtils.getOption(OPT_KIND, options, GameBoyKind.GB);
+@@ -117,8 +115,8 @@ public class GameBoyLoader extends AbstractProgramLoader {
+                     program.endTransaction(id, true);
+                 }
+             }
+-            loadInto(provider, loadSpec, options, log, program, monitor);
+-            createDefaultMemoryBlocks(program, language, log);
++            loadInto(program, settings);
++            createDefaultMemoryBlocks(program, settings);
+ 
+             if (OptionUtils.getBooleanOptionValue(OPT_HW_BLOCKS, options, true)) {
+                 int id = program.startTransaction("Create GB hardware memory blocks");
+@@ -131,21 +129,24 @@ public class GameBoyLoader extends AbstractProgramLoader {
+                     program.endTransaction(id, true);
+                 }
+             }
+-            success = result.add(new Loaded<>(program, loadedName, projectFolderPath));
++            success = result.add(new Loaded<>(program, settings));
+         } finally {
+             if (!success) {
+-                program.release(consumer);
++                program.release(settings.consumer());
+             }
+         }
+         return result;
+     }
+ 
+     @Override
+-    protected void loadProgramInto(ByteProvider provider, LoadSpec loadSpec, List<Option> options, MessageLog log, Program program, TaskMonitor monitor) throws IOException, CancelledException {
++    protected void loadProgramInto(Program program, Loader.ImporterSettings settings) throws IOException, LoadException, CancelledException {
++        var provider = settings.provider();
++        var options = settings.options();
++        var log = settings.log();
+         var as = program.getAddressFactory().getDefaultAddressSpace();
+ 
+         var bootRom = detectBootRom(provider);
+-        var rom = MemoryBlockUtils.createFileBytes(program, provider, monitor);
++        var rom = MemoryBlockUtils.createFileBytes(program, provider, settings.monitor());
+ 
+         if (bootRom.isPresent()) {
+             var cgb = GameBoyKind.CGB.equals(bootRom.get());
+diff --git a/src/main/java/fi/gekkio/ghidraboy/Sha256.java b/src/main/java/fi/gekkio/ghidraboy/Sha256.java
+index ecaedee..b016b5d 100644
+--- a/src/main/java/fi/gekkio/ghidraboy/Sha256.java
++++ b/src/main/java/fi/gekkio/ghidraboy/Sha256.java
+@@ -14,10 +14,13 @@
+ package fi.gekkio.ghidraboy;
+ 
+ import ghidra.app.util.bin.ByteProvider;
+-import ghidra.util.HashUtilities;
++import java.security.MessageDigest;
++import java.security.NoSuchAlgorithmException;
+ 
+ import java.io.ByteArrayInputStream;
+ import java.io.IOException;
++import java.io.InputStream;
++import java.util.HexFormat;
+ import java.util.regex.Pattern;
+ 
+ public record Sha256(String value) {
+@@ -37,13 +40,29 @@ public record Sha256(String value) {
+ 
+     public static Sha256 of(ByteProvider provider) throws IOException {
+         try (var stream = provider.getInputStream(0)) {
+-            return new Sha256(HashUtilities.getHash(HashUtilities.SHA256_ALGORITHM, stream));
++            return new Sha256(hash(stream));
+         }
+     }
+ 
+     public static Sha256 of(byte[] bytes) throws IOException {
+         try (var stream = new ByteArrayInputStream(bytes)) {
+-            return new Sha256(HashUtilities.getHash(HashUtilities.SHA256_ALGORITHM, stream));
++            return new Sha256(hash(stream));
+         }
+     }
++
++    private static String hash(InputStream stream) throws IOException {
++        final MessageDigest digest;
++        try {
++            digest = MessageDigest.getInstance("SHA-256");
++        } catch (NoSuchAlgorithmException e) {
++            // Required of every Java platform implementation.
++            throw new AssertionError(e);
++        }
++        var buffer = new byte[8192];
++        int read;
++        while ((read = stream.read(buffer)) != -1) {
++            digest.update(buffer, 0, read);
++        }
++        return HexFormat.of().formatHex(digest.digest());
++    }
+ }
