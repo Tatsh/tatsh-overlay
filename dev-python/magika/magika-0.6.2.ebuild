@@ -16,6 +16,7 @@ LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
+# shellcheck disable=SC2016
 RDEPEND="
 	>=dev-python/click-8.1.7[${PYTHON_USEDEP}]
 	>=dev-python/python-dotenv-1.0.1[${PYTHON_USEDEP}]
