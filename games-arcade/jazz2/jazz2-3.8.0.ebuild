@@ -67,6 +67,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	elog "This is only the engine and its own assets. It needs the data files"
 	elog "from a copy of Jazz Jackrabbit 2, which are not included."
 	elog
