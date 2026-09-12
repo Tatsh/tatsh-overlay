@@ -21,6 +21,7 @@ KEYWORDS="~amd64"
 RESTRICT="bindist mirror"
 
 src_compile() {
+	# shellcheck disable=SC2046,SC2086
 	edo $(tc-getCC) ${CFLAGS} ${LDFLAGS} -o "${PN}" "${PN}".c
 }
 
