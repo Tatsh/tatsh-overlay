@@ -18,12 +18,8 @@ KEYWORDS="~amd64"
 RDEPEND="
 	>=dev-python/click-7.1.0[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
+	|| (
+		app-emulation/virtualbox
+		app-emulation/virtualbox-kvm
+	)
 "
-
-pkg_postinst() {
-	if ! has_version app-emulation/virtualbox && \
-		! has_version app-emulation/virtualbox-bin; then
-		elog "This wraps the VBoxManage tool, which is provided by"
-		elog "app-emulation/virtualbox or app-emulation/virtualbox-bin."
-	fi
-}
