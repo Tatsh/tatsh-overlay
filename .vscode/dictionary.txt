@@ -1210,6 +1210,7 @@ nabataean
 nadermx
 nafnet
 nall
+namco
 namedtuples
 nandinagari
 nanobind
@@ -1846,6 +1847,7 @@ tinyxml
 tirhuta
 tisserand
 tmbo
+tnfoview
 tomcrypt
 tomli
 tomlkit
