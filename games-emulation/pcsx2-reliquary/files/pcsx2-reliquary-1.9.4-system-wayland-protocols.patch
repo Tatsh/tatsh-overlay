@@ -1,0 +1,35 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Take the Wayland protocol definitions from wayland-protocols
+
+The two XML files are read out of
+pcsx2/GS/parallel-gs/Granite/third_party/sdl3/wayland-protocols, which is
+three submodules deep and has nothing to do with the Qt frontend that needs
+them. Building without the paraLLEl-GS submodule therefore fails at the
+protocol generation step even though nothing else needs it.
+
+dev-libs/wayland-protocols installs both, so ask pkg-config where they are.
+Its layout is unstable/<name>/<name>-unstable-v<n>.xml, so the subdirectory is
+derived from the protocol name; the loop still iterates full stems because the
+generated header names, which the sources include, are built from them.
+
+diff --git a/pcsx2-qt/CMakeLists.txt b/pcsx2-qt/CMakeLists.txt
+index 067eb55..cd7ff13 100644
+--- a/pcsx2-qt/CMakeLists.txt
++++ b/pcsx2-qt/CMakeLists.txt
+@@ -317,12 +317,14 @@ if(NOT WIN32 AND NOT APPLE)
+ 	target_link_libraries(pcsx2-qt PRIVATE Qt6::GuiPrivate)
+ 	find_program(WAYLAND_SCANNER wayland-scanner)
+ 	if(WAYLAND_API AND WAYLAND_SCANNER)
+-		set(WAYLAND_PROTOCOL_DIR "${CMAKE_SOURCE_DIR}/pcsx2/GS/parallel-gs/Granite/third_party/sdl3/wayland-protocols")
++		find_package(PkgConfig REQUIRED)
++		pkg_get_variable(WAYLAND_PROTOCOL_DIR wayland-protocols pkgdatadir)
+ 		set(WAYLAND_GENERATED_DIR "${CMAKE_CURRENT_BINARY_DIR}/wayland-generated-protocols")
+ 		file(MAKE_DIRECTORY "${WAYLAND_GENERATED_DIR}")
+ 
+ 		foreach(PROTOCOL relative-pointer-unstable-v1 pointer-constraints-unstable-v1)
+-			set(PROTOCOL_XML "${WAYLAND_PROTOCOL_DIR}/${PROTOCOL}.xml")
++			string(REGEX REPLACE "-unstable-v[0-9]+$" "" PROTOCOL_SUBDIR "${PROTOCOL}")
++			set(PROTOCOL_XML "${WAYLAND_PROTOCOL_DIR}/unstable/${PROTOCOL_SUBDIR}/${PROTOCOL}.xml")
+ 			set(PROTOCOL_HEADER "${WAYLAND_GENERATED_DIR}/${PROTOCOL}-client-protocol.h")
+ 			set(PROTOCOL_SOURCE "${WAYLAND_GENERATED_DIR}/${PROTOCOL}-protocol.c")
+ 			add_custom_command(
