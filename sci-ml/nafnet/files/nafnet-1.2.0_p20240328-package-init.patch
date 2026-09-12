@@ -1,0 +1,15 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Restore basicsr/__init__.py so the package can be installed
+
+Every directory under basicsr/ has an __init__.py except basicsr/ itself,
+which this fork dropped; upstream BasicSR still ships one. setup.py calls
+find_packages(), which only descends into regular packages, so it returns an
+empty list and the built wheel contains nothing but metadata.
+
+Upstream only ever runs "setup.py develop" from a checkout, where basicsr is
+picked up as a PEP 420 namespace package from the current directory, so this
+never showed up for them.
+
+diff --git a/basicsr/__init__.py b/basicsr/__init__.py
+new file mode 100644
+index 0000000..e69de29

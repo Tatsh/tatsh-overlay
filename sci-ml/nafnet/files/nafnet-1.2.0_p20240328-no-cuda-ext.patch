@@ -1,0 +1,52 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Never build the inherited BasicSR CUDA extensions
+
+setup.py builds deform_conv_ext, fused_act_ext and upfirdn2d_ext unless
+--no_cuda_ext is passed, which a PEP 517 build has no way to do.
+
+Nothing needs them: they come from BasicSR, and the only import sites in
+basicsr/models/archs/arch_util.py are commented out upstream.
+
+make_cuda_ext() also chooses between CppExtension and CUDAExtension by calling
+torch.cuda.is_available() at build time, so what got built depended on whether
+a GPU happened to be visible to the builder.
+
+diff --git a/setup.py b/setup.py
+index 68c4dfc..992cf73 100644
+--- a/setup.py
++++ b/setup.py
+@@ -129,30 +129,12 @@ def get_requirements(filename='requirements.txt'):
+ 
+ 
+ if __name__ == '__main__':
++    # The deformable-conv, fused-act and upfirdn2d ops come from BasicSR
++    # and no NAFNet architecture uses them: the only import sites, in
++    # basicsr/models/archs/arch_util.py, are commented out.
++    ext_modules = []
+     if '--no_cuda_ext' in sys.argv:
+-        ext_modules = []
+         sys.argv.remove('--no_cuda_ext')
+-    else:
+-        ext_modules = [
+-            make_cuda_ext(
+-                name='deform_conv_ext',
+-                module='basicsr.models.ops.dcn',
+-                sources=['src/deform_conv_ext.cpp'],
+-                sources_cuda=[
+-                    'src/deform_conv_cuda.cpp',
+-                    'src/deform_conv_cuda_kernel.cu'
+-                ]),
+-            make_cuda_ext(
+-                name='fused_act_ext',
+-                module='basicsr.models.ops.fused_act',
+-                sources=['src/fused_bias_act.cpp'],
+-                sources_cuda=['src/fused_bias_act_kernel.cu']),
+-            make_cuda_ext(
+-                name='upfirdn2d_ext',
+-                module='basicsr.models.ops.upfirdn2d',
+-                sources=['src/upfirdn2d.cpp'],
+-                sources_cuda=['src/upfirdn2d_kernel.cu']),
+-        ]
+ 
+     write_version_py()
+     setup(

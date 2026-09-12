@@ -1,0 +1,28 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Read the generated version through an explicit namespace
+
+get_version() exec()s basicsr/version.py and then reads __version__ back out
+of locals(). Python 3.13 implemented PEP 667, so locals() inside a function
+returns an independent snapshot that exec() does not write through, and the
+lookup raises KeyError: '__version__'.
+
+Passing an explicit globals dict to exec() and reading from that works on
+every version.
+
+diff --git a/setup.py b/setup.py
+index ab13069..68c4dfc 100644
+--- a/setup.py
++++ b/setup.py
+@@ -88,9 +88,10 @@ version_info = ({})
+ 
+ 
+ def get_version():
++    namespace = {}
+     with open(version_file, 'r') as f:
+-        exec(compile(f.read(), version_file, 'exec'))
+-    return locals()['__version__']
++        exec(compile(f.read(), version_file, 'exec'), namespace)
++    return namespace['__version__']
+ 
+ 
+ def make_cuda_ext(name, module, sources, sources_cuda=None):
