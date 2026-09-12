@@ -39,6 +39,7 @@ amiri
 analyzer
 anari
 andyjsmith
+angelscript
 anomalyco
 antoniovazquezblanco
 antonmedv
@@ -318,6 +319,7 @@ ddownload
 ddrivers
 ddspp
 deark
+deathkiller
 deband
 debugpy
 decli
@@ -388,6 +390,7 @@ dman
 dmio
 dmupenplusapi
 dncil
+dncine
 dndebug
 dnfd
 dnfile
@@ -786,6 +789,7 @@ isystem
 itertools
 iuse
 iwholename
+ixwebsocket
 jackaudio
 jaconv
 jakcron
@@ -949,6 +953,7 @@ libmspack
 libnnedi
 libogc
 libogg
+libopenmpt
 libos
 libpcap
 libpcre
@@ -1331,6 +1336,7 @@ opencode
 openexr
 openfortivpn
 openlara
+openmpt
 openocd
 openpyxl
 openrc
@@ -1377,6 +1383,7 @@ pdbpp
 pdepend
 pdfminer
 pdfplumber
+pdqsort
 peds
 pefile
 pegtl
