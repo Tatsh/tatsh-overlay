@@ -31,6 +31,7 @@ DEPEND="${RDEPEND}"
 src_compile() {
 	# Mirrors src/platform/nix/build.sh, which is upstream's desktop Linux
 	# build. It has no Makefile, just this one command.
+	# shellcheck disable=SC2046,SC2086
 	edo $(tc-getCXX) ${CXXFLAGS} ${LDFLAGS} \
 		-std=c++11 -fno-exceptions -fno-rtti \
 		-Wno-invalid-source-encoding -DNDEBUG -D_POSIX_THREADS \
