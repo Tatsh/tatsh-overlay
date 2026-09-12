@@ -3,7 +3,11 @@
 
 EAPI=8
 
-inherit cmake flag-o-matic xdg
+# Upstream requires find_package(Python3 3.12) for the shader generator and the
+# optional Pillow-based cursor header regeneration.
+PYTHON_COMPAT=( python3_{12..15} )
+
+inherit cmake flag-o-matic python-any-r1 xdg
 
 # Upstream's only tag is a rolling "continuous" one, so this pins a commit.
 MY_COMMIT="6141927738a64810a687a27eb61f5760d36733a5"
@@ -37,7 +41,7 @@ RDEPEND="
 	net-libs/libwebsockets[client]
 "
 DEPEND="${RDEPEND}"
-BDEPEND="dev-lang/python:*"
+BDEPEND="${PYTHON_DEPS}"
 
 PATCHES=( "${FILESDIR}/${P}-vendor-libweaver.patch" )
 
