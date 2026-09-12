@@ -18,6 +18,7 @@ src_prepare() {
 	default
 
 	# Upstream never passes LDFLAGS when linking.
+	# shellcheck disable=SC2016
 	sed -i -e 's|$(CC) $(CFLAGS) $^ -o bin/|$(CC) $(CFLAGS) $(LDFLAGS) $^ -o bin/|' \
 		Makefile || die
 }
