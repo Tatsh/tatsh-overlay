@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit meson
+inherit desktop meson xdg
 
 MY_PN="TRX"
 
@@ -52,6 +52,10 @@ src_install() {
 	# Upstream only installs its own data files on macOS.
 	insinto "/usr/share/${PN}"
 	doins -r data/trx/ship/.
+
+	# Upstream only wires its icon up for the macOS bundle and Windows resources.
+	newicon -s 256 data/trx/icon.png "${PN}.png"
+	make_desktop_entry TRX TRX "${PN}" Game
 
 	einstalldocs
 }
