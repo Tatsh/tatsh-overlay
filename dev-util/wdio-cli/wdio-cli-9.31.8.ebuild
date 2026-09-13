@@ -40,7 +40,8 @@ src_prepare() {
 src_install() {
 	nodejs-mod_src_install
 
-	local bin="/usr/$(get_libdir)/node_modules/${PN}/node_modules/@wdio/cli/bin/wdio.js"
+	local bin
+	bin="/usr/$(get_libdir)/node_modules/${PN}/node_modules/@wdio/cli/bin/wdio.js"
 	fperms 0755 "${bin}"
 	dosym "..${bin#/usr}" /usr/bin/wdio
 }

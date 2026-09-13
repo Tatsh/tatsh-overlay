@@ -50,10 +50,10 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-		-DGGML_CUDA=$(usex cuda)
+		"-DGGML_CUDA=$(usex cuda)"
 		-DGGML_NATIVE=OFF
-		-DGGML_VULKAN=$(usex vulkan)
-		-DTRELLIS_WEBP=$(usex webp)
+		"-DGGML_VULKAN=$(usex vulkan)"
+		"-DTRELLIS_WEBP=$(usex webp)"
 	)
 
 	if use cuda; then

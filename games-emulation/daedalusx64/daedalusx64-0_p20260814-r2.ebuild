@@ -64,7 +64,7 @@ pkg_postinst() {
 	xdg_pkg_postinst
 
 	elog "Put ROMs in \${XDG_DATA_HOME}/DaedalusX64/Roms, by default"
-	elog "~/.local/share/DaedalusX64/Roms. Saves and save states are written"
+	elog "\${HOME}/.local/share/DaedalusX64/Roms. Saves and save states are written"
 	elog "beside them."
 	elog
 	elog "F1 opens the in-game menu, F11 toggles fullscreen and Esc returns"
