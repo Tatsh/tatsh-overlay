@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake desktop xdg
 
 DESCRIPTION="GTA Vice City decompiled and re-built."
 HOMEPAGE="https://web.archive.org/web/20210905122315/https://github.com/GTAmodding/re3/tree/miami"
@@ -69,4 +69,7 @@ src_install() {
 	cmake_src_install
 	dosym "../share/${PN}/reVC" /usr/bin/reVC
 	einstalldocs
+	# Upstream is a source release with no desktop entry or icon, so use a stock
+	# freedesktop icon name.
+	make_desktop_entry reVC 'Grand Theft Auto: Vice City' applications-games Game
 }
