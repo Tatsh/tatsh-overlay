@@ -76,6 +76,7 @@ BDEPEND="dev-lang/python:*"
 PATCHES=(
 	"${FILESDIR}/${P}-torch-single-build.patch"
 	"${FILESDIR}/${P}-use-torch-cli.patch"
+	"${FILESDIR}/${P}-dialogs-via-pfd.patch"
 )
 
 src_prepare() {
@@ -137,10 +138,26 @@ src_compile() {
 }
 
 src_install() {
-	dobin "${BUILD_DIR}/${MY_PN}"
+	# libultraship resolves the port's own assets relative to the executable
+	# and its writable state relative to the working directory, so the
+	# executable goes where starship.o2r can sit beside it and a wrapper picks
+	# the writable directory. SHIP_HOME is libultraship's own override for the
+	# latter; the cd is for the paths that ignore it.
+	exeinto "/usr/libexec/${PN}"
+	doexe "${BUILD_DIR}/${MY_PN}"
 
-	insinto "/usr/share/${PN}"
+	insinto "/usr/libexec/${PN}"
 	doins "${BUILD_DIR}/${PN}.o2r"
+
+	cat > "${T}/${MY_PN}" <<-EOF || die
+		#!/bin/sh
+		SHIP_HOME="\${XDG_DATA_HOME:-\${HOME}/.local/share}/${PN}"
+		export SHIP_HOME
+		mkdir -p "\${SHIP_HOME}" || exit 1
+		cd "\${SHIP_HOME}" || exit 1
+		exec "${EPREFIX}/usr/libexec/${PN}/${MY_PN}" "\$@"
+	EOF
+	dobin "${T}/${MY_PN}"
 
 	# Upstream's Starship.desktop is written for an AppImage and asks for the far
 	# too generic Icon=logo. Generate an entry for the installed binary instead,
@@ -155,6 +172,9 @@ pkg_postinst() {
 	xdg_pkg_postinst
 
 	elog "${MY_PN} needs assets extracted from a US 1.0 or 1.1 Star Fox 64"
-	elog "ROM. Run it once and it will ask for the ROM; the port's own assets"
-	elog "are installed in /usr/share/${PN}."
+	elog "ROM. Run it once and it will ask for the ROM, then write sf64.o2r"
+	elog "and everything else it saves to \${XDG_DATA_HOME}/${PN}."
+	elog
+	elog "Asking for the ROM needs one of zenity, kdialog, matedialog or qarma"
+	elog "installed; without one ${MY_PN} cannot prompt and will exit."
 }

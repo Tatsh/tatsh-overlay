@@ -1,0 +1,88 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Show the dialogs through portable-file-dialogs
+
+SDL implements message boxes itself only under X11; everywhere else it shells
+out to zenity, so on a Wayland session without zenity installed every box
+fails. SDL_ShowMessageBox() then returns -1 without touching the int handed to
+it, and ShowYesNoBox() declared that int uninitialised and compared whatever
+was in it against IDYES. The first-run "Please provide a Starfox 64 ROM" box
+therefore never appeared and the game exited 1 with nothing on stdout.
+
+The file dialogs already go through portable-file-dialogs, which also knows
+about kdialog, matedialog and qarma, so route the message boxes through it as
+well. When it finds no helper at all, say so and answer no, rather than
+whatever the stack happened to hold.
+
+--- a/src/port/Engine.cpp
++++ b/src/port/Engine.cpp
+@@ -3,6 +3,7 @@
+ #include "StringHelper.h"
+ 
+ #include "extractor/GameExtractor.h"
++#include "portable-file-dialogs.h"
+ #include "libultraship/src/Context.h"
+ #include "libultraship/src/controller/controldevice/controller/mapping/ControllerDefaultMappings.h"
+ #include "resource/type/ResourceType.h"
+@@ -563,36 +564,44 @@
+ #if defined(__SWITCH__)
+     SPDLOG_ERROR(message);
+ #else
+-    SDL_ShowSimpleMessageBox(type, title, message, nullptr);
++    // SDL has no message box of its own outside of X11 and shells out to
++    // zenity, which is not the only thing a desktop might have. The file
++    // dialogs already go through portable-file-dialogs, which knows about
++    // kdialog and qarma as well, so these do too.
++    if (pfd::settings::available()) {
++        pfd::icon icon = pfd::icon::error;
++        if (type == SDL_MESSAGEBOX_WARNING) {
++            icon = pfd::icon::warning;
++        } else if (type == SDL_MESSAGEBOX_INFORMATION) {
++            icon = pfd::icon::info;
++        }
++        pfd::message(title, message, pfd::choice::ok, icon).result();
++    }
+     SPDLOG_ERROR(message);
+ #endif
+ }
+ 
+ int GameEngine::ShowYesNoBox(const char* title, const char* box) {
+-    int ret;
+ #ifdef _WIN32
+-    ret = MessageBoxA(nullptr, box, title, MB_YESNO | MB_ICONQUESTION);
++    return MessageBoxA(nullptr, box, title, MB_YESNO | MB_ICONQUESTION);
+ #elif defined(__SWITCH__)
+     SPDLOG_ERROR(box);
+     return IDYES;
+ #else
+-    SDL_MessageBoxData boxData = { 0 };
+-    SDL_MessageBoxButtonData buttons[2] = { { 0 } };
++    // Answering IDNO when there is nothing to ask with is a decision; the
++    // uninitialised int this used to return when SDL_ShowMessageBox() failed
++    // was not. That is what made a missing zenity look like the game silently
++    // refusing to start.
++    if (!pfd::settings::available()) {
++        SPDLOG_ERROR("No dialog helper available (zenity, kdialog, matedialog or qarma); assuming no");
++        SPDLOG_ERROR(box);
++        return IDNO;
++    }
+ 
+-    buttons[0].buttonid = IDYES;
+-    buttons[0].text = "Yes";
+-    buttons[0].flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;
+-    buttons[1].buttonid = IDNO;
+-    buttons[1].text = "No";
+-    buttons[1].flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT;
+-    boxData.numbuttons = 2;
+-    boxData.flags = SDL_MESSAGEBOX_INFORMATION;
+-    boxData.message = box;
+-    boxData.title = title;
+-    boxData.buttons = buttons;
+-    SDL_ShowMessageBox(&boxData, &ret);
++    return pfd::message(title, box, pfd::choice::yes_no, pfd::icon::question).result() == pfd::button::yes
++               ? IDYES
++               : IDNO;
+ #endif
+-    return ret;
+ }
+ 
+ bool GameEngine::HasVersion(SF64Version ver){
