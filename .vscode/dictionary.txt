@@ -1238,6 +1238,7 @@ nandinagari
 nanobind
 nanobind's
 nanomdm
+narmjep
 naskh
 nasm
 nativeaot
@@ -2101,6 +2102,7 @@ xvic
 xvideo
 xxhash
 yabause
+yamls
 yapf
 yasm
 yata
