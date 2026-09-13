@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake xdg
 
 DESCRIPTION="Guitar Hero / Rock Band clone in C with SDL and OpenGL (archived project)."
 HOMEPAGE="https://github.com/Tatsh/freeband"
