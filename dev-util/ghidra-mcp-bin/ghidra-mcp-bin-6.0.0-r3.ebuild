@@ -15,14 +15,14 @@ DESCRIPTION="Ghidra extension exposing program data over MCP for AI-assisted ana
 HOMEPAGE="https://github.com/bethington/ghidra-mcp"
 SRC_URI="https://github.com/bethington/${MY_PN}/releases/download/v${PV}/${GHIDRA_EXT_NAME}-${PV}.zip
 	-> ${P}.zip
-	scripts? ( https://github.com/bethington/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
-		-> ${MY_PN}-${PV}.tar.gz )"
+	https://github.com/bethington/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
+	-> ${MY_PN}-${PV}.tar.gz"
 S="${WORKDIR}/${GHIDRA_EXT_NAME}"
 
 LICENSE="Apache-2.0"
 KEYWORDS="~amd64"
-# Upstream's release archive contains the extension alone. The scripts live in
-# the repository and are fetched from there.
+# Upstream's release archive contains the extension alone. The scripts and the
+# documentation live in the repository and are fetched from there.
 IUSE="scripts"
 
 src_install() {
@@ -33,10 +33,14 @@ src_install() {
 	fi
 
 	ghidra-extension_src_install
+
+	# archive/ is superseded material upstream keeps for its own history.
+	rm -r "${WORKDIR}/${MY_PN}-${PV}/docs/archive" || die
+	dodoc -r "${WORKDIR}/${MY_PN}-${PV}/docs"
 }
 
 pkg_postinst() {
 	elog "The extension runs an embedded HTTP server inside Ghidra. To drive it"
 	elog "from an MCP client you also need upstream's separate Python bridge,"
-	elog "ghidra_mcp_bridge, which is not packaged here."
+	elog "which is dev-python/ghidra-mcp-bridge."
 }
