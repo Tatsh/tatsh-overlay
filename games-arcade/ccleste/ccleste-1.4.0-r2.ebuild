@@ -31,7 +31,21 @@ src_compile() {
 }
 
 src_install() {
-	dobin "${PN}"
+	# The gamepad mapping file is written next to the working directory unless
+	# CCLESTE_INPUT_CFG_PATH says otherwise, so a wrapper points it at the
+	# configuration directory rather than wherever the game was started from.
+	exeinto "/usr/libexec/${PN}"
+	doexe "${PN}"
+
+	cat > "${T}/${PN}" <<-EOF || die
+		#!/bin/sh
+		CCLESTE_CFG_DIR="\${XDG_CONFIG_HOME:-\${HOME}/.config}/${PN}"
+		CCLESTE_INPUT_CFG_PATH="\${CCLESTE_INPUT_CFG_PATH:-\${CCLESTE_CFG_DIR}/input-cfg.txt}"
+		export CCLESTE_INPUT_CFG_PATH
+		mkdir -p "\$(dirname "\${CCLESTE_INPUT_CFG_PATH}")" || exit 1
+		exec "${EPREFIX}/usr/libexec/${PN}/${PN}" "\$@"
+	EOF
+	dobin "${T}/${PN}"
 
 	insinto "/usr/share/${PN}"
 	doins data/* gamecontrollerdb.txt
@@ -45,6 +59,7 @@ src_install() {
 pkg_postinst() {
 	xdg_pkg_postinst
 
-	elog "The gamepad mapping file is written to ccleste-input-cfg.txt in the"
-	elog "current directory. Set CCLESTE_INPUT_CFG_PATH to choose another path."
+	elog "The gamepad mapping file is written to input-cfg.txt in"
+	elog "\${XDG_CONFIG_HOME}/${PN}. Set CCLESTE_INPUT_CFG_PATH to choose"
+	elog "another path."
 }
