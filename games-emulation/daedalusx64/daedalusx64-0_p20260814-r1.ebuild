@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake desktop xdg
 
 MY_PN="daedalus"
 MY_COMMIT="4f5c6fb045358044b64173fac619db5496cc2328"
@@ -46,7 +46,16 @@ src_configure() {
 	cmake_src_configure
 }
 
+src_install() {
+	cmake_src_install
+	# Upstream ships no Linux icon; this is the project artwork from the 3DS port.
+	newicon -s 48 Source/SysCTR/Resources/icon.png "${PN}.png"
+	make_desktop_entry daedalus DaedalusX64 "${PN}" Game
+}
+
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	elog "Put ROMs in one of:"
 	elog "  \${XDG_DATA_HOME}/DaedalusX64/Roms"
 	elog "  the Roms directory under .local/share/DaedalusX64 in your home"
