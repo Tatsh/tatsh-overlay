@@ -88,6 +88,7 @@ BDEPEND="dev-lang/python:*"
 PATCHES=(
 	"${FILESDIR}/${P}-torch-single-build.patch"
 	"${FILESDIR}/${P}-use-torch-cli.patch"
+	"${FILESDIR}/${P}-dialogs-via-pfd.patch"
 )
 
 src_prepare() {
@@ -152,10 +153,26 @@ src_compile() {
 }
 
 src_install() {
-	newbin "${BUILD_DIR}/${MY_TARGET}" "${PN}"
+	# libultraship looks for the port's own assets next to the executable and
+	# writes everything else relative to the working directory, so the
+	# executable goes where spaghetti.o2r can sit beside it and a wrapper picks
+	# the writable directory. SHIP_HOME is libultraship's own override for the
+	# latter; the cd is for the paths that ignore it.
+	exeinto "/usr/libexec/${PN}"
+	newexe "${BUILD_DIR}/${MY_TARGET}" "${MY_TARGET}"
 
-	insinto "/usr/share/${PN}"
+	insinto "/usr/libexec/${PN}"
 	doins "${BUILD_DIR}/spaghetti.o2r"
+
+	cat > "${T}/${PN}" <<-EOF || die
+		#!/bin/sh
+		SHIP_HOME="\${XDG_DATA_HOME:-\${HOME}/.local/share}/${PN}"
+		export SHIP_HOME
+		mkdir -p "\${SHIP_HOME}" || exit 1
+		cd "\${SHIP_HOME}" || exit 1
+		exec "${EPREFIX}/usr/libexec/${PN}/${MY_TARGET}" "\$@"
+	EOF
+	dobin "${T}/${PN}"
 
 	# Upstream's SpaghettiKart.desktop is written for an AppImage: it runs
 	# Spaghettify and asks for the far too generic Icon=icon. Generate an entry
@@ -170,6 +187,9 @@ pkg_postinst() {
 	xdg_pkg_postinst
 
 	elog "${MY_PN} needs assets extracted from a US Mario Kart 64 ROM. Run it"
-	elog "once and it will ask for the ROM; the port's own assets are"
-	elog "installed in /usr/share/${PN}."
+	elog "once and it will ask for the ROM, then write mk64.o2r and everything"
+	elog "else it saves to \${XDG_DATA_HOME}/${PN}."
+	elog
+	elog "Asking for the ROM needs one of zenity, kdialog, matedialog or qarma"
+	elog "installed; without one ${MY_PN} cannot prompt and will exit."
 }
