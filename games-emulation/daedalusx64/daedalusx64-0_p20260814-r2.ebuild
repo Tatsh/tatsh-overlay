@@ -38,6 +38,8 @@ PATCHES=(
 	"${FILESDIR}/${P}-resource-path.patch"
 	"${FILESDIR}/${P}-glew-no-glx-display.patch"
 	"${FILESDIR}/${P}-draw-wrapped-line.patch"
+	"${FILESDIR}/${P}-desktop-key-names.patch"
+	"${FILESDIR}/${P}-pause-menu-key.patch"
 )
 
 src_configure() {
@@ -63,6 +65,9 @@ pkg_postinst() {
 	elog "Put ROMs in \${XDG_DATA_HOME}/DaedalusX64/Roms, by default"
 	elog "~/.local/share/DaedalusX64/Roms. Saves and save states are written"
 	elog "beside them."
+	elog
+	elog "F1 opens the in-game menu, F11 toggles fullscreen and Esc returns"
+	elog "to the ROM list."
 	elog
 	elog "Preferences.ini and the controller configuration live in"
 	elog "\${XDG_CONFIG_HOME}/DaedalusX64, and override the copies installed"

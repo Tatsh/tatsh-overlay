@@ -1,0 +1,64 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Name the keys the desktop build actually binds
+
+The ROM list legend names PSP face buttons, which is no help on a keyboard,
+and two of the five name something this build never bound. Nothing anywhere
+in the ROM selector handles square, so "([ ]) -> Settings" does nothing at
+all; the pages are changed with the shoulder buttons.
+
+"(SELECT) -> Delete" did not work either, for a different reason: the select
+handler calls exit(0) before reaching the one that arms the deletion, so the
+documented delete was unreachable and the key instead quit from inside the
+render loop, tearing down the renderer and the graphics context while they
+were still in use. Escape already quits through the SDL event handler, so
+drop it and let select do what the legend says.
+
+--- a/Source/UI/RomSelectorComponent.cpp
++++ b/Source/UI/RomSelectorComponent.cpp
+@@ -479,12 +479,26 @@
+ {
+ 	static u32 count = 0;
+ 
++#ifdef DAEDALUS_PSP
+ 	const char * const		message[] =
+ 	{	"(X) -> Load",
+ 		"([ ]) -> Settings",
+ 		"(/\\) -> File Names",
+ 		"(HOME) -> Quit",
+ 		"(SELECT) -> Delete"};
++	const char * const		confirm_message = "(X) -> Confirm";
++#else
++	// Named for the PSP face buttons, which is no help on a keyboard, and two
++	// of them named something this build never bound: nothing here handles
++	// square, and the pages are changed with the shoulder buttons.
++	const char * const		message[] =
++	{	"(Enter) -> Load",
++		"(A/S) -> Change Page",
++		"(X) -> File Names",
++		"(Esc) -> Quit",
++		"(Z) -> Delete"};
++	const char * const		confirm_message = "(Enter) -> Confirm";
++#endif
+ 
+ 
+ 	RenderPreview();
+@@ -513,7 +527,7 @@
+ 
+ 	if(mRomDelete)
+ 	{
+-		mpContext->DrawTextAlign(0,SCREEN_WIDTH,AT_RIGHT,CATEGORY_TEXT_TOP + mpContext->GetFontHeight(),"(X) -> Confirm", color);
++		mpContext->DrawTextAlign(0,SCREEN_WIDTH,AT_RIGHT,CATEGORY_TEXT_TOP + mpContext->GetFontHeight(),confirm_message, color);
+ 	}
+ 	else
+ 	{
+@@ -596,10 +610,6 @@
+ 				mCurrentSelection++;
+ 			}
+ 		}
+-		if(new_buttons & PSP_CTRL_SELECT)
+-		{
+-			exit(0);
+-		}
+ 		if(new_buttons & PSP_CTRL_CROSS && mRomDelete)	// DONT CHANGE ORDER
+ 		{
+ 			remove( mSelectedRom.c_str() );

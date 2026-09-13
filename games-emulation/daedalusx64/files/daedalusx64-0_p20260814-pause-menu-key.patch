@@ -1,0 +1,86 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Give the in-game pause menu a key that is not an N64 button
+
+The pause menu is opened with select on the PSP, and UIContext.h defines
+PSP_CTRL_SELECT as Z_TRIG everywhere else, which the SDL input manager binds
+to Z. Pressing Z in game therefore worked the N64 Z trigger and opened the
+menu over the top of it at the same time, so the trigger was unusable.
+
+Raise a flag from the key handler on F1, which is not bound to anything on the
+controller, and have the frame loop consume that instead. The flag ignores key
+repeats, and is dropped again once the menu closes, because the pause screen
+pumps events of its own while it is up.
+
+--- a/Source/Input/SDL/InputManagerSDL.cpp
++++ b/Source/Input/SDL/InputManagerSDL.cpp
+@@ -269,6 +269,9 @@
+ 	return 0;
+ }
+ 
++// Set from the key handler and consumed by the frame loop in SysPosix.
++bool gPauseMenuRequested = false;
++
+ static bool toggle_fullscreen = false;
+ static s16 button = 0;
+ void sceCtrlPeekBufferPositive(SceCtrlData *data, int count){
+@@ -296,6 +299,15 @@
+ 				CPU_Halt("Window Closed");	// User pressed escape to exit
+ 			}
+ 
++			// The pause menu is opened with select on the PSP, and on this
++			// platform PSP_CTRL_SELECT is the N64 Z trigger, so the key that
++			// works the trigger in game also opened the menu over the top of
++			// it. F1 is not an N64 button.
++			if (event.key.keysym.scancode == SDL_SCANCODE_F1 && event.key.repeat == 0)
++			{
++				gPauseMenuRequested = true;
++			}
++
+ 			if (event.key.keysym.scancode == SDL_SCANCODE_F11)
+ 			{
+ 				if (toggle_fullscreen == false) {
+--- a/Source/SysPosix/main.cpp
++++ b/Source/SysPosix/main.cpp
+@@ -67,23 +67,17 @@
+ 	DumpDynarecStats(elapsed_time);
+ #endif
+ 
+-	// Enter debug menu as soon as select is pressed
+-	static u32 oldButtons = 0;
+-	SceCtrlData pad;
++	// The pause menu is opened with select on the PSP, and PSP_CTRL_SELECT is
++	// defined as the N64 Z trigger on this platform, so this used to open the
++	// menu over the game every time the trigger was used. The key handler in
++	// the SDL input manager raises this instead.
++	extern bool gPauseMenuRequested;
+ 	bool activate_pause_menu = false;
+ 
+-	sceCtrlPeekBufferPositive(&pad, 1);
+-
+-	// If KernelButtons.prx not found. Use select for pause instead
+-	if(oldButtons != pad.Buttons)
++	if(gPauseMenuRequested)
+ 	{
+-		// if( gCheatsEnabled && (pad.Buttons & PSP_CTRL_SELECT) )
+-		// {
+-		// 	CheatCodes_Activate( GS_BUTTON );
+-		// }
+-
+-		if(pad.Buttons & PSP_CTRL_SELECT)
+-				activate_pause_menu = true;
++		gPauseMenuRequested = false;
++		activate_pause_menu = true;
+ 	}
+ 
+ 
+@@ -104,6 +98,10 @@
+ 
+ 		// Commit the preferences database before starting to run
+ 		// CPreferences::Get()->Commit();
++
++		// The pause screen pumps events of its own, so drop anything it
++		// raised on the way out rather than reopening immediately.
++		gPauseMenuRequested = false;
+ 	}
+ 
+ //	Reset the elapsed time to avoid glitches when we restart
