@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit desktop wrapper
+inherit desktop wrapper xdg
 
 DESCRIPTION="Quick diagnostic tool that checks the health of your drive."
 HOMEPAGE="https://www.seagate.com/support/downloads/seatools/"
