@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake xdg
 
 DESCRIPTION="Multiplatform, mobile-focused WeeChat relay client."
 HOMEPAGE="https://github.com/LithApp/lith"
