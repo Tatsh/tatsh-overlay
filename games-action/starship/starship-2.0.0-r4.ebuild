@@ -10,6 +10,9 @@ MY_PN="Starship"
 # Submodules.
 LUS_COMMIT="45c4f8d6c19c6176f5e0918917c655ea09ecc212"
 TORCH_COMMIT="f75facb20883570ed091e8ae733ec0539f606e57"
+# libultraship looks for this beside the executable and upstream ships no
+# copy of it.
+GAMECONTROLLERDB_COMMIT="5a12daa568d19344f9b6e9286ef5929833b25c7c"
 # Fetched with FetchContent by Starship itself.
 DR_LIBS_COMMIT="da35f9d6c7374a95353fd1df1d394d44ab66cf01"
 # Fetched with FetchContent by libultraship.
@@ -51,7 +54,9 @@ SRC_URI="https://github.com/HarbourMasters/${MY_PN}/archive/refs/tags/v${PV}.tar
 	https://github.com/leethomason/tinyxml2/archive/refs/tags/${TINYXML2_PV}.tar.gz
 	-> tinyxml2-${TINYXML2_PV}.tar.gz
 	https://github.com/jbeder/yaml-cpp/archive/${YAML_CPP_COMMIT}.tar.gz
-	-> yaml-cpp-${YAML_CPP_COMMIT}.tar.gz"
+	-> yaml-cpp-${YAML_CPP_COMMIT}.tar.gz
+	https://raw.githubusercontent.com/mdqinc/SDL_GameControllerDB/${GAMECONTROLLERDB_COMMIT}/gamecontrollerdb.txt
+	-> gamecontrollerdb.txt-${GAMECONTROLLERDB_COMMIT}"
 S="${WORKDIR}/${MY_PN}-${PV}"
 
 LICENSE="CC0-1.0"
@@ -148,6 +153,10 @@ src_install() {
 
 	insinto "/usr/libexec/${PN}"
 	doins "${BUILD_DIR}/${PN}.o2r"
+
+	# libultraship looks for the controller database beside the executable
+	# and nowhere useful after that, and upstream ships no copy of it.
+	newins "${DISTDIR}/gamecontrollerdb.txt-${GAMECONTROLLERDB_COMMIT}" gamecontrollerdb.txt
 
 	# This Torch looks for config.yml in the working directory and nowhere
 	# else, so the asset definitions the extractor reads are installed here and
