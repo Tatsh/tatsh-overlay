@@ -842,6 +842,7 @@ kbnf
 kcompletion
 kcoreaddons
 kddockwidgets
+kdialog
 kdir
 kdotool
 keepdir
@@ -1012,6 +1013,7 @@ libtrx
 libucl
 libudev
 libultraship
+libultraship's
 libunistring
 libunity
 libunwind
@@ -1109,6 +1111,7 @@ markdownify
 markitdown
 markreidvfx
 marzer
+matedialog
 materialui
 math
 matplotlib
@@ -1537,6 +1540,7 @@ pyvboxmanage
 pyxdg
 pyyaml
 pyzmq
+qarma
 qatom
 qcoro
 qcustomplot
@@ -2097,6 +2101,7 @@ yuzu
 zarchive
 zaufi
 zeldaret
+zenity
 zenkaku
 zenyd
 zerofill
