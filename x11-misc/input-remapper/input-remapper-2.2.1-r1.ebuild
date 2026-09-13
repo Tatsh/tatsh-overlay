@@ -39,6 +39,9 @@ src_prepare() {
 src_install() {
 	distutils-r1_src_install
 	domenu "data/${PN}-gtk.desktop"
+	# The desktop entry asks for Icon=input-remapper, so it has to land in the
+	# icon theme; the copy below goes to the app's own data directory.
+	doicon -s scalable "data/${PN}.svg"
 	insinto /usr/share/metainfo
 	doins "data/io.github.sezanzeb.${PN/-/_}.metainfo.xml"
 	insinto /usr/share/polkit-1/actions
