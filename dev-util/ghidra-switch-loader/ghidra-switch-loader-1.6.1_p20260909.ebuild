@@ -33,10 +33,9 @@ DEPEND+=" dev-java/lz4-java:0
 src_prepare() {
 	ghidra-extension_src_prepare
 
-	# A build file; upstream's own archive does not contain it either.
-	rm gradle.properties || die
-
 	mkdir -p lib || die
-	cp "$(java-pkg_getjar lz4-java lz4-java.jar)" lib/ || die
-	cp "$(java-pkg_getjar zstd-jni zstd-jni.jar)" lib/ || die
+	# --build-only: the jars are copied in, so nothing is resolved from the
+	# system at runtime and neither package belongs in RDEPEND.
+	cp "$(java-pkg_getjar --build-only lz4-java lz4-java.jar)" lib/ || die
+	cp "$(java-pkg_getjar --build-only zstd-jni zstd-jni.jar)" lib/ || die
 }
