@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit desktop toolchain-funcs
+inherit desktop toolchain-funcs xdg
 
 DESCRIPTION="C source port of Celeste Classic for the PICO-8."
 HOMEPAGE="https://github.com/lemon32767/ccleste"
@@ -43,6 +43,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	elog "The gamepad mapping file is written to ccleste-input-cfg.txt in the"
 	elog "current directory. Set CCLESTE_INPUT_CFG_PATH to choose another path."
 }
