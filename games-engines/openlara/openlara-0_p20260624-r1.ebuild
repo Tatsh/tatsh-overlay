@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit edo toolchain-funcs
+inherit desktop edo toolchain-funcs xdg
 
 MY_PN="OpenLara"
 
@@ -47,6 +47,9 @@ src_compile() {
 
 src_install() {
 	dobin "${PN}"
+	# The only icons upstream are console port assets (a 32x32 greyscale GCW0
+	# icon), so use a stock freedesktop name instead.
+	make_desktop_entry "${PN}" OpenLara applications-games Game
 	einstalldocs
 }
 
