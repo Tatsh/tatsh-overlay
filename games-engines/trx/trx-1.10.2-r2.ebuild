@@ -9,8 +9,7 @@ MY_PN="TRX"
 
 DESCRIPTION="Reimplementation of the Tomb Raider 1 and 2 engines."
 HOMEPAGE="https://github.com/LostArtefacts/TRX"
-SRC_URI="https://github.com/LostArtefacts/${MY_PN}/archive/refs/tags/${PN}-${PV}.tar.gz
-	-> ${P}.tar.gz"
+SRC_URI="https://github.com/LostArtefacts/${MY_PN}/archive/refs/tags/${P}.tar.gz"
 S="${WORKDIR}/${MY_PN}-${PN}-${PV}"
 
 LICENSE="GPL-3"
@@ -26,7 +25,7 @@ RDEPEND="
 	media-libs/libglvnd
 	media-libs/libsdl2
 	media-video/ffmpeg:=
-	sys-libs/zlib:=
+	virtual/zlib:=
 "
 DEPEND="${RDEPEND}"
 
@@ -61,6 +60,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	elog "${MY_PN} needs the data files from an original Tomb Raider install."
 	elog "The files shipped with ${MY_PN} itself are in /usr/share/${PN}."
 }
