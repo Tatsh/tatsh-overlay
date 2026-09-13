@@ -1,0 +1,62 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Resolve the UI font the same way as every other resource
+
+TTF_OpenFont() uses the path exactly as given, and "Resources/OpenSans.ttf" is
+relative, so it only resolves when the program is run from its own directory.
+Route it through setBasePath() like the rest of the resource loading.
+
+The NULL check also ran after the font was first used: TTF_SetFontStyle() does
+not tolerate a NULL font, so a failed open segfaulted immediately after
+printing nothing, instead of reporting itself. Check first, then use.
+
+--- a/Source/SysGL/Graphics/DrawTextSDL.cpp
++++ b/Source/SysGL/Graphics/DrawTextSDL.cpp
+@@ -9,8 +9,11 @@
+ #endif
+ 
+ #include "UI/DrawText.h"
++#include "Utility/Paths.h"
+ #include "Utility/Translate.h"
+ 
++#include <string>
++
+ 
+ 
+ 
+@@ -25,21 +28,31 @@
+ 
+ void CDrawText::Initialise()
+ {
++    // TTF_OpenFont() uses the path exactly as given, so a relative one only
++    // resolves when the program is run from its own directory. setBasePath()
++    // finds the copy installed alongside the program, the same way the rest of
++    // the resource loading already does.
++    const std::string font = setBasePath("Resources/OpenSans.ttf").string();
++
+     #ifdef DAEDALUS_PSP
+         // I dunno, maybe 8?
+-        gFonts[CDrawText::F_REGULAR] = TTF_OpenFont("Resources/OpenSans.ttf", 8);
+-        gFonts[CDrawText::F_LARGE_BOLD] = TTF_OpenFont("Resources/OpenSans.ttf", 8);
++        gFonts[CDrawText::F_REGULAR] = TTF_OpenFont(font.c_str(), 8);
++        gFonts[CDrawText::F_LARGE_BOLD] = TTF_OpenFont(font.c_str(), 8);
+      #else
+-        gFonts[CDrawText::F_REGULAR] = TTF_OpenFont("Resources/OpenSans.ttf", 48);
+-        gFonts[CDrawText::F_LARGE_BOLD] = TTF_OpenFont("Resources/OpenSans.ttf", 48);
++        gFonts[CDrawText::F_REGULAR] = TTF_OpenFont(font.c_str(), 48);
++        gFonts[CDrawText::F_LARGE_BOLD] = TTF_OpenFont(font.c_str(), 48);
+     #endif
+-    TTF_SetFontStyle(gFonts[CDrawText::F_LARGE_BOLD], TTF_STYLE_BOLD);
+ 
++    // Checked before the font is used, not after: TTF_SetFontStyle() does not
++    // tolerate a NULL font, so a failed open used to crash here rather than
++    // report itself.
+     if (gFonts[0] == 0)
+     {
+ 		printf( "SDL could not open TTF Font! SDL Error: %s\n", SDL_GetError() );
++		return;
+ 	}
+ 
++    TTF_SetFontStyle(gFonts[CDrawText::F_LARGE_BOLD], TTF_STYLE_BOLD);
+ }
+ 
+ void CDrawText::Destroy()

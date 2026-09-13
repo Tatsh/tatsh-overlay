@@ -1,0 +1,154 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Resolve the remaining relative paths through setBasePath()
+
+The logo, the ROM preview directory, the ROM directory and the two files the
+settings reset removes are all relative paths handed straight to the loader, so
+they only resolve when the program is run from its own directory. Route them
+through setBasePath() like the rest of the path handling already does. The
+reset also named preferences.ini, which is not the spelling anything writes.
+
+Two of them were fatal rather than merely wrong. CreateFromPng() returns null
+when the file is missing and ISplashScreen was the one caller dereferencing the
+result unchecked, so the splash screen segfaulted on startup. Iterating a
+missing ROM directory throws std::filesystem::filesystem_error, which nothing
+catches, so a first run aborted; it now gets the error_code overload and an
+empty list, the same way the language directory already does.
+
+--- a/Source/UI/SplashScreen.cpp
++++ b/Source/UI/SplashScreen.cpp
+@@ -32,6 +32,7 @@
+ #include <cmath>
+ 
+ #include "Interface/Preferences.h"
++#include "Utility/Paths.h"
+ 
+ 
+ extern bool g32bitColorMode;
+@@ -71,7 +72,7 @@
+ :	CUIScreen( p_context )
+ ,	mIsFinished( false )
+ ,	mElapsedTime( 0.0f )
+-,	mpTexture( CNativeTexture::CreateFromPng( LOGO_FILENAME, TexFmt_8888 ) )
++,	mpTexture( CNativeTexture::CreateFromPng( setBasePath( LOGO_FILENAME ), TexFmt_8888 ) )
+ {}
+ 
+ 
+@@ -111,6 +112,14 @@
+ 	c32		colour( 255, 255, 255, a );
+ 
+ 	mpContext->ClearBackground();
++
++	// CreateFromPng() returns null when the logo cannot be loaded, and this is
++	// the only place it is dereferenced without checking.
++	if( mpTexture == nullptr )
++	{
++		return;
++	}
++
+ 	mpContext->RenderTexture( mpTexture, (SCREEN_WIDTH - mpTexture->GetWidth()) / 2, (SCREEN_HEIGHT - mpTexture->GetHeight()) / 2, colour);
+ 
+ #if DAEDALUS_PSP
+--- a/Source/UI/AboutComponent.cpp
++++ b/Source/UI/AboutComponent.cpp
+@@ -31,7 +31,8 @@
+ 
+ #include "Base/Macros.h"
+ #include "Utility/Translate.h"
+-#include "Menu.h"
++#include "Menu.h"
++#include "Utility/Paths.h"
+ 
+ #include <cstring>
+ 
+@@ -66,7 +67,7 @@
+ 
+ IAboutComponent::IAboutComponent( CUIContext * p_context )
+ :	CAboutComponent( p_context )
+-,	mpTexture( CNativeTexture::CreateFromPng( LOGO_FILENAME, TexFmt_8888 ) )
++,	mpTexture( CNativeTexture::CreateFromPng( setBasePath( LOGO_FILENAME ), TexFmt_8888 ) )
+ {}
+ 
+ 
+--- a/Source/UI/RomSelectorComponent.cpp
++++ b/Source/UI/RomSelectorComponent.cpp
+@@ -34,7 +34,8 @@
+ #include "Graphics/ColourValue.h"
+ #include "Graphics/NativeTexture.h"
+ #include "Input/InputManager.h"
+-#include "Utility/MathUtil.h"
++#include "Utility/MathUtil.h"
++#include "Utility/Paths.h"
+ 
+ #include "DrawTextUtilities.h"
+ #include "Menu.h"
+@@ -236,7 +237,7 @@
+ ,	mRomDelete(false)
+ {
+ 
+-	AddRomDirectory( "Roms", mRomsList );
++	AddRomDirectory( setBasePath("Roms"), mRomsList );
+ 	std::stable_sort( mRomsList.begin(), mRomsList.end(), SortByGameName );
+ 
+ 	// Build up a map of the first location for each initial letter
+@@ -265,7 +266,10 @@
+ }
+ void	IRomSelectorComponent::AddRomDirectory(const std::filesystem::path &p_roms_dir, std::vector<SRomInfo*> & roms)
+ {
+-	for (const auto& entry : std::filesystem::directory_iterator(p_roms_dir))
++	// The ROM directory need not exist: iterating a missing one throws
++	// std::filesystem::filesystem_error, which nothing here catches.
++	std::error_code error;
++	for (const auto& entry : std::filesystem::directory_iterator(p_roms_dir, error))
+ 	{
+ 		if (entry.is_regular_file())
+ 		{
+@@ -294,7 +298,7 @@
+ 	mpPreviewTexture = NULL;
+ 	mPreviewIdx= u32(-1);
+ 
+-	AddRomDirectory( "Roms", mRomsList );
++	AddRomDirectory( setBasePath("Roms"), mRomsList );
+ 	stable_sort( mRomsList.begin(), mRomsList.end(), SortByGameName );
+ 
+ 	// Build up a map of the first location for each initial letter
+@@ -707,7 +711,7 @@
+ 
+ 			if( !mRomsList[ mCurrentSelection ]->mSettings.Preview.empty() )
+ 			{
+-				const std::filesystem::path gPreviewDirectory = "Resources/Preview";
++				const std::filesystem::path gPreviewDirectory = setBasePath("Resources/Preview");
+ 
+ 				const std::filesystem::path previewPath = mRomsList[mCurrentSelection]->mSettings.Preview;
+ 				const std::filesystem::path preview_filename = gPreviewDirectory / previewPath;
+--- a/Source/UI/GlobalSettingsComponent.cpp
++++ b/Source/UI/GlobalSettingsComponent.cpp
+@@ -39,6 +39,7 @@
+ #include "Utility/FramerateLimiter.h"
+ #include "Interface/Preferences.h"
+ 
++#include "Utility/Paths.h"
+ #include "Utility/Translate.h"
+ 
+ #include "Input/InputManager.h"
+@@ -176,8 +177,8 @@
+ 		
+ 				if(gShowDialog->Render( mpContext,"Reset settings?", false) )
+ 				{
+-					std::filesystem::remove("preferences.ini");
+-					std::filesystem::remove("rom.db");
++					std::filesystem::remove(setBasePath("Preferences.ini"));
++					std::filesystem::remove(setBasePath("rom.db"));
+ 					ThreadSleepMs(1000);	//safety wait for s
+ 
+ 					gShowDialog->Render( mpContext,"Daedalus will exit now",true);
+@@ -187,8 +188,8 @@
+ 			}
+ 			if(gShowDialog->Render( mpContext,"Reset settings?", false) )
+ 			{
+-				std::filesystem::remove("preferences.ini");
+-				std::filesystem::remove("rom.db");
++				std::filesystem::remove(setBasePath("Preferences.ini"));
++				std::filesystem::remove(setBasePath("rom.db"));
+ 
+ 				ThreadSleepMs(1000);	//safety wait for s
+ 

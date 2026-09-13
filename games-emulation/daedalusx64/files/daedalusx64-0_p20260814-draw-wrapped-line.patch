@@ -1,0 +1,37 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Fix the two ways DrawTextArea() drew text on top of itself
+
+The wrap loop computes each line into `line` and then draws `text`, so every
+iteration redrew the paragraph from the beginning: the first line stacked on
+top of itself once per wrapped line, each copy the full width of the text
+rather than of the area it was wrapped to fit.
+
+It then returns 0 rather than the height it consumed, while callers stack
+paragraphs by adding up those return values -- see the gNoRomsText loop in
+RomSelectorComponent -- so every paragraph after the first landed on the one
+before it. The manual line breaking path above already returns `y - top`.
+
+--- a/Source/SysGL/Graphics/UIContextGL.cpp
++++ b/Source/SysGL/Graphics/UIContextGL.cpp
+@@ -357,13 +357,19 @@
+ 	{
+ 		y += font_height;
+ 		std::string line(it, it+ lengths[i]);
+-		DrawTextScale( x, y, 0.8f, text, lengths[ i ], colour );
++		// The wrapped line is what should be drawn. Passing the whole text
++		// redrew it from the beginning on every line, so a wrapped paragraph
++		// came out as its first line stacked on top of itself, each copy
++		// running past the area it was wrapped to fit.
++		DrawTextScale( x, y, 0.8f, line, lengths[ i ], colour );
+ 		y += 2;
+ 		// text += lengths[ i ];
+ 		std::advance(it, lengths[i]);
+ 	}
+ 
+-	return 0;
++	// Callers stack paragraphs by adding up what each one consumed, so
++	// returning 0 here drew every paragraph after the first on top of it.
++	return y - top;
+ }
+ 
+ //TODO: Should be in draw text interface

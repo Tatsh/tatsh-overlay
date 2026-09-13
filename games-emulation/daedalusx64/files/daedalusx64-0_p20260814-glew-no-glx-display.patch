@@ -1,0 +1,37 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Do not treat a missing GLX display as a GLEW failure
+
+GLEW initialises GLX alongside GL, and a Wayland session has no GLX display,
+so glewInit() returns GLEW_ERROR_NO_GLX_DISPLAY there even though every GL
+entry point it was asked for resolved. Only the GL half is used here, so the
+program aborted at startup with "System_Init failed" on any Wayland session.
+
+Neither branch said anything before giving up, which is what made this worth
+tracking down in the first place, so both now report themselves.
+
+--- a/Source/SysGL/Graphics/GraphicsContextGL.cpp
++++ b/Source/SysGL/Graphics/GraphicsContextGL.cpp
+@@ -126,9 +126,22 @@
+ 
+ 	SDL_GL_SetSwapInterval(1);
+ 
++	// GLEW initialises GLX alongside GL. There is no GLX display under Wayland,
++	// so it returns GLEW_ERROR_NO_GLX_DISPLAY even though every GL entry point
++	// it was asked for resolved; only the GL half is used here.
+ 	GLenum err = glewInit();
+-	if (err != GLEW_OK || !GLEW_VERSION_3_2)
++	if (err != GLEW_OK && err != GLEW_ERROR_NO_GLX_DISPLAY)
+ 	{
++		printf( "GLEW could not initialize! GLEW Error: %s\n", (const char *)glewGetErrorString(err) );
++		SDL_DestroyWindow(gWindow);
++		gWindow = NULL;
++		//SDL_Quit();
++		return false;
++	}
++
++	if (!GLEW_VERSION_3_2)
++	{
++		printf( "OpenGL 3.2 is required, but this context reports %s\n", (const char *)glGetString(GL_VERSION) );
+ 		SDL_DestroyWindow(gWindow);
+ 		gWindow = NULL;
+ 		//SDL_Quit();

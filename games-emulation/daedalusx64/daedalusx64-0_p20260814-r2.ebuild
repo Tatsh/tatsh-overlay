@@ -34,6 +34,10 @@ PATCHES=(
 	"${FILESDIR}/${P}-fhs-xdg.patch"
 	"${FILESDIR}/${P}-shader-load-return.patch"
 	"${FILESDIR}/${P}-language-path.patch"
+	"${FILESDIR}/${P}-font-path.patch"
+	"${FILESDIR}/${P}-resource-path.patch"
+	"${FILESDIR}/${P}-glew-no-glx-display.patch"
+	"${FILESDIR}/${P}-draw-wrapped-line.patch"
 )
 
 src_configure() {
@@ -56,12 +60,11 @@ src_install() {
 pkg_postinst() {
 	xdg_pkg_postinst
 
-	elog "Put ROMs in one of:"
-	elog "  \${XDG_DATA_HOME}/DaedalusX64/Roms"
-	elog "  the Roms directory under .local/share/DaedalusX64 in your home"
+	elog "Put ROMs in \${XDG_DATA_HOME}/DaedalusX64/Roms, by default"
+	elog "~/.local/share/DaedalusX64/Roms. Saves and save states are written"
+	elog "beside them."
 	elog
-	elog "Saves and save states are written beside them. Preferences.ini and"
-	elog "the controller configuration live under .config/DaedalusX64, and"
-	elog "anything you put there overrides the copy installed in"
-	elog "/usr/share/DaedalusX64."
+	elog "Preferences.ini and the controller configuration live in"
+	elog "\${XDG_CONFIG_HOME}/DaedalusX64, and override the copies installed"
+	elog "in /usr/share/DaedalusX64."
 }
