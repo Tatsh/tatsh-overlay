@@ -54,6 +54,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	elog "${PN} needs the data files from a Tomb Raider installation. Run it"
 	elog "from a directory containing them; saves and cache go to ~/.openlara."
 }
