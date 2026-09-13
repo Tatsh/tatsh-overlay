@@ -7,7 +7,7 @@ CRATES=""
 
 RUST_MIN_VER="1.98.0"
 
-inherit cargo desktop
+inherit cargo desktop xdg
 
 DESCRIPTION="N64 emulator written in Rust."
 HOMEPAGE="https://github.com/gopher64/gopher64"
@@ -53,4 +53,10 @@ src_install() {
 	cargo_src_install
 	einstalldocs
 	make_desktop_entry "${PN}"
+
+	local size
+	for size in 128 256 512; do
+		newicon -s "${size}" "data/icon/${PN}_${size}x${size}.png" "${PN}.png"
+	done
+	newicon -s 1024 "data/icon/${PN}.png" "${PN}.png"
 }
