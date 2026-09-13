@@ -5,7 +5,7 @@ EAPI=8
 
 inherit desktop toolchain-funcs xdg
 
-DESCRIPTION="C source port of Celeste Classic for the PICO-8."
+DESCRIPTION="Portable C port of Celeste Classic, originally a PICO-8 game."
 HOMEPAGE="https://github.com/lemon32767/ccleste"
 SRC_URI="https://github.com/lemon32767/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"
