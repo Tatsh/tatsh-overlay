@@ -164,6 +164,14 @@ src_install() {
 	insinto "/usr/libexec/${PN}"
 	doins "${BUILD_DIR}/spaghetti.o2r"
 
+	# GenerateOTR() hands Torch this directory as its source directory, so the
+	# asset definitions have to be here as well: without them it reports "No
+	# config file found" and produces nothing. meta/mods.toml is the metadata
+	# naming the generated archive mk64-assets, which the game then refuses to
+	# start without.
+	doins config.yml
+	doins -r meta yamls
+
 	cat > "${T}/${PN}" <<-EOF || die
 		#!/bin/sh
 		SHIP_HOME="\${XDG_DATA_HOME:-\${HOME}/.local/share}/${PN}"
