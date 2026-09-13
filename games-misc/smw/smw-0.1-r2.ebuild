@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit desktop wrapper
+inherit desktop wrapper xdg
 
 DESCRIPTION="Reimplementation of Super Mario World."
 HOMEPAGE="https://github.com/snesrev/smw"
@@ -36,5 +36,7 @@ src_install() {
 	insinto "/usr/share/${PN}"
 	doins "${PN}_assets.dat" "${PN}.ini"
 	make_wrapper "${PN}" "/usr/share/${PN}/${PN}" "/usr/share/${PN}"
-	make_desktop_entry "${PN}" "${PN}"
+	# Upstream ships no icon of any kind, so use a stock freedesktop name rather
+	# than an Icon= key that resolves to nothing.
+	make_desktop_entry "${PN}" "${PN}" applications-games
 }
