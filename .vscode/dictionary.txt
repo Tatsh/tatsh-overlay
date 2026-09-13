@@ -355,6 +355,7 @@ devtype
 dfetchcontent
 dfilter
 dfmderainbow
+dggml
 dgit
 dglslang
 dgtk
@@ -451,6 +452,7 @@ dslackw
 dsplit
 dstaticdeps
 dsystemd
+dtrellis
 dubhatervapoursynth
 dudev
 duployan
@@ -647,6 +649,9 @@ geovis
 getjar
 getmoto
 getrandom
+ggml
+ggml's
+gguf
 ghidra
 ghidra's
 ghidrah
@@ -938,6 +943,7 @@ libfragmentzip
 libgcrypt
 libgeneral
 libgfxd
+libggml
 libglvnd
 libgodot
 libgreenboost
@@ -1482,6 +1488,7 @@ pulseaudio
 pulseaudiosimple
 pvrtc
 pvxe
+pwilkin
 pyaaf
 pyarrow
 pyasn
@@ -1823,6 +1830,7 @@ taskshell
 taskwarrior
 tatsh
 tatsu
+tauri
 tblib
 tclkit
 tcltk
