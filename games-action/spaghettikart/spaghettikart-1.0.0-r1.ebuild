@@ -18,6 +18,11 @@ LUS_COMMIT="f40cfd33b8bc6237d635d4ed82838a7e3f785386"
 TORCH_COMMIT="2d474ddb8da8b213fbdbb49d0273ce31fa955f35"
 # Fetched with FetchContent by SpaghettiKart itself.
 DR_LIBS_COMMIT="da35f9d6c7374a95353fd1df1d394d44ab66cf01"
+# Fetched by SpaghettiKart with a bare file(DOWNLOAD), which leaves an empty
+# file behind instead of failing when there is no network. sse2neon.h is
+# fetched the same way, but from a branch rather than a tag, so it cannot be
+# mirrored; nothing includes it on amd64 and the empty file is harmless there.
+SEMVER_PV="1.0.0-rc"
 TOMLPLUSPLUS_PV="3.4.0"
 # Fetched with FetchContent by libultraship. MPQ support is off by default in
 # this revision, so StormLib is not needed.
@@ -41,6 +46,8 @@ SRC_URI="https://github.com/HarbourMasters/${MY_PN}/archive/refs/tags/${PV}.tar.
 	-> Torch-${TORCH_COMMIT}.tar.gz
 	https://github.com/mackron/dr_libs/archive/${DR_LIBS_COMMIT}.tar.gz
 	-> dr_libs-${DR_LIBS_COMMIT}.tar.gz
+	https://raw.githubusercontent.com/Neargye/semver/refs/tags/v${SEMVER_PV}/include/semver.hpp
+	-> semver.hpp-${SEMVER_PV}
 	https://github.com/marzer/tomlplusplus/archive/refs/tags/v${TOMLPLUSPLUS_PV}.tar.gz
 	-> tomlplusplus-${TOMLPLUSPLUS_PV}.tar.gz
 	https://github.com/ocornut/imgui/archive/refs/tags/v${IMGUI_PV}.tar.gz
@@ -94,6 +101,15 @@ src_prepare() {
 		libultraship/cmake/dependencies/common.cmake || die
 	grep -q 'file(COPY_FILE' libultraship/cmake/dependencies/common.cmake ||
 		die "failed to redirect the stb_image.h download"
+
+	# Same again for SpaghettiKart's own semver.hpp. file(DOWNLOAD) reports
+	# failure only through a STATUS variable, and there is none here, so with
+	# no network the configure succeeds and leaves an empty header behind.
+	# ModMetadata::version is then dropped and ModManager.cpp fails to compile.
+	sed -i -e "s|file(DOWNLOAD \"https://raw.githubusercontent.com/Neargye/semver/[^\"]*\" |file(MAKE_DIRECTORY \"\${SEMVER_DIR}\")\nfile(COPY_FILE \"${DISTDIR}/semver.hpp-${SEMVER_PV}\" |" \
+		CMakeLists.txt || die
+	grep -q 'file(COPY_FILE' CMakeLists.txt ||
+		die "failed to redirect the semver.hpp download"
 
 	cmake_src_prepare
 
