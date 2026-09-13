@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake flag-o-matic
+inherit cmake desktop flag-o-matic xdg
 
 MY_PN="SpaghettiKart"
 # The executable and CMake project are named after neither the repository nor
@@ -140,6 +140,12 @@ src_install() {
 
 	insinto "/usr/share/${PN}"
 	doins "${BUILD_DIR}/spaghetti.o2r"
+
+	# Upstream's SpaghettiKart.desktop is written for an AppImage: it runs
+	# Spaghettify and asks for the far too generic Icon=icon. Generate an entry
+	# for the installed binary instead, with the icon renamed to match.
+	newicon -s 256 icon.png "${PN}.png"
+	make_desktop_entry "${PN}" "${MY_PN}" "${PN}" Game
 
 	einstalldocs
 }
