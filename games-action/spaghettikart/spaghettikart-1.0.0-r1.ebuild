@@ -151,6 +151,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	elog "${MY_PN} needs assets extracted from a US Mario Kart 64 ROM. Run it"
 	elog "once and it will ask for the ROM; the port's own assets are"
 	elog "installed in /usr/share/${PN}."
