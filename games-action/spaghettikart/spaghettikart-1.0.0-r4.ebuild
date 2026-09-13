@@ -16,6 +16,9 @@ LUS_COMMIT="f40cfd33b8bc6237d635d4ed82838a7e3f785386"
 # This one is no longer reachable from any branch of HarbourMasters/Torch, but
 # GitHub still serves the archive for it.
 TORCH_COMMIT="2d474ddb8da8b213fbdbb49d0273ce31fa955f35"
+# libultraship looks for this beside the executable and upstream ships no
+# copy of it.
+GAMECONTROLLERDB_COMMIT="5a12daa568d19344f9b6e9286ef5929833b25c7c"
 # Fetched with FetchContent by SpaghettiKart itself.
 DR_LIBS_COMMIT="da35f9d6c7374a95353fd1df1d394d44ab66cf01"
 # Fetched by SpaghettiKart with a bare file(DOWNLOAD), which leaves an empty
@@ -63,7 +66,9 @@ SRC_URI="https://github.com/HarbourMasters/${MY_PN}/archive/refs/tags/${PV}.tar.
 	https://github.com/leethomason/tinyxml2/archive/refs/tags/${TINYXML2_PV}.tar.gz
 	-> tinyxml2-${TINYXML2_PV}.tar.gz
 	https://github.com/jbeder/yaml-cpp/archive/${YAML_CPP_COMMIT}.tar.gz
-	-> yaml-cpp-${YAML_CPP_COMMIT}.tar.gz"
+	-> yaml-cpp-${YAML_CPP_COMMIT}.tar.gz
+	https://raw.githubusercontent.com/mdqinc/SDL_GameControllerDB/${GAMECONTROLLERDB_COMMIT}/gamecontrollerdb.txt
+	-> gamecontrollerdb.txt-${GAMECONTROLLERDB_COMMIT}"
 S="${WORKDIR}/${MY_PN}-${PV}"
 
 LICENSE="GPL-3"
@@ -163,6 +168,10 @@ src_install() {
 
 	insinto "/usr/libexec/${PN}"
 	doins "${BUILD_DIR}/spaghetti.o2r"
+
+	# libultraship looks for the controller database beside the executable
+	# and nowhere useful after that, and upstream ships no copy of it.
+	newins "${DISTDIR}/gamecontrollerdb.txt-${GAMECONTROLLERDB_COMMIT}" gamecontrollerdb.txt
 
 	# GenerateOTR() hands Torch this directory as its source directory, so the
 	# asset definitions have to be here as well: without them it reports "No
