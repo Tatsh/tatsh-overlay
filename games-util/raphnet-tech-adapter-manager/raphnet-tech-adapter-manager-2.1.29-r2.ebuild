@@ -3,7 +3,7 @@
 
 EAPI=8
 WX_GTK_VER="3.2-gtk3"
-inherit udev wxwidgets
+inherit desktop udev wxwidgets xdg
 
 DESCRIPTION="Graphical user interface and command-line tools to manage raphnet adapters."
 HOMEPAGE="https://github.com/raphnet/gcn64tools"
@@ -44,6 +44,9 @@ src_install() {
 	popd || die
 	udev_dorules scripts/*.rules
 	einstalldocs
+	# gcn64ctl_gui is the wxGTK front-end; upstream provides no desktop entry and
+	# no application icon, so use a stock freedesktop icon name.
+	make_desktop_entry gcn64ctl_gui 'Raphnet Adapter Manager' applications-utilities Utility
 	if use firmware; then
 		insinto "/usr/share/${PN}"
 		doins -r firmwares
