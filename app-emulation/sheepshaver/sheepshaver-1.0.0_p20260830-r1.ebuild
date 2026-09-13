@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit autotools desktop fcaps flag-o-matic
+inherit autotools desktop fcaps flag-o-matic xdg
 
 DESCRIPTION="Macintosh emulator (updated fork)."
 HOMEPAGE="https://github.com/kanjitalk755/macemu"
