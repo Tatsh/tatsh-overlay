@@ -1,0 +1,52 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Open the cheat file that was asked for
+
+CheatCodes_Read() takes the name of the cheat file, marks it unused, and opens
+a literal "cheat_file" in the working directory instead. Both callers pass
+"Daedalus.cht", which is what the file is actually called and what ships with
+the program, so the installed one was never read and an empty "cheat_file" was
+created wherever the program happened to be started from.
+
+--- a/Source/Interface/Cheats.cpp
++++ b/Source/Interface/Cheats.cpp
+@@ -33,9 +33,11 @@
+ 
+ #include "Ultra/ultra_R4300.h"
+ 
++#include "Utility/Paths.h"
+ #include "Utility/StringUtil.h"
+ #include "Utility/VolatileMem.h"
+ #include <filesystem>
++#include <string>
+ 
+ //
+ // Cheatcode routines and format based from 1964
+@@ -262,7 +264,7 @@
+ //*****************************************************************************
+ //
+ //*****************************************************************************
+-bool CheatCodes_Read(const char *rom_name, const char *file [[maybe_unused]], u8 countryID)
++bool CheatCodes_Read(const char *rom_name, const char *file, u8 countryID)
+ {
+ 	char			current_rom_name[64];
+ 	static char		last_rom_name[128];
+@@ -290,11 +292,17 @@
+ 	// Always clear when parsing a new ROM
+ 	CheatCodes_Clear();
+ 
+-	stream = fopen("cheat_file", "rt");
++	// Both callers pass "Daedalus.cht", which is what the cheat file is
++	// actually called and what ships with the program. Opening a literal
++	// "cheat_file" in the working directory ignored the argument and left an
++	// empty file of that name wherever the program happened to be started.
++	const std::string cheat_path = setBasePath(file).string();
++
++	stream = fopen(cheat_path.c_str(), "rt");
+ 	if(stream == nullptr)
+ 	{
+ 		// File does not exist, try to create a new empty one
+-		stream = fopen("cheat_file", "wt");
++		stream = fopen(cheat_path.c_str(), "wt");
+ 
+ 		if(stream == nullptr)
+ 		{

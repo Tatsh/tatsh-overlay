@@ -40,6 +40,7 @@ PATCHES=(
 	"${FILESDIR}/${P}-draw-wrapped-line.patch"
 	"${FILESDIR}/${P}-desktop-key-names.patch"
 	"${FILESDIR}/${P}-pause-menu-key.patch"
+	"${FILESDIR}/${P}-cheat-file-path.patch"
 )
 
 src_configure() {
