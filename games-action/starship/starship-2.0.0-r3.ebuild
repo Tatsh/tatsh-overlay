@@ -149,12 +149,27 @@ src_install() {
 	insinto "/usr/libexec/${PN}"
 	doins "${BUILD_DIR}/${PN}.o2r"
 
+	# This Torch looks for config.yml in the working directory and nowhere
+	# else, so the asset definitions the extractor reads are installed here and
+	# linked into the working directory by the wrapper. Without them it reports
+	# "No config file found" and writes no sf64.o2r.
+	doins config.yml
+	insinto "/usr/libexec/${PN}/assets"
+	doins -r assets/yaml
+
 	cat > "${T}/${MY_PN}" <<-EOF || die
 		#!/bin/sh
 		SHIP_HOME="\${XDG_DATA_HOME:-\${HOME}/.local/share}/${PN}"
 		export SHIP_HOME
 		mkdir -p "\${SHIP_HOME}" || exit 1
 		cd "\${SHIP_HOME}" || exit 1
+		# The extractor reads these from the working directory, and this is the
+		# working directory. Linking rather than copying keeps the 1.1M of
+		# asset definitions in one place and lets an update replace them.
+		for f in config.yml assets; do
+			[ -e "\${SHIP_HOME}/\${f}" ] ||
+				ln -s "${EPREFIX}/usr/libexec/${PN}/\${f}" "\${SHIP_HOME}/\${f}" || exit 1
+		done
 		exec "${EPREFIX}/usr/libexec/${PN}/${MY_PN}" "\$@"
 	EOF
 	dobin "${T}/${MY_PN}"
