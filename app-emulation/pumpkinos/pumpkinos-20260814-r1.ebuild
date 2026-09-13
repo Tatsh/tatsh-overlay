@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit desktop
+inherit desktop xdg
 
 DESCRIPTION="PumpkinOS is a re-implementation of PalmOS."
 HOMEPAGE="https://github.com/migueletto/PumpkinOS https://pmig96.wordpress.com/category/palmos/"
@@ -72,6 +72,8 @@ EOF
 	newbin ./pumpkin-bin pumpkin
 	insinto "/usr/$(get_libdir)/${MY_PN}/vfs"
 	doins -r vfs/*
-	make_desktop_entry pumpkin "${MY_PN}"
+	# Upstream has no Linux icon, only Windows .ico resources, so use a stock
+	# freedesktop name rather than an Icon= key that resolves to nothing.
+	make_desktop_entry pumpkin "${MY_PN}" applications-system
 	einstalldocs
 }
