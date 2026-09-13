@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit desktop edo linux-info toolchain-funcs wrapper
+inherit desktop edo linux-info toolchain-funcs wrapper xdg
 
 DESCRIPTION="Fork of sm64-port with additional features (alpha branch)."
 HOMEPAGE="https://github.com/Render96/Render96ex/tree/alpha"
@@ -124,6 +124,8 @@ src_install() {
 		doins -r "${WORKDIR}/RENDER96-HD-TEXTURE-PACK-${TEXTURES_SHA}/gfx"
 	fi
 	make_wrapper "${PN}" "./${exe}" "/usr/share/${PN}"
-	make_desktop_entry "${PN}" "${MY_PN}"
+	# Upstream ships no application icon, so use a stock freedesktop name rather
+	# than an Icon= key that resolves to nothing.
+	make_desktop_entry "${PN}" "${MY_PN}" applications-games
 	einstalldocs
 }
