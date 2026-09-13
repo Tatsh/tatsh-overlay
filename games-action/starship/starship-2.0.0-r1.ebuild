@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake desktop flag-o-matic
+inherit cmake desktop flag-o-matic xdg
 
 MY_PN="Starship"
 
@@ -141,6 +141,12 @@ src_install() {
 
 	insinto "/usr/share/${PN}"
 	doins "${BUILD_DIR}/${PN}.o2r"
+
+	# Upstream's Starship.desktop is written for an AppImage and asks for the far
+	# too generic Icon=logo. Generate an entry for the installed binary instead,
+	# with the icon renamed to match.
+	newicon -s 512 logo.png "${PN}.png"
+	make_desktop_entry "${MY_PN}" "${MY_PN}" "${PN}" Game
 
 	einstalldocs
 }
