@@ -152,6 +152,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	elog "${MY_PN} needs assets extracted from a US 1.0 or 1.1 Star Fox 64"
 	elog "ROM. Run it once and it will ask for the ROM; the port's own assets"
 	elog "are installed in /usr/share/${PN}."
