@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake desktop xdg
 
 DESCRIPTION="GTA III decompiled and re-built."
 HOMEPAGE="https://web.archive.org/web/20210906122012/https://github.com/GTAmodding/re3"
@@ -74,6 +74,9 @@ src_install() {
 	cmake_src_install
 	einstalldocs
 	dosym ."./share/${PN}/${PN}" /usr/bin/re3
+	# Upstream is a source release with no desktop entry or icon, so use a stock
+	# freedesktop icon name.
+	make_desktop_entry "${PN}" 'Grand Theft Auto III' applications-games Game
 }
 
 pkg_postinst() {
