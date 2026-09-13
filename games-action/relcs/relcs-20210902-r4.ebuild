@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake
+inherit cmake desktop xdg
 
 DESCRIPTION="GTA Liberty City Stories decompiled and re-built."
 HOMEPAGE="https://web.archive.org/web/20210903220219/https://github.com/GTAmodding/re3/tree/lcs"
@@ -69,4 +69,8 @@ src_install() {
 	cmake_src_install
 	dosym "../share/${PN}/reLCS" /usr/bin/reLCS
 	einstalldocs
+	# Upstream is a source release with no desktop entry or icon, so use a stock
+	# freedesktop icon name.
+	make_desktop_entry reLCS 'Grand Theft Auto: Liberty City Stories' \
+		applications-games Game
 }
