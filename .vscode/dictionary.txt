@@ -1404,6 +1404,7 @@ peds
 pefile
 pegtl
 pehrson
+perfare
 permuter
 petsafe
 pexpect
