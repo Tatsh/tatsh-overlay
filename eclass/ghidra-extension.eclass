@@ -99,6 +99,15 @@ esac
 # directory name, so this must be upstream's own name, which never matches the
 # -bin package names used here.
 
+# @ECLASS_VARIABLE: GHIDRA_EXT_SCRIPTS
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# Script files in a repository that is nothing but scripts, relative to ${S}.
+# Ghidra only looks for scripts inside a module, so when this is set
+# src_prepare moves them under ghidra_scripts and writes the Module.manifest
+# and extension.properties that make the directory one. Leave unset for
+# upstreams that are already laid out as a module.
+
 if [[ ! ${_GHIDRA_EXTENSION_ECLASS} ]]; then
 
 inherit edo java-pkg-2 java-utils-2
@@ -159,7 +168,39 @@ ghidra-extension_src_prepare() {
 		[[ -e ${cruft} ]] && { rm -r "${cruft}" || die; }
 	done
 
+	[[ ${GHIDRA_EXT_SCRIPTS[*]} ]] && _ghidra-extension_make_module
+
 	return 0
+}
+
+# @FUNCTION: _ghidra-extension_make_module
+# @INTERNAL
+# @DESCRIPTION:
+# Turn a bare script repository into a module: move GHIDRA_EXT_SCRIPTS under
+# ghidra_scripts and write the two files Ghidra looks for. Anything upstream
+# already provides is left alone.
+_ghidra-extension_make_module() {
+	[[ ${GHIDRA_EXT_NAME} ]] || die "${ECLASS}: GHIDRA_EXT_NAME must be set"
+
+	mkdir -p ghidra_scripts || die
+
+	local script
+	for script in "${GHIDRA_EXT_SCRIPTS[@]}"; do
+		[[ -f ${script} ]] || die "${ECLASS}: no such script: ${script}"
+		mv "${script}" ghidra_scripts/ || die
+	done
+
+	[[ -e Module.manifest ]] || : > Module.manifest || die
+
+	# version= is rewritten by _ghidra-extension_retarget to match the Ghidra
+	# being built against, so what it says here does not matter.
+	[[ -e extension.properties ]] || cat > extension.properties <<-EOF || die
+		name=${GHIDRA_EXT_NAME}
+		description=${DESCRIPTION}
+		author=
+		createdOn=
+		version=
+	EOF
 }
 
 # @FUNCTION: _ghidra-extension_classpath
