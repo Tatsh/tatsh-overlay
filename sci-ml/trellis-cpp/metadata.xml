@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<use>
+		<flag name="webp">Encode GLB textures as WebP using <pkg>media-libs/libwebp</pkg></flag>
+	</use>
+	<upstream>
+		<remote-id type="github">pwilkin/trellis.cpp</remote-id>
+	</upstream>
+</pkgmetadata>

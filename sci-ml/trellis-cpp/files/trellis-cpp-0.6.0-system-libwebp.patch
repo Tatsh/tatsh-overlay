@@ -1,0 +1,43 @@
+From: Andrew Udvare <audvare@gmail.com>
+Subject: [PATCH] Link the system libwebp rather than fetching one
+
+libwebp was pulled in with FetchContent and built static. It is a normal system
+library, and fetching one at configure time does not work in a build that has
+no network. It ships pkg-config rather than a CMake config, so ask for it that
+way.
+
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -116,26 +116,13 @@
+ # the extension when WebP encoding is actually used for the embedded textures.
+ option(TRELLIS_WEBP "Encode GLB textures as WebP (EXT_texture_webp)" ON)
+ if(TRELLIS_WEBP)
+-  include(FetchContent)
+-  set(WEBP_BUILD_ANIM_UTILS OFF CACHE BOOL "" FORCE)
+-  set(WEBP_BUILD_CWEBP OFF CACHE BOOL "" FORCE)
+-  set(WEBP_BUILD_DWEBP OFF CACHE BOOL "" FORCE)
+-  set(WEBP_BUILD_GIF2WEBP OFF CACHE BOOL "" FORCE)
+-  set(WEBP_BUILD_IMG2WEBP OFF CACHE BOOL "" FORCE)
+-  set(WEBP_BUILD_VWEBP OFF CACHE BOOL "" FORCE)
+-  set(WEBP_BUILD_WEBPINFO OFF CACHE BOOL "" FORCE)
+-  set(WEBP_BUILD_WEBPMUX OFF CACHE BOOL "" FORCE)
+-  set(WEBP_BUILD_EXTRAS OFF CACHE BOOL "" FORCE)
+-  set(WEBP_BUILD_LIBWEBPMUX OFF CACHE BOOL "" FORCE)
+-  set(BUILD_SHARED_LIBS_SAVED ${BUILD_SHARED_LIBS})
+-  set(BUILD_SHARED_LIBS OFF)
+-  FetchContent_Declare(libwebp
+-    URL https://github.com/webmproject/libwebp/archive/refs/tags/v1.5.0.tar.gz
+-    DOWNLOAD_EXTRACT_TIMESTAMP TRUE)
+-  FetchContent_MakeAvailable(libwebp)
+-  set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_SAVED})
++  # Was a FetchContent of libwebp 1.5.0, built static. libwebp is a normal
++  # system library, and downloading one at configure time does not work when
++  # the build has no network. It ships pkg-config rather than a CMake config.
++  find_package(PkgConfig REQUIRED)
++  pkg_check_modules(WEBP REQUIRED IMPORTED_TARGET libwebp)
+   target_compile_definitions(trellis_core PRIVATE TRELLIS_HAVE_WEBP)
+-  target_link_libraries(trellis_core PUBLIC webp)
++  target_link_libraries(trellis_core PUBLIC PkgConfig::WEBP)
+   message(STATUS "trellis.cpp: WebP texture encoding enabled")
+ endif()
+ if(TARGET ggml-cuda)
