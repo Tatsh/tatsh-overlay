@@ -80,6 +80,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	einfo
 	einfo "Store your GTA III game files from an installation in the"
 	einfo "following directory (create if necessary):"
