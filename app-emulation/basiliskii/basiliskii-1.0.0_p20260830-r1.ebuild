@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit autotools desktop
+inherit autotools desktop xdg
 
 DESCRIPTION="68k Macintosh emulator (updated fork)."
 HOMEPAGE="https://github.com/kanjitalk755/macemu"
