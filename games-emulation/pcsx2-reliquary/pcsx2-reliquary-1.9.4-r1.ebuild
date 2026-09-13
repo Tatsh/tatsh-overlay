@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake desktop fcaps flag-o-matic optfeature toolchain-funcs
+inherit cmake desktop fcaps flag-o-matic optfeature toolchain-funcs xdg
 
 MY_PN="pcsx2-reliquary"
 MY_TAG="v${PV}-reliquary"
@@ -174,6 +174,8 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_pkg_postinst
+
 	fcaps cap_net_admin,cap_net_raw=eip "usr/bin/${PN}-qt"
 
 	elog "The executable is ${PN}-qt, so this can be installed alongside"
