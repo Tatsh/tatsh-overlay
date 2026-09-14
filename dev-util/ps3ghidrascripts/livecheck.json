@@ -1,1 +1,5 @@
-{ "stable_version": "^1\\.0\\d{3}$" }
+{
+  "pattern_version": "^1\\.0(\\d+)$",
+  "replace_version": "1.\\1",
+  "stable_version": "^1\\.\\d+$"
+}
