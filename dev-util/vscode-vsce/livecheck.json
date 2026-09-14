@@ -1,5 +1,6 @@
 {
   "dist_github_release": "__distfiles__",
   "dist_github_repository": "Tatsh/tatsh-overlay",
-  "nodejs": true
+  "nodejs": true,
+  "transformation_function": "handle_npm_prerelease"
 }

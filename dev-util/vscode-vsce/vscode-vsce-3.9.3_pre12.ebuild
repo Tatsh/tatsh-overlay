@@ -7,6 +7,9 @@ inherit nodejs-mod
 
 NPM_PN="@${PN/-/\/}"
 
+# Upstream publishes the builds leading up to a release as npm 3.9.3-N. They come before 3.9.3, so
+# the counter is spelled _pre here; a fourth component would sort above the release instead.
+
 DESCRIPTION="VS Code extensions manager for extension developers."
 HOMEPAGE="https://code.visualstudio.com"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
