@@ -1,0 +1,4 @@
+{
+  "pattern_version": "^(?:build-)?(\\d{8})\\d{4}$",
+  "replace_version": "0_p\\1"
+}
