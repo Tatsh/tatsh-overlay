@@ -1,0 +1,8 @@
+{
+  "dist_github_release": "__distfiles__",
+  "dist_github_repository": "Tatsh/tatsh-overlay",
+  "nodejs": true,
+  "regex": "\"latest\":\"([^\"]+)\"",
+  "type": "regex",
+  "url": "https://registry.npmjs.org/-/package/ts-json-schema-generator/dist-tags"
+}
