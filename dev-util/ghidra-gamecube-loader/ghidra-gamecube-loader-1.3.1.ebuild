@@ -33,7 +33,6 @@ DEPEND+=" dev-java/lz4-java:0"
 PATCHES=( "${FILESDIR}/${P}-loadspec-hijack.patch" )
 
 src_prepare() {
-	eapply "${PATCHES[@]}"
 	ghidra-extension_src_prepare
 
 	mkdir -p lib || die
