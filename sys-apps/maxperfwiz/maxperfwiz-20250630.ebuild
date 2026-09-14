@@ -6,8 +6,11 @@ EAPI=8
 DESCRIPTION="Script to configure parameters for increasing system performance."
 HOMEPAGE="https://gitlab.com/cscs/maxperfwiz"
 SHA="476c7fc8cb563364c9eb53d5ad5b4746804b460b"
-SRC_URI="https://gitlab.com/cscs/${PN}/-/archive/${SHA}/${PN}-${SHA}.tar.bz2 -> ${P}.tar.bz2"
-S="${WORKDIR}/${PN}-${SHA}"
+# GitLab serves commit-SHA archives from /-/archive/ behind a Cloudflare bot challenge (HTTP 403).
+# The API route is not challenged and produces the same tree with a doubled prefix directory.
+SRC_URI="https://gitlab.com/api/v4/projects/cscs%2F${PN}/repository/archive.tar.bz2?sha=${SHA}
+	-> ${P}-${SHA}.tar.bz2"
+S="${WORKDIR}/${PN}-${SHA}-${SHA}"
 LICENSE="CSL-1"
 SLOT="0"
 KEYWORDS="~amd64"
