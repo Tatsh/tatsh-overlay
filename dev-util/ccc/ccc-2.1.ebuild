@@ -22,7 +22,7 @@ DEPEND="dev-libs/rapidjson
 	test? ( dev-cpp/gtest )"
 
 PATCHES=(
-	"${FILESDIR}/${P}-system-libraries.patch"
+	"${FILESDIR}/${PN}-system-libraries.patch"
 	"${FILESDIR}/${P}-version.patch"
 )
 

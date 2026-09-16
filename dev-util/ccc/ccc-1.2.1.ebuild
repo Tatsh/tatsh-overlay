@@ -23,7 +23,7 @@ IUSE="test"
 RESTRICT="!test? ( test )"
 
 PATCHES=(
-	"${FILESDIR}/${P}-alloca-stdlib.patch"
+	"${FILESDIR}/${PN}-alloca-stdlib.patch"
 	"${FILESDIR}/${P}-version.patch"
 )
 
