@@ -24,7 +24,7 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="virtual/pkgconfig"
 
-PATCHES=( "${FILESDIR}/${P}-respect-flags.patch" )
+PATCHES=( "${FILESDIR}/${PN}-respect-flags.patch" )
 
 src_compile() {
 	# The default target also builds bot, a demo client that is linked with
