@@ -30,7 +30,7 @@ DEPEND+=" dev-java/lz4-java:0"
 # LoadException. That shadowed the correct loader for unrelated formats. Ghidra
 # reuses one Loader instance for every probe, so the patch also resets the field
 # on entry. Upstream still has both bugs on master and has no newer release.
-PATCHES=( "${FILESDIR}/${P}-loadspec-hijack.patch" )
+PATCHES=( "${FILESDIR}/${PN}-loadspec-hijack.patch" )
 
 src_prepare() {
 	ghidra-extension_src_prepare
