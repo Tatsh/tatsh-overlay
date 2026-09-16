@@ -16,7 +16,7 @@ S="${WORKDIR}/${GHIDRA_EXT_NAME}-${PV}"
 LICENSE="Apache-2.0"
 KEYWORDS="~amd64"
 
-PATCHES=( "${FILESDIR}/${P}-ghidra-12.patch" )
+PATCHES=( "${FILESDIR}/${PN}-ghidra-12.patch" )
 
 src_prepare() {
 	# Upstream generates extension.properties from build.gradle.kts, which
