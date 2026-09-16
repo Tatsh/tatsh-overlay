@@ -24,7 +24,7 @@ RDEPEND="${DEPEND}"
 BDEPEND="app-editors/vim-core" # needed for xxd
 
 PATCHES=(
-	"${FILESDIR}/${P}-0001-cmake-gate-install-time-setc.patch"
+	"${FILESDIR}/${PN}-0001-cmake-gate-install-time-setc.patch"
 )
 
 FILECAPS=(
