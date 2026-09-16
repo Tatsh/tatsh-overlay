@@ -19,7 +19,7 @@ KEYWORDS="~amd64"
 # Upstream has been dormant since 2024 and its only release targets Ghidra 11.2,
 # whose Loader.load() parameter list Ghidra 12 replaced with an ImporterSettings
 # record.
-PATCHES=( "${FILESDIR}/${P}-ghidra12-importer-settings.patch" )
+PATCHES=( "${FILESDIR}/${PN}-ghidra12-importer-settings.patch" )
 
 src_prepare() {
 	eapply "${PATCHES[@]}"
