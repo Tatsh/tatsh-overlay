@@ -9,13 +9,10 @@ the builds, models and voices data directories, which are installed under
 
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -128,8 +128,7 @@
+@@ -134,5 +134,4 @@
  build-backend = "setuptools.build_meta"
 
  [tool.setuptools]
 -package-dir = { "" = "api/src" }
 -packages.find = { where = ["api/src"], namespaces = true }
-+packages = ["kokoro_fastapi", "kokoro_fastapi.core", "kokoro_fastapi.inference", "kokoro_fastapi.routers", "kokoro_fastapi.services", "kokoro_fastapi.services.text_processing", "kokoro_fastapi.structures"]
-
- [tool.pytest.ini_options]
- testpaths = ["api/tests", "ui/tests"]
++packages = ["kokoro_fastapi", "kokoro_fastapi.core", "kokoro_fastapi.inference", "kokoro_fastapi.routers", "kokoro_fastapi.services", "kokoro_fastapi.services.text_processing", "kokoro_fastapi.services.text_processing.normalization", "kokoro_fastapi.structures"]
