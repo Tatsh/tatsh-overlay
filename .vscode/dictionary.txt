@@ -311,6 +311,7 @@ dcall
 dccleste
 dcheck
 dcitra
+dclang
 dcli
 dcmake
 dconfig
@@ -1540,6 +1541,7 @@ pyside
 pysocks
 pytest
 pythonpath
+pythonpycacheprefix
 pytimeparse
 pytorch
 pytz
