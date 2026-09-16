@@ -26,7 +26,7 @@ DEPEND="
 "
 BDEPEND="virtual/pkgconfig"
 
-PATCHES=( "${FILESDIR}/${P}-irssi-1.x.patch" )
+PATCHES=( "${FILESDIR}/${PN}-irssi-1.x.patch" )
 
 src_compile() {
 	# Without SYSTEM_QUASSELC the build uses the bundled QuasselC checkout,
