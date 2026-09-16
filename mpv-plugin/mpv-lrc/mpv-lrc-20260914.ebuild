@@ -11,7 +11,7 @@ inherit mpv-plugin
 
 DESCRIPTION="Synchronize lyrics with mpv"
 HOMEPAGE="https://github.com/guidocella/mpv-lrc"
-SHA="3136d77da32976a2e83d1d4114f180ee4f0f07a9"
+SHA="510f5d5f50de06828603a9f6d91dcf52d56b633f"
 SRC_URI="https://github.com/guidocella/mpv-lrc/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"
 S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="GPL-3"
