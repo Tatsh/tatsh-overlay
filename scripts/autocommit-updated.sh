@@ -6,6 +6,7 @@ while read -r ebuild; do
     pn=$(basename "$dn")
     pushd "$dn" || exit 1
     phases=(clean manifest install)
-    ebuild ./*.ebuild clean manifest install && git add . && pkgdev commit
+    env PYTHONPYCACHEPREFIX= PORTAGE_INST_UID="$(id -u)" PORTAGE_INST_GID="$(id -g)" \
+        ebuild ./*.ebuild clean manifest install && git add . && pkgdev commit
     popd || exit 1
 done < <(git status | grep -E 'deleted:.*ebuild$' | awk '{ print $2 }')
