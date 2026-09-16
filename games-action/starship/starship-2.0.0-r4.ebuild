@@ -79,9 +79,9 @@ DEPEND="${RDEPEND}"
 BDEPEND="dev-lang/python:*"
 
 PATCHES=(
-	"${FILESDIR}/${P}-torch-single-build.patch"
-	"${FILESDIR}/${P}-use-torch-cli.patch"
-	"${FILESDIR}/${P}-dialogs-via-pfd.patch"
+	"${FILESDIR}/${PN}-torch-single-build.patch"
+	"${FILESDIR}/${PN}-use-torch-cli.patch"
+	"${FILESDIR}/${PN}-dialogs-via-pfd.patch"
 )
 
 src_prepare() {
