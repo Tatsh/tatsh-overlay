@@ -28,11 +28,14 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}
 # than any zimg release.
 DEPEND=">=media-libs/zimg-3.0.6_p20260721
 	${PYTHON_DEPS}
+	dev-util/glslang:=
 	virtual/zlib"
 RDEPEND="${DEPEND}"
 # shellcheck disable=SC2016
 BDEPEND="${PYTHON_DEPS}
 	$(python_gen_cond_dep 'dev-python/cython[${PYTHON_USEDEP}]')"
+
+PATCHES=( "${FILESDIR}/${PN}-system-glslang.patch" )
 
 pkg_setup() {
 	python-single-r1_pkg_setup

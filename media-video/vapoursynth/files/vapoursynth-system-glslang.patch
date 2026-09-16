@@ -1,0 +1,36 @@
+Link the system glslang instead of the bundled wrap.
+
+R80 added runtime GLSL to SPIR-V compilation and takes glslang from a wrap-git
+subproject unconditionally, so configure fails without network access. Every
+other dependency here (zimg, libp2p, vulkan) already goes through
+dependency(), so only glslang needs this.
+
+Only glslang's C interface is used (glslang_c_interface.h and
+resource_limits_c.h), which dev-util/glslang provides in libglslang and
+libglslang-default-resource-limits. The wrap pins the same vulkan-sdk release
+that dev-util/glslang tracks, so the accepted dialect matches what upstream
+intends.
+
+--- a/meson.build
++++ b/meson.build
+@@ -183,10 +183,16 @@
+     dependency('zimg', version: '>=3.0.5'),
+ ]
+
+-# Runtime GLSL to SPIR-V compilation: glslang is embedded statically and always present,
+-# taken from the wrap rather than the system so the accepted dialect stays a pinned
+-# platform property instead of following whatever glslang the machine happens to have.
+-glslang_dep = subproject('glslang').get_variable('glslang_dep')
++# Runtime GLSL to SPIR-V compilation. Upstream embeds glslang from the wrap to
++# pin the accepted dialect, but that means downloading it at build time. Link
++# the system glslang instead; only the C interface is used, which lives in
++# libglslang plus libglslang-default-resource-limits.
++glslang_dep = declare_dependency(
++    dependencies: [
++        cxx.find_library('glslang'),
++        cxx.find_library('glslang-default-resource-limits'),
++    ],
++)
+
+ soversion = is_win ? '' : run_command(
+     'grep',
