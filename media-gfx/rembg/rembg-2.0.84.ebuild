@@ -37,8 +37,8 @@ RDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/${P}-poetry-core.patch"
-	"${FILESDIR}/${P}-optional-server.patch"
+	"${FILESDIR}/${PN}-poetry-core.patch"
+	"${FILESDIR}/${PN}-optional-server.patch"
 )
 
 pkg_postinst() {
