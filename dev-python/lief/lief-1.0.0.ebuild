@@ -25,26 +25,23 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 # The bundled backend declares no build requirements in pyproject.toml; these
-# are what api/python/build-requirements.txt actually lists. tomli is only
-# needed where tomllib is not yet in the standard library.
-# shellcheck disable=SC2016
+# are what api/python/build-requirements.txt actually lists. backend/config.py
+# imports tomli unconditionally, with no fallback to the standard library
+# tomllib, so it is needed on every implementation.
 BDEPEND="
-	$(python_gen_cond_dep 'dev-python/tomli[${PYTHON_USEDEP}]' python3_10)
 	dev-build/cmake
 	dev-python/pathspec[${PYTHON_USEDEP}]
 	dev-python/pydantic[${PYTHON_USEDEP}]
 	dev-python/scikit-build-core[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
+	dev-python/tomli[${PYTHON_USEDEP}]
 	dev-python/wheel[${PYTHON_USEDEP}]
 "
 
 # The test suite downloads a large corpus of sample binaries.
 RESTRICT="test"
 
-PATCHES=(
-	"${FILESDIR}/${P}-scikit-build-core-targets.patch"
-	"${FILESDIR}/${P}-no-self-strip.patch"
-)
+PATCHES=( "${FILESDIR}/${PN}-no-self-strip.patch" )
 
 src_configure() {
 	# nanobind's type_caster and tuple templates violate the ODR across
