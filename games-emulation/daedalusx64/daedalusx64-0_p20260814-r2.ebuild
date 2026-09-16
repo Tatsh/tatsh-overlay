@@ -31,16 +31,16 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 
 PATCHES=(
-	"${FILESDIR}/${P}-fhs-xdg.patch"
-	"${FILESDIR}/${P}-shader-load-return.patch"
-	"${FILESDIR}/${P}-language-path.patch"
-	"${FILESDIR}/${P}-font-path.patch"
-	"${FILESDIR}/${P}-resource-path.patch"
-	"${FILESDIR}/${P}-glew-no-glx-display.patch"
-	"${FILESDIR}/${P}-draw-wrapped-line.patch"
-	"${FILESDIR}/${P}-desktop-key-names.patch"
-	"${FILESDIR}/${P}-pause-menu-key.patch"
-	"${FILESDIR}/${P}-cheat-file-path.patch"
+	"${FILESDIR}/${PN}-fhs-xdg.patch"
+	"${FILESDIR}/${PN}-shader-load-return.patch"
+	"${FILESDIR}/${PN}-language-path.patch"
+	"${FILESDIR}/${PN}-font-path.patch"
+	"${FILESDIR}/${PN}-resource-path.patch"
+	"${FILESDIR}/${PN}-glew-no-glx-display.patch"
+	"${FILESDIR}/${PN}-draw-wrapped-line.patch"
+	"${FILESDIR}/${PN}-desktop-key-names.patch"
+	"${FILESDIR}/${PN}-pause-menu-key.patch"
+	"${FILESDIR}/${PN}-cheat-file-path.patch"
 )
 
 src_configure() {
