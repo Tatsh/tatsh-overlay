@@ -21,4 +21,4 @@ S="${WORKDIR}/${GHIDRA_EXT_NAME}-${MY_PV}"
 LICENSE="GPL-3"
 KEYWORDS="~amd64"
 
-PATCHES=( "${FILESDIR}/${P}-ghidra12-exporter.patch" )
+PATCHES=( "${FILESDIR}/${PN}-ghidra12-exporter.patch" )
