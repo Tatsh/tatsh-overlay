@@ -51,8 +51,8 @@ RDEPEND="${DEPEND}
 	')"
 
 PATCHES=(
-	"${FILESDIR}/${P}-no-install-cache-update.patch"
-	"${FILESDIR}/${P}-vendor-datadir.patch"
+	"${FILESDIR}/${PN}-no-install-cache-update.patch"
+	"${FILESDIR}/${PN}-vendor-datadir.patch"
 )
 
 pkg_setup() {
@@ -76,12 +76,10 @@ src_configure() {
 	local mycmakeargs=(
 		# ld-decode's Python library is provided by media-video/vhs-decode.
 		-DBUILD_PYTHON=OFF
-		# sci-libs/onnxruntime{,-bin} install their headers straight into
-		# /usr/include, but the onnxruntimeTargets.cmake they ship points
-		# INTERFACE_INCLUDE_DIRECTORIES at /usr/include/onnxruntime, which does
-		# not exist and makes CMake reject the imported target. Skip the config
-		# package and let upstream's own path search find things instead.
-		-DCMAKE_DISABLE_FIND_PACKAGE_onnxruntime=ON
+		# The top level finds onnxruntime through its CMake config package, but
+		# src/ld-chroma-decoder does its own find_path() and only looks under
+		# ${ONNXRUNTIME_ROOT}/include{,/onnxruntime}, which is where
+		# sci-libs/onnxruntime{,-bin} put the headers.
 		"-DONNXRUNTIME_ROOT=${EPREFIX}/usr"
 	)
 	cmake_src_configure
