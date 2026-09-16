@@ -43,7 +43,7 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="${PYTHON_DEPS}"
 
-PATCHES=( "${FILESDIR}/${P}-vendor-libweaver.patch" )
+PATCHES=( "${FILESDIR}/${PN}-vendor-libweaver.patch" )
 
 src_prepare() {
 	rm -rf 3rdparty/libsmacker 3rdparty/miniaudio || die
