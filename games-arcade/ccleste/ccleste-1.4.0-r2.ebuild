@@ -22,7 +22,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=( "${FILESDIR}/${P}-data-dir.patch" )
+PATCHES=( "${FILESDIR}/${PN}-data-dir.patch" )
 
 src_compile() {
 	emake CC="$(tc-getCC)" \
