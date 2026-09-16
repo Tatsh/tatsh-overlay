@@ -46,7 +46,7 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="dev-lang/python:*"
 
-PATCHES=( "${FILESDIR}/${P}-shared-install.patch" )
+PATCHES=( "${FILESDIR}/${PN}-shared-install.patch" )
 
 src_prepare() {
 	# FETCHCONTENT_SOURCE_DIR_* skips the patch step, so apply upstream's own
