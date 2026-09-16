@@ -7,7 +7,7 @@ inherit toolchain-funcs
 
 DESCRIPTION="Library for decoding Sony's ATRAC9 audio format."
 HOMEPAGE="https://github.com/Thealexbarney/LibAtrac9"
-SHA="6a9e00f6c7abd74d037fd210b6670d3cdb313049"
+SHA="efca2e3af35562a09a9bb6deed90e45b4b824dc4"
 SRC_URI="https://github.com/Thealexbarney/LibAtrac9/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/LibAtrac9-${SHA}/C"
 LICENSE="MIT"
