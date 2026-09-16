@@ -26,7 +26,7 @@ KEYWORDS="~amd64"
 
 DOTNET_PKG_PROJECTS=( "${S}/${MY_PN}/${MY_PN}.csproj" )
 
-PATCHES=( "${FILESDIR}/${P}-unity6.patch" )
+PATCHES=( "${FILESDIR}/${PN}-unity6.patch" )
 
 src_prepare() {
 	# Upstream targets net6.0 and net8.0, both older than the SDK here, and
