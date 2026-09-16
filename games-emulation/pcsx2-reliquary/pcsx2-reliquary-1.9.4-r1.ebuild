@@ -87,7 +87,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-2.6.3-cubeb-alsa.patch"
 	"${FILESDIR}/${PN}-2.8.0-musl-sysconf.patch"
 	"${FILESDIR}/${PN}-2.8.1-libcxx23.patch"
-	"${FILESDIR}/${P}-system-wayland-protocols.patch"
+	"${FILESDIR}/${PN}-system-wayland-protocols.patch"
 )
 
 CMAKE_QA_COMPAT_SKIP=1
