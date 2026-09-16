@@ -42,7 +42,7 @@ DEPEND="${RDEPEND}"
 
 # media-libs/libwebp ships only pkg-config files, but f3d's WebP module looks
 # for a CMake config providing WebP::webp. Patch it to use pkg-config instead.
-PATCHES=( "${FILESDIR}/${P}-webp-pkgconfig.patch" )
+PATCHES=( "${FILESDIR}/${PN}-webp-pkgconfig.patch" )
 
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
