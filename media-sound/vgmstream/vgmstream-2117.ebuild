@@ -21,7 +21,7 @@ RDEPEND="media-libs/libatrac9
 	media-video/ffmpeg:="
 DEPEND="${RDEPEND}"
 
-PATCHES=( "${FILESDIR}/${P}-system-atrac9.patch" )
+PATCHES=( "${FILESDIR}/${PN}-system-atrac9.patch" )
 
 src_configure() {
 	local mycmakeargs=(
