@@ -96,7 +96,7 @@ BDEPEND="
 	dev-util/vulkan-headers
 "
 
-PATCHES=( "${FILESDIR}/${P}-n64recomp-section-bounds.patch" )
+PATCHES=( "${FILESDIR}/${PN}-n64recomp-section-bounds.patch" )
 
 python_check_deps() {
 	python_has_version "dev-python/libyaz0[${PYTHON_USEDEP}]"
