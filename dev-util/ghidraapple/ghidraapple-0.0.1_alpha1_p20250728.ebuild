@@ -24,4 +24,4 @@ KEYWORDS="~amd64"
 # 56 of the module's 57 sources are Kotlin.
 BDEPEND="dev-lang/kotlin-bin"
 
-PATCHES=( "${FILESDIR}/${P}-ghidra-12.patch" )
+PATCHES=( "${FILESDIR}/${PN}-ghidra-12.patch" )
