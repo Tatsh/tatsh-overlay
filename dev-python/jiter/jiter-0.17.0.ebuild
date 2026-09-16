@@ -8,9 +8,11 @@ PYTHON_COMPAT=( python3_{10..15} )
 RUST_MIN_VER="1.83.0"
 CRATES="
 	ahash@0.8.12
-	aho-corasick@1.1.4
+	aho-corasick@1.1.5
 	anes@0.1.6
 	anstyle@1.0.14
+	anyhow@1.0.104
+	approx@0.5.1
 	autocfg@1.5.1
 	bit-set@0.8.0
 	bit-vec@0.8.0
@@ -18,17 +20,19 @@ CRATES="
 	bitvec@1.1.1
 	bumpalo@3.20.3
 	cast@0.3.0
+	cc@1.4.4
 	cfg-if@1.0.4
-	ciborium@0.2.2
+	cfg_aliases@0.2.2
 	ciborium-io@0.2.2
 	ciborium-ll@0.2.2
-	clap@4.6.5
-	clap_builder@4.6.5
+	ciborium@0.2.2
+	clap@4.6.6
+	clap_builder@4.6.6
 	clap_lex@1.1.0
-	codspeed@2.10.1
-	codspeed-criterion-compat@2.10.1
-	codspeed-criterion-compat-walltime@2.10.1
-	colored@2.2.0
+	codspeed-criterion-compat-walltime@5.0.1
+	codspeed-criterion-compat@5.0.1
+	codspeed@5.0.1
+	colored@3.1.1
 	criterion-plot@0.5.0
 	crossbeam-deque@0.8.7
 	crossbeam-epoch@0.9.20
@@ -38,13 +42,15 @@ CRATES="
 	equivalent@1.0.2
 	errno@0.3.14
 	fastrand@2.5.0
+	find-msvc-tools@0.1.11
 	fnv@1.0.7
 	funty@2.0.0
-	futures-core@0.3.33
-	futures-task@0.3.33
-	futures-util@0.3.33
+	futures-core@0.3.34
+	futures-task@0.3.34
+	futures-util@0.3.34
 	getrandom@0.3.4
 	getrandom@0.4.3
+	glob@0.3.4
 	half@2.7.1
 	hashbrown@0.17.1
 	heck@0.5.0
@@ -53,33 +59,33 @@ CRATES="
 	is-terminal@0.4.17
 	itertools@0.10.5
 	itoa@1.0.18
-	js-sys@0.3.103
-	lazy_static@1.5.0
+	js-sys@0.3.104
 	lexical-parse-float@1.0.6
 	lexical-parse-integer@1.0.6
 	lexical-util@1.0.7
 	libc@0.2.189
 	linux-raw-sys@0.12.1
 	memchr@2.8.3
+	nix@0.31.3
 	num-bigint@0.4.8
-	num-integer@0.1.46
+	num-integer@0.1.47
 	num-traits@0.2.19
 	once_cell@1.21.4
 	oorandom@11.1.5
 	paste@1.0.15
 	pin-project-lite@0.2.17
-	plotters@0.3.7
 	plotters-backend@0.3.7
 	plotters-svg@0.3.7
-	portable-atomic@1.14.0
+	plotters@0.3.7
+	portable-atomic@1.15.0
 	ppv-lite86@0.2.21
 	proc-macro2@1.0.107
 	proptest@1.11.0
-	pyo3@0.29.0
-	pyo3-build-config@0.29.0
-	pyo3-ffi@0.29.0
-	pyo3-macros@0.29.0
-	pyo3-macros-backend@0.29.0
+	pyo3-build-config@0.29.2
+	pyo3-ffi@0.29.2
+	pyo3-macros-backend@0.29.2
+	pyo3-macros@0.29.2
+	pyo3@0.29.2
 	quick-error@1.2.3
 	quote@1.0.47
 	r-efi@5.3.0
@@ -89,11 +95,11 @@ CRATES="
 	rand_chacha@0.9.0
 	rand_core@0.9.5
 	rand_xorshift@0.4.0
-	rayon@1.12.0
 	rayon-core@1.13.0
-	regex@1.13.1
-	regex-automata@0.4.16
+	rayon@1.12.0
+	regex-automata@0.4.18
 	regex-syntax@0.8.11
+	regex@1.13.1
 	rustix@1.1.4
 	rustversion@1.0.23
 	rusty-fork@0.3.1
@@ -102,8 +108,10 @@ CRATES="
 	serde_core@1.0.229
 	serde_derive@1.0.229
 	serde_json@1.0.151
+	shlex@2.0.1
 	slab@0.4.12
 	smallvec@1.15.2
+	statrs@0.18.0
 	syn@2.0.119
 	syn@3.0.3
 	tap@1.0.1
@@ -112,33 +120,22 @@ CRATES="
 	tinytemplate@1.2.1
 	unarray@0.1.4
 	unicode-ident@1.0.24
-	uuid@1.24.0
 	version_check@0.9.5
 	wait-timeout@0.2.1
 	walkdir@2.5.0
 	wasip2@1.0.4+wasi-0.2.12
-	wasm-bindgen@0.2.126
-	wasm-bindgen-macro@0.2.126
-	wasm-bindgen-macro-support@0.2.126
-	wasm-bindgen-shared@0.2.126
-	web-sys@0.3.103
+	wasm-bindgen-macro-support@0.2.127
+	wasm-bindgen-macro@0.2.127
+	wasm-bindgen-shared@0.2.127
+	wasm-bindgen@0.2.127
+	web-sys@0.3.104
 	winapi-util@0.1.11
 	windows-link@0.2.1
-	windows-sys@0.59.0
 	windows-sys@0.61.2
-	windows-targets@0.52.6
-	windows_aarch64_gnullvm@0.52.6
-	windows_aarch64_msvc@0.52.6
-	windows_i686_gnu@0.52.6
-	windows_i686_gnullvm@0.52.6
-	windows_i686_msvc@0.52.6
-	windows_x86_64_gnu@0.52.6
-	windows_x86_64_gnullvm@0.52.6
-	windows_x86_64_msvc@0.52.6
 	wit-bindgen@0.57.1
 	wyz@0.5.1
-	zerocopy@0.8.55
-	zerocopy-derive@0.8.55
+	zerocopy-derive@0.8.56
+	zerocopy@0.8.56
 	zmij@1.0.23
 "
 
@@ -151,6 +148,9 @@ SRC_URI="https://github.com/pydantic/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${
 S="${WORKDIR}/${P}/crates/jiter-python"
 
 LICENSE="MIT"
-LICENSE+=" Apache-2.0 Apache-2.0-with-LLVM-exceptions MIT MPL-2.0 UoI-NCSA Unicode-3.0"
+# Dependent crate licenses
+LICENSE+="
+	Apache-2.0 Apache-2.0-with-LLVM-exceptions MIT MPL-2.0 Unicode-3.0
+"
 SLOT="0"
 KEYWORDS="~amd64"
