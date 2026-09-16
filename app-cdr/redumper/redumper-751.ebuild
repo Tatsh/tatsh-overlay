@@ -3,7 +3,6 @@
 
 EAPI=8
 
-CMAKE_MAKEFILE_GENERATOR=ninja # required for C++ modules
 inherit cmake flag-o-matic
 
 DESCRIPTION="Low level CD dumper utility"
@@ -28,6 +27,13 @@ src_prepare() {
 }
 
 src_configure() {
+	local mycmakeargs=(
+		# b751 added clang-tidy targets that read BUILDSYSTEM_TARGETS out of
+		# tests/gtest. src_prepare drops the tests subdirectory because it
+		# fetches googletest over the network, so that directory is never
+		# processed and configure dies on it. These are lint targets only.
+		-DCLANG_TIDY=OFF
+	)
 	filter-flags -O*
 	if use clang; then
 		CC=clang
