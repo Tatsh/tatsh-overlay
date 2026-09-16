@@ -19,24 +19,22 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="bindist mirror"
 
-PATCHES=( "${FILESDIR}/${P}-linux-debug-stubs.patch" )
-
 src_prepare() {
 	default
 
 	# Upstream never passes LDFLAGS when linking.
 	# shellcheck disable=SC2016
 	sed -i -e 's|$(CC) -o $(ELF)|$(CC) $(LDFLAGS) -o $(ELF)|' \
-		PMAP-linux/Makefile || die
+		PMAP-unix/Makefile || die
 }
 
 src_compile() {
-	emake -C PMAP-linux CC="$(tc-getCC)" CFLAGS="${CFLAGS} -I."
+	emake -C PMAP-unix CC="$(tc-getCC)" CFLAGS="${CFLAGS}"
 }
 
 src_install() {
 	# sys-process/procps already owns /usr/bin/pmap.
-	newbin PMAP-linux/pmap "${PN}-ps2"
+	newbin PMAP-unix/pmap "${PN}-ps2"
 	dodoc README.txt Changelog.txt
 }
 
