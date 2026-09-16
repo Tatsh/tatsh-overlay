@@ -26,7 +26,7 @@ RDEPEND="
 # The conversion tests compare against DataFrames.
 BDEPEND="test? ( dev-python/pandas[${PYTHON_USEDEP}] )"
 
-PATCHES=( "${FILESDIR}/${P}-no-coverage.patch" )
+PATCHES=( "${FILESDIR}/${PN}-no-coverage.patch" )
 
 EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
