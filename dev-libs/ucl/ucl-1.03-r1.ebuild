@@ -17,8 +17,8 @@ IUSE="static-libs"
 DEPEND="!!dev-libs/libucl"
 
 PATCHES=(
-	"${FILESDIR}/${P}-CFLAGS.patch"
-	"${FILESDIR}/${P}-x32.patch"
+	"${FILESDIR}/${PN}-CFLAGS.patch"
+	"${FILESDIR}/${PN}-x32.patch"
 )
 
 src_prepare() {
