@@ -76,8 +76,8 @@ BDEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/${P}-security-updates.patch"
-	"${FILESDIR}/${P}-system-tooling.patch"
+	"${FILESDIR}/${PN}-security-updates.patch"
+	"${FILESDIR}/${PN}-system-tooling.patch"
 )
 
 # The release is a self contained tree of beam files, so there is nothing for
