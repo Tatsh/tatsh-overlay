@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.3"
+  },
+  "name": "tailwindcss",
+  "private": true,
+  "version": "4.3.3"
+}
