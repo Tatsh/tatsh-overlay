@@ -27,7 +27,7 @@ BDEPEND="test? (
 	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
 )"
 
-PATCHES=( "${FILESDIR}/${P}-flit-core-4.patch" )
+PATCHES=( "${FILESDIR}/${PN}-flit-core-4.patch" )
 
 EPYTEST_PLUGINS=( pytest-asyncio )
 distutils_enable_tests pytest
