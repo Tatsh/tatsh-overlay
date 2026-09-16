@@ -37,7 +37,7 @@ BDEPEND="
 	vulkan? ( dev-util/glslang )
 "
 
-PATCHES=( "${FILESDIR}/${P}-system-libwebp.patch" )
+PATCHES=( "${FILESDIR}/${PN}-system-libwebp.patch" )
 
 src_prepare() {
 	rmdir thirdparty/ggml || die
