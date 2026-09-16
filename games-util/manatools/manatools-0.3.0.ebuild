@@ -33,8 +33,8 @@ RDEPEND="${DEPEND}"
 # These apply to third_party/sf2cute, which only exists once the submodule
 # archive has been moved into place below, so cmake_src_prepare runs last.
 PATCHES=(
-	"${FILESDIR}/${P}-sf2cute-no-install.patch"
-	"${FILESDIR}/${P}-sf2cute-cstdint.patch"
+	"${FILESDIR}/${PN}-sf2cute-no-install.patch"
+	"${FILESDIR}/${PN}-sf2cute-cstdint.patch"
 )
 
 src_prepare() {
