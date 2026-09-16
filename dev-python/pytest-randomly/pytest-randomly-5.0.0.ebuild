@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=setuptools
+DISTUTILS_USE_PEP517=uv-build
 PYTHON_COMPAT=( python3_{10..15} )
 
 PYPI_VERIFY_REPO="https://github.com/pytest-dev/pytest-randomly"
@@ -20,7 +20,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-python/pytest[${PYTHON_USEDEP}]"
+RDEPEND=">=dev-python/pytest-8[${PYTHON_USEDEP}]"
 
 EPYTEST_PLUGINS=( "${PN}" )
 distutils_enable_tests pytest
