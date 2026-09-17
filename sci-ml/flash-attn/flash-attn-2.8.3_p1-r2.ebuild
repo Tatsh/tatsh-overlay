@@ -56,6 +56,10 @@ pkg_setup() {
 src_prepare() {
 	cuda_src_prepare
 	distutils-r1_src_prepare
+	# PyTorch >= 2.14 headers require C++20 (torch/all.h #errors otherwise, and
+	# c10/util/intrusive_ptr.h uses operator<=>/std::strong_ordering). Must run
+	# after PATCHES, whose context lines still say c++17.
+	sed -i 's/c++17/c++20/g' setup.py || die
 }
 
 src_compile() {
