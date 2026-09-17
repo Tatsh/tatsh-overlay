@@ -1,0 +1,131 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -11,6 +11,6 @@
+ find_package(ncnn REQUIRED)
+ 
+ add_library(vs_fsrcnn_vulkan SHARED main.c fsrcnn.cpp)
+-target_link_libraries(vs_fsrcnn_vulkan ${OpenCV_LIBS} ${VULKAN_LIBRARIES} ${NCNN_LIBRARIES})
++target_link_libraries(vs_fsrcnn_vulkan ${OpenCV_LIBS} Vulkan::Vulkan ncnn)
+ 
+ install(TARGETS vs_fsrcnn_vulkan LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/vapoursynth)
+--- a/fsrcnn.cpp
++++ b/fsrcnn.cpp
+@@ -2,8 +2,8 @@
+ #include <wchar.h>
+ 
+ // VapourSynth Library
+-#include <vapoursynth/VapourSynth.h>
+-#include <vapoursynth/VSHelper.h>
++#include <vapoursynth/VapourSynth4.h>
++#include <vapoursynth/VSHelper4.h>
+ 
+ // Image decode and encode
+ #include <opencv2/core.hpp>
+@@ -40,7 +40,7 @@
+ 	ncnn::destroy_gpu_instance();
+ }
+ 
+-void filter(const VSFrameRef* src, VSFrameRef* dst, const VSVideoInfo* vi, const VSAPI* vsapi) {
++void filter(const VSFrame* src, VSFrame* dst, const VSVideoInfo* vi, const VSAPI* vsapi) {
+ 
+ 	const int srcwidth = vsapi->getFrameWidth(src, 0);
+ 	const int srcheight = vsapi->getFrameHeight(src, 0);
+--- a/fsrcnn.h
++++ b/fsrcnn.h
+@@ -3,7 +3,7 @@
+ #endif
+ void init_ncnn();
+ void destroy_ncnn();
+-void filter(const VSFrameRef *, VSFrameRef*, const VSVideoInfo*, const VSAPI*);
++void filter(const VSFrame *, VSFrame*, const VSVideoInfo*, const VSAPI*);
+ #ifdef __cplusplus
+ }
+ #endif
+\ No newline at end of file
+--- a/main.c
++++ b/main.c
+@@ -1,34 +1,31 @@
+ // VapourSynth Library
+-#include <vapoursynth/VapourSynth.h>
+-#include <vapoursynth/VSHelper.h>
++#include <vapoursynth/VapourSynth4.h>
++#include <vapoursynth/VSHelper4.h>
+ 
+ // FSRCNN
+ #include "fsrcnn.h"
+ #include "stdio.h"
+ 
+ typedef struct {
+-	VSNodeRef* node;
++	VSNode* node;
+ 	VSVideoInfo vi;
+ 	int scale;
+ 	int srcInterleaved, dstInterleaved;
+ } FilterData;
+ 
+-static void VS_CC filterInit(VSMap* in, VSMap* out, void** instanceData, VSNode* node, VSCore* core, const VSAPI* vsapi) {
+-	FilterData* d = (FilterData*)*instanceData;
+-	vsapi->setVideoInfo(&d->vi, 1, node);
+-	fprintf(stderr, "[FSRCNN-Vulkan] NCNN Init...\n");
+-	init_ncnn();
++static int isSupportedFormat(const VSVideoFormat* fmt) {
++	return fmt->colorFamily == cfRGB && fmt->sampleType == stFloat && fmt->bytesPerSample == 4;
+ }
+ 
+-static const VSFrameRef* VS_CC filterGetFrame(int n, int activationReason, void** instanceData, void** frameData, VSFrameContext* frameCtx, VSCore* core, const VSAPI* vsapi) {
+-	FilterData* d = (FilterData*)*instanceData;
++static const VSFrame* VS_CC filterGetFrame(int n, int activationReason, void* instanceData, void** frameData, VSFrameContext* frameCtx, VSCore* core, const VSAPI* vsapi) {
++	FilterData* d = (FilterData*)instanceData;
+ 	if (activationReason == arInitial) {
+ 		vsapi->requestFrameFilter(n, d->node, frameCtx);
+ 	}
+ 	else if (activationReason == arAllFramesReady) {
+-		const VSFrameRef* src = vsapi->getFrameFilter(n, d->node, frameCtx);
+-		if (d->vi.format->colorFamily == cmRGB && d->vi.format->sampleType == 1 && d->vi.format->bytesPerSample == 4) {
+-			VSFrameRef* dst = vsapi->newVideoFrame(d->vi.format, d->vi.width, d->vi.height, src, core);
++		const VSFrame* src = vsapi->getFrameFilter(n, d->node, frameCtx);
++		if (isSupportedFormat(&d->vi.format)) {
++			VSFrame* dst = vsapi->newVideoFrame(&d->vi.format, d->vi.width, d->vi.height, src, core);
+ 			filter(src, dst, &d->vi, vsapi);
+ 			vsapi->freeFrame(src);
+ 			return dst;
+@@ -52,11 +49,12 @@
+ static void VS_CC filterCreate(const VSMap* in, VSMap* out, void* userData, VSCore* core, const VSAPI* vsapi) {
+ 	FilterData d;
+ 	FilterData* data;
++	VSFilterDependency deps[1];
+ 	fprintf(stderr, "[FSRCNN-Vulkan] Filter create.\n");
+ 
+-	d.node = vsapi->propGetNode(in, "clip", 0, 0);
++	d.node = vsapi->mapGetNode(in, "clip", 0, 0);
+ 	d.vi = *vsapi->getVideoInfo(d.node);
+-	if (d.vi.format->colorFamily == cmRGB && d.vi.format->sampleType == 1 && d.vi.format->bytesPerSample == 4) {
++	if (isSupportedFormat(&d.vi.format)) {
+ 		d.vi.width *= 2;
+ 		d.vi.height *= 2;
+ 	}
+@@ -64,7 +62,12 @@
+ 	data = malloc(sizeof(d));
+ 	*data = d;
+ 
+-	vsapi->createFilter(in, out, "FSRCNN-Vulkan", filterInit, filterGetFrame, filterFree, fmParallel, 0, data, core);
++	fprintf(stderr, "[FSRCNN-Vulkan] NCNN Init...\n");
++	init_ncnn();
++
++	deps[0].source = d.node;
++	deps[0].requestPattern = rpStrictSpatial;
++	vsapi->createVideoFilter(out, "FSRCNN-Vulkan", &d.vi, filterGetFrame, filterFree, fmParallel, deps, 1, data, core);
+ 
+ }
+ 
+@@ -72,7 +75,7 @@
+ //////////////////////////////////////////
+ // Init
+ 
+-VS_EXTERNAL_API(void) VapourSynthPluginInit(VSConfigPlugin configFunc, VSRegisterFunction registerFunc, VSPlugin* plugin) {
+-	configFunc("works.acg.vulkan.fsrcnn", "fsrcnn", "VapourSynth FSRCNN Vulkan", VAPOURSYNTH_API_VERSION, 1, plugin);
+-	registerFunc("Filter", "clip:clip;", filterCreate, 0, plugin);
++VS_EXTERNAL_API(void) VapourSynthPluginInit2(VSPlugin* plugin, const VSPLUGINAPI* vspapi) {
++	vspapi->configPlugin("works.acg.vulkan.fsrcnn", "fsrcnn", "VapourSynth FSRCNN Vulkan", VS_MAKE_VERSION(1, 0), VAPOURSYNTH_API_VERSION, 0, plugin);
++	vspapi->registerFunction("Filter", "clip:vnode;", "clip:vnode;", filterCreate, 0, plugin);
+ }

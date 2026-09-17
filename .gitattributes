@@ -12,3 +12,4 @@ games-emulation/daedalusx64/files/daedalusx64-resource-path.patch binary
 games-emulation/libretro-np2kai/files/libretro-np2kai-0001-sdl-makefile.libretro-suppre.patch binary
 games-misc/smw/files/smw-0001-use-xdg-paths-for-config-and.patch binary
 media-video/tbc-tools/files/tbc-tools-no-install-cache-update.patch binary
+media-video/vapoursynth-fsrcnn-ncnn-vulkan/files/*.patch binary
