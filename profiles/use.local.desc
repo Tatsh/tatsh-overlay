@@ -1,227 +1,238 @@
-app-arch/bfcodec: tools - Install jbt and unjbt.
-app-cdr/qpxtool: internal-wt - Use internal CD/DVD writing implementation instead of cdrecord.
-app-cdr/qpxtool: liteon-probe - Enable device probing in Lite-On plugin.
-app-cdr/redumper: clang - Use Clang compiler (workaround).
-app-emulation/basiliskii: jit-debug - Enable JIT debugger
-app-misc/deltona: admin - Administrative utilities like smv and reset-tpm-enrollments
-app-misc/deltona: desktop - Desktop utilities like umpv and mpv-sbs
-app-misc/deltona: git - Git utilities like git-open and merge-dependabot-prs
-app-misc/deltona: media - Media utilities like wait-for-disc and add-info-json
-app-misc/deltona: string - String utilities like is-ascii and ucwords
-app-misc/deltona: wine - Utilities for Wine like mkwineprefix and wineshell
-app-misc/deltona: www - Internet-related utilities like where-from and chrome-bisect-flags
-app-office/glabels: barcode - Enable barcode support with app-text/barcode
-app-office/glabels: qrcode - Enables QR code support with media-gfx/qrencode
-dev-libs/bincookie: tools - Install extra tools
-dev-libs/wolfssl: debug - Debug support
-dev-libs/wolfssl: jni - Enable Java JNI support
-dev-libs/wolfssl: sniffer - Enable sniffer via libpcap
-dev-libs/wolfssl: writedup - Enable write duplication of WOLFSSL objects
-dev-python/misaki: l10n_en - English localization
-dev-python/numba: tbb - Build with TBB support
-dev-python/snowflake-connector-python: pandas - Enable pandas support
-dev-python/snowflake-connector-python: secure-local-storage - Enable secure local storage
-dev-qt/qtwebkit: video - Enable video playback support
-games-action/re3: sanitizer - Build with address sanitiser for better crash logs
-games-action/relcs: sanitizer - Build with address sanitiser for better crash logs
-games-action/revc: sanitizer - Build with address sanitiser for better crash logs
-games-arcade/outfox: bundled-courses - Install bundled courses.
-games-arcade/outfox: bundled-songs - Installed bundled songs.
-games-arcade/stepmania: bundled-courses - Install bundled courses.
-games-arcade/stepmania: bundled-songs - Installed bundled songs.
-games-arcade/stepmania: crash-handler - Enable crash handler
-games-arcade/stepmania: gles2 - Enable GLES2 support
-games-arcade/stepmania: gpl - Enable GPL-compatible build
-games-arcade/stepmania: minimaid - Enable support for Minimaid hardware.
-games-arcade/stepmania: networking - Enable networking support.
-games-arcade/stepmania: parallel-port - Enable parallel port-based input devices.
-games-arcade/stepmania: profiling - Enable profiling.
-games-arcade/stepmania: wav - Enable WAV file support.
-games-arcade/stepmania: xrandr - Enable XRandR support.
-games-emulation/bsnes-hd: libretro - Build libretro core
-games-emulation/cemu: cubeb - Enable cubeb audio support
-games-emulation/cemu: discord - Enable rich Discord presence
-games-emulation/cemu: vulkan - Enable Vulkan graphics support
-games-emulation/citra: scripting - Enable RPC server for scripting
-games-emulation/citra: web-service - Enable web services (telemetry, etc.)
-games-emulation/dosbox-x: dynrec - Use recompiling cpu core instead of dynamic x86/x64 specific cpu core
-games-emulation/dosbox-x: fluidsynth - Use media-sound/fluidsynth for MIDI emulation
-games-emulation/dosbox-x: fpu - Enable FPU emulation
-games-emulation/dosbox-x: freetype - Enable FreeType support
-games-emulation/dosbox-x: midi - Enable MIDI support (with ALSA)
-games-emulation/dosbox-x: mt-32 - Use media-libs/munt-mt32emu for MT-32 emulation
-games-emulation/dosbox-x: printer - Enable printer emulation
-games-emulation/dosbox-x: screenshots - Screenshots and movie recording
-games-emulation/dosbox-x: slirp - Enable libslirp support
-games-emulation/dosbox-x: unaligned - Enable unaligned memory access
-games-emulation/dosbox-x: xbrz - Enable support for xBRZ pixel scaler
-games-emulation/libretro-flycast: gles - Use simplified OpenGLES instead of full-scale OpenGL
-games-emulation/libretro-mednafen-psx-hw: cdrom - Enable physical CDROM support
-games-emulation/libretro-meta: bsnes-mercury - Nintendo - SNES / SFC (bsnes-mercury)
-games-emulation/libretro-meta: dolphin - Nintendo Gamecube/Wii (dolphin)
-games-emulation/libretro-meta: dosbox - DOS (DOSBox)
-games-emulation/libretro-meta: fceumm - Nintendo - NES / Famicom (FCEUmm)
-games-emulation/libretro-meta: flycast - Sega - Dreamcast/NAOMI (Flycast)
-games-emulation/libretro-meta: fmsx - Microsoft - MSX (fMSX)
-games-emulation/libretro-meta: fuse - ZX Spectrum (Fuse)
-games-emulation/libretro-meta: genesis-plus-gx - Sega Genesis / Megadrive (genesis_plus_gx)
-games-emulation/libretro-meta: mame2003-plus - Arcade (MAME 2003 Plus)
-games-emulation/libretro-meta: mednafen-psx-hw - Sony - Playstation (Beetle PSX HW)
-games-emulation/libretro-meta: mednafen-psx - Sony - PlayStation (Beetle PSX)
-games-emulation/libretro-meta: pcsx-rearmed - Sony - PlayStation (PCSX ReARMed)
-games-emulation/libretro-meta: ppsspp - Sony PSP (ppsspp)
-games-emulation/libretro-meta: prboom - Doom (PrBoom)
-games-emulation/libretro-meta: puae - Commodore - Amiga (P-UAE)
-games-emulation/libretro-meta: snes9x - Nintendo - SNES / SFC (Snes9x - Current)
-games-emulation/libretro-meta: swanstation - Sony Playstation (swanstation)
-games-emulation/libretro-meta: tyrquake - Quake (TyrQuake)
-games-emulation/libretro-meta: vice-x64 - Commodore 8-bit (vice)
-games-emulation/libretro-meta: vice-x64sc - Commodore 8-bit (vice)
-games-emulation/libretro-ppsspp: gbm - Use the Graphics Buffer Manager for EGL on KMS.
-games-emulation/libretro-ppsspp: gles2 - Enable GLES2 support.
-games-emulation/libretro-ppsspp: system-ffmpeg - Use system ffmpeg.
-games-emulation/play: libretro - Build libretro core
-games-emulation/play: vulkan - Enable Vulkan graphics library support
-games-emulation/retroarch-assets: materialui - Enable materialui assets
-games-emulation/retroarch-assets: ozone - Emable ozone assets
-games-emulation/retroarch-assets: rgui - Enable rgui assets
-games-emulation/retroarch-assets: xmb - Enable xmb assets
-games-emulation/xemu: aio - Add support for AIO
-games-emulation/xemu: io-uring - Enable efficient I/O via sys-libs/liburing
-games-emulation/xemu: malloc-trim - Enable malloc_trim() support
-games-emulation/xemu: membarrier - Enable membarrier syscall support
-games-emulation/xenia-canary: discord - Build with Discord presence support
-games-emulation/yuzu: compatibility-reporting - Enable compatibility reporting
-games-emulation/yuzu: cubeb - Build with cubeb audio backend
-games-emulation/yuzu: webengine - Use  for embedded web browser
-games-emulation/yuzu: web-service - Enable web-services
-games-misc/render96ex: discord - Enable Discord presence
-games-misc/render96ex: eu - Use the EU ROM
-games-misc/render96ex: goddard - Enable enhancements to Mario's face
-games-misc/render96ex: jp - Use the Japanese ROM
-games-misc/render96ex: models - Enable higher quality models
-games-misc/render96ex: texture-fix - Enable texture bug fixes
-games-misc/render96ex: textures - Install high quality texture replacements
-games-misc/render96ex: us - Use the North American ROM
-games-util/raphnet-tech-adapter-manager: firmware - Install firmware
-games-util/wiimms-iso-tools: fuse - Build wfuse
-media-fonts/noto: ancient - Install fonts for historical scripts
-media-fonts/noto: brahmi - Install font for Brahmi script
-media-fonts/noto: coptic - Install Coptic font
-media-fonts/noto: cuneiform - Install Cuneiform font
-media-fonts/noto: cypriot - Install Cypriot font
-media-fonts/noto: deseret - Install Deseret font
-media-fonts/noto: display - Install Display variant fonts
-media-fonts/noto: duployan - Install Duployan font
-media-fonts/noto: extra - Keep extra fonts
-media-fonts/noto: hieroglyphs - Install fonts for hieroglyphs
-media-fonts/noto: l10n_ban - Install fonts for Balinese script
-media-fonts/noto: l10n_bax - Install fonts for Bamum syllabary
-media-fonts/noto: l10n_ber - Install fonts for Berber script
-media-fonts/noto: l10n_bho - Install fonts for Kaithi script
-media-fonts/noto: l10n_bku - Install fonts for Buhid
-media-fonts/noto: l10n_blt - Install fonts for Tai Viet
-media-fonts/noto: l10n_bsq - Install fonts for Bassa alphabet (Vah)
-media-fonts/noto: l10n_bug - Install fonts for Buginese
-media-fonts/noto: l10n_bya - Install fonts for Tagbanwa alphabet
-media-fonts/noto: l10n_ccp - Install fonts for Chakma
-media-fonts/noto: l10n_cja - Install fonts for Cham
-media-fonts/noto: l10n_cmr - Install fonts for Mro
-media-fonts/noto: l10n_dv - Install fonts for Thaana
-media-fonts/noto: l10n_eky - Instal fonts for Kayah Li
-media-fonts/noto: l10n_hnn - Install fonts for Hanunó'o
-media-fonts/noto: l10n_hoc - Install fonts for Warang Citi
-media-fonts/noto: l10n_ii - Install fonts for Yi syllabary
-media-fonts/noto: l10n_iu - Install fonts for Canadian Aboriginal script
-media-fonts/noto: l10n_jv - Install fonts for Javanese script
-media-fonts/noto: l10n_khb - Install fonts for Tai Tham alphabet
-media-fonts/noto: l10n_kv - Install fonts for Old Permic script
-media-fonts/noto: l10n_lep - Install fonts for Lepcha
-media-fonts/noto: l10n_lif - Install fonts for Limbu
-media-fonts/noto: l10n_lis - Install fonts for Lisu (Fraser alphabet)
-media-fonts/noto: l10n_men - Install fonts for Mende Kikakui script
-media-fonts/noto: l10n_mjl - Install fonts for Takri script
-media-fonts/noto: l10n_mww - Install fonts for Pahawh Hmong and Miao
-media-fonts/noto: l10n_new - Install fonts for Newar
-media-fonts/noto: l10n_nod - Install fonts for Thai Tham alphabet
-media-fonts/noto: l10n_nqo - Install fonts for N'Ko alphabet
-media-fonts/noto: l10n_osa - Install fonts for Osage
-media-fonts/noto: l10n_rej - Install fonts for Rejang
-media-fonts/noto: l10n_saz - Install fonts for Saurashtra script
-media-fonts/noto: l10n_skr - Install fonts for Saraiki
-media-fonts/noto: l10n_srb - Install fonts for Sora Sompeng
-media-fonts/noto: l10n_su - Install fonts for Sundanese
-media-fonts/noto: l10n_syl - Install fonts for Sylheti
-media-fonts/noto: l10n_tbw - Install fonts for Tagbanwa alphabet
-media-fonts/noto: l10n_tmh - Install fonts for Tifinagh alphabet
-media-fonts/noto: l10n_vai - Install fonts for Vai syllabary
-media-fonts/noto: linear - Install Linear (Minoan) fonts
-media-fonts/noto: mono - Install monospace fonts
-media-fonts/noto: music - Install font for music notation
-media-fonts/noto: old-arabian - Install fonts for Old North and Old South Arabian
-media-fonts/noto: pau-cin-hau - Install font for Pau Cin Hau script
-media-fonts/noto: phagspa - Install for 'Phags-pa script
-media-fonts/noto: runic - Install Runic font
-media-fonts/noto: symbols - Install Symbols fonts
-media-gfx/f3d: alembic - Support for Alembic (.abc) files via
-media-gfx/f3d: assimp - Support for FBX, DAE, OFF, DXF, X and 3MF files via
-media-gfx/f3d: exr - Support for OpenEXR images via
-media-gfx/f3d: hdf - Support for VTKHDF, ExodusII and NetCDF file formats
-media-gfx/f3d: occt - Support for STEP, IGES, BREP and XBF files via
-media-gfx/f3d: pdal - Support for point cloud file formats via PDAL
-media-gfx/f3d: vdb - Support for OpenVDB (.vdb) files
-media-gfx/f3d: webp - Support for WebP images via
-media-video/magewell-pro-capture: weave - Do not enable deinterlacing. Warning: this stops "mwcap-control --video-output-deinterlace ..." from working.
-media-video/tbc-tools: teletext - Enable teletext export in ld-process-vbi
-media-video/vapoursynth: asm - Enable assembler code for x86 CPUs (requires ). Only valid on amd64 or x86.
-media-video/vapoursynth: guard-pattern - Adds 32 bytes on the left and the right sides of each frame, fills them with a certain value, and checks their integrity after each filter. It can be used to detect buggy filters that write a little outside the frame.
-mpv-plugin/blur-edges: autoload - Auto-load the plugin
-mpv-plugin/bookmarker-menu: autoload - Auto-load the plugin
-mpv-plugin/crop: autoload - Auto-load the plugin
-mpv-plugin/delete-file: autoload - Auto-load the plugin
-mpv-plugin/mpv-copytime: autoload - Auto-load the plugin
-mpv-plugin/mpv-dvd-browser: autoload - Auto-load the plugin
-mpv-plugin/mpv-libunity: autoload - Auto-load the plugin
-mpv-plugin/mpv-lrc: autoload - Auto-load the plugin
-mpv-plugin/mpv-netrc: autoload - Auto-load the plugin
-mpv-plugin/reload: autoload - Auto-load the plugin
-mpv-plugin/shutup: autoload - Auto-load the plugin
-mpv-plugin/writeedits: autoload - Auto-load the plugin
-mpv-plugin/writename: autoload - Auto-load the plugin
-net-dns/pihole: cron - Installs cron job
-net-misc/curl-impersonate: clients - Install the curl wrapper scripts
-sci-libs/vtk: all-modules - Build all modules
-sci-libs/vtk: boost - Add support for boost
-sci-libs/vtk: cgns - Build support to handle CGNS data files
-sci-libs/vtk: gdal - Support for gdal formatted data
-sci-libs/vtk: imaging - Building Imaging modules
-sci-libs/vtk: logging - Build the logging module
-sci-libs/vtk: opencascade - Enable OpenCASCADE support
-sci-libs/vtk: openvdb - Build support to handle VDB data files
-sci-libs/vtk: pdal - Build support to handle point cloud data files
-sci-libs/vtk: rendering - Building Redering modules
-sci-libs/vtk: tbb - Use  to handle smp support
-sci-libs/vtk: views - Building Views modules
-sci-libs/vtk: vtkm - Build the viskores accelerations modules
-sci-libs/vtk: vtkm - Build the vtkm accelerations modules
-sci-libs/vtk: web - Install web component
-sci-ml/flash-attn: rocm - Enable ROCm support.
-sys-apps/kylemanna-systemd-utils: amazon - Install Amazon Cloud Drive service
-sys-apps/kylemanna-systemd-utils: btrfs - Install units for btrfs
-sys-apps/kylemanna-systemd-utils: cmsis-dap - Unknown
-sys-apps/kylemanna-systemd-utils: crashplan - Install timer for Crashplan
-sys-apps/kylemanna-systemd-utils: kodi - Install service to start Kodi
-sys-apps/kylemanna-systemd-utils: papertrail - Install Papertrail service
-sys-apps/kylemanna-systemd-utils: rssh - Install rssh service
-sys-apps/kylemanna-systemd-utils: storj - Install storj-dataserv-client.service
-sys-apps/kylemanna-systemd-utils: tahoe - Install Tahoe-related services
-sys-apps/kylemanna-systemd-utils: youtube - Install YouTube TV service
-www-apps/kokoro-fastapi: standalone - Install service files for standalone mode.
-www-apps/tabbyapi: standalone - Install service files for standalone mode.
-x11-misc/rom-properties: achievements - Enable achievement pop-ups.
-x11-misc/rom-properties: astc - Enable ASTC texture support
-x11-misc/rom-properties: cli - Build rpcli command.
-x11-misc/rom-properties: pvr - Enable the PowerVR Native SDK subset for PVRTC decompression.
-x11-misc/rom-properties: unice68 - Enable UnICE68 for Atari ST SNDH files (GPLv3).
-x11-misc/rom-properties: xbox-360 - Enable support for reading from Xbox 360 binaries
-x11-misc/rom-properties: xfce - Enable support for XFCE widget.
+app-arch/bfcodec:tools - Install jbt and unjbt.
+app-cdr/qpxtool:internal-wt - Use internal CD/DVD writing implementation instead of cdrecord.
+app-cdr/qpxtool:liteon-probe - Enable device probing in Lite-On plugin.
+app-cdr/redumper:clang - Use Clang compiler (workaround).
+app-emulation/basiliskii:jit-debug - Enable JIT debugger
+app-misc/deltona:admin - Administrative utilities like smv and reset-tpm-enrollments
+app-misc/deltona:chrome - Tools for Chromium-based browsers
+app-misc/deltona:desktop - Desktop utilities like umpv and mpv-sbs
+app-misc/deltona:git - Git utilities like git-open and merge-dependabot-prs
+app-misc/deltona:media - Media utilities like wait-for-disc and add-info-json
+app-misc/deltona:string - String utilities like is-ascii and ucwords
+app-misc/deltona:wine - Utilities for Wine like mkwineprefix and wineshell
+app-misc/deltona:www - Internet-related utilities like where-from and chrome-bisect-flags
+app-office/glabels:barcode - Enable barcode support with app-text/barcode
+app-office/glabels:qrcode - Enables QR code support with media-gfx/qrencode
+dev-libs/bincookie:tools - Install extra tools
+dev-libs/wolfssl:debug - Debug support
+dev-libs/wolfssl:jni - Enable Java JNI support
+dev-libs/wolfssl:sniffer - Enable sniffer via libpcap
+dev-libs/wolfssl:writedup - Enable write duplication of WOLFSSL objects
+dev-python/miasm:cparser - Enable the C type parser via dev-python/pycparser
+dev-python/miasm:graph - Render control flow graphs with dev-python/graphviz
+dev-python/miasm:llvm - Build the LLVM jitter via dev-python/llvmlite
+dev-python/misaki:l10n_en - English localization
+dev-python/numba:tbb - Build with TBB support
+dev-python/snowflake-connector-python:pandas - Enable pandas support
+dev-python/snowflake-connector-python:secure-local-storage - Enable secure local storage
+dev-qt/qtwebkit:video - Enable video playback support
+dev-util/ghidra-mcp-bin:scripts - Install the Ghidra scripts from upstream's repository, which its release archive does not contain
+games-action/re3:sanitizer - Build with address sanitiser for better crash logs
+games-action/relcs:sanitizer - Build with address sanitiser for better crash logs
+games-action/revc:sanitizer - Build with address sanitiser for better crash logs
+games-arcade/jazz2:angelscript - Enable scripting with dev-libs/angelscript, used by JJ2+ levels
+games-arcade/jazz2:openmpt - Play tracker module music with media-libs/libopenmpt
+games-arcade/outfox:bundled-courses - Install bundled courses.
+games-arcade/outfox:bundled-songs - Installed bundled songs.
+games-arcade/stepmania:bundled-courses - Install bundled courses.
+games-arcade/stepmania:bundled-songs - Installed bundled songs.
+games-arcade/stepmania:crash-handler - Enable crash handler
+games-arcade/stepmania:gles2 - Enable GLES2 support
+games-arcade/stepmania:gpl - Enable GPL-compatible build
+games-arcade/stepmania:minimaid - Enable support for Minimaid hardware.
+games-arcade/stepmania:networking - Enable networking support.
+games-arcade/stepmania:parallel-port - Enable parallel port-based input devices.
+games-arcade/stepmania:profiling - Enable profiling.
+games-arcade/stepmania:wav - Enable WAV file support.
+games-arcade/stepmania:xrandr - Enable XRandR support.
+games-emulation/bsnes-hd:libretro - Build libretro core
+games-emulation/cemu:cubeb - Enable cubeb audio support
+games-emulation/cemu:discord - Enable rich Discord presence
+games-emulation/cemu:vulkan - Enable Vulkan graphics support
+games-emulation/citra:scripting - Enable RPC server for scripting
+games-emulation/citra:web-service - Enable web services (telemetry, etc.)
+games-emulation/dosbox-x:dynrec - Use recompiling cpu core instead of dynamic x86/x64 specific cpu core
+games-emulation/dosbox-x:fluidsynth - Use media-sound/fluidsynth for MIDI emulation
+games-emulation/dosbox-x:fpu - Enable FPU emulation
+games-emulation/dosbox-x:freetype - Enable FreeType support
+games-emulation/dosbox-x:midi - Enable MIDI support (with ALSA)
+games-emulation/dosbox-x:mt-32 - Use media-libs/munt-mt32emu for MT-32 emulation
+games-emulation/dosbox-x:printer - Enable printer emulation
+games-emulation/dosbox-x:screenshots - Screenshots and movie recording
+games-emulation/dosbox-x:slirp - Enable libslirp support
+games-emulation/dosbox-x:unaligned - Enable unaligned memory access
+games-emulation/dosbox-x:xbrz - Enable support for xBRZ pixel scaler
+games-emulation/libretro-flycast:gles - Use simplified OpenGLES instead of full-scale OpenGL
+games-emulation/libretro-mednafen-psx-hw:cdrom - Enable physical CDROM support
+games-emulation/libretro-meta:bsnes-mercury - Nintendo - SNES / SFC (bsnes-mercury)
+games-emulation/libretro-meta:dolphin - Nintendo Gamecube/Wii (dolphin)
+games-emulation/libretro-meta:dosbox - DOS (DOSBox)
+games-emulation/libretro-meta:fceumm - Nintendo - NES / Famicom (FCEUmm)
+games-emulation/libretro-meta:flycast - Sega - Dreamcast/NAOMI (Flycast)
+games-emulation/libretro-meta:fmsx - Microsoft - MSX (fMSX)
+games-emulation/libretro-meta:fuse - ZX Spectrum (Fuse)
+games-emulation/libretro-meta:genesis-plus-gx - Sega Genesis / Megadrive (genesis_plus_gx)
+games-emulation/libretro-meta:mame2003-plus - Arcade (MAME 2003 Plus)
+games-emulation/libretro-meta:mednafen-psx - Sony - PlayStation (Beetle PSX)
+games-emulation/libretro-meta:mednafen-psx-hw - Sony - Playstation (Beetle PSX HW)
+games-emulation/libretro-meta:pcsx-rearmed - Sony - PlayStation (PCSX ReARMed)
+games-emulation/libretro-meta:ppsspp - Sony PSP (ppsspp)
+games-emulation/libretro-meta:prboom - Doom (PrBoom)
+games-emulation/libretro-meta:puae - Commodore - Amiga (P-UAE)
+games-emulation/libretro-meta:snes9x - Nintendo - SNES / SFC (Snes9x - Current)
+games-emulation/libretro-meta:swanstation - Sony Playstation (swanstation)
+games-emulation/libretro-meta:tyrquake - Quake (TyrQuake)
+games-emulation/libretro-meta:vice-x64 - Commodore 8-bit (vice)
+games-emulation/libretro-meta:vice-x64sc - Commodore 8-bit (vice)
+games-emulation/libretro-ppsspp:gbm - Use the Graphics Buffer Manager for EGL on KMS.
+games-emulation/libretro-ppsspp:gles2 - Enable GLES2 support.
+games-emulation/libretro-ppsspp:system-ffmpeg - Use system ffmpeg.
+games-emulation/pcsx2-reliquary:clang - Build with llvm-core/clang, which is the only compiler upstream supports
+games-emulation/pcsx2-reliquary:sndio - Enable support for the media-sound/sndio backend
+games-emulation/pcsx2x6:clang - Build with llvm-core/clang, which is the only compiler upstream supports
+games-emulation/pcsx2x6:sndio - Enable support for the media-sound/sndio backend
+games-emulation/play:libretro - Build libretro core
+games-emulation/play:vulkan - Enable Vulkan graphics library support
+games-emulation/retroarch-assets:materialui - Enable materialui assets
+games-emulation/retroarch-assets:ozone - Emable ozone assets
+games-emulation/retroarch-assets:rgui - Enable rgui assets
+games-emulation/retroarch-assets:xmb - Enable xmb assets
+games-emulation/xemu:aio - Add support for AIO
+games-emulation/xemu:io-uring - Enable efficient I/O via sys-libs/liburing
+games-emulation/xemu:malloc-trim - Enable malloc_trim() support
+games-emulation/xemu:membarrier - Enable membarrier syscall support
+games-emulation/xenia-canary:discord - Build with Discord presence support
+games-emulation/yuzu:compatibility-reporting - Enable compatibility reporting
+games-emulation/yuzu:cubeb - Build with cubeb audio backend
+games-emulation/yuzu:web-service - Enable web-services
+games-emulation/yuzu:webengine - Use dev-qt/qtwebengine for embedded web browser
+games-misc/render96ex:discord - Enable Discord presence
+games-misc/render96ex:eu - Use the EU ROM
+games-misc/render96ex:goddard - Enable enhancements to Mario's face
+games-misc/render96ex:jp - Use the Japanese ROM
+games-misc/render96ex:models - Enable higher quality models
+games-misc/render96ex:texture-fix - Enable texture bug fixes
+games-misc/render96ex:textures - Install high quality texture replacements
+games-misc/render96ex:us - Use the North American ROM
+games-util/raphnet-tech-adapter-manager:firmware - Install firmware
+games-util/wiimms-iso-tools:fuse - Build wfuse
+media-fonts/noto:ancient - Install fonts for historical scripts
+media-fonts/noto:brahmi - Install font for Brahmi script
+media-fonts/noto:coptic - Install Coptic font
+media-fonts/noto:cuneiform - Install Cuneiform font
+media-fonts/noto:cypriot - Install Cypriot font
+media-fonts/noto:deseret - Install Deseret font
+media-fonts/noto:display - Install Display variant fonts
+media-fonts/noto:duployan - Install Duployan font
+media-fonts/noto:extra - Keep extra fonts
+media-fonts/noto:hieroglyphs - Install fonts for hieroglyphs
+media-fonts/noto:l10n_ban - Install fonts for Balinese script
+media-fonts/noto:l10n_bax - Install fonts for Bamum syllabary
+media-fonts/noto:l10n_ber - Install fonts for Berber script
+media-fonts/noto:l10n_bho - Install fonts for Kaithi script
+media-fonts/noto:l10n_bku - Install fonts for Buhid
+media-fonts/noto:l10n_blt - Install fonts for Tai Viet
+media-fonts/noto:l10n_bsq - Install fonts for Bassa alphabet (Vah)
+media-fonts/noto:l10n_bug - Install fonts for Buginese
+media-fonts/noto:l10n_bya - Install fonts for Tagbanwa alphabet
+media-fonts/noto:l10n_ccp - Install fonts for Chakma
+media-fonts/noto:l10n_cja - Install fonts for Cham
+media-fonts/noto:l10n_cmr - Install fonts for Mro
+media-fonts/noto:l10n_dv - Install fonts for Thaana
+media-fonts/noto:l10n_eky - Instal fonts for Kayah Li
+media-fonts/noto:l10n_hnn - Install fonts for Hanunó'o
+media-fonts/noto:l10n_hoc - Install fonts for Warang Citi
+media-fonts/noto:l10n_ii - Install fonts for Yi syllabary
+media-fonts/noto:l10n_iu - Install fonts for Canadian Aboriginal script
+media-fonts/noto:l10n_jv - Install fonts for Javanese script
+media-fonts/noto:l10n_khb - Install fonts for Tai Tham alphabet
+media-fonts/noto:l10n_kv - Install fonts for Old Permic script
+media-fonts/noto:l10n_lep - Install fonts for Lepcha
+media-fonts/noto:l10n_lif - Install fonts for Limbu
+media-fonts/noto:l10n_lis - Install fonts for Lisu (Fraser alphabet)
+media-fonts/noto:l10n_men - Install fonts for Mende Kikakui script
+media-fonts/noto:l10n_mjl - Install fonts for Takri script
+media-fonts/noto:l10n_mww - Install fonts for Pahawh Hmong and Miao
+media-fonts/noto:l10n_new - Install fonts for Newar
+media-fonts/noto:l10n_nod - Install fonts for Thai Tham alphabet
+media-fonts/noto:l10n_nqo - Install fonts for N'Ko alphabet
+media-fonts/noto:l10n_osa - Install fonts for Osage
+media-fonts/noto:l10n_rej - Install fonts for Rejang
+media-fonts/noto:l10n_saz - Install fonts for Saurashtra script
+media-fonts/noto:l10n_skr - Install fonts for Saraiki
+media-fonts/noto:l10n_srb - Install fonts for Sora Sompeng
+media-fonts/noto:l10n_su - Install fonts for Sundanese
+media-fonts/noto:l10n_syl - Install fonts for Sylheti
+media-fonts/noto:l10n_tbw - Install fonts for Tagbanwa alphabet
+media-fonts/noto:l10n_tmh - Install fonts for Tifinagh alphabet
+media-fonts/noto:l10n_vai - Install fonts for Vai syllabary
+media-fonts/noto:linear - Install Linear (Minoan) fonts
+media-fonts/noto:mono - Install monospace fonts
+media-fonts/noto:music - Install font for music notation
+media-fonts/noto:old-arabian - Install fonts for Old North and Old South Arabian
+media-fonts/noto:pau-cin-hau - Install font for Pau Cin Hau script
+media-fonts/noto:phagspa - Install for 'Phags-pa script
+media-fonts/noto:runic - Install Runic font
+media-fonts/noto:symbols - Install Symbols fonts
+media-gfx/f3d:alembic - Support for Alembic (.abc) files via media-gfx/alembic
+media-gfx/f3d:assimp - Support for FBX, DAE, OFF, DXF, X and 3MF files via media-libs/assimp
+media-gfx/f3d:exr - Support for OpenEXR images via media-libs/openexr
+media-gfx/f3d:hdf - Support for VTKHDF, ExodusII and NetCDF file formats
+media-gfx/f3d:occt - Support for STEP, IGES, BREP and XBF files via sci-libs/opencascade
+media-gfx/f3d:pdal - Support for point cloud file formats via PDAL
+media-gfx/f3d:vdb - Support for OpenVDB (.vdb) files
+media-gfx/f3d:webp - Support for WebP images via media-libs/libwebp
+media-video/magewell-pro-capture:weave - Do not enable deinterlacing. Warning: this stops "mwcap-control --video-output-deinterlace ..." from working.
+media-video/tbc-tools:teletext - Enable teletext export in ld-process-vbi
+media-video/vapoursynth:asm - Enable assembler code for x86 CPUs (requires dev-lang/yasm). Only valid on amd64 or x86.
+media-video/vapoursynth:guard-pattern - Adds 32 bytes on the left and the right sides of each frame, fills them with a certain value, and checks their integrity after each filter. It can be used to detect buggy filters that write a little outside the frame.
+mpv-plugin/blur-edges:autoload - Auto-load the plugin
+mpv-plugin/bookmarker-menu:autoload - Auto-load the plugin
+mpv-plugin/crop:autoload - Auto-load the plugin
+mpv-plugin/delete-file:autoload - Auto-load the plugin
+mpv-plugin/mpv-copytime:autoload - Auto-load the plugin
+mpv-plugin/mpv-dvd-browser:autoload - Auto-load the plugin
+mpv-plugin/mpv-libunity:autoload - Auto-load the plugin
+mpv-plugin/mpv-lrc:autoload - Auto-load the plugin
+mpv-plugin/mpv-netrc:autoload - Auto-load the plugin
+mpv-plugin/reload:autoload - Auto-load the plugin
+mpv-plugin/shutup:autoload - Auto-load the plugin
+mpv-plugin/writeedits:autoload - Auto-load the plugin
+mpv-plugin/writename:autoload - Auto-load the plugin
+net-dns/pihole:cron - Installs cron job
+net-misc/curl-impersonate:clients - Install the curl wrapper scripts
+sci-libs/vtk:all-modules - Build all modules
+sci-libs/vtk:boost - Add support for boost
+sci-libs/vtk:cgns - Build support to handle CGNS data files
+sci-libs/vtk:gdal - Support for gdal formatted data
+sci-libs/vtk:imaging - Building Imaging modules
+sci-libs/vtk:logging - Build the logging module
+sci-libs/vtk:opencascade - Enable OpenCASCADE support
+sci-libs/vtk:openvdb - Build support to handle VDB data files
+sci-libs/vtk:pdal - Build support to handle point cloud data files
+sci-libs/vtk:rendering - Building Redering modules
+sci-libs/vtk:tbb - Use dev-cpp/tbb to handle smp support
+sci-libs/vtk:views - Building Views modules
+sci-libs/vtk:vtkm - Build the viskores accelerations modules
+sci-libs/vtk:web - Install web component
+sci-ml/flash-attn:rocm - Enable ROCm support.
+sci-ml/trellis-cpp:webp - Encode GLB textures as WebP using media-libs/libwebp
+sys-apps/kylemanna-systemd-utils:amazon - Install Amazon Cloud Drive service
+sys-apps/kylemanna-systemd-utils:btrfs - Install units for btrfs
+sys-apps/kylemanna-systemd-utils:cmsis-dap - Unknown
+sys-apps/kylemanna-systemd-utils:crashplan - Install timer for Crashplan
+sys-apps/kylemanna-systemd-utils:kodi - Install service to start Kodi
+sys-apps/kylemanna-systemd-utils:papertrail - Install Papertrail service
+sys-apps/kylemanna-systemd-utils:rssh - Install rssh service
+sys-apps/kylemanna-systemd-utils:storj - Install storj-dataserv-client.service
+sys-apps/kylemanna-systemd-utils:tahoe - Install Tahoe-related services
+sys-apps/kylemanna-systemd-utils:youtube - Install YouTube TV service
+www-apps/kokoro-fastapi:standalone - Install service files for standalone mode.
+www-apps/tabbyapi:standalone - Install service files for standalone mode.
+x11-misc/rom-properties:achievements - Enable achievement pop-ups.
+x11-misc/rom-properties:astc - Enable ASTC texture support
+x11-misc/rom-properties:cli - Build rpcli command.
+x11-misc/rom-properties:pvr - Enable the PowerVR Native SDK subset for PVRTC decompression.
+x11-misc/rom-properties:unice68 - Enable UnICE68 for Atari ST SNDH files (GPLv3).
+x11-misc/rom-properties:xbox-360 - Enable support for reading from Xbox 360 binaries
+x11-misc/rom-properties:xfce - Enable support for XFCE widget.
