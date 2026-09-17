@@ -97,7 +97,6 @@ barbieri
 bascom
 basepack
 baserom
-basicsr
 basiliskii
 bassa
 bassavah
@@ -492,6 +491,7 @@ eedi
 eend
 eerror
 eeyore
+egencache
 egit
 eigen
 einfo
@@ -1063,7 +1063,6 @@ lith
 livecheck
 livechecks
 llvmlite
-lmdb
 lmod
 loaderwv
 loadspec
@@ -1138,7 +1137,6 @@ mechacon
 mednafen
 meetei
 megadrive
-megvii
 melonds
 membarrier
 memkind
@@ -1231,7 +1229,6 @@ mytree
 mywave
 nabataean
 nadermx
-nafnet
 nall
 namco
 namedtuples
@@ -1294,7 +1291,6 @@ nofetch
 noisereduce
 nolegacy
 noncommercial
-nonlinear
 nonrenewal
 nontransferability
 nosetests
@@ -1843,7 +1839,6 @@ teagle
 teakra
 teletextintegration
 temasek
-tensorboard
 terak
 termcolor
 testfloat
