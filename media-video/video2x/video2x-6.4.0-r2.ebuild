@@ -48,6 +48,10 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
+		# Upstream targets C++17, where std::filesystem::path::u8string() returns
+		# std::string. Newer compilers default to C++20, where it returns
+		# std::u8string, which fmt refuses to format.
+		-DCMAKE_CXX_STANDARD=17
 		-DUSE_SYSTEM_NCNN=ON
 		-Wno-dev
 	)
