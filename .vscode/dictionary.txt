@@ -561,6 +561,7 @@ fastapi
 fastmcp
 fastparquet
 faudio
+favor
 favorite
 fayzullin
 fbalpha
@@ -668,6 +669,7 @@ gitdb
 gitpython
 giwty
 glabels
+glep
 gles
 glew
 glfw
