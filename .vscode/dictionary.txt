@@ -121,6 +121,7 @@ binja
 binpkgs
 binutils
 binv
+birefnet
 bitrock
 bitwidth
 blackbox
@@ -366,6 +367,7 @@ dialogs
 didix
 dilger
 dinothawr
+dinov
 dinstall
 diropts
 discid
