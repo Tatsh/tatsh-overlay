@@ -221,6 +221,9 @@ sci-libs/vtk:vtkm - Build the viskores accelerations modules
 sci-libs/vtk:web - Install web component
 sci-ml/flash-attn:rocm - Enable ROCm support.
 sci-ml/trellis-cpp:webp - Encode GLB textures as WebP using media-libs/libwebp
+sci-ml/trellis-cpp:weights-f16 - Install the full precision TRELLIS.2 weights (~16 GB)
+sci-ml/trellis-cpp:weights-q4 - Install the Q4 quantized TRELLIS.2 weights (~6 GB, lossy)
+sci-ml/trellis-cpp:weights-q8 - Install the Q8 quantized TRELLIS.2 weights (~10 GB, near lossless)
 sys-apps/kylemanna-systemd-utils:amazon - Install Amazon Cloud Drive service
 sys-apps/kylemanna-systemd-utils:btrfs - Install units for btrfs
 sys-apps/kylemanna-systemd-utils:cmsis-dap - Unknown
