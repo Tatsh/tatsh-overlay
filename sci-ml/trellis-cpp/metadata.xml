@@ -7,6 +7,9 @@
 	</maintainer>
 	<use>
 		<flag name="webp">Encode GLB textures as WebP using <pkg>media-libs/libwebp</pkg></flag>
+		<flag name="weights-f16">Install the full precision TRELLIS.2 weights (~16 GB)</flag>
+		<flag name="weights-q4">Install the Q4 quantized TRELLIS.2 weights (~6 GB, lossy)</flag>
+		<flag name="weights-q8">Install the Q8 quantized TRELLIS.2 weights (~10 GB, near lossless)</flag>
 	</use>
 	<upstream>
 		<remote-id type="github">pwilkin/trellis.cpp</remote-id>
