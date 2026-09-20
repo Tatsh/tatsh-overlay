@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<longdescription>
+		shadPKG analyses, decrypts and extracts PlayStation 4 PKG files, including games,
+		updates, patches, DLCs and homebrew packages. Only the command line tool is built;
+		the imgui based GUI is not.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">seregonwar/ShadPKG</remote-id>
+	</upstream>
+</pkgmetadata>

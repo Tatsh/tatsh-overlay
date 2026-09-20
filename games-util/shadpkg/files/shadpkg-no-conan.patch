@@ -1,0 +1,47 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a210156..1eaf0d4 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -21,7 +21,11 @@ find_package(ZLIB REQUIRED)
+ find_package(CryptoPP REQUIRED)
+ find_package(fmt REQUIRED)
+ find_package(nlohmann_json REQUIRED)
+-find_package(capstone REQUIRED)
++find_package(PkgConfig REQUIRED)
++# The conan package exports a capstone::capstone target, the upstream CMake
++# package does not: 5.x exports capstone-shared, 6.x capstone_shared. The
++# pkg-config file is the one thing both of them ship.
++pkg_check_modules(capstone REQUIRED IMPORTED_TARGET capstone)
+ 
+ if(BUILD_GUI)
+     find_package(imgui REQUIRED)
+@@ -67,7 +71,7 @@ set(CORE_SOURCES
+ 
+ add_library(shadpkg_core STATIC ${CORE_SOURCES})
+ 
+-target_include_directories(shadpkg_core PUBLIC
++set(CORE_INCLUDE_DIRS
+     ${CMAKE_SOURCE_DIR}
+     ${CMAKE_SOURCE_DIR}/core
+     ${CMAKE_SOURCE_DIR}/core/file_format
+@@ -75,7 +79,19 @@ target_include_directories(shadpkg_core PUBLIC
+     ${CMAKE_SOURCE_DIR}/common
+ )
+ 
+-target_link_libraries(shadpkg_core PUBLIC ZLIB::ZLIB fmt::fmt cryptopp::cryptopp capstone::capstone nlohmann_json::nlohmann_json)
++if(MSVC)
++    target_include_directories(shadpkg_core PUBLIC ${CORE_INCLUDE_DIRS})
++else()
++    # -iquote rather than -I: these directories must only satisfy "..."
++    # includes. On the -I search path common/assert.h and common/error.h
++    # shadow the system <assert.h> and <error.h> for any third party header
++    # that includes them, e.g. capstone/arm.h.
++    foreach(dir IN LISTS CORE_INCLUDE_DIRS)
++        target_compile_options(shadpkg_core PUBLIC "SHELL:-iquote ${dir}")
++    endforeach()
++endif()
++
++target_link_libraries(shadpkg_core PUBLIC ZLIB::ZLIB fmt::fmt cryptopp::cryptopp PkgConfig::capstone nlohmann_json::nlohmann_json)
+ 
+ if(WIN32)
+     target_compile_definitions(shadpkg_core PRIVATE _WIN32_WINNT=NTDDI_WIN10_RS5)
