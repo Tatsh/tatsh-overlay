@@ -1695,6 +1695,7 @@ seatools
 seccomp
 sekrit
 sentencepiece
+seregonwar
 setc
 setfcap
 setgid
@@ -1705,6 +1706,7 @@ setuptools
 sezanzeb
 sflags
 shaderc
+shadpkg
 shagkur
 sharada
 shazam
