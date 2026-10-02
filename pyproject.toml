@@ -20,10 +20,6 @@ types-pyyaml = "^6.0.12.20250915"
 types-requests = "^2.33.0.20260327"
 yapf = "^0.43.0"
 
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core"]
-
 [tool.mypy]
 disallow_incomplete_defs = true
 disallow_subclassing_any = true
@@ -92,3 +88,7 @@ split_penalty_for_added_line_split = 30
 split_penalty_import_names = 0
 split_penalty_logical_operator = 300
 use_tabs = false
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]

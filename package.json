@@ -95,6 +95,12 @@
         "options": {
           "useTabs": true
         }
+      },
+      {
+        "files": ["*.toml"],
+        "options": {
+          "singleQuote": false
+        }
       }
     ],
     "plugins": [
