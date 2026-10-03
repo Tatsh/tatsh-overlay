@@ -1,9 +1,13 @@
 updates:
-  - directory: /
+  - cooldown:
+      default-days: 7
+    directory: /
     package-ecosystem: npm
     schedule:
       interval: weekly
-  - directory: /
+  - cooldown:
+      default-days: 7
+    directory: /
     package-ecosystem: pip
     schedule:
       interval: weekly
