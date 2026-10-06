@@ -27,7 +27,7 @@ RDEPEND="
 	dev-libs/libayatana-appindicator
 	dev-libs/libayatana-indicator
 	dev-libs/libdbusmenu
-	x11-libs/gtk+:3
+	x11-libs/gtk+:3[wayland]
 "
 
 QA_PREBUILT="opt/${MY_PN_LC}/*"
