@@ -1759,6 +1759,8 @@ sdist
 seatools
 seccomp
 sekrit
+semctl
+semget
 sentencepiece
 seregonwar
 setc
