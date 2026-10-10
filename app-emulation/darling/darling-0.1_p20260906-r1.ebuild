@@ -252,3 +252,12 @@ src_configure() {
 	)
 	cmake_src_configure
 }
+
+src_install() {
+	cmake_src_install
+	# Darling needs its empty directories (e.g. proc is where procfs gets mounted); Portage drops them
+	local dir
+	while IFS= read -r -d '' dir; do
+		keepdir "${dir#"${ED}"}"
+	done < <(find "${ED}/usr/libexec/darling" -type d -empty -print0 || die)
+}
