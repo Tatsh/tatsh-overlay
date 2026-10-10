@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sat, 10 Oct 2026 03:47:40 -0400
+Subject: [PATCH] Return results from semget() and semctl()
+
+sys_semget() discarded the semaphore ID returned by Linux and always
+returned 0, so every set appeared as ID 0. Subsequent semctl() and
+semop() calls then acted on whichever set had ID 0, failing with EINVAL
+when there was none. This broke e.g. PyInstaller's one-file bootloader.
+
+sys_semctl() likewise discarded the result of GETVAL, GETPID, GETNCNT
+and GETZCNT.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ .../emulation/src/xnu_syscall/bsd/impl/sysv_sem/semctl.c       | 3 ++-
+ .../emulation/src/xnu_syscall/bsd/impl/sysv_sem/semget.c       | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/external/xnu/darling/src/libsystem_kernel/emulation/src/xnu_syscall/bsd/impl/sysv_sem/semctl.c b/src/external/xnu/darling/src/libsystem_kernel/emulation/src/xnu_syscall/bsd/impl/sysv_sem/semctl.c
+index 4438c7e..97d5c17 100644
+--- a/src/external/xnu/darling/src/libsystem_kernel/emulation/src/xnu_syscall/bsd/impl/sysv_sem/semctl.c
++++ b/src/external/xnu/darling/src/libsystem_kernel/emulation/src/xnu_syscall/bsd/impl/sysv_sem/semctl.c
+@@ -60,5 +60,6 @@ long sys_semctl(int semid, int semnum, int cmd, union xnu_semun arg)
+ 		arg.buf->sem_ctime = orig.sem_ctime;
+ 	}
+ 
+-	return 0;
++	// GETVAL, GETPID, GETNCNT and GETZCNT return their result
++	return ret;
+ }
+diff --git a/src/external/xnu/darling/src/libsystem_kernel/emulation/src/xnu_syscall/bsd/impl/sysv_sem/semget.c b/src/external/xnu/darling/src/libsystem_kernel/emulation/src/xnu_syscall/bsd/impl/sysv_sem/semget.c
+index b331ea9..65411a3 100644
+--- a/src/external/xnu/darling/src/libsystem_kernel/emulation/src/xnu_syscall/bsd/impl/sysv_sem/semget.c
++++ b/src/external/xnu/darling/src/libsystem_kernel/emulation/src/xnu_syscall/bsd/impl/sysv_sem/semget.c
+@@ -18,5 +18,5 @@ long sys_semget(int32_t key, int n, int fl)
+ 
+ 	if (ret < 0)
+ 		return errno_linux_to_bsd(ret);
+-	return 0;
++	return ret;
+ }

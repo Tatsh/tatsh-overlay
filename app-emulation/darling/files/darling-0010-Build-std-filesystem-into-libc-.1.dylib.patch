@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sat, 10 Oct 2026 03:19:17 -0400
+Subject: [PATCH] Build std::filesystem into libc++.1.dylib
+
+macOS has shipped std::filesystem in libc++.1.dylib since 10.15, so
+binaries built for newer macOS import std::__1::__fs::filesystem::*
+from it and failed to load under Darling with "Symbol not found".
+Build src/filesystem/operations.cpp and directory_iterator.cpp, as C++17
+like upstream does. int128_builtins.cpp is not needed, since Darling
+links compiler-rt.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/src/external/libcxx/CMakeLists.txt b/src/external/libcxx/CMakeLists.txt
+index 55144f764..797d2e27c 100644
+--- a/src/external/libcxx/CMakeLists.txt
++++ b/src/external/libcxx/CMakeLists.txt
+@@ -47,6 +47,15 @@ set(cxx_sources
+ 	src/valarray.cpp
+ 	src/variant.cpp
+ 	src/vector.cpp
++	src/filesystem/directory_iterator.cpp
++	src/filesystem/operations.cpp
++)
++
++# std::filesystem needs C++17; macOS has shipped it in libc++.1.dylib since 10.15
++set_source_files_properties(
++	src/filesystem/directory_iterator.cpp
++	src/filesystem/operations.cpp
++	PROPERTIES COMPILE_OPTIONS "-std=c++17"
+ )
+ 
+ add_darling_object_library(cxx_obj ${cxx_sources})

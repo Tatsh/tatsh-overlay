@@ -221,6 +221,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0007-Derive-OBJC_IS_DEBUG_BUILD-from-NDEBUG.patch"
 	"${FILESDIR}/${PN}-0008-iridium-support-LLVM-23-s-split-branch-opcodes.patch"
 	"${FILESDIR}/${PN}-0009-Honour-DESTDIR-when-renaming-install-bin.patch"
+	"${FILESDIR}/${PN}-0010-Build-std-filesystem-into-libc-.1.dylib.patch"
+	"${FILESDIR}/${PN}-0011-Return-results-from-semget-and-semctl.patch"
 )
 
 FILECAPS=( cap_sys_admin+ep usr/libexec/darling/usr/sbin/fseventsd )
