@@ -224,6 +224,8 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0010-Build-std-filesystem-into-libc-.1.dylib.patch"
 	"${FILESDIR}/${PN}-0011-Return-results-from-semget-and-semctl.patch"
 	"${FILESDIR}/${PN}-0012-Restore-the-working-directory-after-joining-the-mo.patch"
+	"${FILESDIR}/${PN}-0013-Link-host-directories-into-the-prefix-at-the-same-.patch"
+	"${FILESDIR}/${PN}-0014-Add-darpath-to-convert-paths-between-the-host-and-.patch"
 )
 
 FILECAPS=( cap_sys_admin+ep usr/libexec/darling/usr/sbin/fseventsd )
