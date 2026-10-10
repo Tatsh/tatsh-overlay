@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 9 Oct 2026 20:29:57 -0400
+Subject: [PATCH 3/3] Add a standalone CMake build for the tools Darling uses
+
+Builds ld64, ar, ranlib and lipo outside of Darling's tree and installs
+them along with the cctools headers, so distributions can package them
+separately. Darling's own build is unaffected; it adds the
+subdirectories directly.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+ create mode 100644 CMakeLists.txt
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+new file mode 100644
+index 0000000..d60fb58
+--- /dev/null
++++ b/CMakeLists.txt
+@@ -0,0 +1,18 @@
++# Standalone build of the tools Darling needs (ld64, ar, ranlib, lipo), e.g. for distribution packages.
++# Darling itself adds the subdirectories below directly and does not use this file.
++cmake_minimum_required(VERSION 3.18)
++project(darling-cctools C CXX)
++
++set(APPLE_TARGET_TRIPLET_PRIMARY "x86_64-apple-darwin20" CACHE STRING "Target triple the tools are named after")
++set(TARGET_x86_64 ON)
++# Darling defines this globally; it enables Darling-specific fixes in these tools
++add_compile_definitions(DARLING)
++
++add_subdirectory(cctools/ld64/src)
++add_subdirectory(cctools/ar)
++add_subdirectory(cctools/misc)
++
++include(GNUInstallDirs)
++install(TARGETS ${APPLE_TARGET_TRIPLET_PRIMARY}-ld ${APPLE_TARGET_TRIPLET_PRIMARY}-ar ranlib lipo
++	RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
++install(DIRECTORY cctools/include/ DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/darling-cctools")

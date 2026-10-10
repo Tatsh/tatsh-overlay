@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 9 Oct 2026 18:58:59 -0400
+Subject: [PATCH 2/3] ld64: add USE_SYSTEM_BLOCKSRUNTIME option
+
+When ON, link against the system BlocksRuntime (e.g. Gentoo's
+sys-libs/blocksruntime, Debian's libblocksruntime-dev) instead of
+building the bundled copy in 3rd/BlocksRuntime. Defaults to OFF.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ cctools/ld64/src/CMakeLists.txt | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/cctools/ld64/src/CMakeLists.txt b/cctools/ld64/src/CMakeLists.txt
+index 1d8bfa5..f1092d2 100644
+--- a/cctools/ld64/src/CMakeLists.txt
++++ b/cctools/ld64/src/CMakeLists.txt
+@@ -15,7 +15,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../include/foreign)
+ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ld)
+ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ld/parsers)
+ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rd)
+-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rd/BlocksRuntime)
+ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rd/include)
+ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/abstraction)
+ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+@@ -75,8 +74,6 @@ set(ld64_sources
+ 	ld/PlatformSupport.cpp
+ 	./3rd/md5.c
+ 	./3rd/strlcat.c
+-	./3rd/BlocksRuntime/runtime.c
+-	./3rd/BlocksRuntime/data.c
+ 	./3rd/helper.c
+ 	./3rd/strlcpy.c
+ 	./3rd/qsort_r.c
+@@ -88,6 +85,21 @@ set(ld64_sources
+ add_executable(${APPLE_TARGET_TRIPLET_PRIMARY}-ld ${ld64_sources})
+ target_link_libraries(${APPLE_TARGET_TRIPLET_PRIMARY}-ld -lpthread -ldl)
+ 
++option(USE_SYSTEM_BLOCKSRUNTIME "Use the system BlocksRuntime instead of the bundled copy" OFF)
++
++if(USE_SYSTEM_BLOCKSRUNTIME)
++	find_path(BLOCKSRUNTIME_INCLUDE_DIR Block.h PATH_SUFFIXES blocksruntime REQUIRED)
++	find_library(BLOCKSRUNTIME_LIBRARY BlocksRuntime REQUIRED)
++	target_include_directories(${APPLE_TARGET_TRIPLET_PRIMARY}-ld PRIVATE "${BLOCKSRUNTIME_INCLUDE_DIR}")
++	target_link_libraries(${APPLE_TARGET_TRIPLET_PRIMARY}-ld "${BLOCKSRUNTIME_LIBRARY}")
++else()
++	target_sources(${APPLE_TARGET_TRIPLET_PRIMARY}-ld PRIVATE
++		./3rd/BlocksRuntime/runtime.c
++		./3rd/BlocksRuntime/data.c
++	)
++	target_include_directories(${APPLE_TARGET_TRIPLET_PRIMARY}-ld PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/3rd/BlocksRuntime")
++endif()
++
+ # musl libc systems need libexecinfo
+ find_library(EXECINFO
+ 	NAMES

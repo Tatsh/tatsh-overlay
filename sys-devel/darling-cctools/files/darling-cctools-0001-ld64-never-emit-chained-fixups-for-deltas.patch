@@ -1,0 +1,67 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 9 Oct 2026 18:58:59 -0400
+Subject: [PATCH 1/3] ld64: never emit chained fixups for deltas
+
+buildChainedFixupInfo() leaves any fixup cluster containing a
+subtraction out of the chain, but applyFixUps() still encoded 32- and
+64-bit stores of such deltas as chained pointers unless the atom was in
+a code/CFI/unwind/DOF section. Clang 23 emits relative lookup tables
+(32-bit target - table deltas) in __TEXT,__const, so linking dyld
+failed with "chained binds not implemented yet". A 64-bit delta in a
+data section would have been silently encoded as a rebase.
+
+Apply deltas directly, matching the chain builder.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ cctools/ld64/src/ld/OutputFile.cpp | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/cctools/ld64/src/ld/OutputFile.cpp b/cctools/ld64/src/ld/OutputFile.cpp
+index 7d1fa52..95faa1d 100644
+--- a/cctools/ld64/src/ld/OutputFile.cpp
++++ b/cctools/ld64/src/ld/OutputFile.cpp
+@@ -1362,12 +1362,16 @@ void OutputFile::applyFixUps(ld::Internal& state, uint64_t mhAddress, const ld::
+ 	bool is_blx;
+ 	bool is_b;
+ 	bool thumbTarget = false;
++	// a delta (target - from) is resolved at link time and never needs a chained fixup
++	bool isDelta = false;
+ 	std::map<uint32_t, const Fixup*> usedByHints;
+ #if SUPPORT_ARCH_arm64e
+ 	Fixup::AuthData authData;
+ #endif
+ 	for (ld::Fixup::iterator fit = atom->fixupsBegin(), end=atom->fixupsEnd(); fit != end; ++fit) {
+ 		uint8_t* fixUpLocation = &buffer[fit->offsetInAtom];
++		if ( fit->firstInCluster() )
++			isDelta = false;
+ 		ld::Fixup::LOH_arm64 lohExtra;
+ 		switch ( (ld::Fixup::Kind)(fit->kind) ) { 
+ 			case ld::Fixup::kindNone:
+@@ -1389,6 +1393,7 @@ void OutputFile::applyFixUps(ld::Internal& state, uint64_t mhAddress, const ld::
+ 				delta = addressOf(state, fit, &fromTarget);
+ 				if ( ! fit->contentAddendOnly )
+ 					accumulator -= delta;
++				isDelta = true;
+ 				break;
+ 			case ld::Fixup::kindAddAddend:
+ 				if ( ! fit->contentIgnoresAddend ) {
+@@ -1430,7 +1435,7 @@ void OutputFile::applyFixUps(ld::Internal& state, uint64_t mhAddress, const ld::
+ 				break;
+ 			case ld::Fixup::kindStoreLittleEndian32:
+ 				rangeCheckAbsolute32(accumulator, state, atom, fit);
+-				if ( _options.makeChainedFixups() && !fit->contentAddendOnly && (atom->contentType() != ld::Atom::ContentType::typeCFI)
++				if ( _options.makeChainedFixups() && !fit->contentAddendOnly && !isDelta && (atom->contentType() != ld::Atom::ContentType::typeCFI)
+ 				 	&& (atom->section().type() != ld::Section::typeUnwindInfo) && (atom->section().type() != ld::Section::typeCode)
+ 				 	&& (atom->section().type() != ld::Section::typeDtraceDOF)  )
+ 					setFixup32(fixUpLocation, accumulator, toTarget);
+@@ -1438,7 +1443,7 @@ void OutputFile::applyFixUps(ld::Internal& state, uint64_t mhAddress, const ld::
+ 					set32LE(fixUpLocation, accumulator);
+ 				break;
+ 			case ld::Fixup::kindStoreLittleEndian64:
+-				if ( _options.makeChainedFixups() && !fit->contentAddendOnly && (atom->contentType() != ld::Atom::ContentType::typeCFI) )
++				if ( _options.makeChainedFixups() && !fit->contentAddendOnly && !isDelta && (atom->contentType() != ld::Atom::ContentType::typeCFI) )
+ 					setFixup64(fixUpLocation, accumulator, toTarget);
+ 				else
+ 					set64LE(fixUpLocation, accumulator);
