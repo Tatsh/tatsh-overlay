@@ -223,6 +223,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0009-Honour-DESTDIR-when-renaming-install-bin.patch"
 	"${FILESDIR}/${PN}-0010-Build-std-filesystem-into-libc-.1.dylib.patch"
 	"${FILESDIR}/${PN}-0011-Return-results-from-semget-and-semctl.patch"
+	"${FILESDIR}/${PN}-0012-Restore-the-working-directory-after-joining-the-mo.patch"
 )
 
 FILECAPS=( cap_sys_admin+ep usr/libexec/darling/usr/sbin/fseventsd )

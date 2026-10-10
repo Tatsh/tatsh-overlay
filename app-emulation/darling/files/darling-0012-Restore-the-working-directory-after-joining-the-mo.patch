@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Sat, 10 Oct 2026 05:26:16 -0400
+Subject: [PATCH] Restore the working directory after joining the mount
+ namespace
+
+setns() with CLONE_NEWNS moves the caller to the root of the new mount
+namespace. The launcher then resolved its program argument with
+realpath() relative to /, so `darling ./program` and `darling program`
+failed with "is not a supported command or a file". The container's
+mount namespace is a copy of the host's, so change back to the original
+working directory after joining it.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ src/startup/darling.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/startup/darling.c b/src/startup/darling.c
+index a3f27fbf3..0452c685d 100644
+--- a/src/startup/darling.c
++++ b/src/startup/darling.c
+@@ -188,6 +188,10 @@ int main(int argc, char ** argv)
+ 
+ #if USE_LINUX_4_11_HACK
+ 	joinNamespace(pidInit, CLONE_NEWNS, "mnt");
++	// setns() moves us to the root of the mount namespace; restore the working directory so that
++	// relative paths (e.g. `darling ./program`) still resolve
++	if (chdir(g_workingDirectory) != 0)
++		fprintf(stderr, "Cannot change to %s: %s\n", g_workingDirectory, strerror(errno));
+ #endif
+ 
+ 	seteuid(g_originalUid);
