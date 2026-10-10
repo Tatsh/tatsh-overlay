@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 9 Oct 2026 20:29:57 -0400
+Subject: [PATCH] Honour DESTDIR when renaming install-bin
+
+The rename ran in the final install prefix, so a staged (DESTDIR)
+install left install-bin in place and touched the live system instead.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/external/file_cmds/CMakeLists.txt b/src/external/file_cmds/CMakeLists.txt
+index 9f0dc95..3b2d7d8 100644
+--- a/src/external/file_cmds/CMakeLists.txt
++++ b/src/external/file_cmds/CMakeLists.txt
+@@ -68,7 +68,7 @@ install(TARGETS gzip pathchk compress chflags ipcrm
+ 	DESTINATION libexec/darling/usr/bin)
+ 
+ install(TARGETS install-bin DESTINATION libexec/darling/usr/bin)
+-install(CODE "execute_process(COMMAND mv install-bin install WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/libexec/darling/usr/bin)")
++install(CODE "execute_process(COMMAND mv install-bin install WORKING_DIRECTORY \$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/libexec/darling/usr/bin)")
+ install(FILES compress/zcat.sh RENAME zcat
+ 	PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ
+ 	                GROUP_EXECUTE WORLD_READ WORLD_EXECUTE

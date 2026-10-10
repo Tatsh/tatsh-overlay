@@ -1,0 +1,340 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 9 Oct 2026 20:53:55 -0400
+Subject: [PATCH] Add USE_SYSTEM_CCTOOLS and USE_SYSTEM_MIG options
+
+Both default to OFF, which keeps building cctools (ld64, ar, ranlib,
+lipo) and MIG from the cctools-port and bootstrap_cmds submodules.
+
+When ON, use installed copies instead, as distribution packages
+provide them (the standalone builds those submodules now support):
+cctools from DARLING_CCTOOLS_PREFIX (default
+/usr/libexec/darling-cctools) with headers in
+/usr/include/darling-cctools, and MIG as darling-mig. Placeholder
+targets keep the existing add_dependencies() calls throughout the tree
+working.
+
+The tool locations, previously spelled out in about 30 places, are now
+set once (CCTOOLS_LD, CCTOOLS_AR, CCTOOLS_RANLIB, CCTOOLS_LIPO,
+CCTOOLS_INCLUDE_DIR, MIG_EXECUTABLE). MIG is now passed the C compiler
+explicitly with -cc, so an installed MIG preprocesses with the same
+compiler as the rest of the build.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt                 | 26 ++++++++++++++++++++++++++
+ cmake/darling_framework.cmake  | 12 ++++++------
+ cmake/darling_lib.cmake        | 10 +++++-----
+ cmake/darling_static_lib.cmake |  8 ++++----
+ cmake/dsym.cmake               |  2 +-
+ cmake/mig.cmake                |  3 +--
+ cmake/use_ld64.cmake           |  6 +++---
+ src/CMakeLists.txt             | 33 ++++++++++++++++++++++++++-------
+ src/buildtools/CMakeLists.txt  |  2 +-
+ src/libm/CMakeLists.txt        |  4 ++--
+ 10 files changed, 75 insertions(+), 31 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 61d074e0d..13cdcad50 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -210,6 +210,32 @@ cmake_policy(SET CMP0014 NEW)
+ 
+ generate_architecture()
+ 
++option(USE_SYSTEM_CCTOOLS "Use an installed Darling cctools (ld64, ar, ranlib, lipo) instead of building it" OFF)
++option(USE_SYSTEM_MIG "Use an installed Darling MIG instead of building it" OFF)
++
++if (USE_SYSTEM_CCTOOLS)
++	set(DARLING_CCTOOLS_PREFIX "/usr/libexec/darling-cctools" CACHE PATH "Where the installed Darling cctools live")
++	find_program(CCTOOLS_LD ${APPLE_TARGET_TRIPLET_PRIMARY}-ld HINTS "${DARLING_CCTOOLS_PREFIX}/bin" NO_DEFAULT_PATH REQUIRED)
++	find_program(CCTOOLS_AR ${APPLE_TARGET_TRIPLET_PRIMARY}-ar HINTS "${DARLING_CCTOOLS_PREFIX}/bin" NO_DEFAULT_PATH REQUIRED)
++	find_program(CCTOOLS_RANLIB ${APPLE_TARGET_TRIPLET_PRIMARY}-ranlib HINTS "${DARLING_CCTOOLS_PREFIX}/bin" NO_DEFAULT_PATH REQUIRED)
++	find_program(CCTOOLS_LIPO lipo HINTS "${DARLING_CCTOOLS_PREFIX}/bin" NO_DEFAULT_PATH REQUIRED)
++	find_path(CCTOOLS_INCLUDE_DIR mach-o/loader.h HINTS "${DARLING_CCTOOLS_PREFIX}/include" /usr/include/darling-cctools NO_DEFAULT_PATH REQUIRED)
++else()
++	set(CCTOOLS_LD "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ld64/src/${APPLE_TARGET_TRIPLET_PRIMARY}-ld")
++	set(CCTOOLS_AR "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/${APPLE_TARGET_TRIPLET_PRIMARY}-ar")
++	set(CCTOOLS_RANLIB "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/${APPLE_TARGET_TRIPLET_PRIMARY}-ranlib")
++	set(CCTOOLS_LIPO "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/lipo")
++	set(CCTOOLS_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/src/external/cctools-port/cctools/include")
++endif()
++get_filename_component(CCTOOLS_LD_DIR "${CCTOOLS_LD}" DIRECTORY)
++get_filename_component(CCTOOLS_LIPO_DIR "${CCTOOLS_LIPO}" DIRECTORY)
++
++if (USE_SYSTEM_MIG)
++	find_program(MIG_EXECUTABLE darling-mig REQUIRED)
++else()
++	set(MIG_EXECUTABLE "${CMAKE_BINARY_DIR}/build-mig")
++endif()
++
+ add_subdirectory(src)
+ 
+ install(DIRECTORY DESTINATION libexec/darling/private)
+diff --git a/cmake/darling_framework.cmake b/cmake/darling_framework.cmake
+index f9a8ede15..4ce602e8e 100644
+--- a/cmake/darling_framework.cmake
++++ b/cmake/darling_framework.cmake
+@@ -232,7 +232,7 @@ function(add_separated_framework name)
+ 		if (FRAMEWORK_CIRCULAR_DEPENDENCIES)
+ 			add_dependencies(${my_name}_${APPLE_ARCH_64BIT}_firstpass ${my_name}_${APPLE_ARCH_32BIT}_firstpass)
+ 			add_custom_command(TARGET ${my_name}_${APPLE_ARCH_64BIT}_firstpass POST_BUILD
+-				COMMAND ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/lipo
++				COMMAND ${CCTOOLS_LIPO}
+ 					-arch ${APPLE_ARCH_32BIT} $<TARGET_FILE:${my_name}_${APPLE_ARCH_32BIT}_firstpass>
+ 					-arch ${APPLE_ARCH_64BIT} $<TARGET_FILE:${my_name}_${APPLE_ARCH_64BIT}_firstpass>
+ 					-create
+@@ -252,7 +252,7 @@ function(add_separated_framework name)
+ 
+ 		add_dependencies(${my_name}_${APPLE_ARCH_64BIT} ${my_name}_${APPLE_ARCH_32BIT})
+ 		add_custom_command(TARGET ${my_name}_${APPLE_ARCH_64BIT} POST_BUILD
+-			COMMAND ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/lipo
++			COMMAND ${CCTOOLS_LIPO}
+ 				-arch ${APPLE_ARCH_32BIT} $<TARGET_FILE:${my_name}_${APPLE_ARCH_32BIT}>
+ 				-arch ${APPLE_ARCH_64BIT} $<TARGET_FILE:${my_name}_${APPLE_ARCH_64BIT}>
+ 				-create
+@@ -271,7 +271,7 @@ function(add_separated_framework name)
+ 	elseif (BUILD_TARGET_32BIT)
+ 		if (FRAMEWORK_CIRCULAR_DEPENDENCIES)
+ 			add_custom_command(TARGET ${my_name}_${APPLE_ARCH_32BIT}_firstpass POST_BUILD
+-				COMMAND ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/lipo
++				COMMAND ${CCTOOLS_LIPO}
+ 					-arch ${APPLE_ARCH_32BIT} $<TARGET_FILE:${my_name}_${APPLE_ARCH_32BIT}_firstpass>
+ 					-create
+ 					-output
+@@ -289,7 +289,7 @@ function(add_separated_framework name)
+ 		endif (FRAMEWORK_CIRCULAR_DEPENDENCIES)
+ 
+ 		add_custom_command(TARGET ${my_name}_${APPLE_ARCH_32BIT} POST_BUILD
+-			COMMAND ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/lipo
++			COMMAND ${CCTOOLS_LIPO}
+ 				-arch ${APPLE_ARCH_32BIT} $<TARGET_FILE:${my_name}_${APPLE_ARCH_32BIT}>
+ 				-create
+ 				-output
+@@ -307,7 +307,7 @@ function(add_separated_framework name)
+ 	elseif (BUILD_TARGET_64BIT)
+ 		if (FRAMEWORK_CIRCULAR_DEPENDENCIES)
+ 			add_custom_command(TARGET ${my_name}_${APPLE_ARCH_64BIT}_firstpass POST_BUILD
+-				COMMAND ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/lipo
++				COMMAND ${CCTOOLS_LIPO}
+ 					-arch ${APPLE_ARCH_64BIT} $<TARGET_FILE:${my_name}_${APPLE_ARCH_64BIT}_firstpass>
+ 					-create
+ 					-output
+@@ -325,7 +325,7 @@ function(add_separated_framework name)
+ 		endif (FRAMEWORK_CIRCULAR_DEPENDENCIES)
+ 
+ 		add_custom_command(TARGET ${my_name}_${APPLE_ARCH_64BIT} POST_BUILD
+-			COMMAND ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/lipo
++			COMMAND ${CCTOOLS_LIPO}
+ 				-arch ${APPLE_ARCH_64BIT} $<TARGET_FILE:${my_name}_${APPLE_ARCH_64BIT}>
+ 				-create
+ 				-output
+diff --git a/cmake/darling_lib.cmake b/cmake/darling_lib.cmake
+index bf6cd373f..5647d2791 100644
+--- a/cmake/darling_lib.cmake
++++ b/cmake/darling_lib.cmake
+@@ -41,7 +41,7 @@ FUNCTION(add_darling_library name)
+ 			LINK_FLAGS " -Wl,-current_version,${DYLIB_CURRENT_VERSION} ")
+ 	endif (DYLIB_CURRENT_VERSION)
+ 
+-	set_property(TARGET ${name} APPEND_STRING PROPERTY COMPILE_FLAGS  " -B ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/")
++	set_property(TARGET ${name} APPEND_STRING PROPERTY COMPILE_FLAGS  " -B ${CCTOOLS_LIPO_DIR}/")
+ 	add_dependencies(${name} lipo)
+ 
+ 	if (BUILD_TARGET_64BIT AND NOT DARLING_LIB_32BIT_ONLY)
+@@ -63,7 +63,7 @@ ENDFUNCTION(add_darling_library)
+ FUNCTION(make_fat)
+ 	if (BUILD_TARGET_32BIT AND BUILD_TARGET_64BIT)
+ 		set_property(TARGET ${ARGV} APPEND_STRING PROPERTY
+-			COMPILE_FLAGS " -B ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/ -arch ${APPLE_ARCH_32BIT} -arch ${APPLE_ARCH_64BIT}")
++			COMPILE_FLAGS " -B ${CCTOOLS_LIPO_DIR}/ -arch ${APPLE_ARCH_32BIT} -arch ${APPLE_ARCH_64BIT}")
+ 		set_property(TARGET ${ARGV} APPEND_STRING PROPERTY
+ 			LINK_FLAGS " -arch ${APPLE_ARCH_32BIT} -arch ${APPLE_ARCH_64BIT}")
+ 		foreach(tgt ${ARGV})
+@@ -71,7 +71,7 @@ FUNCTION(make_fat)
+ 		endforeach(tgt)
+ 	elseif (BUILD_TARGET_32BIT)
+ 		set_property(TARGET ${ARGV} APPEND_STRING PROPERTY
+-			COMPILE_FLAGS " -B ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/ -arch ${APPLE_ARCH_32BIT}")
++			COMPILE_FLAGS " -B ${CCTOOLS_LIPO_DIR}/ -arch ${APPLE_ARCH_32BIT}")
+ 		set_property(TARGET ${ARGV} APPEND_STRING PROPERTY
+ 			LINK_FLAGS " -arch ${APPLE_ARCH_32BIT}")
+ 		foreach(tgt ${ARGV})
+@@ -79,7 +79,7 @@ FUNCTION(make_fat)
+ 		endforeach(tgt)
+ 	elseif (BUILD_TARGET_64BIT)
+ 		set_property(TARGET ${ARGV} APPEND_STRING PROPERTY
+-			COMPILE_FLAGS " -B ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/ -arch ${APPLE_ARCH_64BIT}")
++			COMPILE_FLAGS " -B ${CCTOOLS_LIPO_DIR}/ -arch ${APPLE_ARCH_64BIT}")
+ 		set_property(TARGET ${ARGV} APPEND_STRING PROPERTY
+ 			LINK_FLAGS " -arch ${APPLE_ARCH_64BIT}")
+ 		foreach(tgt ${ARGV})
+@@ -179,7 +179,7 @@ function(add_darling_object_library name)
+ 
+ 	add_library(${name} OBJECT ${files})
+ 	add_dependencies(${name} lipo)
+-	set_property(TARGET ${name} APPEND_STRING PROPERTY COMPILE_FLAGS " -B ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/")
++	set_property(TARGET ${name} APPEND_STRING PROPERTY COMPILE_FLAGS " -B ${CCTOOLS_LIPO_DIR}/")
+ 
+ 	if (BUILD_TARGET_32BIT AND NOT OBJECT_LIB_64BIT_ONLY)
+ 		set_property(TARGET ${name} APPEND_STRING PROPERTY COMPILE_FLAGS " -arch ${APPLE_ARCH_32BIT}")
+diff --git a/cmake/darling_static_lib.cmake b/cmake/darling_static_lib.cmake
+index bb416639e..55c730ef7 100644
+--- a/cmake/darling_static_lib.cmake
++++ b/cmake/darling_static_lib.cmake
+@@ -6,12 +6,12 @@ include(darling_lib)
+ function(add_darling_static_library name)
+ 	cmake_parse_arguments(STATIC_LIB "FAT;64BIT_ONLY;32BIT_ONLY" "" "SOURCES" ${ARGN})
+ 
+-	set(CMAKE_AR "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/${APPLE_TARGET_TRIPLET_PRIMARY}-ar")
+-	set(CMAKE_RANLIB "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/${APPLE_TARGET_TRIPLET_PRIMARY}-ranlib")
++	set(CMAKE_AR "${CCTOOLS_AR}")
++	set(CMAKE_RANLIB "${CCTOOLS_RANLIB}")
+ 	add_library(${name} STATIC ${STATIC_LIB_SOURCES})
+ 
+-	set_property(TARGET ${name} APPEND_STRING PROPERTY COMPILE_FLAGS " -B ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/")
+-	set_property(TARGET ${name} APPEND_STRING PROPERTY LINK_FLAGS " -B ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/")
++	set_property(TARGET ${name} APPEND_STRING PROPERTY COMPILE_FLAGS " -B ${CCTOOLS_LIPO_DIR}/")
++	set_property(TARGET ${name} APPEND_STRING PROPERTY LINK_FLAGS " -B ${CCTOOLS_LIPO_DIR}/")
+ 	add_dependencies(${name} lipo)
+ 
+ 	if (BUILD_TARGET_64BIT AND NOT STATIC_LIB_32BIT_ONLY)
+diff --git a/cmake/dsym.cmake b/cmake/dsym.cmake
+index 90730d836..6d4fc6a12 100644
+--- a/cmake/dsym.cmake
++++ b/cmake/dsym.cmake
+@@ -12,7 +12,7 @@ function(dsym target)
+ 	if (DSYMUTIL_EXE AND build_type MATCHES debug)
+ 
+ 		add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${target}.dSYM" DEPENDS "${target}" COMMAND ${CMAKE_COMMAND} -E env
+-			"PATH='${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc:$ENV{PATH}'"
++			"PATH='${CCTOOLS_LIPO_DIR}:$ENV{PATH}'"
+ 			"${DSYMUTIL_EXE}" "-flat" "-o" "${target}.dSYM" "$<TARGET_FILE:${target}>")
+ 
+ 		add_custom_target("${target}-dSYM" ALL DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${target}.dSYM" getuuid lipo)
+diff --git a/cmake/mig.cmake b/cmake/mig.cmake
+index 256cd54ec..874d0f745 100644
+--- a/cmake/mig.cmake
++++ b/cmake/mig.cmake
+@@ -1,6 +1,4 @@
+ function(mig defFileName)
+-        set(MIG_EXECUTABLE "${CMAKE_BINARY_DIR}/build-mig")
+-
+         if (NOT MIG_USER_SOURCE_SUFFIX)
+                 set (MIG_USER_SOURCE_SUFFIX "User.c")
+         endif (NOT MIG_USER_SOURCE_SUFFIX)
+@@ -63,6 +61,7 @@ function(mig defFileName)
+ 			COMMAND
+ 				/bin/mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/${dirName} \;
+ 				${MIG_EXECUTABLE}
++				-cc ${CMAKE_C_COMPILER}
+ 				-arch ${MIG_ARCH}
+ 				-target ${MIG_TARGET_TRIPLET_PRIMARY}
+ 				-user ${CMAKE_CURRENT_BINARY_DIR}/${relativeName}${MIG_ARCH_SUFFIX}${MIG_USER_SOURCE_SUFFIX}
+diff --git a/cmake/use_ld64.cmake b/cmake/use_ld64.cmake
+index 374f43528..54ad04b21 100644
+--- a/cmake/use_ld64.cmake
++++ b/cmake/use_ld64.cmake
+@@ -1,6 +1,6 @@
+ FUNCTION(use_ld64 target)
+ 	set_property(TARGET ${target} APPEND_STRING PROPERTY
+-		LINK_FLAGS " -fuse-ld=${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ld64/src/${APPLE_TARGET_TRIPLET_PRIMARY}-ld ")
++		LINK_FLAGS " -fuse-ld=${CCTOOLS_LD} ")
+ 
+ 	if (COMPONENT_gui)
+ 		set(COCOTRON_FW_PATH "${CMAKE_BINARY_DIR}/src/external/cocotron")
+@@ -11,8 +11,8 @@ FUNCTION(use_ld64 target)
+ 	endif()
+ 
+ 	set_property(TARGET ${target} APPEND_STRING PROPERTY
+-		LINK_FLAGS " -B ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ld64/src/ \
+--B ${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/misc/ \
++		LINK_FLAGS " -B ${CCTOOLS_LD_DIR}/ \
++-B ${CCTOOLS_LIPO_DIR}/ \
+ -target ${APPLE_TARGET_TRIPLET_PRIMARY} -Wl,-Z \
+ -Wl,-sdk_version,${CMAKE_OSX_DEPLOYMENT_TARGET} \
+ -Wl,-dylib_file,/usr/lib/system/libsystem_c.dylib:${CMAKE_BINARY_DIR}/src/external/libc/libsystem_c_firstpass.dylib \
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 5c924b34d..7b925ef89 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -79,10 +79,23 @@ find_package(FLEX)
+ set(DARLING_SDK_RELATIVE_PATH "Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
+ set(DARLING_ROOT_RELATIVE_TO_SDK "../../../../../..")
+ 
+-add_subdirectory(external/cctools-port/cctools/ld64/src)
+-add_subdirectory(external/cctools-port/cctools/ar)
+-#add_subdirectory(external/cctools-port/cctools/as)
+-add_subdirectory(external/cctools-port/cctools/misc)
++if (USE_SYSTEM_CCTOOLS)
++	# the SDK's mach-o/arch.h links into the cctools-port submodule; provide the installed one instead
++	file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${DARLING_SDK_RELATIVE_PATH}/usr/include/mach-o")
++	file(CREATE_LINK "${CCTOOLS_INCLUDE_DIR}/mach-o/arch.h"
++		"${CMAKE_BINARY_DIR}/${DARLING_SDK_RELATIVE_PATH}/usr/include/mach-o/arch.h" SYMBOLIC)
++
++	# targets throughout the tree depend on these by name
++	add_custom_target(${APPLE_TARGET_TRIPLET_PRIMARY}-ld)
++	add_custom_target(${APPLE_TARGET_TRIPLET_PRIMARY}-ar)
++	add_custom_target(ranlib)
++	add_custom_target(lipo)
++else()
++	add_subdirectory(external/cctools-port/cctools/ld64/src)
++	add_subdirectory(external/cctools-port/cctools/ar)
++	#add_subdirectory(external/cctools-port/cctools/as)
++	add_subdirectory(external/cctools-port/cctools/misc)
++endif()
+ 
+ #add_subdirectory(util)
+ #add_subdirectory(libmach-o)
+@@ -97,7 +110,13 @@ add_subdirectory(startup)
+ 
+ include_directories(${CMAKE_SOURCE_DIR}/basic-headers)
+ 
+-add_subdirectory(external/bootstrap_cmds)
++if (USE_SYSTEM_MIG)
++	# targets throughout the tree depend on these by name
++	add_custom_target(migcom)
++	add_custom_target(migexe)
++else()
++	add_subdirectory(external/bootstrap_cmds)
++endif()
+ 
+ add_definitions(
+ 	-D__APPLE__
+@@ -110,8 +129,8 @@ add_definitions(
+ 	-DPLATFORM_MacOSX
+ )
+ 
+-set(CMAKE_AR "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/${APPLE_TARGET_TRIPLET_PRIMARY}-ar")
+-set(CMAKE_RANLIB "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/${APPLE_TARGET_TRIPLET_PRIMARY}-ranlib")
++set(CMAKE_AR "${CCTOOLS_AR}")
++set(CMAKE_RANLIB "${CCTOOLS_RANLIB}")
+ #set(CMAKE_ASM_COMPILER "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/as/${APPLE_TARGET_TRIPLET_PRIMARY}-as")
+ 
+ # set macOS deployment version
+diff --git a/src/buildtools/CMakeLists.txt b/src/buildtools/CMakeLists.txt
+index 5410ba977..808e45b37 100644
+--- a/src/buildtools/CMakeLists.txt
++++ b/src/buildtools/CMakeLists.txt
+@@ -1,6 +1,6 @@
+ project(buildtools)
+ 
+-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/../external/cctools-port/cctools/include)
++include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CCTOOLS_INCLUDE_DIR})
+ 
+ add_executable(getuuid getuuid.c)
+ add_executable(elfdep elfdep.c)
+diff --git a/src/libm/CMakeLists.txt b/src/libm/CMakeLists.txt
+index 5be9356bf..43ff024a4 100644
+--- a/src/libm/CMakeLists.txt
++++ b/src/libm/CMakeLists.txt
+@@ -183,7 +183,7 @@ add_circular(system_m FAT
+ 
+ install(TARGETS system_m DESTINATION libexec/darling/usr/lib/system)
+ 
+-set(CMAKE_AR "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/${APPLE_TARGET_TRIPLET_PRIMARY}-ar")
+-set(CMAKE_RANLIB "${CMAKE_BINARY_DIR}/src/external/cctools-port/cctools/ar/${APPLE_TARGET_TRIPLET_PRIMARY}-ranlib")
++set(CMAKE_AR "${CCTOOLS_AR}")
++set(CMAKE_RANLIB "${CCTOOLS_RANLIB}")
+ add_darling_static_library(system_m_static SOURCES ${libm_sources} $<TARGET_OBJECTS:system_m_extra>)
+ make_fat(system_m_static)

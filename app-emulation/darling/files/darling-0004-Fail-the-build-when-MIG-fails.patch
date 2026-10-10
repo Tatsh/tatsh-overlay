@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 9 Oct 2026 20:53:55 -0400
+Subject: [PATCH] Fail the build when MIG fails
+
+The MIG rule joined its commands with ';', so a failing MIG went
+unnoticed until the missing generated sources broke compilation later
+with a confusing error. Join them with '&&' instead.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ cmake/mig.cmake | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cmake/mig.cmake b/cmake/mig.cmake
+index 874d0f745..dc357b4b8 100644
+--- a/cmake/mig.cmake
++++ b/cmake/mig.cmake
+@@ -59,7 +59,7 @@ function(mig defFileName)
+ 			${CMAKE_CURRENT_BINARY_DIR}/${relativeName}${MIG_ARCH_SUFFIX}${MIG_SERVER_HEADER_SUFFIX}
+ 			${CMAKE_CURRENT_BINARY_DIR}/${relativeName}${MIG_ARCH_SUFFIX}${MIG_XTRACE_SUFFIX}
+ 			COMMAND
+-				/bin/mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/${dirName} \;
++				/bin/mkdir -p ${CMAKE_CURRENT_BINARY_DIR}/${dirName} &&
+ 				${MIG_EXECUTABLE}
+ 				-cc ${CMAKE_C_COMPILER}
+ 				-arch ${MIG_ARCH}
+@@ -70,7 +70,7 @@ function(mig defFileName)
+ 				-sheader ${CMAKE_CURRENT_BINARY_DIR}/${relativeName}${MIG_ARCH_SUFFIX}${MIG_SERVER_HEADER_SUFFIX}
+ 				-xtracemig ${CMAKE_CURRENT_BINARY_DIR}/${relativeName}${MIG_ARCH_SUFFIX}${MIG_XTRACE_SUFFIX}
+ 				${MIG_FLAGS}
+-				${CMAKE_CURRENT_SOURCE_DIR}/${defFileName} \;
++				${CMAKE_CURRENT_SOURCE_DIR}/${defFileName} &&
+ 				# this is so that the xtrace file is always produced so that the command is not constantly re-run
+ 				# for MIG definitions that produce no xtrace files
+ 				touch ${CMAKE_CURRENT_BINARY_DIR}/${relativeName}${MIG_ARCH_SUFFIX}${MIG_XTRACE_SUFFIX}

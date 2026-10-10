@@ -40,7 +40,6 @@ analyzer
 anari
 andyjsmith
 angelscript
-anomalyco
 antoniovazquezblanco
 antonmedv
 anyio
@@ -128,6 +127,7 @@ blackbox
 blas
 blastem
 blis
+blocksruntime
 bluemsx
 bluez
 bmcfee
@@ -166,6 +166,7 @@ ccflags
 ccleste
 ccmd
 ccsha
+cctools
 cddb
 cdecrypt
 cdpatch
@@ -176,6 +177,7 @@ cemu
 certifi
 cffi
 cflags
+cfnetwork
 cgns
 cgnslib
 chailove
@@ -218,6 +220,7 @@ cmdpack
 cmocka
 cmrc
 cmsis
+cocotron
 codeberg
 codeclimate
 codegen
@@ -234,15 +237,21 @@ colorspace
 commandlines
 commitizen
 commitlintrc
+commoncrypto
 concurrentqueue
+configd
 configura
 configurator
 conftest
 contentunderstanding
 contrib
 cooperspencer
+copyfile
 copytime
 corecrypto
+corefoundation
+corelibs
+coretls
 corlett's
 cowlib
 cpack
@@ -262,6 +271,7 @@ creds
 crfsuite
 croco
 crocods
+crontabs
 cryptopp
 cscs
 cstdint
@@ -293,6 +303,9 @@ dakrk
 dallow
 dalsa
 danielgatis
+darlin
+darlinghq
+darlingserver
 darm
 dasbus
 dask
@@ -305,6 +318,7 @@ dbeaver
 dbfile
 dbuild
 dbus
+dbuskit
 dbusmenu
 dbusmock
 dcall
@@ -314,11 +328,13 @@ dcitra
 dclang
 dcli
 dcmake
+dcompile
 dconfig
 dcpp
 dcrc
 ddaedalus
 ddaemon
+ddarling
 ddeveloper
 ddisable
 ddownload
@@ -454,6 +470,7 @@ dslackw
 dsplit
 dstaticdeps
 dsystemd
+dtrace
 dtrellis
 dubhatervapoursynth
 dudev
@@ -513,6 +530,7 @@ emeson
 emesonargs
 emotionengine
 emutype
+energytrace
 enet
 eninja
 enpm
@@ -567,6 +585,7 @@ favor
 favorite
 fayzullin
 fbalpha
+fblocks
 fbneo
 fcaps
 fceu
@@ -586,6 +605,7 @@ findpegtl
 fireweapon
 fium
 fixbaserom
+fixups
 flacted
 flakefinder
 flashplayer
@@ -595,6 +615,7 @@ fluidsynth
 fluxsmooth
 flycast
 flyinghead
+fmdb
 fmsx
 fmtconv
 fmtlib
@@ -620,6 +641,7 @@ frida
 frob
 frozendict
 fsetid
+fseventsd
 fsrcnn
 fsrcnnx
 fsspec
@@ -664,6 +686,7 @@ ghidriff
 gickup
 gidgethub
 gidgetlab
+giflib
 gileshuang
 gister
 gitbundle
@@ -681,6 +704,7 @@ glslang
 glui
 gmailctl
 gnomovision
+gnudiff
 gnutls
 gobject
 godot
@@ -691,6 +715,7 @@ gonetz
 goos
 gopls
 gpasswd
+gpatch
 gpgx
 gpsp
 gqlgen
@@ -723,6 +748,7 @@ hatari
 hatran
 havsfunc
 hdfs
+heimdal
 helpuri
 hephaest
 hidraw
@@ -779,7 +805,10 @@ iocb
 iocgns
 ioffmpeg
 iogdal
+iohid
 ioifc
+iokitd
+iokituser
 iolas
 iomanx
 iompi
@@ -789,6 +818,7 @@ ioodbc
 iopdal
 iosql
 ioss
+iostoragefamily
 iousd
 ioxml
 ipadiff
@@ -864,6 +894,7 @@ kerneldir
 kethsar
 keycodemapdb
 keym
+keymgr
 keysyms
 kfilemetadata
 kfmin
@@ -915,15 +946,19 @@ libaio
 libao
 libasnd
 libatrac
+libauto
 libav
 libayatana
 libb
 libbar
 libbz
+libc
 libc's
+libcap
 libcdio
 libchdr
 libclang
+libclosure
 libco
 libcrypt
 libcst
@@ -931,7 +966,9 @@ libcxx
 libcxxabi
 libd
 libdbusmenu
+libdispatch
 libdrm
+libedit
 libepoxy
 libevdev
 libexec
@@ -958,17 +995,24 @@ libhac
 libharu
 libhsl
 libiberty
+libiconv
 libidn
 libimob
 libimobiledevice
+libinfo
 libjpeg
+libkqueue
 liblinkernsbypass
 liblsdl
 libmad
+libmalloc
 libmp
 libmpv
 libmspack
+libnetwork
 libnnedi
+libnotify
+libobjc
 libogc
 libogg
 libopenmpt
@@ -980,9 +1024,11 @@ libpdfium
 libpicofe
 libpietendo
 libpit
+libplatform
 libplist
 libproj
 libpsl
+libpthread
 libpulse
 libpumpkin
 libpwasio
@@ -992,11 +1038,14 @@ libreal
 librealcugan
 librealcugannv
 librealesrgan
+libresolv
 librespot
+libressl
 libretro
 libretrodb
 librife
 librosa
+librpcsvc
 librw
 libsamplerate
 libscriptlua
@@ -1010,15 +1059,19 @@ libsmacker
 libsndfile
 libspng
 libstdc
+libstdcxx
 libsuinput
+libsystem
 libtasn
 libtatsu
+libtelnet
 libtermcap
 libtheora
 libtom
 libtomcrypt
 libtommath
 libtoolchain
+libtrace
 libtray
 libtrx
 libucl
@@ -1031,6 +1084,7 @@ libunwind
 liburing
 libusb
 libusbmuxd
+libutil
 libva
 libvgmstream
 libvips
@@ -1044,6 +1098,7 @@ libwebsockets
 libxcb
 libxkbcommon
 libxkbfile
+libxpc
 libyaml
 libyaz
 libz
@@ -1061,6 +1116,7 @@ linecast
 linkernsbypass
 linters
 lintstagedrc
+lipo
 lisu
 liteon
 lith
@@ -1161,6 +1217,7 @@ miasm
 michaeldfallen
 micromdm
 mido
+migcom
 migueletto
 miguelgrinberg
 mikke
@@ -1251,6 +1308,7 @@ ndejong
 neko
 neocd
 nestopia
+netcat
 netd
 netgo
 netlink
@@ -1325,6 +1383,7 @@ nvswitch
 nvswitchctl
 nxengine
 nycrc
+objc
 objdump
 occivink
 occt
@@ -1349,12 +1408,13 @@ onnxruntime
 onroerend
 openal
 opencascade
-opencode
+opendirectory
 openexr
 openfortivpn
 openlara
 openmpt
 openocd
+openpam
 openpyxl
 openrc
 openvdb
@@ -1384,6 +1444,7 @@ pango
 papertrail
 paramiko
 parrado
+passwordserver
 patchelf
 patchfile
 pathlib
@@ -1520,6 +1581,7 @@ pylibyaml
 pylzham
 pymatting
 pynput
+pyobjc
 pyopencl
 pyopenjtalk
 pyopenssl
@@ -1588,6 +1650,7 @@ quot
 quse
 rabbitizer
 randers
+ranlib
 raphnet
 rapidcsv
 rapidjson
@@ -1623,6 +1686,7 @@ relw
 relwithdebinfo
 remapper
 rembg
+removefile
 removegrain
 remsky
 renderbag
@@ -1676,6 +1740,7 @@ samuelcolvin
 sandflow
 saraiki
 saramibreak
+sasl
 saurashtra
 savoirfairelinux
 sbclaude
@@ -1841,6 +1906,7 @@ tblib
 tclkit
 tcltk
 tcpdump
+tcsh
 teagle
 teakra
 teletextintegration
@@ -1882,6 +1948,7 @@ tirhuta
 tisserand
 tmbo
 tnfoview
+tokend
 tomcrypt
 tomli
 tomlkit
@@ -1954,6 +2021,7 @@ usedep
 usemove
 usepkg
 userspace
+usertemplate
 usex
 utfcpp
 uvicorn

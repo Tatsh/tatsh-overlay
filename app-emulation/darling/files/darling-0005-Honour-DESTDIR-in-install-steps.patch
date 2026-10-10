@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 9 Oct 2026 20:53:55 -0400
+Subject: [PATCH] Honour DESTDIR in install steps
+
+- fseventsd: use the setcap() helper, which honours DESTDIR, instead of
+  running setcap on the final install path.
+- Only run tools/shutdown-user.sh for direct installs. A staged install
+  (packaging) must not shut down running Darling instances or ask for
+  sudo.
+- file_cmds: rename install-bin within DESTDIR.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt                                          | 5 ++++-
+ src/frameworks/CoreServices/src/FSEvents/CMakeLists.txt | 3 ++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 13cdcad50..3ee83c570 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -277,7 +277,10 @@ InstallSymlink(/Volumes/SystemRoot/usr/share/zoneinfo ${CMAKE_INSTALL_PREFIX}/li
+ install(DIRECTORY DESTINATION libexec/darling/Library/Preferences)
+ 
+ if(NOT DEBIAN_PACKAGING)
+-	install(CODE "execute_process(COMMAND bash ${DARLING_TOP_DIRECTORY}/tools/shutdown-user.sh)")
++	# only for direct installs; staged (DESTDIR) installs are packaging and must not touch running instances
++	install(CODE "if (\"\$ENV{DESTDIR}\" STREQUAL \"\")
++		execute_process(COMMAND bash ${DARLING_TOP_DIRECTORY}/tools/shutdown-user.sh)
++	endif()")
+ endif(NOT DEBIAN_PACKAGING)
+ 
+ add_custom_target(uninstall
+diff --git a/src/frameworks/CoreServices/src/FSEvents/CMakeLists.txt b/src/frameworks/CoreServices/src/FSEvents/CMakeLists.txt
+index b4334219f..fb42679f6 100644
+--- a/src/frameworks/CoreServices/src/FSEvents/CMakeLists.txt
++++ b/src/frameworks/CoreServices/src/FSEvents/CMakeLists.txt
+@@ -27,4 +27,5 @@ add_darling_executable(fseventsd fseventsd.m)
+ target_link_libraries(fseventsd system Foundation CarbonCore)
+ 
+ install(TARGETS fseventsd DESTINATION libexec/darling/usr/sbin)
+-install(CODE "execute_process(COMMAND ${SETCAP_EXECUTABLE} \"cap_sys_admin+ep\" \"${CMAKE_INSTALL_PREFIX}/libexec/darling/usr/sbin/fseventsd\")")
++include(setcap)
++setcap(libexec/darling/usr/sbin/fseventsd "cap_sys_admin+ep")

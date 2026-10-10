@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 9 Oct 2026 18:59:42 -0400
+Subject: [PATCH] Delete ASM static libraries before re-archiving
+
+CMake's default ASM archive rule appends to an existing archive with
+`ar cr`, unlike the C/C++ rules, which delete it first. Once ranlib has
+turned an archive of fat objects into a fat archive (e.g. csu's
+libbundle1.a), relinking it after a rebuild fails with "is a fat file".
+Use the same delete-then-create sequence as the C/C++ rules.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8077b7e94..f7346bc9d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -69,6 +69,12 @@ project(darling)
+ 
+ enable_language(ASM)
+ 
++# CMake's default ASM rule appends to an existing archive (unlike C/C++), which fails once ranlib has made it fat
++set(CMAKE_ASM_CREATE_STATIC_LIBRARY
++	"${CMAKE_COMMAND} -E rm -f <TARGET>"
++	"<CMAKE_AR> qc <TARGET> <LINK_FLAGS> <OBJECTS>"
++	"<CMAKE_RANLIB> <TARGET>")
++
+ set(CMAKE_INSTALL_DEFAULT_COMPONENT_NAME "core")
+ 
+ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")

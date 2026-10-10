@@ -1,0 +1,59 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Andrew Udvare <audvare@gmail.com>
+Date: Fri, 9 Oct 2026 18:58:48 -0400
+Subject: [PATCH] Derive OBJC_IS_DEBUG_BUILD from NDEBUG
+
+objc-config.h derives DEBUG from NDEBUG and objc-runtime.mm errors out
+if it disagrees with OBJC_IS_DEBUG_BUILD, which the build system
+hard-coded to 1. Any build defining NDEBUG (CMake's Release,
+RelWithDebInfo and MinSizeRel) therefore failed with "mismatch in
+debug-ness macros". Tying it to the build configuration is not enough
+either, as e.g. Gentoo builds RelWithDebInfo without NDEBUG.
+
+Define it in objc-config.h from DEBUG instead. objc-private.h already
+ensures objc-config.h is included before any header that uses it.
+
+Signed-off-by: Andrew Udvare <audvare@gmail.com>
+---
+ runtime/CMakeLists.txt | 6 +++---
+ runtime/objc-config.h  | 4 ++++
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/src/external/objc4/runtime/CMakeLists.txt b/src/external/objc4/runtime/CMakeLists.txt
+index be9456a..db3d113 100644
+--- a/src/external/objc4/runtime/CMakeLists.txt
++++ b/src/external/objc4/runtime/CMakeLists.txt
+@@ -15,15 +15,15 @@ endif(COMMAND cmake_policy)
+ add_definitions(-D__STDC_NO_ATOMICS__)
+ 
+ # Override DEBUG CFLAGS because -O0 has been triggering strange bugs
+-set(CMAKE_C_FLAGS_DEBUG "-ggdb -DOBJC_IS_DEBUG_BUILD=1")
+-set(CMAKE_CXX_FLAGS_DEBUG "-ggdb -DOBJC_IS_DEBUG_BUILD=1")
++set(CMAKE_C_FLAGS_DEBUG "-ggdb")
++set(CMAKE_CXX_FLAGS_DEBUG "-ggdb")
+ 
+ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -nostdinc -O2 -D__DARWIN_UNIX03 -fPIC -fblocks -fobjc-legacy-dispatch -fvisibility-inlines-hidden -fstrict-aliasing -fno-delete-null-pointer-checks")
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -nostdinc -nostdinc++ -O2 -std=gnu++14 -D__DARWIN_UNIX03 -fPIC -fblocks -fobjc-legacy-dispatch \
+ 			-fno-rtti -fno-exceptions -Wno-c++11-narrowing -fvisibility-inlines-hidden -Wno-invalid-offsetof -Wno-deprecated-objc-isa-usage \
+ 			-Wno-cast-of-sel-type -Wstrict-aliasing=2 -Wstrict-overflow=4 -fstrict-aliasing -fno-delete-null-pointer-checks")
+ 
+-add_definitions(-DOBJC_NO_GC -DOBJC_IS_DEBUG_BUILD=1)
++add_definitions(-DOBJC_NO_GC)
+ add_definitions(-DTARGET_OS_IPHONE=0 -DOS_OBJECT_USE_OBJC=0 -D_LIBCPP_VISIBLE="")
+ 
+ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+diff --git a/src/external/objc4/runtime/objc-config.h b/src/external/objc4/runtime/objc-config.h
+index f93d7f4..3c161be 100644
+--- a/src/external/objc4/runtime/objc-config.h
++++ b/src/external/objc4/runtime/objc-config.h
+@@ -33,6 +33,10 @@
+ #   define DEBUG 0
+ #endif
+ 
++// Must agree with DEBUG; derive it here rather than from the build system, which cannot know
++// whether NDEBUG ends up defined (e.g. distributions that build RelWithDebInfo without it).
++#define OBJC_IS_DEBUG_BUILD DEBUG
++
+ // Define SUPPORT_GC_COMPAT=1 to enable compatibility where GC once was.
+ // OBJC_NO_GC and OBJC_NO_GC_API in objc-api.h mean something else.
+ #if !TARGET_OS_OSX
