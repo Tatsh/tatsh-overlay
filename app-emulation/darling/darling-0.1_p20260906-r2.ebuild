@@ -263,3 +263,14 @@ src_install() {
 		keepdir "${dir#"${ED}"}"
 	done < <(find "${ED}/usr/libexec/darling" -type d -empty -print0 || die)
 }
+
+pkg_postinst() {
+	fcaps_pkg_postinst
+	if [[ -n ${REPLACING_VERSIONS} ]]; then
+		elog "A running Darling container continues to use the files from before this update. Each user"
+		elog "with a running container must stop it with:"
+		elog "  darling shutdown"
+		elog "To stop every Darling container on the system, run as root:"
+		elog "  pkill -x darlingserver"
+	fi
+}
