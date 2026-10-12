@@ -8,7 +8,4 @@
 	<upstream>
 		<remote-id type="github">4e6/mpv-reload</remote-id>
 	</upstream>
-	<use>
-		<flag name="autoload">Auto-load the plugin</flag>
-	</use>
 </pkgmetadata>
