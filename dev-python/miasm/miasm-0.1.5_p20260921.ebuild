@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1
 
-MY_COMMIT="1dc5fa90311992c92b7cff08f3c5354ece67a995"
+MY_COMMIT="3671fc24d6e625c2d75f3311724eb6b0c97664f8"
 
 DESCRIPTION="Reverse engineering framework for machine code manipulation."
 HOMEPAGE="https://github.com/cea-sec/miasm https://pypi.org/project/miasm/"
@@ -34,15 +34,24 @@ RDEPEND="
 "
 BDEPEND="test? ( dev-python/parameterized[${PYTHON_USEDEP}] )"
 
+src_test() {
+	# Import the built extensions rather than the source-tree miasm/.
+	rm -r miasm || die
+	distutils-r1_src_test
+}
+
 EPYTEST_IGNORE=(
 	# Helper modules for test_all.py rather than test modules: they read
 	# sys.argv at import time and abort when pytest collects them.
 	test/arch/aarch64/unit/asm_test.py
 	test/arch/mips32/unit/asm_test.py
 	test/arch/x86/unit/asm_test.py
+	test/jitter/test_post_instr.py
 	test/os_dep/linux/test_env.py
 	# test_all.py is a subprocess driver that reruns everything below it.
 	test/test_all.py
+	# Example scripts parse sys.argv at import time.
+	example
 )
 
 EPYTEST_PLUGINS=()
