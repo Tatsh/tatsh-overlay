@@ -4,6 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
+PYPI_VERIFY_REPO=https://github.com/didix21/mdutils
 PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
@@ -15,4 +16,5 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
+EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
