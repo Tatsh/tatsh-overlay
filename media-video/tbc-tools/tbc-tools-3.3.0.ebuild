@@ -26,14 +26,14 @@ IUSE="teletext"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-# ld-chroma-decoder requires ONNX Runtime unconditionally; upstream provides no
+# tbc-chroma-decoder requires ONNX Runtime unconditionally; upstream provides no
 # option to build without it.
 DEPEND="dev-qt/qtbase:6[gui,sql,widgets]
 	dev-qt/qtsvg:6
 	sci-libs/fftw:3.0=
 	|| ( sci-libs/onnxruntime sci-libs/onnxruntime-bin )"
 # tbc-video-export is a bundled Python application driving ffmpeg, and
-# ld-process-vbi shells out to the bundled vhs-teletext for teletext export.
+# tbc-process-vbi shells out to the bundled vhs-teletext for teletext export.
 # shellcheck disable=SC2016
 RDEPEND="${DEPEND}
 	${PYTHON_DEPS}
@@ -60,15 +60,18 @@ pkg_setup() {
 }
 
 src_prepare() {
-	rmdir src/efm-decoder/libs/ezpwd src/ld-process-vbi/vendor/cc_decoder || die
+	rmdir src/efm-decoder/libs/ezpwd src/tbc-process-vbi/vendor/cc_decoder || die
 	mv "${WORKDIR}/ezpwd-reed-solomon-${EZPWD_SHA}" src/efm-decoder/libs/ezpwd || die
-	mv "${WORKDIR}/cc_decoder-${CC_DECODER_SHA}" src/ld-process-vbi/vendor/cc_decoder || die
+	mv "${WORKDIR}/cc_decoder-${CC_DECODER_SHA}" src/tbc-process-vbi/vendor/cc_decoder || die
 	# Both bundled Python applications hunt for an interpreter on PATH. Only the
 	# one selected here is guaranteed to have the dependencies installed.
 	sed -i "s|^PYTHON_NAMES=(.*)$|PYTHON_NAMES=(${EPYTHON} python3 python)|" \
 		src/tbc-video-export/tbc-video-export.in || die
 	sed -i "s|QStringLiteral(\"python3\"),|QStringLiteral(\"${EPYTHON}\"),\n        QStringLiteral(\"python3\"),|" \
-		src/ld-process-vbi/teletextintegration.cpp || die
+		src/tbc-analyse/teletextviewerdialog.cpp \
+		src/tbc-process-vbi/teletextintegration.cpp || die
+	# CRLF line endings; normalise so PATCHES (applied by cmake_src_prepare) can stay LF.
+	sed -i 's/\r$//' src/tbc-analyse/CMakeLists.txt || die
 	cmake_src_prepare
 }
 
@@ -76,8 +79,11 @@ src_configure() {
 	local mycmakeargs=(
 		# ld-decode's Python library is provided by media-video/vhs-decode.
 		-DBUILD_PYTHON=OFF
+		# Automagic on an installed toolkit, and it hardcodes sm_61, which current
+		# CUDA releases no longer support.
+		-DLDCHROMA_ENABLE_CUDA=OFF
 		# The top level finds onnxruntime through its CMake config package, but
-		# src/ld-chroma-decoder does its own find_path() and only looks under
+		# src/tbc-chroma-decoder does its own find_path() and only looks under
 		# ${ONNXRUNTIME_ROOT}/include{,/onnxruntime}, which is where
 		# sci-libs/onnxruntime{,-bin} put the headers.
 		"-DONNXRUNTIME_ROOT=${EPREFIX}/usr"

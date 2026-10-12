@@ -5,9 +5,8 @@ to the data dir; the compiled-in lookup path follows it. The vendored
 VhsDecodeAutoAudioAlign is a .NET application that upstream runs through mono,
 which Gentoo does not ship, so it is not installed at all.
 
-diff -ur a/src/audio-align/CMakeLists.txt b/src/audio-align/CMakeLists.txt
---- a/src/audio-align/CMakeLists.txt	2026-08-03 01:05:20.997767958 -0400
-+++ b/src/audio-align/CMakeLists.txt	2026-08-03 01:05:21.012506208 -0400
+--- a/src/audio-align/CMakeLists.txt
++++ b/src/audio-align/CMakeLists.txt
 @@ -26,7 +26,6 @@
  )
  
@@ -16,22 +15,41 @@ diff -ur a/src/audio-align/CMakeLists.txt b/src/audio-align/CMakeLists.txt
  
  if(BUILD_TESTING)
      add_executable(test-audio-align-runtime
-diff -ur a/src/ld-process-vbi/CMakeLists.txt b/src/ld-process-vbi/CMakeLists.txt
---- a/src/ld-process-vbi/CMakeLists.txt	2026-08-03 01:05:20.994944680 -0400
-+++ b/src/ld-process-vbi/CMakeLists.txt	2026-08-03 01:05:21.012403987 -0400
-@@ -14,7 +14,7 @@
- target_link_libraries(ld-process-vbi PRIVATE Qt::Core lddecode-library)
+--- a/src/tbc-analyse/CMakeLists.txt
++++ b/src/tbc-analyse/CMakeLists.txt
+@@ -96,7 +96,7 @@
+ set(_teletext_vendor_dir "${CMAKE_SOURCE_DIR}/src/tbc-process-vbi/vendor/vhs-teletext")
+ target_compile_definitions(tbc-analyse PRIVATE
+     AUDIO_ALIGN_VENDOR_DIR="${_audio_align_vendor_dir}"
+-    TELETEXT_VENDOR_DIR="${_teletext_vendor_dir}"
++    TELETEXT_VENDOR_DIR="${CMAKE_INSTALL_FULL_DATADIR}/tbc-tools/vendor/vhs-teletext"
+ )
+ add_custom_command(TARGET tbc-analyse POST_BUILD
+     COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:tbc-analyse>/vendor/vhs_decode_auto_audio_align"
+@@ -116,7 +116,7 @@
+         "${_teletext_vendor_dir}"
+         "$<TARGET_FILE_DIR:tbc-analyse>/vendor/vhs-teletext"
+ )
+-install(DIRECTORY "${_teletext_vendor_dir}/" DESTINATION ${CMAKE_INSTALL_BINDIR}/vendor/vhs-teletext)
++install(DIRECTORY "${_teletext_vendor_dir}/" DESTINATION ${CMAKE_INSTALL_DATADIR}/tbc-tools/vendor/vhs-teletext)
+ 
+ if(WIN32)
+     target_compile_definitions(tbc-analyse PRIVATE
+--- a/src/tbc-process-vbi/CMakeLists.txt
++++ b/src/tbc-process-vbi/CMakeLists.txt
+@@ -19,7 +19,7 @@
+ )
  set(_teletext_vendor_dir "${CMAKE_CURRENT_SOURCE_DIR}/vendor/vhs-teletext")
- target_compile_definitions(ld-process-vbi PRIVATE
+ target_compile_definitions(tbc-process-vbi PRIVATE
 -    TELETEXT_VENDOR_DIR="${_teletext_vendor_dir}"
 +    TELETEXT_VENDOR_DIR="${CMAKE_INSTALL_FULL_DATADIR}/tbc-tools/vendor/vhs-teletext"
  )
  
- add_custom_command(TARGET ld-process-vbi POST_BUILD
-@@ -25,7 +25,7 @@
+ add_custom_command(TARGET tbc-process-vbi POST_BUILD
+@@ -30,7 +30,7 @@
  )
  
- install(TARGETS ld-process-vbi)
+ install(TARGETS tbc-process-vbi)
 -install(DIRECTORY "${_teletext_vendor_dir}/" DESTINATION ${CMAKE_INSTALL_BINDIR}/vendor/vhs-teletext)
 +install(DIRECTORY "${_teletext_vendor_dir}/" DESTINATION ${CMAKE_INSTALL_DATADIR}/tbc-tools/vendor/vhs-teletext)
  
