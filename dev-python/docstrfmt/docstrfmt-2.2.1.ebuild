@@ -4,6 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=flit
+PYPI_VERIFY_REPO=https://github.com/LilSpazJoekp/docstrfmt
 PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
