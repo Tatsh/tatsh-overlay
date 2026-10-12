@@ -37,7 +37,7 @@ src_prepare() {
 	# pihole-core installs the prestart/poststop helpers under
 	# /usr/$(get_libdir)/pihole/Templates rather than the upstream-default
 	# flat /opt/pihole directory.
-	cp "${FILESDIR}/${P}.openrc" "${T}/pihole-FTL" || die
+	cp "${FILESDIR}/${PN}.openrc" "${T}/pihole-FTL" || die
 	sed -r -e "s/@LIBDIR@/$(get_libdir)/g" -i "${T}/pihole-FTL" || die
 	cmake_src_prepare
 }
