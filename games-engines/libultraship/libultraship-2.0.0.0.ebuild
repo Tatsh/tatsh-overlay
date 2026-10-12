@@ -3,7 +3,9 @@
 
 EAPI=8
 
-inherit cmake
+PYTHON_COMPAT=( python3_{12..15} )
+
+inherit cmake python-any-r1
 
 # Upstream pulls every one of these with FetchContent at configure time, which
 # is not allowed here, so they are fetched as distfiles and redirected with
@@ -44,7 +46,7 @@ RDEPEND="
 	media-libs/libsdl3
 "
 DEPEND="${RDEPEND}"
-BDEPEND="dev-lang/python:*"
+BDEPEND="${PYTHON_DEPS}"
 
 PATCHES=( "${FILESDIR}/${PN}-shared-install.patch" )
 
