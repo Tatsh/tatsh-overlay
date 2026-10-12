@@ -6,6 +6,7 @@ EAPI=8
 DISTUTILS_EXT=1
 DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_USE_PEP517=hatchling
+PYPI_VERIFY_REPO=https://github.com/Tatsh/scenechange
 PYTHON_COMPAT=( python3_{12..15} )
 # 0.5.0 ships as a wheel following https://vapoursynth.com/doc/packaging.html,
 # so the plugin installs into the vapoursynth package rather than a plugin dir
