@@ -31,5 +31,18 @@ RDEPEND="${DEPEND}
 	>=dev-python/regex-2022[${PYTHON_USEDEP}]"
 BDEPEND=">=dev-python/cython-3.0[${PYTHON_USEDEP}]"
 
+src_prepare() {
+	distutils-r1_src_prepare
+	# >=dev-cpp/abseil-cpp-20260107 headers need C++20
+	sed -i 's/--std=c++17/--std=c++20/' setup.py || die
+}
+
+src_test() {
+	# Import the built extensions rather than the source-tree package, which holds the tests.
+	mv "${PN//-/_}/tests" tests || die
+	rm -r "${PN//-/_}" || die
+	distutils-r1_src_test
+}
+
 EPYTEST_PLUGINS=()
 distutils_enable_tests pytest
