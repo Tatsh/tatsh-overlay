@@ -3,7 +3,9 @@
 
 EAPI=8
 
-inherit cmake desktop flag-o-matic xdg
+PYTHON_COMPAT=( python3_{12..15} )
+
+inherit cmake desktop flag-o-matic python-any-r1 xdg
 
 MY_PN="Starship"
 
@@ -76,7 +78,7 @@ RDEPEND="
 	media-libs/sdl2-net
 "
 DEPEND="${RDEPEND}"
-BDEPEND="dev-lang/python:*"
+BDEPEND="${PYTHON_DEPS}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-torch-single-build.patch"
