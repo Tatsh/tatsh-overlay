@@ -1,0 +1,11 @@
+--- a/curated_tokenizers/_bbpe.pyx
++++ b/curated_tokenizers/_bbpe.pyx
+@@ -60,7 +60,7 @@
+         self._byte_decoder = {v.decode("utf-8"): k for k, v in self._byte_encoder.items()}
+         self._split_pattern = regex.compile(SPLIT_PATTERN)
+         self._piece_to_id = vocab
+-        self._id_to_piece = {v: k for k, v in vocab.items()}
++        self._id_to_piece = {v: k for k, v in self._piece_to_id.items()}
+         cdef vector[pair[string, string]] c_merges
+         for p1, p2 in merges:
+             c_merges.push_back(pair[string, string](p1.encode('utf-8'), p2.encode('utf-8')))
