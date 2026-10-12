@@ -225,7 +225,6 @@ codeberg
 codeclimate
 codegen
 codeman
-codesign
 coinhsl
 coleco
 color
@@ -256,7 +255,6 @@ corlett's
 cowlib
 cpack
 cparser
-cpio
 cplugins
 cppflags
 cpprestsdk
@@ -307,6 +305,7 @@ darlin
 darlinghq
 darlingserver
 darm
+darpath
 dasbus
 dask
 dataclass
@@ -397,6 +396,7 @@ distname
 distutils
 djava
 dlazy
+dldchroma
 dlenski
 dlibretro
 dlibrw
@@ -1912,6 +1912,7 @@ tcsh
 teagle
 teakra
 teletextintegration
+teletextviewerdialog
 temasek
 terak
 termcolor
