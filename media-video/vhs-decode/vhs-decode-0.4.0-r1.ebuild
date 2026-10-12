@@ -45,7 +45,7 @@ CRATES="
 "
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{2,3,4} )
+PYTHON_COMPAT=( python3_1{2,3,4,5} )
 inherit cargo desktop distutils-r1
 
 DESCRIPTION="Software defined VHS decoder."
