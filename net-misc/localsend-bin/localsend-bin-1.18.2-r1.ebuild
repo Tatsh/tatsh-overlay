@@ -10,29 +10,44 @@ MY_PN_LC="localsend"
 
 DESCRIPTION="Share files to nearby devices over the local network."
 HOMEPAGE="https://localsend.org https://github.com/localsend/localsend"
-SRC_URI="https://github.com/${MY_PN_LC}/${MY_PN_LC}/releases/download/v${PV}/${MY_PN}-${PV}-linux-x86-64.tar.gz
-	-> ${P}.tar.gz"
+SRC_URI="
+	cli? (
+		https://github.com/${MY_PN_LC}/${MY_PN_LC}/releases/download/v${PV}/${MY_PN}-CLI-${PV}-linux-x86-64.tar.gz
+			-> ${P}-cli.tar.gz
+	)
+	gui? (
+		https://github.com/${MY_PN_LC}/${MY_PN_LC}/releases/download/v${PV}/${MY_PN}-${PV}-linux-x86-64.tar.gz
+			-> ${P}.tar.gz
+	)
+"
 S="${WORKDIR}"
 
 # The bundle ships the Flutter engine and Dart runtime alongside the app.
 LICENSE="Apache-2.0 BSD MIT"
 SLOT="0"
 KEYWORDS="-* ~amd64"
+IUSE="+cli gui"
+REQUIRED_USE="|| ( cli gui )"
 RESTRICT="bindist mirror strip test"
 
 # libtray_manager_plugin.so links all four ayatana/dbusmenu sonames directly.
 RDEPEND="
-	dev-libs/ayatana-ido
-	dev-libs/glib:2
-	dev-libs/libayatana-appindicator
-	dev-libs/libayatana-indicator
-	dev-libs/libdbusmenu
-	x11-libs/gtk+:3[wayland]
+	gui? (
+		dev-libs/ayatana-ido
+		dev-libs/glib:2
+		dev-libs/libayatana-appindicator
+		dev-libs/libayatana-indicator
+		dev-libs/libdbusmenu
+		x11-libs/gtk+:3[wayland]
+	)
 "
 
-QA_PREBUILT="opt/${MY_PN_LC}/*"
+QA_PREBUILT="opt/${MY_PN_LC}/* usr/bin/${MY_PN_LC}-cli"
 
 src_install() {
+	use cli && dobin "${MY_PN_LC}-cli"
+	use gui || return
+
 	insinto "/opt/${MY_PN_LC}"
 	doins -r data lib
 	exeinto "/opt/${MY_PN_LC}"

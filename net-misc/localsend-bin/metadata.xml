@@ -5,6 +5,9 @@
 		<email>audvare@gmail.com</email>
 		<name>Andrew Udvare</name>
 	</maintainer>
+	<use>
+		<flag name="cli">Install the localsend-cli command line client</flag>
+	</use>
 	<upstream>
 		<remote-id type="github">localsend/localsend</remote-id>
 	</upstream>
