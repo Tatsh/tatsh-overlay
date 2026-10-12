@@ -18,15 +18,15 @@ vita3k/CMakeLists.txt continues to enable Tracy on the core components.
 
 Signed-off-by: Andrew Udvare <audvare@gmail.com>
 ---
- CMakeLists.txt          | 16 ++++++++++++++++
+ CMakeLists.txt          | 14 ++++++++++++++
  external/CMakeLists.txt | 10 ++++++++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 8fe9abbb..0825918c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -332,6 +332,22 @@ if(USE_SYSTEM_CAPSTONE)
+@@ -332,6 +332,20 @@ if(USE_SYSTEM_CAPSTONE)
  	endif()
  endif()
  
@@ -36,13 +36,11 @@ index 8fe9abbb..0825918c 100644
 +	if(TARGET Tracy::TracyClient)
 +		set_target_properties(Tracy::TracyClient PROPERTIES IMPORTED_GLOBAL TRUE)
 +	endif()
-+	# vita3k uses a bare `tracy` target with TRACY_ENABLE defined for
-+	# Debug/RelWithDebInfo builds. Mirror that on an INTERFACE wrapper.
++	# vita3k links a bare `tracy` target. Wrap the system client and let it
++	# carry its own TRACY_ENABLE, which must match how it was built.
 +	if(NOT TARGET tracy)
 +		add_library(tracy INTERFACE)
 +		target_link_libraries(tracy INTERFACE Tracy::TracyClient)
-+		target_compile_definitions(tracy INTERFACE
-+			$<$<CONFIG:Debug,RelWithDebInfo>:TRACY_ENABLE>)
 +	endif()
 +endif()
 +

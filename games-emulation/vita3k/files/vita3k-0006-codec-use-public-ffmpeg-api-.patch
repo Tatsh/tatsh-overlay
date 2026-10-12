@@ -9,18 +9,13 @@ aac.cpp: replace ffcodec(codec)->cb.decode (which requires the internal
 For one-packet-at-a-time usage the public API is functionally equivalent and
 the entire packet is consumed, so es_size_used can simply be the incoming size.
 
-mp3.cpp: replace deprecated `avcodec_close(); av_free()` with
-avcodec_free_context(&context). The replacement was added in FFmpeg 3.0 and
-avcodec_close is removed in newer releases.
-
-Both changes use only API available since FFmpeg 3.1, so they also work
+This change uses only API available since FFmpeg 3.1, so they also work
 against the bundled ffmpeg-core distribution.
 
 Signed-off-by: Andrew Udvare <audvare@gmail.com>
 ---
  vita3k/codec/src/aac.cpp | 17 ++++++++---------
- vita3k/codec/src/mp3.cpp |  5 +----
- 2 files changed, 9 insertions(+), 13 deletions(-)
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
 diff --git a/vita3k/codec/src/aac.cpp b/vita3k/codec/src/aac.cpp
 index ba2364a7..a69334f1 100644
@@ -62,20 +57,5 @@ index ba2364a7..a69334f1 100644
  
      return true;
  }
-diff --git a/vita3k/codec/src/mp3.cpp b/vita3k/codec/src/mp3.cpp
-index 28f485f6..eab86b04 100644
---- a/vita3k/codec/src/mp3.cpp
-+++ b/vita3k/codec/src/mp3.cpp
-@@ -202,8 +202,5 @@ Mp3DecoderState::Mp3DecoderState(uint32_t channels) {
- }
- 
- Mp3DecoderState::~Mp3DecoderState() {
--    avcodec_close(context);
--    av_free(context);
--
--    context = nullptr;
-+    avcodec_free_context(&context);
- }
 -- 
 2.54.0
-
