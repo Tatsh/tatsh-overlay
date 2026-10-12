@@ -8,7 +8,4 @@
 	<upstream>
 		<remote-id type="github">Tatsh/mpv-netrc</remote-id>
 	</upstream>
-	<use>
-		<flag name="autoload">Auto-load the plugin</flag>
-	</use>
 </pkgmetadata>
