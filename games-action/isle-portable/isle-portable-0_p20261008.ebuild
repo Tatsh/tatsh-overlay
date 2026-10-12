@@ -10,7 +10,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 inherit cmake flag-o-matic python-any-r1 xdg
 
 # Upstream's only tag is a rolling "continuous" one, so this pins a commit.
-MY_COMMIT="6141927738a64810a687a27eb61f5760d36733a5"
+MY_COMMIT="416f21f6a40c028da3e9fb84b49ee474109a6bd5"
 # Submodules. Everything else is resolved from the system with
 # DOWNLOAD_DEPENDENCIES=OFF.
 LIBSMACKER_COMMIT="b3d4e97e0c95d5259d858495a5addd2d93bce5f4"
