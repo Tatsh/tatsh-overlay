@@ -6,6 +6,6 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">Alcaro/Flips</remote-id>
+		<remote-id type="github">Sir-Walrus/Flips</remote-id>
 	</upstream>
 </pkgmetadata>
