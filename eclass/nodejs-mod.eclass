@@ -39,11 +39,6 @@ esac
 
 inherit nodejs
 
-# shellcheck disable=SC2086
-if has nodejs-pack ${INHERITED}; then
-    die "nodejs-mod and nodejs-pack eclass are incompatible"
-fi
-
 # @ECLASS_VARIABLE: NODEJS_MOD_PREFIX
 # @DESCRIPTION:
 # The directory prefix for the NodeJS module
