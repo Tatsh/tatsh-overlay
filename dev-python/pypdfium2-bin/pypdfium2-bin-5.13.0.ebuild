@@ -11,7 +11,7 @@ MY_PN="${PN%-bin}"
 MY_TAG="py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64"
 
 DESCRIPTION="Python bindings to PDFium."
-HOMEPAGE="https://github.com/pypdfium2-team/pypdfium2 https://pypi.org/project/pypdfium2/"
+HOMEPAGE="https://github.com/pypdfium2-team/pypdfium2"
 # Building PDFium from source is not possible inside Portage: upstream's
 # build_native.py git-clones PDFium and six Chromium sub-repositories at build
 # time and needs a newer GN than any distribution ships. There is no system
