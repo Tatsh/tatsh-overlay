@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
-PYTHON_COMPAT=( python3_{10..14} )
+PYTHON_COMPAT=( python3_{10..15} )
 PYPI_VERIFY_REPO="https://github.com/Tatsh/patreon-archiver"
 
 inherit distutils-r1 pypi
