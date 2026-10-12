@@ -5,6 +5,7 @@ EAPI=8
 
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=maturin
+PYPI_VERIFY_REPO=https://github.com/jawah/h2
 PYTHON_COMPAT=( python3_{11..15} )
 RUST_MIN_VER="1.83.0"
 
