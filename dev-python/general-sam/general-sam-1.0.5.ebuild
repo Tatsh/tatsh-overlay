@@ -4,6 +4,7 @@
 EAPI=8
 
 DISTUTILS_EXT=1
+PYPI_VERIFY_REPO=https://github.com/ModelTC/general-sam-py
 PYTHON_COMPAT=( python3_{10..15} )
 DISTUTILS_USE_PEP517=maturin
 
