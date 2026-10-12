@@ -4,6 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
+PYPI_VERIFY_REPO=https://github.com/numba/llvmlite
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 DISTUTILS_EXT=1
 inherit cmake distutils-r1 pypi
