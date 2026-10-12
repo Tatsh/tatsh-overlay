@@ -3,7 +3,7 @@
 
 EAPI=8
 
-LLVM_COMPAT=( {17..23} )
+LLVM_COMPAT=( {18..23} )
 
 inherit cmake fcaps flag-o-matic llvm-r2
 
@@ -121,7 +121,7 @@ DARLING_SUBMODULES=(
 	"src/external/network_cmds darling-network_cmds 9a0a90e2021ecdde91986b91f65a236eda158023"
 	"src/external/nghttp2 darling-nghttp2 1a1853837b4350d4393bd25e1e4cb6018ab2d918"
 	"src/external/objc4 darling-objc4 1a12df76d12bfc9fdfffadb290f7742763568765"
-	"src/external/openjdk openjdk 5a541c1844a9508e48b3addaf2d38775683abb38"
+	"src/external/openjdk darling-openjdk 5a541c1844a9508e48b3addaf2d38775683abb38"
 	"src/external/openpam darling-openpam 8362545bac04032fcf59287cd66e6f4662a3692b"
 	"src/external/openpam/darling/submodules/pam_modules darling-pam_modules 241bbee0da845d1dfebc747b16a62aaed22f165b"
 	"src/external/openssh darling-openssh 9137305e5793d31124bcf2fdf0c6fa28c2e3e812"
