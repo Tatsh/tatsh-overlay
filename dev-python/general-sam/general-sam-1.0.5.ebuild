@@ -44,6 +44,13 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
+src_unpack() {
+	# pypi exports src_unpack (provenance check), overriding cargo's vendoring.
+	pypi_src_unpack
+	cargo_crate_unpack
+	cargo_gen_config
+}
+
 src_prepare() {
 	# The sdist ships no lockfile, so cargo would contact the registry to
 	# resolve versions even though the crates themselves are vendored.
