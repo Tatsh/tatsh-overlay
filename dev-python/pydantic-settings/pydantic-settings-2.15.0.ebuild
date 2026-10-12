@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..14} )
+PYTHON_COMPAT=( python3_{10..15} )
 DISTUTILS_USE_PEP517=hatchling
 
 PYPI_VERIFY_REPO="https://github.com/pydantic/pydantic-settings"
