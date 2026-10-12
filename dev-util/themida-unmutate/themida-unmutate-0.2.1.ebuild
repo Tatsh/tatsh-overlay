@@ -16,8 +16,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	<dev-python/lief-0.16.0[${PYTHON_USEDEP}]
 	<dev-python/miasm-0.2.0[${PYTHON_USEDEP}]
-	>=dev-python/lief-0.15.1[${PYTHON_USEDEP}]
+	>=dev-python/lief-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/miasm-0.1.5[${PYTHON_USEDEP}]
 "
+
+PATCHES=( "${FILESDIR}/${PN}-lief-1.patch" )

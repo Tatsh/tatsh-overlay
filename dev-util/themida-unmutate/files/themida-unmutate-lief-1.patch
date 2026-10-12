@@ -1,0 +1,60 @@
+diff -ru a/pyproject.toml b/pyproject.toml
+--- a/pyproject.toml	2026-10-12 06:23:57.470696557 -0400
++++ b/pyproject.toml	2026-10-12 06:23:57.486503138 -0400
+@@ -9,7 +9,7 @@
+ 
+ [tool.poetry.dependencies]
+ python = "^3.11"
+-lief = "^0.15.1"
++lief = ">=0.16.0"
+ miasm = "^0.1.5"
+ 
+ 
+diff -ru a/themida_unmutate/rebuilding.py b/themida_unmutate/rebuilding.py
+--- a/themida_unmutate/rebuilding.py	2026-10-12 06:23:57.470838856 -0400
++++ b/themida_unmutate/rebuilding.py	2026-10-12 06:23:57.486406813 -0400
+@@ -49,10 +49,10 @@
+         raise Exception(f"Failed to parse PE '{input_binary_path}'")
+ 
+     # Create a new code section
+-    unmut_section = lief.PE.Section([0] * NEW_SECTION_MAX_SIZE, NEW_SECTION_NAME,
+-                                    lief.PE.Section.CHARACTERISTICS.CNT_CODE.value
+-                                    | lief.PE.Section.CHARACTERISTICS.MEM_READ.value
+-                                    | lief.PE.Section.CHARACTERISTICS.MEM_EXECUTE.value)
++    unmut_section = lief.PE.Section(NEW_SECTION_NAME, [0] * NEW_SECTION_MAX_SIZE)
++    unmut_section.characteristics = (lief.PE.Section.CHARACTERISTICS.CNT_CODE.value
++                                     | lief.PE.Section.CHARACTERISTICS.MEM_READ.value
++                                     | lief.PE.Section.CHARACTERISTICS.MEM_EXECUTE.value)
+     pe_obj.add_section(unmut_section)
+     unmut_section = pe_obj.get_section(NEW_SECTION_NAME)
+     unmut_section_base = pe_obj.imagebase + unmut_section.virtual_address
+@@ -119,12 +119,8 @@
+         text_section_bytes[offset:offset + len(data)] = data
+     text_section.content = memoryview(text_section_bytes)
+ 
+-    # Invoke the builder
+-    builder = lief.PE.Builder(pe_obj)
+-    builder.build()
+-
+-    # Save the result
+-    builder.write(output_binary_path)
++    # Build and save the result
++    pe_obj.write(output_binary_path)
+ 
+ 
+ def __rebuild_simplified_binary_in_place(
+@@ -196,12 +192,8 @@
+         text_section_bytes[offset:offset + len(data)] = data
+     text_section.content = memoryview(text_section_bytes)
+ 
+-    # Invoke the builder
+-    builder = lief.PE.Builder(pe_obj)
+-    builder.build()
+-
+-    # Save the result
+-    builder.write(output_binary_path)
++    # Build and save the result
++    pe_obj.write(output_binary_path)
+ 
+ 
+ def __section_from_virtual_address(lief_bin: lief.Binary, virtual_addr: int) -> Optional[lief.Section]:
