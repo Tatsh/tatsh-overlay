@@ -1,4 +1,4 @@
-# Copyright 2024 Gentoo Authors
+# Copyright 2024-2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -8,7 +8,7 @@ inherit autotools cmake flag-o-matic
 DESCRIPTION="An active fork of curl-impersonate with more versions and build targets."
 HOMEPAGE="https://github.com/lexiforest/curl-impersonate"
 BORINGSSL_SHA="156c7b75ae9b8c3b3f847acf264f17594c3859fb"
-CURL_VERSION="curl-8_21_0"
+CURL_VERSION="curl-8_22_0"
 SRC_URI="https://github.com/lexiforest/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/google/boringssl/archive/${BORINGSSL_SHA}.tar.gz -> boringssl-${BORINGSSL_SHA}.tar.gz
 	https://github.com/curl/curl/archive/${CURL_VERSION}.tar.gz -> ${CURL_VERSION//_/.}.tar.gz"
@@ -20,6 +20,7 @@ IUSE="clients"
 
 DEPEND="app-arch/brotli:=
 	dev-libs/nss:=
+	net-dns/c-ares:=
 	llvm-runtimes/libcxx:=
 	net-libs/nghttp2:=
 	app-arch/zstd:=
@@ -79,6 +80,7 @@ src_compile() {
 		"--with-openssl=${S}/boringssl-${BORINGSSL_SHA}" \
 		"--with-zlib=${EPREFIX}/usr/$(get_libdir)" \
 		"--with-zstd=${EPREFIX}/usr/$(get_libdir)" \
+		--enable-ares \
 		--enable-ech \
 		--enable-ipv6 \
 		--disable-static \
