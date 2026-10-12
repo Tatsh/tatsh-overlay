@@ -133,7 +133,7 @@ libretro-core_src_compile() {
 # This function installs the shared library for this Libretro core.
 libretro-core_src_install() {
 	# Absolute path of the directory containing Libretro shared libraries.
-	LIBRETRO_LIB_DIR="${EROOT%/}/usr/$(get_libdir)/libretro"
+	LIBRETRO_LIB_DIR="/usr/$(get_libdir)/libretro"
 	# If this core's shared library exists, install that.
 	for i in "${LIBRETRO_CORE_LIB_FILE[@]}"
 	do
