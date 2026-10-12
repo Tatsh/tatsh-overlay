@@ -52,8 +52,10 @@ KEYWORDS="~amd64"
 QA_FLAGS_IGNORED="usr/lib.*/py.*/site-packages/jh2/_hazmat.*.so"
 
 src_unpack() {
-	cargo_src_unpack
-	default
+	# pypi exports src_unpack (provenance check), overriding cargo's vendoring.
+	pypi_src_unpack
+	cargo_crate_unpack
+	cargo_gen_config
 }
 
 src_test() {
