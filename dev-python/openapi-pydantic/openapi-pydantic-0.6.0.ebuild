@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=poetry
+DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{12..15} )
 
 PYPI_VERIFY_REPO="https://github.com/mike-oakley/openapi-pydantic"
