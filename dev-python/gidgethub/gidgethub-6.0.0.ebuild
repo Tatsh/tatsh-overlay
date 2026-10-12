@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DISTUTILS_USE_PEP517=flit
+DISTUTILS_USE_PEP517=pdm-backend
 PYTHON_COMPAT=( python3_{11..15} )
 
 inherit distutils-r1 pypi
@@ -14,7 +14,7 @@ HOMEPAGE="
 	https://pypi.org/project/gidgethub/
 "
 
-LICENSE="Apache-2.0"
+LICENSE="Apache-2.0 MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
@@ -22,12 +22,21 @@ KEYWORDS="~amd64"
 # USE=crypto flag so we depend on cryptography directly.
 RDEPEND=">=dev-python/cryptography-3.4.0[${PYTHON_USEDEP}]
 	>=dev-python/pyjwt-2.4.0[${PYTHON_USEDEP}]
+	>=dev-python/typing-extensions-4.0.0[${PYTHON_USEDEP}]
 	>=dev-python/uritemplate-3.0.1[${PYTHON_USEDEP}]"
 BDEPEND="test? (
-	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
+	dev-python/aiohttp[${PYTHON_USEDEP}]
+	dev-python/httpx2[${PYTHON_USEDEP}]
+	dev-python/tornado[${PYTHON_USEDEP}]
 )"
 
-PATCHES=( "${FILESDIR}/${PN}-flit-core-4.patch" )
+src_prepare() {
+	distutils-r1_src_prepare
+	# The importlib_resources backport is not packaged; the stdlib module has
+	# the same files() API.
+	sed -i 's/^import importlib_resources$/import importlib.resources as importlib_resources/' \
+		tests/test_abc.py tests/test_apps.py || die
+}
 
 EPYTEST_PLUGINS=( pytest-asyncio )
 distutils_enable_tests pytest
