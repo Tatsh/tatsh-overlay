@@ -7,6 +7,6 @@
 	</maintainer>
 	<upstream>
 		<remote-id type="github">reagento/adaptix</remote-id>
-		<remote-id type="pypi">dataclass-factory</remote-id>
+		<remote-id type="pypi">adaptix</remote-id>
 	</upstream>
 </pkgmetadata>
