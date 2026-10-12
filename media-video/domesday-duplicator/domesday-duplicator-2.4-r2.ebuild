@@ -6,7 +6,7 @@ EAPI=8
 inherit cmake desktop
 
 DESCRIPTION="Software for the 40Mhz USB-3.0 RF sampler (harrypm fork)."
-HOMEPAGE="https://github.com/simoninns/DomesdayDuplicator"
+HOMEPAGE="https://github.com/Domesday86/DomesdayDuplicator"
 # Upstream moved the application out of the umbrella repository into the
 # gui-app submodule; the parent now only carries docs, firmware and hardware
 # designs, none of which this package installs.
