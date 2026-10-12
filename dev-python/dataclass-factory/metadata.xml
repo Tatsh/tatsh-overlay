@@ -6,7 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">reagento/dataclass-factory</remote-id>
+		<remote-id type="github">reagento/adaptix</remote-id>
 		<remote-id type="pypi">dataclass-factory</remote-id>
 	</upstream>
 </pkgmetadata>
