@@ -4,7 +4,7 @@
 EAPI=8
 DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_{12..14} )
+PYTHON_COMPAT=( python3_{12..15} )
 inherit distutils-r1 systemd
 
 DESCRIPTION="An OAI compatible exllamav3 API that's both lightweight and fast."
