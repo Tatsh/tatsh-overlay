@@ -6,7 +6,7 @@ EAPI=8
 LIBRETRO_COMMIT_SHA="dummy"
 LIBRETRO_REPO_NAME="hrydgard/ppsspp"
 
-inherit cmake libretro libretro-core
+inherit cmake ffmpeg-compat libretro libretro-core
 
 DESCRIPTION="Libretro port of PPSSPP"
 HOMEPAGE="https://www.ppsspp.org/"
@@ -20,7 +20,6 @@ IUSE="opengl gles2 vulkan X +wayland gbm system-ffmpeg"
 RESTRICT="test"
 REQUIRED_USE="
 	|| ( gbm wayland X )
-	opengl? ( !gles2 )
 	gbm? ( !X )
 "
 
@@ -30,12 +29,14 @@ RDEPEND="
 	dev-libs/libzip:=
 	media-libs/libpng:=
 	media-libs/libsdl2[joystick]
-	system-ffmpeg? ( media-video/ffmpeg:0/58.60.60 )
+	system-ffmpeg? ( media-video/ffmpeg-compat:6= )
 	virtual/zlib:=
 	opengl? (
-		virtual/opengl
-		media-libs/glew:=
+		!gles2? (
+			virtual/opengl
+			media-libs/glew:=
 		)
+	)
 	gles2? ( media-libs/mesa )
 	vulkan? ( media-libs/vulkan-loader )
 	wayland? ( media-libs/mesa[wayland] )
@@ -73,6 +74,19 @@ src_configure() {
 		-DUSING_GLES2="$(usex gles2)"
 		-DLIBRETRO=ON
 	)
+
+	if use system-ffmpeg; then
+		# FindFFmpeg searches /usr before pkg-config, which would pick up the
+		# newer system FFmpeg, so point it at ffmpeg-compat:6 directly.
+		local c prefix
+		prefix="${SYSROOT}$(ffmpeg_compat_get_prefix 6)"
+		for c in avcodec avformat avutil swresample swscale; do
+			mycmakeargs+=(
+				"-DFFmpeg_INCLUDE_${c}=${prefix}/include"
+				"-DFFmpeg_LIBRARY_${c}=${prefix}/$(get_libdir)/lib${c}.so"
+			)
+		done
+	fi
 
 	if use wayland; then
 		mycmakeargs+=( -DUSE_WAYLAND_WSI=ON )
