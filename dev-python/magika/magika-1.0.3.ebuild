@@ -5,6 +5,7 @@ EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
 # sci-libs/onnxruntime only provides its Python bindings for 3.12 and later.
+PYPI_VERIFY_REPO=https://github.com/google/magika
 PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
