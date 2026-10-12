@@ -7,6 +7,7 @@ app-cdr/qpxtool:internal-wt - Use internal CD/DVD writing implementation instead
 app-cdr/qpxtool:liteon-probe - Enable device probing in Lite-On plugin.
 app-cdr/redumper:clang - Use Clang compiler (workaround).
 app-emulation/basiliskii:jit-debug - Enable JIT debugger
+app-emulation/darling:metal - Build Metal support (on Vulkan)
 app-misc/deltona:admin - Administrative utilities like smv and reset-tpm-enrollments
 app-misc/deltona:chrome - Tools for Chromium-based browsers
 app-misc/deltona:desktop - Desktop utilities like umpv and mpv-sbs
@@ -190,21 +191,9 @@ media-video/magewell-pro-capture:weave - Do not enable deinterlacing. Warning: t
 media-video/tbc-tools:teletext - Enable teletext export in ld-process-vbi
 media-video/vapoursynth:asm - Enable assembler code for x86 CPUs (requires dev-lang/yasm). Only valid on amd64 or x86.
 media-video/vapoursynth:guard-pattern - Adds 32 bytes on the left and the right sides of each frame, fills them with a certain value, and checks their integrity after each filter. It can be used to detect buggy filters that write a little outside the frame.
-mpv-plugin/blur-edges:autoload - Auto-load the plugin
-mpv-plugin/bookmarker-menu:autoload - Auto-load the plugin
-mpv-plugin/crop:autoload - Auto-load the plugin
-mpv-plugin/delete-file:autoload - Auto-load the plugin
-mpv-plugin/mpv-copytime:autoload - Auto-load the plugin
-mpv-plugin/mpv-dvd-browser:autoload - Auto-load the plugin
-mpv-plugin/mpv-libunity:autoload - Auto-load the plugin
-mpv-plugin/mpv-lrc:autoload - Auto-load the plugin
-mpv-plugin/mpv-netrc:autoload - Auto-load the plugin
-mpv-plugin/reload:autoload - Auto-load the plugin
-mpv-plugin/shutup:autoload - Auto-load the plugin
-mpv-plugin/writeedits:autoload - Auto-load the plugin
-mpv-plugin/writename:autoload - Auto-load the plugin
 net-dns/pihole:cron - Installs cron job
 net-misc/curl-impersonate:clients - Install the curl wrapper scripts
+net-misc/localsend-bin:cli - Install the localsend-cli command line client
 sci-libs/vtk:all-modules - Build all modules
 sci-libs/vtk:boost - Add support for boost
 sci-libs/vtk:cgns - Build support to handle CGNS data files
