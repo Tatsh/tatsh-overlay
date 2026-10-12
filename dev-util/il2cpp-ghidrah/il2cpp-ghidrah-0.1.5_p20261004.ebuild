@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=setuptools
 # The tests need nothing beyond pytest itself.
 EPYTEST_PLUGINS=()
 # Bounded above by dev-python/pyghidra.
-PYTHON_COMPAT=( python3_{12..14} )
+PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1
 
