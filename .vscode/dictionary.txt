@@ -375,6 +375,7 @@ dggml
 dgit
 dglslang
 dgtk
+dhdf
 dheadless
 dhwview
 dialog
@@ -793,6 +794,7 @@ insinto
 instafail
 installdir
 installkernel
+instr
 intellivision
 interconverter
 interp
