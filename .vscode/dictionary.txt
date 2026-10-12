@@ -26,7 +26,6 @@ aiosmtplib
 aiosqlite
 airtap
 akefile
-alcaro
 aliftype
 allarches
 allenc
@@ -82,8 +81,10 @@ automagic
 automodule
 autotools
 avcodec
+avformat
 avisynth
 avstream
+avutil
 awscli
 awslabs
 ayatana
@@ -246,7 +247,6 @@ contentunderstanding
 contrib
 cooperspencer
 copyfile
-copytime
 corecrypto
 corefoundation
 corelibs
@@ -617,6 +617,7 @@ fluxsmooth
 flycast
 flyinghead
 fmdb
+fmpeg
 fmsx
 fmtconv
 fmtlib
@@ -803,7 +804,6 @@ intltool
 intv
 inyutin
 ioadios
-iocb
 iocgns
 ioffmpeg
 iogdal
@@ -926,6 +926,7 @@ kwiml
 kwin
 kxmlgui
 kylemanna
+kyutai
 labbe's
 labeled
 lameenc
@@ -1187,7 +1188,6 @@ matthewbauer
 mawen
 maxcountryman
 maxperfwiz
-mazare
 mbed
 mbedcrypto
 mbedtls
@@ -1785,11 +1785,9 @@ shellformat
 shemanarev
 shifta
 shockwave
-shutup
 siac
 sideloading
 siedit
-simoninns
 simonlindholm
 simpleini
 simplier
@@ -1884,6 +1882,8 @@ svcname
 svpn
 swanstation
 swiftshader
+swresample
+swscale
 sylheti
 sylotinagri
 syms
@@ -2121,7 +2121,6 @@ williballenthin
 wineasio
 wineshell
 wingetty
-wint
 wireshark
 wiswa
 wlto
@@ -2134,7 +2133,6 @@ wrapt
 writable
 writedup
 writeedits
-writename
 wslpath
 wswan
 wweula
