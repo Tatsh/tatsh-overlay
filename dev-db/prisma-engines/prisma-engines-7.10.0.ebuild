@@ -16,7 +16,7 @@ declare -A GIT_CRATES=(
 	[postgres-native-tls]='https://github.com/prisma/rust-postgres;278641fa1a08b7e7d35841342ab4426c5b063d9a;rust-postgres-%commit%/postgres-native-tls'
 	[postgres-protocol]='https://github.com/prisma/rust-postgres;278641fa1a08b7e7d35841342ab4426c5b063d9a;rust-postgres-%commit%/postgres-protocol'
 	[postgres-types]='https://github.com/prisma/rust-postgres;278641fa1a08b7e7d35841342ab4426c5b063d9a;rust-postgres-%commit%/postgres-types'
-	[tiberius]='https://github.com/prisma/tiberius;59db57960a14b422fb3a1309aa4aa47880896ff8;tiberius-%commit%'
+	[tiberius]='https://github.com/tiberius-rs/tiberius;59db57960a14b422fb3a1309aa4aa47880896ff8;tiberius-%commit%'
 	[tokio-postgres]='https://github.com/prisma/rust-postgres;278641fa1a08b7e7d35841342ab4426c5b063d9a;rust-postgres-%commit%/tokio-postgres'
 )
 RUST_MIN_VER="1.97.1"
