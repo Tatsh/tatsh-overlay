@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=maturin
-PYTHON_COMPAT=( python3_{12..14} )
+PYTHON_COMPAT=( python3_{12..15} )
 RUST_MIN_VER="1.80"
 
 CRATES="
@@ -148,7 +148,7 @@ CRATES="
 inherit cargo distutils-r1 pypi
 
 DESCRIPTION="Python bindings to read and write audio files."
-HOMEPAGE="https://pypi.org/project/sphn/ https://github.com/LaurentMazare/sphn"
+HOMEPAGE="https://pypi.org/project/sphn/ https://github.com/kyutai-labs/sphn"
 SRC_URI+="
 	${CARGO_CRATE_URIS}
 "

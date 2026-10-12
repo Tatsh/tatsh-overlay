@@ -6,7 +6,7 @@
 		<name>Andrew Udvare</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="github">LaurentMazare/sphn</remote-id>
+		<remote-id type="github">kyutai-labs/sphn</remote-id>
 		<remote-id type="pypi">sphn</remote-id>
 	</upstream>
 </pkgmetadata>
