@@ -9,7 +9,7 @@ inherit distutils-r1 systemd
 
 DESCRIPTION="An OAI compatible exllamav3 API that's both lightweight and fast."
 HOMEPAGE="https://github.com/theroyallab/tabbyAPI"
-COMMIT="53da7919d4e45c63f4acbcbbc00cbe0f60a1ce65"
+COMMIT="2636ef602b55b5343cf3740dd55a77f21e0a8003"
 SRC_URI="https://github.com/theroyallab/tabbyAPI/archive/${COMMIT}.tar.gz -> ${P}-${COMMIT:0:7}.tar.gz"
 S="${WORKDIR}/tabbyAPI-${COMMIT}"
 LICENSE="AGPL-3"
