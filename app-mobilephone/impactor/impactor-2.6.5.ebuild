@@ -5,7 +5,7 @@
 
 EAPI=8
 
-RUST_MIN_VER="1.85.0"
+RUST_MIN_VER="1.88.0"
 CRATES="
 	ab_glyph@0.2.32
 	ab_glyph_rasterizer@0.1.10
@@ -27,6 +27,9 @@ CRATES="
 	anstyle-wincon@3.0.11
 	anstyle@1.0.14
 	anyhow@1.0.102
+	apple-bundles@0.21.0
+	apple-flat-package@0.20.0
+	apple-xar@0.20.0
 	ar@0.9.0
 	arbitrary@1.4.2
 	arc-swap@1.9.1
@@ -147,6 +150,7 @@ CRATES="
 	core-graphics@0.23.2
 	core_maths@0.1.1
 	cosmic-text@0.15.0
+	cpio-archive@0.10.0
 	cpubits@0.1.1
 	cpufeatures@0.2.17
 	cpufeatures@0.3.0
@@ -934,11 +938,6 @@ CRATES="
 # Upstream pulls several crates from git rather than the crates.io releases.
 declare -A GIT_CRATES=(
 	[android-loader]='https://github.com/Dadoum/android-loader;dfa86501afca7caa23d5ce15322ac7260d857485;android-loader-%commit%'
-	[apple-bundles]='https://github.com/PlumeImpactor/plume-apple-platform-rs;428b42f059bbf0b17104f9ad448b5dab3ef79f53;plume-apple-platform-rs-%commit%/apple-bundles'
-	[apple-codesign]='https://github.com/PlumeImpactor/plume-apple-platform-rs;428b42f059bbf0b17104f9ad448b5dab3ef79f53;plume-apple-platform-rs-%commit%/apple-codesign'
-	[apple-flat-package]='https://github.com/PlumeImpactor/plume-apple-platform-rs;428b42f059bbf0b17104f9ad448b5dab3ef79f53;plume-apple-platform-rs-%commit%/apple-flat-package'
-	[apple-xar]='https://github.com/PlumeImpactor/plume-apple-platform-rs;428b42f059bbf0b17104f9ad448b5dab3ef79f53;plume-apple-platform-rs-%commit%/apple-xar'
-	[cpio-archive]='https://github.com/PlumeImpactor/plume-apple-platform-rs;428b42f059bbf0b17104f9ad448b5dab3ef79f53;plume-apple-platform-rs-%commit%/cpio-archive'
 	[idevice]='https://github.com/jkcoxson/idevice;5171e34e3a236842af1160a84d955d037ddca3af;idevice-%commit%/idevice'
 	[sysv64]='https://github.com/Dadoum/android-loader;dfa86501afca7caa23d5ce15322ac7260d857485;android-loader-%commit%/sysv64'
 )
@@ -949,7 +948,7 @@ DESCRIPTION="Open-source, cross-platform, and feature rich iOS sideloading appli
 HOMEPAGE="https://github.com/claration/Impactor"
 SRC_URI="https://github.com/claration/Impactor/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	${CARGO_CRATE_URIS}"
-S="${WORKDIR}/Impactor-${PV}"
+S="${WORKDIR}/${P}"
 
 LICENSE="MIT"
 # Dependent crate licenses
