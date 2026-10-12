@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_EXT=1
-PYTHON_COMPAT=( python3_{11..14} )
+PYTHON_COMPAT=( python3_{11..15} )
 DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
@@ -37,9 +37,19 @@ RDEPEND="${PYTHON_DEPS}
 DEPEND="${RDEPEND}"
 BDEPEND="${PYTHON_DEPS}
 	dev-build/ninja
-	sys-devel/gcc:13"
+	|| (
+		sys-devel/gcc:13
+		sys-devel/gcc:15
+	)"
 
 src_configure() {
-	export CC=${CHOST}-gcc-13 CXX=${CHOST}-g++-13
+	# Prefer GCC 13; GCC 15 is the slot that is stable on every profile.
+	local slot
+	for slot in 13 15; do
+		if has_version -b "sys-devel/gcc:${slot}"; then
+			export CC="${CHOST}-gcc-${slot}" CXX="${CHOST}-g++-${slot}"
+			break
+		fi
+	done
 	distutils-r1_src_configure
 }
