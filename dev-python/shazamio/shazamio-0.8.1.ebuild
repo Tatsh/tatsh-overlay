@@ -24,7 +24,7 @@ RDEPEND="
 	>=dev-python/numpy-2.2.2[${PYTHON_USEDEP}]
 	>=dev-python/pydantic-2.9.2[${PYTHON_USEDEP}]
 	>=dev-python/pydub-0.25.1[${PYTHON_USEDEP}]
-	=dev-python/shazamio-core-1.1.2[${PYTHON_USEDEP}]
+	>=dev-python/shazamio-core-2.0.0[${PYTHON_USEDEP}]
 	<dev-python/dataclass-factory-3.0[${PYTHON_USEDEP}]
 	>=dev-python/dataclass-factory-2.16[${PYTHON_USEDEP}]
 "
