@@ -6,10 +6,12 @@ packaged in Gentoo so far. The differences are small enough to bridge:
   * wxString::FromUTF8() gained a std::string_view overload in 3.3. The
     (pointer, length) and (const std::string&) overloads exist in both
     releases, so the affected call sites use those and need no version check.
-  * wxInfoDC and wxScrollHelper::DoPrepareReadOnlyDC() are new in 3.3, and
-    wxString::wc_string() is 3.3's name for ToStdWstring(). Guard those with
-    wxCHECK_VERSION so the 3.3 code paths are picked up automatically once
-    x11-libs/wxGTK:3.3 is available.
+  * wxInfoDC, wxScrollHelper::DoPrepareReadOnlyDC() and
+    wxWithImages::SetStateImages() are new in 3.3 (3.2 takes a wxImageList
+    through AssignStateImageList() instead), and wxString::wc_string() is
+    3.3's name for ToStdWstring(). Guard those with wxCHECK_VERSION so the 3.3
+    code paths are picked up automatically once x11-libs/wxGTK:3.3 is
+    available.
 
 The find_package() minimum is lowered rather than pinned, so 3.3 continues to
 satisfy it.
@@ -257,3 +259,21 @@ diff -ruN a/src/gui/wxgui/wxWindowSystem.cpp b/src/gui/wxgui/wxWindowSystem.cpp
  }
  
  WindowSystem::WindowInfo& WindowSystem::GetWindowInfo()
+diff -ruN a/src/gui/wxgui/wxcomponents/checktree.cpp b/src/gui/wxgui/wxcomponents/checktree.cpp
+--- a/src/gui/wxgui/wxcomponents/checktree.cpp	2026-10-12 05:00:50.463878412 -0400
++++ b/src/gui/wxgui/wxcomponents/checktree.cpp	2026-10-12 05:00:50.476506322 -0400
+@@ -165,7 +165,14 @@
+ 		dc.SelectObject(wxNullBitmap);
+ 		states.push_back(wxBitmapBundle::FromBitmap(bitmap));
+ 	}
++#if wxCHECK_VERSION(3, 3, 0)
+ 	SetStateImages(states);
++#else
++	auto* imageList = new wxImageList(size.x, size.y, true, static_cast<int>(states.size()));
++	for (const auto& state : states)
++		imageList->Add(state.GetBitmap(size));
++	AssignStateImageList(imageList);
++#endif
+ 	Refresh();
+ }
+ 
