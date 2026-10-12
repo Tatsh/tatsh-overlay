@@ -20,7 +20,7 @@ KEYWORDS="~amd64"
 DEPEND="
 	app-arch/libarchive:=
 	dev-libs/openssl:=
-	sys-libs/zlib:=
+	virtual/zlib:=
 "
 RDEPEND="${DEPEND}"
 
