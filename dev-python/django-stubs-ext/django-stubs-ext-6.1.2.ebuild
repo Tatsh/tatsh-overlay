@@ -9,7 +9,7 @@ PYPI_VERIFY_REPO="https://github.com/typeddjango/django-stubs"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Monkey-patching and extensions for django-stubs."
+DESCRIPTION="Monkey-patching and extensions for django-stubs"
 HOMEPAGE="https://pypi.org/project/django-stubs-ext/"
 
 LICENSE="MIT"

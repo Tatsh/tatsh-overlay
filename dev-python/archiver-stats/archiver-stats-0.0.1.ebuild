@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/archiver-stats"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Reusable live statistics and progress display for CLIs."
+DESCRIPTION="Reusable live statistics and progress display for CLIs"
 HOMEPAGE="https://pypi.org/project/archiver-stats/"
 
 LICENSE="MIT"

@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Remove the background from images."
+DESCRIPTION="Remove the background from images"
 HOMEPAGE="https://github.com/danielgatis/rembg https://pypi.org/project/rembg/"
 
 LICENSE="MIT"

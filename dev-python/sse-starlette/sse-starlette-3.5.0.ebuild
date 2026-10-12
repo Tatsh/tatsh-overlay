@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/sysid/sse-starlette"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="SSE plugin for Starlette."
+DESCRIPTION="SSE plugin for Starlette"
 HOMEPAGE="https://pypi.org/project/sse-starlette/"
 
 LICENSE="BSD"

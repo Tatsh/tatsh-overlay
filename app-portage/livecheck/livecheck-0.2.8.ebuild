@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/livecheck"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Tool to update ebuilds."
+DESCRIPTION="Tool to update ebuilds"
 HOMEPAGE="https://pypi.org/project/livecheck/"
 
 LICENSE="MIT"

@@ -4,7 +4,7 @@
 EAPI=8
 inherit cmake
 
-DESCRIPTION="RealSR super resolution implemented with ncnn library."
+DESCRIPTION="RealSR super resolution implemented with ncnn library"
 HOMEPAGE="https://github.com/nihui/realsr-ncnn-vulkan"
 SRC_URI="https://github.com/nihui/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 

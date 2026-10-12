@@ -11,7 +11,7 @@ inherit distutils-r1 flag-o-matic
 
 MY_PN="LIEF"
 
-DESCRIPTION="Library to instrument ELF, PE and Mach-O executable formats."
+DESCRIPTION="Library to instrument ELF, PE and Mach-O executable formats"
 HOMEPAGE="https://lief.re https://github.com/lief-project/LIEF"
 # There is no sdist on PyPI for this series, only wheels. The source tree
 # bundles every third party dependency under third-party/ as a zip, including

@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Create and update PowerPoint .pptx files."
+DESCRIPTION="Create and update PowerPoint .pptx files"
 HOMEPAGE="https://github.com/scanny/python-pptx https://pypi.org/project/python-pptx/"
 
 LICENSE="MIT"

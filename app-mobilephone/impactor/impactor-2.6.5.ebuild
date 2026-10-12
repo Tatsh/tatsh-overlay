@@ -944,7 +944,7 @@ declare -A GIT_CRATES=(
 
 inherit cargo desktop xdg
 
-DESCRIPTION="Open-source, cross-platform, and feature rich iOS sideloading application."
+DESCRIPTION="Open-source, cross-platform, and feature rich iOS sideloading application"
 HOMEPAGE="https://github.com/claration/Impactor"
 SRC_URI="https://github.com/claration/Impactor/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	${CARGO_CRATE_URIS}"

@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1
 
-DESCRIPTION="Hashing library."
+DESCRIPTION="Hashing library"
 HOMEPAGE="https://pypi.org/project/hsh/"
 SRC_URI="https://github.com/chrissimpkins/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 

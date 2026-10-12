@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="libretro-db tools from RetroArch."
+DESCRIPTION="libretro-db tools from RetroArch"
 HOMEPAGE="https://github.com/libretro/RetroArch/tree/master/libretro-db"
 SRC_URI="https://github.com/libretro/RetroArch/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

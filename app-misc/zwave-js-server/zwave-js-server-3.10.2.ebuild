@@ -9,7 +9,7 @@ inherit nodejs-mod systemd
 # deletes as if it were a test directory.
 NODEJS_KEEP_DEV_FILES=1
 
-DESCRIPTION="Small server wrapper around Z-Wave JS to access it via a WebSocket."
+DESCRIPTION="Small server wrapper around Z-Wave JS to access it via a WebSocket"
 HOMEPAGE="https://github.com/zwave-js/zwave-js-server"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

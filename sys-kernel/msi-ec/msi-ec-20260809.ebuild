@@ -5,7 +5,7 @@ EAPI=8
 
 inherit linux-mod-r1
 
-DESCRIPTION="Kernel module for the embedded controller of MSI laptops."
+DESCRIPTION="Kernel module for the embedded controller of MSI laptops"
 HOMEPAGE="https://github.com/BeardOverflow/msi-ec"
 SHA="d7fbbd88e6831e56801b860e46475cbf8ddbc7c1"
 SRC_URI="https://github.com/BeardOverflow/msi-ec/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"

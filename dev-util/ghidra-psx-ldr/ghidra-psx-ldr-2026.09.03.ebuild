@@ -7,7 +7,7 @@ GHIDRA_EXT_NAME="ghidra_psx_ldr"
 
 inherit ghidra-extension
 
-DESCRIPTION="Ghidra loader for Sony PlayStation (PSX) executables."
+DESCRIPTION="Ghidra loader for Sony PlayStation (PSX) executables"
 HOMEPAGE="https://github.com/lab313ru/ghidra_psx_ldr"
 SRC_URI="https://github.com/lab313ru/${GHIDRA_EXT_NAME}/archive/refs/tags/${PV}.tar.gz
 	-> ${P}.tar.gz"

@@ -8,7 +8,7 @@ GHIDRA_EXT_NAME="N64LoaderWV"
 inherit ghidra-extension
 
 # Upstream tags a release per Ghidra version rather than versioning the loader.
-DESCRIPTION="Ghidra loader for Nintendo 64 ROMs."
+DESCRIPTION="Ghidra loader for Nintendo 64 ROMs"
 HOMEPAGE="https://github.com/zerokilo/n64loaderwv"
 SRC_URI="https://github.com/zerokilo/${PN}/archive/refs/tags/${PV}.tar.gz
 	-> ${P}.tar.gz"

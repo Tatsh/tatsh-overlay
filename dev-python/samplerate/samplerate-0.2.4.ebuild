@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=meson-python
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python bindings for libsamplerate."
+DESCRIPTION="Python bindings for libsamplerate"
 HOMEPAGE="https://pypi.org/project/samplerate/ https://github.com/tuxu/python-samplerate"
 
 LICENSE="MIT"

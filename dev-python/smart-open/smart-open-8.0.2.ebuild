@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/piskvorky/smart_open"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Utils for streaming large files (S3, HDFS, GCS, Azure, gzip, bz2, zst)."
+DESCRIPTION="Utils for streaming large files (S3, HDFS, GCS, Azure, gzip, bz2, zst)"
 HOMEPAGE="https://github.com/piskvorky/smart_open"
 
 LICENSE="MIT"

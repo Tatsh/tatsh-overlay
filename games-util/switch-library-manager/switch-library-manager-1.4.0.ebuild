@@ -5,7 +5,7 @@ EAPI=8
 
 inherit go-module
 
-DESCRIPTION="Manage Switch backups (console only)."
+DESCRIPTION="Manage Switch backups (console only)"
 HOMEPAGE="https://github.com/giwty/switch-library-manager"
 SRC_URI="https://github.com/giwty/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-vendor.tar.xz"

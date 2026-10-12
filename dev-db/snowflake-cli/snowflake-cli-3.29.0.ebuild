@@ -6,7 +6,7 @@ DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="CLI to Snowflake database."
+DESCRIPTION="CLI to Snowflake database"
 HOMEPAGE="https://pypi.org/project/snowflake-cli-labs/"
 SRC_URI="https://github.com/snowflakedb/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 S="${WORKDIR}/${PN}-${PV}"

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Script to configure parameters for increasing system performance."
+DESCRIPTION="Script to configure parameters for increasing system performance"
 HOMEPAGE="https://gitlab.com/cscs/maxperfwiz"
 SHA="476c7fc8cb563364c9eb53d5ad5b4746804b460b"
 # GitLab serves commit-SHA archives from /-/archive/ behind a Cloudflare bot challenge (HTTP 403).

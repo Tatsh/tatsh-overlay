@@ -12,7 +12,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/dbeaver-creds"
 
 inherit cmake distutils-r1 pypi
 
-DESCRIPTION="Recover your DBeaver saved credentials."
+DESCRIPTION="Recover your DBeaver saved credentials"
 HOMEPAGE="
 	https://tatsh.github.io/dbeaver-creds/
 	https://github.com/Tatsh/dbeaver-creds

@@ -5,7 +5,7 @@ EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/${PN}"
 
-DESCRIPTION="Assets needed for RetroArch. Also contains the official branding."
+DESCRIPTION="Assets needed for RetroArch. Also contains the official branding"
 HOMEPAGE="https://github.com/libretro/retroarch-assets"
 
 if [[ "${PV}" == *9999 ]]; then

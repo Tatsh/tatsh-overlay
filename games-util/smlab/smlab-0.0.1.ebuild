@@ -11,7 +11,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/smlab"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Generate StepMania dance-single charts from audio."
+DESCRIPTION="Generate StepMania dance-single charts from audio"
 HOMEPAGE="https://pypi.org/project/smlab/ https://github.com/Tatsh/smlab"
 # The chart and offset models are 150 MB together and are not part of the sources. smlab searches
 # "${EPREFIX}"/usr/share/smlab before it downloads anything (weights.py checks sys.prefix and the

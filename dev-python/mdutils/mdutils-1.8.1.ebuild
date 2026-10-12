@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Create Markdown files from Python code."
+DESCRIPTION="Create Markdown files from Python code"
 HOMEPAGE="https://github.com/didix21/mdutils https://pypi.org/project/mdutils/"
 
 LICENSE="MIT"

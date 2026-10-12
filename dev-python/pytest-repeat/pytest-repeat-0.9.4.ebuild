@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/pytest-dev/pytest-repeat"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Plugin for Pytest to make it easy to repeat tests."
+DESCRIPTION="Plugin for Pytest to make it easy to repeat tests"
 HOMEPAGE="https://pypi.org/project/pytest-repeat/"
 
 LICENSE="MIT"

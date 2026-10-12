@@ -9,7 +9,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1
 
-DESCRIPTION="Python support for Parquet file format."
+DESCRIPTION="Python support for Parquet file format"
 HOMEPAGE="https://github.com/dask/fastparquet/"
 SRC_URI="https://github.com/dask/fastparquet/archive/refs/tags/${PV}.tar.gz -> ${P}.gh.tar.gz"
 

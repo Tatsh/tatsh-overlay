@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="Provides service endpoint configuration per service on profile."
+DESCRIPTION="Provides service endpoint configuration per service on profile"
 HOMEPAGE="https://pypi.org/project/awscli-plugin-endpoint/"
 SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
 

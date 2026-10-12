@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="nnedi3 filter."
+DESCRIPTION="nnedi3 filter"
 HOMEPAGE="https://github.com/sekrit-twc/znedi3"
 SHA="e2016a0ca8cc438ec3e5d0cccafc565092d1a3a5"
 GRAPHENGINE_SHA="f06d7cb4d589ea4657f01b13613efb7437c8ecda"

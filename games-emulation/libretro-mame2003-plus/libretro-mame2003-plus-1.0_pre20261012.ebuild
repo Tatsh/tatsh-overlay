@@ -7,7 +7,7 @@ LIBRETRO_REPO_NAME="libretro/mame2003-plus-libretro"
 LIBRETRO_COMMIT_SHA="3a2f7f39b1733a8e6b2dca6f1197f18b9a74867b"
 inherit libretro-core
 
-DESCRIPTION="MAME (0.78) with extra features for libretro."
+DESCRIPTION="MAME (0.78) with extra features for libretro"
 HOMEPAGE="https://github.com/libretro/mame2003-plus-libretro"
 LICENSE="MAME-GPL"
 SLOT="0"

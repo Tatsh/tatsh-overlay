@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Transliterate Japanese to Romaji."
+DESCRIPTION="Transliterate Japanese to Romaji"
 HOMEPAGE="https://pypi.org/project/pykakasi/"
 
 LICENSE="MIT"

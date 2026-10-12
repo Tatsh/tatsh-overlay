@@ -10,7 +10,7 @@ inherit cmake xdg
 MIO_COMMIT="8b6b7d878c89e81614d05edca7936de41ccdd2da"
 SF2CUTE_COMMIT="b42f23c75667d414ac024858f5303fb7dc17e0fd"
 
-DESCRIPTION="Tools for Sega Dreamcast AICA sound driver formats."
+DESCRIPTION="Tools for Sega Dreamcast AICA sound driver formats"
 HOMEPAGE="https://github.com/dakrk/manatools"
 SRC_URI="https://github.com/dakrk/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz

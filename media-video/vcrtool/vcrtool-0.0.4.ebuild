@@ -9,7 +9,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/vcrtool"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Control a JLIP device such as a VCR."
+DESCRIPTION="Control a JLIP device such as a VCR"
 HOMEPAGE="
 	https://github.com/Tatsh/vcrtool
 	https://pypi.org/project/vcrtool/

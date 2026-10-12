@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/madpah/requirements-parser"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python module for parsing Pip requirement files."
+DESCRIPTION="Python module for parsing Pip requirement files"
 HOMEPAGE="https://pypi.org/project/requirements-parser/"
 
 LICENSE="Apache-2.0"

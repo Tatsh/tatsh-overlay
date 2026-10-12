@@ -5,7 +5,7 @@ EAPI=8
 
 inherit systemd
 
-DESCRIPTION="AltServer for AltStore, but on-device."
+DESCRIPTION="AltServer for AltStore, but on-device"
 HOMEPAGE="https://github.com/NyaMisty/AltServer-Linux"
 MY_PN="AltServer-Linux"
 SHA="78764512b735e7a731ef4ff36aca8d80dbd8d7c8"

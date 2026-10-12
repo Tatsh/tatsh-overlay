@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake desktop xdg
 
-DESCRIPTION="GTA Vice City decompiled and re-built."
+DESCRIPTION="GTA Vice City decompiled and re-built"
 HOMEPAGE="https://web.archive.org/web/20210905122315/https://github.com/GTAmodding/re3/tree/miami"
 SHA="a16fcd8d6a79e433c1c6e73d540f1bbe27e14164"
 LIBRW_SHA="5501c4fdc7425ff926be59369a13593bb6c81b54"

@@ -7,7 +7,7 @@ GHIDRA_EXT_NAME="GhidraExtensionManager"
 
 inherit ghidra-extension
 
-DESCRIPTION="Ghidra extension that installs and updates other Ghidra extensions."
+DESCRIPTION="Ghidra extension that installs and updates other Ghidra extensions"
 HOMEPAGE="https://github.com/antoniovazquezblanco/GhidraExtensionManager"
 SRC_URI="https://github.com/antoniovazquezblanco/${GHIDRA_EXT_NAME}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

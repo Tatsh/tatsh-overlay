@@ -15,7 +15,7 @@ inherit distutils-r1
 # of the default branch at upstream's own version.
 MY_COMMIT="a0bc447b3beed83a260b8c2bd38b3da9ad9743bc"
 
-DESCRIPTION="Automates Ghidra analysis of Unity IL2CPP binaries."
+DESCRIPTION="Automates Ghidra analysis of Unity IL2CPP binaries"
 HOMEPAGE="https://github.com/TeamRocketIst/il2cpp-ghidrah"
 SRC_URI="https://github.com/TeamRocketIst/${PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz"

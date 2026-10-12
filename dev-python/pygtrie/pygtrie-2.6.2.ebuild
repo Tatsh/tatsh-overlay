@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="A pure Python trie data structure implementation."
+DESCRIPTION="A pure Python trie data structure implementation"
 HOMEPAGE="https://pypi.org/project/pygtrie/ https://github.com/mina86/pygtrie"
 
 LICENSE="Apache-2.0"

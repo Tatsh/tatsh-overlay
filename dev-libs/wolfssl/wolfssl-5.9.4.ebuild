@@ -5,7 +5,7 @@ EAPI=8
 
 inherit autotools
 
-DESCRIPTION="Embedded SSL library."
+DESCRIPTION="Embedded SSL library"
 HOMEPAGE="https://www.wolfssl.com/ https://github.com/wolfSSL/wolfssl"
 SRC_URI="https://github.com/wolfSSL/${PN}/archive/refs/tags/v${PV}-stable.tar.gz -> ${P}.tar.gz"
 

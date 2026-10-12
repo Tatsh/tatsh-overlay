@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Remove additional copy protection found in some later PS1 games."
+DESCRIPTION="Remove additional copy protection found in some later PS1 games"
 HOMEPAGE="https://alex-free.github.io/aprip/ https://github.com/alex-free/aprip"
 SRC_URI="https://github.com/alex-free/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

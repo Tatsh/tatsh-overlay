@@ -5,7 +5,7 @@ EAPI=8
 
 inherit autotools cmake flag-o-matic
 
-DESCRIPTION="An active fork of curl-impersonate with more versions and build targets."
+DESCRIPTION="An active fork of curl-impersonate with more versions and build targets"
 HOMEPAGE="https://github.com/lexiforest/curl-impersonate"
 BORINGSSL_SHA="156c7b75ae9b8c3b3f847acf264f17594c3859fb"
 CURL_VERSION="curl-8_22_0"

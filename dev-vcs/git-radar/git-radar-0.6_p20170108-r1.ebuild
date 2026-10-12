@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="A heads up display for Git."
+DESCRIPTION="A heads up display for Git"
 HOMEPAGE="https://github.com/michaeldfallen/git-radar"
 SHA="2ac25e3d1047cdf19f15bc894ff39449b83d65d4"
 SRC_URI="https://github.com/michaeldfallen/git-radar/archive/${SHA}.tar.gz -> ${P}.tar.gz"

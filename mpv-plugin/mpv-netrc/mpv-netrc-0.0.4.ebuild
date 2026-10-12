@@ -6,7 +6,7 @@ MPV_REQ_USE="lua"
 USE_MPV="rdepend"
 inherit mpv-plugin
 
-DESCRIPTION="Reads ~/.netrc and sets up authorisation for URIs."
+DESCRIPTION="Reads ~/.netrc and sets up authorisation for URIs"
 HOMEPAGE="https://github.com/Tatsh/mpv-netrc"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

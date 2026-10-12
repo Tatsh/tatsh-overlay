@@ -11,7 +11,7 @@ PYPI_VERIFY_REPO="https://github.com/undertheseanlp/underthesea"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Vietnamese NLP Toolkit."
+DESCRIPTION="Vietnamese NLP Toolkit"
 HOMEPAGE="https://pypi.org/project/underthesea/"
 
 LICENSE="GPL-3"

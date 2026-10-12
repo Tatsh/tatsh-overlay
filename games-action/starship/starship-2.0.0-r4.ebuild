@@ -31,7 +31,7 @@ LIBGFXD_COMMIT="96fd3b849f38b3a7c7b7f3ff03c5921d328e6cdf"
 TINYXML2_PV="10.0.0"
 YAML_CPP_COMMIT="28f93bdec6387d42332220afa9558060c8016795"
 
-DESCRIPTION="Star Fox 64 port to modern platforms."
+DESCRIPTION="Star Fox 64 port to modern platforms"
 HOMEPAGE="https://github.com/HarbourMasters/Starship"
 SRC_URI="https://github.com/HarbourMasters/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz

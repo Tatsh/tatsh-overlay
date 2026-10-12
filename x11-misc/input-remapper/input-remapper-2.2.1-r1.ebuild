@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit desktop distutils-r1 systemd udev xdg
 
-DESCRIPTION="An easy to use tool to change the behaviour of your input devices."
+DESCRIPTION="An easy to use tool to change the behaviour of your input devices"
 HOMEPAGE="https://github.com/sezanzeb/input-remapper"
 SRC_URI="https://github.com/sezanzeb/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.gh.tar.gz"
 

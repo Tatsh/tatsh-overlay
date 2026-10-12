@@ -5,7 +5,7 @@ EAPI=8
 
 inherit toolchain-funcs
 
-DESCRIPTION="Library for decoding Sony's ATRAC9 audio format."
+DESCRIPTION="Library for decoding Sony's ATRAC9 audio format"
 HOMEPAGE="https://github.com/Thealexbarney/LibAtrac9"
 SHA="efca2e3af35562a09a9bb6deed90e45b4b824dc4"
 SRC_URI="https://github.com/Thealexbarney/LibAtrac9/archive/${SHA}.tar.gz -> ${P}.tar.gz"

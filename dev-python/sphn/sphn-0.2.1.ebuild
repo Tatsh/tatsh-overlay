@@ -147,7 +147,7 @@ CRATES="
 
 inherit cargo distutils-r1 pypi
 
-DESCRIPTION="Python bindings to read and write audio files."
+DESCRIPTION="Python bindings to read and write audio files"
 HOMEPAGE="https://pypi.org/project/sphn/ https://github.com/kyutai-labs/sphn"
 SRC_URI+="
 	${CARGO_CRATE_URIS}

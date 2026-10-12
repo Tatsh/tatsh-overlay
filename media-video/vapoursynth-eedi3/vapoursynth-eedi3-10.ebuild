@@ -5,7 +5,7 @@ EAPI=8
 
 inherit meson
 
-DESCRIPTION="A very slow edge directed interpolation filter (renewed)."
+DESCRIPTION="A very slow edge directed interpolation filter (renewed)"
 HOMEPAGE="https://github.com/HolyWu/VapourSynth-EEDI3"
 SRC_URI="https://github.com/HolyWu/VapourSynth-EEDI3/archive/refs/tags/r${PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/VapourSynth-EEDI3-r${PV}"

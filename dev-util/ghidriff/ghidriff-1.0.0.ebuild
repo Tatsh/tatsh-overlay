@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Ghidra binary diffing engine."
+DESCRIPTION="Ghidra binary diffing engine"
 HOMEPAGE="https://github.com/clearbluejar/ghidriff https://pypi.org/project/ghidriff/"
 
 LICENSE="GPL-3"

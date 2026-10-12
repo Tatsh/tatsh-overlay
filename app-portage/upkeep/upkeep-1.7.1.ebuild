@@ -6,7 +6,7 @@ DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{10..15} )
 inherit distutils-r1 systemd
 
-DESCRIPTION="Helper commands to automate updating with Portage."
+DESCRIPTION="Helper commands to automate updating with Portage"
 HOMEPAGE="
 	https://github.com/Tatsh/upkeep
 	https://pypi.org/project/upkeep/

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="List all secret items using libsecret (e.g. GNOME Keyring)."
+DESCRIPTION="List all secret items using libsecret (e.g. GNOME Keyring)"
 HOMEPAGE="https://github.com/gileshuang/lssecret"
 SHA="7f63780a8621305a8cc5e0455a603654e472fd30"
 SRC_URI="https://github.com/gileshuang/lssecret/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz"

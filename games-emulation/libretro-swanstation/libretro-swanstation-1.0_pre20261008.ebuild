@@ -7,7 +7,7 @@ LIBRETRO_COMMIT_SHA="5430a4a53b89fa5827c97b84ada29d23317245bc"
 
 inherit libretro-core cmake
 
-DESCRIPTION="Fast Sony Playstation emulator."
+DESCRIPTION="Fast Sony Playstation emulator"
 HOMEPAGE="https://github.com/libretro/swanstation"
 LICENSE="GPL-3"
 SLOT="0"

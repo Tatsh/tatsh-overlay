@@ -10,7 +10,7 @@ MY_PN="ShadPKG"
 # system, so package a snapshot of main instead.
 COMMIT="7a02c1e56b40477b26a660884deda1f3ca8d2eab"
 
-DESCRIPTION="Tool to derive keys from and extract PlayStation 4 PKG files."
+DESCRIPTION="Tool to derive keys from and extract PlayStation 4 PKG files"
 HOMEPAGE="https://github.com/seregonwar/ShadPKG"
 SRC_URI="https://github.com/seregonwar/${MY_PN}/archive/${COMMIT}.tar.gz
 	-> ${P}.gh.tar.gz"

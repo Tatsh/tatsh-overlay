@@ -5,7 +5,7 @@ EAPI=8
 WX_GTK_VER="3.2-gtk3"
 inherit desktop udev wxwidgets xdg
 
-DESCRIPTION="Graphical user interface and command-line tools to manage raphnet adapters."
+DESCRIPTION="Graphical user interface and command-line tools to manage raphnet adapters"
 HOMEPAGE="https://github.com/raphnet/gcn64tools"
 SRC_URI="https://github.com/raphnet/gcn64tools/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/gcn64tools-${PV}"

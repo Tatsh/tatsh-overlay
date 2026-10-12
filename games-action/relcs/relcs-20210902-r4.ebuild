@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake desktop xdg
 
-DESCRIPTION="GTA Liberty City Stories decompiled and re-built."
+DESCRIPTION="GTA Liberty City Stories decompiled and re-built"
 HOMEPAGE="https://web.archive.org/web/20210903220219/https://github.com/GTAmodding/re3/tree/lcs"
 SHA="33abd1b4e7a7b19e2d09c796c481c3325c1e2902"
 LIBRW_SHA="5501c4fdc7425ff926be59369a13593bb6c81b54"

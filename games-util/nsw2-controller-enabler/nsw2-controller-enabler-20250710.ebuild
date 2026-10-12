@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_{11..15} )
 
 inherit python-single-r1 udev
 
-DESCRIPTION="Enable Switch 2 Pro Controller and NSO GameCube controller input via USB."
+DESCRIPTION="Enable Switch 2 Pro Controller and NSO GameCube controller input via USB"
 HOMEPAGE="https://github.com/ikz87/NSW2-controller-enabler"
 MY_PN="NSW2-controller-enabler"
 SHA="cb8946f34f7befab35860ce9f45155cf3edc68ff"

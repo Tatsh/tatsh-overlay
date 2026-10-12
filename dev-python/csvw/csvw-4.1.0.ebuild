@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python library to work with CSVW described tabular data."
+DESCRIPTION="Python library to work with CSVW described tabular data"
 HOMEPAGE="https://github.com/cldf/csvw"
 
 LICENSE="Apache-2.0"

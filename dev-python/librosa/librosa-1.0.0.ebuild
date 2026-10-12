@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/librosa/librosa"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python library for audio and music analysis."
+DESCRIPTION="Python library for audio and music analysis"
 HOMEPAGE="https://pypi.org/project/librosa/ https://librosa.org/"
 # The PyPI sdist ships the test modules but not the test audio or baseline
 # images; those only exist in the git tag. Both archives extract to ${P}/, so the

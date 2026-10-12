@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/ashuttl/linecast"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Weather, tides, the sun, the moon, and maps, drawn for the terminal."
+DESCRIPTION="Weather, tides, the sun, the moon, and maps, drawn for the terminal"
 HOMEPAGE="https://github.com/ashuttl/linecast https://terminaltrove.com/linecast/"
 LICENSE="MIT"
 SLOT="0"

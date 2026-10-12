@@ -11,7 +11,7 @@ PYPI_NO_NORMALIZE=1
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Pythonic API to the Linux uinput kernel module."
+DESCRIPTION="Pythonic API to the Linux uinput kernel module"
 HOMEPAGE="https://github.com/pyinput/python-uinput https://pypi.org/project/python-uinput/"
 
 LICENSE="GPL-3+"

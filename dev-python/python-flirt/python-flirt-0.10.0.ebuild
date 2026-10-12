@@ -236,7 +236,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit cargo distutils-r1
 
-DESCRIPTION="Python library for parsing, compiling, and matching FLIRT signatures."
+DESCRIPTION="Python library for parsing, compiling, and matching FLIRT signatures"
 HOMEPAGE="https://pypi.org/project/python-flirt/"
 SRC_URI="https://github.com/williballenthin/lancelot/archive/refs/tags/v${PV}.tar.gz -> lancelot-${PV}.gh.tar.gz
 	${CARGO_CRATE_URIS}"

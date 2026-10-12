@@ -11,7 +11,7 @@ MY_PN="OpenLara"
 # branch.
 MY_COMMIT="e4ce52edec5a9a6ad22b69d08c687bf070e68876"
 
-DESCRIPTION="Classic Tomb Raider open source engine."
+DESCRIPTION="Classic Tomb Raider open source engine"
 HOMEPAGE="https://github.com/XProger/OpenLara"
 SRC_URI="https://github.com/libretro/${MY_PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz"

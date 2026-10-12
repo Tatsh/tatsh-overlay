@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Symbolic link qdbus -> qdbus6."
+DESCRIPTION="Symbolic link qdbus -> qdbus6"
 HOMEPAGE="https://www.qt.io/"
 
 S="${WORKDIR}"

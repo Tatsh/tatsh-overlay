@@ -7,7 +7,7 @@ inherit toolchain-funcs
 
 MY_COMMIT="079be662dde374a383646256108a4974c2bc7796"
 
-DESCRIPTION="Irssi plugin to connect to a Quassel core."
+DESCRIPTION="Irssi plugin to connect to a Quassel core"
 HOMEPAGE="https://github.com/phhusson/quassel-irssi"
 SRC_URI="https://github.com/phhusson/${PN}/archive/${MY_COMMIT}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}-${MY_COMMIT}"

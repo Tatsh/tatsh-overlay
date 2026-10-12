@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{10..15} )
 inherit cuda distutils-r1 multiprocessing pypi
 
-DESCRIPTION="Flash Attention: Fast and Memory-Efficient Exact Attention (Python component)."
+DESCRIPTION="Flash Attention: Fast and Memory-Efficient Exact Attention (Python component)"
 HOMEPAGE="https://github.com/Dao-AILab/flash-attention"
 LICENSE="BSD"
 SLOT="0"

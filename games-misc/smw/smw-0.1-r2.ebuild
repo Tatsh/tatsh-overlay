@@ -5,7 +5,7 @@ EAPI=8
 
 inherit desktop wrapper xdg
 
-DESCRIPTION="Reimplementation of Super Mario World."
+DESCRIPTION="Reimplementation of Super Mario World"
 HOMEPAGE="https://github.com/snesrev/smw"
 SRC_URI="fetch+https://github.com/snesrev/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	smw.sfc"

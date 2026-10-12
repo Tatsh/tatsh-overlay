@@ -12,7 +12,7 @@ applyTo: '**/*.ebuild'
 - Use tabs for indentation, never spaces.
 - Follow Gentoo ebuild conventions and PMS (Package Manager Specification).
 - Always create `metadata.xml`. Use the `./scripts/metadata.py` command to automatically start one.
-- Descriptions should always end in a period.
+- Descriptions must not end in a period and must be 80 characters or fewer (pkgcheck `BadDescription`).
 
 ## Patching and configuration
 

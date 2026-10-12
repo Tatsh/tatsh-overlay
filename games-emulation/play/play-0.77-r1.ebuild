@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake flag-o-matic xdg
 
-DESCRIPTION="PlayStation 2 emulator."
+DESCRIPTION="PlayStation 2 emulator"
 HOMEPAGE="https://purei.org/ https://github.com/jpd002/Play-"
 MY_PV="${PV:0:4}"
 CODEGEN_SHA="a5009f7dca062695b8e5aebbd71e67b4ddfa9251"

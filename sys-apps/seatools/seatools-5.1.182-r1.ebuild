@@ -5,7 +5,7 @@ EAPI=8
 
 inherit desktop wrapper xdg
 
-DESCRIPTION="Quick diagnostic tool that checks the health of your drive."
+DESCRIPTION="Quick diagnostic tool that checks the health of your drive"
 HOMEPAGE="https://www.seagate.com/support/downloads/seatools/"
 SRC_URI="https://www.seagate.com/content/dam/seagate/migrated-assets/www-content/support-content/downloads/${PN}/_shared/downloads/SeaToolsLinuxX64Installer.zip -> ${P}.zip
 	https://www.seagate.com/content/dam/seagate/migrated-assets/www-content/support-content/_shared/images/${PN}-icon.png"

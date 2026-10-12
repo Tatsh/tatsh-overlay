@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Super lightweight function registries for your library."
+DESCRIPTION="Super lightweight function registries for your library"
 HOMEPAGE="https://github.com/explosion/catalogue"
 
 LICENSE="MIT"

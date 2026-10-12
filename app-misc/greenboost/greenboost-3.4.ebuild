@@ -5,7 +5,7 @@ EAPI=8
 
 inherit linux-mod-r1 systemd udev
 
-DESCRIPTION="Hacky thing for Ollama."
+DESCRIPTION="Hacky thing for Ollama"
 HOMEPAGE="https://gitlab.com/IsolatedOctopi/greenboost"
 SRC_URI="https://gitlab.com/IsolatedOctopi/${PN}/-/archive/v${PV}/${PN}-v${PV}.tar.bz2"
 S="${WORKDIR}/${PN}-v${PV}"

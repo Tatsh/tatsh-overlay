@@ -453,7 +453,7 @@ RUST_MIN_VER="1.97.0"
 
 inherit cargo
 
-DESCRIPTION="Static analysis tool for GitHub Actions workflows."
+DESCRIPTION="Static analysis tool for GitHub Actions workflows"
 HOMEPAGE="https://docs.zizmor.sh https://github.com/zizmorcore/zizmor"
 SRC_URI="https://github.com/zizmorcore/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz

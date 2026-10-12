@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Completely rewritten adbsync with proper --exclude."
+DESCRIPTION="Completely rewritten adbsync with proper --exclude"
 HOMEPAGE="https://github.com/jb2170/better-adb-sync"
 MY_PN=BetterADBSync
 SRC_URI="$(pypi_sdist_url --no-normalize "${MY_PN}")"

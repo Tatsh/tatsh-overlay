@@ -11,7 +11,7 @@ inherit distutils-r1
 # Upstream has never tagged a release; setup.py declares 1.0.0.
 MY_COMMIT="e312928eb4e00938d4df88db2209ce0b19a66609"
 
-DESCRIPTION="Open Windows Explorer from a WSL shell using a Unix-style path."
+DESCRIPTION="Open Windows Explorer from a WSL shell using a Unix-style path"
 HOMEPAGE="https://github.com/ijknabla/explorer-from-wsl"
 SRC_URI="https://github.com/ijknabla/${PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz"

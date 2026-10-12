@@ -9,7 +9,7 @@ USE_MPV="rdepend"
 
 inherit mpv-plugin
 
-DESCRIPTION="Fills the black bars on the side of a video with a blurred copy of its edges."
+DESCRIPTION="Fills the black bars on the side of a video with a blurred copy of its edges"
 HOMEPAGE="https://github.com/occivink/mpv-scripts"
 SHA="01f3e99558915bb715b614d7f4b052230360eb21"
 SRC_URI="https://github.com/occivink/mpv-scripts/archive/${SHA}.tar.gz -> occivink-mpv-scripts-${SHA:0:7}.tar.gz"

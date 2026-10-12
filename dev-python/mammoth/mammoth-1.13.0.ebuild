@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Convert Word documents (.docx files) to HTML."
+DESCRIPTION="Convert Word documents (.docx files) to HTML"
 HOMEPAGE="https://github.com/mwilliamson/python-mammoth https://pypi.org/project/mammoth/"
 
 LICENSE="BSD-2"

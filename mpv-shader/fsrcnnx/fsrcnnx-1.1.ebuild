@@ -5,7 +5,7 @@ EAPI=8
 
 inherit mpv-shader
 
-DESCRIPTION="Shaders implemnting FSRCNNX for upscaling."
+DESCRIPTION="Shaders implemnting FSRCNNX for upscaling"
 HOMEPAGE="https://github.com/igv/FSRCNN-TensorFlow"
 MY_PN="${PN^^}"
 SRC_URI="https://github.com/igv/FSRCNN-TensorFlow/releases/download/${PV}/${MY_PN}_x2_16-0-4-1.glsl

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Patches for ReVanced."
+DESCRIPTION="Patches for ReVanced"
 HOMEPAGE="https://github.com/ReVanced/revanced-patches https://revanced.app/"
 SRC_URI="https://github.com/ReVanced/revanced-patches/releases/download/v${PV}/patches-${PV}.rvp -> ${P}.rvp"
 

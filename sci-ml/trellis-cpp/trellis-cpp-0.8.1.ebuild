@@ -28,7 +28,7 @@ WEIGHTS_QUANT=(
 	tex_flow_1024
 )
 
-DESCRIPTION="TRELLIS.2 image to 3D in C++ and GGML."
+DESCRIPTION="TRELLIS.2 image to 3D in C++ and GGML"
 HOMEPAGE="https://github.com/pwilkin/trellis.cpp"
 SRC_URI="https://github.com/pwilkin/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.gh.tar.gz

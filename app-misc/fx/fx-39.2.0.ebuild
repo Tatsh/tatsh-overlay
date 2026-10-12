@@ -5,7 +5,7 @@ EAPI=8
 inherit go-module
 
 MY_PV=$(ver_rs 3 -)
-DESCRIPTION="Terminal JSON viewer."
+DESCRIPTION="Terminal JSON viewer"
 HOMEPAGE="https://fx.wtf"
 SRC_URI="https://github.com/antonmedv/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-vendor.tar.xz"

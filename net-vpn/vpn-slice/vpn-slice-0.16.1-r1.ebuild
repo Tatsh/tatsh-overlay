@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="vpnc-script replacement for easy and secure split-tunnel VPN setup."
+DESCRIPTION="vpnc-script replacement for easy and secure split-tunnel VPN setup"
 HOMEPAGE="https://github.com/dlenski/vpn-slice https://pypi.org/project/vpn-slice/"
 SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
 S="${WORKDIR}/${P}"

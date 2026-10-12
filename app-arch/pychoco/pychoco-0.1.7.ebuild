@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1
 
-DESCRIPTION="Minimal choco command for use on non-Windows platforms."
+DESCRIPTION="Minimal choco command for use on non-Windows platforms"
 HOMEPAGE="https://github.com/Tatsh/pychoco"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

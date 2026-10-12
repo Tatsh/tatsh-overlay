@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="More than 60 spinners for terminal."
+DESCRIPTION="More than 60 spinners for terminal"
 HOMEPAGE="https://pypi.org/project/spinners/"
 
 LICENSE="MIT"

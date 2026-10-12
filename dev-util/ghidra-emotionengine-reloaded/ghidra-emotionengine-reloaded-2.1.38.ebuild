@@ -7,7 +7,7 @@ GHIDRA_EXT_NAME="ghidra-emotionengine-reloaded"
 
 inherit ghidra-extension
 
-DESCRIPTION="Ghidra extension adding PlayStation 2 Emotion Engine support."
+DESCRIPTION="Ghidra extension adding PlayStation 2 Emotion Engine support"
 HOMEPAGE="https://github.com/chaoticgd/ghidra-emotionengine-reloaded"
 SRC_URI="https://github.com/chaoticgd/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

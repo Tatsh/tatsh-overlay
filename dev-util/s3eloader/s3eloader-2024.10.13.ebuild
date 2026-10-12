@@ -7,7 +7,7 @@ GHIDRA_EXT_NAME="S3ELoader"
 
 inherit ghidra-extension
 
-DESCRIPTION="Ghidra loader for Marmalade S3E binaries."
+DESCRIPTION="Ghidra loader for Marmalade S3E binaries"
 HOMEPAGE="https://github.com/knot126/S3ELoader"
 SRC_URI="https://github.com/knot126/${GHIDRA_EXT_NAME}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Reverse engineering framework with assembly, emulation and symbolic execution."
+DESCRIPTION="Reverse engineering framework with assembly, emulation and symbolic execution"
 HOMEPAGE="https://github.com/cea-sec/miasm https://pypi.org/project/miasm/"
 
 LICENSE="GPL-2"

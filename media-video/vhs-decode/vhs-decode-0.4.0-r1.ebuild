@@ -48,7 +48,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{2,3,4,5} )
 inherit cargo desktop distutils-r1
 
-DESCRIPTION="Software defined VHS decoder."
+DESCRIPTION="Software defined VHS decoder"
 HOMEPAGE="https://github.com/oyvindln/vhs-decode"
 SRC_URI="https://github.com/oyvindln/vhs-decode/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	${CARGO_CRATE_URIS}"

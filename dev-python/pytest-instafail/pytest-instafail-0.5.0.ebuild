@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="pytest plugin to show failures instantly."
+DESCRIPTION="pytest plugin to show failures instantly"
 HOMEPAGE="https://github.com/pytest-dev/pytest-instafail https://pypi.org/project/pytest-instafail/"
 SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
 

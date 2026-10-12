@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="General purpose read/extract tool for Nintendo Switch file formats."
+DESCRIPTION="General purpose read/extract tool for Nintendo Switch file formats"
 HOMEPAGE="https://github.com/jakcron/nstool"
 SRC_URI="https://github.com/jakcron/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

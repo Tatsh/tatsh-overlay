@@ -9,7 +9,7 @@ inherit ghidra-extension
 
 MY_COMMIT="828847d8e705e1373ac87620adeeef448edecd54"
 
-DESCRIPTION="Better Apple binary analysis for Ghidra."
+DESCRIPTION="Better Apple binary analysis for Ghidra"
 HOMEPAGE="https://github.com/ReverseApple/GhidraApple"
 # The only release, v0.0.1-alpha1, is a prebuilt archive for Ghidra 11.3.1 from
 # March 2025. Building the sources against the installed Ghidra is what makes

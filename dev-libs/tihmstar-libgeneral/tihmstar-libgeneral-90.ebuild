@@ -5,7 +5,7 @@ EAPI=8
 
 inherit autotools
 
-DESCRIPTION="Stuff used in tsschecker."
+DESCRIPTION="Stuff used in tsschecker"
 HOMEPAGE="https://github.com/tihmstar/libgeneral"
 MY_PN="${PN/tihmstar-}"
 SRC_URI="https://github.com/tihmstar/${MY_PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"

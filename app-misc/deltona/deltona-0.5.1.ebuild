@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/deltona"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A lot of uncategorised utilities."
+DESCRIPTION="A lot of uncategorised utilities"
 HOMEPAGE="https://github.com/Tatsh/deltona"
 LICENSE="MIT"
 SLOT="0"

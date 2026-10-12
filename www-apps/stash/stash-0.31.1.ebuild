@@ -5,7 +5,7 @@ EAPI=8
 
 inherit go-module nodejs
 
-DESCRIPTION="An organiser for your special videos, written in Go."
+DESCRIPTION="An organiser for your special videos, written in Go"
 HOMEPAGE="https://github.com/stashapp/stash https://docs.stashapp.cc/"
 SRC_URI="https://github.com/stashapp/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-vendor.tar.xz

@@ -13,7 +13,7 @@ MY_PN="Il2CppDumper"
 # life net7.0 target with net8.0. Nothing else changed.
 MY_COMMIT="4741d46ba9cd6159c5d853eb9d6fc48b4bfa2b1a"
 
-DESCRIPTION="Unity il2cpp reverse engineering tool."
+DESCRIPTION="Unity il2cpp reverse engineering tool"
 HOMEPAGE="https://github.com/Perfare/Il2CppDumper"
 SRC_URI="https://github.com/Perfare/${MY_PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.gh.tar.gz

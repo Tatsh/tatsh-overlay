@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Hook application for (patched) openfortivpn to support systemd-resolved."
+DESCRIPTION="Hook application for (patched) openfortivpn to support systemd-resolved"
 HOMEPAGE="https://github.com/Tatsh/ifup-systemd-resolved"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

@@ -10,7 +10,7 @@ inherit distutils-r1
 
 MY_PN="${PN//-/_}"
 
-DESCRIPTION="Retry client for aiohttp."
+DESCRIPTION="Retry client for aiohttp"
 HOMEPAGE="https://github.com/inyutin/aiohttp_retry
 	https://pypi.org/project/aiohttp-retry/"
 # The sdist on PyPI omits tests/app.py and tests/__init__.py, so the test

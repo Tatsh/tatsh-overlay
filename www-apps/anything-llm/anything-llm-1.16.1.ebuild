@@ -9,7 +9,7 @@ inherit nodejs-mod systemd
 # and the node_modules archive is unpacked alongside it.
 NODEJS_MOD_PREFIX="server"
 
-DESCRIPTION="Server endpoints to process or create content for chatting."
+DESCRIPTION="Server endpoints to process or create content for chatting"
 HOMEPAGE="https://anythingllm.com/"
 SRC_URI="https://github.com/Mintplex-Labs/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"

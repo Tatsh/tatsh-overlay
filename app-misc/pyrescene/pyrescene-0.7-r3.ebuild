@@ -6,7 +6,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1
 
-DESCRIPTION="Mechanism to restore metadata from certain releasesd files."
+DESCRIPTION="Mechanism to restore metadata from certain releasesd files"
 HOMEPAGE="https://rescene.wikidot.com/ https://bitbucket.org/Gfy/pyrescene/downloads/"
 MY_PN="pyReScene"
 SRC_URI="https://bitbucket.org/Gfy/${PN}/downloads/${MY_PN}-${PV}.zip -> ${P}.zip"

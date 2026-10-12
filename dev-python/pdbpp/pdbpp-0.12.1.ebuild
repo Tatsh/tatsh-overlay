@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A drop-in replacement for pdb that adds tab-completion, syntax highlighting, etc."
+DESCRIPTION="Drop-in pdb replacement with tab-completion and syntax highlighting"
 HOMEPAGE="
 	https://github.com/pdbpp/pdbpp
 	https://pypi.org/project/pdbpp/

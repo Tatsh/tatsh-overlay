@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/rr-/docstring_parser"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Parse Python docstrings in reST, Google and Numpydoc format."
+DESCRIPTION="Parse Python docstrings in reST, Google and Numpydoc format"
 HOMEPAGE="https://github.com/rr-/docstring_parser"
 
 LICENSE="MIT"

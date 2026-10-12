@@ -9,7 +9,7 @@ PYPI_VERIFY_REPO="https://github.com/rogdham/python-xz"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Pure Python implementation of the XZ file format with random access support."
+DESCRIPTION="Pure Python implementation of the XZ file format with random access support"
 HOMEPAGE="https://pypi.org/project/python-xz/"
 
 LICENSE="MIT"

@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/dynaconf/dynaconf"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="The dynamic configurator for your Python Project."
+DESCRIPTION="The dynamic configurator for your Python Project"
 HOMEPAGE="https://github.com/dynaconf/dynaconf https://pypi.org/project/dynaconf/"
 
 LICENSE="MIT"

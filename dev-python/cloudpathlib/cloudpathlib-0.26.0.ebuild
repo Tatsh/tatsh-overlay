@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=flit
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Pathlib-style classes for cloud storage services."
+DESCRIPTION="Pathlib-style classes for cloud storage services"
 HOMEPAGE="https://github.com/drivendataorg/cloudpathlib"
 
 LICENSE="MIT"

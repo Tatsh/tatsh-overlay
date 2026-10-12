@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="A lossless video/GIF/image upscaler."
+DESCRIPTION="A lossless video/GIF/image upscaler"
 HOMEPAGE="https://github.com/k4yt3x/video2x/ https://github.com/k4yt3x/video2x"
 LIBREAL_ESRGAN_NCNN_VULKAN_SHA="c1f255524f79566c40866b38e5e65b40adf77eee"
 LIBRIFE_NCNN_VULKAN_SHA="3f7bcb44f38b2acda6fa5e575a6d12517ac16b94"

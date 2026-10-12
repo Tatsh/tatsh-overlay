@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Asynchronous client for the reverse engineered Shazam API."
+DESCRIPTION="Asynchronous client for the reverse engineered Shazam API"
 HOMEPAGE="https://github.com/shazamio/ShazamIO
 	https://pypi.org/project/shazamio/"
 

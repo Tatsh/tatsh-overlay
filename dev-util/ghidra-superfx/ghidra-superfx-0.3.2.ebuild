@@ -7,7 +7,7 @@ GHIDRA_EXT_NAME="ghidra-superfx"
 
 inherit ghidra-extension
 
-DESCRIPTION="Ghidra processor module for the Nintendo SuperFX co-processor."
+DESCRIPTION="Ghidra processor module for the Nintendo SuperFX co-processor"
 HOMEPAGE="https://github.com/ChekeEdd/ghidra-superfx"
 SRC_URI="https://github.com/ChekeEdd/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

@@ -10,7 +10,7 @@ MY_COMMIT="ffe2632eb09f46a696fbf905788521c49f98b342"
 # Same rtaudio snapshot that media-libs/wineasio pins; only asio.h is used.
 RTAUDIO_SHA="e03448bd15c1c34e842459939d755f5f89e880ed"
 
-DESCRIPTION="ASIO to PipeWire driver for Wine."
+DESCRIPTION="ASIO to PipeWire driver for Wine"
 HOMEPAGE="https://github.com/dekrain/pipewireasio"
 SRC_URI="https://github.com/dekrain/${PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz

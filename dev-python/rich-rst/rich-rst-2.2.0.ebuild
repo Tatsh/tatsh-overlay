@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/wasi-master/rich-rst"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A beautiful reStructuredText renderer for rich."
+DESCRIPTION="A beautiful reStructuredText renderer for rich"
 HOMEPAGE="https://github.com/wasi-master/rich-rst"
 
 LICENSE="MIT"

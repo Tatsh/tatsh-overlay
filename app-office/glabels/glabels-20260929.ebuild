@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake xdg
 
-DESCRIPTION="glabels label designer (now in Qt)."
+DESCRIPTION="glabels label designer (now in Qt)"
 HOMEPAGE="https://github.com/j-evins/glabels-qt"
 SHA="2a92bfffc739436a046a38e0a8cd8302e64bad10"
 SRC_URI="https://github.com/j-evins/${PN}-qt/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"

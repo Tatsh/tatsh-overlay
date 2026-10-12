@@ -9,7 +9,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Cython MeCab wrapper for fast, pythonic Japanese tokenization."
+DESCRIPTION="Cython MeCab wrapper for fast, pythonic Japanese tokenization"
 HOMEPAGE="https://github.com/polm/fugashi"
 
 LICENSE="MIT"

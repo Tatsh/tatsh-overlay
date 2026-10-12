@@ -8,7 +8,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/clem2itunes"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Sync a remote Strawberry rated library to Music.app using Python, JXA and SSH."
+DESCRIPTION="Sync a remote Strawberry rated library to Music.app using Python, JXA and SSH"
 HOMEPAGE="
 	https://github.com/Tatsh/clem2itunes
 	https://pypi.org/project/clem2itunes/

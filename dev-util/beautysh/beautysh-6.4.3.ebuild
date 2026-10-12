@@ -11,7 +11,7 @@ PYPI_VERIFY_REPO="https://github.com/lovesegfault/beautysh"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A Bash beautifier for the masses."
+DESCRIPTION="A Bash beautifier for the masses"
 HOMEPAGE="https://github.com/lovesegfault/beautysh https://pypi.org/project/beautysh/"
 
 LICENSE="MIT"

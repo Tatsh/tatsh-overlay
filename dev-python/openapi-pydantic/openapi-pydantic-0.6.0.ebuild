@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/mike-oakley/openapi-pydantic"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Pydantic OpenAPI schema implementation."
+DESCRIPTION="Pydantic OpenAPI schema implementation"
 HOMEPAGE="https://github.com/mike-oakley/openapi-pydantic"
 
 LICENSE="MIT"

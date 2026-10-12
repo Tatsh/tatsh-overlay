@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Beautiful spinners for terminal, IPython and Jupyter."
+DESCRIPTION="Beautiful spinners for terminal, IPython and Jupyter"
 HOMEPAGE="https://pypi.org/project/halo/ https://github.com/manrajgrover/halo"
 
 LICENSE="MIT"

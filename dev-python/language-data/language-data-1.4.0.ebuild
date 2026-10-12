@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/georgkrause/language_data"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Supplementary data about languages used by the langcodes module."
+DESCRIPTION="Supplementary data about languages used by the langcodes module"
 HOMEPAGE="https://github.com/georgkrause/language_data"
 
 LICENSE="MIT"

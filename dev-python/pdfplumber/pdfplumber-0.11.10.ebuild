@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1
 
-DESCRIPTION="Plumb a PDF for detailed information about each text character."
+DESCRIPTION="Plumb a PDF for detailed information about each text character"
 HOMEPAGE="https://github.com/jsvine/pdfplumber https://pypi.org/project/pdfplumber/"
 # The PyPI sdist ships the test modules but none of the PDFs they read.
 SRC_URI="https://github.com/jsvine/${PN}/archive/refs/tags/v${PV}.tar.gz

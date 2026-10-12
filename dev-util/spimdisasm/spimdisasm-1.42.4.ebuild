@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Decompollaborate/spimdisasm"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="MIPS disassembler."
+DESCRIPTION="MIPS disassembler"
 HOMEPAGE="https://pypi.org/project/spimdisasm/"
 
 LICENSE="MIT"

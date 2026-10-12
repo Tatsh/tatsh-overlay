@@ -156,7 +156,7 @@ DARLING_SUBMODULES=(
 	"src/external/zlib darling-zlib 677de9b1c2bea1e428f56d8fc63300aa471eaf99"
 	"src/external/zsh darling-zsh 4a7a6ebf6216395c7db698a4993db16e484aa54d"
 )
-DESCRIPTION="Translation layer for running macOS software on Linux."
+DESCRIPTION="Translation layer for running macOS software on Linux"
 HOMEPAGE="https://www.darlinghq.org/ https://github.com/darlinghq/darling"
 SRC_URI="https://github.com/darlinghq/darling/archive/${DARLING_SHA}.tar.gz -> darling-${DARLING_SHA}.tar.gz"
 for _sm in "${DARLING_SUBMODULES[@]}"; do

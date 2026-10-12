@@ -5,7 +5,7 @@ EAPI=8
 
 inherit desktop xdg
 
-DESCRIPTION="Web debugging proxy application."
+DESCRIPTION="Web debugging proxy application"
 HOMEPAGE="https://www.charlesproxy.com/"
 SRC_URI="https://www.charlesproxy.com/assets/release/${PV}/${PN}-proxy-${PV}_x86_64.tar.gz"
 S="${WORKDIR}/charles"

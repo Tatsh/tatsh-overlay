@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Modules to convert numbers to words, easily extensible."
+DESCRIPTION="Modules to convert numbers to words, easily extensible"
 HOMEPAGE="https://github.com/savoirfairelinux/num2words"
 
 LICENSE="LGPL-2.1"

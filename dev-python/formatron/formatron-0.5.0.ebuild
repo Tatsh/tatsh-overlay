@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Control the output format of language models with minimal overhead."
+DESCRIPTION="Control the output format of language models with minimal overhead"
 HOMEPAGE="https://pypi.org/project/formatron/"
 
 LICENSE="MIT"

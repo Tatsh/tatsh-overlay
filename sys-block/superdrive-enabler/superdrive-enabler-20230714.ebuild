@@ -4,7 +4,7 @@
 EAPI=8
 inherit linux-info toolchain-funcs
 
-DESCRIPTION="Hack for Apple's Superdrive to work with other systems than OS X."
+DESCRIPTION="Hack for Apple's Superdrive to work with other systems than OS X"
 HOMEPAGE="https://github.com/onmomo/superdrive-enabler"
 SHA="3e6b355e08820e1d9a763f240ecf56e51bd5f8a9"
 SRC_URI="https://github.com/onmomo/superdrive-enabler/archive/${SHA}.tar.gz -> ${P}.tar.gz"

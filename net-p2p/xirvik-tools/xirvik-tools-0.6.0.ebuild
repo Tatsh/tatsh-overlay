@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python3_1{1,2,3,4,5} )
 DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1
 
-DESCRIPTION="Tools for Xirvik servers."
+DESCRIPTION="Tools for Xirvik servers"
 HOMEPAGE="https://github.com/Tatsh/xirvik-tools"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 

@@ -124,7 +124,7 @@ CRATES="aho-corasick@1.1.4
 
 inherit cargo
 
-DESCRIPTION="A xdotool-like tool to manipulate windows on KDE Wayland."
+DESCRIPTION="A xdotool-like tool to manipulate windows on KDE Wayland"
 HOMEPAGE="https://github.com/jinliu/kdotool"
 SRC_URI="
 	https://github.com/jinliu/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz

@@ -13,7 +13,7 @@ MY_PN="Ghidra-Switch-Loader"
 # 1.6.1-9bba6a6-Ghidra_12.1.2.
 MY_COMMIT="9bba6a6643f41d11386ea5bb2f0bc1d2ea536e2a"
 
-DESCRIPTION="Ghidra loader for Nintendo Switch NSO, NRO and KIP executables."
+DESCRIPTION="Ghidra loader for Nintendo Switch NSO, NRO and KIP executables"
 HOMEPAGE="https://github.com/Adubbz/Ghidra-Switch-Loader"
 SRC_URI="https://github.com/Adubbz/${MY_PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz"

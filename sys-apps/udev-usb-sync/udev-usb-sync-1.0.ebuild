@@ -5,7 +5,7 @@ EAPI=8
 
 inherit udev
 
-DESCRIPTION="Fine tune write cache and buffer limits for USB storage devices."
+DESCRIPTION="Fine tune write cache and buffer limits for USB storage devices"
 HOMEPAGE="https://gitlab.manjaro.org/fhdk/udev-usb-sync"
 SRC_URI="https://gitlab.manjaro.org/fhdk/${PN}/-/archive/${PV}/${P}.tar.bz2"
 

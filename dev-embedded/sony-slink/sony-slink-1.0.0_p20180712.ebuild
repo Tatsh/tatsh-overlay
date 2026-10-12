@@ -8,7 +8,7 @@ MY_PN="Sony_SLink"
 # Upstream has never tagged a release; library.properties declares 1.0.0.
 MY_COMMIT="df17fdd32b6d4c089c88de214e7a27bd3b66effb"
 
-DESCRIPTION="Arduino library for the Sony S-Link/Control-A1 bus protocol."
+DESCRIPTION="Arduino library for the Sony S-Link/Control-A1 bus protocol"
 HOMEPAGE="https://github.com/Ircama/Sony_SLink"
 SRC_URI="https://github.com/Ircama/${MY_PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz"

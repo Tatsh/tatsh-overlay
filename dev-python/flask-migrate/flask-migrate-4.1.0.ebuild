@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="SQLAlchemy database migrations for Flask applications using Alembic."
+DESCRIPTION="SQLAlchemy database migrations for Flask applications using Alembic"
 HOMEPAGE="https://github.com/miguelgrinberg/flask-migrate https://pypi.org/project/Flask-Migrate/"
 
 LICENSE="MIT"

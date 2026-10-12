@@ -5,7 +5,7 @@ EAPI=8
 
 inherit toolchain-funcs
 
-DESCRIPTION="Image converter from Sega Dreamcast PVR format to PNG."
+DESCRIPTION="Image converter from Sega Dreamcast PVR format to PNG"
 HOMEPAGE="https://github.com/nextgeniuspro/spvr2png"
 SHA="bc6c35945d072c78f9bc0e79f396d189082c5609"
 SRC_URI="https://github.com/nextgeniuspro/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"

@@ -5,7 +5,7 @@ EAPI=8
 
 inherit linux-mod-r1 udev
 
-DESCRIPTION="Magewell Pro Capture driver."
+DESCRIPTION="Magewell Pro Capture driver"
 HOMEPAGE="https://www.magewell.com/downloads/pro-capture#/driver/linux-x86"
 SRC_URI="https://www.magewell.com/files/drivers/ProCaptureForLinuxPUBLIC_${PV/.0}.tar.gz"
 S="${WORKDIR}/ProCaptureForLinuxPUBLIC_${PV/.0}"

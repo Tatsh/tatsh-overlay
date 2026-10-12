@@ -8,7 +8,7 @@ inherit cmake plocale xdg-utils
 # Qt UI translations, shipped in i18n/qt as vita3k_<tag>.ts.
 PLOCALES="en"
 
-DESCRIPTION="Experimental PlayStation Vita emulator."
+DESCRIPTION="Experimental PlayStation Vita emulator"
 HOMEPAGE="
 	https://vita3k.org
 	https://github.com/Vita3K/Vita3K

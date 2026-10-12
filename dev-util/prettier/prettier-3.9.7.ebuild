@@ -5,7 +5,7 @@ EAPI=8
 
 inherit nodejs-mod
 
-DESCRIPTION="Prettier is an opinionated code formatter."
+DESCRIPTION="Prettier is an opinionated code formatter"
 HOMEPAGE="https://prettier.io"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

@@ -8,7 +8,7 @@ inherit cmake desktop fcaps flag-o-matic optfeature toolchain-funcs xdg
 MY_PN="pcsx2-reliquary"
 MY_TAG="v${PV}-reliquary"
 
-DESCRIPTION="PCSX2 fork with speedrun and practice tooling."
+DESCRIPTION="PCSX2 fork with speedrun and practice tooling"
 HOMEPAGE="https://github.com/DiscoStarslayer/pcsx2-reliquary"
 SRC_URI="https://github.com/DiscoStarslayer/${MY_PN}/archive/refs/tags/${MY_TAG}.tar.gz
 	-> ${P}.gh.tar.gz"

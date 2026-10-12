@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/dade"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Extract and convert assets from a collection of PC and console video games."
+DESCRIPTION="Extract and convert assets from a collection of PC and console video games"
 HOMEPAGE="https://tatsh.github.io/dade/ https://github.com/Tatsh/dade"
 LICENSE="MIT"
 SLOT="0"

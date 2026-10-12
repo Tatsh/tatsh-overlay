@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/chrisguidry/uncalled-for"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Async dependency injection for Python functions."
+DESCRIPTION="Async dependency injection for Python functions"
 HOMEPAGE="https://github.com/chrisguidry/uncalled-for"
 
 LICENSE="MIT"

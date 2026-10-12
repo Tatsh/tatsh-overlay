@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Control and monitor input devices."
+DESCRIPTION="Control and monitor input devices"
 HOMEPAGE="https://pypi.org/project/pynput/"
 SRC_URI="https://github.com/moses-palmer/pynput/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 

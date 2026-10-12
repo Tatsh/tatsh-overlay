@@ -5,7 +5,7 @@ EAPI=8
 
 inherit desktop wrapper
 
-DESCRIPTION="JAR and Android APK reverse engineering suite."
+DESCRIPTION="JAR and Android APK reverse engineering suite"
 HOMEPAGE="https://bytecodeviewer.com/"
 MY_PN="Bytecode-Viewer"
 PNB="${PN%-*}"

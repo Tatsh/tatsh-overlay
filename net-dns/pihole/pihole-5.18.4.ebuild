@@ -5,7 +5,7 @@ EAPI=8
 
 inherit shell-completion systemd
 
-DESCRIPTION="Network-wide ad blocking (core)."
+DESCRIPTION="Network-wide ad blocking (core)"
 HOMEPAGE="https://pi-hole.net/"
 SRC_URI="https://github.com/pi-hole/pi-hole/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/pi-hole-${PV}"

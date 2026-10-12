@@ -9,7 +9,7 @@ USE_MPV="rdepend"
 
 inherit mpv-plugin toolchain-funcs
 
-DESCRIPTION="Shows progress on a panel following libunity specification."
+DESCRIPTION="Shows progress on a panel following libunity specification"
 HOMEPAGE="https://github.com/mrlotfi/mpv-libunity"
 SHA="1ccbbd27cc2ef66529f103e3b5b498723fc05369"
 SRC_URI="https://github.com/mrlotfi/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"

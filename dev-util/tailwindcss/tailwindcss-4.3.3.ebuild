@@ -10,7 +10,7 @@ inherit nodejs-mod
 # in.
 NPM_PN="@${PN}/cli"
 
-DESCRIPTION="Utility-first CSS framework, as a standalone CLI."
+DESCRIPTION="Utility-first CSS framework, as a standalone CLI"
 HOMEPAGE="https://tailwindcss.com https://github.com/tailwindlabs/tailwindcss"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Hardware information viewer inspired by Redmond."
+DESCRIPTION="Hardware information viewer inspired by Redmond"
 HOMEPAGE="https://github.com/Tatsh/hwview"
 SRC_URI="https://github.com/Tatsh/hwview/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

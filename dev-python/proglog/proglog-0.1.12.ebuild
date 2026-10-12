@@ -6,7 +6,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1
 
-DESCRIPTION="Progress logging system for Python."
+DESCRIPTION="Progress logging system for Python"
 HOMEPAGE="https://pypi.org/project/proglog/"
 SRC_URI="https://github.com/Edinburgh-Genome-Foundry/${PN^}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 S="${WORKDIR}/${PN^}-${PV}"

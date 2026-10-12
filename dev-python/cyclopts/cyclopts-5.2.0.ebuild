@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/BrianPugh/cyclopts"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Intuitive, easy CLIs based on type hints."
+DESCRIPTION="Intuitive, easy CLIs based on type hints"
 HOMEPAGE="https://github.com/BrianPugh/cyclopts"
 
 LICENSE="Apache-2.0"

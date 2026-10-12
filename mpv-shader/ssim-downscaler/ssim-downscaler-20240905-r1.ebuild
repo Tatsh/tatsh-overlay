@@ -5,7 +5,7 @@ EAPI=8
 
 inherit mpv-shader
 
-DESCRIPTION="Downscaler shader for mpv."
+DESCRIPTION="Downscaler shader for mpv"
 HOMEPAGE="https://gist.github.com/igv/36508af3ffc84410fe39761d6969be10"
 GIST_ID="36508af3ffc84410fe39761d6969be10"
 SHA="38992bce7f9ff844f800820df0908692b65bb74a"

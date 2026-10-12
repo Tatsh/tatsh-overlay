@@ -7,7 +7,7 @@ EAPI=8
 
 inherit go-module
 
-DESCRIPTION="Netplay server for N64 emulators."
+DESCRIPTION="Netplay server for N64 emulators"
 HOMEPAGE="https://github.com/gopher64/gopher64-netplay-server"
 SRC_URI="https://github.com/gopher64/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-vendor.tar.xz

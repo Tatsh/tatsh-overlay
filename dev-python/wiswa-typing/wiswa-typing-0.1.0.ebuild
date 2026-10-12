@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/wiswa-typing"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Shared types for the Wiswa ecosystem."
+DESCRIPTION="Shared types for the Wiswa ecosystem"
 HOMEPAGE="
 	https://github.com/Tatsh/wiswa-typing
 	https://pypi.org/project/wiswa-typing/

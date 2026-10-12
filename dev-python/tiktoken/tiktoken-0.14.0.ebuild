@@ -40,7 +40,7 @@ CRATES="
 
 inherit cargo distutils-r1 pypi
 
-DESCRIPTION="Fast BPE tokeniser for use with OpenAI's models."
+DESCRIPTION="Fast BPE tokeniser for use with OpenAI's models"
 HOMEPAGE="https://github.com/openai/tiktoken"
 SRC_URI+="
 	${CARGO_CRATE_URIS}

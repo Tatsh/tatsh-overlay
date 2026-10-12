@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{11,12,13,14,15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="The fast, Pythonic way to build MCP servers and clients."
+DESCRIPTION="The fast, Pythonic way to build MCP servers and clients"
 HOMEPAGE="https://github.com/PrefectHQ/fastmcp"
 
 LICENSE="Apache-2.0"

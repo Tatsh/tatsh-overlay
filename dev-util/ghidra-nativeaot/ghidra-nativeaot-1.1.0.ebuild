@@ -7,7 +7,7 @@ GHIDRA_EXT_NAME="ghidra-nativeaot"
 
 inherit ghidra-extension
 
-DESCRIPTION="Ghidra extension for .NET Native AOT compiled binaries."
+DESCRIPTION="Ghidra extension for .NET Native AOT compiled binaries"
 HOMEPAGE="https://github.com/Washi1337/ghidra-nativeaot"
 SRC_URI="https://github.com/Washi1337/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

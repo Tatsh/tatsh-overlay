@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=hatchling
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A new flavour of deep learning operations."
+DESCRIPTION="A new flavour of deep learning operations"
 HOMEPAGE="https://github.com/arogozhnikov/einops"
 
 LICENSE="MIT"

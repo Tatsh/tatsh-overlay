@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit python-single-r1
 
-DESCRIPTION="Muonium's collection of VapourSynth functions."
+DESCRIPTION="Muonium's collection of VapourSynth functions"
 HOMEPAGE="https://github.com/WolframRhodium/muvsfunc"
 SRC_URI="https://github.com/WolframRhodium/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

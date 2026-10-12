@@ -41,7 +41,7 @@ LIBGFXD_COMMIT="96fd3b849f38b3a7c7b7f3ff03c5921d328e6cdf"
 TINYXML2_PV="10.0.0"
 YAML_CPP_COMMIT="2f86d13775d119edbb69af52e5f566fd65c6953b"
 
-DESCRIPTION="Mario Kart 64 port to modern platforms."
+DESCRIPTION="Mario Kart 64 port to modern platforms"
 HOMEPAGE="https://github.com/HarbourMasters/SpaghettiKart"
 SRC_URI="https://github.com/HarbourMasters/${MY_PN}/archive/refs/tags/${PV}.tar.gz
 	-> ${P}.tar.gz

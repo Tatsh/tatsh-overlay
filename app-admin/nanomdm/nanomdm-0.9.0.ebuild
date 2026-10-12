@@ -5,7 +5,7 @@ EAPI=8
 
 inherit go-module
 
-DESCRIPTION="Minimalist Apple MDM server."
+DESCRIPTION="Minimalist Apple MDM server"
 HOMEPAGE="https://github.com/micromdm/nanomdm"
 SRC_URI="https://github.com/micromdm/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz

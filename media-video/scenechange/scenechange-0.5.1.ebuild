@@ -15,7 +15,7 @@ PYPI_PN="vapoursynth-${PN}"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Scene change detection plugin for VapourSynth."
+DESCRIPTION="Scene change detection plugin for VapourSynth"
 HOMEPAGE="https://tatsh.github.io/scenechange/ https://github.com/Tatsh/scenechange"
 
 LICENSE="LGPL-2.1+"

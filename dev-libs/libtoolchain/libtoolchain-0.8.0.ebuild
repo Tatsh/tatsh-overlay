@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Toolchain development library."
+DESCRIPTION="Toolchain development library"
 HOMEPAGE="https://github.com/jakcron/libtoolchain"
 SRC_URI="https://github.com/jakcron/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

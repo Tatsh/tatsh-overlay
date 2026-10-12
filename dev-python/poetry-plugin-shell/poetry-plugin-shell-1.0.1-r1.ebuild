@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/python-poetry/poetry-plugin-shell"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Runs a subshell with virtual environment activated."
+DESCRIPTION="Runs a subshell with virtual environment activated"
 HOMEPAGE="https://github.com/python-poetry/poetry-plugin-shell"
 
 LICENSE="MIT"

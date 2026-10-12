@@ -8,7 +8,7 @@ PYTHON_REQ_USE="ncurses,readline"
 
 inherit fcaps flag-o-matic pax-utils python-r1 toolchain-funcs xdg-utils
 
-DESCRIPTION="Original Xbox emulator."
+DESCRIPTION="Original Xbox emulator"
 HOMEPAGE="https://xemu.app/ https://github.com/xemu-project/xemu"
 BERKELEY_SOFTFLOAT_SHA="b64af41c3276f97f0e181920400ee056b9c88037"
 BERKELEY_TESTFLOAT_SHA="e7af9751d9f9fd3b47911f51a5cfd08af256a9ab"

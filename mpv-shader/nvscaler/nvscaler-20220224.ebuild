@@ -5,7 +5,7 @@ EAPI=8
 
 inherit mpv-shader
 
-DESCRIPTION="NVIDIA image scaling v1.0.2 for mpv."
+DESCRIPTION="NVIDIA image scaling v1.0.2 for mpv"
 HOMEPAGE="https://gist.github.com/agyild/7e8951915b2bf24526a9343d951db214"
 GIST_ID="7e8951915b2bf24526a9343d951db214"
 SHA="05f00864228871ffd157daa9beb2db8fa7412cfa"

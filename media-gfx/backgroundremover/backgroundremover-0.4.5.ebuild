@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1
 
-DESCRIPTION="Remove backgrounds from images and video using AI."
+DESCRIPTION="Remove backgrounds from images and video using AI"
 HOMEPAGE="https://github.com/nadermx/backgroundremover"
 SRC_URI="https://github.com/nadermx/backgroundremover/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

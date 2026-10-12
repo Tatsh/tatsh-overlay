@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Multi-system emulator focusing on accuracy and preservation."
+DESCRIPTION="Multi-system emulator focusing on accuracy and preservation"
 HOMEPAGE="https://github.com/ares-emulator/ares https://ares-emu.net/"
 SRC_URI="https://github.com/ares-emulator/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/ares-emulator/ares-deps/releases/download/2026-04-23/ares-deps-linux-universal.tar.xz -> ${P}-deps.tar.xz"

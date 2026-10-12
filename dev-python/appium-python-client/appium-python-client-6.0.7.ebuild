@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python client for Appium."
+DESCRIPTION="Python client for Appium"
 HOMEPAGE="https://appium.io/ https://github.com/appium/python-client"
 
 LICENSE="Apache-2.0"

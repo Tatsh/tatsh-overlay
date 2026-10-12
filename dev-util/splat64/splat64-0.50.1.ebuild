@@ -9,7 +9,7 @@ DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{11..15} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="MIPS instruction decoder."
+DESCRIPTION="MIPS instruction decoder"
 HOMEPAGE="https://github.com/ethteck/splat"
 
 LICENSE="MIT"

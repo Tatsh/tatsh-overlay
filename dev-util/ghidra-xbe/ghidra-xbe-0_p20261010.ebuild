@@ -12,7 +12,7 @@ MY_TAG="build-202602250354"
 # The version of XboxDev/xtlid that upstream's build script pins.
 XTLID_PV="0.1.2"
 
-DESCRIPTION="Ghidra loader for original Xbox XBE executables."
+DESCRIPTION="Ghidra loader for original Xbox XBE executables"
 HOMEPAGE="https://github.com/XboxDev/ghidra-xbe"
 SRC_URI="https://github.com/XboxDev/${PN}/archive/refs/tags/${MY_TAG}.tar.gz
 	-> ${P}.tar.gz

@@ -7,7 +7,7 @@ MULTILIB_COMPAT=( abi_x86_64 )
 
 inherit desktop multilib-build pax-utils xdg
 
-DESCRIPTION="Open source tool for debugging, testing and building with HTTP requests."
+DESCRIPTION="Open source tool for debugging, testing and building with HTTP requests"
 HOMEPAGE="https://github.com/httptoolkit/httptoolkit-desktop https://httptoolkit.com/"
 MY_PN="HttpToolkit"
 MY_PN_LOWER="${MY_PN,,}"

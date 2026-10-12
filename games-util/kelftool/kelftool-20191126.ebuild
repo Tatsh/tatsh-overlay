@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Utility for decrypt, encrypt and sign PS2 KELF and PSX KELF files."
+DESCRIPTION="Utility for decrypt, encrypt and sign PS2 KELF and PSX KELF files"
 HOMEPAGE="https://github.com/parrado/kelftool"
 SHA="6b9b471388626c4a576c7d7d67b8664c00fcd024"
 SRC_URI="https://github.com/parrado/kelftool/archive/${SHA}.tar.gz -> ${P}.tar.gz"

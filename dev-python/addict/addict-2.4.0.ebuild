@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Dictionary whose items can be set using attribute and item syntax."
+DESCRIPTION="Dictionary whose items can be set using attribute and item syntax"
 HOMEPAGE="https://pypi.org/project/addict/"
 
 LICENSE="MIT"

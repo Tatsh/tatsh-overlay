@@ -11,7 +11,7 @@ RUST_MIN_VER="1.88.0"
 
 inherit cargo
 
-DESCRIPTION="Fast, async link checker for Markdown, HTML and text files."
+DESCRIPTION="Fast, async link checker for Markdown, HTML and text files"
 HOMEPAGE="https://lychee.cli.rs https://github.com/lycheeverse/lychee"
 SRC_URI="https://github.com/lycheeverse/${PN}/archive/refs/tags/${PN}-v${PV}.tar.gz
 	-> ${P}.tar.gz

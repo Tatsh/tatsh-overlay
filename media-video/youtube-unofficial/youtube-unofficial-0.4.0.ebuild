@@ -9,7 +9,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/youtube-unofficial"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Access parts of your account unavailable through normal YouTube API access."
+DESCRIPTION="Access parts of your account unavailable through normal YouTube API access"
 HOMEPAGE="
 	https://github.com/Tatsh/youtube-unofficial
 	https://pypi.org/project/youtube-unofficial/

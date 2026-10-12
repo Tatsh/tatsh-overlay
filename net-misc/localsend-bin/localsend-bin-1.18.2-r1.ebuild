@@ -8,7 +8,7 @@ inherit desktop xdg
 MY_PN="LocalSend"
 MY_PN_LC="localsend"
 
-DESCRIPTION="Share files to nearby devices over the local network."
+DESCRIPTION="Share files to nearby devices over the local network"
 HOMEPAGE="https://localsend.org https://github.com/localsend/localsend"
 SRC_URI="
 	cli? (

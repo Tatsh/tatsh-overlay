@@ -10,7 +10,7 @@ PYPI_NO_NORMALIZE=1
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Read access to Windows Registry hive files."
+DESCRIPTION="Read access to Windows Registry hive files"
 HOMEPAGE="https://github.com/williballenthin/python-registry
 	https://pypi.org/project/python-registry/"
 

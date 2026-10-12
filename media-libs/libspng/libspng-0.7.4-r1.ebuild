@@ -5,7 +5,7 @@ EAPI=8
 
 inherit meson
 
-DESCRIPTION="Simple, modern libpng alternative."
+DESCRIPTION="Simple, modern libpng alternative"
 HOMEPAGE="https://libspng.org"
 SRC_URI="https://github.com/randy408/libspng/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

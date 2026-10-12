@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{12..15} )
 inherit distutils-r1 systemd
 
-DESCRIPTION="An OAI compatible exllamav3 API that's both lightweight and fast."
+DESCRIPTION="An OAI compatible exllamav3 API that's both lightweight and fast"
 HOMEPAGE="https://github.com/theroyallab/tabbyAPI"
 COMMIT="2636ef602b55b5343cf3740dd55a77f21e0a8003"
 SRC_URI="https://github.com/theroyallab/tabbyAPI/archive/${COMMIT}.tar.gz -> ${P}-${COMMIT:0:7}.tar.gz"

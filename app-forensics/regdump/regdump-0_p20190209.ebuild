@@ -8,7 +8,7 @@ inherit edo toolchain-funcs
 # Upstream's only tag is "r1", which is not a version number.
 MY_TAG="r1"
 
-DESCRIPTION="Dump Windows registry hives as text, one line per value."
+DESCRIPTION="Dump Windows registry hives as text, one line per value"
 HOMEPAGE="https://github.com/adoxa/regdump"
 SRC_URI="https://github.com/adoxa/${PN}/archive/refs/tags/${MY_TAG}.tar.gz
 	-> ${P}.tar.gz"

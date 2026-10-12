@@ -7,7 +7,7 @@ GHIDRA_EXT_NAME="GhidraBoy"
 
 inherit ghidra-extension
 
-DESCRIPTION="Ghidra support for the Sharp SM83 processor and Game Boy ROMs."
+DESCRIPTION="Ghidra support for the Sharp SM83 processor and Game Boy ROMs"
 HOMEPAGE="https://github.com/Gekkio/GhidraBoy"
 SRC_URI="https://github.com/Gekkio/${GHIDRA_EXT_NAME}/archive/refs/tags/${PV}.tar.gz
 	-> ${P}.tar.gz"

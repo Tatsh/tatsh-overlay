@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake desktop
 
-DESCRIPTION="Client recreating the functionality of the Sony Headphones app."
+DESCRIPTION="Client recreating the functionality of the Sony Headphones app"
 HOMEPAGE="https://github.com/Plutoberth/SonyHeadphonesClient"
 MY_PN="SonyHeadphonesClient"
 IMGUI_SHA="fe6369b03dab08c6636e32f57757e72c047e7cf1"

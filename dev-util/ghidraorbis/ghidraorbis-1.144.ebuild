@@ -12,7 +12,7 @@ inherit ghidra-extension
 # tag is rebuilt from it.
 MY_PV="1.0${PV#1.}"
 
-DESCRIPTION="Ghidra loader for PlayStation 4 Orbis OS executables."
+DESCRIPTION="Ghidra loader for PlayStation 4 Orbis OS executables"
 HOMEPAGE="https://github.com/astrelsky/GhidraOrbis"
 SRC_URI="https://github.com/astrelsky/${GHIDRA_EXT_NAME}/archive/refs/tags/${MY_PV}.tar.gz
 	-> ${P}.tar.gz"

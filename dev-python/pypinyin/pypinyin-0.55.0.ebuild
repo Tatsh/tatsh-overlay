@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="汉字拼音转换模块/工具."
+DESCRIPTION="汉字拼音转换模块/工具"
 HOMEPAGE="https://pypi.org/project/pypinyin/"
 
 LICENSE="MIT"

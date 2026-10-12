@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A pytest fixture for benchmarking code."
+DESCRIPTION="A pytest fixture for benchmarking code"
 HOMEPAGE="https://github.com/ionelmc/pytest-benchmark https://pypi.org/project/pytest-benchmark/"
 
 LICENSE="BSD"

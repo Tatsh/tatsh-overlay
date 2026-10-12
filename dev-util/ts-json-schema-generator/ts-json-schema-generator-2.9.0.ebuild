@@ -5,7 +5,7 @@ EAPI=8
 
 inherit nodejs-mod
 
-DESCRIPTION="Generate JSON Schema from TypeScript types."
+DESCRIPTION="Generate JSON Schema from TypeScript types"
 HOMEPAGE="https://github.com/vega/ts-json-schema-generator"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

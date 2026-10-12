@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Validating URI References per RFC 3986."
+DESCRIPTION="Validating URI References per RFC 3986"
 HOMEPAGE="https://github.com/python-hyper/rfc3986"
 
 LICENSE="Apache-2.0"

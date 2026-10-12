@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A Python library for alpha matting."
+DESCRIPTION="A Python library for alpha matting"
 HOMEPAGE="https://pypi.org/project/PyMatting/"
 
 LICENSE="MIT"

@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/explosion/confection"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="The sweetest config system for Python."
+DESCRIPTION="The sweetest config system for Python"
 HOMEPAGE="https://github.com/explosion/confection"
 
 LICENSE="MIT"

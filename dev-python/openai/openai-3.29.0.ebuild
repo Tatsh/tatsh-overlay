@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/openai/openai-python"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="OpenAI Python library."
+DESCRIPTION="OpenAI Python library"
 HOMEPAGE="https://pypi.org/project/openai/"
 
 LICENSE="Apache-2.0"

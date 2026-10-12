@@ -5,7 +5,7 @@ EAPI=8
 
 inherit mpv-shader
 
-DESCRIPTION="Shader for mpv."
+DESCRIPTION="Shader for mpv"
 HOMEPAGE="https://gist.github.com/igv/a015fc885d5c22e6891820ad89555637"
 GIST_ID="a015fc885d5c22e6891820ad89555637"
 SHA="038064821c5f768dfc6c00261535018d5932cdd5"

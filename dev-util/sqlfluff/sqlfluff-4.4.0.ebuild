@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="The SQL linter for humans."
+DESCRIPTION="The SQL linter for humans"
 HOMEPAGE="https://pypi.org/project/sqlfluff/"
 
 LICENSE="MIT"

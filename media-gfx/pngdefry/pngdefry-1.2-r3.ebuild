@@ -5,7 +5,7 @@ EAPI=8
 
 inherit toolchain-funcs
 
-DESCRIPTION="Convert iOS and macOS compressed PNG files to normal."
+DESCRIPTION="Convert iOS and macOS compressed PNG files to normal"
 HOMEPAGE="https://web.archive.org/web/20211120053356/http://www.jongware.com/pngdefry.html"
 SRC_URI="https://web.archive.org/web/20211205021959/http://www.jongware.com/binaries/${PN}.zip -> ${P}.zip"
 S="${WORKDIR}/source"

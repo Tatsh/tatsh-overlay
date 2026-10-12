@@ -8,7 +8,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/flacted"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Front-end to metaflac to set common FLAC tags."
+DESCRIPTION="Front-end to metaflac to set common FLAC tags"
 HOMEPAGE="
 	https://github.com/Tatsh/flacted
 	https://pypi.org/project/flacted/

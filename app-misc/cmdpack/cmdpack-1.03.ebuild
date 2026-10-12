@@ -5,7 +5,7 @@ EAPI=8
 
 inherit toolchain-funcs
 
-DESCRIPTION="Neill Corlett's command-line pack."
+DESCRIPTION="Neill Corlett's command-line pack"
 HOMEPAGE="https://web.archive.org/web/20140330233023/https://neillcorlett.com/cmdpack/"
 SRC_URI="https://web.archive.org/web/20130616041227/http://www.neillcorlett.com/downloads/${P}-src.tar.gz -> ${P}.tar.gz"
 

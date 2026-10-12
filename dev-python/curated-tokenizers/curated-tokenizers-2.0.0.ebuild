@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1
 
-DESCRIPTION="Lightweight piece tokenization library."
+DESCRIPTION="Lightweight piece tokenization library"
 HOMEPAGE="https://github.com/explosion/curated-tokenizers"
 SRC_URI="https://github.com/explosion/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

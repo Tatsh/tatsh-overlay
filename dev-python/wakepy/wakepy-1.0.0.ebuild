@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/wakepy/wakepy"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Cross-platform wakelock / keep-awake / stay-awake written in Python."
+DESCRIPTION="Cross-platform wakelock / keep-awake / stay-awake written in Python"
 HOMEPAGE="https://pypi.org/project/wakepy/"
 
 LICENSE="MIT"

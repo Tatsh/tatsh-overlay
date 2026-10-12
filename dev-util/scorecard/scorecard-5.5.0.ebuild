@@ -5,7 +5,7 @@ EAPI=8
 
 inherit go-module shell-completion
 
-DESCRIPTION="Security health metrics for open source projects."
+DESCRIPTION="Security health metrics for open source projects"
 HOMEPAGE="https://github.com/ossf/scorecard"
 SRC_URI="https://github.com/ossf/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-vendor.tar.xz"

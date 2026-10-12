@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Install GTA III files from ISO or directories for use with re3."
+DESCRIPTION="Install GTA III files from ISO or directories for use with re3"
 HOMEPAGE="https://github.com/Tatsh/re3-installer"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

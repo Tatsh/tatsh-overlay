@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=uv-build
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="Release management tool designed for teams (cz command)."
+DESCRIPTION="Release management tool designed for teams (cz command)"
 HOMEPAGE="https://pypi.org/project/commitizen/"
 SRC_URI="https://github.com/${PN}-tools/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 

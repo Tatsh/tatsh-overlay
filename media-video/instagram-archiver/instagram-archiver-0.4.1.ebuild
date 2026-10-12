@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/instagram-archiver"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Save Instagram content you have access to."
+DESCRIPTION="Save Instagram content you have access to"
 HOMEPAGE="
 	https://tatsh.github.io/instagram-archiver/
 	https://github.com/Tatsh/instagram-archiver

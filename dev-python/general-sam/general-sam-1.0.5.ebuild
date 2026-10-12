@@ -36,7 +36,7 @@ CRATES="
 
 inherit cargo distutils-r1 pypi
 
-DESCRIPTION="General Suffix Automaton implementation in Python."
+DESCRIPTION="General Suffix Automaton implementation in Python"
 HOMEPAGE="https://github.com/ModelTC/general-sam-py"
 SRC_URI+=" ${CARGO_CRATE_URIS}"
 

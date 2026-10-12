@@ -7,7 +7,7 @@ MPV_REQ_USE="cplugins(+),libmpv"
 
 inherit mpv-plugin toolchain-funcs
 
-DESCRIPTION="Set mpv to quiet when stdout/stdout is not a TTY."
+DESCRIPTION="Set mpv to quiet when stdout/stdout is not a TTY"
 HOMEPAGE="https://github.com/AN3223/dotfiles"
 SHA="4413db6c1b47aa70ffce40c5a91158e518881718"
 SRC_URI="https://github.com/AN3223/dotfiles/archive/${SHA}.tar.gz -> AN3223-dotfiles-${SHA:0:7}.tar.gz"

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Single file executable that provides a complete Tcl and Tk runtime."
+DESCRIPTION="Single file executable that provides a complete Tcl and Tk runtime"
 HOMEPAGE="https://github.com/stiefel40k/kitgen"
 MY_PV="${PV:0:5}-${PV:6}"
 MY_PN="kitgen"

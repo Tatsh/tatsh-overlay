@@ -11,7 +11,7 @@ inherit distutils-r1
 
 MY_PN="ghidra-mcp"
 
-DESCRIPTION="MCP bridge exposing Ghidra's reverse engineering tools to MCP clients."
+DESCRIPTION="MCP bridge exposing Ghidra's reverse engineering tools to MCP clients"
 HOMEPAGE="https://github.com/bethington/ghidra-mcp"
 SRC_URI="https://github.com/bethington/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${MY_PN}-${PV}.gh.tar.gz"

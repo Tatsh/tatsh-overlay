@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/wiswa-vcs"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Cross-host VCS metadata sync and mirroring helpers used by Wiswa."
+DESCRIPTION="Cross-host VCS metadata sync and mirroring helpers used by Wiswa"
 HOMEPAGE="
 	https://github.com/Tatsh/wiswa-vcs
 	https://pypi.org/project/wiswa-vcs/

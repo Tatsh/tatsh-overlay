@@ -5,7 +5,7 @@ EAPI=8
 
 inherit edo
 
-DESCRIPTION="Enhanced (unofficial) qpxtool version."
+DESCRIPTION="Enhanced (unofficial) qpxtool version"
 HOMEPAGE="https://github.com/speed47/qpxtool"
 MY_PV="$(ver_cut 1-3)"
 MY_PL="$(ver_cut 4)"

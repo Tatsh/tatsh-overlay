@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_{11..15} )
 
 inherit cmake python-single-r1 xdg
 
-DESCRIPTION="Post decoder tools for the decode projects' TBC format."
+DESCRIPTION="Post decoder tools for the decode projects' TBC format"
 HOMEPAGE="https://github.com/harrypm/tbc-tools"
 # Both are git submodules, so they are absent from the GitHub archive.
 EZPWD_SHA="62a490c13f6e057fbf2dc6777fde234c7a19098e"

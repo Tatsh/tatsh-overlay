@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Disassemble Common Intermediate Language (CIL) instructions."
+DESCRIPTION="Disassemble Common Intermediate Language (CIL) instructions"
 HOMEPAGE="https://pypi.org/project/dncil/"
 
 LICENSE="MIT"

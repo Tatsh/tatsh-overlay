@@ -41,7 +41,7 @@ DISTFILES_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfi
 # a lock file full of :hex entries without it.
 HEX_PV="2.5.1"
 
-DESCRIPTION="Platform for hosting and sharing terminal session recordings."
+DESCRIPTION="Platform for hosting and sharing terminal session recordings"
 HOMEPAGE="https://asciinema.org https://github.com/asciinema/asciinema-server"
 # Mix and npm both resolve over the network, so the dependency trees are
 # fetched ahead of time and shipped whole. The Rust crates come from CRATES.

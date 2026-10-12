@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/explosion/srsly"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Modern high-performance serialization utilities for Python."
+DESCRIPTION="Modern high-performance serialization utilities for Python"
 HOMEPAGE="https://github.com/explosion/srsly"
 
 LICENSE="MIT"

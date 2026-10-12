@@ -6,7 +6,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0..5} )
 inherit distutils-r1
 
-DESCRIPTION="English pipeline optimized for CPU."
+DESCRIPTION="English pipeline optimized for CPU"
 HOMEPAGE="https://spacy.io/models/en#en_core_web_sm https://github.com/explosion/spacy-models"
 SRC_URI="https://github.com/explosion/spacy-models/releases/download/${PN//-/_}-${PV}/${PN//-/_}-${PV}.tar.gz"
 

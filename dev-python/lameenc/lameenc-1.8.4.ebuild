@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1
 
-DESCRIPTION="Python bindings for the LAME MP3 encoder."
+DESCRIPTION="Python bindings for the LAME MP3 encoder"
 HOMEPAGE="https://pypi.org/project/lameenc/ https://github.com/chrisstaite/lameenc"
 # PyPI publishes wheels only, so the sources come from the git tag.
 SRC_URI="https://github.com/chrisstaite/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"

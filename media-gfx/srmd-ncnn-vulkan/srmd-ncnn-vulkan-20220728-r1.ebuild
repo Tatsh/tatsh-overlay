@@ -4,7 +4,7 @@
 EAPI=8
 inherit cmake
 
-DESCRIPTION="SRMD super resolution implemented with ncnn library."
+DESCRIPTION="SRMD super resolution implemented with ncnn library"
 HOMEPAGE="https://github.com/nihui/srmd-ncnn-vulkan"
 SRC_URI="https://github.com/nihui/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 

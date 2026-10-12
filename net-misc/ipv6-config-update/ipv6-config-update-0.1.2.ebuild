@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Update IPv6 CIDR in config files and restart relevant systemd units."
+DESCRIPTION="Update IPv6 CIDR in config files and restart relevant systemd units"
 HOMEPAGE="https://github.com/Tatsh/ipv6-config-update"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

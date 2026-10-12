@@ -10,7 +10,7 @@ inherit distutils-r1 xdg
 
 MY_PN="Registry-Spy"
 
-DESCRIPTION="Cross-platform Windows Registry browser."
+DESCRIPTION="Cross-platform Windows Registry browser"
 HOMEPAGE="https://github.com/andyjsmith/Registry-Spy"
 SRC_URI="https://github.com/andyjsmith/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

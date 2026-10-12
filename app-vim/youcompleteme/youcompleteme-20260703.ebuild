@@ -5,7 +5,7 @@ EAPI=8
 PYTHON_COMPAT=( python3_1{0..5} )
 inherit python-single-r1
 
-DESCRIPTION="A code-completion engine for Vim."
+DESCRIPTION="A code-completion engine for Vim"
 HOMEPAGE="https://github.com/ycm-core/YouCompleteMe"
 SHA="d4c91430b70a21ce471c8572400b647d313995b4"
 MY_PN="YouCompleteMe"

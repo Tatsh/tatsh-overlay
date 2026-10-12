@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="UniDic packaged for Python."
+DESCRIPTION="UniDic packaged for Python"
 HOMEPAGE="https://pypi.org/project/unidic/"
 
 LICENSE="MIT"

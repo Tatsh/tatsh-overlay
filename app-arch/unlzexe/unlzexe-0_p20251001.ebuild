@@ -9,7 +9,7 @@ inherit edo toolchain-funcs
 # branch.
 MY_COMMIT="066aac7be3b27813c221d3b03621ad6dfaecd285"
 
-DESCRIPTION="Decompress EXE files compressed with LZEXE 0.90/0.91."
+DESCRIPTION="Decompress EXE files compressed with LZEXE 0.90/0.91"
 HOMEPAGE="https://github.com/mywave82/unlzexe"
 SRC_URI="https://github.com/mywave82/${PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz"

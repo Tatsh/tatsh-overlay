@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{1,2,3,4,5} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="A combined disassembler/static analysis/symbolic execution/debugger framework."
+DESCRIPTION="A combined disassembler/static analysis/symbolic execution/debugger framework"
 HOMEPAGE="https://github.com/vivisect/vivisect"
 
 LICENSE="Apache-2.0"

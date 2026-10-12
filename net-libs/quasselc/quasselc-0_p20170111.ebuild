@@ -8,7 +8,7 @@ inherit toolchain-funcs
 MY_PN="QuasselC"
 MY_COMMIT="a0a1e6bd87d3eac68b5369972d1c2035cfe47e94"
 
-DESCRIPTION="API to access a Quassel core in pure C."
+DESCRIPTION="API to access a Quassel core in pure C"
 HOMEPAGE="https://github.com/phhusson/QuasselC"
 SRC_URI="https://github.com/phhusson/${MY_PN}/archive/${MY_COMMIT}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${MY_PN}-${MY_COMMIT}"

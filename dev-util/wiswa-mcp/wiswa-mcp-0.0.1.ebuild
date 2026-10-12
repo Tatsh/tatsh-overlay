@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/wiswa-mcp"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="FastMCP server exposing Wiswa settings discovery for AI assistants."
+DESCRIPTION="FastMCP server exposing Wiswa settings discovery for AI assistants"
 HOMEPAGE="
 	https://tatsh.github.io/wiswa-mcp/
 	https://github.com/Tatsh/wiswa-mcp

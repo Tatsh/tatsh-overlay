@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit python-single-r1
 
-DESCRIPTION="Derainbow function for VapourSynth."
+DESCRIPTION="Derainbow function for VapourSynth"
 HOMEPAGE="https://github.com/dubhatervapoursynth/vapoursynth-astdr"
 SRC_URI="https://github.com/dubhatervapoursynth/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

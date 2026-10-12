@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Decode and encode EA Layer 3 audio as used by Need for Speed World."
+DESCRIPTION="Decode and encode EA Layer 3 audio as used by Need for Speed World"
 HOMEPAGE="https://github.com/driftyz700/ealayer3-nfsw"
 SRC_URI="https://github.com/driftyz700/${PN}/archive/refs/tags/${PV}.tar.gz
 	-> ${P}.tar.gz"

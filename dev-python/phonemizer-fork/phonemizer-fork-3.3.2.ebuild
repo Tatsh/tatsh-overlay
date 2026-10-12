@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0..5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Simple text to phones converter for multiple languages."
+DESCRIPTION="Simple text to phones converter for multiple languages"
 HOMEPAGE="https://pypi.org/project/phonemizer-fork/"
 
 LICENSE="GPL-3"

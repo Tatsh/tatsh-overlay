@@ -8,7 +8,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/usps-track"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="CLI to track a USPS shipment by SMS."
+DESCRIPTION="CLI to track a USPS shipment by SMS"
 HOMEPAGE="
 	https://github.com/Tatsh/usps-track
 	https://pypi.org/project/usps-track/

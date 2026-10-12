@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="FSRCNN ported to VapourSynth."
+DESCRIPTION="FSRCNN ported to VapourSynth"
 HOMEPAGE="https://github.com/Sg4Dylan/vapoursynth-fsrcnn-ncnn-vulkan"
 SHA="0a721959116f6f86dbd13bda70a5fd6a883938f4"
 SRC_URI="https://github.com/Sg4Dylan/vapoursynth-fsrcnn-ncnn-vulkan/archive/${SHA}.tar.gz -> ${P}.tar.gz"

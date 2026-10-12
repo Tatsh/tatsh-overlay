@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{11..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Noise reduction in audio using spectral gating."
+DESCRIPTION="Noise reduction in audio using spectral gating"
 HOMEPAGE="https://github.com/timsainb/noisereduce https://pypi.org/project/noisereduce/"
 
 LICENSE="MIT"

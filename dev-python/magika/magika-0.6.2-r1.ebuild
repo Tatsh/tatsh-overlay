@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Detect file content types with a deep learning model."
+DESCRIPTION="Detect file content types with a deep learning model"
 HOMEPAGE="https://google.github.io/magika/ https://github.com/google/magika https://pypi.org/project/magika/"
 
 LICENSE="Apache-2.0"

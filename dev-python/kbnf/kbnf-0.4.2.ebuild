@@ -147,7 +147,7 @@ CRATES="ahash@0.8.12
 
 inherit cargo distutils-r1 pypi
 
-DESCRIPTION="A fast constrained decoding engine based on context free grammar."
+DESCRIPTION="A fast constrained decoding engine based on context free grammar"
 HOMEPAGE="https://pypi.org/project/kbnf/"
 SRC_URI+=" ${CARGO_CRATE_URIS}"
 

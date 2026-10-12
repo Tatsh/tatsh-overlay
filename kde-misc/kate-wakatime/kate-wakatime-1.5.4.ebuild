@@ -7,7 +7,7 @@ QTMIN=6.6.2
 
 inherit ecm
 
-DESCRIPTION="Time tracking with WakaTime for Kate."
+DESCRIPTION="Time tracking with WakaTime for Kate"
 HOMEPAGE="https://github.com/tatsh/kate-wakatime"
 SRC_URI="https://github.com/Tatsh/kate-wakatime/archive/v${PV}.tar.gz -> ${PN}-v${PV}.tar.gz"
 

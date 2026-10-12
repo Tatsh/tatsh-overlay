@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Shell extension for file managers to manage game ROMs and disc images."
+DESCRIPTION="Shell extension for file managers to manage game ROMs and disc images"
 HOMEPAGE="https://github.com/GerbilSoft/rom-properties"
 SRC_URI="https://github.com/GerbilSoft/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

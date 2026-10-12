@@ -60,7 +60,7 @@ G64_SUBMODULES=(
 	"lib/rt64/src/contrib/re-spirv/external/SPIRV-Headers|KhronosGroup/SPIRV-Headers|f013f08e4455bcc1f0eed8e3dd5e2009682656d9"
 )
 
-DESCRIPTION="Static recompilation of Mystical Ninja Starring Goemon."
+DESCRIPTION="Static recompilation of Mystical Ninja Starring Goemon"
 HOMEPAGE="https://github.com/klorfmorf/Goemon64Recomp"
 SRC_URI="https://github.com/klorfmorf/${MY_PN}/archive/refs/tags/v${MY_PV}.tar.gz
 	-> ${P}.tar.gz"

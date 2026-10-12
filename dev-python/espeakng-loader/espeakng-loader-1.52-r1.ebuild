@@ -8,7 +8,7 @@ inherit distutils-r1
 
 COMMIT="0ddc87adf77e5850d7eeb542ac8a87d421b64daa"
 
-DESCRIPTION="Shared library loader for eSpeak NG."
+DESCRIPTION="Shared library loader for eSpeak NG"
 HOMEPAGE="https://github.com/thewh1teagle/espeakng-loader"
 SRC_URI="https://github.com/thewh1teagle/espeakng-loader/archive/${COMMIT}.tar.gz
 	-> ${P}-${COMMIT:0:8}.gh.tar.gz"

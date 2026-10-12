@@ -11,7 +11,7 @@ PYPI_VERIFY_REPO="https://github.com/mosquito/caio"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Asynchronous file IO for Linux MacOS or Windows."
+DESCRIPTION="Asynchronous file IO for Linux MacOS or Windows"
 HOMEPAGE="https://github.com/mosquito/caio"
 
 LICENSE="Apache-2.0"

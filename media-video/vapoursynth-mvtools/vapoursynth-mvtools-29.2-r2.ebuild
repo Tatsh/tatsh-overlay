@@ -6,7 +6,7 @@ EAPI=8
 PYTHON_COMPAT=( python3_{12,13,14,15} )
 inherit meson python-single-r1
 
-DESCRIPTION="Motion compensation, etc for VapourSynth."
+DESCRIPTION="Motion compensation, etc for VapourSynth"
 HOMEPAGE="https://github.com/dubhatervapoursynth/vapoursynth-mvtools"
 # Upstream moved to the dubhatervapoursynth organisation and tags use an
 # underscore rather than a dot.

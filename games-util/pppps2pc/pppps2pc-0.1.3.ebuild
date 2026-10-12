@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{11..15} )
 
 inherit distutils-r1 udev
 
-DESCRIPTION="Extremely simple tool to enable the ParaParaParadise PS2 controller on a PC."
+DESCRIPTION="Extremely simple tool to enable the ParaParaParadise PS2 controller on a PC"
 HOMEPAGE="
 	https://github.com/Tatsh/pppps2pc
 	https://pypi.org/project/pppps2pc/

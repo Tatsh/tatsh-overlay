@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake xdg
 
-DESCRIPTION="Multiplatform, mobile-focused WeeChat relay client."
+DESCRIPTION="Multiplatform, mobile-focused WeeChat relay client"
 HOMEPAGE="https://github.com/LithApp/lith"
 SRC_URI="https://github.com/LithApp/lith/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/Lith-${PV}"

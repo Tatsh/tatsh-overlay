@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Qt 6 GUI for Video2x."
+DESCRIPTION="Qt 6 GUI for Video2x"
 HOMEPAGE="https://github.com/k4yt3x/video2x-qt6"
 SRC_URI="https://github.com/k4yt3x/video2x-qt6/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 

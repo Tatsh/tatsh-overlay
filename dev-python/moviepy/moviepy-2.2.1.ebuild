@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1
 
-DESCRIPTION="Python library for video editing."
+DESCRIPTION="Python library for video editing"
 HOMEPAGE="https://pypi.org/project/moviepy/"
 SRC_URI="https://github.com/Zulko/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 

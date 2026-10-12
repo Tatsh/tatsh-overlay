@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python 3 wrapper for the LZHAM codec."
+DESCRIPTION="Python 3 wrapper for the LZHAM codec"
 HOMEPAGE="https://github.com/Galaxy1036/pylzham https://pypi.org/project/pylzham/"
 LICENSE="MIT"
 SLOT="0"

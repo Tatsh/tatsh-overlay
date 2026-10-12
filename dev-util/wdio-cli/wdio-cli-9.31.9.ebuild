@@ -10,7 +10,7 @@ NODEJS_KEEP_DEV_FILES=1
 
 inherit nodejs-mod
 
-DESCRIPTION="WebdriverIO testrunner command line interface."
+DESCRIPTION="WebdriverIO testrunner command line interface"
 HOMEPAGE="https://webdriver.io https://github.com/webdriverio/webdriverio"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

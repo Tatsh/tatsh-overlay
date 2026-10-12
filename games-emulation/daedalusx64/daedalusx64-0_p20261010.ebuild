@@ -8,7 +8,7 @@ inherit cmake desktop xdg
 MY_PN="daedalus"
 MY_COMMIT="4f5c6fb045358044b64173fac619db5496cc2328"
 
-DESCRIPTION="Nintendo 64 emulator."
+DESCRIPTION="Nintendo 64 emulator"
 HOMEPAGE="https://github.com/DaedalusX64/daedalus"
 # The only release, 1.1.8 from 2019, is a PSP build. Development continues in
 # the repository, so a snapshot is used.

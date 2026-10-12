@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Simple, Pythonic remote execution and deployment."
+DESCRIPTION="Simple, Pythonic remote execution and deployment"
 HOMEPAGE="https://pypi.org/project/fabric/"
 
 LICENSE="BSD-2"

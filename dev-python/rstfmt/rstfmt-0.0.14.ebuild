@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A formatter for reStructuredText."
+DESCRIPTION="A formatter for reStructuredText"
 HOMEPAGE="https://github.com/dzhu/rstfmt https://pypi.org/project/rstfmt/"
 
 LICENSE="MIT"

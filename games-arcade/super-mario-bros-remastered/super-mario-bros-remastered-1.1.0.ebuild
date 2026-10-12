@@ -5,7 +5,7 @@ EAPI=8
 
 inherit desktop wrapper
 
-DESCRIPTION="Unofficial remaster of the original game."
+DESCRIPTION="Unofficial remaster of the original game"
 HOMEPAGE="https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public"
 GODOT_VERSION=4.6.2
 SRC_URI="https://github.com/JHDev2006/Super-Mario-Bros.-Remastered-Public/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz

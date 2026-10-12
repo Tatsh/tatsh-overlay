@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 DISTUTILS_USE_PEP517=setuptools
 inherit distutils-r1 shell-completion
 
-DESCRIPTION="Open files by MIME-type or file name using regular expressions."
+DESCRIPTION="Open files by MIME-type or file name using regular expressions"
 HOMEPAGE="https://xyne.dev/projects/mimeo/"
 SRC_URI="https://xyne.dev/projects/${PN}/src/${P}.tar.xz"
 

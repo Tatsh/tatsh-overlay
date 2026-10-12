@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="DSP utilities for PyTorch: resampling, FFT convolutions and filter banks."
+DESCRIPTION="DSP utilities for PyTorch: resampling, FFT convolutions and filter banks"
 HOMEPAGE="https://pypi.org/project/julius/ https://github.com/adefossez/julius"
 
 LICENSE="MIT"

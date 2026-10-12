@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Jaded-Encoding-Thaumaturgy/jetpytools"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Collection of stuff that's useful in general Python programming."
+DESCRIPTION="Collection of stuff that's useful in general Python programming"
 HOMEPAGE="https://pypi.org/project/jetpytools/"
 
 LICENSE="MIT"

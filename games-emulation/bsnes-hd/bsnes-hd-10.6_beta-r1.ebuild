@@ -5,7 +5,7 @@ EAPI=8
 
 inherit desktop toolchain-funcs
 
-DESCRIPTION="bsnes fork that adds HD video features."
+DESCRIPTION="bsnes fork that adds HD video features"
 HOMEPAGE="https://github.com/DerKoun/bsnes-hd"
 MY_MAJOR="${PV%.*}"
 MY_MINOR="${PV#*.}"

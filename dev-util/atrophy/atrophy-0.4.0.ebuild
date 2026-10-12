@@ -5,7 +5,7 @@ EAPI=8
 
 inherit nodejs-mod
 
-DESCRIPTION="Find and remove unused code from a TypeScript project."
+DESCRIPTION="Find and remove unused code from a TypeScript project"
 HOMEPAGE="https://github.com/ashutosh-rath02/atrophy"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

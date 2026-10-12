@@ -18,7 +18,7 @@ PRISM_COMMIT="1de054450e7b3c5f777d2e3dfcb228ad120c329d"
 STB_COMMIT="0bc88af4de5fb022db643c2d8e549a0927749354"
 THREADPOOL_PV="4.1.0"
 
-DESCRIPTION="Cross-platform runtime for Nintendo 64 game ports."
+DESCRIPTION="Cross-platform runtime for Nintendo 64 game ports"
 HOMEPAGE="https://github.com/Kenix3/libultraship"
 SRC_URI="https://github.com/Kenix3/${PN}/archive/refs/tags/${PV}.tar.gz
 	-> ${P}.tar.gz

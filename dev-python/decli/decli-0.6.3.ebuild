@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Minimal declarative cli tool."
+DESCRIPTION="Minimal declarative cli tool"
 HOMEPAGE="https://pypi.org/project/decli/"
 SRC_URI="https://github.com/Woile/${PN}/archive/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 

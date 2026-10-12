@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake desktop flag-o-matic toolchain-funcs
 
-DESCRIPTION="Xbox 360 emulator research project (Canary version)."
+DESCRIPTION="Xbox 360 emulator research project (Canary version)"
 HOMEPAGE="https://github.com/xenia-canary/xenia-canary https://xenia.jp/"
 SHA="f21ebd49e979e44f081f474df78c3fbfee9cb3f2"
 AES_128_SHA="7e3ac3bb6b478187472b4ac6f1698eb203e8e90b"

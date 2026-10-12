@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="PADD provides in-depth information about your Pi-hole."
+DESCRIPTION="PADD provides in-depth information about your Pi-hole"
 HOMEPAGE="https://github.com/pi-hole/PADD"
 MY_PN="${PN^^}"
 SRC_URI="https://github.com/pi-hole/${MY_PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"

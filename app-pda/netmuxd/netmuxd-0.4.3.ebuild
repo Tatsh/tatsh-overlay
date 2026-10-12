@@ -259,7 +259,7 @@ declare -A GIT_CRATES=(
 
 inherit cargo systemd
 
-DESCRIPTION="A replacement/addition to usbmuxd."
+DESCRIPTION="A replacement/addition to usbmuxd"
 HOMEPAGE="https://github.com/jkcoxson/netmuxd"
 SRC_URI="https://github.com/jkcoxson/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	${CARGO_CRATE_URIS}"

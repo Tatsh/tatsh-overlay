@@ -7,7 +7,7 @@ inherit desktop meson xdg
 
 MY_PN="TRX"
 
-DESCRIPTION="Reimplementation of the Tomb Raider 1 and 2 engines."
+DESCRIPTION="Reimplementation of the Tomb Raider 1 and 2 engines"
 HOMEPAGE="https://github.com/LostArtefacts/TRX"
 SRC_URI="https://github.com/LostArtefacts/${MY_PN}/archive/refs/tags/${P}.tar.gz"
 S="${WORKDIR}/${MY_PN}-${PN}-${PV}"

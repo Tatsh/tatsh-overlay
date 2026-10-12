@@ -57,7 +57,7 @@ Z64_SUBMODULES=(
 	"lib/rt64/src/contrib/re-spirv/external/SPIRV-Headers|KhronosGroup/SPIRV-Headers|f013f08e4455bcc1f0eed8e3dd5e2009682656d9"
 )
 
-DESCRIPTION="Static recompilation of The Legend of Zelda: Majora's Mask."
+DESCRIPTION="Static recompilation of The Legend of Zelda: Majora's Mask"
 HOMEPAGE="https://github.com/Zelda64Recomp/Zelda64Recomp"
 SRC_URI="https://github.com/Zelda64Recomp/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

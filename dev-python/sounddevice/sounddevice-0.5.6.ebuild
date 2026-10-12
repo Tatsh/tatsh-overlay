@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/spatialaudio/python-sounddevice"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python bindings to PortAudio and more."
+DESCRIPTION="Python bindings to PortAudio and more"
 HOMEPAGE="https://pypi.org/project/sounddevice/"
 
 LICENSE="MIT"

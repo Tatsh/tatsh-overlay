@@ -5,7 +5,7 @@ EAPI=8
 
 inherit meson
 
-DESCRIPTION="Obsolete miscfilters package for VapourSynth."
+DESCRIPTION="Obsolete miscfilters package for VapourSynth"
 HOMEPAGE="https://github.com/vapoursynth/vs-miscfilters-obsolete"
 SHA="07e0589a381f7deb3bf533bb459a94482bccc5c7"
 SRC_URI="https://github.com/vapoursynth/vs-miscfilters-obsolete/archive/${SHA}.tar.gz -> ${P}.tar.gz"

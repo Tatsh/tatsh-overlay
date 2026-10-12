@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Adds SQLAlchemy support to Flask."
+DESCRIPTION="Adds SQLAlchemy support to Flask"
 HOMEPAGE="https://github.com/pallets-eco/flask-sqlalchemy https://pypi.org/project/Flask-SQLAlchemy/"
 
 LICENSE="BSD"

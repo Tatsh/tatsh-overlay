@@ -18,7 +18,7 @@ MINIAUDIO_COMMIT="9634bedb5b5a2ca38c1ee7108a9358a4e233f14d"
 # libweaver is five files out of SIEdit, compiled by 3rdparty/CMakeLists.txt.
 SIEDIT_COMMIT="abb6d47139d7a03c5c1bad9b89e2267849e27904"
 
-DESCRIPTION="Portable reimplementation of LEGO Island."
+DESCRIPTION="Portable reimplementation of LEGO Island"
 HOMEPAGE="https://github.com/isledecomp/isle-portable"
 SRC_URI="https://github.com/isledecomp/${PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz

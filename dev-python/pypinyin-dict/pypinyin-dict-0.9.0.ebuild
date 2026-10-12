@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Override pypinyin's built-in pinyin data with external data files."
+DESCRIPTION="Override pypinyin's built-in pinyin data with external data files"
 HOMEPAGE="https://pypi.org/project/pypinyin-dict/"
 
 LICENSE="MIT"

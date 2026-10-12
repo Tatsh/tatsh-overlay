@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A fast converter between Japanese hankaku and zenkaku characters."
+DESCRIPTION="A fast converter between Japanese hankaku and zenkaku characters"
 HOMEPAGE="https://pypi.org/project/mojimoji/"
 
 LICENSE="MIT"

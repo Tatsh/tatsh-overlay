@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/testcontainers/testcontainers-python"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python library for throwaway instances of anything that can run in a Docker container"
+DESCRIPTION="Throwaway instances of anything that can run in a Docker container"
 HOMEPAGE="
 	https://github.com/testcontainers/testcontainers-python
 	https://pypi.org/project/testcontainers/

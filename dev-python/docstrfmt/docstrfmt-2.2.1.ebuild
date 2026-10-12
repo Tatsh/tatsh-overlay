@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A formatter for Sphinx flavored reStructuredText."
+DESCRIPTION="A formatter for Sphinx flavored reStructuredText"
 HOMEPAGE="https://github.com/LilSpazJoekp/docstrfmt https://pypi.org/project/docstrfmt/"
 
 LICENSE="MIT"

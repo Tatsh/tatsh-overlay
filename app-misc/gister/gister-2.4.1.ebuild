@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Shell script to access GitHub Gist."
+DESCRIPTION="Shell script to access GitHub Gist"
 HOMEPAGE="https://github.com/weakish/gister"
 SRC_URI="https://github.com/weakish/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

@@ -5,7 +5,7 @@ EAPI=8
 
 inherit toolchain-funcs
 
-DESCRIPTION="Compress and decompress Konami Compression variant 1 (LZKN1) data."
+DESCRIPTION="Compress and decompress Konami Compression variant 1 (LZKN1) data"
 HOMEPAGE="https://github.com/vladikcomper/konami-compression-tools"
 SRC_URI="https://github.com/vladikcomper/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

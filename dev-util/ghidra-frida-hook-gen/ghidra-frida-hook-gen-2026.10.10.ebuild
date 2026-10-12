@@ -7,7 +7,7 @@ GHIDRA_EXT_NAME="ghidra-frida-hook-gen"
 
 inherit ghidra-extension
 
-DESCRIPTION="Ghidra extension generating Frida hook snippets for functions."
+DESCRIPTION="Ghidra extension generating Frida hook snippets for functions"
 HOMEPAGE="https://github.com/CENSUS/ghidra-frida-hook-gen"
 SRC_URI="https://github.com/CENSUS/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

@@ -5,7 +5,7 @@ EAPI=8
 
 inherit go-module
 
-DESCRIPTION="Tool that uses Gmail in order to mimic sendmail for 'git send-email'."
+DESCRIPTION="Tool that uses Gmail in order to mimic sendmail for 'git send-email'"
 HOMEPAGE="https://github.com/google/gmail-oauth2-tools/tree/master/go/sendgmail"
 SHA="0c865b7b590292d5d8a197529127166e9d7d7d2d"
 SRC_URI="https://github.com/google/gmail-oauth2-tools/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz

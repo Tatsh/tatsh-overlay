@@ -5,7 +5,7 @@ EAPI=8
 
 inherit desktop xdg
 
-DESCRIPTION="PumpkinOS is a re-implementation of PalmOS."
+DESCRIPTION="PumpkinOS is a re-implementation of PalmOS"
 HOMEPAGE="https://github.com/migueletto/PumpkinOS https://pmig96.wordpress.com/category/palmos/"
 SHA="c81ee9eacfdd52cb0e0bea878fbce3d027df20ed"
 MY_PN="PumpkinOS"

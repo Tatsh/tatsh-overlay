@@ -9,7 +9,7 @@ RUST_MIN_VER="1.98.0"
 
 inherit cargo desktop xdg
 
-DESCRIPTION="N64 emulator written in Rust."
+DESCRIPTION="N64 emulator written in Rust"
 HOMEPAGE="https://github.com/gopher64/gopher64"
 PARALLEL_RDP_STANDALONE_SHA="388d70f5835b352d841d9d9e5a08c5de01470f41"
 RCHEEVOS_SHA="2ad0b8672f68a48148620164510b963039e49eb1"

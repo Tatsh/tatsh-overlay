@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A simple immutable dictionary."
+DESCRIPTION="A simple immutable dictionary"
 HOMEPAGE="https://github.com/Marco-Sulla/python-frozendict"
 
 LICENSE="LGPL-3"

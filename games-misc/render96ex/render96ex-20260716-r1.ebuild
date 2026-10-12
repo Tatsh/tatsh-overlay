@@ -5,7 +5,7 @@ EAPI=8
 
 inherit desktop edo linux-info toolchain-funcs wrapper xdg
 
-DESCRIPTION="Fork of sm64-port with additional features (alpha branch)."
+DESCRIPTION="Fork of sm64-port with additional features (alpha branch)"
 HOMEPAGE="https://github.com/Render96/Render96ex/tree/alpha"
 SHA="f6e9e1b54f43b2caeffcf71644c6165f2652948c"
 MODELS_SHA="f4f438447748782b7c824cee903594706a3941e2"

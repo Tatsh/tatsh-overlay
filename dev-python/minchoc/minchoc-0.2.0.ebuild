@@ -9,7 +9,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/minchoc"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Minimal, Chocolatey-compatible NuGet server in a Django app."
+DESCRIPTION="Minimal, Chocolatey-compatible NuGet server in a Django app"
 HOMEPAGE="
 	https://github.com/Tatsh/minchoc
 	https://pypi.org/project/minchoc/

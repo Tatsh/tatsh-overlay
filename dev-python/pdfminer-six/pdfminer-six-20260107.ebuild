@@ -10,7 +10,7 @@ inherit distutils-r1
 
 MY_PN="pdfminer.six"
 
-DESCRIPTION="Tool for extracting information from PDF documents."
+DESCRIPTION="Tool for extracting information from PDF documents"
 HOMEPAGE="https://github.com/pdfminer/pdfminer.six https://pypi.org/project/pdfminer.six/"
 # The PyPI sdist omits samples/, which 90 of the tests read.
 SRC_URI="https://github.com/pdfminer/${MY_PN}/archive/refs/tags/${PV}.tar.gz

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Library for parsing Nintendo file formats."
+DESCRIPTION="Library for parsing Nintendo file formats"
 HOMEPAGE="https://github.com/jakcron/libpietendo"
 SRC_URI="https://github.com/jakcron/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

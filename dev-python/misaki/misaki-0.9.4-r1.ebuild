@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="G2P engine designed for Kokoro models."
+DESCRIPTION="G2P engine designed for Kokoro models"
 HOMEPAGE="https://pypi.org/project/misaki/"
 
 LICENSE="Apache-2.0"

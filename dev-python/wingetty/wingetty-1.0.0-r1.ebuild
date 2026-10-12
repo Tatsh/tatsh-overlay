@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit python-r1
 
-DESCRIPTION="WinGet repository server (REST API only)."
+DESCRIPTION="WinGet repository server (REST API only)"
 HOMEPAGE="https://github.com/thilojaeggi/WinGetty"
 SRC_URI="https://github.com/thilojaeggi/WinGetty/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

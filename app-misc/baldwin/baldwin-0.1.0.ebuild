@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python3_1{2,3,4,5} )
 DISTUTILS_USE_PEP517=hatchling
 inherit distutils-r1
 
-DESCRIPTION="Simple home directory versioning."
+DESCRIPTION="Simple home directory versioning"
 HOMEPAGE="https://github.com/Tatsh/baldwin"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 

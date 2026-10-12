@@ -9,7 +9,7 @@ inherit toolchain-funcs
 # branch.
 MY_COMMIT="0d92602b694f810fa4b137d87c743f345b303a14"
 
-DESCRIPTION="Extract the contents of an Apple DMG disk image."
+DESCRIPTION="Extract the contents of an Apple DMG disk image"
 HOMEPAGE="https://github.com/matthewbauer/undmg"
 SRC_URI="https://github.com/matthewbauer/${PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz"

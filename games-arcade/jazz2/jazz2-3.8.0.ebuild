@@ -7,7 +7,7 @@ inherit cmake xdg
 
 MY_PN="jazz2-native"
 
-DESCRIPTION="Open-source reimplementation of Jazz Jackrabbit 2."
+DESCRIPTION="Open-source reimplementation of Jazz Jackrabbit 2"
 HOMEPAGE="https://deat.tk/jazz2/ https://github.com/deathkiller/jazz2-native"
 SRC_URI="https://github.com/deathkiller/${MY_PN}/archive/refs/tags/${PV}.tar.gz
 	-> ${P}.gh.tar.gz"

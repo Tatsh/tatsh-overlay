@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Low-level cryptographic primitives from Apple."
+DESCRIPTION="Low-level cryptographic primitives from Apple"
 HOMEPAGE="https://developer.apple.com/security/"
 SRC_URI="${P}.zip"
 LICENSE="corecrypto"

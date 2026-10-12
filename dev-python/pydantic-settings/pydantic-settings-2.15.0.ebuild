@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/pydantic/pydantic-settings"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Settings management using Pydantic."
+DESCRIPTION="Settings management using Pydantic"
 HOMEPAGE="https://github.com/pydantic/pydantic-settings"
 
 LICENSE="MIT"

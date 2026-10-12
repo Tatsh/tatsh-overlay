@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python wrapper for libc's dlinfo and dyld_find on Mac."
+DESCRIPTION="Python wrapper for libc's dlinfo and dyld_find on Mac"
 HOMEPAGE="https://github.com/fphammerle/python-dlinfo"
 
 LICENSE="MIT"

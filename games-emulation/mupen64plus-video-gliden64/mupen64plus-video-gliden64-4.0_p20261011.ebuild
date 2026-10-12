@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="A new generation, open-source graphics plugin for N64 emulators."
+DESCRIPTION="A new generation, open-source graphics plugin for N64 emulators"
 HOMEPAGE="https://github.com/gonetz/GLideN64"
 SHA="a04081ad6a966a9413bea63a55f502e0dc98bb18"
 SRC_URI="https://github.com/gonetz/GLideN64/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"

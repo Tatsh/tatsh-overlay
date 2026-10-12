@@ -7,7 +7,7 @@ inherit meson
 
 MY_PN="DiscImageCreator"
 
-DESCRIPTION="Dump optical discs with subchannel and error correction data."
+DESCRIPTION="Dump optical discs with subchannel and error correction data"
 HOMEPAGE="https://github.com/saramibreak/DiscImageCreator"
 SRC_URI="https://github.com/saramibreak/${MY_PN}/archive/refs/tags/${PV}.tar.gz
 	-> ${P}.tar.gz"

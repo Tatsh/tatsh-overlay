@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Music source separation in the waveform domain."
+DESCRIPTION="Music source separation in the waveform domain"
 HOMEPAGE="https://pypi.org/project/demucs/ https://github.com/adefossez/demucs"
 
 LICENSE="MIT"

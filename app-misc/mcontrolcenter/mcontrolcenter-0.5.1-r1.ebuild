@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake desktop xdg
 
-DESCRIPTION="Allows you to change the settings of MSI laptops."
+DESCRIPTION="Allows you to change the settings of MSI laptops"
 HOMEPAGE="https://github.com/dmitry-s93/MControlCenter"
 SRC_URI="https://github.com/dmitry-s93/MControlCenter/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 

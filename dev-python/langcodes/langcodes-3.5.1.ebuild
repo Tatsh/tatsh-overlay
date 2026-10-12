@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/georgkrause/langcodes"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Tools for labeling human languages with IETF language tags."
+DESCRIPTION="Tools for labeling human languages with IETF language tags"
 HOMEPAGE="https://github.com/georgkrause/langcodes"
 
 LICENSE="MIT"

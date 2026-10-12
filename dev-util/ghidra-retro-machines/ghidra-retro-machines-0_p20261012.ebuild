@@ -11,7 +11,7 @@ inherit ghidra-extension
 # branch.
 MY_COMMIT="20dd96067b86396663155e5a1d97b346cd0bd3df"
 
-DESCRIPTION="Ghidra processor modules and loaders for retro home computers."
+DESCRIPTION="Ghidra processor modules and loaders for retro home computers"
 HOMEPAGE="https://github.com/CBongo/ghidra-retro-machines"
 SRC_URI="https://github.com/CBongo/${PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz"

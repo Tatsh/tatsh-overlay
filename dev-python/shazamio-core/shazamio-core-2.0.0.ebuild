@@ -97,7 +97,7 @@ RUST_MIN_VER="1.87.0"
 
 inherit cargo distutils-r1 pypi
 
-DESCRIPTION="Rust core for the shazamio Shazam API client."
+DESCRIPTION="Rust core for the shazamio Shazam API client"
 HOMEPAGE="https://github.com/shazamio/shazamio-core
 	https://pypi.org/project/shazamio-core/"
 SRC_URI+=" ${CARGO_CRATE_URIS}"

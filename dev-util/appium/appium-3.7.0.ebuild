@@ -10,7 +10,7 @@ NODEJS_KEEP_DEV_FILES=1
 
 inherit nodejs-mod
 
-DESCRIPTION="Cross-platform automation framework for mobile, web and desktop apps."
+DESCRIPTION="Cross-platform automation framework for mobile, web and desktop apps"
 HOMEPAGE="https://appium.io https://github.com/appium/appium"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

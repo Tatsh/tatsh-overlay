@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Jaded-Encoding-Thaumaturgy/vs-jetpack"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Full suite of filters, wrappers, etc for filtering video using VapourSynth."
+DESCRIPTION="Full suite of filters, wrappers, etc for filtering video using VapourSynth"
 HOMEPAGE="https://github.com/Jaded-Encoding-Thaumaturgy/vs-jetpack"
 SRC_URI="$(pypi_sdist_url vsjetpack)"
 S="${WORKDIR}/vsjetpack-${PV}"

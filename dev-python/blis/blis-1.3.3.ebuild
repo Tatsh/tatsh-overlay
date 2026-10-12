@@ -11,7 +11,7 @@ PYPI_VERIFY_REPO="https://github.com/explosion/cython-blis"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="The Blis BLAS-like linear algebra library, as a self-contained C-extension."
+DESCRIPTION="The Blis BLAS-like linear algebra library, as a self-contained C-extension"
 HOMEPAGE="https://github.com/explosion/cython-blis"
 
 LICENSE="BSD"

@@ -79,7 +79,7 @@ DISTUTILS_USE_PEP517=maturin
 PYTHON_COMPAT=( python3_1{1,2,3,4,5} )
 inherit cargo distutils-r1
 
-DESCRIPTION="Common N64 compression formats implemented in Rust (library only)."
+DESCRIPTION="Common N64 compression formats implemented in Rust (library only)"
 HOMEPAGE="https://pypi.org/project/crunch64/"
 SRC_URI="https://github.com/decompals/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.gh.tar.gz
 	${CARGO_CRATE_URIS}

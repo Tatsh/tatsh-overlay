@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Text preprocess."
+DESCRIPTION="Text preprocess"
 HOMEPAGE="https://github.com/Ailln/proces"
 
 LICENSE="MIT"

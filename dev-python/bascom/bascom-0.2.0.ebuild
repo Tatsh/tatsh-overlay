@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/bascom"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Core library used in Tatsh projects."
+DESCRIPTION="Core library used in Tatsh projects"
 HOMEPAGE="https://pypi.org/project/bascom/"
 
 LICENSE="MIT"

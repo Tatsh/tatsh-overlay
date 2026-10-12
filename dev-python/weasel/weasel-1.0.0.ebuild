@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/explosion/weasel"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A small and easy workflow system."
+DESCRIPTION="A small and easy workflow system"
 HOMEPAGE="https://github.com/explosion/weasel"
 
 LICENSE="MIT"

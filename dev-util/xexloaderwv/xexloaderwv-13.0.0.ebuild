@@ -11,7 +11,7 @@ inherit ghidra-extension
 # separately, in extension.properties. This is the tag holding ${PV}.
 MY_TAG="12.1.2"
 
-DESCRIPTION="Ghidra loader for Xbox 360 XEX executables."
+DESCRIPTION="Ghidra loader for Xbox 360 XEX executables"
 HOMEPAGE="https://github.com/zerokilo/xexloaderwv"
 SRC_URI="https://github.com/zerokilo/${PN}/archive/refs/tags/${MY_TAG}.tar.gz
 	-> ${P}.tar.gz"

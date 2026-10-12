@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{10..15} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="Curated transformer models."
+DESCRIPTION="Curated transformer models"
 HOMEPAGE="https://github.com/explosion/curated-transformers"
 
 LICENSE="MIT"

@@ -8,7 +8,7 @@ LIBRETRO_COMMIT_SHA="f013e213458e06d9df718e4bc4b09d46f88aa899"
 
 inherit libretro-core
 
-DESCRIPTION="Port of fMSX to the libretro API."
+DESCRIPTION="Port of fMSX to the libretro API"
 HOMEPAGE="https://github.com/libretro/fmsx-libretro"
 LICENSE="fMSX"
 SLOT="0"

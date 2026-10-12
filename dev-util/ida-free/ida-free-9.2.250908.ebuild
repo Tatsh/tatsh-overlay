@@ -5,7 +5,7 @@ EAPI=8
 
 inherit desktop wrapper
 
-DESCRIPTION="Free version of the code analyzer."
+DESCRIPTION="Free version of the code analyzer"
 HOMEPAGE="https://hex-rays.com/ida-free"
 SRC_URI="${P}.run"
 S="${WORKDIR}/ida/programfiles"

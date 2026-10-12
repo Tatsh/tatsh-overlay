@@ -9,7 +9,7 @@ inherit cmake
 # release upstream made.
 MY_COMMIT="e634ca58b4821d9f3d560cdc6df5dec02ffc93fd"
 
-DESCRIPTION="LZFSE compression library and command line tool."
+DESCRIPTION="LZFSE compression library and command line tool"
 HOMEPAGE="https://github.com/lzfse/lzfse"
 SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz"

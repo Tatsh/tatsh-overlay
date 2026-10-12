@@ -8,7 +8,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/gmail-archiver"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Locally archive Gmail emails."
+DESCRIPTION="Locally archive Gmail emails"
 HOMEPAGE="
 	https://github.com/Tatsh/gmail-archiver
 	https://pypi.org/project/gmail-archiver/

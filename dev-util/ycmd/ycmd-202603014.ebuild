@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_1{0..5} )
 
 inherit cmake python-single-r1
 
-DESCRIPTION="A code-completion & code-comprehension server."
+DESCRIPTION="A code-completion & code-comprehension server"
 HOMEPAGE="https://github.com/ycm-core/ycmd"
 SHA="a290328810cec343fc4df23ff86936cfa7630687"
 SRC_URI="https://github.com/ycm-core/ycmd/archive/${SHA}.tar.gz -> ${P}.tar.gz"

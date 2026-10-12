@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake xdg
 
-DESCRIPTION="A simple NFO viewer."
+DESCRIPTION="A simple NFO viewer"
 HOMEPAGE="https://tatsh.github.io/tnfoview/ https://github.com/Tatsh/tnfoview"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.gh.tar.gz"

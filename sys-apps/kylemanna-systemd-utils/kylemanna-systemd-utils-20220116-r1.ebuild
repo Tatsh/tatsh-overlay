@@ -5,7 +5,7 @@ EAPI=8
 
 inherit udev
 
-DESCRIPTION="Random systemd utilities."
+DESCRIPTION="Random systemd utilities"
 HOMEPAGE="https://github.com/kylemanna/systemd-utils"
 MY_PN="${PN/kylemanna-}"
 SHA="eadaa1c9878553b7c032bf2911321fd6374fdeaa"

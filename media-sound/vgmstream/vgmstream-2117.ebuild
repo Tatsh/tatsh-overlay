@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Library for playback of various streamed audio formats used in video games."
+DESCRIPTION="Library for playback of various streamed audio formats used in video games"
 HOMEPAGE="https://vgmstream.org/ https://github.com/vgmstream/vgmstream"
 SRC_URI="https://github.com/vgmstream/${PN}/archive/refs/tags/r${PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}-r${PV}"

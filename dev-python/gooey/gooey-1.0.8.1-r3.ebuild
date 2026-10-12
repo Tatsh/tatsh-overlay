@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="Turn any command line program into a full GUI application with one line."
+DESCRIPTION="Turn any command line program into a full GUI application with one line"
 HOMEPAGE="https://pypi.org/project/Gooey/"
 SRC_URI="$(pypi_sdist_url --no-normalize "${PN^}")"
 S="${WORKDIR}/${MY_PN}-${PV}"

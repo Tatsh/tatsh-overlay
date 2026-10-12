@@ -9,7 +9,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/installkernel-wsl"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="installkernel for WSL 2."
+DESCRIPTION="installkernel for WSL 2"
 HOMEPAGE="
 	https://github.com/Tatsh/installkernel-wsl
 	https://pypi.org/project/installkernel-wsl/

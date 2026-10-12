@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Natural Language Toolkit."
+DESCRIPTION="Natural Language Toolkit"
 HOMEPAGE="https://pypi.org/project/nltk/"
 
 LICENSE="Apache-2.0"

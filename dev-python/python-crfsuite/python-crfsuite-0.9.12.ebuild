@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python binding for CRFsuite."
+DESCRIPTION="Python binding for CRFsuite"
 HOMEPAGE="https://github.com/scrapinghub/python-crfsuite https://pypi.org/project/python-crfsuite/"
 
 LICENSE="MIT"

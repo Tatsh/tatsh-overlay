@@ -8,7 +8,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/mkwineprefix"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Create a Wine prefix with custom settings."
+DESCRIPTION="Create a Wine prefix with custom settings"
 HOMEPAGE="
 	https://github.com/Tatsh/mkwineprefix
 	https://pypi.org/project/mkwineprefix/

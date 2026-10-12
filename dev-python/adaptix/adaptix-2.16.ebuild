@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1
 
-DESCRIPTION="Modern way to convert python dataclasses to and from plain types."
+DESCRIPTION="Modern way to convert python dataclasses to and from plain types"
 HOMEPAGE="https://github.com/reagento/adaptix"
 # 2.16 was published on PyPI as dataclass-factory (wheel only), so this uses
 # the tag instead. It still installs the dataclass_factory module.

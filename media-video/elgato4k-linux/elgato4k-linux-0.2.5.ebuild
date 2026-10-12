@@ -60,7 +60,7 @@ RUST_MIN_VER="1.85.0"
 
 inherit cargo
 
-DESCRIPTION="Linux CLI support for Elgato 4k series of capture cards."
+DESCRIPTION="Linux CLI support for Elgato 4k series of capture cards"
 HOMEPAGE="https://github.com/13bm/elgato4k-linux"
 SHA="f654c66ad4b14eb3537d9469d3f128e8f69caf10"
 SRC_URI="https://github.com/13bm/elgato4k-linux/archive/${SHA}.tar.gz -> ${PN}-${SHA:0:7}.tar.gz

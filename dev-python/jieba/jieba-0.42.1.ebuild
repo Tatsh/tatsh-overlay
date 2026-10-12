@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Chinese Words Segmentation Utilities."
+DESCRIPTION="Chinese Words Segmentation Utilities"
 HOMEPAGE="https://pypi.org/project/jieba/"
 
 LICENSE="MIT"

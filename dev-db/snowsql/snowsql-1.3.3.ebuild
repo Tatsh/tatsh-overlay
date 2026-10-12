@@ -5,7 +5,7 @@ EAPI=8
 
 inherit rpm
 
-DESCRIPTION="Lame database tool."
+DESCRIPTION="Lame database tool"
 HOMEPAGE="https://docs.snowflake.com/en/user-guide/snowsql"
 SRC_URI="https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/$(ver_cut 1-2)/linux_x86_64/snowflake-${P}-1.x86_64.rpm"
 S="${WORKDIR}/usr"

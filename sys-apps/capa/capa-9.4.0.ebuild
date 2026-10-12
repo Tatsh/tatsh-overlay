@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{2,3,4,5} )
 inherit distutils-r1
 
-DESCRIPTION="The FLARE team's open-source tool to identify capabilities in executable files."
+DESCRIPTION="The FLARE team's open-source tool to identify capabilities in executable files"
 HOMEPAGE="https://github.com/mandiant/capa"
 SRC_URI="https://github.com/mandiant/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/mandiant/${PN}-rules/archive/refs/tags/v${PV}.tar.gz -> ${PN}-rules-${PV}.tar.gz"

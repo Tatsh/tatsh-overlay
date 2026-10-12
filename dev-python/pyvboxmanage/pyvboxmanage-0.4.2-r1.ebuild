@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Orchestrate VBoxManage commands from a YAML configuration file."
+DESCRIPTION="Orchestrate VBoxManage commands from a YAML configuration file"
 HOMEPAGE="https://github.com/ndejong/pyvboxmanage https://pypi.org/project/pyvboxmanage/"
 
 LICENSE="BSD-2"

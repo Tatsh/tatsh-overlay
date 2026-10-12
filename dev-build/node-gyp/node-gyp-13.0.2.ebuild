@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_1{0..5} )
 
 inherit nodejs-mod python-r1
 
-DESCRIPTION="Node.js native addon build tool."
+DESCRIPTION="Node.js native addon build tool"
 HOMEPAGE="https://www.npmjs.com/package/node-gyp"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

@@ -5,7 +5,7 @@ EAPI=8
 
 inherit nodejs-mod
 
-DESCRIPTION="Decompile React Native bundles."
+DESCRIPTION="Decompile React Native bundles"
 HOMEPAGE="https://github.com/numandev1/react-native-decompiler"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

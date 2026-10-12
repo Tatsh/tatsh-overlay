@@ -9,7 +9,7 @@ inherit ghidra-extension
 
 MY_PN="Ghidra_GolangAnalyzerExtension"
 
-DESCRIPTION="Ghidra extension recovering function names and types from Go binaries."
+DESCRIPTION="Ghidra extension recovering function names and types from Go binaries"
 HOMEPAGE="https://github.com/mooncat-greenpy/Ghidra_GolangAnalyzerExtension"
 SRC_URI="https://github.com/mooncat-greenpy/${MY_PN}/archive/refs/tags/${PV}.tar.gz
 	-> ${P}.tar.gz"

@@ -91,7 +91,7 @@ CRATES="
 
 inherit cargo distutils-r1
 
-DESCRIPTION="Underthesea Core."
+DESCRIPTION="Underthesea Core"
 HOMEPAGE="https://github.com/undertheseanlp/underthesea https://pypi.org/project/underthesea-core/"
 UNDERTHESEA_PV="8.3.0"
 SRC_URI="https://github.com/undertheseanlp/underthesea/archive/v${UNDERTHESEA_PV}.tar.gz -> underthesea-${UNDERTHESEA_PV}.gh.tar.gz

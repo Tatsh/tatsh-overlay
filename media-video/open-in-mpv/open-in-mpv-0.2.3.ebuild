@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/open-in-mpv"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Host-side of the extension to open any link or page URL in mpv via browser context menu."
+DESCRIPTION="Host side of a browser extension that opens links and pages in mpv"
 HOMEPAGE="
 	https://github.com/Tatsh/open-in-mpv
 	https://pypi.org/project/open-in-mpv/

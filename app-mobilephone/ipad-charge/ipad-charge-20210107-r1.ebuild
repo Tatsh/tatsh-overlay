@@ -4,7 +4,7 @@
 EAPI=8
 inherit udev
 
-DESCRIPTION="Helper utility to enable charging with Apple mobile devices such as the iPad."
+DESCRIPTION="Helper utility to enable charging with Apple mobile devices such as the iPad"
 HOMEPAGE="https://github.com/mkorenkov/ipad_charge"
 SHA="f070404d27affea6963024d852dd2e4941153792"
 SRC_URI="https://github.com/mkorenkov/ipad_charge/archive/${SHA}.tar.gz -> ${P}.tar.gz"

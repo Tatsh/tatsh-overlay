@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1
 
-DESCRIPTION="Joystick-aware screen waker."
+DESCRIPTION="Joystick-aware screen waker"
 HOMEPAGE="https://codeberg.org/forestix/joystickwake"
 SRC_URI="https://codeberg.org/forestix/joystickwake/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}"

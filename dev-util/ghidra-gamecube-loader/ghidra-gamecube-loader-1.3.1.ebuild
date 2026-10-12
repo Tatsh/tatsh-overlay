@@ -9,7 +9,7 @@ inherit java-utils-2 ghidra-extension
 
 MY_PN="Ghidra-GameCube-Loader"
 
-DESCRIPTION="Ghidra loader for Nintendo GameCube binaries."
+DESCRIPTION="Ghidra loader for Nintendo GameCube binaries"
 HOMEPAGE="https://github.com/Cuyler36/Ghidra-GameCube-Loader"
 SRC_URI="https://github.com/Cuyler36/${MY_PN}/archive/refs/tags/${PV}.tar.gz
 	-> ${P}.tar.gz"

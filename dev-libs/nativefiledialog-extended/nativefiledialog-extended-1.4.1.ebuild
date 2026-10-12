@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="File dialog library with C and C++ bindings, based on nativefiledialog."
+DESCRIPTION="File dialog library with C and C++ bindings, based on nativefiledialog"
 HOMEPAGE="https://github.com/btzy/nativefiledialog-extended"
 SRC_URI="https://github.com/btzy/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

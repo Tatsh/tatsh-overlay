@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_1{0..5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Pythonic bindings for FFmpeg's libraries."
+DESCRIPTION="Pythonic bindings for FFmpeg's libraries"
 HOMEPAGE="https://pypi.org/project/av/ https://github.com/PyAV-Org/PyAV/"
 
 LICENSE="BSD"

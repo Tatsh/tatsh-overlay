@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=hatchling
 PYTHON_COMPAT=( python3_{11..15} )
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python implementation of git-up."
+DESCRIPTION="Python implementation of git-up"
 HOMEPAGE="https://github.com/msiemens/PyGitUp https://pypi.org/project/git-up/"
 
 LICENSE="MIT"

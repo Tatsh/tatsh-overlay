@@ -141,7 +141,7 @@ CRATES="
 
 inherit cargo distutils-r1
 
-DESCRIPTION="Fast iterable JSON parser."
+DESCRIPTION="Fast iterable JSON parser"
 HOMEPAGE="https://github.com/pydantic/jiter"
 SRC_URI="https://github.com/pydantic/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz
 	${CARGO_CRATE_URIS}"

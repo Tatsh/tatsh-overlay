@@ -5,7 +5,7 @@ EAPI=8
 LUA_COMPAT=( lua5-1 luajit )
 inherit lua
 
-DESCRIPTION="API to allow scripts to create interactive scrollable lists in mpv player."
+DESCRIPTION="API to allow scripts to create interactive scrollable lists in mpv player"
 HOMEPAGE="https://github.com/CogentRedTester/mpv-scroll-list"
 SHA="b8a3498b35fbb1d1d08aff98079acdb0da672277"
 SRC_URI="https://github.com/CogentRedTester/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"

@@ -5,7 +5,7 @@ EAPI=8
 WX_GTK_VER="3.2-gtk3"
 inherit desktop wrapper wxwidgets xdg
 
-DESCRIPTION="Clone of Guitar Hero and similar games."
+DESCRIPTION="Clone of Guitar Hero and similar games"
 HOMEPAGE="https://clonehero.net/"
 SRC_URI="https://github.com/clonehero-game/releases/releases/download/v${PV}-final/Linux.x86_64-Standalone.tar
 	-> ${P}.tar"

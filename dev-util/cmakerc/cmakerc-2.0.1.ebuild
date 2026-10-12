@@ -4,7 +4,7 @@
 EAPI=8
 
 MY_PN="cmrc"
-DESCRIPTION="A resource compiler in a single CMake script."
+DESCRIPTION="A resource compiler in a single CMake script"
 HOMEPAGE="https://github.com/vector-of-bool/cmrc"
 SRC_URI="https://github.com/vector-of-bool/${MY_PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 

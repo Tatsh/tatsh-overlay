@@ -10,7 +10,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Package for simplifying writing VapourSynth 'plugins' in python."
+DESCRIPTION="Package for simplifying writing VapourSynth 'plugins' in python"
 HOMEPAGE="https://pypi.org/project/vspyplugin/"
 SRC_URI="$(pypi_sdist_url "${PN^}" "${PV}")"
 S="${WORKDIR}/${PN}-${PV}"

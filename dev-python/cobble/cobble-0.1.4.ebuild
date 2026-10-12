@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Create Python data objects."
+DESCRIPTION="Create Python data objects"
 HOMEPAGE="https://github.com/mwilliamson/python-cobble https://pypi.org/project/cobble/"
 
 LICENSE="BSD-2"

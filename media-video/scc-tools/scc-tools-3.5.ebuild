@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Scenarist Closed Caption format tools."
+DESCRIPTION="Scenarist Closed Caption format tools"
 HOMEPAGE="https://www.theneitherworld.com/mcpoodle/SCC_TOOLS/DOCS/SCC_TOOLS.HTML"
 SRC_URI="https://www.theneitherworld.com/mcpoodle/SCC_TOOLS/SCC_TOOLS.ZIP -> ${P}.zip"
 S="${WORKDIR}/SOURCE"

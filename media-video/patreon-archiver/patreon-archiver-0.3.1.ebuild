@@ -9,7 +9,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/patreon-archiver"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Tool to download data from Patreon."
+DESCRIPTION="Tool to download data from Patreon"
 HOMEPAGE="
 	https://github.com/Tatsh/patreon-archiver
 	https://pypi.org/project/patreon-archiver/

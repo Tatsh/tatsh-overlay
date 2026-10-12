@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Convert Chinese numerals and Arabic numerals."
+DESCRIPTION="Convert Chinese numerals and Arabic numerals"
 HOMEPAGE="https://pypi.org/project/cn2an/"
 
 LICENSE="MIT"

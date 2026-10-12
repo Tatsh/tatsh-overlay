@@ -5,7 +5,7 @@ EAPI=8
 
 inherit flag-o-matic meson
 
-DESCRIPTION="Shell for reading and writing PlayStation 2 HDD PFS filesystems."
+DESCRIPTION="Shell for reading and writing PlayStation 2 HDD PFS filesystems"
 HOMEPAGE="https://github.com/ps2homebrew/pfsshell"
 SRC_URI="https://github.com/ps2homebrew/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

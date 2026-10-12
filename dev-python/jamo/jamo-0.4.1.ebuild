@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A Hangul syllable and jamo analyzer."
+DESCRIPTION="A Hangul syllable and jamo analyzer"
 HOMEPAGE="https://pypi.org/project/jamo/"
 
 LICENSE="Apache-2.0"

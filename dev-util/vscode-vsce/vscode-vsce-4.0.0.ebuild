@@ -7,7 +7,7 @@ inherit nodejs-mod
 
 NPM_PN="@${PN/-/\/}"
 
-DESCRIPTION="VS Code extensions manager for extension developers."
+DESCRIPTION="VS Code extensions manager for extension developers"
 HOMEPAGE="https://code.visualstudio.com"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

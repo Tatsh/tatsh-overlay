@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_1{2,3,4,5} )
 # nothing to repeat per implementation.
 inherit meson python-single-r1
 
-DESCRIPTION="A video processing framework with simplicity in mind."
+DESCRIPTION="A video processing framework with simplicity in mind"
 HOMEPAGE="https://www.vapoursynth.com/ https://github.com/vapoursynth/vapoursynth"
 MY_PV="R${PV//_/-}"
 MY_PV="${MY_PV^^}"

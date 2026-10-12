@@ -5,7 +5,7 @@ EAPI=8
 
 inherit autotools
 
-DESCRIPTION="Library handling the communication with Apple's Tatsu Signing Server (TSS)."
+DESCRIPTION="Library handling the communication with Apple's Tatsu Signing Server (TSS)"
 HOMEPAGE="https://github.com/libimobiledevice/libtatsu"
 SRC_URI="https://github.com/libimobiledevice/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 

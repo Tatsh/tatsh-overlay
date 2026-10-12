@@ -5,7 +5,7 @@ EAPI=8
 
 inherit toolchain-funcs
 
-DESCRIPTION="Converts DiscJuggler CDI files to various disc image formats."
+DESCRIPTION="Converts DiscJuggler CDI files to various disc image formats"
 HOMEPAGE="https://web.archive.org/web/20091027063725/http://es.geocities.com/dextstuff/cdirip/down_cdi.html"
 SRC_URI="https://web.archive.org/web/20091027063725/http://es.geocities.com/dextstuff/${PN}/${PN}${PV//.}-src.zip"
 

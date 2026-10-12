@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Floating IPS is a patcher for IPS and BPS files."
+DESCRIPTION="Floating IPS is a patcher for IPS and BPS files"
 HOMEPAGE="https://github.com/Sir-Walrus/Flips"
 SRC_URI="https://github.com/Sir-Walrus/Flips/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

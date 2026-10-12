@@ -8,7 +8,7 @@ LIBRETRO_COMMIT_SHA="b3b40b178b0d2977d71d12c9ce9b148c69964ca0"
 
 inherit libretro-core
 
-DESCRIPTION="Standalone port/fork of Mednafen PSX to the Libretro API."
+DESCRIPTION="Standalone port/fork of Mednafen PSX to the Libretro API"
 HOMEPAGE="https://github.com/libretro/beetle-psx-libretro"
 LICENSE="GPL-2"
 SLOT="0"

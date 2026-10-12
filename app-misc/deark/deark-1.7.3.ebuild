@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Utility to extract data from various file formats."
+DESCRIPTION="Utility to extract data from various file formats"
 HOMEPAGE="https://entropymine.com/deark/ https://github.com/jsummers/deark"
 SRC_URI="https://github.com/jsummers/deark/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

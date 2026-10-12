@@ -5,7 +5,7 @@ EAPI=8
 
 MY_PN="${PN%-bin}"
 
-DESCRIPTION="Collect and display high-resolution traces using Intel Processor Trace."
+DESCRIPTION="Collect and display high-resolution traces using Intel Processor Trace"
 HOMEPAGE="https://magic-trace.org https://github.com/janestreet/magic-trace"
 # Building from source needs a full OCaml/dune toolchain and a large set of
 # Jane Street libraries that are not packaged.

@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Segmentation with orthography profiles."
+DESCRIPTION="Segmentation with orthography profiles"
 HOMEPAGE="https://github.com/cldf/segments"
 
 LICENSE="Apache-2.0"

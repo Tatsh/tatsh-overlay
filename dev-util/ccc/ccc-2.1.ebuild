@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Parser and dumper for debugging symbols from PlayStation 2 games."
+DESCRIPTION="Parser and dumper for debugging symbols from PlayStation 2 games"
 HOMEPAGE="https://github.com/chaoticgd/ccc"
 SRC_URI="https://github.com/chaoticgd/${PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

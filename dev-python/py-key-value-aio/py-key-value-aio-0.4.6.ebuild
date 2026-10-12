@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{11,12,13,14,15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Async Key-Value Store - A pluggable interface for KV Stores."
+DESCRIPTION="Async Key-Value Store - A pluggable interface for KV Stores"
 HOMEPAGE="https://github.com/strawgate/py-key-value"
 
 LICENSE="Apache-2.0"

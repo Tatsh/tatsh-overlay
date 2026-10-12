@@ -23,7 +23,7 @@ RUST_MIN_VER="1.97.1"
 
 inherit cargo
 
-DESCRIPTION="Prisma's database engines."
+DESCRIPTION="Prisma's database engines"
 HOMEPAGE="https://github.com/prisma/prisma-engines"
 SRC_URI="https://github.com/prisma/prisma-engines/archive/${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-crates.tar.xz

@@ -60,7 +60,8 @@ Follow this order in ebuilds:
 
 ## `DESCRIPTION`
 
-- End the description with a period.
+- Do not end the description with a period (pkgcheck `BadDescription`).
+- Keep it to 80 characters or fewer.
 
 ## `HOMEPAGE`
 

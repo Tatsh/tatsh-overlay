@@ -5,7 +5,7 @@ EAPI=8
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit python-r1
 
-DESCRIPTION="Generates nftables maps of geolocation IP address blocks."
+DESCRIPTION="Generates nftables maps of geolocation IP address blocks"
 HOMEPAGE="https://github.com/pvxe/nftables-geoip"
 SHA="87239547814b242f9ae61c7ecfcc3487d35f7e9c"
 SRC_URI="https://github.com/pvxe/nftables-geoip/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"

@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Library manager for C/C++ (tool only)."
+DESCRIPTION="Library manager for C/C++ (tool only)"
 HOMEPAGE="https://github.com/microsoft/vcpkg-tool https://vcpkg.io/en/index.html"
 # Upstream tags are zero-padded dates. Build the tag with ver_cut rather than a
 # here-string: here-strings need a temp file, which the sandbox denies during

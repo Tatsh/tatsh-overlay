@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/mosquito/aiofile"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Asynchronous file operations."
+DESCRIPTION="Asynchronous file operations"
 HOMEPAGE="https://github.com/mosquito/aiofile"
 
 LICENSE="Apache-2.0"

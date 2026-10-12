@@ -9,7 +9,7 @@ inherit nodejs-mod
 # deletes as if it were a sample file.
 NODEJS_KEEP_DEV_FILES=1
 
-DESCRIPTION="CLI tool for running Yeoman generators."
+DESCRIPTION="CLI tool for running Yeoman generators"
 HOMEPAGE="https://yeoman.io"
 SRC_URI="https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-node_modules.tar.xz"
 S="${WORKDIR}/${P}"

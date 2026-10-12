@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Tools and a C/C++ library to manipulate BFCodec-encrypted content."
+DESCRIPTION="Tools and a C/C++ library to manipulate BFCodec-encrypted content"
 HOMEPAGE="https://github.com/Tatsh/bfcodec"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

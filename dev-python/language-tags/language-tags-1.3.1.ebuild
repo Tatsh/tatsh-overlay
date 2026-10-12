@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=hatchling
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python version of the language-tags Javascript project."
+DESCRIPTION="Python version of the language-tags Javascript project"
 HOMEPAGE="https://github.com/OnroerendErfgoed/language-tags"
 
 LICENSE="MIT"

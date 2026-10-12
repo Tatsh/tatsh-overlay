@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python library for TOML."
+DESCRIPTION="Python library for TOML"
 HOMEPAGE="https://pypi.org/project/toml/"
 
 LICENSE="MIT"

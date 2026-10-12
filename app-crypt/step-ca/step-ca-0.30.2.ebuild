@@ -7,7 +7,7 @@ inherit go-module
 
 MY_PN="certificates"
 
-DESCRIPTION="Private certificate authority and ACME server."
+DESCRIPTION="Private certificate authority and ACME server"
 HOMEPAGE="https://smallstep.com/product/team/devops/ https://github.com/smallstep/certificates"
 SRC_URI="https://github.com/smallstep/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz

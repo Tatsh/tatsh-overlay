@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Tool to extract files from Sega Dreamcast GD-ROM dumps in .gdi format."
+DESCRIPTION="Tool to extract files from Sega Dreamcast GD-ROM dumps in .gdi format"
 HOMEPAGE="https://github.com/MachXNU/gdiextract"
 SHA="da98843213a8dbe295ccf111d11d16173376b690"
 SRC_URI="https://github.com/MachXNU/${PN}/archive/${SHA}.tar.gz -> ${P}.tar.gz"

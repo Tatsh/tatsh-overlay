@@ -11,7 +11,7 @@ PYPI_VERIFY_REPO="https://github.com/r9y9/pyopenjtalk"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Python wrapper for OpenJTalk."
+DESCRIPTION="Python wrapper for OpenJTalk"
 HOMEPAGE="https://github.com/r9y9/pyopenjtalk"
 
 LICENSE="MIT"

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-DESCRIPTION="Plugin to let the emulator communicate with the controllers directly."
+DESCRIPTION="Plugin to let the emulator communicate with the controllers directly"
 HOMEPAGE="https://www.raphnet-tech.com/products/raphnetraw/index.php"
 SRC_URI="https://www.raphnet-tech.com/downloads/${P}.tar.gz"
 

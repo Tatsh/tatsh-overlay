@@ -6,7 +6,7 @@ EAPI=8
 inherit go-module
 
 MY_PV=$(ver_rs 3 -)
-DESCRIPTION="Mirror Git repositories to other Git providers."
+DESCRIPTION="Mirror Git repositories to other Git providers"
 HOMEPAGE="https://github.com/cooperspencer/gickup"
 SRC_URI="https://github.com/cooperspencer/${PN}/archive/refs/tags/v${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-vendor.tar.xz"

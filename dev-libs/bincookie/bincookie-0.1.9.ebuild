@@ -4,7 +4,7 @@
 EAPI=8
 inherit cmake
 
-DESCRIPTION="Library to parse Apple's binarycookies format."
+DESCRIPTION="Library to parse Apple's binarycookies format"
 HOMEPAGE="https://github.com/Tatsh/bincookie"
 SRC_URI="https://github.com/Tatsh/bincookie/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 

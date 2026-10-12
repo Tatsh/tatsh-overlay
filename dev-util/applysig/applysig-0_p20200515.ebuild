@@ -10,7 +10,7 @@ inherit ghidra-extension
 
 MY_COMMIT="4a40e0e6a321a7f2a32fb5f67c47dc7ff85f39c7"
 
-DESCRIPTION="Ghidra script that applies IDA FLIRT signatures."
+DESCRIPTION="Ghidra script that applies IDA FLIRT signatures"
 HOMEPAGE="https://github.com/NWMonster/ApplySig"
 # Upstream has tagged no releases, so a snapshot is used.
 SRC_URI="https://github.com/NWMonster/${GHIDRA_EXT_NAME}/archive/${MY_COMMIT}.tar.gz

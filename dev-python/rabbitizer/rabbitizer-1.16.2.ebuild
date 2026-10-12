@@ -10,7 +10,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_{11..15} )
 inherit distutils-r1
 
-DESCRIPTION="MIPS instruction decoder."
+DESCRIPTION="MIPS instruction decoder"
 HOMEPAGE="https://github.com/Decompollaborate/rabbitizer"
 SRC_URI="https://github.com/Decompollaborate/${PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.gh.tar.gz"
 

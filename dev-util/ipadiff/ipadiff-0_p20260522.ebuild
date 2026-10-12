@@ -9,7 +9,7 @@ inherit go-module
 # branch.
 MY_COMMIT="fda9b001d9b38122e544ecfa5ad4e53c97b694f8"
 
-DESCRIPTION="Diff two iOS .ipa bundles."
+DESCRIPTION="Diff two iOS .ipa bundles"
 HOMEPAGE="https://github.com/Xplo8E/ipadiff"
 SRC_URI="https://github.com/Xplo8E/${PN}/archive/${MY_COMMIT}.tar.gz
 	-> ${P}.tar.gz

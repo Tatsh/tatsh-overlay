@@ -5,7 +5,7 @@ EAPI=8
 
 inherit autotools
 
-DESCRIPTION="Harwell Solver Library (HSL)."
+DESCRIPTION="Harwell Solver Library (HSL)"
 HOMEPAGE="https://github.com/coin-or-tools/ThirdParty-HSL https://licences.stfc.ac.uk/product/coin-hsl"
 BUILD_TOOLS_VERSION="20208f47f7bbc0056a92adefdfd43fded969f674"
 SOLVERS_VERSION="1.0.1"

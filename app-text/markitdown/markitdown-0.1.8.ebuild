@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Convert files and office documents to Markdown."
+DESCRIPTION="Convert files and office documents to Markdown"
 HOMEPAGE="https://github.com/microsoft/markitdown https://pypi.org/project/markitdown/"
 
 LICENSE="MIT"

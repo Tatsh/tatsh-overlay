@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_1{0..5} )
 
 inherit distutils-r1
 
-DESCRIPTION="Library for advanced natural language processing."
+DESCRIPTION="Library for advanced natural language processing"
 HOMEPAGE="https://pypi.org/project/spacy/"
 SRC_URI="https://github.com/explosion/spaCy/archive/refs/tags/release-v${PV}.tar.gz -> ${P}.gh.tar.gz"
 S="${WORKDIR}/spaCy-release-v${PV}"

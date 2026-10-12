@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=poetry
 PYTHON_COMPAT=( python3_1{1,2,3,4,5} )
 inherit distutils-r1
 
-DESCRIPTION="CLI tool and library for managing the Motorola MB8611 modem and other devices."
+DESCRIPTION="CLI tool and library for managing the Motorola MB8611 modem and other devices"
 HOMEPAGE="https://github.com/Tatsh/mb8611"
 SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
 

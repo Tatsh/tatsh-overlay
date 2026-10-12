@@ -11,7 +11,7 @@ MY_PN="${PN%-bin}"
 
 inherit ghidra-extension
 
-DESCRIPTION="Ghidra extension exposing program data over MCP for AI-assisted analysis."
+DESCRIPTION="Ghidra extension exposing program data over MCP for AI-assisted analysis"
 HOMEPAGE="https://github.com/bethington/ghidra-mcp"
 SRC_URI="https://github.com/bethington/${MY_PN}/releases/download/v${PV}/${GHIDRA_EXT_NAME}-${PV}.zip
 	-> ${P}.zip

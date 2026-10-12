@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/cz-path"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Commitizen plugin that prefixes commits with common path of files."
+DESCRIPTION="Commitizen plugin that prefixes commits with common path of files"
 HOMEPAGE="
 	https://github.com/Tatsh/cz-path
 	https://pypi.org/project/cz-path/

@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_1{2,3,4,5} )
 
 inherit distutils-r1
 
-DESCRIPTION="Utilities for Vivisect."
+DESCRIPTION="Utilities for Vivisect"
 HOMEPAGE="https://github.com/williballenthin/viv-utils https://pypi.org/project/viv-utils/"
 SRC_URI="https://github.com/williballenthin/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
 

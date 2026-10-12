@@ -6,7 +6,7 @@ EAPI=8
 inherit go-module
 
 MY_PV=$(ver_rs 3 -)
-DESCRIPTION="Garbage YouTube live stream downloader."
+DESCRIPTION="Garbage YouTube live stream downloader"
 HOMEPAGE="https://github.com/Kethsar/ytarchive"
 SRC_URI="https://github.com/Kethsar/${PN}/archive/refs/tags/v${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-vendor.tar.xz"

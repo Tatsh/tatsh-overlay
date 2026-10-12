@@ -5,7 +5,7 @@ EAPI=8
 
 inherit java-utils-2
 
-DESCRIPTION="Command line application to use ReVanced."
+DESCRIPTION="Command line application to use ReVanced"
 HOMEPAGE="https://github.com/ReVanced/revanced-cli https://revanced.app/"
 SRC_URI="https://github.com/ReVanced/revanced-cli/releases/download/v${PV}/${P}-all.jar"
 

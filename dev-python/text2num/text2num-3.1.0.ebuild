@@ -40,7 +40,7 @@ CRATES="
 
 inherit cargo distutils-r1 pypi
 
-DESCRIPTION="Parse and convert number wording into digit representation."
+DESCRIPTION="Parse and convert number wording into digit representation"
 HOMEPAGE="https://pypi.org/project/text2num/"
 SRC_URI+=" ${CARGO_CRATE_URIS}"
 

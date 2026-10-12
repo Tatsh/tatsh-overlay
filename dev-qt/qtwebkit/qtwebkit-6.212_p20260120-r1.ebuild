@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake flag-o-matic
 
-DESCRIPTION="Community fork of QtWebKit."
+DESCRIPTION="Community fork of QtWebKit"
 HOMEPAGE="https://github.com/movableink/webkit"
 SHA="e5d2c3f3fd2bf2c392d7c7b212e8d1490ff8fe2b"
 SRC_URI="https://github.com/movableink/webkit/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"

@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/sbclaude"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Run Claude Code in a throwaway Docker container."
+DESCRIPTION="Run Claude Code in a throwaway Docker container"
 HOMEPAGE="https://github.com/Tatsh/sbclaude"
 LICENSE="MIT"
 SLOT="0"

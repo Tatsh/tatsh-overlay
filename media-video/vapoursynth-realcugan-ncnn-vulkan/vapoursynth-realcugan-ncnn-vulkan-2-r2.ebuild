@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="Real-CUGAN super resolution plugin for VapourSynth."
+DESCRIPTION="Real-CUGAN super resolution plugin for VapourSynth"
 HOMEPAGE="https://github.com/Kiyamou/VapourSynth-RealCUGAN-ncnn-Vulkan"
 SRC_URI="https://github.com/Kiyamou/VapourSynth-RealCUGAN-ncnn-Vulkan/archive/refs/tags/r2.tar.gz -> ${P}.tar.gz
 	https://github.com/Kiyamou/VapourSynth-RealCUGAN-ncnn-Vulkan/releases/download/r2/models.zip -> ${PN}-models-${PV}.zip"

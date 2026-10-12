@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake
 
-DESCRIPTION="RealSR super resolution plugin for VapourSynth."
+DESCRIPTION="RealSR super resolution plugin for VapourSynth"
 HOMEPAGE="https://github.com/Kiyamou/VapourSynth-RealSR-ncnn-Vulkan"
 SRC_URI="https://github.com/Kiyamou/VapourSynth-RealSR-ncnn-Vulkan/archive/refs/tags/r${PV}.tar.gz -> ${P}.tar.gz
 	https://github.com/Kiyamou/VapourSynth-RealSR-ncnn-Vulkan/releases/download/r1/models.7z -> ${P}-models.7z"

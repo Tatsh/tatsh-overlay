@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Colored symbols for various log levels for Python."
+DESCRIPTION="Colored symbols for various log levels for Python"
 HOMEPAGE="https://pypi.org/project/log-symbols/ https://github.com/manrajgrover/py-log-symbols"
 
 LICENSE="MIT"

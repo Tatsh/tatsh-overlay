@@ -9,7 +9,7 @@ USE_MPV="rdepend"
 
 inherit mpv-plugin
 
-DESCRIPTION="Queue files for deletion on quit."
+DESCRIPTION="Queue files for deletion on quit"
 HOMEPAGE="https://github.com/zenyd/mpv-scripts"
 SHA="10b53d507085ba2deda301b6fab3397eee275b71"
 SPECIAL_NAME="copyTime"

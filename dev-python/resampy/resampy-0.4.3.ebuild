@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Efficient signal resampling."
+DESCRIPTION="Efficient signal resampling"
 HOMEPAGE="https://pypi.org/project/resampy/ https://github.com/bmcfee/resampy"
 
 LICENSE="ISC"

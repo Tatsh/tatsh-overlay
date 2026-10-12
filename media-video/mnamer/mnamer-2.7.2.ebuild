@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python3_1{2,3,4,5} )
 DISTUTILS_USE_PEP517=setuptools
 inherit distutils-r1 pypi
 
-DESCRIPTION="Media file renaming and organising tool."
+DESCRIPTION="Media file renaming and organising tool"
 HOMEPAGE="https://github.com/jkwill87/mnamer"
 
 LICENSE="MIT"

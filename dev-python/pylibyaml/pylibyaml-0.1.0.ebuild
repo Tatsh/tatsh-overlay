@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_1{1,2,3,4,5} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Speed up PyYAML by automatically enabling LibYAML bindings."
+DESCRIPTION="Speed up PyYAML by automatically enabling LibYAML bindings"
 HOMEPAGE="https://pypi.org/project/pylibyaml/"
 
 LICENSE="MIT"

@@ -8,7 +8,7 @@ inherit cmake desktop fcaps flag-o-matic optfeature toolchain-funcs xdg
 MY_PN="pcsx2x6"
 MY_TAG="v${PV}"
 
-DESCRIPTION="PCSX2 fork emulating NAMCO System 246 and 256 arcade hardware."
+DESCRIPTION="PCSX2 fork emulating NAMCO System 246 and 256 arcade hardware"
 HOMEPAGE="https://github.com/PS2Homebrew-arcade/pcsx2x6"
 SRC_URI="https://github.com/PS2Homebrew-arcade/${MY_PN}/archive/refs/tags/${MY_TAG}.tar.gz
 	-> ${P}.gh.tar.gz"

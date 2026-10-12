@@ -11,7 +11,7 @@ inherit distutils-r1
 
 MY_COMMIT="3671fc24d6e625c2d75f3311724eb6b0c97664f8"
 
-DESCRIPTION="Reverse engineering framework for machine code manipulation."
+DESCRIPTION="Reverse engineering framework for machine code manipulation"
 HOMEPAGE="https://github.com/cea-sec/miasm https://pypi.org/project/miasm/"
 # Upstream has not tagged since 0.1.5 in 2020. That release's setup.py imports
 # distutils, which Python 3.12 removed, while master builds with setuptools

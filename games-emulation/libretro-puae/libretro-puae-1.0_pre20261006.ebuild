@@ -8,7 +8,7 @@ LIBRETRO_COMMIT_SHA="bc0c2b0ec64b81e368fa253f029e31247aeb66ac"
 
 inherit libretro-core
 
-DESCRIPTION="WIP libretro port of UAE (P-UAE and libco), a Commodore Amiga Emulator."
+DESCRIPTION="WIP libretro port of UAE (P-UAE and libco), a Commodore Amiga Emulator"
 HOMEPAGE="https://github.com/libretro/libretro-uae"
 LICENSE="GPL-2"
 SLOT="0"

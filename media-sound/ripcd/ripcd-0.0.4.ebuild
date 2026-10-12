@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/ripcd"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Rip audio CD to FLAC with CDDB metadata."
+DESCRIPTION="Rip audio CD to FLAC with CDDB metadata"
 HOMEPAGE="https://github.com/Tatsh/ripcd"
 
 LICENSE="MIT"

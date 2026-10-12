@@ -5,7 +5,7 @@ EAPI=8
 
 inherit autotools desktop xdg
 
-DESCRIPTION="68k Macintosh emulator (updated fork)."
+DESCRIPTION="68k Macintosh emulator (updated fork)"
 HOMEPAGE="https://github.com/kanjitalk755/macemu"
 SHA="892eeb74ab9d70dfb034138a0b39057b14f275bc"
 SRC_URI="https://github.com/kanjitalk755/macemu/archive/${SHA}.tar.gz -> ${P}.tar.gz

@@ -5,7 +5,7 @@ EAPI=8
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit cmake pypi python-r1
 
-DESCRIPTION="A Python FFI of nihui/rife-ncnn-vulkan achieved with SWIG."
+DESCRIPTION="A Python FFI of nihui/rife-ncnn-vulkan achieved with SWIG"
 HOMEPAGE="https://pypi.org/project/rife-ncnn-vulkan-python/"
 MODELS_SHA="c806e66490679aebc1b4a6832985e004fd552f46"
 SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")

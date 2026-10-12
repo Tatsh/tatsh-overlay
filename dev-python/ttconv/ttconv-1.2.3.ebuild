@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Library for conversion of common timed text formats."
+DESCRIPTION="Library for conversion of common timed text formats"
 HOMEPAGE="https://github.com/sandflow/ttconv https://pypi.org/project/ttconv/"
 
 LICENSE="BSD-2"

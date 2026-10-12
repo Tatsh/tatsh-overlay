@@ -12,7 +12,7 @@ inherit ghidra-extension
 # tag is rebuilt from it.
 MY_PV="1.0${PV#1.}"
 
-DESCRIPTION="Ghidra scripts for parsing PlayStation 3 executables."
+DESCRIPTION="Ghidra scripts for parsing PlayStation 3 executables"
 HOMEPAGE="https://github.com/clienthax/Ps3GhidraScripts"
 SRC_URI="https://github.com/clienthax/${GHIDRA_EXT_NAME}/archive/refs/tags/${MY_PV}.tar.gz
 	-> ${P}.tar.gz"

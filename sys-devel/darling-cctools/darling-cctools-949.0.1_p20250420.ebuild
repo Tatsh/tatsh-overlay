@@ -8,7 +8,7 @@ LLVM_COMPAT=( {18..23} )
 inherit cmake llvm-r2
 
 SHA="d9456c221e1f462e17c0b3297748bc089d5a861e"
-DESCRIPTION="Darling's fork of cctools and ld64 (Mach-O linker, ar, ranlib, lipo)."
+DESCRIPTION="Darling's fork of cctools and ld64 (Mach-O linker, ar, ranlib, lipo)"
 HOMEPAGE="https://github.com/darlinghq/cctools-port https://www.darlinghq.org/"
 SRC_URI="https://github.com/darlinghq/cctools-port/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/cctools-port-${SHA}"

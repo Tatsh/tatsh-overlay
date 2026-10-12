@@ -7,7 +7,7 @@ DISTUTILS_USE_PEP517=setuptools
 PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 inherit distutils-r1
 
-DESCRIPTION="An kill-switch that waits for a change on your USB ports."
+DESCRIPTION="An kill-switch that waits for a change on your USB ports"
 HOMEPAGE="https://github.com/hephaest0s/usbkill"
 SHA="d3df79edab0c1dcec4b56468958c17a5c5dc6dce"
 SRC_URI="https://github.com/hephaest0s/usbkill/archive/${SHA}.tar.gz -> ${P}.tar.gz"

@@ -7,7 +7,7 @@ inherit toolchain-funcs
 
 MY_PN="PMAP"
 
-DESCRIPTION="PlayStation 2 Mechacon Adjustment Program, for CD/DVD subsystem maintenance."
+DESCRIPTION="PlayStation 2 Mechacon Adjustment Program, for CD/DVD subsystem maintenance"
 HOMEPAGE="https://github.com/ps2homebrew/PMAP"
 SRC_URI="https://github.com/ps2homebrew/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
 	-> ${P}.tar.gz"

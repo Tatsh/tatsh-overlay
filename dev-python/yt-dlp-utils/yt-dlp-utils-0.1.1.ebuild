@@ -10,7 +10,7 @@ PYPI_VERIFY_REPO="https://github.com/Tatsh/yt-dlp-utils"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Utilities for programmatic use of yt-dlp."
+DESCRIPTION="Utilities for programmatic use of yt-dlp"
 HOMEPAGE="https://pypi.org/project/yt-dlp-utils/"
 
 LICENSE="MIT"

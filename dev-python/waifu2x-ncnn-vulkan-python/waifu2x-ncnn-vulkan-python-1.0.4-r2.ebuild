@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
 
 inherit cmake python-r1 pypi
 
-DESCRIPTION="A Python FFI of nihui/waifu2x-ncnn-vulkan achieved with SWIG."
+DESCRIPTION="A Python FFI of nihui/waifu2x-ncnn-vulkan achieved with SWIG"
 HOMEPAGE="https://pypi.org/project/waifu2x-ncnn-vulkan-python/"
 SRC_URI="$(pypi_sdist_url --no-normalize "${PN}")"
 

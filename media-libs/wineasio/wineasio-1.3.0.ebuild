@@ -5,7 +5,7 @@ EAPI=8
 
 inherit flag-o-matic toolchain-funcs
 
-DESCRIPTION="ASIO to JACK driver for Wine."
+DESCRIPTION="ASIO to JACK driver for Wine"
 HOMEPAGE="https://github.com/wineasio/wineasio"
 RTAUDIO_SHA="e03448bd15c1c34e842459939d755f5f89e880ed"
 SRC_URI="https://github.com/${PN}/${PN}/releases/download/v${PV}/${P}.tar.gz

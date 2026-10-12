@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{12..15} )
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="An inference library for Kokoro-82M."
+DESCRIPTION="An inference library for Kokoro-82M"
 HOMEPAGE="https://pypi.org/project/kokoro/"
 
 LICENSE="Apache-2.0"

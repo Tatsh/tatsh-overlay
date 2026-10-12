@@ -8,7 +8,7 @@ DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="A lightweight console printing and formatting toolkit."
+DESCRIPTION="A lightweight console printing and formatting toolkit"
 HOMEPAGE="https://github.com/explosion/wasabi"
 
 LICENSE="MIT"

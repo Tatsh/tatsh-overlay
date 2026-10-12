@@ -5,7 +5,7 @@ EAPI=8
 
 inherit autotools flag-o-matic
 
-DESCRIPTION="The UCL Compression Library."
+DESCRIPTION="The UCL Compression Library"
 HOMEPAGE="https://www.oberhumer.com/opensource/ucl/"
 SRC_URI="https://www.oberhumer.com/opensource/ucl/download/${P}.tar.gz"
 
