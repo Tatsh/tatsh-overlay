@@ -16,7 +16,7 @@ HOMEPAGE="https://github.com/inyutin/aiohttp_retry
 # The sdist on PyPI omits tests/app.py and tests/__init__.py, so the test
 # suite cannot import its own fixtures. The tag ships them.
 SRC_URI="https://github.com/inyutin/${MY_PN}/archive/refs/tags/v${PV}.tar.gz
-	-> ${P}.tar.gz"
+	-> ${P}.gh.tar.gz"
 S="${WORKDIR}/${MY_PN}-${PV}"
 
 LICENSE="MIT"
@@ -25,6 +25,5 @@ KEYWORDS="~amd64"
 
 RDEPEND="dev-python/aiohttp[${PYTHON_USEDEP}]"
 
-BDEPEND="test? ( dev-python/pytest-aiohttp[${PYTHON_USEDEP}] )"
-
+EPYTEST_PLUGINS=( pytest-aiohttp pytest-asyncio )
 distutils_enable_tests pytest
