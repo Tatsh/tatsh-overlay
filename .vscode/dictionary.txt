@@ -1588,6 +1588,7 @@ pykakasi
 pylibyaml
 pylzham
 pymatting
+pymobiledevice
 pynput
 pyobjc
 pyopencl
@@ -1834,6 +1835,7 @@ soxr
 spacy
 spaghettify
 spammy
+sparserestore
 spatialaudio
 spaz
 speedrun
@@ -1976,6 +1978,8 @@ treetable
 triangulator
 trimpath
 trng
+trollrestore
+trollstore
 trustme
 truststore
 tscache
