@@ -1,0 +1,11 @@
+--- a/src/shader_recompiler/frontend/maxwell/structured_control_flow.cpp	2024-03-04 08:02:54.000000000 -0500
++++ b/src/shader_recompiler/frontend/maxwell/structured_control_flow.cpp	2026-10-12 21:38:10.560207392 -0400
+@@ -976,7 +976,7 @@
+     Environment& env;
+     IR::AbstractSyntaxList& syntax_list;
+     bool uses_demote_to_helper{};
+-    const Flow::Block dummy_flow_block;
++    const Flow::Block dummy_flow_block{};
+ };
+ } // Anonymous namespace
+ 

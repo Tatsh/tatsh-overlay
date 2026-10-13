@@ -77,6 +77,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0006-boost-1.88.patch"
 	"${FILESDIR}/${PN}-0006-fix-use-of-nullptr-with-std-.patch"
 	"${FILESDIR}/${PN}-0007-fix-for-qt-6.10-qpa-change.patch"
+	"${FILESDIR}/${PN}-0008-gcc-16-const-member-init.patch"
 	"${FILESDIR}/${PN}-sdl-pipewire.patch"
 )
 
