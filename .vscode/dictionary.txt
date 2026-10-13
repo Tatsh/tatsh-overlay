@@ -393,6 +393,7 @@ disruptorplus
 distdir
 distfile
 distfiles
+distill
 distname
 distutils
 djava
@@ -556,6 +557,7 @@ esysroot
 ethteck
 evalex
 evdev
+evidentiary
 evins
 ewarn
 exceptiongroup
@@ -779,6 +781,7 @@ ifup
 iges
 iinclude
 ijknabla
+ilcs
 imageio
 imaplib
 imex
@@ -1206,6 +1209,7 @@ mende
 menelkir
 meowpc
 meroitic
+merrion
 merryhime
 mesen
 mesens
@@ -1213,6 +1217,7 @@ metaflac
 metainfo
 metapackage
 mgba
+mgpt
 mgree
 miao
 miasm
@@ -1525,6 +1530,7 @@ pppps
 ppsspp
 prboom
 prcbuild
+preempted
 preinst
 prerm
 preshed
@@ -1707,6 +1713,7 @@ revc
 rewx
 rgui
 richgel
+rightsholder
 ripcd
 riscv
 riverwalk
@@ -1868,6 +1875,7 @@ subclassing
 sublicensable
 sublicenseable
 submitit
+subprocessors
 subslot
 suidsgid
 suntec
