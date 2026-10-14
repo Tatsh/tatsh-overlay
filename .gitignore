@@ -5,7 +5,10 @@
 .cspellcache
 .directory
 /.*_cache/
+/.Trashes/
 /.claude/plans/
+/.sbclaude-venv/
+/.venv/
 /.wiswa-ci/
 /.yarn/install-state.gz
 /metadata/*
