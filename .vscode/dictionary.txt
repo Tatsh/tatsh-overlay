@@ -57,6 +57,7 @@ asan
 asar
 asciidoctor
 asciinema
+asflags
 asgi
 ashutosh
 ashuttl
@@ -69,6 +70,7 @@ astrelsky
 asttokens
 asyncer
 asyncio
+atexit
 atomicparsley
 atrac
 attn
@@ -145,6 +147,7 @@ broot
 browserchooser
 browserslist
 brrrip
+bsearch
 bsnes
 btrfs
 btzy
@@ -158,10 +161,12 @@ byteswapped
 cacerts
 cachetools
 calloc
+caminandes
 canadianaboriginal
 capa
 carian
 catus
+cbuild
 ccbin
 ccflags
 ccleste
@@ -174,11 +179,13 @@ cdpatch
 cdrecord
 cdrom
 cdrtools
+cdvd
 cemu
 certifi
 cffi
 cflags
 cfnetwork
+cglue
 cgns
 cgnslib
 chailove
@@ -215,6 +222,7 @@ clienthax
 climits
 clonehero
 cloudpathlib
+cmakelibs
 cmakelists
 cmakerc
 cmdpack
@@ -270,6 +278,7 @@ crfsuite
 croco
 crocods
 crontabs
+crossdev
 cryptopp
 cscs
 cstdint
@@ -342,6 +351,7 @@ ddspp
 deark
 deathkiller
 deband
+debuginfod
 debugpy
 decli
 declspec
@@ -375,6 +385,7 @@ dggml
 dgit
 dglslang
 dgtk
+dhave
 dhdf
 dheadless
 dhwview
@@ -397,9 +408,14 @@ distill
 distname
 distutils
 djava
+djbig
+djpeg
 dlazy
 dldchroma
 dlenski
+dlerc
+dlfind
+dlibdeflate
 dlibretro
 dlibrw
 dlinfo
@@ -412,6 +428,7 @@ dlsym
 dlua
 dlus
 dlzfse
+dlzma
 dman
 dmio
 dmupenplusapi
@@ -456,7 +473,9 @@ dother
 dotize
 dounit
 dpackage
+dpng
 dport
+dprefer
 dproject
 dpulseaudio
 dreamcast
@@ -472,10 +491,12 @@ dslackw
 dsplit
 dstaticdeps
 dsystemd
+dtiff
 dtrace
 dtrellis
 dubhatervapoursynth
 dudev
+dunix
 duployan
 dusing
 dvapoursynth
@@ -487,6 +508,7 @@ dvtk
 dvulkan
 dwarfstack
 dwayland
+dwebp
 dwith
 dxbox
 dxemu
@@ -497,6 +519,8 @@ dynarmic
 dynrec
 dyuzu
 dzhu
+dzlib
+dzstd
 ealayer
 eapis
 eapply
@@ -561,6 +585,7 @@ evidentiary
 evins
 ewarn
 exceptiongroup
+execstack
 exeinto
 exes
 existance
@@ -583,6 +608,7 @@ fancycompleter
 fastapi
 fastmcp
 fastparquet
+fatfs
 faudio
 favor
 favorite
@@ -631,6 +657,7 @@ foresto
 formatron
 fowner
 fpeel
+fpermissive
 fperms
 fphammerle
 fprint
@@ -644,6 +671,8 @@ freetype
 frida
 frob
 frozendict
+fsclient
+fseek
 fsetid
 fseventsd
 fsrcnn
@@ -655,6 +684,7 @@ fugashi
 fulfill
 funcs
 funcy
+fvwrite
 fxcfg
 félix
 gailly
@@ -662,11 +692,14 @@ gambatte
 gamecontrollerdb
 gamecube
 gccdir
+gccprefix
 gcflags
 gcrypt
 gdal
+gdbserver
 gdiextract
 gdkchan
+gdwarf
 gearboy
 gearsystem
 gekkio
@@ -721,6 +754,7 @@ gopls
 gpasswd
 gpatch
 gpgx
+gprofng
 gpsp
 gqlgen
 gradlew
@@ -733,6 +767,7 @@ grayed
 greenboost
 greenpy
 griffelib
+gskit
 gtksourceview
 guessit
 guicommon
@@ -831,6 +866,7 @@ ipython
 ircama
 irecovery
 iregex
+irix
 iroco
 irssi
 isledecomp
@@ -940,17 +976,22 @@ launchervar
 lbrotlidec
 ldflags
 ldlibs
+ldmakit
 leasetime
 lepcha
 leveladj
 levelmon
 lexiforest
+lfind
 lflags
 lfreetype
+lgskit
+libada
 libadrenotools
 libaio
 libao
 libasnd
+libatomic
 libatrac
 libauto
 libav
@@ -961,11 +1002,13 @@ libbz
 libc
 libc's
 libcap
+libcc
 libcdio
 libchdr
 libclang
 libclosure
 libco
+libcody's
 libcrypt
 libcst
 libcxx
@@ -973,6 +1016,8 @@ libcxxabi
 libd
 libdbusmenu
 libdispatch
+libdragon
+libdragon's
 libdrm
 libedit
 libepoxy
@@ -988,12 +1033,15 @@ libfmtconv
 libfoo
 libfprint
 libfragmentzip
+libgcc
 libgcrypt
 libgeneral
 libgfxd
 libggml
+libgloss
 libglvnd
 libgodot
+libgomp
 libgreenboost
 libgudev
 libgusb
@@ -1038,6 +1086,7 @@ libpthread
 libpulse
 libpumpkin
 libpwasio
+libquadmath
 libquasselc
 libr
 libreal
@@ -1064,6 +1113,7 @@ libslirp
 libsmacker
 libsndfile
 libspng
+libssp
 libstdc
 libstdcxx
 libsuinput
@@ -1151,6 +1201,7 @@ luajit
 lunasvg
 lutro
 lvulkan
+lwip
 lxml
 lycheeverse
 lzexe
@@ -1161,6 +1212,7 @@ lzma
 macemu
 macvendor
 macvendordb
+madler
 madpah
 magewell
 magika
@@ -1183,6 +1235,7 @@ markdownify
 markitdown
 markreidvfx
 marzer
+masp
 matedialog
 materialui
 math
@@ -1239,6 +1292,7 @@ miniz
 minizip
 mintplex
 mipsdisasm
+mipsel
 misaki
 miscfilters
 mizo
@@ -1267,6 +1321,7 @@ mrlotfi
 msgspec
 msiemens
 msmoosh
+msplit
 msvc
 mtune
 muety
@@ -1317,6 +1372,7 @@ neocd
 nestopia
 netcat
 netd
+netfs
 netgo
 netlink
 netmuxd
@@ -1328,12 +1384,15 @@ newa
 newar
 newbashcomp
 newbin
+newenvd
 newexe
 newfishcomp
 newicon
 newinitd
 newins
 newjar
+newlib
+newlib's
 newrules
 newscript
 newunit
@@ -1424,6 +1483,7 @@ openocd
 openpam
 openpyxl
 openrc
+openvcl
 openvdb
 optfeature
 optflags
@@ -1459,6 +1519,7 @@ pathspec
 pathstr
 paucinhau
 pcfx
+pckey
 pcores
 pcre
 pcsc
@@ -1514,6 +1575,7 @@ plutosvg
 plutovg
 pmap
 pngdefry
+pnggroup
 pocketcdg
 pokemini
 polkit
@@ -1543,6 +1605,7 @@ procapture
 procatpure
 proces
 procps
+profglue
 proglog
 programfileslinux
 progs
@@ -1553,6 +1616,8 @@ psutil
 psvpfsparser
 psvpfstools
 pthread
+pthreadglue
+pthreads
 puae
 pugh
 pugixml
@@ -1680,6 +1745,7 @@ recompiler
 redering
 redorav
 redumper
+reent
 referer
 refractoring
 regdump
@@ -1706,6 +1772,7 @@ resampy
 resp
 respawn
 respx
+retargetable
 retroachievements
 retroarch
 retrodream
@@ -1755,6 +1822,7 @@ saurashtra
 savoirfairelinux
 sbclaude
 scanny
+scei
 scenechange
 schalnat
 scikit
@@ -1766,6 +1834,7 @@ scribam
 scumm
 scummvm
 sdist
+sdksrc
 seatools
 seccomp
 sekrit
@@ -1853,6 +1922,7 @@ sqlfluff
 squirreljme
 srmd
 srsly
+srxfixup
 sslkeylogfile
 sslvpn
 ssource
@@ -2063,6 +2133,7 @@ vgpu
 vgpuctl
 videobuf
 videopac
+videoplayer
 vimfiles
 vimrc
 virtualjaguar
