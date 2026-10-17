@@ -1,0 +1,92 @@
+# Only hooks that run in pre-commit.ci: no `language: system` hooks and no network access at run
+# time. Prettier and cspell run in the QA workflow instead.
+exclude: "^\\.yarn/releases/"
+repos:
+  - hooks:
+      - id: 'check-added-large-files'
+      - id: 'check-ast'
+        files: '^scripts/'
+      - id: 'check-builtin-literals'
+        files: '^scripts/'
+      - id: 'check-case-conflict'
+      - id: 'check-executables-have-shebangs'
+      - id: 'check-merge-conflict'
+      # Scripts under files/ are installed with the right mode by the ebuild.
+      - exclude: '/files/'
+        id: 'check-shebang-scripts-are-executable'
+      - id: 'check-symlinks'
+      - id: 'check-toml'
+      - id: 'check-xml'
+      - id: 'debug-statements'
+        files: '^scripts/'
+      - id: 'destroyed-symlinks'
+      - id: 'detect-private-key'
+      # Patches, lock files and license texts must stay byte-for-byte as upstream made them.
+      - exclude: "^licenses/|(/files/.*\\.patch|\\.lock)$"
+        id: 'end-of-file-fixer'
+      - args:
+          - '--unique'
+        files: "^(\\.gitattributes|\\.prettierignore|\\.vscode/dictionary\\.txt)$"
+        id: 'file-contents-sorter'
+      - id: 'fix-byte-order-marker'
+      - exclude: "(/files/.*\\.patch|\\.lock)$"
+        id: 'mixed-line-ending'
+    repo: 'https://github.com/pre-commit/pre-commit-hooks'
+    rev: 'v6.0.0'
+  - hooks:
+      - id: 'poetry-check'
+    repo: 'https://github.com/python-poetry/poetry'
+    rev: '2.5.1'
+  - hooks:
+      - args:
+          - '--fix'
+        files: '^scripts/'
+        id: 'ruff-check'
+    repo: 'https://github.com/astral-sh/ruff-pre-commit'
+    rev: 'v0.16.10'
+  - hooks:
+      - files: '^scripts/'
+        id: 'yapf'
+        name: 'check Python files are formatted'
+    repo: 'https://github.com/google/yapf'
+    rev: 'v0.43.0'
+  - hooks:
+      - additional_dependencies:
+          - 'portage'
+          - 'portage-types'
+          - 'pyyaml'
+          - 'requests'
+          - 'types-pyyaml'
+          - 'types-requests'
+        files: '^scripts/'
+        id: 'mypy'
+    repo: 'https://github.com/pre-commit/mirrors-mypy'
+    rev: 'v2.4.0'
+  - hooks:
+      # Ebuilds and eclasses have no file type that pre-commit recognises, so match the files that
+      # `yarn shellcheck` checks.
+      - files: "^(scripts/[^/]+\\.sh|eclass/[^/]+\\.eclass|[^/]+/[^/]+/[^/]+\\.ebuild|net-dns/pihole-ftl/files/pihole-FTL|x11-misc/mimeo/files/mimeo-completion\\.sh)$"
+        id: 'shellcheck'
+        types:
+          - 'text'
+    repo: 'https://github.com/shellcheck-py/shellcheck-py'
+    rev: 'v0.11.0.1'
+  - hooks:
+      - id: 'check-github-actions'
+      - id: 'check-github-workflows'
+    repo: 'https://github.com/python-jsonschema/check-jsonschema'
+    rev: '0.38.2'
+  - hooks:
+      - id: 'zizmor'
+    repo: 'https://github.com/zizmorcore/zizmor-pre-commit'
+    rev: 'v1.30.1'
+  - hooks:
+      - args:
+          - '--config'
+          - 'package.json'
+          - '--configPointer'
+          - '/markdownlint-cli2'
+          - '--fix'
+        id: 'markdownlint-cli2'
+    repo: 'https://github.com/DavidAnson/markdownlint-cli2'
+    rev: 'v0.23.3'
