@@ -36,9 +36,12 @@ emaint sync -a
 
 Based on [Masking installed but unsafe ebuild repositories](https://wiki.gentoo.org/wiki/Ebuild_repository#Masking_installed_but_unsafe_ebuild_repositories).
 
-In `/etc/portage/package.mask/tatsh-overlay`, block all packages from this repository by default:
+In `/etc/portage/package.mask/tatsh-overlay`, block all packages from this repository (and its
+parents) by default:
 
 ```plain
+*/*::guru
+*/*::pentoo
 */*::tatsh-overlay
 ```
 
