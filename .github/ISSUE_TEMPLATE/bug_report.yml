@@ -51,7 +51,7 @@ body:
       required: true
   - attributes:
       description: |
-        For anything that fails during `emerge`, attach the complete `build.log` by dragging the file here. Portage prints its path, usually `/var/tmp/portage/<category>/<package>/temp/build.log`. Attach or paste any other relevant logs too, such as a program's own log or `dmesg` output. Pasted logs go inside the code block below.
+        For anything that fails during `emerge`, attach the complete `build.log` by dragging the file here. Portage prints its path, usually `/var/tmp/portage/<category>/<package>/temp/build.log`. Attach or paste any other relevant logs too, such as a program's own log or `dmesg` output. Pasted logs go inside the code block below. Check logs for personal information, such as usernames, home directories and hostnames, before submitting.
       label: 'Build log and other logs'
       value: |
         <details>
@@ -66,7 +66,9 @@ body:
     type: 'textarea'
   - attributes:
       description: |
-        Pass the atom so the output includes the USE flags and compiler flags (`CFLAGS`, `CXXFLAGS`, `LDFLAGS`, `MAKEOPTS`) used for that package. Paste it inside the code block below.
+        This shows the global `USE` and compiler flags (`CFLAGS`, `CXXFLAGS`, `LDFLAGS`, `MAKEOPTS`). For a package that is already installed, passing the atom also shows the flags it was built with. Paste it inside the code block below.
+
+        **Before submitting, check the output for personal information and remove or replace it**, for example your hostname (often part of the kernel version on the `System uname` line), names of private machines or paths, and usernames or tokens in `sync-uri`, `GENTOO_MIRRORS` or `PORTAGE_BINHOST` URLs.
       label: "Output of `emerge --info '=<category>/<package>-<version>::tatsh-overlay'`"
       value: |
         <details>
@@ -83,7 +85,12 @@ body:
       required: true
   - attributes:
       description: |
-        Any `package.use`, `package.env` or `package.accept_keywords` entries for the package(s), and any changes to `CFLAGS`, `LDFLAGS`, the linker or the compiler, such as LTO or Clang.
+        `emerge --info` does not show a package's own settings until it is installed, so for a package that fails to build, list its `package.use`, `package.env` and `package.accept_keywords` entries here, and any changes to the compiler or linker such as LTO or Clang. These commands find the entries and the `package.env` files they use:
+
+        ```sh
+        grep -rn '<category>/<package>' /etc/portage
+        grep -rhE '^[<>=~]*<category>/<package>([-[:space:]]|$)' /etc/portage/package.env | sed 's/#.*//' | awk '{for (i = 2; i <= NF; i++) print "/etc/portage/env/" $i}' | xargs -r grep -H .
+        ```
       label: 'Per-package settings'
       render: 'text'
     id: 'settings'
