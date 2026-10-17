@@ -1021,6 +1021,7 @@ libdragon's
 libdrm
 libedit
 libepoxy
+libera
 libevdev
 libexec
 libexecdir
