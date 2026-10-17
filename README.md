@@ -22,10 +22,14 @@ If you find a bug, please [file an issue](https://github.com/Tatsh/tatsh-overlay
 
 ## Installation
 
+This overlay builds on the [GURU](https://wiki.gentoo.org/wiki/Project:GURU) and
+[Pentoo](https://www.pentoo.org/) overlays, and some packages here depend on packages only they
+provide, so enable all three:
+
 ```shell
 emerge app-eselect/eselect-repository
-eselect repository enable tatsh-overlay
-emerge --sync
+eselect repository enable guru pentoo tatsh-overlay
+emaint sync -a
 ```
 
 ## Only unmask packages you use from this repository
