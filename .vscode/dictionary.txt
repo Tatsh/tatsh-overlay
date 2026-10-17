@@ -549,6 +549,7 @@ elfio
 elgato
 elog
 emable
+emaint
 emake
 emakeargs
 emea
@@ -1582,6 +1583,7 @@ pokemini
 polkit
 polm
 popcnt
+portageq
 portaudio
 portfile
 porttree
