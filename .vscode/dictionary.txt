@@ -2106,7 +2106,6 @@ usbkill
 usbmuxd
 usedep
 usemove
-usepkg
 userspace
 usertemplate
 usex
