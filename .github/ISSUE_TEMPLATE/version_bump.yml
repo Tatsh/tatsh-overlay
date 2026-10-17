@@ -1,0 +1,44 @@
+body:
+  - attributes:
+      value: |
+        Sync all repositories first (`emaint sync -a`) to make sure the new version is not already in the overlay. Please also search [existing issues](https://github.com/Tatsh/tatsh-overlay/issues?q=is%3Aissue).
+    type: 'markdown'
+  - attributes:
+      description: 'The package(s) as they are in the overlay now, one per line.'
+      label: 'Package(s)'
+      placeholder: |
+        =games-emulation/example-1.2.3::tatsh-overlay
+    id: 'packages'
+    type: 'textarea'
+    validations:
+      required: true
+  - attributes:
+      label: 'New upstream version'
+      placeholder: '1.3.0'
+    id: 'version'
+    type: 'input'
+    validations:
+      required: true
+  - attributes:
+      description: 'Link to the release, tag or changelog.'
+      label: 'Release or changelog'
+      placeholder: 'https://github.com/example/example/releases/tag/v1.3.0'
+    id: 'release'
+    type: 'input'
+  - attributes:
+      description: 'New or removed dependencies, build system changes, or anything known to break.'
+      label: 'Notes'
+    id: 'notes'
+    type: 'textarea'
+  - attributes:
+      label: 'Checklist'
+      options:
+        - label: 'I synced all repositories (`emaint sync -a`) and the overlay does not have this version yet.'
+          required: true
+        - label: 'I searched existing issues for this version.'
+          required: true
+    id: 'checklist'
+    type: 'checkboxes'
+description: 'A package in this overlay has a newer upstream version.'
+name: 'Version bump'
+title: '<category>/<package>: version bump to '
