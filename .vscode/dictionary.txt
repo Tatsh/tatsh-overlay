@@ -119,6 +119,7 @@ bincookie
 bincue
 bindir
 bindist
+binhost
 binja
 binpkgs
 binutils
