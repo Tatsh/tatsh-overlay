@@ -1583,7 +1583,6 @@ pokemini
 polkit
 polm
 popcnt
-portageq
 portaudio
 portfile
 porttree
