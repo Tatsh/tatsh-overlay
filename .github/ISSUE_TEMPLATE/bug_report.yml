@@ -1,15 +1,14 @@
 body:
   - attributes:
       value: |
-        This overlay builds on the guru and pentoo overlays, so both must be enabled:
+        This overlay builds on the guru and pentoo overlays, so both must be enabled and synced. `eselect repository enable` does not sync, so run both commands:
 
         ```sh
         eselect repository enable guru pentoo tatsh-overlay
+        emaint sync -a
         ```
 
-        Before filing, sync all repositories (`emaint sync -a`) and check that the problem still
-        happens. Please also search
-        [existing issues](https://github.com/Tatsh/tatsh-overlay/issues?q=is%3Aissue).
+        Before filing, sync all repositories again and check that the problem still happens. Please also search [existing issues](https://github.com/Tatsh/tatsh-overlay/issues?q=is%3Aissue).
     type: 'markdown'
   - attributes:
       description: |
@@ -44,8 +43,7 @@ body:
       required: true
   - attributes:
       description: |
-        The first error, with the lines around it. For build failures this is usually just before
-        `* ERROR:` in the output. For runtime problems, the error message or backtrace.
+        The first error, with the lines around it. For build failures this is usually just before `* ERROR:` in the output. For runtime problems, the error message or backtrace.
       label: 'Error output'
       render: 'text'
     id: 'error'
@@ -54,10 +52,7 @@ body:
       required: true
   - attributes:
       description: |
-        For anything that fails during `emerge`, attach the complete `build.log` by dragging the file
-        here. Portage prints its path, usually `/var/tmp/portage/<category>/<package>/temp/build.log`.
-        Attach or paste any other relevant logs too, such as a program's own log or `dmesg` output.
-        Pasted logs go inside the code block below.
+        For anything that fails during `emerge`, attach the complete `build.log` by dragging the file here. Portage prints its path, usually `/var/tmp/portage/<category>/<package>/temp/build.log`. Attach or paste any other relevant logs too, such as a program's own log or `dmesg` output. Pasted logs go inside the code block below.
       label: 'Build log and other logs'
       value: |
         <details>
@@ -80,8 +75,7 @@ body:
       required: true
   - attributes:
       description: |
-        Pass the atom so the output includes the USE flags and compiler flags (`CFLAGS`, `CXXFLAGS`,
-        `LDFLAGS`, `MAKEOPTS`) used for that package. Paste it inside the code block below.
+        Pass the atom so the output includes the USE flags and compiler flags (`CFLAGS`, `CXXFLAGS`, `LDFLAGS`, `MAKEOPTS`) used for that package. Paste it inside the code block below.
       label: "Output of `emerge --info '=<category>/<package>-<version>::tatsh-overlay'`"
       value: |
         <details>
@@ -106,8 +100,7 @@ body:
       required: true
   - attributes:
       description: |
-        Any `package.use`, `package.env` or `package.accept_keywords` entries for the package(s), and
-        any changes to `CFLAGS`, `LDFLAGS`, the linker or the compiler, such as LTO or Clang.
+        Any `package.use`, `package.env` or `package.accept_keywords` entries for the package(s), and any changes to `CFLAGS`, `LDFLAGS`, the linker or the compiler, such as LTO or Clang.
       label: 'Per-package settings'
       render: 'text'
     id: 'settings'
