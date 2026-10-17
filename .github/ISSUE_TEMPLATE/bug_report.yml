@@ -88,8 +88,11 @@ body:
         `emerge --info` does not show a package's own settings until it is installed, so for a package that fails to build, list its `package.use`, `package.env` and `package.accept_keywords` entries here, and any changes to the compiler or linker such as LTO or Clang. These commands find the entries and the `package.env` files they use:
 
         ```sh
-        grep -rn '<category>/<package>' /etc/portage
-        grep -rhE '^[<>=~]*<category>/<package>([-[:space:]]|$)' /etc/portage/package.env | sed 's/#.*//' | awk '{for (i = 2; i <= NF; i++) print "/etc/portage/env/" $i}' | xargs -r grep -H .
+        grep -rn '<category>/<package>' /etc/portage/package.*
+        grep -rhE '^[<>=~]*<category>/<package>([-[:space:]]|$)' /etc/portage/package.env |
+          sed 's/#.*//' |
+          awk '{for (i = 2; i <= NF; i++) print "/etc/portage/env/" $i}' |
+          xargs -r grep -H .
         ```
       label: 'Per-package settings'
       render: 'text'
