@@ -56,7 +56,7 @@
   "files": ["LICENSE", "README.md"],
   "homepage": "https://tatsh.github.io/tatsh-overlay/",
   "keywords": ["gentoo", "overlay"],
-  "license": "MIT",
+  "license": "GPL-2.0-only",
   "markdownlint-cli2": {
     "config": {
       "MD024": {
