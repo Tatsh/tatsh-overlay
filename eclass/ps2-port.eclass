@@ -47,7 +47,7 @@ RESTRICT="strip test"
 # Bare-metal target objects carry no .note.GNU-stack section.
 QA_EXECSTACK="${PS2_PORTS#/}/*"
 
-DEPEND="dev-embedded/ps2sdk"
+DEPEND="dev-games/ps2sdk"
 BDEPEND="
 	${DEPEND}
 	app-alternatives/ninja

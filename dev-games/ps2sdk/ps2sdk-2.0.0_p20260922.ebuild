@@ -23,8 +23,8 @@ IUSE="examples"
 RESTRICT="strip test"
 
 DEPEND="
-	dev-embedded/ps2-ee-gcc
-	dev-embedded/ps2-iop-gcc
+	dev-games/ps2-ee-gcc
+	dev-games/ps2-iop-gcc
 "
 RDEPEND="${DEPEND}"
 BDEPEND="${DEPEND}"
