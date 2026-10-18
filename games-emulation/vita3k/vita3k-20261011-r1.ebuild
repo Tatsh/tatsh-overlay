@@ -3,6 +3,8 @@
 
 EAPI=8
 
+# Upstream only enables Tracy outside Release builds.
+CMAKE_BUILD_TYPE=Release
 inherit cmake plocale xdg-utils
 
 # Qt UI translations, shipped in i18n/qt as vita3k_<tag>.ts.
@@ -76,7 +78,6 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND=">=dev-libs/boost-1.81:=
-	dev-cpp/tracy
 	dev-cpp/yaml-cpp:=
 	dev-libs/capstone:=
 	dev-libs/libfmt:=
@@ -168,6 +169,10 @@ src_prepare() {
 	mv "${WORKDIR}/psp2rela-${VITA_TOOLCHAIN_PSP2RELA_SHA}" "${S}/external/vita-toolchain/psp2rela" || die
 	rm -rf "${S}/external/libadrenotools/lib/linkernsbypass" || die
 	mv "${WORKDIR}/liblinkernsbypass-${LIBADRENOTOOLS_LIB_LINKERNSBYPASS_SHA}" "${S}/external/libadrenotools/lib/linkernsbypass" || die
+	# LTO is only enabled through the user's flags.
+	sed -e '/set(CMAKE_INTERPROCEDURAL_OPTIMIZATION/d' -i CMakeLists.txt || die
+	# Tracy is not used in Release builds; skip its empty-submodule check.
+	sed -e '/path = external\/tracy$/d' -i .gitmodules || die
 	cmake_src_prepare
 }
 
@@ -186,7 +191,6 @@ src_configure() {
 		-DUSE_SYSTEM_SPDLOG=ON
 		-DUSE_SYSTEM_STB=ON
 		-DUSE_SYSTEM_PUGIXML=ON
-		-DUSE_SYSTEM_TRACY=ON
 		-DUSE_SYSTEM_XXHASH=ON
 		-DUSE_SYSTEM_YAML_CPP=ON
 		-Wno-dev

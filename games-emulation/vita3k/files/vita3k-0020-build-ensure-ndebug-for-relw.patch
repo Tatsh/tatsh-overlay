@@ -31,23 +31,25 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 352ef0ad..1c7da0f9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -9,6 +9,21 @@ endif()
+@@ -9,6 +9,23 @@ endif()
  
  project(Vita3K)
  
-+# Ensure NDEBUG is defined for RelWithDebInfo builds. CMake's default
-+# RelWithDebInfo flags include -DNDEBUG, but some downstream packagers
-+# (e.g. Gentoo's cmake.eclass) clear CMAKE_<LANG>_FLAGS_RELWITHDEBINFO and
++# Ensure NDEBUG is defined for Release and RelWithDebInfo builds. CMake's
++# default flags for both include -DNDEBUG, but some downstream packagers
++# (e.g. Gentoo's cmake.eclass) clear CMAKE_<LANG>_FLAGS_<CONFIG> and
 +# substitute the user's CFLAGS/CXXFLAGS, which may not contain -DNDEBUG. A
 +# number of assert() call sites in the shader translator and HLE modules are
 +# TODO markers / unreachable-path guards rather than real invariants and
 +# depend on NDEBUG eliding them; without it the emulator aborts at runtime on
 +# unimplemented paths. Debug builds intentionally keep asserts active.
 +foreach(_lang C CXX)
-+    if(NOT CMAKE_${_lang}_FLAGS_RELWITHDEBINFO MATCHES "(^| )-DNDEBUG( |$)")
-+        set(CMAKE_${_lang}_FLAGS_RELWITHDEBINFO
-+            "${CMAKE_${_lang}_FLAGS_RELWITHDEBINFO} -DNDEBUG")
-+    endif()
++    foreach(_cfg RELEASE RELWITHDEBINFO)
++        if(NOT CMAKE_${_lang}_FLAGS_${_cfg} MATCHES "(^| )-DNDEBUG( |$)")
++            set(CMAKE_${_lang}_FLAGS_${_cfg}
++                "${CMAKE_${_lang}_FLAGS_${_cfg}} -DNDEBUG")
++        endif()
++    endforeach()
 +endforeach()
 +
  # Detects the amount of processors of the host machine and forwards the result to CPU_COUNT
