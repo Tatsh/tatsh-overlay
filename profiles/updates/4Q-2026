@@ -1,3 +1,4 @@
 move dev-python/dataclass-factory dev-python/adaptix
 move dev-embedded/ps2-dvp-binutils dev-games/ps2-dvp-binutils
 move dev-embedded/ps2-ee-binutils dev-games/ps2-ee-binutils
+move dev-embedded/ps2-iop-binutils dev-games/ps2-iop-binutils
