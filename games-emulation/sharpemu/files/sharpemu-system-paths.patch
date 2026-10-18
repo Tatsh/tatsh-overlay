@@ -1,0 +1,101 @@
+diff --git a/src/SharpEmu.CLI/SharpEmu.CLI.csproj b/src/SharpEmu.CLI/SharpEmu.CLI.csproj
+index 7cc497b..b261559 100644
+--- a/src/SharpEmu.CLI/SharpEmu.CLI.csproj
++++ b/src/SharpEmu.CLI/SharpEmu.CLI.csproj
+@@ -117,67 +117,4 @@ SPDX-License-Identifier: GPL-2.0-or-later
+     <NativeLibraryFolderName>plugins</NativeLibraryFolderName>
+   </PropertyGroup>
+ 
+-  <PropertyGroup>
+-    <FfmpegRuntimeTag>3b502d4</FfmpegRuntimeTag>
+-    <FfmpegRuntimeDir>
+-      $(BaseIntermediateOutputPath)ffmpeg-runtime/$(FfmpegRuntimeTag)/$(RuntimeIdentifier)</FfmpegRuntimeDir>
+-    <FfmpegRuntimePackage Condition="'$(RuntimeIdentifier)' == 'win-x64'">ffmpeg-windows-x64.zip</FfmpegRuntimePackage>
+-    <FfmpegRuntimePackage Condition="'$(RuntimeIdentifier)' == 'linux-x64'">ffmpeg-linux-x64.zip</FfmpegRuntimePackage>
+-    <FfmpegRuntimePackage Condition="'$(RuntimeIdentifier)' == 'osx-x64'">ffmpeg-macos-x64.zip</FfmpegRuntimePackage>
+-    <FfmpegRuntimePackage Condition="'$(RuntimeIdentifier)' == 'osx-arm64'">ffmpeg-macos-arm64.zip</FfmpegRuntimePackage>
+-    <FfmpegRuntimeArchive>$(FfmpegRuntimeDir)/$(FfmpegRuntimePackage)</FfmpegRuntimeArchive>
+-    <FfmpegRuntimeExtractDir>$(FfmpegRuntimeDir)/extracted</FfmpegRuntimeExtractDir>
+-  </PropertyGroup>
+-
+-  <Target Name="FetchFfmpegRuntime"
+-    BeforeTargets="Publish;Build"
+-    Condition="'$(RuntimeIdentifier)' != '' And '$(FfmpegRuntimePackage)' != ''">
+-    <DownloadFile
+-      SourceUrl="https://github.com/sharpemu/ffmpeg-core/releases/download/$(FfmpegRuntimeTag)/$(FfmpegRuntimePackage)"
+-      DestinationFolder="$(FfmpegRuntimeDir)"
+-      Condition="!Exists('$(FfmpegRuntimeArchive)')" />
+-    <Unzip
+-      SourceFiles="$(FfmpegRuntimeArchive)"
+-      DestinationFolder="$(FfmpegRuntimeExtractDir)"
+-      Condition="!Exists('$(FfmpegRuntimeExtractDir)')" />
+-  </Target>
+-
+-  <Target Name="PublishFfmpegRuntime"
+-    AfterTargets="Publish"
+-    DependsOnTargets="FetchFfmpegRuntime"
+-    Condition="'$(RuntimeIdentifier)' != '' And '$(FfmpegRuntimePackage)' != ''">
+-    <!-- Keyed off the target $(RuntimeIdentifier), not the host OS: publishing
+-         e.g. linux-x64 from a Windows machine is a supported cross-publish,
+-         and the extracted archive's own layout (bin/*.dll vs lib/*.so*) only
+-         depends on which platform's ffmpeg-core package was fetched. -->
+-    <ItemGroup>
+-      <_FfmpegRuntimeFiles Condition="$(RuntimeIdentifier.StartsWith('win'))"
+-        Include="$(FfmpegRuntimeExtractDir)/bin/*.dll" />
+-      <_FfmpegRuntimeFiles Condition="!$(RuntimeIdentifier.StartsWith('win'))"
+-        Include="$(FfmpegRuntimeExtractDir)/lib/*.so;$(FfmpegRuntimeExtractDir)/lib/*.so.*;$(FfmpegRuntimeExtractDir)/lib/*.dylib" />
+-    </ItemGroup>
+-    <Copy SourceFiles="@(_FfmpegRuntimeFiles)"
+-      DestinationFolder="$(PublishDir)$(NativeLibraryFolderName)"
+-      SkipUnchangedFiles="true" />
+-  </Target>
+-
+-  <!-- Mirrors PublishFfmpegRuntime for plain `dotnet build`: devs running
+-       straight out of the build output directory (no publish step) still
+-       need the FFmpeg plugins present, otherwise AvPlayer/Bink video probing
+-       throws NotSupportedException the first time a guest opens a movie. -->
+-  <Target Name="BuildFfmpegRuntime"
+-    AfterTargets="Build"
+-    DependsOnTargets="FetchFfmpegRuntime"
+-    Condition="'$(RuntimeIdentifier)' != '' And '$(FfmpegRuntimePackage)' != ''">
+-    <ItemGroup>
+-      <_FfmpegRuntimeFiles Condition="$(RuntimeIdentifier.StartsWith('win'))"
+-        Include="$(FfmpegRuntimeExtractDir)/bin/*.dll" />
+-      <_FfmpegRuntimeFiles Condition="!$(RuntimeIdentifier.StartsWith('win'))"
+-        Include="$(FfmpegRuntimeExtractDir)/lib/*.so;$(FfmpegRuntimeExtractDir)/lib/*.so.*;$(FfmpegRuntimeExtractDir)/lib/*.dylib" />
+-    </ItemGroup>
+-    <Copy SourceFiles="@(_FfmpegRuntimeFiles)"
+-      DestinationFolder="$(OutDir)$(NativeLibraryFolderName)"
+-      SkipUnchangedFiles="true" />
+-  </Target>
+-
+ </Project>
+diff --git a/src/SharpEmu.GUI/Updater.cs b/src/SharpEmu.GUI/Updater.cs
+index 0cb7006..e365928 100644
+--- a/src/SharpEmu.GUI/Updater.cs
++++ b/src/SharpEmu.GUI/Updater.cs
+@@ -25,6 +25,12 @@ public static class Updater
+ 
+     public static async Task<UpdateInfo?> CheckAsync(string? currentSha, CancellationToken cancellationToken = default)
+     {
++        // Updates are handled by the system package manager.
++        if (OperatingSystem.IsLinux())
++        {
++            return null;
++        }
++
+         var platform = CurrentPlatform();
+         using var timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+         timeout.CancelAfter(CheckTimeout);
+diff --git a/src/SharpEmu.HLE/SharpEmu.HLE.csproj b/src/SharpEmu.HLE/SharpEmu.HLE.csproj
+index 8932bea..4956d85 100644
+--- a/src/SharpEmu.HLE/SharpEmu.HLE.csproj
++++ b/src/SharpEmu.HLE/SharpEmu.HLE.csproj
+@@ -39,6 +39,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
+   <PropertyGroup>
+     <SharpEmuAerolibNamesFile>$(MSBuildThisFileDirectory)..\..\scripts\ps5_names.txt</SharpEmuAerolibNamesFile>
+     <SharpEmuAerolibTaskAssembly>$(MSBuildThisFileDirectory)..\..\artifacts\bin\$(Configuration)\netstandard2.0\SharpEmu.SourceGenerators.dll</SharpEmuAerolibTaskAssembly>
++    <SharpEmuAerolibTaskAssembly Condition="'$(_CommandLineDefinedOutputPath)' == 'true'">$([MSBuild]::EnsureTrailingSlash('$(OutputPath)'))SharpEmu.SourceGenerators.dll</SharpEmuAerolibTaskAssembly>
+   </PropertyGroup>
+ 
+   <UsingTask TaskName="SharpEmu.SourceGenerators.GenerateAerolibBinaryTask"
