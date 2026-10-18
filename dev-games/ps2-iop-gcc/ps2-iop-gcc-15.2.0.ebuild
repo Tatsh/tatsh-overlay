@@ -24,9 +24,9 @@ DEPEND="
 "
 RDEPEND="
 	${DEPEND}
-	~dev-embedded/ps2-iop-binutils-2.45.1
+	~dev-games/ps2-iop-binutils-2.45.1
 "
-BDEPEND="~dev-embedded/ps2-iop-binutils-2.45.1"
+BDEPEND="~dev-games/ps2-iop-binutils-2.45.1"
 
 TARGET="mipsel-none-elf"
 # Bare-metal target objects carry no .note.GNU-stack section.

@@ -3,3 +3,4 @@ move dev-embedded/ps2-dvp-binutils dev-games/ps2-dvp-binutils
 move dev-embedded/ps2-ee-binutils dev-games/ps2-ee-binutils
 move dev-embedded/ps2-iop-binutils dev-games/ps2-iop-binutils
 move dev-embedded/ps2-ee-gcc dev-games/ps2-ee-gcc
+move dev-embedded/ps2-iop-gcc dev-games/ps2-iop-gcc
