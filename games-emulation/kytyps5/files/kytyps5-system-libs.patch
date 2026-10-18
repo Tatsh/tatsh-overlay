@@ -1,0 +1,542 @@
+diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
+index f3cdf3a..0ef4aa2 100644
+--- a/3rdparty/CMakeLists.txt
++++ b/3rdparty/CMakeLists.txt
+@@ -1,110 +1,42 @@
+-set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+-
+-add_subdirectory(cpuinfo)
+-
+-include(FetchContent)
+-
+-# The Bluetooth DualSense transports speaker audio as fixed-size Opus packets.
+-set(kyty_build_testing_saved "${BUILD_TESTING}")
+-set(BUILD_TESTING OFF)
+-set(OPUS_BUILD_PROGRAMS OFF CACHE BOOL "" FORCE)
+-set(OPUS_INSTALL_PKG_CONFIG_MODULE OFF CACHE BOOL "" FORCE)
+-set(OPUS_INSTALL_CMAKE_CONFIG_MODULE OFF CACHE BOOL "" FORCE)
+-if(MSVC AND CMAKE_C_COMPILER_ID STREQUAL "Clang")
+-	# Opus assumes MSVC accepts SSE4.1 intrinsics without per-file flags, but
+-	# clang-cl rejects them in its baseline x64 files. Its AVX2 dispatch also
+-	# depends on the SSE4.1 declarations, so retain the x64 SSE2 baseline only.
+-	set(OPUS_X86_MAY_HAVE_SSE4_1 OFF CACHE BOOL "" FORCE)
+-	set(OPUS_X86_MAY_HAVE_AVX2 OFF CACHE BOOL "" FORCE)
+-endif()
+-FetchContent_Declare(opus
+-	GIT_REPOSITORY https://github.com/xiph/opus.git
+-	GIT_TAG ddbe48383984d56acd9e1ab6a090c54ca6b735a6
+-	GIT_SHALLOW FALSE)
+-FetchContent_MakeAvailable(opus)
+-set(BUILD_TESTING "${kyty_build_testing_saved}")
+-install(FILES "${opus_SOURCE_DIR}/COPYING" DESTINATION "licenses/opus")
+-
+-# The guest instruction patcher needs a decoder/encoder and a small
+-# trampoline assembler. Pin the same revisions used by shadPS4's implementation.
+-set(XBYAK_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+-FetchContent_Declare(
+-	xbyak
+-	GIT_REPOSITORY https://github.com/herumi/xbyak.git
+-	GIT_TAG 44a72f369268f7d552650891b296693e91db86bb
+-	GIT_SHALLOW FALSE
+-)
+-
+-set(ZYDIS_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+-set(ZYDIS_BUILD_TOOLS OFF CACHE BOOL "" FORCE)
+-set(ZYDIS_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+-set(ZYDIS_BUILD_DOXYGEN OFF CACHE BOOL "" FORCE)
+-FetchContent_Declare(
+-	zydis
+-	GIT_REPOSITORY https://github.com/zyantific/zydis.git
+-	GIT_TAG 120e0e705f8e3b507dc49377ac2879979f0d545c
+-	GIT_SUBMODULES_RECURSE TRUE
+-	GIT_SHALLOW FALSE
+-)
+-
+-FetchContent_MakeAvailable(xbyak zydis)
+-target_compile_definitions(xbyak INTERFACE XBYAK_NO_EXCEPTION)
+-
+-# ZArchive provides random-access reads for compressed game dumps. Build only
+-# the reader/writer library and its zstd dependency; the command-line tool is
+-# not part of KytyPS5's runtime distribution.
+-set(ZSTD_BUILD_PROGRAMS OFF CACHE BOOL "" FORCE)
+-set(ZSTD_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+-set(ZSTD_BUILD_STATIC ON CACHE BOOL "" FORCE)
+-set(ZSTD_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+-set(ZSTD_LEGACY_SUPPORT OFF CACHE BOOL "" FORCE)
+-set(ZSTD_MULTITHREAD_SUPPORT OFF CACHE BOOL "" FORCE)
+-FetchContent_Declare(
+-	zstd
+-	GIT_REPOSITORY https://github.com/facebook/zstd.git
+-	GIT_TAG f8745da6ff1ad1e7bab384bd1f9d742439278e99
+-	GIT_SHALLOW FALSE
+-	SOURCE_SUBDIR build/cmake
+-)
+-FetchContent_Declare(
+-	zarchive_source
+-	GIT_REPOSITORY https://github.com/Exzap/ZArchive.git
+-	GIT_TAG d2c717730092c7bf8cbb033b12fd4001b7c4d932
+-	GIT_SHALLOW FALSE
+-	PATCH_COMMAND "${GIT_EXECUTABLE}" apply --ignore-whitespace
+-		"${CMAKE_CURRENT_SOURCE_DIR}/patches/zarchive-reader.patch"
+-	SOURCE_SUBDIR kyty-library-only
+-)
+-FetchContent_MakeAvailable(zstd zarchive_source)
+-
++# Gentoo: use system libraries. Only imgui, LibAtrac9 (shadPS4 fork API) and
++# ZArchive (with KytyPS5's reader hardening patch) are built from source.
++find_package(PkgConfig REQUIRED)
++
++find_package(cpuinfo CONFIG REQUIRED)
++add_library(cpuinfo INTERFACE)
++target_link_libraries(cpuinfo INTERFACE cpuinfo::cpuinfo)
++
++pkg_check_modules(OPUS REQUIRED IMPORTED_TARGET opus)
++add_library(opus INTERFACE)
++target_link_libraries(opus INTERFACE PkgConfig::OPUS)
++
++find_package(xbyak CONFIG REQUIRED)
++set_target_properties(xbyak::xbyak PROPERTIES IMPORTED_GLOBAL TRUE)
++set_property(TARGET xbyak::xbyak APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS XBYAK_NO_EXCEPTION)
++find_package(zydis CONFIG REQUIRED)
++set_target_properties(Zydis::Zydis PROPERTIES IMPORTED_GLOBAL TRUE)
++
++pkg_check_modules(ZSTD REQUIRED IMPORTED_TARGET libzstd)
++set(KYTY_ZARCHIVE_DIR "" CACHE PATH "ZArchive source directory")
+ add_library(zarchive STATIC
+-	"${zarchive_source_SOURCE_DIR}/src/zarchivereader.cpp"
+-	"${zarchive_source_SOURCE_DIR}/src/zarchivewriter.cpp"
+-	"${zarchive_source_SOURCE_DIR}/src/sha_256.c"
++	"${KYTY_ZARCHIVE_DIR}/src/zarchivereader.cpp"
++	"${KYTY_ZARCHIVE_DIR}/src/zarchivewriter.cpp"
++	"${KYTY_ZARCHIVE_DIR}/src/sha_256.c"
+ )
+ add_library(ZArchive::zarchive ALIAS zarchive)
+-target_include_directories(zarchive SYSTEM PUBLIC "${zarchive_source_SOURCE_DIR}/include")
+-target_include_directories(zarchive PRIVATE "${zstd_SOURCE_DIR}/lib")
+-target_link_libraries(zarchive PRIVATE libzstd_static)
++target_include_directories(zarchive SYSTEM PUBLIC "${KYTY_ZARCHIVE_DIR}/include")
++target_link_libraries(zarchive PRIVATE PkgConfig::ZSTD)
+ target_compile_features(zarchive PRIVATE cxx_std_20)
+-if(MSVC)
+-	target_compile_options(zarchive PRIVATE /W0)
+-else()
+-	target_compile_options(zarchive PRIVATE -w)
+-endif()
++target_compile_options(zarchive PRIVATE -w)
+ 
+-set(SDL_SHARED OFF CACHE BOOL "" FORCE)
+-if(APPLE)
+-	# SDL's built-in iconv fallback does not support CP932.
+-	set(SDL_SYSTEM_ICONV ON CACHE BOOL "Use system iconv for CP932 conversion" FORCE)
++find_package(SDL3 CONFIG REQUIRED COMPONENTS SDL3-shared)
++if(NOT TARGET SDL3::SDL3-static)
++	add_library(SDL3::SDL3-static INTERFACE IMPORTED GLOBAL)
++	set_target_properties(SDL3::SDL3-static PROPERTIES INTERFACE_LINK_LIBRARIES SDL3::SDL3)
+ endif()
+-add_subdirectory(SDL3)
+ 
+-add_library(Vulkan-Headers INTERFACE)
+-add_library(Vulkan::Headers ALIAS Vulkan-Headers)
+-target_include_directories(Vulkan-Headers INTERFACE
+-	"${CMAKE_CURRENT_SOURCE_DIR}/Vulkan-Headers/include"
+-)
++find_package(VulkanHeaders CONFIG REQUIRED)
++set_target_properties(Vulkan::Headers PROPERTIES IMPORTED_GLOBAL TRUE)
+ 
+ add_library(imgui STATIC
+ 	imgui/imgui.cpp
+@@ -119,95 +51,35 @@ target_include_directories(imgui PUBLIC
+ )
+ target_compile_definitions(imgui PRIVATE IMGUI_IMPL_VULKAN_NO_PROTOTYPES)
+ target_link_libraries(imgui PUBLIC Vulkan::Headers)
+-if(MSVC)
+-	target_compile_options(imgui PRIVATE /W0)
+-else()
+-	target_compile_options(imgui PRIVATE -w)
+-endif()
+-
+-set(SPIRV_SKIP_TESTS ON CACHE BOOL "" FORCE)
+-set(SPIRV_SKIP_EXECUTABLES ON CACHE BOOL "" FORCE)
+-set(SKIP_SPIRV_TOOLS_INSTALL ON CACHE BOOL "" FORCE)
+-set(SPIRV_WERROR OFF CACHE BOOL "" FORCE)
+-set(SPIRV-Headers_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SPIRV-Headers" CACHE PATH "" FORCE)
+-add_subdirectory(SPIRV-Tools)
+-
+-add_library(spirv-tools ALIAS SPIRV-Tools-static)
+-add_library(spirv-tools-opt ALIAS SPIRV-Tools-opt)
+-
+-add_subdirectory(xxHash/build/cmake)
+-
+-set(FMT_DOC OFF CACHE BOOL "" FORCE)
+-set(FMT_INSTALL OFF CACHE BOOL "" FORCE)
+-set(FMT_MODULE OFF CACHE BOOL "" FORCE)
+-set(FMT_TEST OFF CACHE BOOL "" FORCE)
+-add_subdirectory(fmt EXCLUDE_FROM_ALL)
+-
+-set(JSON_BuildTests OFF CACHE BOOL "" FORCE)
+-set(JSON_Install OFF CACHE BOOL "" FORCE)
+-add_subdirectory(nlohmann_json EXCLUDE_FROM_ALL)
+-
+-set(SPDLOG_BUILD_ALL OFF CACHE BOOL "" FORCE)
+-set(SPDLOG_BUILD_EXAMPLE OFF CACHE BOOL "" FORCE)
+-set(SPDLOG_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+-set(SPDLOG_BUILD_BENCH OFF CACHE BOOL "" FORCE)
+-set(SPDLOG_BUILD_WARNINGS OFF CACHE BOOL "" FORCE)
+-set(SPDLOG_INSTALL OFF CACHE BOOL "" FORCE)
+-set(SPDLOG_FMT_EXTERNAL ON CACHE BOOL "" FORCE)
+-set(SPDLOG_NO_EXCEPTIONS ON CACHE BOOL "" FORCE)
+-if(WIN32)
+-	set(SPDLOG_WCHAR_FILENAMES ON CACHE BOOL "" FORCE)
+-endif()
+-add_subdirectory(spdlog EXCLUDE_FROM_ALL)
+-
+-if (NOT TARGET FFmpeg::ffmpeg)
+-	# On macOS the target arch is driven by CMAKE_OSX_ARCHITECTURES, not the host
+-	# CMAKE_SYSTEM_PROCESSOR (which reports arm64 even for an x86_64/Rosetta build).
+-	if(APPLE AND CMAKE_OSX_ARCHITECTURES)
+-		if(CMAKE_OSX_ARCHITECTURES MATCHES "^(x86_64)$")
+-			set(ARCHITECTURE x86_64)
+-		elseif(CMAKE_OSX_ARCHITECTURES MATCHES "^(arm64)$")
+-			set(ARCHITECTURE arm64)
+-		else()
+-			set(ARCHITECTURE x86_64 arm64) # universal
+-		endif()
+-	elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64|ARM64)$")
+-		set(ARCHITECTURE arm64)
+-	else()
+-		set(ARCHITECTURE x86_64)
+-	endif()
+-	add_subdirectory(ffmpeg-core)
+-	add_library(FFmpeg::ffmpeg ALIAS ffmpeg)
+-endif()
++target_compile_options(imgui PRIVATE -w)
++
++find_package(SPIRV-Tools CONFIG REQUIRED)
++find_package(SPIRV-Tools-opt CONFIG REQUIRED)
++add_library(spirv-tools INTERFACE)
++target_link_libraries(spirv-tools INTERFACE SPIRV-Tools-shared)
++add_library(spirv-tools-opt INTERFACE)
++target_link_libraries(spirv-tools-opt INTERFACE SPIRV-Tools-opt)
++
++pkg_check_modules(XXHASH REQUIRED IMPORTED_TARGET libxxhash)
++add_library(xxhash INTERFACE)
++target_link_libraries(xxhash INTERFACE PkgConfig::XXHASH)
++
++find_package(fmt CONFIG REQUIRED)
++set_target_properties(fmt::fmt PROPERTIES IMPORTED_GLOBAL TRUE)
++find_package(nlohmann_json CONFIG REQUIRED)
++set_target_properties(nlohmann_json::nlohmann_json PROPERTIES IMPORTED_GLOBAL TRUE)
++find_package(spdlog CONFIG REQUIRED)
++set_target_properties(spdlog::spdlog PROPERTIES IMPORTED_GLOBAL TRUE)
++
++pkg_check_modules(FFMPEG REQUIRED IMPORTED_TARGET
++	libavcodec libavfilter libavformat libavutil libswresample libswscale)
++add_library(ffmpeg INTERFACE)
++target_link_libraries(ffmpeg INTERFACE PkgConfig::FFMPEG)
++add_library(FFmpeg::ffmpeg ALIAS ffmpeg)
+ 
+ file(GLOB LIBATRAC9_SOURCES LibAtrac9/C/src/*.c)
+ add_library(LibAtrac9 STATIC ${LIBATRAC9_SOURCES})
+ target_include_directories(LibAtrac9 PUBLIC LibAtrac9/C/src)
+-if(MSVC)
+-	target_compile_options(LibAtrac9 PRIVATE /W0)
+-endif()
+ 
+-set(TRACY_STATIC ON CACHE BOOL "" FORCE)
+-set(TRACY_ENABLE ON CACHE BOOL "" FORCE)
+-set(TRACY_NO_CRASH_HANDLER ON CACHE BOOL "" FORCE)
+-set(TRACY_ON_DEMAND ON CACHE BOOL "" FORCE)
+-set(TRACY_DELAYED_INIT ON CACHE BOOL "" FORCE)
+-set(TRACY_MANUAL_LIFETIME ON CACHE BOOL "" FORCE)
+-add_subdirectory(tracy EXCLUDE_FROM_ALL)
+-if (TARGET TracyClient)
+-	if (MSVC)
+-		target_compile_options(TracyClient PRIVATE /WX-)
+-	endif()
+-	if (CLANG)
+-		target_compile_options(TracyClient PRIVATE
+-			-Wno-error
+-			-Wno-braced-scalar-init
+-			-Wno-format
+-			-Wno-unused-variable
+-		)
+-	endif()
+-endif()
+-
+-if (CLANG AND MSVC)
+-add_subdirectory(winpthread)
+-endif()
++find_package(Tracy CONFIG REQUIRED)
++set_target_properties(Tracy::TracyClient PROPERTIES IMPORTED_GLOBAL TRUE)
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 444913f..82c4bd1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -149,11 +149,13 @@ endif()
+ 
+ project(Kyty${KYTY_PROJECT_NAME}${CMAKE_BUILD_TYPE}${KYTY_COMPILER} VERSION 0.3.0)
+ 
++find_path(MAGIC_ENUM_INCLUDE_DIR magic_enum.hpp PATH_SUFFIXES magic_enum REQUIRED)
++
+ include_directories(
+ 	${KYTY_THIRD_PARTY_DIR}/gtest/include
+ 	${KYTY_THIRD_PARTY_DIR}/gtest
+ 	${KYTY_THIRD_PARTY_DIR}/fmt/include
+-	${KYTY_THIRD_PARTY_DIR}/magic_enum/include/magic_enum
++	${MAGIC_ENUM_INCLUDE_DIR}
+ 	${PROJECT_BINARY_DIR}
+ 	${KYTY_SOURCE_DIR}
+ )
+diff --git a/src/common/userDataDir.h b/src/common/userDataDir.h
+new file mode 100644
+index 0000000..7334b68
+--- /dev/null
++++ b/src/common/userDataDir.h
+@@ -0,0 +1,31 @@
++#ifndef KYTY_COMMON_USER_DATA_DIR_H_
++#define KYTY_COMMON_USER_DATA_DIR_H_
++
++#include <cstdlib>
++#include <filesystem>
++#include <system_error>
++
++namespace Common {
++
++// Settings, saves, patches and logs are written relative to the working
++// directory. A system install is read-only, so work from
++// $XDG_DATA_HOME/kytyps5 (default ~/.local/share/kytyps5) instead.
++inline bool EnterUserDataDirectory() {
++	std::filesystem::path dir;
++	if (const char* xdg = std::getenv("XDG_DATA_HOME"); xdg != nullptr && *xdg == '/') {
++		dir = xdg;
++	} else if (const char* home = std::getenv("HOME"); home != nullptr && *home != '\0') {
++		dir = std::filesystem::path(home) / ".local" / "share";
++	} else {
++		return false;
++	}
++	dir /= "kytyps5";
++	std::error_code ec;
++	std::filesystem::create_directories(dir, ec);
++	std::filesystem::current_path(dir, ec);
++	return !ec;
++}
++
++} // namespace Common
++
++#endif /* KYTY_COMMON_USER_DATA_DIR_H_ */
+diff --git a/src/launcher/CMakeLists.txt b/src/launcher/CMakeLists.txt
+index 35a8bc1..4f3412b 100644
+--- a/src/launcher/CMakeLists.txt
++++ b/src/launcher/CMakeLists.txt
+@@ -102,15 +102,6 @@ install(TARGETS launcher
+ 	BUNDLE DESTINATION .
+ 	RUNTIME DESTINATION .)
+ 
+-if(NOT APPLE)
+-	# Older releases require the previous executable name when validating updates.
+-	install(CODE "
+-		file(INSTALL DESTINATION \"\${CMAKE_INSTALL_PREFIX}\"
+-			TYPE PROGRAM RENAME \"launcher${CMAKE_EXECUTABLE_SUFFIX}\"
+-			FILES \"\${CMAKE_INSTALL_PREFIX}/${launcher_name}${CMAKE_EXECUTABLE_SUFFIX}\")
+-	")
+-endif()
+-
+ if(APPLE)
+ 	install(TARGETS kyty_emulator DESTINATION "KytyPS5.app/Contents/MacOS")
+ 	install(TARGETS kyty_updater DESTINATION "KytyPS5.app/Contents/MacOS")
+@@ -131,10 +122,6 @@ if(APPLE)
+ 	")
+ endif()
+ 
+-if(NOT APPLE)
+-	install(TARGETS kyty_updater RUNTIME DESTINATION .)
+-endif()
+-
+ if(WIN32)
+     install(CODE "
+     		execute_process(
+@@ -146,62 +133,6 @@ if(WIN32)
+ 				--no-translations
+     		)
+     ")
+-elseif(LINUX)
+-	# Bundle the Qt runtime and plugins.
+-	set_target_properties(launcher PROPERTIES
+-		INSTALL_RPATH "$ORIGIN/lib"
+-		BUILD_WITH_INSTALL_RPATH FALSE
+-		LINK_FLAGS "${KYTY_LD_OPTIONS} -Wl,--disable-new-dtags")
+-
+-	# Support distribution and official Qt layouts.
+-	get_target_property(kyty_qt_core_lib Qt6::Core IMPORTED_LOCATION_RELEASE)
+-	if(NOT kyty_qt_core_lib)
+-		get_target_property(kyty_qt_core_lib Qt6::Core IMPORTED_LOCATION)
+-	endif()
+-	get_filename_component(kyty_qt_libdir "${kyty_qt_core_lib}" DIRECTORY)
+-
+-	set(kyty_qt_plugins_dir "")
+-	foreach(kyty_candidate
+-			"${kyty_qt_libdir}/qt6/plugins"
+-			"${kyty_qt_libdir}/../plugins"
+-			"${Qt6_DIR}/../../../plugins")
+-		if(IS_DIRECTORY "${kyty_candidate}/platforms")
+-			get_filename_component(kyty_qt_plugins_dir "${kyty_candidate}" ABSOLUTE)
+-			break()
+-		endif()
+-	endforeach()
+-
+-	if(kyty_qt_plugins_dir)
+-		message(STATUS "Qt plugins for launcher deployment: ${kyty_qt_plugins_dir}")
+-		set(kyty_qt_plugin_files "")
+-		foreach(kyty_qt_plugin platforms tls imageformats xcbglintegrations wayland-shell-integration)
+-			if(IS_DIRECTORY "${kyty_qt_plugins_dir}/${kyty_qt_plugin}")
+-				file(GLOB kyty_qt_plugin_group
+-					"${kyty_qt_plugins_dir}/${kyty_qt_plugin}/*.so"
+-					"${kyty_qt_plugins_dir}/${kyty_qt_plugin}/*.so.*")
+-				list(APPEND kyty_qt_plugin_files ${kyty_qt_plugin_group})
+-				install(DIRECTORY "${kyty_qt_plugins_dir}/${kyty_qt_plugin}" DESTINATION "plugins")
+-			endif()
+-		endforeach()
+-		install(CODE "
+-			set(kyty_plugin_files \"${kyty_qt_plugin_files}\")
+-			file(GET_RUNTIME_DEPENDENCIES
+-				EXECUTABLES \"${CMAKE_CURRENT_BINARY_DIR}/${launcher_name}\"
+-				LIBRARIES \${kyty_plugin_files}
+-				RESOLVED_DEPENDENCIES_VAR kyty_resolved
+-				POST_INCLUDE_REGEXES \"libQt6\" \"libicu\"
+-				POST_EXCLUDE_REGEXES \".*\")
+-			foreach(kyty_dep \${kyty_resolved})
+-				file(INSTALL DESTINATION \"\${CMAKE_INSTALL_PREFIX}/lib\"
+-					TYPE SHARED_LIBRARY FOLLOW_SYMLINK_CHAIN FILES \"\${kyty_dep}\")
+-			endforeach()
+-		")
+-		install(CODE "
+-			file(WRITE \"\${CMAKE_INSTALL_PREFIX}/qt.conf\" \"[Paths]\\nPlugins = plugins\\n\")
+-		")
+-	else()
+-		message(WARNING "Qt plugin directory not found; the installed launcher will need a system Qt")
+-	endif()
+ endif()
+ 
+ 
+diff --git a/src/launcher/src/cheatFile.cpp b/src/launcher/src/cheatFile.cpp
+index 1c14454..ad3cb9f 100644
+--- a/src/launcher/src/cheatFile.cpp
++++ b/src/launcher/src/cheatFile.cpp
+@@ -48,7 +48,7 @@ QString PlanPath(const QString& title_id) {
+ 	if (!IsSupportedTitleId(title_id)) {
+ 		return {};
+ 	}
+-	return QDir(QCoreApplication::applicationDirPath())
++	return QDir(QDir::currentPath())
+ 	    .filePath(QStringLiteral("_Patches/%1.json").arg(title_id.trimmed().toUpper()));
+ }
+ 
+diff --git a/src/launcher/src/main.cpp b/src/launcher/src/main.cpp
+index 05710ea..84eedbc 100644
+--- a/src/launcher/src/main.cpp
++++ b/src/launcher/src/main.cpp
+@@ -1,10 +1,13 @@
+ #include "mainDialog.h"
+ #include "launcherTheme.h"
+ 
++#include "common/userDataDir.h"
++
+ #include <QApplication>
+ 
+ int main(int argc, char* argv[]) {
+ 	QApplication a(argc, argv);
++	Common::EnterUserDataDirectory();
+ 	LauncherTheme::Initialize(a);
+ 
+ 	MainDialog w;
+diff --git a/src/launcher/src/mainDialog.cpp b/src/launcher/src/mainDialog.cpp
+index d3ca293..368433e 100644
+--- a/src/launcher/src/mainDialog.cpp
++++ b/src/launcher/src/mainDialog.cpp
+@@ -428,7 +428,7 @@ void MainDialog::RunInterpreter(QProcess* process, const Configuration& info) {
+ 	const auto& interpreter = m_p->GetInterpreter();
+ 
+ 	QFileInfo f(interpreter);
+-	auto      dir = f.absoluteDir();
++	auto      dir = QDir::current();
+ 
+ 	auto args = CreateEmulatorArgs(info);
+ 	if (args.isEmpty()) {
+diff --git a/src/loader/guestInstructionPatcher.cpp b/src/loader/guestInstructionPatcher.cpp
+index 0ab7de6..5ed9c07 100644
+--- a/src/loader/guestInstructionPatcher.cpp
++++ b/src/loader/guestInstructionPatcher.cpp
+@@ -267,7 +267,7 @@ DecodedCodeInstruction DecodeCodeInstruction(uintptr_t address, uintptr_t end) {
+ 	for (u8 index = 0; index < decoded.instruction.operand_count_visible; ++index) {
+ 		const auto& operand = decoded.operands[index];
+ 		if (operand.type != ZYDIS_OPERAND_TYPE_MEMORY ||
+-		    !IsStackPointerRegister(operand.mem.base) || operand.mem.disp.size == 0 ||
++		    !IsStackPointerRegister(operand.mem.base) || !operand.mem.disp.has_displacement ||
+ 		    operand.mem.disp.value >= 0) {
+ 			continue;
+ 		}
+diff --git a/src/main.cpp b/src/main.cpp
+index 1c3bdbb..cfdad9f 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -5,6 +5,7 @@
+ #include "common/file.h"
+ #include "common/stringUtils.h"
+ #include "common/threads.h"
++#include "common/userDataDir.h"
+ #include "common/virtualMemory.h"
+ #include "emulator.h"
+ #include "kytyGitVersion.h"
+@@ -531,6 +532,25 @@ static int Main(int argc, char* argv[]) {
+ 		return 0;
+ 	}
+ 
++	// Resolve path arguments before leaving the caller's directory.
++	static std::vector<std::string> absolute_args;
++	absolute_args.reserve(static_cast<size_t>(argc));
++	for (int index = 1; index + 1 < argc; index++) {
++		const std::string_view arg(argv[index]);
++		if (arg == "--game" || arg == "--addcont-dir" || arg == "--game-patch" ||
++		    arg == "--shader-log-folder" ||
++		    arg == "--command-buffer-dump-folder" || arg == "--printf-output-file") {
++			std::error_code ec;
++			auto            path = std::filesystem::absolute(argv[index + 1], ec);
++			if (!ec) {
++				absolute_args.push_back(path.string());
++				argv[index + 1] = absolute_args.back().data();
++			}
++			index++;
++		}
++	}
++	Common::EnterUserDataDirectory();
++
+ 	if (!ParseArgs(argc, argv, options, show_help)) {
+ 		PrintUsage();
+ 		return 1;
+diff --git a/src/utils.cmake b/src/utils.cmake
+index 998e009..f3983b8 100644
+--- a/src/utils.cmake
++++ b/src/utils.cmake
+@@ -96,12 +96,12 @@ if(KYTY_CLANG_CL)
+ elseif(CLANG OR GCC)
+ 
+ 	if (CLANG)
+-	    set(KYTY_CPP_FLAGS "${KYTY_CPP_FLAGS} -fno-rtti -fno-exceptions -fcolor-diagnostics -finput-charset=UTF-8 -fexec-charset=UTF-8 -g -fno-strict-aliasing -fno-omit-frame-pointer -Wall -fmessage-length=0")
++	    set(KYTY_CPP_FLAGS "${KYTY_CPP_FLAGS} -fno-rtti -fno-exceptions -fcolor-diagnostics -finput-charset=UTF-8 -fexec-charset=UTF-8 -fno-strict-aliasing -fno-omit-frame-pointer -Wall -fmessage-length=0")
+ 	    if (WIN32)
+ 	    	set(KYTY_CPP_FLAGS "${KYTY_CPP_FLAGS} -static")
+ 	    endif()
+ 	else()
+-		set(KYTY_CPP_FLAGS "${KYTY_CPP_FLAGS} -fno-exceptions -fdiagnostics-color=always -finput-charset=UTF-8 -fexec-charset=UTF-8 -static-libgcc -static-libstdc++ -g -fno-strict-aliasing -fno-omit-frame-pointer -Wall -Wno-unused-value -fmessage-length=0")
++		set(KYTY_CPP_FLAGS "${KYTY_CPP_FLAGS} -fno-exceptions -fdiagnostics-color=always -finput-charset=UTF-8 -fexec-charset=UTF-8 -fno-strict-aliasing -fno-omit-frame-pointer -Wall -Wno-unused-value -fmessage-length=0")
+ 	endif()
+ 	
+     if(KYTY_WARNINGS_ARE_ERRORS)
+@@ -109,7 +109,6 @@ elseif(CLANG OR GCC)
+ 	add_compile_options(-Werror)
+     endif()	
+ 
+-	add_link_options("-g")
+ 	
+ 	unset(CMAKE_CXX_STANDARD_LIBRARIES CACHE)
+ 	unset(CMAKE_C_STANDARD_LIBRARIES CACHE)
