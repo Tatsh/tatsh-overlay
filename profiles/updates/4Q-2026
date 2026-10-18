@@ -6,3 +6,4 @@ move dev-embedded/ps2-ee-gcc dev-games/ps2-ee-gcc
 move dev-embedded/ps2-iop-gcc dev-games/ps2-iop-gcc
 move dev-embedded/ps2sdk dev-games/ps2sdk
 move dev-embedded/ps2-zlib dev-games/ps2-zlib
+move dev-embedded/ps2-libjpeg-turbo dev-games/ps2-libjpeg-turbo
