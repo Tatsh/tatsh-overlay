@@ -10,3 +10,4 @@ move dev-embedded/ps2-libjpeg-turbo dev-games/ps2-libjpeg-turbo
 move dev-embedded/ps2-libpng dev-games/ps2-libpng
 move dev-embedded/ps2-libtiff dev-games/ps2-libtiff
 move dev-embedded/gskit dev-games/gskit
+move dev-embedded/masp dev-games/masp
