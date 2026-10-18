@@ -1,0 +1,132 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9797d88..d2ac5ef 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -60,9 +60,7 @@ else()
+ endif()
+ 
+ if (ARCHITECTURE STREQUAL "x86_64")
+-    # Target x86-64-v3 CPU architecture as this is a good balance between supporting performance critical
+-    # instructions like AVX2 and maintaining support for older CPUs.
+-    add_compile_options(-march=x86-64-v3)
++    # Gentoo: the ISA level comes from the user's CFLAGS.
+ endif()
+ 
+ cmake_host_system_information(RESULT PROC_INFO QUERY PROCESSOR_DESCRIPTION)
+@@ -233,12 +231,13 @@ endif()
+ 
+ if (ENABLE_SYSTEM_LIBRARIES)
+     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
++    find_package(PkgConfig REQUIRED)
+     find_package(Boost 1.84.0 CONFIG)
+     find_package(CLI11 2.6.1 CONFIG)
+     find_package(FFmpeg 5.1.2 MODULE)
+     find_package(fmt 12.0.0 CONFIG)
+     find_package(Freetype 2.14.1 MODULE)
+-    find_package(glslang 15 CONFIG)
++    find_package(glslang CONFIG)
+     find_package(half 1.12.0 MODULE)
+     find_package(magic_enum 0.9.7 CONFIG)
+     find_package(miniupnpc 2.3.3 MODULE)
+@@ -258,8 +257,22 @@ if (ENABLE_SYSTEM_LIBRARIES)
+     find_package(xxHash 0.8.2 MODULE)
+     find_package(ZArchive 0.1.2 MODULE)
+     find_package(ZLIB 1.3 MODULE)
+-    find_package(Zydis 5.0.0 MODULE)
+-    find_package(zstd 1.5.6 CONFIG)
++    # Gentoo: Zydis 4 (see cpu_patches.cpp backport); upstream ships no FindZydis module.
++    find_package(zydis CONFIG)
++    find_package(OpenSSL)
++    find_package(Protobuf CONFIG)
++    find_package(httplib CONFIG)
++    find_package(libusb MODULE)
++    # Tracy is only enabled in upstream's non-Release builds; use its headers
++    # without TRACY_ENABLE so every profiling macro compiles away.
++    find_path(TRACY_INCLUDE_DIR tracy/Tracy.hpp PATH_SUFFIXES tracy REQUIRED)
++    add_library(Tracy::TracyClient INTERFACE IMPORTED GLOBAL)
++    set_target_properties(Tracy::TracyClient PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${TRACY_INCLUDE_DIR}")
++    pkg_check_modules(ZSTD IMPORTED_TARGET libzstd>=1.5.6)
++    if (TARGET PkgConfig::ZSTD)
++        add_library(zstd::libzstd INTERFACE IMPORTED GLOBAL)
++        set_target_properties(zstd::libzstd PROPERTIES INTERFACE_LINK_LIBRARIES PkgConfig::ZSTD)
++    endif()
+     find_package(pugixml 1.14 CONFIG)
+     find_package(absl 20250512.1 CONFIG)
+     if (APPLE)
+@@ -1332,7 +1345,7 @@ target_link_libraries(shadps4 PRIVATE magic_enum::magic_enum fmt::fmt toml11::to
+ target_link_libraries(shadps4 PRIVATE Boost::headers GPUOpen::VulkanMemoryAllocator LibAtrac9 sirit Vulkan::Headers xxHash::xxhash Zydis::Zydis SDL3::SDL3 pugixml::pugixml)
+ target_link_libraries(shadps4 PRIVATE stb::headers lfreist-hwinfo::hwinfo nlohmann_json::nlohmann_json miniz::miniz fdk-aac CLI11::CLI11 OpenAL::OpenAL Cpp_Httplib miniupnpc::miniupnpc)
+ target_link_libraries(shadps4 PRIVATE Freetype::Freetype)
+-target_link_libraries(shadps4 PRIVATE libprotobuf)
++target_link_libraries(shadps4 PRIVATE protobuf::libprotobuf)
+ target_link_libraries(shadps4 PRIVATE ZArchive::zarchive)
+ target_link_libraries(shadps4 PRIVATE zstd::libzstd)
+ target_include_directories(shadps4 PRIVATE "${SHADNET_PROTO_OUT}")
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index 5d58b9b..9a3558c 100644
+--- a/externals/CMakeLists.txt
++++ b/externals/CMakeLists.txt
+@@ -209,7 +209,9 @@ option(TRACY_NO_CODE_TRANSFER "" ON)
+ option(TRACY_NO_SAMPLING "" ON)
+ option(TRACY_ONLY_LOCALHOST "" ON)
+ option(TRACY_NO_CONTEXT_SWITCH "" ON)
++if (NOT TARGET Tracy::TracyClient)
+ add_subdirectory(tracy)
++endif()
+ 
+ # pugixml
+ if (NOT TARGET pugixml::pugixml)
+@@ -354,7 +356,11 @@ endif()
+ 
+ # cpp-httplib
+ add_library(Cpp_Httplib INTERFACE)
+-target_include_directories(Cpp_Httplib INTERFACE cpp-httplib/)
++if (TARGET httplib::httplib)
++    target_link_libraries(Cpp_Httplib INTERFACE httplib::httplib)
++else()
++    target_include_directories(Cpp_Httplib INTERFACE cpp-httplib/)
++endif()
+ 
+ if (TARGET ZLIB::ZLIB)
+     target_link_libraries(Cpp_Httplib INTERFACE ZLIB::ZLIB)
+@@ -399,7 +405,9 @@ set(protobuf_FORCE_FETCH_DEPENDENCIES OFF CACHE INTERNAL "")
+ if(MSVC)
+ set(protobuf_MSVC_STATIC_RUNTIME OFF CACHE BOOL "" FORCE)
+ endif()
++if (NOT TARGET protobuf::libprotobuf)
+ add_subdirectory(protobuf EXCLUDE_FROM_ALL)
++endif()
+ 
+ if (NOT TARGET zstd::libzstd)
+     # zstd (dependency of ZArchive)
+diff --git a/src/core/cpu_patches.cpp b/src/core/cpu_patches.cpp
+index 605fcf3..8695982 100644
+--- a/src/core/cpu_patches.cpp
++++ b/src/core/cpu_patches.cpp
+@@ -128,7 +128,7 @@ static Xbyak::Address ZydisToXbyakMemoryOperand(const ZydisDecodedOperand& opera
+             expression = expression + ZydisToXbyakRegister(operand.mem.index);
+         }
+     }
+-    if (operand.mem.disp.size != 0 && operand.mem.disp.value != 0) {
++    if (operand.mem.disp.has_displacement && operand.mem.disp.value != 0) {
+         expression = expression + operand.mem.disp.value;
+     }
+ 
+@@ -332,7 +332,7 @@ static void GenerateReciprocalInstruction(void* address, const ZydisDecodedInstr
+         } else {
+             ZydisDecodedOperand operand = operands[1];
+             if (operands[1].mem.base == ZYDIS_REGISTER_RSP) { // rsp can't be index
+-                operand.mem.disp.size = 32;
++                operand.mem.disp.has_displacement = ZYAN_TRUE;
+                 operand.mem.disp.value += rsp_disp + 8 * 3; // Account for what we pushed
+             }
+             Xbyak::Address mem = ZydisToXbyakMemoryOperand(operand);
+@@ -1289,7 +1289,7 @@ DecodedCodeInstruction DecodeCodeInstruction(uintptr_t address, uintptr_t end) {
+     for (u8 index = 0; index < decoded.instruction.operand_count_visible; ++index) {
+         const auto& operand = decoded.operands[index];
+         if (operand.type != ZYDIS_OPERAND_TYPE_MEMORY ||
+-            !IsStackPointerRegister(operand.mem.base) || operand.mem.disp.size == 0 ||
++            !IsStackPointerRegister(operand.mem.base) || !operand.mem.disp.has_displacement ||
+             operand.mem.disp.value >= 0) {
+             continue;
+         }

@@ -1,0 +1,26 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 641fcc6..cbe9fb6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -197,6 +197,7 @@ find_package(toml11 4.2.0 CONFIG)
+ find_package(VulkanHeaders 1.4.329 CONFIG)
+ find_package(OpenAL CONFIG)
+ find_package(ZArchive 0.1.2 MODULE)
++find_package(nlohmann_json 3.12 CONFIG)
+ list(POP_BACK CMAKE_MODULE_PATH)
+ 
+ add_subdirectory(externals)
+diff --git a/externals/CMakeLists.txt b/externals/CMakeLists.txt
+index 3f9c9b4..a1b8ea6 100644
+--- a/externals/CMakeLists.txt
++++ b/externals/CMakeLists.txt
+@@ -84,7 +84,9 @@ endif()
+ 
+ #nlohmann json
+ set(JSON_BuildTests OFF CACHE INTERNAL "")
++if (NOT TARGET nlohmann_json::nlohmann_json)
+ add_subdirectory(json)
++endif()
+ 
+ if (NOT APPLE)
+     # vulkan-headers
