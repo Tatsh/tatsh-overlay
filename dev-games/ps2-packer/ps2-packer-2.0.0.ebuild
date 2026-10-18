@@ -18,7 +18,7 @@ QA_PREBUILT="usr/share/ps2-packer/stub/*"
 
 DEPEND="virtual/zlib:="
 RDEPEND="${DEPEND}"
-BDEPEND="dev-embedded/ps2sdk"
+BDEPEND="dev-games/ps2sdk"
 
 src_prepare() {
 	sed -i -e 's/ -Werror\([[:space:]]\|$\)/\1/g' stub/{,lz4/,lzma/,lzo/,zlib/}Makefile || die
