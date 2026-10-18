@@ -15,9 +15,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="
-	dev-embedded/ps2-libjpeg-turbo
-	dev-embedded/ps2-libpng
-	dev-embedded/ps2-libtiff
+	dev-games/ps2-libjpeg-turbo
+	dev-games/ps2-libpng
+	dev-games/ps2-libtiff
 "
 RDEPEND="${DEPEND}"
 
