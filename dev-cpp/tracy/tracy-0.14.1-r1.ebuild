@@ -24,3 +24,16 @@ src_prepare() {
 	sed -re 's|/\$<IF:\$<CONFIG:Release>,,\$<CONFIG>>||g' -i CMakeLists.txt || die
 	cmake_src_prepare
 }
+
+src_configure() {
+	# Profiling is opt-in: nothing runs until the consumer calls
+	# tracy::StartupProfiler(), and nothing is collected until a viewer
+	# connects. Tracy's crash handler is off because emulators handle SIGSEGV.
+	local mycmakeargs=(
+		-DTRACY_ENABLE=ON
+		-DTRACY_MANUAL_LIFETIME=ON
+		-DTRACY_NO_CRASH_HANDLER=ON
+		-DTRACY_ON_DEMAND=ON
+	)
+	cmake_src_configure
+}
