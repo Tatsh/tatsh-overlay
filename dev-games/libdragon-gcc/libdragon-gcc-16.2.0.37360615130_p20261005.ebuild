@@ -32,9 +32,9 @@ DEPEND="
 "
 RDEPEND="
 	${DEPEND}
-	~dev-embedded/libdragon-binutils-${BINUTILS_PV}
+	~dev-games/libdragon-binutils-${BINUTILS_PV}
 "
-BDEPEND="~dev-embedded/libdragon-binutils-${BINUTILS_PV}"
+BDEPEND="~dev-games/libdragon-binutils-${BINUTILS_PV}"
 
 # libdragon's VR4300 errata fix and N64 multilib set, from the preview branch's
 # tools/build-toolchain.sh.
