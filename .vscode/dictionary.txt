@@ -126,6 +126,7 @@ binpkgs
 binutils
 binv
 birefnet
+bitcode
 bitrock
 bitwidth
 blackbox
@@ -412,6 +413,7 @@ distutils
 djava
 djbig
 djpeg
+dkyty
 dlazy
 dldchroma
 dlenski
@@ -495,6 +497,7 @@ dstaticdeps
 dsystemd
 dtiff
 dtrace
+dtracy
 dtrellis
 dubhatervapoursynth
 dudev
@@ -840,6 +843,7 @@ instr
 intellivision
 interconverter
 interp
+interprocedural
 intervaltree
 intltool
 intv
@@ -968,6 +972,7 @@ kwiml
 kwin
 kxmlgui
 kylemanna
+kyty
 kyutai
 labbe's
 labeled
@@ -1871,6 +1876,7 @@ shockwave
 siac
 sideloading
 siedit
+sigsegv
 simonlindholm
 simpleini
 simplier
@@ -2276,6 +2282,8 @@ ytarchive
 yubi
 yuzu
 zarchive
+zarchivecommon
+zarchivereader
 zaufi
 zeldaret
 zenity
