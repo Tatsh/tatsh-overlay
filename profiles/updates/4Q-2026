@@ -17,3 +17,4 @@ move dev-embedded/ps2-packer dev-games/ps2-packer
 move dev-embedded/ps2dev dev-games/ps2dev
 move dev-embedded/libdragon-binutils dev-games/libdragon-binutils
 move dev-embedded/libdragon-gcc dev-games/libdragon-gcc
+move dev-embedded/libdragon dev-games/libdragon

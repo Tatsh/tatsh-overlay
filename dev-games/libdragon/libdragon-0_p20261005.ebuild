@@ -25,7 +25,7 @@ IUSE="examples roms"
 # Target objects must not be touched by the host strip, and tests need an N64.
 RESTRICT="strip test"
 
-DEPEND="dev-embedded/libdragon-gcc"
+DEPEND="dev-games/libdragon-gcc"
 RDEPEND="${DEPEND}"
 BDEPEND="${DEPEND}"
 
