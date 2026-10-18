@@ -11,15 +11,15 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	dev-embedded/gskit
-	dev-embedded/masp
-	dev-embedded/openvcl
-	dev-embedded/ps2-dvp-binutils
-	dev-embedded/ps2-ee-binutils
-	dev-embedded/ps2-ee-gcc
-	dev-embedded/ps2-iop-binutils
-	dev-embedded/ps2-iop-gcc
-	dev-embedded/ps2-packer
-	dev-embedded/ps2client
-	dev-embedded/ps2sdk
+	dev-games/gskit
+	dev-games/masp
+	dev-games/openvcl
+	dev-games/ps2-dvp-binutils
+	dev-games/ps2-ee-binutils
+	dev-games/ps2-ee-gcc
+	dev-games/ps2-iop-binutils
+	dev-games/ps2-iop-gcc
+	dev-games/ps2-packer
+	dev-games/ps2client
+	dev-games/ps2sdk
 "
