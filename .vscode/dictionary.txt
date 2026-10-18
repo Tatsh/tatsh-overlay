@@ -82,6 +82,7 @@ autoclean
 automagic
 automodule
 autotools
+avalonia
 avcodec
 avformat
 avisynth
@@ -1492,6 +1493,7 @@ optfeature
 optflags
 opti
 optio
+optout
 opusfile
 orbis
 orjson
@@ -1858,6 +1860,7 @@ shaderc
 shadpkg
 shagkur
 sharada
+sharpemu
 shazam
 shazamio
 shellcheck
@@ -2134,6 +2137,7 @@ vgmstream
 vgpu
 vgpuctl
 videobuf
+videodec
 videopac
 videoplayer
 vimfiles
