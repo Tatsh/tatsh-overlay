@@ -34,12 +34,12 @@ DEPEND="
 "
 RDEPEND="
 	${DEPEND}
-	~dev-embedded/ps2-ee-binutils-2.45.1_p20251130
+	~dev-games/ps2-ee-binutils-2.45.1_p20251130
 "
 BDEPEND="
 	app-alternatives/lex
 	sys-apps/texinfo
-	~dev-embedded/ps2-ee-binutils-2.45.1_p20251130
+	~dev-games/ps2-ee-binutils-2.45.1_p20251130
 "
 
 TARGET="mips64r5900el-ps2-elf"
