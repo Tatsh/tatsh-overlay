@@ -1,8 +1,25 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 641fcc6..cbe9fb6 100644
+index 641fcc6..c30884e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -197,6 +197,7 @@ find_package(toml11 4.2.0 CONFIG)
+@@ -175,6 +175,16 @@ execute_process(
+ )
+ 
+ set(APP_VERSION "${GIT_REV_LIST_NUMBER}")
++# Release tarballs carry no git metadata; let the build system provide it.
++if (DEFINED LAUNCHER_APP_VERSION)
++    set(APP_VERSION "${LAUNCHER_APP_VERSION}")
++    set(GIT_BRANCH "${LAUNCHER_GIT_BRANCH}")
++    set(GIT_DESC "${LAUNCHER_GIT_DESC}")
++endif()
++# Version of the emulator installed alongside the launcher (found in PATH).
++if (DEFINED SHADPS4_SYSTEM_VERSION)
++    add_compile_definitions(SHADPS4_SYSTEM_VERSION="${SHADPS4_SYSTEM_VERSION}")
++endif()
+ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/common/scm_rev.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/common/scm_rev.cpp" @ONLY)
+ set_source_files_properties(src/shadps4.rc PROPERTIES COMPILE_DEFINITIONS "APP_VERSION=${APP_VERSION}")
+ 
+@@ -197,6 +207,7 @@ find_package(toml11 4.2.0 CONFIG)
  find_package(VulkanHeaders 1.4.329 CONFIG)
  find_package(OpenAL CONFIG)
  find_package(ZArchive 0.1.2 MODULE)
@@ -24,3 +41,101 @@ index 3f9c9b4..a1b8ea6 100644
  
  if (NOT APPLE)
      # vulkan-headers
+diff --git a/src/main.cpp b/src/main.cpp
+index 38958cd..5773b99 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -13,6 +13,42 @@
+ #include "core/user_settings.h"
+ #include "qt_gui/game_install_dialog.h"
+ #include "qt_gui/main_window.h"
++#ifdef SHADPS4_SYSTEM_VERSION
++#include <algorithm>
++#include <QDate>
++#include <QStandardPaths>
++#include "qt_gui/gui_settings.h"
++
++// Register the emulator installed in PATH as a version and select it by default.
++static void RegisterSystemEmulator() {
++    const QString exe = QStandardPaths::findExecutable(QStringLiteral("shadps4"));
++    if (exe.isEmpty()) {
++        return;
++    }
++    const std::string path = exe.toStdString();
++    const std::string name = "v" SHADPS4_SYSTEM_VERSION;
++    auto versions = VersionManager::GetVersionList();
++    auto it = std::find_if(versions.begin(), versions.end(),
++                           [&](const VersionManager::Version& v) { return v.path == path; });
++    if (it == versions.end() || (it->codename == "Local" && it->name != name)) {
++        if (it != versions.end()) {
++            VersionManager::RemoveVersion(*it);
++        }
++        VersionManager::AddNewVersion({
++            .name = name,
++            .path = path,
++            .date = QDate::currentDate().toString(Qt::ISODate).toStdString(),
++            .codename = "Local",
++            .type = VersionManager::VersionType::Custom,
++            .id = 0,
++        });
++    }
++    gui_settings settings{};
++    if (settings.GetValue(gui::vm_versionSelected).toString().isEmpty()) {
++        settings.SetValue(gui::vm_versionSelected, exe);
++    }
++}
++#endif
+ #ifdef _WIN32
+ #include <windows.h>
+ #endif
+@@ -149,6 +185,10 @@ int main(int argc, char* argv[]) {
+         }
+     }
+ 
++#ifdef SHADPS4_SYSTEM_VERSION
++    RegisterSystemEmulator();
++#endif
++
+     // If no game directories are set and no command line argument, prompt for it
+     if (EmulatorSettings.GetGameInstallDirsEnabled().empty() && !has_command_line_argument) {
+         GameInstallDialog dlg;
+diff --git a/src/qt_gui/game_install_dialog.cpp b/src/qt_gui/game_install_dialog.cpp
+index 002e038..e29e236 100644
+--- a/src/qt_gui/game_install_dialog.cpp
++++ b/src/qt_gui/game_install_dialog.cpp
+@@ -128,7 +128,7 @@ QWidget* GameInstallDialog::SetupVersionDirectory() {
+     connect(browse, &QPushButton::clicked, this, &GameInstallDialog::BrowseVersionDirectory);
+     layout->addWidget(browse);
+ 
+-#ifdef HIDE_VERSION_MANAGER
++#if defined(HIDE_VERSION_MANAGER) || defined(SHADPS4_SYSTEM_VERSION)
+     group->setHidden(true);
+ #endif
+ 
+@@ -148,7 +148,7 @@ void GameInstallDialog::Save() {
+     // Check games directory.
+     auto gamesDirectory = m_gamesDirectory->text();
+     auto addonsDirectory = m_addonsDirectory->text();
+-#ifndef HIDE_VERSION_MANAGER
++#if !defined(HIDE_VERSION_MANAGER) && !defined(SHADPS4_SYSTEM_VERSION)
+     auto versionDirectory = m_versionDirectory->text();
+ #endif
+ 
+@@ -173,7 +173,7 @@ void GameInstallDialog::Save() {
+         }
+     }
+ 
+-#ifndef HIDE_VERSION_MANAGER
++#if !defined(HIDE_VERSION_MANAGER) && !defined(SHADPS4_SYSTEM_VERSION)
+     if (versionDirectory.isEmpty() || !QDir::isAbsolutePath(versionDirectory)) {
+         QMessageBox::critical(this, tr("Error"),
+                               "The value for location to install emulator versions is not valid.");
+@@ -193,7 +193,7 @@ void GameInstallDialog::Save() {
+     // Save the directories
+     EmulatorSettings.AddGameInstallDir(Common::FS::PathFromQString(gamesDirectory));
+     EmulatorSettings.SetAddonInstallDir(Common::FS::PathFromQString(addonsDirectory));
+-#ifndef HIDE_VERSION_MANAGER
++#if !defined(HIDE_VERSION_MANAGER) && !defined(SHADPS4_SYSTEM_VERSION)
+     m_gui_settings->SetValue(gui::vm_versionPath, versionDirectory);
+ #endif
+ 
