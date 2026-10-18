@@ -14,7 +14,7 @@ LICENSE="libpng2"
 SLOT="0"
 KEYWORDS="~amd64"
 
-DEPEND="dev-embedded/ps2-zlib"
+DEPEND="dev-games/ps2-zlib"
 RDEPEND="${DEPEND}"
 
 src_configure() {
