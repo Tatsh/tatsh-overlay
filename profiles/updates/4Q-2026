@@ -15,3 +15,4 @@ move dev-embedded/openvcl dev-games/openvcl
 move dev-embedded/ps2client dev-games/ps2client
 move dev-embedded/ps2-packer dev-games/ps2-packer
 move dev-embedded/ps2dev dev-games/ps2dev
+move dev-embedded/libdragon-binutils dev-games/libdragon-binutils
