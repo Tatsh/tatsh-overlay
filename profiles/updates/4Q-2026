@@ -12,3 +12,4 @@ move dev-embedded/ps2-libtiff dev-games/ps2-libtiff
 move dev-embedded/gskit dev-games/gskit
 move dev-embedded/masp dev-games/masp
 move dev-embedded/openvcl dev-games/openvcl
+move dev-embedded/ps2client dev-games/ps2client
