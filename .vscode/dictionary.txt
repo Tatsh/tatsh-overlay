@@ -1,3 +1,4 @@
+aacdec
 aatl
 aboood
 acinclude
@@ -813,6 +814,7 @@ httptools
 httpx
 huggingface
 huskyrc
+hwinfo
 hwview
 icudt
 idevice
@@ -827,6 +829,7 @@ imageio
 imaplib
 imex
 imgui
+imguifiledialog
 implemnting
 implot
 incdir
@@ -1331,6 +1334,7 @@ msgspec
 msiemens
 msmoosh
 msplit
+msse
 msvc
 mtune
 muety
@@ -1712,6 +1716,7 @@ qrencode
 qtbase
 qtdeclarative
 qtkeychain
+qtlauncher
 qtmin
 qtmultimedia
 qtpositioning
@@ -1863,6 +1868,7 @@ sezanzeb
 sflags
 shaderc
 shadpkg
+shadps
 shagkur
 sharada
 sharpemu
