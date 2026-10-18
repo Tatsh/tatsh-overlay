@@ -415,6 +415,7 @@ djava
 djbig
 djpeg
 dkyty
+dlauncher
 dlazy
 dldchroma
 dlenski
@@ -490,6 +491,7 @@ drhelius
 driftyz
 dris
 drivendataorg
+dshadps
 dsirit
 dskip
 dslackw
