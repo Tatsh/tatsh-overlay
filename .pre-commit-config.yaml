@@ -43,7 +43,7 @@ repos:
         files: '^scripts/'
         id: 'ruff-check'
     repo: 'https://github.com/astral-sh/ruff-pre-commit'
-    rev: 'v0.16.10'
+    rev: 'v0.17.1'
   - hooks:
       - files: '^scripts/'
         id: 'yapf'
@@ -70,7 +70,7 @@ repos:
         types:
           - 'text'
     repo: 'https://github.com/shellcheck-py/shellcheck-py'
-    rev: 'v0.11.0.1'
+    rev: 'v0.11.0.1-1'
   - hooks:
       - id: 'check-github-actions'
       - id: 'check-github-workflows'
@@ -79,7 +79,7 @@ repos:
   - hooks:
       - id: 'zizmor'
     repo: 'https://github.com/zizmorcore/zizmor-pre-commit'
-    rev: 'v1.30.1'
+    rev: 'v1.31.1'
   - hooks:
       - args:
           - '--config'
