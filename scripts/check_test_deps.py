@@ -14,10 +14,10 @@ import logging
 import os
 import re
 import sys
+import tomllib
 from pathlib import Path
 
 import requests
-import tomllib
 
 logger = logging.getLogger('check_test_deps')
 

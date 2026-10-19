@@ -19,12 +19,12 @@ import os
 import re
 import sys
 import time
+import tomllib
 from collections.abc import Iterable
 from functools import lru_cache
 from pathlib import Path
 
 import requests
-import tomllib
 
 logger = logging.getLogger('upstream_test_deps')
 
