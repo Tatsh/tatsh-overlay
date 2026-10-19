@@ -143,6 +143,7 @@ bomberman
 boringssl
 boto
 botocore
+boykopovar
 brahmi
 breakpad
 brep
@@ -314,6 +315,7 @@ dakrk
 dallow
 dalsa
 danielgatis
+danyps
 darlin
 darlinghq
 darlingserver
@@ -1773,6 +1775,7 @@ rejang
 rela
 relcs
 releasesd
+relinker
 rels
 relw
 relwithdebinfo
