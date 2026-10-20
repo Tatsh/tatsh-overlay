@@ -927,6 +927,7 @@ jsonschema
 jsummers
 jsvine
 judgment
+kainctl
 kaithi
 kakasi
 kanjitalk
@@ -972,6 +973,7 @@ kotlinc
 koun
 kparts
 krig
+krilla
 ktexteditor
 kwargs
 kwidgetsaddons
@@ -1557,6 +1559,7 @@ permuter
 petsafe
 pexpect
 pfsshell
+pfzy
 phags
 phagspa
 phantomjs
@@ -1945,6 +1948,7 @@ sqlfluff
 squirreljme
 srmd
 srsly
+srstevenson
 srxfixup
 sslkeylogfile
 sslvpn
@@ -1965,6 +1969,7 @@ stfc
 stfc's
 stiefel
 stormlib
+storytold
 strawgate
 subclassing
 sublicensable
