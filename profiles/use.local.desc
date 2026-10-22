@@ -18,6 +18,8 @@ app-misc/deltona:wine - Utilities for Wine like mkwineprefix and wineshell
 app-misc/deltona:www - Internet-related utilities like where-from and chrome-bisect-flags
 app-office/glabels:barcode - Enable barcode support with app-text/barcode
 app-office/glabels:qrcode - Enables QR code support with media-gfx/qrencode
+dev-games/libdragon:roms - Build the examples and install their N64 ROM images
+dev-games/ps2-ee-binutils:gdb - Build the GNU debugger for the Emotion Engine
 dev-libs/bincookie:tools - Install extra tools
 dev-libs/wolfssl:debug - Debug support
 dev-libs/wolfssl:jni - Enable Java JNI support
@@ -35,6 +37,7 @@ dev-util/ghidra-mcp-bin:scripts - Install the Ghidra scripts from upstream's rep
 games-action/re3:sanitizer - Build with address sanitiser for better crash logs
 games-action/relcs:sanitizer - Build with address sanitiser for better crash logs
 games-action/revc:sanitizer - Build with address sanitiser for better crash logs
+games-action/vvvvvv:makeandplay - Build the free Make and Play edition and install its data.zip
 games-arcade/jazz2:angelscript - Enable scripting with dev-libs/angelscript, used by JJ2+ levels
 games-arcade/jazz2:openmpt - Play tracker module music with media-libs/libopenmpt
 games-arcade/outfox:bundled-courses - Install bundled courses.
