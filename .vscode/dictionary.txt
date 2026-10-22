@@ -252,6 +252,7 @@ commitizen
 commitlintrc
 commoncrypto
 concurrentqueue
+confd
 configd
 configura
 configurator
@@ -742,6 +743,7 @@ gitdb
 gitpython
 giwty
 glabels
+glanceapp
 glep
 gles
 glew
@@ -1403,6 +1405,7 @@ newa
 newar
 newbashcomp
 newbin
+newconfd
 newenvd
 newexe
 newfishcomp
