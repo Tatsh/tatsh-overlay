@@ -1,0 +1,20 @@
+#!/sbin/openrc-run
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+description="Glance dashboard"
+command=/usr/bin/glance
+command_args="--config ${GLANCE_CONFIG:-/etc/glance/glance.yml}"
+command_background=yes
+command_user="glance:glance"
+pidfile="/run/${RC_SVCNAME}.pid"
+output_log="/var/log/${RC_SVCNAME}.log"
+error_log="/var/log/${RC_SVCNAME}.log"
+
+depend() {
+	need net
+}
+
+start_pre() {
+	checkpath -f -o glance:glance -m 0640 "${output_log}"
+}

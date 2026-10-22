@@ -1,0 +1,17 @@
+[Unit]
+Description=Glance dashboard
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=glance
+Group=glance
+ExecStart=/usr/bin/glance --config /etc/glance/glance.yml
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

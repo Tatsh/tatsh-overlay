@@ -1,0 +1,2 @@
+# Path to the configuration file
+#GLANCE_CONFIG="/etc/glance/glance.yml"
