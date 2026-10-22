@@ -24,6 +24,7 @@
       ".claude/settings.local.json",
       ".git/**",
       ".vscode/extensions.json",
+      ".wiswa-ci/**",
       ".yarn/**/*.cjs",
       "Manifest",
       "dist/**",
