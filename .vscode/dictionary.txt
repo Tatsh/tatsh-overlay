@@ -207,7 +207,6 @@ checkreqs
 cheevos
 cheke
 chishm
-chksums
 choco
 chost
 chrisguidry
@@ -332,6 +331,7 @@ dateutil
 dbeaver
 dbfile
 dbuild
+dbundle
 dbus
 dbuskit
 dbusmenu
@@ -438,6 +438,7 @@ dlua
 dlus
 dlzfse
 dlzma
+dmakeandplay
 dman
 dmio
 dmupenplusapi
@@ -664,6 +665,7 @@ fmtlib
 fmts
 fomit
 fontconfig
+fontsdir
 forestix
 foresto
 formatron
@@ -1239,6 +1241,7 @@ magika
 magnavox
 mahajani
 mainpid
+makeandplay
 makeopts
 malloc
 mame
@@ -1569,6 +1572,7 @@ phantomjs
 phasher
 phhusson
 phonemizer
+physfs
 pickability
 picodrive
 pidfile
