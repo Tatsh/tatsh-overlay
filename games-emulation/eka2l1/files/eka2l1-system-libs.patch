@@ -1,0 +1,446 @@
+Use system libraries instead of bundled submodules, and never FetchContent libuv.
+Respect user flags in the bundled FFmpeg.
+
+diff --git a/src/emu/kernel/src/codeseg.cpp b/src/emu/kernel/src/codeseg.cpp
+index 183b758b0..300f750a2 100644
+--- a/src/emu/kernel/src/codeseg.cpp
++++ b/src/emu/kernel/src/codeseg.cpp
+@@ -23,7 +23,7 @@
+ #include <kernel/codeseg.h>
+ #include <kernel/kernel.h>
+ #include <loader/common.h>
+-#include <xxHash/xxhash.h>
++#include <xxhash.h>
+ #include <utils/consts.h>
+ 
+ #include <algorithm>
+diff --git a/src/external/CMakeLists.txt b/src/external/CMakeLists.txt
+index 7f4e28f72..afd335955 100644
+--- a/src/external/CMakeLists.txt
++++ b/src/external/CMakeLists.txt
+@@ -17,109 +17,19 @@ set(CMAKE_POLICY_VERSION_MINIMUM 3.10)
+ # is disabled, and the two we actually need - LZMA for 7z, zlib for zip - are built from the xz and zlib
+ # submodules and handed to libarchive below. To add another compression method later, build it here the
+ # same way rather than turning its ENABLE_ switch back on.
+-set(EKA2L1_SAVED_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
+-set(BUILD_SHARED_LIBS OFF)
+-
+-set(XZ_NLS OFF CACHE BOOL "" FORCE)
+-set(XZ_DOC OFF CACHE BOOL "" FORCE)
+-set(XZ_TOOL_XZ OFF CACHE BOOL "" FORCE)
+-set(XZ_TOOL_XZDEC OFF CACHE BOOL "" FORCE)
+-set(XZ_TOOL_LZMADEC OFF CACHE BOOL "" FORCE)
+-set(XZ_TOOL_LZMAINFO OFF CACHE BOOL "" FORCE)
+-set(XZ_TOOL_SCRIPTS OFF CACHE BOOL "" FORCE)
+-set(XZ_TOOL_SYMLINKS OFF CACHE BOOL "" FORCE)
+-set(XZ_TOOL_SYMLINKS_LZMA OFF CACHE BOOL "" FORCE)
+-# Nothing here writes archives, and the threaded coders drag in a pthread configuration we do not want
+-# on every platform we ship to.
+-set(XZ_THREADS no CACHE STRING "" FORCE)
+-
+-add_subdirectory(xz EXCLUDE_FROM_ALL)
+-
+-# Answer libarchive's FIND_PACKAGE(LibLZMA) with the xz target above instead of letting it search.
+-# Every one of these is a short-circuit for a specific step of the stock FindLibLZMA: a cached
+-# LIBLZMA_INCLUDE_DIR skips its find_path (which on this machine happily returns Homebrew's headers), a
+-# set LIBLZMA_LIBRARY skips its find_library (which returns the SDK's liblzma.tbd - a /usr/lib dylib
+-# that must not end up in a shipped iOS binary), and the three HAS_ results skip check_library_exists,
+-# which cannot link a target that has not been built yet. LIBLZMA_LIBRARY naming a target rather than a
+-# file is deliberate: CMake resolves it at generate time, which is what makes libarchive depend on it.
+-# Dropping a FindLibLZMA.cmake of our own in CMAKE_MODULE_PATH does not work - libarchive overwrites
+-# that variable wholesale on the third line of its CMakeLists.
+-set(LIBLZMA_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/xz/src/liblzma/api" CACHE PATH "" FORCE)
+-set(LIBLZMA_LIBRARY liblzma)
+-set(LIBLZMA_HAS_AUTO_DECODER TRUE CACHE INTERNAL "")
+-set(LIBLZMA_HAS_EASY_ENCODER TRUE CACHE INTERNAL "")
+-set(LIBLZMA_HAS_LZMA_PRESET TRUE CACHE INTERNAL "")
+-
+-set(ENABLE_LZMA ON CACHE BOOL "" FORCE)
+-
+-# Same story for zlib. Without it libarchive's zip reader only handles stored entries; it is also the
+-# emulator's own deflate, for the Symbian formats that carry one. zlib's CMakeLists is not used - it
+-# renames zconf.h in the source tree and insists on a shared library plus examples - so the sources are
+-# listed here and the checked-in zconf.h serves as the configuration.
+-add_library(zlibstatic STATIC
+-        zlib/adler32.c zlib/compress.c zlib/crc32.c zlib/deflate.c zlib/gzclose.c zlib/gzlib.c
+-        zlib/gzread.c zlib/gzwrite.c zlib/infback.c zlib/inffast.c zlib/inflate.c zlib/inftrees.c
+-        zlib/trees.c zlib/uncompr.c zlib/zutil.c)
+-target_include_directories(zlibstatic PUBLIC zlib)
+-
+-if (UNIX OR APPLE)
+-    set_property(TARGET zlibstatic PROPERTY POSITION_INDEPENDENT_CODE ON)
+-    # zlib probes these itself only through its own configure/CMake, neither of which runs here.
+-    target_compile_definitions(zlibstatic PRIVATE HAVE_UNISTD_H HAVE_STDARG_H)
+-endif()
+-
+-# Short-circuit libarchive's FIND_PACKAGE(ZLIB) exactly the way LibLZMA is handled above: a cached
+-# include dir skips find_path, and ZLIB_LIBRARY naming the target skips find_library and still resolves
+-# at generate time. The version test reads zlib.h from the include dir, so it passes on its own.
+-set(ZLIB_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/zlib" CACHE PATH "" FORCE)
+-set(ZLIB_LIBRARY zlibstatic)
+-
+-set(ENABLE_ZLIB ON CACHE BOOL "" FORCE)
+-
+-# Nothing here uses libarchive's regex matching, and letting it search costs a
+-# build: on MSVC no POSIX regex library is found, and libarchive's fall-through
+-# for that case fatals with "libgcc not found" instead of moving on.
+-set(POSIX_REGEX_LIB "NONE" CACHE STRING "" FORCE)
+-foreach (libarchive_backend MBEDTLS NETTLE OPENSSL LIBB2 LZ4 LZO ZSTD BZip2 LIBXML2 EXPAT
+-        WIN32_XMLLITE PCREPOSIX PCRE2POSIX LIBGCC CNG ICONV XATTR ACL)
+-    set(ENABLE_${libarchive_backend} OFF CACHE BOOL "" FORCE)
+-endforeach()
+-
+-foreach (libarchive_extra TAR CPIO CAT UNZIP TEST INSTALL WERROR)
+-    set(ENABLE_${libarchive_extra} OFF CACHE BOOL "" FORCE)
+-endforeach()
+-
+-# libarchive decides which platform functions exist with CHECK_FUNCTION_EXISTS, which only tells the
+-# truth if the probe is actually linked. The iOS toolchain compiles try_compile projects as static
+-# libraries (see ENABLE_STRICT_TRY_COMPILE in cmake/ios.toolchain.cmake), so an unresolved symbol is never
+-# noticed and every probe answers yes - _fseeki64, futimesat, close_range, lzma_stream_encoder_mt and
+-# friends included, none of which exist here. libarchive then compiles the code behind them.
+-#
+-# So make this subtree link its probes, and put the setting back afterwards: the rest of the tree is
+-# configured and working against the lenient answers, and flipping it globally would re-answer every
+-# other project's probes too. Seeding the known-wrong results by hand instead was tried and rejected -
+-# comparing the two generated config.h files showed the list is longer and less obvious than it looks,
+-# and it would have to be revisited every time libarchive adds a probe.
+-set(EKA2L1_SAVED_TRY_COMPILE_TARGET_TYPE ${CMAKE_TRY_COMPILE_TARGET_TYPE})
+-set(CMAKE_TRY_COMPILE_TARGET_TYPE EXECUTABLE)
+-
+-add_subdirectory(libarchive EXCLUDE_FROM_ALL)
++# Gentoo: use system libraries. Their imported targets must be visible to src/emu.
++set(CMAKE_FIND_PACKAGE_TARGETS_GLOBAL ON)
++find_package(PkgConfig REQUIRED)
+ 
+-set(CMAKE_TRY_COMPILE_TARGET_TYPE ${EKA2L1_SAVED_TRY_COMPILE_TARGET_TYPE})
++find_package(ZLIB REQUIRED)
++add_library(zlibstatic INTERFACE)
++target_link_libraries(zlibstatic INTERFACE ZLIB::ZLIB)
+ 
+-set(BUILD_SHARED_LIBS ${EKA2L1_SAVED_BUILD_SHARED_LIBS})
+-
+-# archive.h declares everything __declspec(dllimport) on Windows unless LIBARCHIVE_STATIC is defined,
+-# and libarchive sets it only on the target itself, never on its interface.
+-target_compile_definitions(archive_static INTERFACE LIBARCHIVE_STATIC)
+-
+-if (UNIX OR APPLE)
+-    set_property(TARGET liblzma PROPERTY POSITION_INDEPENDENT_CODE ON)
+-    set_property(TARGET archive_static PROPERTY POSITION_INDEPENDENT_CODE ON)
+-endif()
++pkg_check_modules(LIBARCHIVE REQUIRED IMPORTED_TARGET libarchive)
++add_library(archive_static INTERFACE)
++target_link_libraries(archive_static INTERFACE PkgConfig::LIBARCHIVE)
+ 
+ # Force Boost directory for Dynarmic - we never use one
+-set (Boost_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/ext-boost/" CACHE PATH "Boost include directory")
+ if (ANDROID)
+     add_definitions(-DBOOST_ERROR_CODE_HEADER_ONLY
+             -DBOOST_SYSTEM_NO_LIB
+@@ -133,17 +43,11 @@ if (ANDROID)
+ endif()
+ 
+ # PugiXML
+-add_library(pugixml
+-    pugixml/src/pugiconfig.hpp
+-    pugixml/src/pugixml.cpp
+-    pugixml/src/pugixml.hpp)
++find_package(pugixml REQUIRED)
+ 
+-target_include_directories(pugixml PUBLIC pugixml/src)
+-
+-# fmt
+-add_subdirectory(fmt)
+-add_library(fmt::fmt ALIAS fmt)
+-set (fmt_DIR fmt)
++find_package(fmt REQUIRED)
++add_library(fmt INTERFACE)
++target_link_libraries(fmt INTERFACE fmt::fmt)
+ 
+ set(CMAKE_REQUIRED_QUIET 1)
+ 
+@@ -182,31 +86,18 @@ if (EKA2L1_ENABLE_SCRIPTING_ABILITY AND EKA2L1_SCRIPTING_LUA)
+             set(LUA_DLL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/luajit-android/x86_64/libluajit.so")
+ 		endif()
+     else()
+-        target_include_directories(liblua INTERFACE  "${CMAKE_CURRENT_SOURCE_DIR}/luajit/src/")
+-
+-        option(LUAJIT_DIR "" ON)
+-        set(LUAJIT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/luajit")
+-
+-        add_subdirectory(luajit-cmake)
+-
+-        # Fix up a bit
+-        target_include_directories(buildvm PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/luajit-cmake")
+-
+-        target_link_libraries(liblua INTERFACE luajit::lib luajit::header)
+-        target_include_directories(liblua INTERFACE "${CMAKE_CURRENT_BINARY_DIR}/luajit-cmake")
++        pkg_check_modules(LUAJIT REQUIRED IMPORTED_TARGET luajit)
++        target_link_libraries(liblua INTERFACE PkgConfig::LUAJIT)
+     endif()
+ endif()
+ 
+-# SPDLOG - Build examples off
+-option (SPDLOG_BUILD_EXAMPLES "Build spdlog Examples" OFF) 
+-option (SPDLOG_BUILD_BENCH "Build spdlog benchmarks" OFF)
+-option (SPDLOG_FMT_EXTERNAL "Use external fmt library instead of bundled" ON)
+-
+-add_subdirectory(spdlog)
++find_package(spdlog REQUIRED)
++add_library(spdlog INTERFACE)
++target_link_libraries(spdlog INTERFACE spdlog::spdlog)
+ 
+-# GLM
+-option (GLM_TEST_ENABLE "Enable glm tests" OFF)
+-add_subdirectory(glm)
++find_package(glm REQUIRED)
++add_library(glm INTERFACE)
++target_link_libraries(glm INTERFACE glm::glm)
+ 
+ # Dynarmic: disable tests
+ option(DYNARMIC_TESTS "Enable dynarmic tests" OFF)
+@@ -227,8 +118,7 @@ set(PLUTOVG_BUILD_EXAMPLES OFF CACHE BOOL "Disable plutovg examples" FORCE)
+ set(LUNASVG_DISABLE_LOAD_SYSTEM_FONTS ON CACHE BOOL "Skip OS font directories" FORCE)
+ add_subdirectory(lunasvg)
+ 
+-option(YAML_CPP_BUILD_TESTS "Enable YAML cpp testing" OFF)
+-add_subdirectory(yaml-cpp)
++find_package(yaml-cpp REQUIRED)
+ 
+ if (MSVC)
+     add_library(libdemangle
+@@ -243,13 +133,8 @@ target_include_directories(glad PUBLIC glad/include)
+ 
+ #stb
+ add_library(stb INTERFACE)
+-target_include_directories(stb INTERFACE stb)
+-
+-#catch2
+-option (CATCH_BUILD_TESTING "Build catch testing" OFF)
+-option (CATCH_ENABLE_WERROR "Disable catch werror" OFF)
++target_include_directories(stb INTERFACE /usr/include/stb)
+ 
+-add_subdirectory(Catch2)
+ 
+ # Microprofile
+ add_library(microprofile STATIC microprofile/microprofile.cpp microprofile/microprofile.h)
+@@ -258,45 +143,15 @@ set_property(TARGET microprofile PROPERTY CXX_STANDARD 11)
+ target_compile_definitions(microprofile PUBLIC MICROPROFILE_ENABLED=0 MICROPROFILE_GPU_TIMERS=0)
+ 
+ ## XXHash
+-add_library(xxHash STATIC xxHash/xxhash.c)
+-target_include_directories(xxHash PUBLIC xxHash)
++pkg_check_modules(XXHASH REQUIRED IMPORTED_TARGET libxxhash)
++add_library(xxHash INTERFACE)
++target_link_libraries(xxHash INTERFACE PkgConfig::XXHASH)
+ 
+ ## opencore-amr: backs FFmpeg's libopencore_amrnb encoder.
+-set(OPENCORE_AMRNB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/opencore-amr/opencore/codecs_v2/audio/gsm_amr/amr_nb")
+-file(GLOB OPENCORE_AMRNB_SOURCES
+-    "${OPENCORE_AMRNB_DIR}/dec/src/*.cpp" "${OPENCORE_AMRNB_DIR}/enc/src/*.cpp" "${OPENCORE_AMRNB_DIR}/common/src/*.cpp")
+-# Same exclusions as upstream amrnb/Makefile.am: wrappers we do not use and duplicates of encoder files.
+-list(REMOVE_ITEM OPENCORE_AMRNB_SOURCES
+-    "${OPENCORE_AMRNB_DIR}/dec/src/decoder_gsm_amr.cpp"
+-    "${OPENCORE_AMRNB_DIR}/dec/src/pvgsmamrdecoder.cpp"
+-    "${OPENCORE_AMRNB_DIR}/enc/src/gsmamr_encoder_wrapper.cpp"
+-    "${OPENCORE_AMRNB_DIR}/common/src/bits2prm.cpp"
+-    "${OPENCORE_AMRNB_DIR}/common/src/copy.cpp"
+-    "${OPENCORE_AMRNB_DIR}/common/src/div_32.cpp"
+-    "${OPENCORE_AMRNB_DIR}/common/src/l_abs.cpp"
+-    "${OPENCORE_AMRNB_DIR}/common/src/r_fft.cpp"
+-    "${OPENCORE_AMRNB_DIR}/common/src/vad1.cpp"
+-    "${OPENCORE_AMRNB_DIR}/common/src/vad2.cpp")
+-list(APPEND OPENCORE_AMRNB_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/opencore-amr/amrnb/wrapper.cpp")
+-
+-add_library(opencore-amrnb STATIC ${OPENCORE_AMRNB_SOURCES})
+-# Compiled as C like upstream's --enable-compile-c, so FFmpeg's configure links it without a C++ runtime.
+-set_source_files_properties(${OPENCORE_AMRNB_SOURCES} PROPERTIES LANGUAGE C)
+-set_property(TARGET opencore-amrnb PROPERTY C_STANDARD 99)
+-target_include_directories(opencore-amrnb
+-    PUBLIC opencore-amr/amrnb
+-    PRIVATE opencore-amr/oscl
+-        "${OPENCORE_AMRNB_DIR}/common/include"
+-        "${OPENCORE_AMRNB_DIR}/dec/include"
+-        "${OPENCORE_AMRNB_DIR}/dec/src"
+-        "${OPENCORE_AMRNB_DIR}/enc/src"
+-        opencore-amr/opencore/codecs_v2/audio/gsm_amr/common/dec/include)
+-if (MSVC)
+-    target_compile_options(opencore-amrnb PRIVATE /TC /W0)
+-else()
+-    # The fixed-point codec shifts negative values by design; keep UBSan reports to code we maintain.
+-    target_compile_options(opencore-amrnb PRIVATE -x c -w -fno-sanitize=undefined)
+-endif()
++pkg_check_modules(OPENCORE_AMRNB REQUIRED IMPORTED_TARGET opencore-amrnb)
++add_library(opencore-amrnb INTERFACE)
++target_include_directories(opencore-amrnb INTERFACE "${OPENCORE_AMRNB_INCLUDEDIR}/opencore-amrnb")
++target_link_libraries(opencore-amrnb INTERFACE PkgConfig::OPENCORE_AMRNB)
+ 
+ if (BUILD_TOOLS)
+     find_package(LibClang QUIET)
+@@ -333,7 +188,9 @@ if (NOT EKA2L1_IOS)
+     # iOS uses a native AURemoteIO audio_driver (see
+     # src/emu/drivers/.../audiounit_ios). cubeb's bundled cubeb_audiounit.cpp
+     # targets macOS CoreAudio HAL and doesn't cleanly compile on the iOS SDK.
+-    add_subdirectory(cubeb)
++    find_package(cubeb REQUIRED)
++    add_library(cubeb INTERFACE)
++    target_link_libraries(cubeb INTERFACE cubeb::cubeb)
+ endif()
+ 
+ 
+@@ -364,18 +221,14 @@ add_subdirectory(libfat)
+ 
+ # mbedtls
+ # The TLS driver links these targets; bundled test programs stay disabled.
+-set(ENABLE_TESTING OFF CACHE BOOL "Build mbed TLS tests." FORCE)
+-set(ENABLE_PROGRAMS OFF CACHE BOOL "Build mbed TLS programs." FORCE)
+-set(MBEDTLS_FATAL_WARNINGS OFF CACHE BOOL "Compiler warnings treated as errors" FORCE)
+-add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
++pkg_check_modules(MBEDTLS REQUIRED IMPORTED_TARGET mbedtls-3)
++add_library(mbedtls INTERFACE)
++target_link_libraries(mbedtls INTERFACE PkgConfig::MBEDTLS)
+ 
+ # SQLite3
+-add_library(sqlite3
+-    sqlite3/sqlite3.c
+-    sqlite3/sqlite3.h
+-    sqlite3/sqlite3ext.h)
+-
+-target_include_directories(sqlite3 PUBLIC sqlite3)
++pkg_check_modules(SQLITE3 REQUIRED IMPORTED_TARGET sqlite3)
++add_library(sqlite3 INTERFACE)
++target_link_libraries(sqlite3 INTERFACE PkgConfig::SQLITE3)
+ 
+ # miniBae. Later in driver, we will implement the full thing hopefully :D
+ file(GLOB MINIBAE_SHARED_SOURCES
+@@ -400,27 +253,19 @@ set (TSF_INCLUDE ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "TSF include path")
+ # SDL2
+ # Can't believe in 2022 the official CMake can't still ship a FindSDL2 with the program...
+ if (NOT ANDROID AND NOT EKA2L1_IOS)
+-    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/sdl2-cmake-scripts")
+-
+-    if(APPLE)
+-        set(SDL2_PATH "${CMAKE_CURRENT_SOURCE_DIR}/sdl2/macos" CACHE PATH "Where SDL2 is located" FORCE)
+-    elseif(WIN32)
+-        set(SDL2_PATH "${CMAKE_CURRENT_SOURCE_DIR}/sdl2/Windows" CACHE PATH "Where SDL2 is located" FORCE)
+-        set(SDL2_INCLUDE_DIR "${SDL2_PATH}/include" CACHE PATH "Where the SDL2 include files can be found" FORCE)
+-    endif()
+-
+-    find_package(SDL2 REQUIRED)
++    find_package(SDL2 REQUIRED CONFIG)
+     add_library(SDL2 INTERFACE)
+-
+-    target_include_directories(SDL2 INTERFACE "${SDL2_INCLUDE_DIR}")
+-    target_link_libraries(SDL2 INTERFACE "${SDL2_LIBRARY}")
++    target_link_libraries(SDL2 INTERFACE SDL2::SDL2)
+ endif()
+ 
+ # libuv
+ option(LIBUV_BUILD_TESTS "Build test for libuv" OFF)
+ option(LIBUV_BUILD_BENCH "Build bench for libuv" OFF)
+ option(BUILD_UVW_LIBS "Build UVW libraries" ON)
+-option(FETCH_LIBUV "Fetch the libuv repo using CMake FetchContent facility" ON)
++set(FETCH_LIBUV OFF CACHE BOOL "" FORCE)
++pkg_check_modules(LIBUV REQUIRED IMPORTED_TARGET libuv)
++add_library(uv_a INTERFACE)
++target_link_libraries(uv_a INTERFACE PkgConfig::LIBUV)
+ set (BUILD_TESTING OFF CACHE INTERNAL "Enable testing with ctest." FORCE)
+ # uvw would otherwise add -stdlib=libc++ as a PUBLIC compile option wherever libc++ is
+ # installed, regardless of the standard library the rest of the build links against.
+@@ -431,12 +276,11 @@ add_subdirectory(uvlooper)
+ 
+ # UPNP
+ 
+-option (UPNPC_BUILD_SHARED "Build shared library" FALSE)
+-option (UPNPC_BUILD_TESTS "Build test executables" FALSE)
+-option (UPNPC_BUILD_SAMPLE "Build sample executables" FALSE)
+-option (UPNPC_NO_INSTALL "Disable installation" TRUE)
+-
+-add_subdirectory(miniupnp/miniupnpc)
++pkg_check_modules(MINIUPNPC REQUIRED IMPORTED_TARGET miniupnpc)
++add_library(miniupnpc INTERFACE)
++target_include_directories(miniupnpc INTERFACE "${MINIUPNPC_INCLUDEDIR}/miniupnpc")
++target_link_libraries(miniupnpc INTERFACE PkgConfig::MINIUPNPC)
++add_library(miniupnpc::miniupnpc ALIAS miniupnpc)
+ 
+ # libtess2
+ 
+@@ -462,8 +306,7 @@ target_include_directories(libtess2 PUBLIC libtess2/Include)
+ add_subdirectory(RectangleBinPack)
+ 
+ # Re2
+-option(RE2_BUILD_TESTING "enable testing for RE2" OFF)
+-add_subdirectory(re2)
++find_package(re2 REQUIRED)
+ 
+ # Discord-RPC
+ if(ENABLE_DISCORD_RICH_PRESENCE)
+@@ -473,31 +316,11 @@ endif()
+ add_library(thread-pool INTERFACE)
+ target_include_directories(thread-pool INTERFACE thread-pool/include)
+ 
+-add_definitions(-DFT_CONFIG_OPTION_SUBPIXEL_RENDERING)
+-
+-set(FT_DISABLE_HARFBUZZ ON CACHE BOOL "" FORCE)
+-set(FT_ENABLE_ERROR_STRINGS ON CACHE BOOL "" FORCE)
+-
+-if (EKA2L1_IOS)
+-    # freetype's CMake autoprobe would otherwise pick up Homebrew's macOS
+-    # libpng / zlib / bzip2 / brotli, which link as macOS dylibs and fail
+-    # the iOS link step. The Symbian content we render through freetype
+-    # does not need these compression backends.
+-    set(FT_DISABLE_PNG ON CACHE BOOL "" FORCE)
+-    set(FT_DISABLE_ZLIB ON CACHE BOOL "" FORCE)
+-    set(FT_DISABLE_BZIP2 ON CACHE BOOL "" FORCE)
+-    set(FT_DISABLE_BROTLI ON CACHE BOOL "" FORCE)
+-endif()
+-
+-# freetype's own find_package(ZLIB) now answers with zlibstatic, which is deliberate, but its
+-# install(EXPORT) then refuses to generate because that target is in no export set. Nothing here is
+-# ever `cmake --install`ed.
+-set(SKIP_INSTALL_ALL ON)
+-
+-add_subdirectory(freetype)
++find_package(Freetype REQUIRED)
++add_library(freetype INTERFACE)
++target_link_libraries(freetype INTERFACE Freetype::Freetype)
+ 
+ set (capstone_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/capstone/include" PARENT_SCOPE)
+-set (YAML_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/yaml-cpp/include" PARENT_SCOPE)
+ set (LIBCXXABI_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libcxxabi/include" PARENT_SCOPE)
+ set (FRSML_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/FRSML/include" PARENT_SCOPE)
+ set (GLM_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/glm" PARENT_SCOPE)
+diff --git a/src/external/ffmpeg/CMakeLists.txt b/src/external/ffmpeg/CMakeLists.txt
+index 51b9696..66e7c9f 100644
+--- a/src/external/ffmpeg/CMakeLists.txt
++++ b/src/external/ffmpeg/CMakeLists.txt
+@@ -40,7 +40,7 @@ endif()
+ 
+ set(ffmpeg_options
+     --disable-everything --disable-autodetect --disable-shared --enable-static
+-    --enable-pic --disable-avdevice --disable-avfilter
++    --enable-pic --disable-optimizations --disable-stripping --disable-avdevice --disable-avfilter
+     --disable-programs --disable-doc --disable-network
+     --enable-decoder=h264,mpeg4,h263,h263p,mpeg2video,mjpeg,mjpegb
+     --enable-decoder=aac,aac_latm,wavpack,amrnb,amrwb,mp3,adpcm_ima_wav,pcm_alaw,pcm_s16le,pcm_s8,pcm_u8,wmav1,wmav2
+@@ -51,6 +51,10 @@ set(ffmpeg_options
+     --enable-protocol=file "--arch=${ffmpeg_arch}")
+ set(ffmpeg_cflags "${CMAKE_C_FLAGS}")
+ set(ffmpeg_ldflags "${CMAKE_EXE_LINKER_FLAGS}")
++# ponytail: LTO renames the constants libswscale inline asm refers to, so FFmpeg is built without
++# it. Pass --enable-lto like media-video/ffmpeg does if that ever matters.
++string(REGEX REPLACE "-flto(=[^ ]*)?" "" ffmpeg_cflags "${ffmpeg_cflags}")
++string(REGEX REPLACE "-flto(=[^ ]*)?" "" ffmpeg_ldflags "${ffmpeg_ldflags}")
+ set(ffmpeg_libraries)
+ 
+ if(MSVC)
+@@ -211,7 +215,8 @@ function(ffmpeg_shell_quote output value)
+     string(REPLACE "'" "'\"'\"'" quoted "${value}")
+     set(${output} "'${quoted}'" PARENT_SCOPE)
+ endfunction()
+-set(ffmpeg_script "#!/bin/sh\nset -eu\n")
++# configure also reads CFLAGS and LDFLAGS from the environment; the flags above already carry them.
++set(ffmpeg_script "#!/bin/sh\nset -eu\nunset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS\n")
+ if(WIN32)
+     string(APPEND ffmpeg_script "export PATH=\"/usr/bin:$PATH\"\n")
+ endif()
