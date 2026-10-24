@@ -337,6 +337,7 @@ dbuskit
 dbusmenu
 dbusmock
 dcall
+dccache
 dccleste
 dcheck
 dcitra
@@ -370,6 +371,7 @@ defun
 defusedxml
 deinterlace
 deinterlacing
+deka
 dekrain
 demangle
 demanglegnu
@@ -1144,6 +1146,7 @@ libtasn
 libtatsu
 libtelnet
 libtermcap
+libtess
 libtheora
 libtom
 libtomcrypt
@@ -1163,6 +1166,7 @@ liburing
 libusb
 libusbmuxd
 libutil
+libuv
 libva
 libvgmstream
 libvips
@@ -1299,6 +1303,7 @@ miao
 miasm
 michaeldfallen
 micromdm
+microprofile
 mido
 migcom
 migueletto
@@ -1306,6 +1311,7 @@ miguelgrinberg
 mikke
 minchoc
 miniaudio
+minibae
 minideen
 minimaid
 minimp
@@ -1499,6 +1505,7 @@ onnxruntime
 onroerend
 openal
 opencascade
+opencore
 opendirectory
 openexr
 openfortivpn
@@ -1771,6 +1778,7 @@ realesrgan
 realsr
 recomp
 recompiler
+rectanglebinpack
 redering
 redorav
 redumper
@@ -2063,6 +2071,7 @@ tinycc
 tinycmmc
 tinygettext
 tinygettext's
+tinysoundfont
 tinyxml
 tirhuta
 tisserand
