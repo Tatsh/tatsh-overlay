@@ -40,6 +40,7 @@ analyzer
 anari
 andyjsmith
 angelscript
+aniso
 antoniovazquezblanco
 antonmedv
 anyio
@@ -196,6 +197,7 @@ cgnslib
 chailove
 chakma
 cham
+changedetection
 changeme
 chaoticgd
 chardet
@@ -238,6 +240,7 @@ codeberg
 codeclimate
 codegen
 codeman
+codspeed
 coinhsl
 coleco
 color
@@ -394,6 +397,7 @@ dggml
 dgit
 dglslang
 dgtk
+dgtlmoon
 dhave
 dhdf
 dheadless
@@ -558,6 +562,7 @@ einops
 einstalldocs
 ejavac
 elbasan
+elementpath
 eleonore
 elfio
 elgato
@@ -573,6 +578,7 @@ emotionengine
 emutype
 energytrace
 enet
+engineio
 eninja
 enpm
 enrollments
@@ -611,6 +617,7 @@ extldflags
 extname
 extradoc
 extrainstall
+extruct
 exzap
 ezpwd
 faad
@@ -634,6 +641,8 @@ fbneo
 fcaps
 fceu
 fceumm
+feedgen
+feedparser
 felis
 fetchcontent
 ffms
@@ -728,6 +737,7 @@ geovis
 getjar
 getmoto
 getrandom
+gevent
 ggml
 ggml's
 gguf
@@ -824,6 +834,7 @@ httptools
 httpx
 huggingface
 huskyrc
+hustcc
 hwinfo
 hwview
 icudt
@@ -848,6 +859,7 @@ infovis
 inih
 iniparser
 inputremapper
+inscriptis
 insinto
 instafail
 installdir
@@ -894,6 +906,7 @@ isodate
 isrc
 isystem
 itertools
+itsdangerous
 iuse
 iwholename
 ixwebsocket
@@ -930,6 +943,7 @@ jsoncpp
 jsonnet
 jsonref
 jsonschema
+jstyleson
 jsummers
 jsvine
 judgment
@@ -1195,15 +1209,18 @@ lightrec
 lighttpd
 limbu
 linecast
+linjackson
 linkernsbypass
 linters
 lintstagedrc
 lipo
 lisu
+litellm
 liteon
 lith
 livecheck
 livechecks
+lkiesow
 llvmlite
 lmod
 loaderwv
@@ -1345,6 +1362,7 @@ mousabaker
 movableink
 moviepy
 mpfr
+mqtt
 mrboom
 mrlotfi
 msgspec
@@ -1539,8 +1557,10 @@ packagefiles
 padd
 pahawh
 pahawhhmong
+paho
 palmyrene
 pango
+panzi
 papertrail
 paramiko
 parrado
@@ -1646,6 +1666,7 @@ programfileslinux
 progs
 prosystem
 proxyd
+prrvchr
 psalterpahlavi
 psutil
 psvpfsparser
@@ -1658,6 +1679,7 @@ pugh
 pugixml
 pulseaudio
 pulseaudiosimple
+puremagic
 pvrtc
 pvxe
 pwilkin
@@ -1702,9 +1724,12 @@ pypi
 pypinyin
 pypinyin's
 pypng
+pyppeteer
+pyppeteerstealth
 pyproject
 pypy
 pyrate
+pyrdfa
 pyrepl
 pyrescene
 pyserial
@@ -1763,6 +1788,7 @@ randers
 ranlib
 raphnet
 rapidcsv
+rapidfuzz
 rapidjson
 rapidyaml
 raviqqe
@@ -1867,6 +1893,7 @@ scikit
 scipy
 scires
 scrapinghub
+scrapy
 screamf
 scribam
 scumm
@@ -1875,6 +1902,7 @@ sdist
 sdksrc
 seatools
 seccomp
+segno
 sekrit
 semctl
 semget
@@ -1929,6 +1957,7 @@ snesrev
 sniffio
 snowflakedb
 socketfile
+socketio
 softfloat
 softmmu
 sompeng
@@ -2061,6 +2090,7 @@ threadpool
 tifinagh
 tihmstar
 tiktoken
+timeago
 timebombs
 timsainb
 tinf
@@ -2232,6 +2262,7 @@ wdio
 webdriverio
 webengine
 webhome
+weblyzard
 webp
 webpassword
 webroot
@@ -2262,6 +2293,7 @@ writedup
 writeedits
 wslpath
 wswan
+wtforms
 wweula
 wxpython
 wxwidgets
@@ -2341,4 +2373,5 @@ zwrap
 zyan
 zycore
 zydis
+zytedata
 zzapreti
