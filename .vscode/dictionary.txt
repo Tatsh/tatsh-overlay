@@ -469,6 +469,7 @@ dodir
 dodoc
 doenvd
 doexe
+dofishcomp
 dofuuz
 doheader
 doicon
@@ -793,7 +794,9 @@ gravitydb
 grayed
 greenboost
 greenpy
+greppable
 griffelib
+gron
 gskit
 gtksourceview
 guessit
@@ -2114,6 +2117,7 @@ tomlkit
 tomllib
 tomlplusplus
 tommath
+tomnomnom
 toolbelt
 torchvision
 tqdm
