@@ -122,8 +122,19 @@ When `yarn qa` reports unknown words, run `yarn dict:update` to regenerate
 
 ## Go packages (`go-module` eclass)
 
-- Convert `go.sum` to `EGO_SUM` format: each line becomes a quoted string in a bash array.
-- Sort `EGO_SUM` entries alphabetically.
+- Do not use `EGO_SUM` or `go-module_set_globals`; both are deprecated.
+- Run `go mod vendor` on a pristine source extract and ship `${P}/vendor` as `${P}-vendor.tar.xz` on
+  the `__distfiles__` release. Add it to `SRC_URI` after the upstream tarball, as in
+  `app-admin/nanomdm`.
+- Build the tarball reproducibly:
+
+  ```sh
+  tar --sort=name --mtime='2026-01-01 00:00:00Z' --owner=0 --group=0 --numeric-owner \
+    --mode='u+rwX,go+rX,go-w' -cJf "${P}-vendor.tar.xz" "${P}/vendor"
+  ```
+
+- Upload with `gh release upload __distfiles__ <file> --repo Tatsh/tatsh-overlay` and check the
+  downloaded asset's checksum matches the local file before running `ebuild <path> manifest`.
 
 ## De-vendoring
 
