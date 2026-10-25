@@ -1,0 +1,5 @@
+# Address and port to listen on. Upstream defaults to 0.0.0.0.
+#CHANGEDETECTION_HOST="127.0.0.1"
+#CHANGEDETECTION_PORT="5000"
+# Where watches and snapshots are stored.
+#CHANGEDETECTION_DATASTORE="/var/lib/changedetection"

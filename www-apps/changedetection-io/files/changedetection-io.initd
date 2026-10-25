@@ -1,0 +1,21 @@
+#!/sbin/openrc-run
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+description="Website change detection and monitoring service"
+command=/usr/bin/changedetection.io
+command_args="-d ${CHANGEDETECTION_DATASTORE:-/var/lib/changedetection} -h ${CHANGEDETECTION_HOST:-127.0.0.1} -p ${CHANGEDETECTION_PORT:-5000}"
+command_background=yes
+command_user="changedetection:changedetection"
+pidfile="/run/${RC_SVCNAME}.pid"
+output_log="/var/log/${RC_SVCNAME}.log"
+error_log="/var/log/${RC_SVCNAME}.log"
+
+depend() {
+	need net
+}
+
+start_pre() {
+	checkpath -d -o changedetection:changedetection -m 0750 "${CHANGEDETECTION_DATASTORE:-/var/lib/changedetection}"
+	checkpath -f -o changedetection:changedetection -m 0640 "${output_log}"
+}
