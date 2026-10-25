@@ -1,0 +1,18 @@
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+PYPI_NO_NORMALIZE=1
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{12..15} )
+
+inherit distutils-r1 pypi
+
+DESCRIPTION="Pure Python 3 JsonLogic and CertLogic implementation"
+HOMEPAGE="https://github.com/panzi/panzi-json-logic https://pypi.org/project/panzi-json-logic/"
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="~amd64"
+
+# No tests in the PyPI sdist.
