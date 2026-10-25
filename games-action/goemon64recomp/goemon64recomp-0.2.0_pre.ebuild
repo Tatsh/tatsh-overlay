@@ -112,13 +112,15 @@ pkg_setup() {
 src_prepare() {
 	# The ROM is not a distfile: it cannot be distributed, and a package wide
 	# RESTRICT="fetch" would stop Portage fetching the submodule archives too.
-	# Check it by hand instead.
-	if [[ ! -f ${DISTDIR}/${MY_ROM} ]]; then
-		eerror "Place your unmodified NTSC-U ROM in ${DISTDIR} as ${MY_ROM}."
+	# Check it by hand instead. Portage only exposes SRC_URI files in DISTDIR, so
+	# look in the real one, as git-r3 does for its store.
+	local rom="${PORTAGE_ACTUAL_DISTDIR:-${DISTDIR}}/${MY_ROM}"
+	if [[ ! -f ${rom} ]]; then
+		eerror "Place your unmodified NTSC-U ROM at ${rom}."
 		die "${MY_ROM} not found"
 	fi
 	local got
-	got=$(sha1sum "${DISTDIR}/${MY_ROM}") || die
+	got=$(sha1sum "${rom}") || die
 	if [[ ${got%% *} != "${MY_ROM_SHA1}" ]]; then
 		eerror "${MY_ROM} has sha1 ${got%% *}, expected ${MY_ROM_SHA1}."
 		die "${MY_ROM} is not the expected ROM"
@@ -146,7 +148,7 @@ src_prepare() {
 	if [[ ! -f lib/mnsg/config/usa/rommy.yaml ]]; then
 		die "lib/mnsg has no config/usa/rommy.yaml, so ${MY_ROM} cannot be decompressed"
 	fi
-	cp "${DISTDIR}/${MY_ROM}" lib/mnsg/config/usa/baserom.z64 || die
+	cp "${rom}" lib/mnsg/config/usa/baserom.z64 || die
 	edo "${EPYTHON}" lib/mnsg/tools/rommy.py decompress \
 		--input lib/mnsg/config/usa/baserom.z64 \
 		--output "${MY_ROM_DECOMPRESSED}" \
