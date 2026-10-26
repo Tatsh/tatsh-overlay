@@ -3,6 +3,7 @@ aatl
 aboood
 acinclude
 aclocal
+actualbudget
 adaptix
 adbsync
 addopts
