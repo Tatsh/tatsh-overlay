@@ -106,6 +106,7 @@ baserom
 basiliskii
 bassa
 bassavah
+bassmidi
 batak
 bdepend
 beartype
@@ -1061,6 +1062,8 @@ libav
 libayatana
 libb
 libbar
+libbass
+libbassmidi
 libbotan
 libbz
 libc
@@ -2197,6 +2200,7 @@ uinput
 uips
 umpv
 unalz
+unarr
 uncc
 uncompromisable
 underthesea
@@ -2247,6 +2251,7 @@ vercmp
 verifyer
 verweij
 vgmstream
+vgmtrans
 vgpu
 vgpuctl
 videobuf
