@@ -50,6 +50,7 @@ appindicator
 appium
 appium's
 aprip
+aras
 arduino
 argcomplete
 argparse
@@ -160,6 +161,7 @@ btzy
 buginese
 buhid
 buildonly
+builtinzlib
 bulkedit
 byteshuf
 byteswap
@@ -209,6 +211,7 @@ checkreqs
 cheevos
 cheke
 chishm
+chlumsky
 choco
 chost
 chrisguidry
@@ -415,6 +418,7 @@ diropts
 discid
 discordrpc
 disle
+dispmanx
 disruptorplus
 distdir
 distfile
@@ -669,6 +673,7 @@ flacted
 flakefinder
 flashplayer
 flavored
+floathard
 flto
 fluidsynth
 fluxsmooth
@@ -994,6 +999,7 @@ kiyamou
 klorfmorf
 kmod
 kodi
+kokke
 kokkos
 kokoro
 konloch
@@ -1037,6 +1043,7 @@ libadrenotools
 libaio
 libao
 libasnd
+libass
 libatomic
 libatrac
 libauto
@@ -1191,6 +1198,7 @@ libusb
 libusbmuxd
 libutil
 libuv
+libv
 libva
 libvgmstream
 libvips
@@ -1375,6 +1383,8 @@ mpfr
 mqtt
 mrboom
 mrlotfi
+msdf
+msdfgen
 msgspec
 msiemens
 msmoosh
@@ -1399,6 +1409,7 @@ mvtools
 mwcap
 mwilliamson
 mycmakeargs
+myconf
 myeconfargs
 myemakeargs
 mygoargs
@@ -1537,6 +1548,7 @@ opencore
 opendirectory
 openexr
 openfortivpn
+opengles
 openlara
 openmpt
 openocd
@@ -1554,6 +1566,7 @@ opusfile
 orbis
 orjson
 osmanya
+osmesa
 osname
 ospi
 ospray
@@ -1801,6 +1814,7 @@ rapidcsv
 rapidfuzz
 rapidjson
 rapidyaml
+raspberrypi
 raviqqe
 rawio
 rcheevos
@@ -1906,6 +1920,7 @@ scrapinghub
 scrapy
 screamf
 scribam
+scrn
 scumm
 scummvm
 sdist
@@ -1958,6 +1973,7 @@ smallstep
 smaniotto
 smlab
 smmap
+smol
 smsplus
 sndfile
 sndh
@@ -2021,6 +2037,7 @@ stdump's
 stepmania
 stfc
 stfc's
+stfs
 stiefel
 stormlib
 storytold
@@ -2178,6 +2195,7 @@ unidic
 unistd
 unjbt
 unkeyworded
+unleashedrecomp
 unlzexe
 unmutate
 unpreferred
@@ -2216,6 +2234,7 @@ vgmstream
 vgpu
 vgpuctl
 videobuf
+videocore
 videodec
 videopac
 videoplayer
@@ -2321,7 +2340,9 @@ xdamage
 xdist
 xdmf
 xemu
+xenos
 xexloaderwv
+xexp
 xext
 xfixes
 xinerama
