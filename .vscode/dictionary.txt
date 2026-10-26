@@ -143,6 +143,7 @@ bmcfee
 bnes
 bomberman
 boringssl
+botan
 boto
 botocore
 boykopovar
@@ -600,6 +601,7 @@ epreifx
 epytest
 epython
 eqawarn
+eqmake
 erfgoed
 ergrelet
 eroot
@@ -641,6 +643,7 @@ fastapi
 fastmcp
 fastparquet
 fatfs
+fatx
 faudio
 favor
 favorite
@@ -830,6 +833,7 @@ hdfs
 heimdal
 helpuri
 hephaest
+hetelek
 hidraw
 higan
 hinterwaeldlers
@@ -868,6 +872,7 @@ implemnting
 implot
 incdir
 includedir
+includepath
 infovis
 inih
 iniparser
@@ -1051,6 +1056,7 @@ libav
 libayatana
 libb
 libbar
+libbotan
 libbz
 libc
 libc's
