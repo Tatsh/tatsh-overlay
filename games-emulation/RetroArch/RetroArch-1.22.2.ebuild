@@ -135,6 +135,8 @@ src_configure() {
 		"$(use_enable network networking)"
 		"$(use_enable openal al)"
 		"$(use_enable opengl)"
+		# The GL1 driver needs desktop libGL, which configure does not probe for with GLES.
+		"$(use_enable !gles2 opengl1)"
 		"$(use_enable oss)"
 		"$(use_enable ozone)"
 		"$(use_enable pulseaudio pulse)"
