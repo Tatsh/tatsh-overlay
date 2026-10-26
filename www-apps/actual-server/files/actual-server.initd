@@ -1,0 +1,23 @@
+#!/sbin/openrc-run
+# Copyright 2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+description="Actual Budget sync server"
+command=/usr/bin/actual-server
+command_background=yes
+command_user="actual:actual"
+pidfile="/run/${RC_SVCNAME}.pid"
+output_log="/var/log/${RC_SVCNAME}.log"
+error_log="/var/log/${RC_SVCNAME}.log"
+
+depend() {
+	need net
+}
+
+start_pre() {
+	export ACTUAL_HOSTNAME="${ACTUAL_HOSTNAME:-127.0.0.1}"
+	export ACTUAL_PORT="${ACTUAL_PORT:-5006}"
+	export ACTUAL_DATA_DIR="${ACTUAL_DATA_DIR:-/var/lib/actual}"
+	checkpath -d -o actual:actual -m 0750 "${ACTUAL_DATA_DIR}"
+	checkpath -f -o actual:actual -m 0640 "${output_log}"
+}

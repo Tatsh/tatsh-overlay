@@ -1,0 +1,20 @@
+[Unit]
+Description=Actual Budget sync server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=actual
+Group=actual
+Environment=ACTUAL_HOSTNAME=127.0.0.1 ACTUAL_PORT=5006 ACTUAL_DATA_DIR=/var/lib/actual
+ExecStart=/usr/bin/actual-server
+Restart=on-failure
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+StateDirectory=actual
+StateDirectoryMode=0750
+
+[Install]
+WantedBy=multi-user.target

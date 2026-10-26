@@ -1,0 +1,5 @@
+# Address and port to listen on. Upstream defaults to 0.0.0.0:5006.
+#ACTUAL_HOSTNAME="127.0.0.1"
+#ACTUAL_PORT="5006"
+# Where budgets and server data are stored.
+#ACTUAL_DATA_DIR="/var/lib/actual"
