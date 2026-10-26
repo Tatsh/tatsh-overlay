@@ -149,6 +149,20 @@ When `yarn qa` reports unknown words, run `yarn dict:update` to regenerate
 - If a project uses git submodules for headers, symlink or copy system-installed headers in
   `src_prepare()` rather than fetching the submodule.
 
+## Forcing Clang
+
+- If the ebuild forces Clang (for example because upstream code needs Clang-only builtins), replace
+  `-flto=auto` with `-flto=thin` using `flag-o-matic`. GCC treats `-flto=auto` as parallel LTO, but
+  Clang treats it as full LTO, which links on a single thread:
+
+  ```bash
+  if ! tc-is-clang; then
+   export CC="${CHOST}-clang" CXX="${CHOST}-clang++"
+   strip-unsupported-flags
+   replace-flags -flto=auto -flto=thin
+  fi
+  ```
+
 ## Packages with Cython extensions
 
 - If the PyPI sdist does not include pre-generated `.c` files, add `DISTUTILS_EXT=1` and put
