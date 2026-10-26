@@ -2396,6 +2396,7 @@ zerofill
 zerokilo
 zeux
 zherczeg
+zhlynn
 zimg
 zint
 zizmor
@@ -2403,6 +2404,7 @@ zizmorcore
 zlibwrapper
 znedi
 zoneinfo
+zsign
 zstd
 zstd's
 zulko
