@@ -86,8 +86,8 @@ pkg_nofetch() {
 	einfo "  ${PN}-shader.ar     shader.ar from the root of the US disc image"
 	einfo "  ${PN}-default.xexp  default.xexp from title update #2, a file named TU_19KA20I* in"
 	einfo "                      /Content/Cache/ on an Xbox 360 that has downloaded it. That file"
-	einfo "                      is an STFS container; extract default.xexp with Velocity or"
-	einfo "                      another STFS extractor."
+	einfo "                      is an STFS container; extract default.xexp with Velocity"
+	einfo "                      (games-util/velocity) or another STFS extractor."
 	einfo
 	einfo "Upstream documents dumping these in docs/DUMPING-en.md."
 }
