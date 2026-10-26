@@ -1,0 +1,66 @@
+Use the system spdlog, zlib and minizip.
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bb3478d..07f8962 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -71,7 +71,7 @@ endif()
+ option(ENABLE_UI_QT "Build the UI (Qt)" ON)
+ option(ENABLE_CLI "Build the CLI application" ON)
+ 
+-add_subdirectory("${PROJECT_SOURCE_DIR}/lib/spdlog")
++find_package(spdlog REQUIRED)
+ add_subdirectory("${PROJECT_SOURCE_DIR}/lib/mio")
+ 
+ add_subdirectory(src)
+diff --git a/src/main/CMakeLists.txt b/src/main/CMakeLists.txt
+index 04fb741..c1e20ef 100644
+--- a/src/main/CMakeLists.txt
++++ b/src/main/CMakeLists.txt
+@@ -1,39 +1,10 @@
+-# Add zlib and minizip dependencies
+-# Prefer system zlib; otherwise build vendored static
+-option(USE_SYSTEM_ZLIB "Use system-provided zlib if available" ON)
+-
+-if (USE_SYSTEM_ZLIB)
+-  find_package(ZLIB QUIET)
+-endif()
+-
+-if (NOT ZLIB_FOUND)
+-  message(STATUS "System zlib not found; building vendored zlib (static)")
+-  set(ZLIB_BUILD_TESTING OFF CACHE BOOL "[zlib] Enable Zlib Examples as tests"              FORCE)
+-  set(ZLIB_BUILD_SHARED  OFF CACHE BOOL "[zlib] Enable building zlib shared library"        FORCE)
+-  set(ZLIB_BUILD_STATIC  ON  CACHE BOOL "[zlib] Enable building zlib static library"        FORCE)
+-  set(ZLIB_BUILD_MINIZIP OFF CACHE BOOL "[zlib] Enable building libminizip contrib library" FORCE)
+-  set(ZLIB_INSTALL       OFF CACHE BOOL "[zlib] Enable installation of zlib"                FORCE)
+-
+-  add_subdirectory("${PROJECT_SOURCE_DIR}/lib/zlib"
+-          "${CMAKE_BINARY_DIR}/lib/zlib"
+-          EXCLUDE_FROM_ALL)
+-
+-  add_library(ZLIB::ZLIB ALIAS zlibstatic)
+-endif()
+-
+-# Add minizip from our vendored zlib
+-set(MINIZIP_DIR "${PROJECT_SOURCE_DIR}/lib/zlib/contrib/minizip")
+-
+-add_library(minizip STATIC
+-        "${MINIZIP_DIR}/ioapi.c"
+-        "${MINIZIP_DIR}/unzip.c"
+-)
+-if (WIN32)
+-  target_sources(minizip PRIVATE "${MINIZIP_DIR}/iowin32.c")
+-endif()
+-
+-target_include_directories(minizip PUBLIC "${MINIZIP_DIR}")
+-target_link_libraries(minizip PUBLIC ZLIB::ZLIB)
++# Gentoo: use the system zlib and minizip.
++find_package(ZLIB REQUIRED)
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(MINIZIP REQUIRED IMPORTED_TARGET minizip)
++add_library(minizip INTERFACE)
++target_include_directories(minizip INTERFACE "${MINIZIP_INCLUDEDIR}/minizip")
++target_link_libraries(minizip INTERFACE PkgConfig::MINIZIP)
+ 
+ # Add libunarr
+ message(INFO "Using built-in unarr")
