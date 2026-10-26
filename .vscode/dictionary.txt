@@ -484,6 +484,7 @@ doheader
 doicon
 doinitd
 doins
+dojar
 dolauncher
 dolib
 doman
@@ -646,6 +647,7 @@ fancycompleter
 fastapi
 fastmcp
 fastparquet
+fastparse
 fatfs
 fatx
 faudio
@@ -749,6 +751,7 @@ gekkio
 genconfig
 gendisc
 gentoolkit
+geny
 geoip
 georgkrause
 geovis
@@ -972,6 +975,7 @@ jsummers
 jsvine
 judgment
 kainctl
+kaitai
 kaithi
 kakasi
 kanjitalk
@@ -1934,6 +1938,7 @@ schalnat
 scikit
 scipy
 scires
+scopt
 scrapinghub
 scrapy
 screamf
