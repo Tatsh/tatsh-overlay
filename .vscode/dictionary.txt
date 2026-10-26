@@ -576,6 +576,7 @@ elbasan
 elementpath
 eleonore
 elfio
+elfutils
 elgato
 elog
 emable
@@ -1330,6 +1331,7 @@ megadrive
 melonds
 membarrier
 memkind
+memset
 mende
 menelkir
 meowpc
@@ -1693,6 +1695,7 @@ priv
 proc
 procapture
 procatpure
+procdump
 proces
 procps
 profglue
