@@ -111,6 +111,11 @@ src_prepare() {
 		mv "${WORKDIR}/${repo##*/}-${sha}" "${path}" || die
 	done
 	cmake_src_prepare
+	# Upstream changes to the executable's directory unless --use-cwd is passed, and restarts
+	# drop that flag. The game must install into the wrapper's working directory, not /usr.
+	sed -i 's/bool useDefaultWorkingDirectory = false;/bool useDefaultWorkingDirectory = true;/' \
+		UnleashedRecomp/main.cpp || die
+	grep -q 'useDefaultWorkingDirectory = true;' UnleashedRecomp/main.cpp || die
 
 	local name
 	for name in "${UR_GAME_FILES[@]}"; do
