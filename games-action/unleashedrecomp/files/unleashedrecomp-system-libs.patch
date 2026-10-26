@@ -1,0 +1,149 @@
+Build against system libraries instead of vcpkg and bundled submodules, and do not override
+the user's -march.
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9032d76..4410cd3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,10 +1,5 @@
+ cmake_minimum_required (VERSION 3.20)
+ 
+-if(NOT DEFINED ENV{VCPKG_ROOT})
+-    message(FATAL_ERROR "VCPKG_ROOT is not defined!")
+-endif()
+-
+-include($ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
+ set(UNLEASHED_RECOMP_THIRDPARTY_ROOT ${CMAKE_SOURCE_DIR}/thirdparty)
+ set(UNLEASHED_RECOMP_TOOLS_ROOT ${CMAKE_SOURCE_DIR}/tools)
+ set(CMAKE_CXX_STANDARD 20)
+@@ -18,16 +13,11 @@ endif()
+ 
+ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+ 
+-# Target Sandy Bridge for all projects
+-add_compile_options(
+-    -march=sandybridge
+-)
++project("UnleashedRecomp-ALL")
+ 
+ add_subdirectory(${UNLEASHED_RECOMP_THIRDPARTY_ROOT})
+ add_subdirectory(${UNLEASHED_RECOMP_TOOLS_ROOT})
+ 
+-project("UnleashedRecomp-ALL")
+-
+ # Include sub-projects.
+ add_subdirectory("UnleashedRecompLib")
+ add_subdirectory("UnleashedRecomp")
+diff --git a/UnleashedRecomp/CMakeLists.txt b/UnleashedRecomp/CMakeLists.txt
+index 10863c0..aca5e1f 100644
+--- a/UnleashedRecomp/CMakeLists.txt
++++ b/UnleashedRecomp/CMakeLists.txt
+@@ -209,13 +209,8 @@ set(UNLEASHED_RECOMP_THIRDPARTY_INCLUDES
+     "${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/ddspp"
+     "${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/imgui"
+     "${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/implot"
+-    "${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/json/include"
+-    "${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/magic_enum/include"
+-    "${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/stb"
+-    "${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/unordered_dense/include"
++    /usr/include/stb
+     "${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/volk"
+-    "${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/Vulkan-Headers/include"
+-    "${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/VulkanMemoryAllocator/include"
+     "${UNLEASHED_RECOMP_TOOLS_ROOT}/bc_diff"
+     "${UNLEASHED_RECOMP_TOOLS_ROOT}/XenosRecomp/thirdparty/smol-v/source"
+ )
+@@ -324,7 +319,6 @@ if (CMAKE_SYSTEM_NAME MATCHES "Linux")
+     target_compile_definitions(UnleashedRecomp PRIVATE SDL_VULKAN_ENABLED)
+ endif()
+ 
+-find_package(directx-dxc REQUIRED)
+ find_package(CURL REQUIRED)
+ 
+ if (UNLEASHED_RECOMP_D3D12)
+@@ -348,8 +342,6 @@ if (UNLEASHED_RECOMP_D3D12)
+     )
+ endif()
+ 
+-file(CHMOD ${DIRECTX_DXC_TOOL} PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE)
+-
+ if (WIN32)
+     target_link_libraries(UnleashedRecomp PRIVATE
+         comctl32
+diff --git a/thirdparty/CMakeLists.txt b/thirdparty/CMakeLists.txt
+index 97656fd..5b74ffb 100644
+--- a/thirdparty/CMakeLists.txt
++++ b/thirdparty/CMakeLists.txt
+@@ -1,5 +1,39 @@
+ cmake_policy(SET CMP0077 NEW)
+ 
++set(CMAKE_FIND_PACKAGE_TARGETS_GLOBAL ON)
++find_package(PkgConfig REQUIRED)
++
++find_package(fmt REQUIRED)
++find_package(tomlplusplus REQUIRED)
++find_package(nfd REQUIRED)
++find_package(SDL2 REQUIRED)
++find_package(SDL2_mixer REQUIRED)
++
++pkg_check_modules(XXHASH REQUIRED IMPORTED_TARGET GLOBAL libxxhash)
++add_library(xxHash::xxhash ALIAS PkgConfig::XXHASH)
++pkg_check_modules(ZSTD REQUIRED IMPORTED_TARGET GLOBAL libzstd)
++add_library(libzstd INTERFACE)
++target_link_libraries(libzstd INTERFACE PkgConfig::ZSTD)
++add_library(libzstd_static ALIAS libzstd)
++
++add_library(SDL2::SDL2-static ALIAS SDL2::SDL2)
++if(NOT TARGET SDL2_mixer)
++    add_library(SDL2_mixer INTERFACE)
++    target_link_libraries(SDL2_mixer INTERFACE SDL2_mixer::SDL2_mixer)
++endif()
++
++find_program(DIRECTX_DXC_TOOL dxc HINTS /usr/lib/llvm/dxc/bin REQUIRED)
++find_library(DIRECTX_DXCOMPILER_LIBRARY dxcompiler HINTS /usr/lib/llvm/dxc/lib REQUIRED)
++find_path(DIRECTX_DXC_INCLUDE_DIR dxcapi.h HINTS /usr/lib/llvm/dxc/include PATH_SUFFIXES dxc REQUIRED)
++add_library(Microsoft::DirectXShaderCompiler UNKNOWN IMPORTED GLOBAL)
++set_target_properties(Microsoft::DirectXShaderCompiler PROPERTIES
++    IMPORTED_LOCATION "${DIRECTX_DXCOMPILER_LIBRARY}"
++    INTERFACE_INCLUDE_DIRECTORIES "${DIRECTX_DXC_INCLUDE_DIR}")
++# DXIL signing is only used for the Windows Direct3D 12 shader cache.
++add_library(Microsoft::DXIL INTERFACE IMPORTED GLOBAL)
++
++set(MSDF_ATLAS_USE_VCPKG OFF)
++set(MSDFGEN_USE_VCPKG OFF)
+ set(MSDF_ATLAS_BUILD_STANDALONE OFF)
+ set(MSDF_ATLAS_USE_SKIA OFF)
+ set(MSDF_ATLAS_NO_ARTERY_FONT ON)
+@@ -16,7 +50,5 @@ set(SDL2MIXER_VORBIS "VORBISFILE")
+ set(SDL2MIXER_WAVPACK OFF)
+ 
+ add_subdirectory("${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/msdf-atlas-gen")
+-add_subdirectory("${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/nativefiledialog-extended")
+ add_subdirectory("${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/o1heap")
+-add_subdirectory("${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/SDL")
+-add_subdirectory("${UNLEASHED_RECOMP_THIRDPARTY_ROOT}/SDL_mixer")
++
+diff --git a/tools/XenosRecomp/CMakeLists.txt b/tools/XenosRecomp/CMakeLists.txt
+index b6e3369..ad9a1db 100644
+--- a/tools/XenosRecomp/CMakeLists.txt
++++ b/tools/XenosRecomp/CMakeLists.txt
+@@ -1,6 +1,5 @@
+ cmake_minimum_required(VERSION 3.20)
+ 
+-include($ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
+ set(CMAKE_CXX_STANDARD 17)
+ 
+ project("XenosRecomp-ALL")
+diff --git a/tools/XenosRecomp/XenosRecomp/CMakeLists.txt b/tools/XenosRecomp/XenosRecomp/CMakeLists.txt
+index 4e0e2d2..aed1782 100644
+--- a/tools/XenosRecomp/XenosRecomp/CMakeLists.txt
++++ b/tools/XenosRecomp/XenosRecomp/CMakeLists.txt
+@@ -18,8 +18,6 @@ add_executable(XenosRecomp
+     shader_recompiler.h
+     "${SMOLV_SOURCE_DIR}/smolv.cpp")
+ 
+-find_package(directx-dxc CONFIG REQUIRED)
+-
+ target_link_libraries(XenosRecomp PRIVATE
+     Microsoft::DirectXShaderCompiler
+     Microsoft::DXIL

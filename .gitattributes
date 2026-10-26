@@ -5,6 +5,7 @@ app-cdr/cdi2nero/files/cdi2nero.patch binary
 app-pda/altserver/files/altserver-altsign.patch binary
 app-pda/altserver/files/altserver-libplist-from-memory.patch binary
 dev-util/ghidraorbis/files/*.patch binary
+games-action/unleashedrecomp/files/unleashedrecomp-system-libs.patch binary
 games-arcade/stepmania/files/stepmania-libtom-use-pkgconfig.patch binary
 games-emulation/daedalusx64/files/daedalusx64-desktop-key-names.patch binary
 games-emulation/daedalusx64/files/daedalusx64-language-path.patch binary
