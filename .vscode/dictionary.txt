@@ -635,6 +635,8 @@ ezpwd
 faad
 fabiocaccamo
 faccessat
+facetime
+facetimehd
 fakecrc
 fakegem
 famicom
@@ -850,6 +852,7 @@ httptoolkit
 httptools
 httpx
 huggingface
+humanify
 huskyrc
 hustcc
 hwinfo
@@ -940,6 +943,7 @@ jawah
 jazzband
 jdeps
 jeepney
+jehna
 jetpytools
 jiaaro
 jieba
@@ -1600,6 +1604,7 @@ patchfile
 pathlib
 pathspec
 pathstr
+patjak
 paucinhau
 pcfx
 pckey
@@ -2204,6 +2209,7 @@ unjbt
 unkeyworded
 unleashedrecomp
 unlzexe
+unminify
 unmutate
 unpreferred
 unshield
