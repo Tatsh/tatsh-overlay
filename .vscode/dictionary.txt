@@ -45,6 +45,7 @@ aniso
 antoniovazquezblanco
 antonmedv
 anyio
+apfs
 appdirs
 appico
 appindicator
@@ -1292,6 +1293,7 @@ lzfse
 lzham
 lzkn
 lzma
+lzvn
 macbookpro
 macemu
 macvendor
@@ -1970,6 +1972,7 @@ setuid
 setuptools
 sezanzeb
 sflags
+sgan
 shaderc
 shadpkg
 shadps
