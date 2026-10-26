@@ -214,6 +214,7 @@ checkreqs
 cheevos
 cheke
 chishm
+chkconfig
 chlumsky
 choco
 chost
@@ -337,6 +338,7 @@ dataclasses
 dataserv
 datetimes
 dateutil
+davidjo
 dbeaver
 dbfile
 dbuild
@@ -995,6 +997,7 @@ kelf
 kelftool
 kempster
 kenix
+kernelbuild
 kerneldir
 kethsar
 keycodemapdb
@@ -1289,6 +1292,7 @@ lzfse
 lzham
 lzkn
 lzma
+macbookpro
 macemu
 macvendor
 macvendordb
