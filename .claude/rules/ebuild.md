@@ -57,6 +57,7 @@ Follow this order in ebuilds:
 - Use `>=` version constraints when upstream specifies minimum versions.
 - Always include `[${PYTHON_USEDEP}]` for Python library dependencies in `RDEPEND`.
 - Sort dependencies alphabetically within each dependency variable.
+- Always depend on `virtual/zlib`, never `sys-libs/zlib`. For minizip use `virtual/minizip`.
 
 ## `DESCRIPTION`
 
