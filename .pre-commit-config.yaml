@@ -43,7 +43,7 @@ repos:
         files: '^scripts/'
         id: 'ruff-check'
     repo: 'https://github.com/astral-sh/ruff-pre-commit'
-    rev: 'v0.17.2'
+    rev: 'v0.17.3'
   - hooks:
       - files: '^scripts/'
         id: 'yapf'
@@ -61,7 +61,7 @@ repos:
         files: '^scripts/'
         id: 'mypy'
     repo: 'https://github.com/pre-commit/mirrors-mypy'
-    rev: 'v2.4.0'
+    rev: 'v2.4.1'
   - hooks:
       # Ebuilds and eclasses have no file type that pre-commit recognises, so match the files that
       # `yarn shellcheck` checks.
@@ -75,7 +75,7 @@ repos:
       - id: 'check-github-actions'
       - id: 'check-github-workflows'
     repo: 'https://github.com/python-jsonschema/check-jsonschema'
-    rev: '0.38.2'
+    rev: '0.39.0'
   - hooks:
       - id: 'zizmor'
     repo: 'https://github.com/zizmorcore/zizmor-pre-commit'
