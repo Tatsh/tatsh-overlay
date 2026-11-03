@@ -8,7 +8,7 @@ inherit cmake
 MY_PN="ShadPKG"
 # The last tag, v2.1.0, predates the whole decompiler and the current build
 # system, so package a snapshot of main instead.
-COMMIT="7a02c1e56b40477b26a660884deda1f3ca8d2eab"
+COMMIT="f294146cbe7cad375c4a28ce16885621b0e00288"
 
 DESCRIPTION="Tool to derive keys from and extract PlayStation 4 PKG files"
 HOMEPAGE="https://github.com/seregonwar/ShadPKG"
