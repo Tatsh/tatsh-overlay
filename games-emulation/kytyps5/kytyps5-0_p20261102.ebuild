@@ -7,7 +7,7 @@ LLVM_COMPAT=( {22..23} )
 
 inherit cmake flag-o-matic llvm-r2
 
-MY_TAG="KytyPS5-2026-10-18-37df7f3"
+MY_TAG="KytyPS5-2026-11-02-dfec14a"
 IMGUI_SHA="f1cc2ae15e53a861a874c3034aae6798fde194ab"
 LIBATRAC9_SHA="ec8899dadf393f655f2871a94e0fe4b3d6220c9a"
 ZARCHIVE_SHA="d2c717730092c7bf8cbb033b12fd4001b7c4d932"
@@ -35,10 +35,13 @@ RDEPEND="app-arch/zstd:=
 	dev-qt/qtbase:6[concurrent,dbus,gui,network,widgets]
 	dev-util/spirv-tools
 	media-libs/libsdl3
+	media-libs/openxr-loader
 	media-libs/opus
 	media-libs/vulkan-loader
 	media-video/ffmpeg:="
 DEPEND="${RDEPEND}
+	dev-cpp/gtest
+	media-fonts/noto
 	dev-cpp/magic_enum
 	dev-cpp/nlohmann_json
 	dev-libs/xbyak
@@ -76,10 +79,12 @@ src_configure() {
 	llvm_prepend_path "${LLVM_SLOT}"
 	local -x CC="${CHOST}-clang" CXX="${CHOST}-clang++"
 	strip-unsupported-flags
+	replace-flags -flto=auto -flto=thin
 	local mycmakeargs=(
 		-DCMAKE_C_COMPILER_LAUNCHER=
 		-DCMAKE_CXX_COMPILER_LAUNCHER=
 		-DCMAKE_INSTALL_PREFIX="${EPREFIX}/usr/$(get_libdir)/${PN}"
+		-DKYTY_SYSTEM_FONT_DIR="${EPREFIX}/usr/share/fonts/noto"
 		-DKYTY_ZARCHIVE_DIR="${WORKDIR}/ZArchive-${ZARCHIVE_SHA}"
 	)
 	cmake_src_configure

@@ -1,19 +1,27 @@
-diff --git a/3rdparty/CMakeLists.txt b/3rdparty/CMakeLists.txt
-index f3cdf3a..0ef4aa2 100644
+Use system libraries and store runtime data in the user directory.
+
 --- a/3rdparty/CMakeLists.txt
 +++ b/3rdparty/CMakeLists.txt
-@@ -1,110 +1,42 @@
+@@ -1,152 +1,47 @@
 -set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
--
++# Gentoo: use system libraries. Only imgui, LibAtrac9 (shadPS4 fork API) and
++# ZArchive (with KytyPS5's reader hardening patch) are built from source.
++find_package(PkgConfig REQUIRED)
+ 
 -add_subdirectory(cpuinfo)
--
++find_package(cpuinfo CONFIG REQUIRED)
++add_library(cpuinfo INTERFACE)
++target_link_libraries(cpuinfo INTERFACE cpuinfo::cpuinfo)
+ 
 -include(FetchContent)
--
++pkg_check_modules(OPUS REQUIRED IMPORTED_TARGET opus)
++add_library(opus INTERFACE)
++target_link_libraries(opus INTERFACE PkgConfig::OPUS)
+ 
 -# The Bluetooth DualSense transports speaker audio as fixed-size Opus packets.
 -set(kyty_build_testing_saved "${BUILD_TESTING}")
 -set(BUILD_TESTING OFF)
 -set(OPUS_BUILD_PROGRAMS OFF CACHE BOOL "" FORCE)
--set(OPUS_INSTALL_PKG_CONFIG_MODULE OFF CACHE BOOL "" FORCE)
 -set(OPUS_INSTALL_CMAKE_CONFIG_MODULE OFF CACHE BOOL "" FORCE)
 -if(MSVC AND CMAKE_C_COMPILER_ID STREQUAL "Clang")
 -	# Opus assumes MSVC accepts SSE4.1 intrinsics without per-file flags, but
@@ -29,6 +37,50 @@ index f3cdf3a..0ef4aa2 100644
 -FetchContent_MakeAvailable(opus)
 -set(BUILD_TESTING "${kyty_build_testing_saved}")
 -install(FILES "${opus_SOURCE_DIR}/COPYING" DESTINATION "licenses/opus")
++find_package(OpenXR CONFIG REQUIRED GLOBAL)
++set(KYTY_NOTO_SANS_DIR "${KYTY_SYSTEM_FONT_DIR}" PARENT_SCOPE)
+ 
+-# Headsets are driven through OpenXR. Only the static loader is built; the runtime that serves it
+-# (for example SteamVR, Monado or Virtual Desktop) comes from the user's system.
+-set(DYNAMIC_LOADER OFF CACHE BOOL "" FORCE)
+-set(BUILD_WITH_SYSTEM_JSONCPP OFF CACHE BOOL "" FORCE)
+-FetchContent_Declare(openxr
+-	GIT_REPOSITORY https://github.com/KhronosGroup/OpenXR-SDK.git
+-	GIT_TAG f2448a8797c85814aa892efc1ab8707900fbcc78 # release-1.1.63
+-	GIT_SHALLOW FALSE)
+-FetchContent_MakeAvailable(openxr)
+-# The loader uses exceptions internally.
+-if(NOT KYTY_CLANG_CL)
+-	target_compile_options(openxr_loader PRIVATE -fexceptions)
+-endif()
+-install(FILES "${openxr_SOURCE_DIR}/LICENSE" DESTINATION "licenses/openxr")
++find_package(xbyak CONFIG REQUIRED)
++set_target_properties(xbyak::xbyak PROPERTIES IMPORTED_GLOBAL TRUE)
++set_property(TARGET xbyak::xbyak APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS XBYAK_NO_EXCEPTION)
++find_package(zydis CONFIG REQUIRED)
++set_target_properties(Zydis::Zydis PROPERTIES IMPORTED_GLOBAL TRUE)
+ 
+-# Noto Sans v2.015 (SIL Open Font License 1.1) is libFont's fallback font.
+-set(KYTY_NOTO_SANS_REPOSITORY "https://raw.githubusercontent.com/notofonts/notofonts.github.io")
+-set(KYTY_NOTO_SANS_COMMIT 42af67ccd12bc0e31ed85384bf73e39248265374)
+-set(KYTY_NOTO_SANS_BASE_URL "${KYTY_NOTO_SANS_REPOSITORY}/${KYTY_NOTO_SANS_COMMIT}/fonts")
+-set(KYTY_NOTO_SANS_DIR "${FETCHCONTENT_BASE_DIR}/noto-sans")
+-function(kyty_fetch_noto_sans path sha256)
+-	get_filename_component(name "${path}" NAME)
+-	file(DOWNLOAD "${KYTY_NOTO_SANS_BASE_URL}/${path}" "${KYTY_NOTO_SANS_DIR}/${name}"
+-		EXPECTED_HASH SHA256=${sha256})
+-endfunction()
+-kyty_fetch_noto_sans(LICENSE f2095b08bed08b23a6fe26112fcd679a2bee3f002eef077eb05d215ed1051bd8)
+-kyty_fetch_noto_sans(NotoSans/hinted/ttf/NotoSans-Regular.ttf
+-	478c558ea716033cd60c03438f628dfa75694dcf6b5f6d505a2f05fd2b4f3823)
+-kyty_fetch_noto_sans(NotoSans/hinted/ttf/NotoSans-Bold.ttf
+-	1df075a380fc7cb898acf64c1f7b3b4dd780de3caa860178bf929de35817a913)
+-kyty_fetch_noto_sans(NotoSans/hinted/ttf/NotoSans-Italic.ttf
+-	467e3f89eeca4108bb8710a2b9e0cf2281ac56d5b0609211a83776d0505eecb5)
+-kyty_fetch_noto_sans(NotoSans/hinted/ttf/NotoSans-BoldItalic.ttf
+-	1b602a9d6353be42c91df097a4857b69fa2696f26703d7a33b54a15d87c2622c)
+-install(FILES "${KYTY_NOTO_SANS_DIR}/LICENSE" DESTINATION "licenses/noto-sans")
+-set(KYTY_NOTO_SANS_DIR "${KYTY_NOTO_SANS_DIR}" PARENT_SCOPE)
 -
 -# The guest instruction patcher needs a decoder/encoder and a small
 -# trampoline assembler. Pin the same revisions used by shadPS4's implementation.
@@ -82,25 +134,15 @@ index f3cdf3a..0ef4aa2 100644
 -)
 -FetchContent_MakeAvailable(zstd zarchive_source)
 -
-+# Gentoo: use system libraries. Only imgui, LibAtrac9 (shadPS4 fork API) and
-+# ZArchive (with KytyPS5's reader hardening patch) are built from source.
-+find_package(PkgConfig REQUIRED)
-+
-+find_package(cpuinfo CONFIG REQUIRED)
-+add_library(cpuinfo INTERFACE)
-+target_link_libraries(cpuinfo INTERFACE cpuinfo::cpuinfo)
-+
-+pkg_check_modules(OPUS REQUIRED IMPORTED_TARGET opus)
-+add_library(opus INTERFACE)
-+target_link_libraries(opus INTERFACE PkgConfig::OPUS)
-+
-+find_package(xbyak CONFIG REQUIRED)
-+set_target_properties(xbyak::xbyak PROPERTIES IMPORTED_GLOBAL TRUE)
-+set_property(TARGET xbyak::xbyak APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS XBYAK_NO_EXCEPTION)
-+find_package(zydis CONFIG REQUIRED)
-+set_target_properties(Zydis::Zydis PROPERTIES IMPORTED_GLOBAL TRUE)
-+
+-# Keep the fetched libraries' install rules out of the package.
+-foreach(kyty_dir "${opus_SOURCE_DIR}" "${openxr_SOURCE_DIR}" "${xbyak_SOURCE_DIR}" "${zydis_SOURCE_DIR}"
+-		"${zstd_SOURCE_DIR}/build/cmake")
+-	set_property(DIRECTORY "${kyty_dir}" PROPERTY EXCLUDE_FROM_ALL TRUE)
+-endforeach()
+-
 +pkg_check_modules(ZSTD REQUIRED IMPORTED_TARGET libzstd)
++add_library(libzstd_static INTERFACE)
++target_link_libraries(libzstd_static INTERFACE PkgConfig::ZSTD)
 +set(KYTY_ZARCHIVE_DIR "" CACHE PATH "ZArchive source directory")
  add_library(zarchive STATIC
 -	"${zarchive_source_SOURCE_DIR}/src/zarchivereader.cpp"
@@ -121,20 +163,21 @@ index f3cdf3a..0ef4aa2 100644
 -	target_compile_options(zarchive PRIVATE /W0)
 -else()
 -	target_compile_options(zarchive PRIVATE -w)
--endif()
 +target_compile_options(zarchive PRIVATE -w)
- 
--set(SDL_SHARED OFF CACHE BOOL "" FORCE)
--if(APPLE)
--	# SDL's built-in iconv fallback does not support CP932.
--	set(SDL_SYSTEM_ICONV ON CACHE BOOL "Use system iconv for CP932 conversion" FORCE)
++
 +find_package(SDL3 CONFIG REQUIRED COMPONENTS SDL3-shared)
 +if(NOT TARGET SDL3::SDL3-static)
 +	add_library(SDL3::SDL3-static INTERFACE IMPORTED GLOBAL)
 +	set_target_properties(SDL3::SDL3-static PROPERTIES INTERFACE_LINK_LIBRARIES SDL3::SDL3)
  endif()
--add_subdirectory(SDL3)
  
+-set(SDL_SHARED OFF CACHE BOOL "" FORCE)
+-if(APPLE)
+-	# SDL's built-in iconv fallback does not support CP932.
+-	set(SDL_SYSTEM_ICONV ON CACHE BOOL "Use system iconv for CP932 conversion" FORCE)
+-endif()
+-add_subdirectory(SDL3)
+-
 -add_library(Vulkan-Headers INTERFACE)
 -add_library(Vulkan::Headers ALIAS Vulkan-Headers)
 -target_include_directories(Vulkan-Headers INTERFACE
@@ -145,7 +188,7 @@ index f3cdf3a..0ef4aa2 100644
  
  add_library(imgui STATIC
  	imgui/imgui.cpp
-@@ -119,95 +51,35 @@ target_include_directories(imgui PUBLIC
+@@ -161,95 +56,35 @@
  )
  target_compile_definitions(imgui PRIVATE IMGUI_IMPL_VULKAN_NO_PROTOTYPES)
  target_link_libraries(imgui PUBLIC Vulkan::Headers)
@@ -154,19 +197,35 @@ index f3cdf3a..0ef4aa2 100644
 -else()
 -	target_compile_options(imgui PRIVATE -w)
 -endif()
--
++target_compile_options(imgui PRIVATE -w)
+ 
 -set(SPIRV_SKIP_TESTS ON CACHE BOOL "" FORCE)
 -set(SPIRV_SKIP_EXECUTABLES ON CACHE BOOL "" FORCE)
 -set(SKIP_SPIRV_TOOLS_INSTALL ON CACHE BOOL "" FORCE)
 -set(SPIRV_WERROR OFF CACHE BOOL "" FORCE)
 -set(SPIRV-Headers_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SPIRV-Headers" CACHE PATH "" FORCE)
 -add_subdirectory(SPIRV-Tools)
--
++find_package(SPIRV-Tools CONFIG REQUIRED)
++find_package(SPIRV-Tools-opt CONFIG REQUIRED)
++add_library(spirv-tools INTERFACE)
++target_link_libraries(spirv-tools INTERFACE SPIRV-Tools-shared)
++add_library(spirv-tools-opt INTERFACE)
++target_link_libraries(spirv-tools-opt INTERFACE SPIRV-Tools-opt)
+ 
 -add_library(spirv-tools ALIAS SPIRV-Tools-static)
 -add_library(spirv-tools-opt ALIAS SPIRV-Tools-opt)
--
++pkg_check_modules(XXHASH REQUIRED IMPORTED_TARGET libxxhash)
++add_library(xxhash INTERFACE)
++target_link_libraries(xxhash INTERFACE PkgConfig::XXHASH)
+ 
 -add_subdirectory(xxHash/build/cmake)
--
++find_package(fmt CONFIG REQUIRED)
++set_target_properties(fmt::fmt PROPERTIES IMPORTED_GLOBAL TRUE)
++find_package(nlohmann_json CONFIG REQUIRED)
++set_target_properties(nlohmann_json::nlohmann_json PROPERTIES IMPORTED_GLOBAL TRUE)
++find_package(spdlog CONFIG REQUIRED)
++set_target_properties(spdlog::spdlog PROPERTIES IMPORTED_GLOBAL TRUE)
+ 
 -set(FMT_DOC OFF CACHE BOOL "" FORCE)
 -set(FMT_INSTALL OFF CACHE BOOL "" FORCE)
 -set(FMT_MODULE OFF CACHE BOOL "" FORCE)
@@ -209,26 +268,6 @@ index f3cdf3a..0ef4aa2 100644
 -	add_subdirectory(ffmpeg-core)
 -	add_library(FFmpeg::ffmpeg ALIAS ffmpeg)
 -endif()
-+target_compile_options(imgui PRIVATE -w)
-+
-+find_package(SPIRV-Tools CONFIG REQUIRED)
-+find_package(SPIRV-Tools-opt CONFIG REQUIRED)
-+add_library(spirv-tools INTERFACE)
-+target_link_libraries(spirv-tools INTERFACE SPIRV-Tools-shared)
-+add_library(spirv-tools-opt INTERFACE)
-+target_link_libraries(spirv-tools-opt INTERFACE SPIRV-Tools-opt)
-+
-+pkg_check_modules(XXHASH REQUIRED IMPORTED_TARGET libxxhash)
-+add_library(xxhash INTERFACE)
-+target_link_libraries(xxhash INTERFACE PkgConfig::XXHASH)
-+
-+find_package(fmt CONFIG REQUIRED)
-+set_target_properties(fmt::fmt PROPERTIES IMPORTED_GLOBAL TRUE)
-+find_package(nlohmann_json CONFIG REQUIRED)
-+set_target_properties(nlohmann_json::nlohmann_json PROPERTIES IMPORTED_GLOBAL TRUE)
-+find_package(spdlog CONFIG REQUIRED)
-+set_target_properties(spdlog::spdlog PROPERTIES IMPORTED_GLOBAL TRUE)
-+
 +pkg_check_modules(FFMPEG REQUIRED IMPORTED_TARGET
 +	libavcodec libavfilter libavformat libavutil libswresample libswscale)
 +add_library(ffmpeg INTERFACE)
@@ -268,11 +307,18 @@ index f3cdf3a..0ef4aa2 100644
 -endif()
 +find_package(Tracy CONFIG REQUIRED)
 +set_target_properties(Tracy::TracyClient PROPERTIES IMPORTED_GLOBAL TRUE)
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 444913f..82c4bd1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -149,11 +149,13 @@ endif()
+@@ -6,7 +6,7 @@
+ 
+ get_property(KYTY_GENERATOR_IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+ if(NOT KYTY_GENERATOR_IS_MULTI_CONFIG AND NOT CMAKE_BUILD_TYPE)
+-	set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build" FORCE)
++#_cmake_modify_IGNORE 	set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build" FORCE)
+ 	set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS Debug Release RelWithDebInfo MinSizeRel)
+ endif()
+ 
+@@ -149,11 +149,13 @@
  
  project(Kyty${KYTY_PROJECT_NAME}${CMAKE_BUILD_TYPE}${KYTY_COMPILER} VERSION 0.3.0)
  
@@ -287,9 +333,21 @@ index 444913f..82c4bd1 100644
  	${PROJECT_BINARY_DIR}
  	${KYTY_SOURCE_DIR}
  )
-diff --git a/src/common/userDataDir.h b/src/common/userDataDir.h
-new file mode 100644
-index 0000000..7334b68
+@@ -947,3 +949,14 @@
+ if(KYTY_CLANG_CL)
+ 	install(FILES "${KYTY_THIRD_PARTY_DIR}/winpthread/bin/libwinpthread-1.dll" DESTINATION .)
+ endif()
++
++message(STATUS "<<< Gentoo configuration >>>
++Build type      ${CMAKE_BUILD_TYPE}
++Install path    ${CMAKE_INSTALL_PREFIX}
++Compiler flags:
++C               ${CMAKE_C_FLAGS}
++C++             ${CMAKE_CXX_FLAGS}
++Linker flags:
++Executable      ${CMAKE_EXE_LINKER_FLAGS}
++Module          ${CMAKE_MODULE_LINKER_FLAGS}
++Shared          ${CMAKE_SHARED_LINKER_FLAGS}\n")
 --- /dev/null
 +++ b/src/common/userDataDir.h
 @@ -0,0 +1,31 @@
@@ -324,27 +382,9 @@ index 0000000..7334b68
 +} // namespace Common
 +
 +#endif /* KYTY_COMMON_USER_DATA_DIR_H_ */
-diff --git a/src/launcher/CMakeLists.txt b/src/launcher/CMakeLists.txt
-index 35a8bc1..4f3412b 100644
 --- a/src/launcher/CMakeLists.txt
 +++ b/src/launcher/CMakeLists.txt
-@@ -102,15 +102,6 @@ install(TARGETS launcher
- 	BUNDLE DESTINATION .
- 	RUNTIME DESTINATION .)
- 
--if(NOT APPLE)
--	# Older releases require the previous executable name when validating updates.
--	install(CODE "
--		file(INSTALL DESTINATION \"\${CMAKE_INSTALL_PREFIX}\"
--			TYPE PROGRAM RENAME \"launcher${CMAKE_EXECUTABLE_SUFFIX}\"
--			FILES \"\${CMAKE_INSTALL_PREFIX}/${launcher_name}${CMAKE_EXECUTABLE_SUFFIX}\")
--	")
--endif()
--
- if(APPLE)
- 	install(TARGETS kyty_emulator DESTINATION "KytyPS5.app/Contents/MacOS")
- 	install(TARGETS kyty_updater DESTINATION "KytyPS5.app/Contents/MacOS")
-@@ -131,10 +122,6 @@ if(APPLE)
+@@ -133,10 +133,6 @@
  	")
  endif()
  
@@ -355,7 +395,7 @@ index 35a8bc1..4f3412b 100644
  if(WIN32)
      install(CODE "
      		execute_process(
-@@ -146,62 +133,6 @@ if(WIN32)
+@@ -148,65 +144,6 @@
  				--no-translations
      		)
      ")
@@ -404,9 +444,12 @@ index 35a8bc1..4f3412b 100644
 -				RESOLVED_DEPENDENCIES_VAR kyty_resolved
 -				POST_INCLUDE_REGEXES \"libQt6\" \"libicu\"
 -				POST_EXCLUDE_REGEXES \".*\")
+-			# Install each library once, as a regular file under the name the binaries load.
 -			foreach(kyty_dep \${kyty_resolved})
+-				get_filename_component(kyty_dep_file \"\${kyty_dep}\" REALPATH)
+-				get_filename_component(kyty_dep_name \"\${kyty_dep}\" NAME)
 -				file(INSTALL DESTINATION \"\${CMAKE_INSTALL_PREFIX}/lib\"
--					TYPE SHARED_LIBRARY FOLLOW_SYMLINK_CHAIN FILES \"\${kyty_dep}\")
+-					RENAME \"\${kyty_dep_name}\" FILES \"\${kyty_dep_file}\")
 -			endforeach()
 -		")
 -		install(CODE "
@@ -418,11 +461,9 @@ index 35a8bc1..4f3412b 100644
  endif()
  
  
-diff --git a/src/launcher/src/cheatFile.cpp b/src/launcher/src/cheatFile.cpp
-index 1c14454..ad3cb9f 100644
 --- a/src/launcher/src/cheatFile.cpp
 +++ b/src/launcher/src/cheatFile.cpp
-@@ -48,7 +48,7 @@ QString PlanPath(const QString& title_id) {
+@@ -48,7 +48,7 @@
  	if (!IsSupportedTitleId(title_id)) {
  		return {};
  	}
@@ -431,42 +472,36 @@ index 1c14454..ad3cb9f 100644
  	    .filePath(QStringLiteral("_Patches/%1.json").arg(title_id.trimmed().toUpper()));
  }
  
-diff --git a/src/launcher/src/main.cpp b/src/launcher/src/main.cpp
-index 05710ea..84eedbc 100644
 --- a/src/launcher/src/main.cpp
 +++ b/src/launcher/src/main.cpp
-@@ -1,10 +1,13 @@
+@@ -1,11 +1,13 @@
  #include "mainDialog.h"
  #include "launcherTheme.h"
- 
 +#include "common/userDataDir.h"
-+
+ 
  #include <QApplication>
+ #include <QIcon>
  
  int main(int argc, char* argv[]) {
  	QApplication a(argc, argv);
 +	Common::EnterUserDataDirectory();
- 	LauncherTheme::Initialize(a);
- 
- 	MainDialog w;
-diff --git a/src/launcher/src/mainDialog.cpp b/src/launcher/src/mainDialog.cpp
-index d3ca293..368433e 100644
+ 	// Title bars and taskbars get the bolder small-size artwork.
+ 	const QIcon small_art(QStringLiteral(":/icons/kyty-small.svg"));
+ 	const QIcon large_art(QStringLiteral(":/icons/kyty.svg"));
 --- a/src/launcher/src/mainDialog.cpp
 +++ b/src/launcher/src/mainDialog.cpp
-@@ -428,7 +428,7 @@ void MainDialog::RunInterpreter(QProcess* process, const Configuration& info) {
- 	const auto& interpreter = m_p->GetInterpreter();
- 
- 	QFileInfo f(interpreter);
--	auto      dir = f.absoluteDir();
-+	auto      dir = QDir::current();
- 
- 	auto args = CreateEmulatorArgs(info);
- 	if (args.isEmpty()) {
-diff --git a/src/loader/guestInstructionPatcher.cpp b/src/loader/guestInstructionPatcher.cpp
-index 0ab7de6..5ed9c07 100644
+@@ -436,7 +436,7 @@
+ 	process->setNativeArguments(
+ 	    CmdCommand(QDir::toNativeSeparators(interpreter), args, close_terminal));
+ #endif
+-	process->setWorkingDirectory(QFileInfo(interpreter).absolutePath());
++	process->setWorkingDirectory(QDir::currentPath());
+ #if defined(_WIN32)
+ 	process->setCreateProcessArgumentsModifier([](QProcess::CreateProcessArguments* args) {
+ 		args->flags |= static_cast<uint32_t>(CREATE_NEW_CONSOLE);
 --- a/src/loader/guestInstructionPatcher.cpp
 +++ b/src/loader/guestInstructionPatcher.cpp
-@@ -267,7 +267,7 @@ DecodedCodeInstruction DecodeCodeInstruction(uintptr_t address, uintptr_t end) {
+@@ -271,7 +271,7 @@
  	for (u8 index = 0; index < decoded.instruction.operand_count_visible; ++index) {
  		const auto& operand = decoded.operands[index];
  		if (operand.type != ZYDIS_OPERAND_TYPE_MEMORY ||
@@ -475,8 +510,6 @@ index 0ab7de6..5ed9c07 100644
  		    operand.mem.disp.value >= 0) {
  			continue;
  		}
-diff --git a/src/main.cpp b/src/main.cpp
-index 1c3bdbb..cfdad9f 100644
 --- a/src/main.cpp
 +++ b/src/main.cpp
 @@ -5,6 +5,7 @@
@@ -487,7 +520,7 @@ index 1c3bdbb..cfdad9f 100644
  #include "common/virtualMemory.h"
  #include "emulator.h"
  #include "kytyGitVersion.h"
-@@ -531,6 +532,25 @@ static int Main(int argc, char* argv[]) {
+@@ -455,6 +456,25 @@
  		return 0;
  	}
  
@@ -513,11 +546,9 @@ index 1c3bdbb..cfdad9f 100644
  	if (!ParseArgs(argc, argv, options, show_help)) {
  		PrintUsage();
  		return 1;
-diff --git a/src/utils.cmake b/src/utils.cmake
-index 998e009..f3983b8 100644
 --- a/src/utils.cmake
 +++ b/src/utils.cmake
-@@ -96,12 +96,12 @@ if(KYTY_CLANG_CL)
+@@ -98,12 +98,12 @@
  elseif(CLANG OR GCC)
  
  	if (CLANG)
@@ -530,9 +561,9 @@ index 998e009..f3983b8 100644
 -		set(KYTY_CPP_FLAGS "${KYTY_CPP_FLAGS} -fno-exceptions -fdiagnostics-color=always -finput-charset=UTF-8 -fexec-charset=UTF-8 -static-libgcc -static-libstdc++ -g -fno-strict-aliasing -fno-omit-frame-pointer -Wall -Wno-unused-value -fmessage-length=0")
 +		set(KYTY_CPP_FLAGS "${KYTY_CPP_FLAGS} -fno-exceptions -fdiagnostics-color=always -finput-charset=UTF-8 -fexec-charset=UTF-8 -fno-strict-aliasing -fno-omit-frame-pointer -Wall -Wno-unused-value -fmessage-length=0")
  	endif()
+ 	set(KYTY_CPP_FLAGS "${KYTY_CPP_FLAGS} -march=x86-64-v3 -ffp-contract=off")
  	
-     if(KYTY_WARNINGS_ARE_ERRORS)
-@@ -109,7 +109,6 @@ elseif(CLANG OR GCC)
+@@ -112,7 +112,6 @@
  	add_compile_options(-Werror)
      endif()	
  
@@ -540,3 +571,14 @@ index 998e009..f3983b8 100644
  	
  	unset(CMAKE_CXX_STANDARD_LIBRARIES CACHE)
  	unset(CMAKE_C_STANDARD_LIBRARIES CACHE)
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -638,5 +638,5 @@
+ add_kyty_full_emulator_test(virtual_memory_allocation_tests "${KYTY_TESTS_DIR}/VirtualMemoryAllocationTests.cpp")
+-add_library(kyty_test_gtest STATIC EXCLUDE_FROM_ALL
+-	"${KYTY_THIRD_PARTY_DIR}/fmt/test/gtest/gmock-gtest-all.cc")
+-target_include_directories(kyty_test_gtest PUBLIC "${KYTY_THIRD_PARTY_DIR}/fmt/test/gtest")
++find_package(GTest CONFIG REQUIRED)
++add_library(kyty_test_gtest INTERFACE)
++target_link_libraries(kyty_test_gtest INTERFACE GTest::gtest GTest::gmock)
+ target_sources(virtual_memory_allocation_tests PRIVATE "${KYTY_TESTS_DIR}/TrinityTests.cpp")
