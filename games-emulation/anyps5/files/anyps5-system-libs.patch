@@ -1,7 +1,8 @@
-diff -ruN a/cmake/ZArchive.cmake b/cmake/ZArchive.cmake
---- a/cmake/ZArchive.cmake	2026-10-19 12:18:10.000000000 -0400
-+++ b/cmake/ZArchive.cmake	2026-10-19 12:27:42.901973543 -0400
-@@ -1,25 +1,3 @@
+Use system libraries and avoid forced static linking.
+
+--- a/cmake/ZArchive.cmake
++++ b/cmake/ZArchive.cmake
+@@ -1,25 +1,6 @@
 -enable_language(C)
 -
 -set(ZSTD_BUILD_PROGRAMS OFF CACHE BOOL "" FORCE)
@@ -27,22 +28,24 @@ diff -ruN a/cmake/ZArchive.cmake b/cmake/ZArchive.cmake
 -if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 -    target_link_options(zarchive INTERFACE LINKER:--exclude-libs,libzarchive.a:libzstd.a)
 -endif()
++pkg_check_modules(ZSTD REQUIRED IMPORTED_TARGET libzstd)
++add_library(libzstd_static INTERFACE)
++target_link_libraries(libzstd_static INTERFACE PkgConfig::ZSTD)
 +pkg_check_modules(ZARCHIVE REQUIRED IMPORTED_TARGET zarchive)
 +add_library(zarchive INTERFACE)
 +target_link_libraries(zarchive INTERFACE PkgConfig::ZARCHIVE)
-diff -ruN a/CMakeLists.txt b/CMakeLists.txt
---- a/CMakeLists.txt	2026-10-19 12:18:10.000000000 -0400
-+++ b/CMakeLists.txt	2026-10-19 12:27:42.901914703 -0400
-@@ -72,8 +72,6 @@
-     add_compile_options(-fsanitize=address -fno-omit-frame-pointer)
-     add_link_options(-fsanitize=address)
-     add_compile_definitions(ANYPS5_ENABLE_ASAN=1)
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -123,8 +123,6 @@
+     add_compile_options(-fsanitize=thread -fno-omit-frame-pointer)
+     add_link_options(-fsanitize=thread)
+     add_compile_definitions(ANYPS5_ENABLE_TSAN=1)
 -elseif(NOT APPLE)
 -    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
  endif()
  
  if(APPLE AND NOT ANYPS5_RELINKER_ONLY)
-@@ -273,13 +271,16 @@
+@@ -614,13 +612,16 @@
          endif()
      endif()
  endif()
@@ -66,9 +69,9 @@ diff -ruN a/CMakeLists.txt b/CMakeLists.txt
  
  if(APS5_ENABLE_TRACY)
      include(cmake/Tracy.cmake)
-@@ -301,13 +302,9 @@
-     endif()
- endif()
+@@ -645,13 +646,9 @@
+ 
+ include(cmake/Jxr.cmake)
  
 -set(LIBUSB_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 -set(LIBUSB_INSTALL_TARGETS OFF CACHE BOOL "" FORCE)
@@ -82,10 +85,24 @@ diff -ruN a/CMakeLists.txt b/CMakeLists.txt
 +target_link_libraries(usb-1.0 INTERFACE PkgConfig::LIBUSB)
  
  include(cmake/ZArchive.cmake)
- if(WIN32)
-diff -ruN a/core/Decoder/Jpeg/CMakeLists.txt b/core/Decoder/Jpeg/CMakeLists.txt
---- a/core/Decoder/Jpeg/CMakeLists.txt	2026-10-19 12:18:10.000000000 -0400
-+++ b/core/Decoder/Jpeg/CMakeLists.txt	2026-10-19 12:27:42.902098793 -0400
+ include(cmake/Opus.cmake)
+@@ -677,3 +674,14 @@
+ add_subdirectory(core/Decoder/Png)
+ add_subdirectory(core/libs)
+ add_subdirectory(core/relinker)
++
++message(STATUS "<<< Gentoo configuration >>>
++Build type      ${CMAKE_BUILD_TYPE}
++Install path    ${CMAKE_INSTALL_PREFIX}
++Compiler flags:
++C               ${CMAKE_C_FLAGS}
++C++             ${CMAKE_CXX_FLAGS}
++Linker flags:
++Executable      ${CMAKE_EXE_LINKER_FLAGS}
++Module          ${CMAKE_MODULE_LINKER_FLAGS}
++Shared          ${CMAKE_SHARED_LINKER_FLAGS}\n")
+--- a/core/Decoder/Jpeg/CMakeLists.txt
++++ b/core/Decoder/Jpeg/CMakeLists.txt
 @@ -3,62 +3,9 @@
          message(FATAL_ERROR "JPEG decoder requires an existing runtime target: ${runtimeTarget}")
      endif()
@@ -150,9 +167,8 @@ diff -ruN a/core/Decoder/Jpeg/CMakeLists.txt b/core/Decoder/Jpeg/CMakeLists.txt
      target_link_libraries(${target} PRIVATE ${runtimeTarget} jpeg_turbo)
      set_target_properties(${target} PROPERTIES
          CXX_EXTENSIONS OFF
-diff -ruN a/core/Decoder/Png/CMakeLists.txt b/core/Decoder/Png/CMakeLists.txt
---- a/core/Decoder/Png/CMakeLists.txt	2026-10-19 12:18:10.000000000 -0400
-+++ b/core/Decoder/Png/CMakeLists.txt	2026-10-19 12:27:42.902154697 -0400
+--- a/core/Decoder/Png/CMakeLists.txt
++++ b/core/Decoder/Png/CMakeLists.txt
 @@ -5,7 +5,7 @@
  
      add_library(${target} STATIC ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/src/Png.cpp)
@@ -171,28 +187,205 @@ diff -ruN a/core/Decoder/Png/CMakeLists.txt b/core/Decoder/Png/CMakeLists.txt
          target_link_libraries(${target}_tests PRIVATE ${target})
          configure_windows_unwind(${target}_tests)
          add_test(NAME ${target} COMMAND ${target}_tests)
-diff -ruN a/core/libs/prx/libSceAgcDriver/CMakeLists.txt b/core/libs/prx/libSceAgcDriver/CMakeLists.txt
---- a/core/libs/prx/libSceAgcDriver/CMakeLists.txt	2026-10-19 12:18:10.000000000 -0400
-+++ b/core/libs/prx/libSceAgcDriver/CMakeLists.txt	2026-10-19 12:27:42.902546829 -0400
-@@ -327,10 +327,6 @@
-         BYPRODUCTS ${agcTraceRevisionHeader}
-         VERBATIM
- )
--set(agcZlibIncludeDir ${CMAKE_SOURCE_DIR}/3rdparty/libjpeg-turbo/src/spng/zlib)
--set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/Execution/src/TraceFile.cpp PROPERTIES
--        INCLUDE_DIRECTORIES ${agcZlibIncludeDir}
--)
- 
- add_library(libSceAgcDriver SHARED EXCLUDE_FROM_ALL
-         ${agcDriverSources}
-diff -ruN a/core/libs/prx/libSceZlib/CMakeLists.txt b/core/libs/prx/libSceZlib/CMakeLists.txt
---- a/core/libs/prx/libSceZlib/CMakeLists.txt	2026-10-19 12:18:10.000000000 -0400
-+++ b/core/libs/prx/libSceZlib/CMakeLists.txt	2026-10-19 12:27:42.902221960 -0400
+--- a/core/libs/prx/libSceZlib/CMakeLists.txt
++++ b/core/libs/prx/libSceZlib/CMakeLists.txt
 @@ -1,6 +1,5 @@
- add_library(libSceZlib SHARED EXCLUDE_FROM_ALL ${CMAKE_CURRENT_SOURCE_DIR}/Export.cpp)
+ add_library(libSceZlib SHARED EXCLUDE_FROM_ALL ${CMAKE_CURRENT_SOURCE_DIR}/Export.cpp ${CMAKE_CURRENT_SOURCE_DIR}/../libkernel/Time/TimedWait.cpp)
 -target_include_directories(libSceZlib PRIVATE ${LIBS_INCLUDE_DIR}
 -    ${CMAKE_SOURCE_DIR}/3rdparty/libjpeg-turbo/src/spng/zlib)
 +target_include_directories(libSceZlib PRIVATE ${LIBS_INCLUDE_DIR})
  set_target_properties(libSceZlib PROPERTIES CXX_EXTENSIONS OFF)
  configure_windows_unwind(libSceZlib)
  target_link_libraries(libSceZlib PRIVATE jpeg_turbo)
+--- a/cmake/Opus.cmake
++++ b/cmake/Opus.cmake
+@@ -1,26 +1,4 @@
+-function(add_bundled_opus)
+-    set(BUILD_SHARED_LIBS OFF)
+-    set(BUILD_TESTING OFF)
+-    set(OPUS_BUILD_SHARED_LIBRARY OFF)
+-    set(OPUS_BUILD_TESTING OFF)
+-    set(OPUS_BUILD_PROGRAMS OFF)
+-    set(OPUS_INSTALL_PKG_CONFIG_MODULE OFF)
+-    set(OPUS_INSTALL_CMAKE_CONFIG_MODULE OFF)
+-    set(OPUS_STACK_PROTECTOR OFF)
+-    set(OPUS_FORTIFY_SOURCE OFF)
+-    add_subdirectory(3rdparty/opus EXCLUDE_FROM_ALL)
+-    set_target_properties(opus PROPERTIES POSITION_INDEPENDENT_CODE ON C_VISIBILITY_PRESET hidden)
+-    target_compile_definitions(opus PRIVATE OPUS_EXPORT=)
+-    if(MINGW AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+-        include(CheckCCompilerFlag)
+-        check_c_compiler_flag("-Wa,-muse-unaligned-vector-move" ANYPS5_ASM_UNALIGNED_VECTOR_MOVE)
+-        if(ANYPS5_ASM_UNALIGNED_VECTOR_MOVE)
+-            target_compile_options(opus PRIVATE -Wa,-muse-unaligned-vector-move)
+-        endif()
+-    endif()
+-    if(MINGW OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-        target_link_options(opus INTERFACE LINKER:--exclude-libs,libopus.a)
+-    endif()
+-endfunction()
+-
+-add_bundled_opus()
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(OPUS REQUIRED IMPORTED_TARGET opus)
++add_library(opus INTERFACE)
++target_link_libraries(opus INTERFACE PkgConfig::OPUS)
+--- a/core/libs/prx/libSceHttp2/CMakeLists.txt
++++ b/core/libs/prx/libSceHttp2/CMakeLists.txt
+@@ -1,37 +1,12 @@
+-function(configure_http2_backend)
+-    set(ENABLE_LIB_ONLY ON)
+-    set(ENABLE_DOC OFF)
+-    set(BUILD_SHARED_LIBS OFF)
+-    set(BUILD_STATIC_LIBS ON)
+-    foreach(package OpenSSL Libngtcp2 Libnghttp3 Systemd Jansson Libevent LibXml2 Jemalloc)
+-        set(CMAKE_DISABLE_FIND_PACKAGE_${package} TRUE)
+-    endforeach()
+-    add_subdirectory(${CMAKE_SOURCE_DIR}/3rdparty/nghttp2 ${CMAKE_BINARY_DIR}/3rdparty/nghttp2 EXCLUDE_FROM_ALL)
+-endfunction()
+-configure_http2_backend()
+-foreach(property LINK_LIBRARIES INTERFACE_LINK_LIBRARIES)
+-    get_target_property(libraries nghttp2_static ${property})
+-    if(libraries)
+-        list(REMOVE_ITEM libraries windows_seh_personalities)
+-        set_property(TARGET nghttp2_static PROPERTY ${property} "${libraries}")
+-    endif()
+-endforeach()
+-set_target_properties(nghttp2_static PROPERTIES POSITION_INDEPENDENT_CODE ON C_VISIBILITY_PRESET hidden)
+-if(MINGW OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-    target_link_options(nghttp2_static INTERFACE LINKER:--exclude-libs,libnghttp2.a)
+-endif()
+-install(FILES ${CMAKE_SOURCE_DIR}/3rdparty/nghttp2/COPYING DESTINATION licenses/nghttp2)
++pkg_check_modules(NGHTTP2 REQUIRED IMPORTED_TARGET libnghttp2)
++add_library(nghttp2_static INTERFACE)
++target_link_libraries(nghttp2_static INTERFACE PkgConfig::NGHTTP2)
+ 
+-set(http2ZlibDir ${CMAKE_SOURCE_DIR}/3rdparty/libjpeg-turbo/src/spng/zlib)
+-add_library(anyps5_http2_transport STATIC EXCLUDE_FROM_ALL Transport.cpp
+-    ${http2ZlibDir}/adler32.c ${http2ZlibDir}/crc32.c ${http2ZlibDir}/inffast.c
+-    ${http2ZlibDir}/inflate.c ${http2ZlibDir}/inftrees.c ${http2ZlibDir}/zutil.c)
+-target_include_directories(anyps5_http2_transport PRIVATE ${LIBS_INCLUDE_DIR} ${http2ZlibDir})
+-target_link_libraries(anyps5_http2_transport PRIVATE libSceNet libSceSsl libkernel libc nghttp2_static)
++add_library(anyps5_http2_transport STATIC EXCLUDE_FROM_ALL Transport.cpp)
++target_include_directories(anyps5_http2_transport PRIVATE ${LIBS_INCLUDE_DIR})
++target_link_libraries(anyps5_http2_transport PRIVATE libSceNet libSceSsl libkernel libc nghttp2_static ZLIB::ZLIB)
+ set_target_properties(anyps5_http2_transport PROPERTIES POSITION_INDEPENDENT_CODE ON CXX_VISIBILITY_PRESET hidden C_VISIBILITY_PRESET hidden)
+-if(MINGW OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-    target_link_options(anyps5_http2_transport INTERFACE LINKER:--exclude-libs,libanyps5_http2_transport.a)
+-endif()
++
+ add_library(libSceHttp2 SHARED EXCLUDE_FROM_ALL Export.cpp Cookies.cpp InventoryExports.cpp)
+ target_include_directories(libSceHttp2 PRIVATE ${LIBS_INCLUDE_DIR})
+ target_link_libraries(libSceHttp2 PRIVATE libc libkernel anyps5_http2_transport)
+--- a/core/libs/prx/libSceNKWebKit/CMakeLists.txt
++++ b/core/libs/prx/libSceNKWebKit/CMakeLists.txt
+@@ -1,21 +1,8 @@
+-function(configure_quickjs_backend)
+-    set(BUILD_SHARED_LIBS OFF)
+-    set(QJS_ENABLE_INSTALL OFF CACHE BOOL "" FORCE)
+-    add_subdirectory(${CMAKE_SOURCE_DIR}/3rdparty/quickjs ${CMAKE_BINARY_DIR}/3rdparty/quickjs EXCLUDE_FROM_ALL)
+-endfunction()
+-configure_quickjs_backend()
+-foreach(property LINK_LIBRARIES INTERFACE_LINK_LIBRARIES)
+-    get_target_property(libraries qjs ${property})
+-    if(libraries)
+-        list(REMOVE_ITEM libraries windows_seh_personalities)
+-        set_property(TARGET qjs PROPERTY ${property} "${libraries}")
+-    endif()
+-endforeach()
+-set_target_properties(qjs PROPERTIES POSITION_INDEPENDENT_CODE ON C_VISIBILITY_PRESET hidden)
+-if(MINGW OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-    target_link_options(qjs INTERFACE LINKER:--exclude-libs,libqjs.a)
+-endif()
+-install(FILES ${CMAKE_SOURCE_DIR}/3rdparty/quickjs/LICENSE DESTINATION licenses/quickjs)
++find_path(QJS_INCLUDE_DIR quickjs.h PATH_SUFFIXES quickjs-ng REQUIRED)
++find_library(QJS_LIBRARY NAMES qjs REQUIRED)
++add_library(qjs INTERFACE)
++target_include_directories(qjs INTERFACE ${QJS_INCLUDE_DIR})
++target_link_libraries(qjs INTERFACE ${QJS_LIBRARY})
+ 
+ file(GLOB nkWebKitSources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+ add_library(libSceNKWebKit SHARED EXCLUDE_FROM_ALL Export.cpp DateParsing.cpp CharactersToNumber.cpp ${nkWebKitSources})
+--- a/core/libs/prx/libSceVorbisDec/CMakeLists.txt
++++ b/core/libs/prx/libSceVorbisDec/CMakeLists.txt
+@@ -1,64 +1,8 @@
+-enable_language(C)
+-
+-set(OGG_DIR ${CMAKE_SOURCE_DIR}/3rdparty/ogg)
+-set(VORBIS_DIR ${CMAKE_SOURCE_DIR}/3rdparty/vorbis)
+-set(OGG_GENERATED_DIR ${CMAKE_CURRENT_BINARY_DIR}/ogg/include)
+-
+-include(CheckIncludeFiles)
+-check_include_files(inttypes.h INCLUDE_INTTYPES_H)
+-check_include_files(stdint.h INCLUDE_STDINT_H)
+-check_include_files(sys/types.h INCLUDE_SYS_TYPES_H)
+-set(SIZE16 int16_t)
+-set(USIZE16 uint16_t)
+-set(SIZE32 int32_t)
+-set(USIZE32 uint32_t)
+-set(SIZE64 int64_t)
+-set(USIZE64 uint64_t)
+-configure_file(${OGG_DIR}/include/ogg/config_types.h.in ${OGG_GENERATED_DIR}/ogg/config_types.h @ONLY)
+-
+-add_library(ogg STATIC EXCLUDE_FROM_ALL
+-        ${OGG_DIR}/src/bitwise.c
+-        ${OGG_DIR}/src/framing.c
+-)
+-target_include_directories(ogg PUBLIC ${OGG_DIR}/include ${OGG_GENERATED_DIR})
+-
+-add_library(vorbis STATIC EXCLUDE_FROM_ALL
+-        ${VORBIS_DIR}/lib/analysis.c
+-        ${VORBIS_DIR}/lib/bitrate.c
+-        ${VORBIS_DIR}/lib/block.c
+-        ${VORBIS_DIR}/lib/codebook.c
+-        ${VORBIS_DIR}/lib/envelope.c
+-        ${VORBIS_DIR}/lib/floor0.c
+-        ${VORBIS_DIR}/lib/floor1.c
+-        ${VORBIS_DIR}/lib/info.c
+-        ${VORBIS_DIR}/lib/lookup.c
+-        ${VORBIS_DIR}/lib/lpc.c
+-        ${VORBIS_DIR}/lib/lsp.c
+-        ${VORBIS_DIR}/lib/mapping0.c
+-        ${VORBIS_DIR}/lib/mdct.c
+-        ${VORBIS_DIR}/lib/psy.c
+-        ${VORBIS_DIR}/lib/registry.c
+-        ${VORBIS_DIR}/lib/res0.c
+-        ${VORBIS_DIR}/lib/sharedbook.c
+-        ${VORBIS_DIR}/lib/smallft.c
+-        ${VORBIS_DIR}/lib/synthesis.c
+-        ${VORBIS_DIR}/lib/window.c
+-)
+-target_include_directories(vorbis PUBLIC ${VORBIS_DIR}/include PRIVATE ${VORBIS_DIR}/lib)
+-target_link_libraries(vorbis PUBLIC ogg)
+-if(NOT WIN32)
+-    target_link_libraries(vorbis PRIVATE m)
+-endif()
+-
+-add_library(vorbisfile STATIC EXCLUDE_FROM_ALL ${VORBIS_DIR}/lib/vorbisfile.c)
+-target_include_directories(vorbisfile PRIVATE ${VORBIS_DIR}/lib)
+-target_link_libraries(vorbisfile PUBLIC vorbis)
+-set_target_properties(ogg vorbis vorbisfile PROPERTIES POSITION_INDEPENDENT_CODE ON C_VISIBILITY_PRESET hidden)
+-if(MINGW)
+-    foreach(library IN ITEMS ogg vorbis vorbisfile)
+-        target_compile_options(${library} PRIVATE -fexceptions)
+-    endforeach()
+-endif()
++pkg_check_modules(VORBIS REQUIRED IMPORTED_TARGET vorbisfile vorbis ogg)
++foreach(library IN ITEMS ogg vorbis vorbisfile)
++    add_library(${library} INTERFACE)
++    target_link_libraries(${library} INTERFACE PkgConfig::VORBIS)
++endforeach()
+ 
+ add_library(libSceVorbisDec SHARED EXCLUDE_FROM_ALL Export.cpp)
+ target_include_directories(libSceVorbisDec PRIVATE ${LIBS_INCLUDE_DIR})
+--- a/core/libs/prx/libSceNKWebKit/src/Jsc.hpp
++++ b/core/libs/prx/libSceNKWebKit/src/Jsc.hpp
+@@ -1,7 +1,7 @@
+ #pragma once
+ 
+ #include "prx/libSceNKWebKit/src/JscApi.hpp"
+-#include "../../../../../3rdparty/quickjs/quickjs.h"
++#include <quickjs.h>
+ #include <atomic>
+ #include <chrono>
+ #include <cstddef>

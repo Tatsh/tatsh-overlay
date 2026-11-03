@@ -5,7 +5,10 @@ EAPI=8
 
 inherit cmake
 
-EGIT_COMMIT="5638146d6a68f33710290b329c35802b9230c9c5"
+EGIT_COMMIT="f6232fcfda70644495273f6b8dd88cf0603463d6"
+JXRLIB_SHA="f7521879862b9085318e814c6157490dd9dbbdb4"
+VGMSTREAM_SHA="7c520e8f9b078dfde2f84f1b5bcbad0c6c415806"
+LIBFVAD_SHA="532ab666c20d3cfda38bca63abbb0f152706c369"
 LIBATRAC9_SHA="946e05a9212976626a9f5e52f29c0a7202871f29"
 MBEDTLS_PV="3.6.7"
 
@@ -14,20 +17,29 @@ HOMEPAGE="https://boykopovar.github.io/AnyPS5/ https://github.com/boykopovar/Any
 SRC_URI="https://github.com/boykopovar/AnyPS5/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz
 	https://github.com/shadps4-emu/ext-LibAtrac9/archive/${LIBATRAC9_SHA}.tar.gz
 		-> ${PN}-LibAtrac9-${LIBATRAC9_SHA}.tar.gz
+	https://github.com/dpirch/libfvad/archive/${LIBFVAD_SHA}.tar.gz -> ${PN}-libfvad-${LIBFVAD_SHA}.tar.gz
+	https://github.com/4creators/jxrlib/archive/${JXRLIB_SHA}.tar.gz -> ${PN}-jxrlib-${JXRLIB_SHA}.tar.gz
+	https://github.com/vgmstream/vgmstream/archive/${VGMSTREAM_SHA}.tar.gz -> ${PN}-vgmstream-${VGMSTREAM_SHA}.tar.gz
 	https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-${MBEDTLS_PV}/mbedtls-${MBEDTLS_PV}.tar.bz2"
 S="${WORKDIR}/AnyPS5-${EGIT_COMMIT}"
 
-LICENSE="GPL-2 MIT || ( Apache-2.0 GPL-2+ )"
+LICENSE="BSD BSD-2 GPL-2 ISC MIT || ( Apache-2.0 GPL-2+ )"
 SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="app-arch/zarchive
+	app-arch/zstd:=
 	dev-libs/libusb:1
+	>=dev-libs/quickjs-ng-0.17.0:=
 	dev-util/glslang
 	media-libs/freetype
 	media-libs/libjpeg-turbo:=
+	media-libs/libogg
 	media-libs/libsdl2[joystick,sound,video,vulkan]
+	media-libs/libvorbis
+	media-libs/opus
 	media-libs/vulkan-loader
+	net-libs/nghttp2
 	media-video/ffmpeg:=
 	virtual/zlib:="
 DEPEND="${RDEPEND}
@@ -43,7 +55,12 @@ src_prepare() {
 	# mbedtls stays bundled: libSceSsl installs its own allocator through
 	# mbedtls_platform_set_calloc_free(), which needs MBEDTLS_PLATFORM_MEMORY, and
 	# net-libs/mbedtls does not enable it.
-	rmdir 3rdparty/{LibAtrac9,mbedtls} || die
+	rmdir 3rdparty/{LibAtrac9,jxrlib,libfvad,mbedtls,vgmstream} || die
+	# These wrappers use private codec headers and data structures.
+	mv "${WORKDIR}/jxrlib-${JXRLIB_SHA}" 3rdparty/jxrlib || die
+	mv "${WORKDIR}/vgmstream-${VGMSTREAM_SHA}" 3rdparty/vgmstream || die
+	# libwebrtc uses libfvad internal headers and structures.
+	mv "${WORKDIR}/libfvad-${LIBFVAD_SHA}" 3rdparty/libfvad || die
 	mv "${WORKDIR}/ext-LibAtrac9-${LIBATRAC9_SHA}" 3rdparty/LibAtrac9 || die
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_PV}" 3rdparty/mbedtls || die
 	cmake_src_prepare
