@@ -1,4 +1,4 @@
-# Copyright 2025 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -17,10 +17,11 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-# 1.3.3 dropped srsly: it is neither in install_requires nor imported anywhere.
-RDEPEND="<dev-python/pydantic-3.0.0[${PYTHON_USEDEP}]
-	>=dev-python/pydantic-1.7.4[${PYTHON_USEDEP}]
-	>=dev-python/typing-extensions-4.0[${PYTHON_USEDEP}]"
+# shellcheck disable=SC2016
+RDEPEND="$(python_gen_cond_dep '
+	>=dev-python/typing-extensions-4.0[${PYTHON_USEDEP}]
+	<dev-python/typing-extensions-5[${PYTHON_USEDEP}]
+' python3_10)"
 
 EPYTEST_PLUGINS=()
 distutils_enable_tests pytest

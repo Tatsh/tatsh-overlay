@@ -1,4 +1,4 @@
-# Copyright 2025 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -6,12 +6,12 @@ EAPI=8
 PYTHON_COMPAT=( python3_{10..15} )
 DISTUTILS_USE_PEP517=setuptools
 
-PYPI_VERIFY_REPO="https://github.com/explosion/cymem"
+PYPI_VERIFY_REPO="https://github.com/explosion/murmurhash"
 
 inherit distutils-r1 pypi
 
-DESCRIPTION="Manage calls to calloc/free through Cython"
-HOMEPAGE="https://github.com/explosion/cymem"
+DESCRIPTION="Cython bindings for MurmurHash"
+HOMEPAGE="https://github.com/explosion/murmurhash"
 
 LICENSE="MIT"
 SLOT="0"

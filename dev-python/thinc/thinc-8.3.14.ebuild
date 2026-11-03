@@ -1,4 +1,4 @@
-# Copyright 2025 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -22,7 +22,7 @@ RDEPEND=">=dev-python/blis-1.3.0[${PYTHON_USEDEP}]
 	<dev-python/blis-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/catalogue-2.0.4[${PYTHON_USEDEP}]
 	<dev-python/catalogue-2.1.0[${PYTHON_USEDEP}]
-	>=dev-python/confection-1.1.0[${PYTHON_USEDEP}]
+	>=dev-python/confection-1.3.2[${PYTHON_USEDEP}]
 	<dev-python/confection-2.0.0[${PYTHON_USEDEP}]
 	>=dev-python/cymem-2.0.2[${PYTHON_USEDEP}]
 	<dev-python/cymem-2.1.0[${PYTHON_USEDEP}]
