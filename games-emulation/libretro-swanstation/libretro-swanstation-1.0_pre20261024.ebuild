@@ -1,9 +1,9 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 LIBRETRO_REPO_NAME="libretro/swanstation"
-LIBRETRO_COMMIT_SHA="5430a4a53b89fa5827c97b84ada29d23317245bc"
+LIBRETRO_COMMIT_SHA="631f0fb31b809e0f889d7c551fe695788e39c1d3"
 
 inherit libretro-core cmake
 
