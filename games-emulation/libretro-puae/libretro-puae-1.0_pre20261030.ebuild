@@ -1,10 +1,10 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/libretro-uae"
-LIBRETRO_COMMIT_SHA="bc0c2b0ec64b81e368fa253f029e31247aeb66ac"
+LIBRETRO_COMMIT_SHA="356160901b4563a60d663829a2e1d07a9207671c"
 
 inherit libretro-core
 
