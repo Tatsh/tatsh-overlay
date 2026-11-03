@@ -1,9 +1,9 @@
-# Copyright 2025 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..15} )
+PYTHON_COMPAT=( python3_{11..15} )
 DISTUTILS_USE_PEP517=setuptools
 
 PYPI_VERIFY_REPO="https://github.com/sysid/sse-starlette"
@@ -17,7 +17,8 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=dev-python/anyio-4.7.0[${PYTHON_USEDEP}]"
+RDEPEND=">=dev-python/starlette-0.49.1[${PYTHON_USEDEP}]
+	>=dev-python/anyio-4.7.0[${PYTHON_USEDEP}]"
 
 # Tests need asgi-lifespan and portend, not packaged in Gentoo.
 RESTRICT="test"
