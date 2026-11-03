@@ -1,10 +1,10 @@
-# Copyright 2023 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 DISTUTILS_USE_PEP517=uv-build
-PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
+PYTHON_COMPAT=( python3_{10..15} )
 inherit distutils-r1 pypi
 
 DESCRIPTION="Release management tool designed for teams (cz command)"
