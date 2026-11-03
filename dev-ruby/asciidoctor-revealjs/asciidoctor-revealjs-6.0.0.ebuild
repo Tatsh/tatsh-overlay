@@ -9,8 +9,6 @@ RUBY_FAKEGEM_EXTRADOC="CHANGELOG.md README.adoc"
 
 RUBY_FAKEGEM_GEMSPEC="${PN}.gemspec"
 
-RUBY_FAKEGEM_EXTRAINSTALL="templates"
-
 inherit ruby-fakegem
 
 DESCRIPTION="A reveal.js converter for Asciidoctor"
