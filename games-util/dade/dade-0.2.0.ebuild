@@ -20,13 +20,13 @@ RDEPEND="
 	app-arch/7zip
 	app-arch/unshield
 	app-cdr/cdrtools
-	>=dev-python/anyio-4.15.0[${PYTHON_USEDEP}]
+	>=dev-python/anyio-4.15.1[${PYTHON_USEDEP}]
 	>=dev-python/bascom-0.2.0[${PYTHON_USEDEP}]
 	>=dev-python/click-8.5.0[${PYTHON_USEDEP}]
 	>=dev-python/cryptography-50.0.1[${PYTHON_USEDEP}]
 	>=dev-python/jinja2-3.1.6[${PYTHON_USEDEP}]
 	>=dev-python/mido-1.3.3[${PYTHON_USEDEP}]
-	>=dev-python/numpy-2.2.6[${PYTHON_USEDEP}]
+	>=dev-python/numpy-2.5.3[${PYTHON_USEDEP}]
 	>=dev-python/pillow-12.3.0[${PYTHON_USEDEP}]
 	>=dev-python/pylzham-0.1.3[${PYTHON_USEDEP}]
 	>=dev-python/pyopencl-2024.1[${PYTHON_USEDEP}]
