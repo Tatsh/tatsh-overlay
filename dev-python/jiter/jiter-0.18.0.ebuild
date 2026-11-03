@@ -5,7 +5,7 @@ EAPI=8
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=maturin
 PYTHON_COMPAT=( python3_{10..15} )
-RUST_MIN_VER="1.83.0"
+RUST_MIN_VER="1.88.0"
 CRATES="
 	ahash@0.8.12
 	aho-corasick@1.1.5
@@ -44,6 +44,7 @@ CRATES="
 	fastrand@2.5.0
 	find-msvc-tools@0.1.11
 	fnv@1.0.7
+	foldhash@0.2.0
 	funty@2.0.0
 	futures-core@0.3.34
 	futures-task@0.3.34
@@ -81,11 +82,11 @@ CRATES="
 	ppv-lite86@0.2.21
 	proc-macro2@1.0.107
 	proptest@1.11.0
-	pyo3-build-config@0.29.2
-	pyo3-ffi@0.29.2
-	pyo3-macros-backend@0.29.2
-	pyo3-macros@0.29.2
-	pyo3@0.29.2
+	pyo3-build-config@0.30.1
+	pyo3-ffi@0.30.1
+	pyo3-macros-backend@0.30.1
+	pyo3-macros@0.30.1
+	pyo3@0.30.1
 	quick-error@1.2.3
 	quote@1.0.47
 	r-efi@5.3.0
@@ -107,7 +108,7 @@ CRATES="
 	serde@1.0.229
 	serde_core@1.0.229
 	serde_derive@1.0.229
-	serde_json@1.0.151
+	serde_json@1.0.154
 	shlex@2.0.1
 	slab@0.4.12
 	smallvec@1.15.2
@@ -151,6 +152,7 @@ LICENSE="MIT"
 # Dependent crate licenses
 LICENSE+="
 	Apache-2.0 Apache-2.0-with-LLVM-exceptions MIT MPL-2.0 Unicode-3.0
+	ZLIB
 "
 SLOT="0"
 KEYWORDS="~amd64"
