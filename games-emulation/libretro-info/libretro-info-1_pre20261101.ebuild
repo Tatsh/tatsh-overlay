@@ -1,9 +1,9 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-LIBRETRO_COMMIT_SHA="5c41d34edc6bbf4fb2b8f6c78835b96657aa4ad2"
+LIBRETRO_COMMIT_SHA="d63d696656b70a5e4924448fe86e06091deb2bec"
 
 DESCRIPTION="Libretro info files required for libretro cores"
 HOMEPAGE="https://github.com/libretro/libretro-super"
