@@ -1,4 +1,4 @@
-# Copyright 2025 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -16,6 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="dev-python/click[${PYTHON_USEDEP}]
+	dev-python/defusedxml[${PYTHON_USEDEP}]
 	dev-python/joblib[${PYTHON_USEDEP}]
 	>=dev-python/regex-2021.8.3[${PYTHON_USEDEP}]
 	dev-python/tqdm[${PYTHON_USEDEP}]"
