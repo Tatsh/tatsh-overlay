@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -7,7 +7,7 @@ inherit font
 
 DESCRIPTION="Google's font family that aims to support all the world's languages"
 HOMEPAGE="https://fonts.google.com/noto https://github.com/notofonts/notofonts.github.io"
-SHA="noto-monthly-release-2026.09.01"
+SHA="noto-monthly-release-2026.11.01"
 SRC_URI="https://github.com/notofonts/notofonts.github.io/archive/refs/tags/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}fonts.github.io-${SHA}"
 LICENSE="OFL-1.1"
