@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	>=dev-python/selenium-4.37.0[${PYTHON_USEDEP}]
+	>=dev-python/selenium-4.51.0[${PYTHON_USEDEP}]
 	>=dev-python/typing-extensions-4.16[${PYTHON_USEDEP}]
 "
 
