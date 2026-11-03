@@ -1,10 +1,10 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/Genesis-Plus-GX"
-LIBRETRO_COMMIT_SHA="ca93fec870378f3bff65931bcd828d5e756cce75"
+LIBRETRO_COMMIT_SHA="f27655b592ef43f317272d79883bcaa10d3ac8ad"
 inherit libretro-core
 
 DESCRIPTION="libretro implementation of Genesis Plus GX. \
