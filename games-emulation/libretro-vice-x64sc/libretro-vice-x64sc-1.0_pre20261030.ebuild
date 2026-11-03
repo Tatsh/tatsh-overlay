@@ -1,10 +1,10 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/vice-libretro"
-LIBRETRO_COMMIT_SHA="c8c242db75a559246d6d51017e6dd4ecd75d6a9f"
+LIBRETRO_COMMIT_SHA="5ebe7d333ab15be57a9dde5f46c29a5bbd5f44f8"
 
 inherit libretro-core
 
