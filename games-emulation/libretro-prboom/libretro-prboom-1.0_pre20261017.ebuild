@@ -1,10 +1,10 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/libretro-prboom"
-LIBRETRO_COMMIT_SHA="daa9b7304bfba1b521d7ad2413d5be1251dbc7a7"
+LIBRETRO_COMMIT_SHA="4849268e7342494193f2bbf2d0128a751cf58da7"
 
 inherit libretro libretro-core
 
