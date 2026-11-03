@@ -1,10 +1,10 @@
-# Copyright 2023-2026 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
-PYTHON_COMPAT=( python3_{10..15} )
+PYTHON_COMPAT=( python3_{11..15} )
 PYPI_VERIFY_REPO="https://github.com/Tatsh/patreon-archiver"
 
 inherit distutils-r1 pypi
@@ -19,14 +19,14 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=dev-python/anyio-4.13.0[${PYTHON_USEDEP}]
+RDEPEND=">=dev-python/anyio-4.15.1[${PYTHON_USEDEP}]
 	>=dev-python/archiver-stats-0.0.1[${PYTHON_USEDEP}]
-	>=dev-python/bascom-0.1.2[${PYTHON_USEDEP}]
-	>=dev-python/click-8.3.2[${PYTHON_USEDEP}]
-	>=dev-python/niquests-3.18.6[${PYTHON_USEDEP}]
+	>=dev-python/bascom-0.2.0[${PYTHON_USEDEP}]
+	>=dev-python/click-8.5.0[${PYTHON_USEDEP}]
+	>=dev-python/niquests-3.21.2[${PYTHON_USEDEP}]
 	>=dev-python/rich-15.0.0[${PYTHON_USEDEP}]
-	>=dev-python/typing-extensions-4.15.0[${PYTHON_USEDEP}]
-	>=dev-python/yt-dlp-utils-0.1.0[${PYTHON_USEDEP}]"
+	>=dev-python/typing-extensions-4.16.0[${PYTHON_USEDEP}]
+	>=dev-python/yt-dlp-utils-0.1.1[${PYTHON_USEDEP}]"
 BDEPEND="test? (
 	${RDEPEND}
 	dev-python/mock[${PYTHON_USEDEP}]
