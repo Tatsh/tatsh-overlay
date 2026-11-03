@@ -1,4 +1,4 @@
-# Copyright 2022 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -8,7 +8,7 @@ inherit cmake desktop xdg
 DESCRIPTION="Wii U emulator"
 HOMEPAGE="https://cemu.info/ https://github.com/cemu-project/Cemu"
 MY_PN="Cemu"
-SHA="aa20e2f86e93c9f625f048dbd2b6b993f1973180"
+SHA="3f8dd913cfd4c8247ad65ab41ba6ef0a55926769"
 GLSLANG_SHA="7200bc12a8979d13b22cd52de80ffb7d41939615"
 IMGUI_PV="1.88"
 SRC_URI="https://github.com/cemu-project/Cemu/archive/${SHA}.tar.gz
