@@ -4,7 +4,7 @@
 EAPI=8
 
 DISTUTILS_USE_PEP517=hatchling
-PYTHON_COMPAT=( python3_{10..15} )
+PYTHON_COMPAT=( python3_{11..15} )
 
 PYPI_VERIFY_REPO="https://github.com/pytest-dev/pytest-env"
 
@@ -20,8 +20,8 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND=">=dev-python/pytest-9.0.2[${PYTHON_USEDEP}]
-	>=dev-python/python-dotenv-1.2.2[${PYTHON_USEDEP}]"
+RDEPEND=">=dev-python/pytest-9.1.1[${PYTHON_USEDEP}]
+	>=dev-python/python-dotenv-1.2.4[${PYTHON_USEDEP}]"
 
 EPYTEST_PLUGINS=( "${PN}" )
 distutils_enable_tests pytest
