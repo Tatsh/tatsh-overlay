@@ -1,4 +1,5 @@
 aacdec
+aarch
 aatl
 aboood
 acinclude
@@ -32,6 +33,7 @@ aliftype
 allarches
 allenc
 alloca
+allprojects
 alsa
 altserver
 altsign
@@ -261,6 +263,7 @@ commandlines
 commitizen
 commitlintrc
 commoncrypto
+comtypes
 concurrentqueue
 confd
 configd
@@ -343,6 +346,8 @@ dateutil
 davidjo
 dbeaver
 dbfile
+dbgeng
+dbgmodel
 dbuild
 dbundle
 dbus
@@ -364,8 +369,10 @@ dcrc
 ddaedalus
 ddaemon
 ddarling
+ddefault
 ddeveloper
 ddisable
+ddocdir
 ddownload
 ddrivers
 ddspp
@@ -388,6 +395,7 @@ deka
 dekrain
 demangle
 demanglegnu
+demangler
 demucs
 denable
 dengine
@@ -400,6 +408,7 @@ desmume
 destdir
 devname
 devtype
+dexamples
 dfetchcontent
 dfilter
 dfmderainbow
@@ -443,6 +452,7 @@ dldchroma
 dlenski
 dlerc
 dlfind
+dlibc
 dlibdeflate
 dlibretro
 dlibrw
@@ -469,7 +479,6 @@ dnfd
 dnfile
 dnsmasq
 dnspython
-dobashcomp
 dobin
 docdir
 docinto
@@ -481,13 +490,11 @@ doctest
 documentintelligence
 dodir
 dodoc
-doenvd
 doexe
 dofishcomp
 dofuuz
 doheader
 doicon
-doinitd
 doins
 dojar
 dolauncher
@@ -533,6 +540,7 @@ dubhatervapoursynth
 dudev
 dunix
 duployan
+duser
 dusing
 dvapoursynth
 dvcpkg
@@ -566,14 +574,17 @@ ebuilds
 ecbd
 eclass
 eclasses
+ecolor
 econf
 ecwolf
 eedi
 eend
 eerror
 eeyore
+eframe
 egencache
 egit
+egui
 eigen
 einfo
 einops
@@ -590,6 +601,7 @@ emable
 emaint
 emake
 emakeargs
+emath
 emea
 emeson
 emesonargs
@@ -602,6 +614,7 @@ eninja
 enpm
 enrollments
 entuwii
+epaint
 epezent
 epfreix
 eprefix
@@ -636,7 +649,6 @@ extensionmanager
 extldflags
 extname
 extradoc
-extrainstall
 extruct
 exzap
 ezpwd
@@ -671,10 +683,10 @@ felis
 fetchcontent
 ffms
 fftw
+fidb
 fidelityfx
 fides
 filecaps
-filelock
 filesdir
 filt
 findname
@@ -846,6 +858,7 @@ heimdal
 helpuri
 hephaest
 hetelek
+hfsexplorer
 hidraw
 higan
 hinterwaeldlers
@@ -951,10 +964,12 @@ javac
 javahelp
 jawah
 jazzband
+jcenter
 jdeps
 jeepney
 jehna
 jetpytools
+jflex
 jiaaro
 jieba
 jinja
@@ -979,6 +994,7 @@ jstyleson
 jsummers
 jsvine
 judgment
+jxrlib
 kainctl
 kaitai
 kaithi
@@ -1015,6 +1031,7 @@ khudawadi
 kikakui
 kissfft
 kitgen
+kittest
 kitware
 kiyamou
 klorfmorf
@@ -1050,6 +1067,7 @@ ldflags
 ldlibs
 ldmakit
 ldpath
+ldsp
 leasetime
 lepcha
 leveladj
@@ -1112,6 +1130,7 @@ libfmtconv
 libfoo
 libfprint
 libfragmentzip
+libfvad
 libgcc
 libgcrypt
 libgeneral
@@ -1232,6 +1251,7 @@ libvsscript
 libvulkan
 libweaver
 libwebp
+libwebrtc
 libwebsockets
 libxcb
 libxkbcommon
@@ -1585,6 +1605,7 @@ openpyxl
 openrc
 openvcl
 openvdb
+openxr
 optfeature
 optflags
 opti
@@ -1701,6 +1722,7 @@ prboom
 prcbuild
 preempted
 preinst
+prepdev
 prerm
 preshed
 prestart
@@ -1739,6 +1761,7 @@ pwilkin
 pyaaf
 pyarrow
 pyasn
+pybag
 pybind
 pycairo
 pycargoebuild
@@ -1797,6 +1820,7 @@ pytz
 pyudev
 pyusb
 pyvboxmanage
+pywin
 pyxdg
 pyyaml
 pyzmq
@@ -1832,6 +1856,7 @@ qtwebsockets
 quassel
 quasselc
 quic
+quickjs
 quicknes
 quiqua
 quot
@@ -1924,6 +1949,7 @@ ruamel
 runkit
 runpath
 rustc
+rustflags
 ryubing
 ryujinx
 safetensors
@@ -1935,6 +1961,7 @@ samuelcolvin
 sandflow
 saraiki
 saramibreak
+sarif
 sasl
 saurashtra
 savoirfairelinux
@@ -2007,6 +2034,7 @@ smlab
 smmap
 smol
 smsplus
+snakeyaml
 sndfile
 sndh
 sndio
@@ -2022,7 +2050,6 @@ sompeng
 soname
 sonames
 sorasompeng
-sortedcontainers
 sounddevice
 soundfile
 soundfont
@@ -2337,6 +2364,7 @@ werkzeug
 werror
 wextra
 wfuse
+wgpu
 wiedenbauer
 wiimm
 wiimms
@@ -2344,6 +2372,8 @@ williballenthin
 wineasio
 wineshell
 wingetty
+winit
+winprint
 wireshark
 wiswa
 wlto
@@ -2374,6 +2404,7 @@ xcursor
 xdamage
 xdist
 xdmf
+xebyte
 xemu
 xenos
 xexloaderwv
@@ -2403,6 +2434,7 @@ xvic
 xvideo
 xxhash
 yabause
+yajsw
 yamls
 yapf
 yasm
