@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/virtualjaguar-libretro"
-LIBRETRO_COMMIT_SHA="03ced5f903641083f2d819b07252344176f47b7f"
+LIBRETRO_COMMIT_SHA="34696082dbc0448caf23aa4ecb5ed40817cb8da0"
 inherit libretro-core
 
 DESCRIPTION="Virtual Jaguar libretro port (Atari Jaguar)"
