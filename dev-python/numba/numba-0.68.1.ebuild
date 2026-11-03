@@ -1,10 +1,10 @@
-# Copyright 2022 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=setuptools
-PYTHON_COMPAT=( python3_1{0,1,2,3,4,5} )
+PYTHON_COMPAT=( python3_{10..15} )
 PYPI_VERIFY_REPO="https://github.com/numba/numba"
 
 inherit distutils-r1 flag-o-matic pypi
@@ -19,7 +19,10 @@ IUSE="tbb"
 
 DEPEND="tbb? ( dev-cpp/tbb )
 	dev-python/numpy[${PYTHON_USEDEP}]"
-RDEPEND="dev-python/llvmlite[${PYTHON_USEDEP}]
+RDEPEND=">=dev-python/llvmlite-0.50.0[${PYTHON_USEDEP}]
+	<dev-python/llvmlite-0.51[${PYTHON_USEDEP}]
+	>=dev-python/numpy-1.22[${PYTHON_USEDEP}]
+	<dev-python/numpy-2.6[${PYTHON_USEDEP}]
 	dev-python/setuptools:0[${PYTHON_USEDEP}]"
 
 src_configure() {
