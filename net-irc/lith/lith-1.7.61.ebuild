@@ -1,4 +1,4 @@
-# Copyright 2021-2022 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -18,13 +18,14 @@ DEPEND="dev-libs/qcoro
 	dev-qt/qtbase:6[dbus,gui,network,widgets,xml]
 	dev-qt/qtdeclarative:6
 	dev-qt/qtmultimedia:6
-	dev-libs/qtkeychain:=
 	dev-qt/qtwebsockets:6"
 RDEPEND="${DEPEND}"
 
 src_configure() {
+	# Release archives must not pick up the overlay checkout's Git metadata.
+	local -x GIT_CEILING_DIRECTORIES="${WORKDIR}"
 	local mycmakeargs=(
-		"-DVERSION=${PV}"
+		"-DLITH_VERSION=${PV}"
 		-DLITH_FEATURE_KEYCHAIN=ON
 		-DLITH_FORCE_LOCAL_PACKAGES_ONLY=ON
 		-Wno-dev
