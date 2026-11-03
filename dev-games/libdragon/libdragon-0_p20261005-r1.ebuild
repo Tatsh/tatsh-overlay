@@ -8,7 +8,7 @@ inherit toolchain-funcs
 DESCRIPTION="Open source Nintendo 64 SDK and asset tools"
 HOMEPAGE="https://libdragon.dev/ https://github.com/n64brew/libdragon"
 # The preview branch.
-SHA="f26e1c16145e4d6ad7e391e1306513d684083c02"
+SHA="98154dafd5ac50e74ee09a5de1035d24a53f54f0"
 SRC_URI="
 	https://github.com/n64brew/libdragon/archive/${SHA}.tar.gz -> ${PN}-${SHA}.tar.gz
 	roms? (
