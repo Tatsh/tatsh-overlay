@@ -1,9 +1,9 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-LIBRETRO_COMMIT_SHA="42c21b99889468a8e77fd7f002229ec16e2f9fa2"
+LIBRETRO_COMMIT_SHA="84250057ec476554aed8145c61811d824a0f08fd"
 
 DESCRIPTION="Collection of overlay files for use with RetroArch"
 HOMEPAGE="https://github.com/libretro/common-overlays"
