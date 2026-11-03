@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/gambatte-libretro"
-LIBRETRO_COMMIT_SHA="96174369b3c30d9fc57c926fa3379c273dc6a9a5"
+LIBRETRO_COMMIT_SHA="77f2567d718b8973d02caa2daa8dce4953faf811"
 inherit libretro-core
 
 DESCRIPTION="Gambatte libretro port (Nintendo Game Boy / Game Boy Color)"
