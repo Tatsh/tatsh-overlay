@@ -7,7 +7,7 @@ LLVM_COMPAT=( {18..23} )
 
 inherit cmake fcaps flag-o-matic llvm-r2
 
-DARLING_SHA="60ba801decee7a00782f74f6be4c8ffb013f79ff"
+DARLING_SHA="148c4cee8f08de0be8435588dbcda667ec165050"
 # Submodules used by the stock component set: "<path> <darlinghq repository> <commit>".
 # cctools-port and bootstrap_cmds come from sys-devel/darling-cctools and dev-util/darling-mig.
 DARLING_SUBMODULES=(
@@ -213,7 +213,6 @@ BDEPEND="
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-Delete-ASM-static-libraries-before-re-archiving.patch"
-	"${FILESDIR}/${PN}-0002-Disable-constant-ObjC-literals-when-the-compiler-s.patch"
 	"${FILESDIR}/${PN}-0003-Add-USE_SYSTEM_CCTOOLS-and-USE_SYSTEM_MIG-options.patch"
 	"${FILESDIR}/${PN}-0004-Fail-the-build-when-MIG-fails.patch"
 	"${FILESDIR}/${PN}-0005-Honour-DESTDIR-in-install-steps.patch"
