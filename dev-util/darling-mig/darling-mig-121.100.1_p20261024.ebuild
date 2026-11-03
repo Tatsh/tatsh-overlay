@@ -11,7 +11,7 @@ inherit cmake llvm-r2
 # libpthread submodules, so build inside a minimal Darling tree.
 DARLING_SHA="60ba801decee7a00782f74f6be4c8ffb013f79ff"
 LIBPTHREAD_SHA="f07f265bfbcf071c1adfc808de971e053ea5edc5"
-SHA="0f300a7a04bb1174a3b7db58b57d738aadc14e13"
+SHA="32b640d0df86f7067fb6d22eb5f6cd79207f4176"
 XNU_SHA="fa29287aa2f0115271e091f1031f53c9e024005d"
 DESCRIPTION="Apple's Mach Interface Generator (MIG) as used to build Darling"
 HOMEPAGE="https://github.com/darlinghq/darling-bootstrap_cmds https://www.darlinghq.org/"
