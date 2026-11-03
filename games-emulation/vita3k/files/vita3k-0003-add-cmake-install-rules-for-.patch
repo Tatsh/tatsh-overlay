@@ -61,7 +61,7 @@ index e8aa40a7..56656b49 100644
 +	install(FILES "${CMAKE_SOURCE_DIR}/dist/linux/org.vita3k.vita3k.metainfo.xml"
 +		DESTINATION "${CMAKE_INSTALL_DATADIR}/metainfo"
 +		COMPONENT vita3k)
-+	install(FILES "${CMAKE_SOURCE_DIR}/dist/image/org.vita3k.vita3k.svg"
++	install(FILES "${CMAKE_SOURCE_DIR}/dist/image/Vita3K.icon/Assets/org.vita3k.vita3k.svg"
 +		DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps"
 +		COMPONENT vita3k)
 +endif()

@@ -15,7 +15,7 @@ HOMEPAGE="
 	https://vita3k.org
 	https://github.com/Vita3K/Vita3K
 "
-SHA="46602447c7f84d53790b44e1869ab5105178bf16"
+SHA="5482414e52efb90e368151004951a7e9bf643e29"
 LIBATRAC9_SHA="82767fe38823c32536726ea798f392b0b49e66b9"
 SPIRV_CROSS_SHA="d8e3e2b141b8c8a167b2e3984736a6baacff316c"
 VULKANMEMORYALLOCATOR_HPP_SHA="3843082eaa6a6f67e6780715fcd602fc81942c9c"
@@ -95,7 +95,6 @@ DEPEND=">=dev-libs/boost-1.81:=
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-allow-shared-system-boost-on.patch"
 	"${FILESDIR}/${PN}-0003-add-cmake-install-rules-for-.patch"
 	"${FILESDIR}/${PN}-0004-skip-empty-boost-submodule-c.patch"
 	"${FILESDIR}/${PN}-0005-add-use_system_ffmpeg-opt-in.patch"
