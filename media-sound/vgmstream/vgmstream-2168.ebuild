@@ -13,15 +13,12 @@ LICENSE="ISC"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="media-libs/libatrac9
-	media-libs/libogg
+RDEPEND="media-libs/libogg
 	media-libs/libvorbis
 	media-libs/speex
 	media-sound/mpg123-base
 	media-video/ffmpeg:="
 DEPEND="${RDEPEND}"
-
-PATCHES=( "${FILESDIR}/${PN}-system-atrac9.patch" )
 
 src_configure() {
 	local mycmakeargs=(
