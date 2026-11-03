@@ -1,4 +1,4 @@
-# Copyright 2025 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -15,7 +15,10 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="dev-python/pytest[${PYTHON_USEDEP}]"
+RDEPEND="
+	>=dev-python/py-cpuinfo-10.1.0[${PYTHON_USEDEP}]
+	>=dev-python/pytest-8.1[${PYTHON_USEDEP}]
+"
 
 EPYTEST_PLUGINS=( "${PN}" )
 distutils_enable_tests pytest
