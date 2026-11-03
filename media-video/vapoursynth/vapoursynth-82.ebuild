@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_1{2,3,4,5} )
+PYTHON_COMPAT=( python3_{12..15} )
 
 # Upstream builds one stable-ABI module (vapoursynth.abi3.so), so there is
 # nothing to repeat per implementation.
