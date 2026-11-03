@@ -1,9 +1,9 @@
-# Copyright 2025 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..15} )
+PYTHON_COMPAT=( python3_{11..15} )
 DISTUTILS_USE_PEP517=hatchling
 
 PYPI_VERIFY_REPO="https://github.com/pydantic/pydantic-settings"
@@ -18,7 +18,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND=">=dev-python/pydantic-2.7.0[${PYTHON_USEDEP}]
-	>=dev-python/python-dotenv-0.21.0[${PYTHON_USEDEP}]
+	>=dev-python/python-dotenv-1.2.2[${PYTHON_USEDEP}]
+	>=dev-python/typing-extensions-4.0.0[${PYTHON_USEDEP}]
 	>=dev-python/typing-inspection-0.4.0[${PYTHON_USEDEP}]"
 BDEPEND="test? (
 	dev-python/chardet[${PYTHON_USEDEP}]
