@@ -1,11 +1,11 @@
-# Copyright 2025 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 DISTUTILS_USE_PEP517=setuptools
 DISTUTILS_EXT=1
-PYTHON_COMPAT=( python3_{11,12,13,14,15} )
+PYTHON_COMPAT=( python3_{11..15} )
 
 PYPI_VERIFY_REPO="https://github.com/mosquito/caio"
 
