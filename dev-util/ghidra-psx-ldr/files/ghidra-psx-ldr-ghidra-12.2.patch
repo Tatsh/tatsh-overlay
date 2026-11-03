@@ -1,0 +1,46 @@
+Adapt to the Ghidra 12.2 API.
+
+--- a/src/main/java/psyq/SigApplier.java
++++ b/src/main/java/psyq/SigApplier.java
+@@ -127,7 +127,7 @@
+ 		
+ 		monitor.initialize(totalObjs);
+ 		monitor.setMessage("Applying obj symbols...");
+-		monitor.clearCanceled();
++		monitor.clearCancelled();
+ 		
+ 		Map<String, Pair<Long, Float>> objsList = new HashMap<>();
+ 		
+--- a/src/main/java/psyq/PsyqLibFileSystem.java
++++ b/src/main/java/psyq/PsyqLibFileSystem.java
+@@ -64,7 +64,7 @@
+ 	 */
+ 	public void mount(TaskMonitor monitor) {
+ 		monitor.setMessage("Opening " + PsyqLibFileSystem.class.getSimpleName() + "...");
+-		monitor.clearCanceled();
++		monitor.clearCancelled();
+ 		
+ 		BinaryReader reader = new BinaryReader(provider, true);
+ 
+--- a/src/main/java/psx/PsxBaseChooser.java
++++ b/src/main/java/psx/PsxBaseChooser.java
+@@ -40,7 +40,7 @@
+ 	}
+ 
+ 	@Override
+-	public Component getCustomEditorComponent() {
++	public Component getCustomEditorComponent(ghidra.app.util.AddressFactoryService addressFactoryService) {
+ 		return editor;
+ 	}
+ 
+--- a/src/main/java/psx/PsxSizeChooser.java
++++ b/src/main/java/psx/PsxSizeChooser.java
+@@ -41,7 +41,7 @@
+ 	}
+ 
+ 	@Override
+-	public Component getCustomEditorComponent() {
++	public Component getCustomEditorComponent(ghidra.app.util.AddressFactoryService addressFactoryService) {
+ 		return editor;
+ 	}
+ 

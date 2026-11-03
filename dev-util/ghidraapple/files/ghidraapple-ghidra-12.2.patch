@@ -1,0 +1,22 @@
+Adapt to the Ghidra 12.2 API.
+
+--- a/src/main/java/lol/fairplay/ghidraapple/actions/markasblock/MarkBlocks.kt
++++ b/src/main/java/lol/fairplay/ghidraapple/actions/markasblock/MarkBlocks.kt
+@@ -182,7 +182,7 @@
+                 // Yes, we do need to call [getDataType] and get another instance. Calling [remove] with
+                 //  the existing instance does not work, unfortunately.
+                 remove(
+-                    getDataType(CategoryPath(BLOCK_CATEGORY_PATH_STRING), minimalBlockLayoutType.name),
++                    listOf(getDataType(CategoryPath(BLOCK_CATEGORY_PATH_STRING), minimalBlockLayoutType.name)),
+                     TaskMonitor.DUMMY,
+                 )
+             }
+@@ -301,7 +301,7 @@
+                 // Yes, we do need to call [getDataType] and get another instance. Calling [remove] with
+                 //  the existing instance does not work, unfortunately.
+                 remove(
+-                    getDataType(CategoryPath(BLOCK_CATEGORY_PATH_STRING), minimalBlockByRefType.name),
++                    listOf(getDataType(CategoryPath(BLOCK_CATEGORY_PATH_STRING), minimalBlockByRefType.name)),
+                     TaskMonitor.DUMMY,
+                 )
+             }

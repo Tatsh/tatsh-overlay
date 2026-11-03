@@ -1,0 +1,44 @@
+Adapt to the Ghidra 12.2 API.
+
+--- a/src/main/java/com/xebyte/core/ServiceUtils.java
++++ b/src/main/java/com/xebyte/core/ServiceUtils.java
+@@ -752,8 +752,8 @@
+      * silently drop it.
+      */
+     private static String decoderOf(ghidra.program.model.lang.LanguageDescription d) {
+-        if (d instanceof ghidra.program.model.lang.SleighLanguageDescription sld) {
+-            generic.jar.ResourceFile sla = sld.getSlaFile();
++        if (d instanceof ghidra.app.plugin.processors.sleigh.SleighLanguageDescription sld) {
++            generic.jar.ResourceFile sla = sld.getLanguageFile().getSlaFile();
+             if (sla != null) return sla.getAbsolutePath();
+         }
+         return d.getLanguageID().getIdAsString();
+--- a/src/main/java/com/xebyte/core/DataTypeService.java
++++ b/src/main/java/com/xebyte/core/DataTypeService.java
+@@ -1199,7 +1199,7 @@
+                 // Check if type is in use (simplified check)
+                 // Note: Ghidra will prevent deletion if type is in use during remove operation
+ 
+-                boolean deleted = dtm.remove(dataType, null);
++                boolean deleted = dtm.remove(dataType);
+                 if (deleted) {
+                     success.set(true);
+                 } else {
+@@ -1514,7 +1514,7 @@
+                 StringBuilder delMsg = new StringBuilder();
+                 try {
+                     threadingStrategy.executeWrite(program, "Recreate struct delete", () -> {
+-                        deleted.set(dtm.remove(existing, null));
++                        deleted.set(dtm.remove(existing));
+                         if (deleted.get()) {
+                             delMsg.append("Removed existing type before recreate");
+                         } else {
+@@ -1784,7 +1784,7 @@
+         try {
+             threadingStrategy.executeWrite(program, "Delete placeholder type " + logicalName, () -> {
+                 DataTypeManager dtm = program.getDataTypeManager();
+-                boolean deleted = dtm.remove(dataType, null);
++                boolean deleted = dtm.remove(dataType);
+                 if (deleted) {
+                     result.append("Removed placeholder '").append(dataType.getPathName()).append("'");
+                     success.set(true);

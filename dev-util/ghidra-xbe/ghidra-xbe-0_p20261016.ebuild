@@ -8,7 +8,7 @@ GHIDRA_EXT_NAME="ghidra-xbe"
 inherit edo ghidra-extension
 
 # Upstream tags builds by date rather than versioning the loader.
-MY_TAG="build-202602250354"
+MY_TAG="build-202610161023"
 # The version of XboxDev/xtlid that upstream's build script pins.
 XTLID_PV="0.1.2"
 

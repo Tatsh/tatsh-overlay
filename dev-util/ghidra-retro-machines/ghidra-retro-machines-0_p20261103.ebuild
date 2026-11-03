@@ -4,12 +4,14 @@
 EAPI=8
 
 GHIDRA_EXT_NAME="ghidra-retro-machines"
+GHIDRA_PV_MIN=12.2
+GHIDRA_PV_MAX=12.3
 
-inherit ghidra-extension
+inherit java-utils-2 ghidra-extension
 
 # Upstream has never tagged a release, so this is a snapshot of the default
 # branch.
-MY_COMMIT="20dd96067b86396663155e5a1d97b346cd0bd3df"
+MY_COMMIT="da7aebc7b6b3c54b388b40253b15f84670d4b088"
 
 DESCRIPTION="Ghidra processor modules and loaders for retro home computers"
 HOMEPAGE="https://github.com/CBongo/ghidra-retro-machines"
@@ -19,3 +21,12 @@ S="${WORKDIR}/${PN}-${MY_COMMIT}"
 
 LICENSE="Apache-2.0"
 KEYWORDS="~amd64"
+
+RDEPEND+=" dev-java/snakeyaml:0"
+DEPEND="${RDEPEND}"
+
+src_prepare() {
+	ghidra-extension_src_prepare
+	mkdir -p lib || die
+	java-pkg_jar-from --into lib snakeyaml
+}

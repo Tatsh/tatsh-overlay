@@ -17,3 +17,5 @@ S="${WORKDIR}/${PN}-${PV}"
 # its own, so it is covered by the repository's licence.
 LICENSE="Apache-2.0"
 KEYWORDS="~amd64"
+
+PATCHES=( "${FILESDIR}/${PN}-ghidra-12.2.patch" )

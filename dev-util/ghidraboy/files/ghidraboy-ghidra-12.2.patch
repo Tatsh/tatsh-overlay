@@ -1,0 +1,13 @@
+Adapt to the Ghidra 12.2 API.
+
+--- a/src/main/java/fi/gekkio/ghidraboy/GameBoyKindOption.java
++++ b/src/main/java/fi/gekkio/ghidraboy/GameBoyKindOption.java
+@@ -42,7 +42,7 @@
+     }
+ 
+     @Override
+-    public Component getCustomEditorComponent() {
++    public Component getCustomEditorComponent(ghidra.app.util.AddressFactoryService addressFactoryService) {
+         return this.customEditor;
+     }
+ 

@@ -36,8 +36,9 @@
 # methods, changed behaviour or reflective lookups, and Ghidra discovers plugins
 # reflectively. Ghidra patch releases have been safe in practice (upstream
 # builds of the same tag against 12.1.2 and 12.1.3 are byte-identical
-# bytecode), minor releases have not, so GHIDRA_PV_MIN/GHIDRA_PV_MAX default to
-# a single minor series and should be widened only after re-testing.
+# bytecode). The Ghidra package uses its major.minor version as a subslot,
+# and := dependencies rebuild extensions when that subslot changes. Raise
+# GHIDRA_PV_MAX after checking extensions against each new minor release.
 #
 # An ebuild that fetches upstream's sources instead of one of those archives
 # gets the whole build for free: if the unpacked tree has a src/main/java
@@ -83,13 +84,13 @@ esac
 # @PRE_INHERIT
 # @DESCRIPTION:
 # Oldest dev-util/ghidra the extension is known to work with, inclusive.
-# Defaults to the 12.1 series.
+# Defaults to the 12.2 series.
 
 # @ECLASS_VARIABLE: GHIDRA_PV_MAX
 # @PRE_INHERIT
 # @DESCRIPTION:
 # First dev-util/ghidra the extension is not known to work with, exclusive.
-# Defaults to 12.2, so the generated dependency spans one minor series. Raise
+# Defaults to 12.3, covering the checked 12.2 series. Raise
 # it only after checking the extension against the newer Ghidra.
 
 # @ECLASS_VARIABLE: GHIDRA_EXT_NAME
@@ -131,18 +132,22 @@ KOTLIN_HOME="/usr/share/kotlin-bin"
 # Sets the global output variables provided by this eclass. Must be called once
 # in global scope.
 _ghidra-extension_set_globals() {
-	: "${GHIDRA_PV_MIN:=12.1}"
-	: "${GHIDRA_PV_MAX:=12.2}"
+	: "${GHIDRA_PV_MIN:=12.2}"
+	: "${GHIDRA_PV_MAX:=12.3}"
 
 	SLOT="0"
-	RDEPEND=">=dev-util/ghidra-${GHIDRA_PV_MIN}
+	RDEPEND=">=dev-util/ghidra-${GHIDRA_PV_MIN}:0=
 		<dev-util/ghidra-${GHIDRA_PV_MAX}"
 	# Ghidra's sleigh compiler and its jars are used at build time, so it is
 	# needed in DEPEND as well as RDEPEND.
 	DEPEND="${RDEPEND}"
 	# jdeps and the sleigh compiler both come from the JDK.
 	BDEPEND="app-arch/unzip
-		virtual/jdk:21"
+		>=virtual/jdk-25:*"
+	# java-utils otherwise selects from DEPEND, where only Ghidra is listed.
+	JAVA_PKG_NV_DEPEND=">=virtual/jdk-25:*"
+	JAVA_PKG_WANT_SOURCE=25
+	JAVA_PKG_WANT_TARGET=25
 }
 _ghidra-extension_set_globals
 
@@ -309,11 +314,10 @@ _ghidra-extension_build_module() {
 	rm -r src || die
 }
 
-# @FUNCTION: _ghidra-extension_get_ghidra_version
-# @INTERNAL
+# @FUNCTION: ghidra-extension_get_ghidra_version
 # @DESCRIPTION:
 # Echoes the version of the installed dev-util/ghidra.
-_ghidra-extension_get_ghidra_version() {
+ghidra-extension_get_ghidra_version() {
 	local prop_file="${ESYSROOT}${GHIDRA_HOME}/Ghidra/application.properties"
 	[[ -f ${prop_file} ]] || die "${ECLASS}: ${prop_file} not found"
 
@@ -386,6 +390,11 @@ _ghidra-extension_check_linkage() {
 	readarray -d '' jars < <(find lib -name '*.jar' -print0 2>/dev/null)
 	(( ${#jars[@]} )) || return 0
 
+	local java_release
+	java_release="$(sed -n 's/^application\.java\.compiler=//p' \
+		"${ESYSROOT}${GHIDRA_HOME}/Ghidra/application.properties")" || die
+	[[ ${java_release} ]] || die "${ECLASS}: no Ghidra Java compiler version"
+
 	local packages="${T}/ghidra-packages"
 	_ghidra-extension_ghidra_packages > "${packages}" || die
 
@@ -402,7 +411,7 @@ _ghidra-extension_check_linkage() {
 		# Ghidra. Third-party jars vendored into an extension reference no
 		# Ghidra package, and routinely reference optional dependencies they do
 		# not ship, which would otherwise be reported as incompatibilities.
-		deps="$(jdeps --multi-release 21 -verbose:package "${jar}" 2>/dev/null |
+		deps="$(jdeps --multi-release "${java_release}" -verbose:package "${jar}" 2>/dev/null |
 			awk '/^[[:space:]]/ { print $3 }' | sort -u)" || die "jdeps failed on ${jar}"
 		if ! grep -qxF -f "${packages}" <<<"${deps}"; then
 			einfo "Skipping ${jar}, it does not use Ghidra's API"
@@ -420,7 +429,7 @@ _ghidra-extension_check_linkage() {
 		done
 
 		einfo "Checking ${jar} against Ghidra ${1}"
-		missing="$(jdeps --multi-release 21 --class-path "${classpath}" \
+		missing="$(jdeps --multi-release "${java_release}" --class-path "${classpath}" \
 			--missing-deps "${jar}" 2>/dev/null)" || die "jdeps failed on ${jar}"
 		if [[ ${missing} ]]; then
 			eerror "${jar} references classes that Ghidra ${1} does not provide:"
@@ -442,7 +451,7 @@ ghidra-extension_src_compile() {
 	[[ -d src/main/java ]] && _ghidra-extension_build_module
 
 	local ghidra_version
-	ghidra_version="$(_ghidra-extension_get_ghidra_version)" || die
+	ghidra_version="$(ghidra-extension_get_ghidra_version)" || die
 
 	_ghidra-extension_check_linkage "${ghidra_version}"
 	_ghidra-extension_retarget "${ghidra_version}"

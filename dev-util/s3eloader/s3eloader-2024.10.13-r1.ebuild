@@ -22,7 +22,6 @@ KEYWORDS="~amd64"
 PATCHES=( "${FILESDIR}/${PN}-ghidra12-importer-settings.patch" )
 
 src_prepare() {
-	eapply "${PATCHES[@]}"
 	ghidra-extension_src_prepare
 
 	# Committed build output.

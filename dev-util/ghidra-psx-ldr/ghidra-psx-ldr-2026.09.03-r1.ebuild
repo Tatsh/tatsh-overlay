@@ -17,3 +17,5 @@ S="${WORKDIR}/${GHIDRA_EXT_NAME}-${PV}"
 # Apache-2.0 header. The vendored com.udojava.evalex (EvalEx) is MIT.
 LICENSE="Apache-2.0 MIT"
 KEYWORDS="~amd64"
+
+PATCHES=( "${FILESDIR}/${PN}-ghidra-12.2.patch" )

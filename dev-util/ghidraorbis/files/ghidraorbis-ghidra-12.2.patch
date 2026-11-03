@@ -1,0 +1,13 @@
+Adapt to the Ghidra 12.2 API.
+
+--- a/src/main/java/orbis/bin/AbstractFileSystem.java
++++ b/src/main/java/orbis/bin/AbstractFileSystem.java
+@@ -105,7 +105,7 @@
+ 		}
+ 	}
+ 
+-	private void storeFile(T entry) {
++	private void storeFile(T entry) throws IOException {
+ 		int count = helper.getFileCount();
+ 		helper.storeFile(entry.getFileName(), count, false, entry.getSize(), entry);
+ 	}

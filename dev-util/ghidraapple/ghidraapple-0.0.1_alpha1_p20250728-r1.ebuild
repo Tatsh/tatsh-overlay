@@ -22,6 +22,6 @@ LICENSE="GPL-3"
 KEYWORDS="~amd64"
 
 # 56 of the module's 57 sources are Kotlin.
-BDEPEND="dev-lang/kotlin-bin"
+BDEPEND+=" dev-lang/kotlin-bin"
 
-PATCHES=( "${FILESDIR}/${PN}-ghidra-12.patch" )
+PATCHES=( "${FILESDIR}/${PN}-ghidra-12.2.patch"  "${FILESDIR}/${PN}-ghidra-12.patch" )
