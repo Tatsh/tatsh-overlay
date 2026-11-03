@@ -8,7 +8,7 @@ inherit cmake desktop multiprocessing xdg
 
 DESCRIPTION="Experimental Symbian OS emulator"
 HOMEPAGE="https://eka2l1.com https://github.com/EKA2L1/EKA2L1"
-SHA="cd7041f58192899d7f2c3c29444487b0d6fefe0b"
+SHA="ba5f84b973b4bc55ee5f9956bfd344775d8f7c1d"
 CAPSTONE_SHA="52c66920fc7bfa15fd9626dfd9f646c698aaa99b"
 _DYNARMIC_SHA="855e885288fc21a616ed07ee4437f34abe7c3922"
 FFMPEG_SHA="569633bfe198554354afefa59859a871ee28e551"
