@@ -7,7 +7,7 @@ inherit autotools desktop xdg
 
 DESCRIPTION="68k Macintosh emulator (updated fork)"
 HOMEPAGE="https://github.com/kanjitalk755/macemu"
-SHA="892eeb74ab9d70dfb034138a0b39057b14f275bc"
+SHA="f532be3d3d70b70f272b52050ce0889a4025d624"
 SRC_URI="https://github.com/kanjitalk755/macemu/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://basilisk.cebix.net/images/apple.png -> ${PN}-icon.png"
 
