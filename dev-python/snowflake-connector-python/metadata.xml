@@ -10,6 +10,5 @@
 	</upstream>
 	<use>
 		<flag name="pandas">Enable pandas support</flag>
-		<flag name="secure-local-storage">Enable secure local storage</flag>
 	</use>
 </pkgmetadata>
