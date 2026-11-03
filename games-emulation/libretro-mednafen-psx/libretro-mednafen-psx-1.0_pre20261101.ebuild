@@ -1,10 +1,10 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/beetle-psx-libretro"
-LIBRETRO_COMMIT_SHA="b3b40b178b0d2977d71d12c9ce9b148c69964ca0"
+LIBRETRO_COMMIT_SHA="71ee81e77acd49296ecf4a683f5a61568ba80bf9"
 
 inherit libretro-core
 
