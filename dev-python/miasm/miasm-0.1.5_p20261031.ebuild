@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python3_{10..15} )
 
 inherit distutils-r1
 
-MY_COMMIT="3671fc24d6e625c2d75f3311724eb6b0c97664f8"
+MY_COMMIT="4313bdc12219e19dbda79db271ecd19e72e487bb"
 
 DESCRIPTION="Reverse engineering framework for machine code manipulation"
 HOMEPAGE="https://github.com/cea-sec/miasm https://pypi.org/project/miasm/"
@@ -26,7 +26,7 @@ KEYWORDS="~amd64"
 IUSE="cparser graph llvm"
 
 RDEPEND="
-	>=dev-python/pyparsing-2.4.1[${PYTHON_USEDEP}]
+	>=dev-python/pyparsing-3.3.2[${PYTHON_USEDEP}]
 	dev-python/future[${PYTHON_USEDEP}]
 	cparser? ( >=dev-python/pycparser-2.17[${PYTHON_USEDEP}] )
 	graph? ( dev-python/graphviz[${PYTHON_USEDEP}] )
