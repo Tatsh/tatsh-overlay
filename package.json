@@ -75,6 +75,7 @@
     },
     "gitignore": true,
     "globs": ["**/*.md", "**/*.mdc"],
+    "ignores": [".package_build_cache/**", ".wiswa-ci/**"],
     "noBanner": true,
     "showFound": true
   },

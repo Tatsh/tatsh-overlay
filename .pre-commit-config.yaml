@@ -88,5 +88,6 @@ repos:
           - '/markdownlint-cli2'
           - '--fix'
         id: 'markdownlint-cli2'
+        language_version: 'system'
     repo: 'https://github.com/DavidAnson/markdownlint-cli2'
     rev: 'v0.24.0'
