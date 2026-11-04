@@ -1,0 +1,30 @@
+--- a/src/gtk/config/stub-export.cpp
++++ b/src/gtk/config/stub-export.cpp
+@@ -6,6 +6,7 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later                               *
+  ***************************************************************************/
+ 
++#include "config.gtk.h"
+ #include "check-uid.h"
+ 
+ #include "AchGDBus.hpp"
+@@ -119,7 +120,9 @@
+ 
+ 	// Initialize achievements.
+ 	// NOTE: Probably not strictly needed for the config dialog...
++#ifdef ENABLE_ACHIEVEMENTS
+ 	AchGDBus::instance();
++#endif /* ENABLE_ACHIEVEMENTS */
+ 
+ #if GTK_CHECK_VERSION(2, 90, 2)
+ 	GtkApplication *const app = gtk_application_new(
+@@ -375,7 +378,9 @@
+ 	fputs("*** GTK" GTK_MAJOR_STR " rp_show_RomDataView_dialog(): Starting main loop.\n", stderr);
+ 
+ 	// Initialize achievements.
++#ifdef ENABLE_ACHIEVEMENTS
+ 	AchGDBus::instance();
++#endif /* ENABLE_ACHIEVEMENTS */
+ 
+ #if GTK_CHECK_VERSION(2, 90, 2)
+ 	app = gtk_application_new("com.gerbilsoft.rom-properties.rp-config", G_APPLICATION_FLAGS_NONE);

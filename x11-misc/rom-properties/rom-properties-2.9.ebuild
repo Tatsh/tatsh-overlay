@@ -41,6 +41,7 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-seccomp-add-faccessat2.patch"
+	"${FILESDIR}/${PN}-gtk-no-achievements.patch"
 )
 
 DOCS=( README.md NEWS.md )
@@ -56,6 +57,9 @@ src_configure() {
 		-DINSTALL_APPARMOR=OFF
 		-DINSTALL_DOC=OFF
 		-DSPLIT_DEBUG=NO
+		# The Tracker extractor only probes for an installed tinysparql to pick its install path;
+		# it does not link it. localsearch-3 is the only version in ::gentoo.
+		-DTRACKER_INSTALL_API_VERSION=3L
 		-DUSE_INTERNAL_JPEG=NO
 		-DUSE_INTERNAL_LZ4=NO
 		-DUSE_INTERNAL_LZO=NO
@@ -86,7 +90,8 @@ src_configure() {
 
 src_install() {
 	cmake_src_install
-	if ! use kde && ! use gtk; then
-		rm "${D}/usr/share/applications/rp-config.desktop" || die
+	# rp-config needs one of the GUI plugins.
+	if ! use gtk && ! use kde && ! use xfce; then
+		rm "${ED}/usr/share/applications/com.gerbilsoft.rom-properties.rp-config.desktop" || die
 	fi
 }
