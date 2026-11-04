@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<use>
+		<flag name="gui">Build the GTK4/libadwaita desktop app</flag>
+		<flag name="server">Build the unattended rip server and its web UI</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">freemkv/freemkv</remote-id>
+	</upstream>
+</pkgmetadata>
