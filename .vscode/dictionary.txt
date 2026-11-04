@@ -535,6 +535,7 @@ dstaticdeps
 dsystemd
 dtiff
 dtrace
+dtracker
 dtracy
 dtrellis
 dubhatervapoursynth
@@ -773,6 +774,7 @@ geny
 geoip
 georgkrause
 geovis
+gerbilsoft
 getjar
 getmoto
 getrandom
@@ -1292,6 +1294,7 @@ lmod
 loaderwv
 loadspec
 localmount
+localsearch
 localsend
 lodepng
 loguru
@@ -2195,6 +2198,7 @@ tinycmmc
 tinygettext
 tinygettext's
 tinysoundfont
+tinysparql
 tinyxml
 tirhuta
 tisserand
