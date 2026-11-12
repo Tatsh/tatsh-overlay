@@ -24,7 +24,8 @@ RDEPEND="${DEPEND}
 	>=net-dns/${PN}-ftl-${FTL_VERSION}
 	>=net-dns/${PN}-web-${WEB_VERSION}
 	app-admin/sudo
-	sys-apps/iproute2"
+	sys-apps/iproute2
+	!<net-dns/${PN}-ftl-6.8-r1"
 
 src_prepare() {
 	default
@@ -44,7 +45,16 @@ src_prepare() {
 		advanced/Templates/*.sh \
 		advanced/Templates/pihole.cron \
 		advanced/Templates/gravity_copy.sql \
+		advanced/Templates/pihole-FTL.systemd \
 		|| die
+	# gravity.sh builds the schema paths from piholeGitDir (the installer's git
+	# checkout) rather than a literal path, so the sed above misses them.
+	sed -i \
+		-e "s|^piholeGitDir=\"/etc/\\.pihole\"$|piholeGitDir=\"${EPREFIX}/usr/${libdir}/${PN}\"|" \
+		-e 's|${piholeGitDir}/advanced/Templates/|${piholeGitDir}/Templates/|' \
+		gravity.sh || die
+	grep -q "^gravityDBschema=\"\${piholeGitDir}/Templates/gravity.db.sql\"$" gravity.sh \
+		|| die "gravity.sh schema path not rewritten"
 }
 
 src_install() {
@@ -64,6 +74,11 @@ src_install() {
 
 	insinto "/usr/$(get_libdir)/${PN}/Templates"
 	doins -r advanced/Templates/*
+
+	# Upstream's v6 unit and the root-run helpers it calls (flat, as in /opt/pihole).
+	exeinto "/usr/$(get_libdir)/${PN}"
+	doexe advanced/Templates/pihole-FTL-{prestart,poststop}.sh
+	systemd_newunit advanced/Templates/pihole-FTL.systemd pihole-FTL.service
 
 	newbashcomp "advanced/bash-completion/${PN}.bash" "${PN}"
 
