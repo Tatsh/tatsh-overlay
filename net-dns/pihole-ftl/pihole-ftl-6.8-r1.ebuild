@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake fcaps systemd
+inherit cmake fcaps
 
 DESCRIPTION="The Pi-hole FTL engine (DNS, embedded web UI)"
 HOMEPAGE="https://github.com/pi-hole/FTL"
@@ -63,5 +63,5 @@ src_compile() {
 src_install() {
 	cmake_src_install
 	newinitd "${T}/pihole-FTL" pihole-FTL
-	systemd_dounit "${FILESDIR}/pihole-FTL.service"
+	# The systemd unit ships with net-dns/pihole, as upstream keeps it in core.
 }
