@@ -49,6 +49,7 @@ src_prepare() {
 		|| die
 	# gravity.sh builds the schema paths from piholeGitDir (the installer's git
 	# checkout) rather than a literal path, so the sed above misses them.
+	# shellcheck disable=SC2016 # ${piholeGitDir} must stay literal for sed
 	sed -i \
 		-e "s|^piholeGitDir=\"/etc/\\.pihole\"$|piholeGitDir=\"${EPREFIX}/usr/${libdir}/${PN}\"|" \
 		-e 's|${piholeGitDir}/advanced/Templates/|${piholeGitDir}/Templates/|' \
