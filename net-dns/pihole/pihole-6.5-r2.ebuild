@@ -46,6 +46,7 @@ src_prepare() {
 		advanced/Templates/pihole.cron \
 		advanced/Templates/gravity_copy.sql \
 		advanced/Templates/pihole-FTL.systemd \
+		advanced/Templates/logrotate \
 		|| die
 	# gravity.sh builds the schema paths from piholeGitDir (the installer's git
 	# checkout) rather than a literal path, so the sed above misses them.
