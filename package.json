@@ -124,7 +124,7 @@
     "mypy": "poetry run mypy",
     "qa": "yarn shellcheck && yarn mypy scripts && yarn ruff scripts && yarn check-spelling && yarn check-formatting",
     "ruff": "poetry run ruff check",
-    "shellcheck": "shellcheck scripts/*.sh eclass/*.eclass ./*/*/*.ebuild net-dns/pihole-ftl/files/pihole-FTL x11-misc/mimeo/files/mimeo-completion.sh"
+    "shellcheck": "shellcheck scripts/*.sh eclass/*.eclass ./*/*/*.ebuild net-dns/pihole-ftl/files/pihole-ftl.openrc x11-misc/mimeo/files/mimeo-completion.sh"
   },
   "version": "0.0.0"
 }

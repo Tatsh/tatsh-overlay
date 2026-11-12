@@ -65,7 +65,7 @@ repos:
   - hooks:
       # Ebuilds and eclasses have no file type that pre-commit recognises, so match the files that
       # `yarn shellcheck` checks.
-      - files: "^(scripts/[^/]+\\.sh|eclass/[^/]+\\.eclass|[^/]+/[^/]+/[^/]+\\.ebuild|net-dns/pihole-ftl/files/pihole-FTL|x11-misc/mimeo/files/mimeo-completion\\.sh)$"
+      - files: "^(scripts/[^/]+\\.sh|eclass/[^/]+\\.eclass|[^/]+/[^/]+/[^/]+\\.ebuild|net-dns/pihole-ftl/files/pihole-ftl\\.openrc|x11-misc/mimeo/files/mimeo-completion\\.sh)$"
         id: 'shellcheck'
         types:
           - 'text'
