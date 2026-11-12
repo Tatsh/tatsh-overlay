@@ -24,6 +24,7 @@ RDEPEND="${DEPEND}
 	>=net-dns/${PN}-ftl-${FTL_VERSION}
 	>=net-dns/${PN}-web-${WEB_VERSION}
 	app-admin/sudo
+	net-misc/curl
 	sys-apps/iproute2
 	!<net-dns/${PN}-ftl-6.8-r1"
 
@@ -100,6 +101,7 @@ src_install() {
 	keepdir "/var/lib/${PN}"
 
 	systemd_dounit "${FILESDIR}/${PN}-update-gravity-db."*
+	systemd_dounit "${FILESDIR}/${PN}-update-macvendor-db."*
 }
 
 pkg_postinst() {

@@ -1,11 +1,18 @@
 [Unit]
-Description=Update macvendor.db
+Description=Update Pi-hole's macvendor.db
 Wants=network-online.target
-After=network.target network-online.target
+After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/wget https://ftl.pi-hole.net/macvendor.db -O /var/lib/pihole/macvendor.db
-
-[Install]
-WantedBy=multi-user.target
+User=pihole
+Group=pihole
+# Download to a temporary name first so a failed transfer never leaves a
+# truncated database behind.
+ExecStart=/usr/bin/curl -fsSL --retry 3 -o /var/lib/pihole/macvendor.db.new https://ftl.pi-hole.net/macvendor.db
+ExecStartPost=/bin/mv -f /var/lib/pihole/macvendor.db.new /var/lib/pihole/macvendor.db
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/pihole
