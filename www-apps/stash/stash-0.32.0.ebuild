@@ -17,12 +17,15 @@ RESTRICT="test"
 
 UI_PV="2.5"
 
+# The module bumps in patch 0004 raise the go directive to 1.26.
+BDEPEND=">=dev-lang/go-1.26.0:="
 RDEPEND="media-video/ffmpeg"
 
 PATCHES=(
 	"${FILESDIR}/${PN}-0001-makefile-remove-ui-steps.patch"
 	"${FILESDIR}/${PN}-0002-makefile-do-not-fight-the-package-manager.patch"
 	"${FILESDIR}/${PN}-0003-gqlgen-skip-go-mod-tidy.patch"
+	"${FILESDIR}/${PN}-0004-go-bump-modules-for-go-1.27.patch"
 )
 
 src_compile() {
@@ -33,9 +36,8 @@ src_compile() {
 	enpm run gqlgen || die "graphql codegen failed"
 
 	VITE_APP_DATE="$(date '+%Y-%m-%d %H:%M:%S')"
-	VITE_APP_NOLEGACY=true
 	VITE_APP_STASH_VERSION="${PV}"
-	export VITE_APP_DATE VITE_APP_NOLEGACY VITE_APP_STASH_VERSION
+	export VITE_APP_DATE VITE_APP_STASH_VERSION
 	enpm run build || die "ui build failed"
 
 	popd > /dev/null || die

@@ -6,16 +6,17 @@ release and generate targets.
 ---
 --- a/Makefile
 +++ b/Makefile
-@@ -54,7 +54,7 @@
- endif
- 
+@@ -59,9 +59,7 @@
+ # generate requires pre-ui, ui requires generate and build-release requires ui, so they must be run sequentially
  .PHONY: release
--release: pre-ui generate ui build-release
-+release: generate build-release
+ release: 
+-	$(MAKE) pre-ui
+ 	$(MAKE) generate
+-	$(MAKE) ui
+ 	$(MAKE) build-release
  
  # targets to set various build flags
- # use combinations on the make command-line to configure a build, e.g.:
-@@ -279,7 +279,7 @@
+@@ -290,7 +288,7 @@
  
  # Regenerates GraphQL files
  .PHONY: generate

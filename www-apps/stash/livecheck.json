@@ -3,5 +3,6 @@
   "dist_github_repository": "Tatsh/tatsh-overlay",
   "gomodule": true,
   "nodejs": true,
+  "nodejs_package_manager": "pnpm",
   "nodejs_path": "ui/v2.5"
 }

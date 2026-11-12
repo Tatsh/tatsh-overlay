@@ -5,8 +5,8 @@ Avoids needing LDFLAGS= and MAKEOPTS=-j1 overrides in the ebuild.
 ---
 --- a/Makefile
 +++ b/Makefile
-@@ -16,8 +16,9 @@
-   NOOP := @:
+@@ -18,8 +18,9 @@
+   PREFIX := $(HOME)/.local
  endif
  
 -# set LDFLAGS environment variable to any extra ldflags required
@@ -17,18 +17,18 @@ Avoids needing LDFLAGS= and MAKEOPTS=-j1 overrides in the ebuild.
  
  # set OUTPUT environment variable to generate a specific binary name
  # this will apply to both `stash` and `phasher`, so build them separately
-@@ -53,6 +54,10 @@
-   COMPILER_IMAGE := ghcr.io/stashapp/compiler:latest
- endif
+@@ -57,6 +58,10 @@
  
+ # cannot really parallelise the release target
+ # generate requires pre-ui, ui requires generate and build-release requires ui, so they must be run sequentially
 +# The flags-* targets set variables with $(eval ...) from their recipes, so a
 +# parallel make can start building before the flags are applied.
 +.NOTPARALLEL:
 +
  .PHONY: release
- release: generate build-release
- 
-@@ -66,7 +71,6 @@
+ release: 
+ 	$(MAKE) generate
+@@ -72,7 +77,6 @@
  .PHONY: flags-release
  flags-release:
  	$(NOOP)
