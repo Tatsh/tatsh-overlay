@@ -67,15 +67,10 @@ src_prepare() {
 	mkdir tabbyapi || die
 	mv backends common endpoints main.py tabbyapi/ || die
 	find tabbyapi -type d -exec touch {}/__init__.py \; || die
-	find tabbyapi -name '*.py' -type f -exec sed -i \
-		-e 's|^from common |from tabbyapi.common |g' \
-		-e 's|^from common\.|from tabbyapi.common.|g' \
-		-e 's|^from endpoints\.|from tabbyapi.endpoints.|g' \
-		-e 's|^from backends\.|from tabbyapi.backends.|g' \
-		-e 's|^import common\b|import tabbyapi.common|g' \
-		-e 's|^import endpoints\b|import tabbyapi.endpoints|g' \
-		-e 's|^import backends\b|import tabbyapi.backends|g' \
-		-e 's|^    from backends\b|    from tabbyapi.backends|g' \
+	# Rewrite every import of the moved packages, including the ones inside
+	# functions.
+	find tabbyapi -name '*.py' -type f -exec sed -i -E \
+		-e 's/^(\s*)(from|import) (common|endpoints|backends)\b/\1\2 tabbyapi.\3/' \
 		{} + || die
 	distutils-r1_src_prepare
 }
