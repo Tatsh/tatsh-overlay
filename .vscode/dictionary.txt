@@ -294,6 +294,7 @@ cparser
 cplugins
 cppflags
 cpprestsdk
+cputest
 cpylint
 cpython
 cramjam
@@ -604,6 +605,7 @@ einfo
 einops
 einstalldocs
 ejavac
+ekatests
 elbasan
 elementpath
 eleonore
@@ -1189,6 +1191,7 @@ liblinkernsbypass
 liblsdl
 libmad
 libmalloc
+libmbedcrypto
 libmp
 libmpv
 libmspack
@@ -2212,6 +2215,7 @@ tclkit
 tcltk
 tcpdump
 tcsh
+tdmi
 teagle
 teakra
 teletextintegration
@@ -2322,6 +2326,7 @@ unicodecsv
 unidecode
 unidic
 unistd
+unittests
 unjbt
 unkeyworded
 unleashedrecomp
