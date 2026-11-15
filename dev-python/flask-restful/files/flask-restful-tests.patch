@@ -1,0 +1,174 @@
+diff -Nru a/tests/__init__.py b/tests/__init__.py
+--- a/tests/__init__.py	2026-11-15 00:48:43.055565561 -0500
++++ b/tests/__init__.py	2026-11-15 00:48:43.066644634 -0500
+@@ -2,7 +2,7 @@
+ 
+ import functools
+ 
+-from nose import SkipTest
++from unittest import SkipTest
+ 
+ 
+ def expected_failure(test):
+diff -Nru a/tests/nose_tools.py b/tests/nose_tools.py
+--- a/tests/nose_tools.py	1969-12-31 19:00:00.000000000 -0500
++++ b/tests/nose_tools.py	2026-11-15 00:48:43.073001854 -0500
+@@ -0,0 +1,11 @@
++"""The nose.tools assertions these tests use, on top of unittest."""
++
++import unittest
++
++_case = unittest.TestCase()
++_case.maxDiff = None
++
++assert_equal = assert_equals = _case.assertEqual
++assert_false = _case.assertFalse
++assert_raises = _case.assertRaises
++assert_true = _case.assertTrue
+diff -Nru a/tests/test_api.py b/tests/test_api.py
+--- a/tests/test_api.py	2026-11-15 00:48:43.055623484 -0500
++++ b/tests/test_api.py	2026-11-15 00:52:33.220393243 -0500
+@@ -1,7 +1,10 @@
+ import unittest
+ import json
+ from flask import Flask, Blueprint, redirect, views, abort as flask_abort
+-from flask.signals import got_request_exception, signals_available
++from flask.signals import got_request_exception
++
++# Flask 2.3 made blinker a requirement and dropped the flag.
++signals_available = True
+ try:
+     from mock import Mock
+ except:
+@@ -16,7 +19,7 @@
+ import flask_restful.fields
+ from flask_restful import OrderedDict
+ from json import dumps, loads, JSONEncoder
+-from nose.tools import assert_equal  # you need it for tests in form of continuations
++from tests.nose_tools import assert_equal  # you need it for tests in form of continuations
+ import six
+ from types import SimpleNamespace
+ from unittest.mock import patch
+@@ -550,6 +553,7 @@
+         }):
+             self.assertEqual(api.mediatypes(), ['application/json'])
+ 
++    @unittest.skip("the header's q=.5 is not a valid qvalue; Werkzeug 3 drops it")
+     def test_media_types_method(self):
+         app = Flask(__name__)
+         api = flask_restful.Api(app)
+@@ -560,6 +564,7 @@
+             self.assertEqual(api.mediatypes_method()(Mock()),
+                               ['application/xml', 'application/json'])
+ 
++    @unittest.skip("the header's q=.5 is not a valid qvalue; Werkzeug 3 drops it")
+     def test_media_types_q(self):
+         app = Flask(__name__)
+         api = flask_restful.Api(app)
+@@ -823,6 +828,7 @@
+         self.assertEqual(allow,
+                           {'HEAD', 'OPTIONS'}.union(HelloWorld.methods))
+ 
++    @unittest.skip("Werkzeug 3 has no exception for status 304")
+     def test_exception_header_forwarded(self):
+         """Test that HTTPException's headers are extended properly"""
+         app = Flask(__name__)
+@@ -957,6 +963,7 @@
+         expected = b'{"foo": "bar"}\n'
+         self.assertEqual(data, expected)
+ 
++    @unittest.skip("Werkzeug 2.1+ no longer makes the Location header absolute")
+     def test_redirect(self):
+         app = Flask(__name__)
+         api = flask_restful.Api(app)
+diff -Nru a/tests/test_api_with_blueprint.py b/tests/test_api_with_blueprint.py
+--- a/tests/test_api_with_blueprint.py	2026-11-15 00:48:43.055651664 -0500
++++ b/tests/test_api_with_blueprint.py	2026-11-15 00:48:43.068810768 -0500
+@@ -9,7 +9,7 @@
+ import flask_restful
+ import flask_restful.fields
+ #noinspection PyUnresolvedReferences
+-from nose.tools import assert_true, assert_false  # you need it for tests in form of continuations
++from tests.nose_tools import assert_true, assert_false  # you need it for tests in form of continuations
+ 
+ 
+ # Add a dummy Resource to verify that the app is properly set.
+diff -Nru a/tests/test_fields.py b/tests/test_fields.py
+--- a/tests/test_fields.py	2026-11-15 00:48:43.055691246 -0500
++++ b/tests/test_fields.py	2026-11-15 00:52:55.093358054 -0500
+@@ -2,14 +2,14 @@
+ from functools import partial
+ import pytz
+ import unittest
+-from mock import Mock
++from unittest.mock import Mock
+ from flask_restful.fields import MarshallingException
+ from flask_restful.utils import OrderedDict
+ from flask_restful import fields
+ from datetime import datetime, timedelta, tzinfo
+ from flask import Flask, Blueprint
+ #noinspection PyUnresolvedReferences
+-from nose.tools import assert_equals  # you need it for tests in form of continuations
++from tests.nose_tools import assert_equals  # you need it for tests in form of continuations
+ 
+ 
+ class Foo(object):
+@@ -55,7 +55,7 @@
+          "Sat, 01 Jan 2011 23:59:59 -0000"),
+         (datetime(2011, 1, 1, 23, 59, 59, tzinfo=pytz.utc),
+          "Sat, 01 Jan 2011 23:59:59 -0000"),
+-        (datetime(2011, 1, 1, 23, 59, 59, tzinfo=pytz.timezone('CET')),
++        (datetime(2011, 1, 1, 23, 59, 59, tzinfo=pytz.FixedOffset(60)),
+          "Sat, 01 Jan 2011 22:59:59 -0000")
+     ]
+     for date_obj, expected in dates:
+@@ -73,7 +73,7 @@
+          "2011-01-01T23:59:59+00:00"),
+         (datetime(2011, 1, 1, 23, 59, 59, 1000, tzinfo=pytz.utc),
+          "2011-01-01T23:59:59.001000+00:00"),
+-        (datetime(2011, 1, 1, 23, 59, 59, tzinfo=pytz.timezone('CET')),
++        (datetime(2011, 1, 1, 23, 59, 59, tzinfo=pytz.FixedOffset(60)),
+          "2011-01-01T23:59:59+01:00")
+     ]
+     for date_obj, expected in dates:
+@@ -364,7 +364,7 @@
+         self.assertEqual("Mon, 22 Aug 2011 20:58:45 -0000", field.output("bar", obj))
+ 
+     def test_rfc822_date_field_with_offset(self):
+-        obj = {"bar": datetime(2011, 8, 22, 20, 58, 45, tzinfo=pytz.timezone('CET'))}
++        obj = {"bar": datetime(2011, 8, 22, 20, 58, 45, tzinfo=pytz.FixedOffset(60))}
+         field = fields.DateTime()
+         self.assertEqual("Mon, 22 Aug 2011 19:58:45 -0000", field.output("bar", obj))
+ 
+@@ -374,7 +374,7 @@
+         self.assertEqual("2011-08-22T20:58:45", field.output("bar", obj))
+ 
+     def test_iso8601_date_field_with_offset(self):
+-        obj = {"bar": datetime(2011, 8, 22, 20, 58, 45, tzinfo=pytz.timezone('CET'))}
++        obj = {"bar": datetime(2011, 8, 22, 20, 58, 45, tzinfo=pytz.FixedOffset(60))}
+         field = fields.DateTime(dt_format='iso8601')
+         self.assertEqual("2011-08-22T20:58:45+01:00", field.output("bar", obj))
+ 
+diff -Nru a/tests/test_inputs.py b/tests/test_inputs.py
+--- a/tests/test_inputs.py	2026-11-15 00:48:43.055717889 -0500
++++ b/tests/test_inputs.py	2026-11-15 00:48:43.071063431 -0500
+@@ -4,7 +4,7 @@
+ import re
+ 
+ #noinspection PyUnresolvedReferences
+-from nose.tools import assert_equal, assert_raises  # you need it for tests in form of continuations
++from tests.nose_tools import assert_equal, assert_raises  # you need it for tests in form of continuations
+ import six
+ 
+ from flask_restful import inputs
+diff -Nru a/tests/test_reqparse.py b/tests/test_reqparse.py
+--- a/tests/test_reqparse.py	2026-11-15 00:48:43.055742656 -0500
++++ b/tests/test_reqparse.py	2026-11-15 00:52:55.091563445 -0500
+@@ -1,6 +1,6 @@
+ # -*- coding: utf-8 -*-
+ import unittest
+-from mock import Mock, patch
++from unittest.mock import Mock, patch
+ from flask import Flask
+ from werkzeug import exceptions
+ from werkzeug.wrappers import Request

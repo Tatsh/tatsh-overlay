@@ -15,10 +15,29 @@ HOMEPAGE="https://github.com/flask-restful/flask-restful https://pypi.org/projec
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 RDEPEND=">=dev-python/aniso8601-0.82[${PYTHON_USEDEP}]
 	>=dev-python/flask-0.8[${PYTHON_USEDEP}]
 	dev-python/pytz[${PYTHON_USEDEP}]
 	>=dev-python/six-1.3.0[${PYTHON_USEDEP}]"
+BDEPEND="
+	test? (
+		${RDEPEND}
+		dev-python/blinker[${PYTHON_USEDEP}]
+		dev-python/nose2[${PYTHON_USEDEP}]
+	)
+"
 
-# Tests require the long-dead nose.
+PATCHES=(
+	# reqparse's default ("json", "values") location 415s on form posts with Werkzeug 2.3+.
+	"${FILESDIR}/${PN}-werkzeug-json.patch"
+	# Drop nose (unittest assertions, run by nose2, which keeps the generator tests),
+	# and catch the tests up with Flask 3, Werkzeug 3 and tzdata 2024b.
+	"${FILESDIR}/${PN}-tests.patch"
+)
+
+python_test() {
+	"${EPYTHON}" -m nose2 -v tests || die "Tests failed with ${EPYTHON}"
+}

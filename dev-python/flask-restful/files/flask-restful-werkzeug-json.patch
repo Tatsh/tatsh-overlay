@@ -1,0 +1,34 @@
+--- a/flask_restful/reqparse.py	2026-11-15 00:48:43.053249547 -0500
++++ b/flask_restful/reqparse.py	2026-11-15 00:51:56.646106814 -0500
+@@ -109,12 +109,21 @@
+                 self.type, self.choices, self.action, self.help, self.case_sensitive,
+                 self.operators, self.store_missing, self.trim, self.nullable)
+ 
++    @staticmethod
++    def _request_value(request, location, default):
++        try:
++            return getattr(request, location, default)
++        except exceptions.UnsupportedMediaType:
++            # Werkzeug 2.3+ raises this from request.json unless the body is
++            # JSON; older versions returned None.
++            return None
++
+     def source(self, request):
+         """Pulls values off the request in the provided location
+         :param request: The flask request object to parse arguments from
+         """
+         if isinstance(self.location, six.string_types):
+-            value = getattr(request, self.location, MultiDict())
++            value = self._request_value(request, self.location, MultiDict())
+             if callable(value):
+                 value = value()
+             if value is not None:
+@@ -122,7 +131,7 @@
+         else:
+             values = MultiDict()
+             for l in self.location:
+-                value = getattr(request, l, None)
++                value = self._request_value(request, l, None)
+                 if callable(value):
+                     value = value()
+                 if value is not None:
