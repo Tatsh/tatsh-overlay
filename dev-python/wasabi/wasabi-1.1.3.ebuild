@@ -14,3 +14,11 @@ HOMEPAGE="https://github.com/explosion/wasabi"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+EPYTEST_DESELECT=(
+	# Needs nbconvert and a Jupyter kernel.
+	wasabi/tests/test_jupyter.py::test_jupyter
+)
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
