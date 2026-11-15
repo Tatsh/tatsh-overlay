@@ -30,7 +30,8 @@ S="${WORKDIR}/${PN}-mainline-${MY_PV}"
 LICENSE="BSD GPL-2 GPL-2+ LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+compatibility-reporting +cubeb llvm-libunwind +web-service webengine"
+IUSE="+compatibility-reporting +cubeb llvm-libunwind test +web-service webengine"
+RESTRICT="!test? ( test )"
 
 REQUIRED_USE="compatibility-reporting? ( web-service )"
 
@@ -58,7 +59,8 @@ DEPEND=">=app-arch/zstd-1.5.0:=
 	virtual/zlib
 	virtual/libusb:=
 	llvm-libunwind? ( llvm-runtimes/libunwind )
-	!llvm-libunwind? ( sys-libs/libunwind:= )"
+	!llvm-libunwind? ( sys-libs/libunwind:= )
+	test? ( >=dev-cpp/catch-3:0 )"
 RDEPEND="${DEPEND}
 	media-libs/vulkan-loader"
 BDEPEND="app-arch/unzip
@@ -132,7 +134,7 @@ src_configure() {
 		-DUSE_DISCORD_PRESENCE=OFF
 		-DYUZU_DOWNLOAD_TIME_ZONE_DATA=OFF
 		"-DYUZU_ENABLE_COMPATIBILITY_REPORTING=$(usex compatibility-reporting)"
-		-DYUZU_TESTS=OFF
+		"-DYUZU_TESTS=$(usex test)"
 		-DYUZU_USE_EXTERNAL_SDL2=ON
 		-DYUZU_USE_EXTERNAL_VULKAN_HEADERS=OFF
 		-DYUZU_USE_EXTERNAL_VULKAN_UTILITY_LIBRARIES=OFF
