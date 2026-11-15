@@ -24,7 +24,10 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 # shellcheck disable=SC2016
 RDEPEND="${PYTHON_DEPS}
 	$(python_gen_cond_dep '
+		>=dev-python/llguidance-1.7.0[${PYTHON_USEDEP}]
 		>=dev-python/numpy-2.1.0[${PYTHON_USEDEP}]
+		dev-python/pillow[${PYTHON_USEDEP}]
+		dev-python/pydantic[${PYTHON_USEDEP}]
 		dev-python/pyyaml[${PYTHON_USEDEP}]
 		dev-python/rich[${PYTHON_USEDEP}]
 		>=sci-ml/safetensors-0.3.2[${PYTHON_USEDEP}]
