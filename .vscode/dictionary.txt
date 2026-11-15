@@ -863,6 +863,7 @@ harrypm
 hatari
 hatran
 havsfunc
+hcli
 hdfs
 heimdal
 helpuri
@@ -892,6 +893,8 @@ hwinfo
 hwview
 icudt
 idaapi
+idalib
+idapro
 idevice
 idna
 ifndef
@@ -1087,6 +1090,7 @@ levelmon
 lexiforest
 lfind
 lflags
+lfmt
 lfreetype
 lgskit
 libada
@@ -1257,6 +1261,7 @@ libutil
 libuv
 libv
 libva
+libvapoursynth
 libvgmstream
 libvips
 libvk
@@ -1298,6 +1303,9 @@ livecheck
 livechecks
 lkiesow
 llvmlite
+lmbedcrypto
+lmbedtls
+lmbedx
 lmod
 loaderwv
 loadspec
@@ -1372,6 +1380,7 @@ mborgerson
 mbrt
 mdutils
 mecab
+mecabrc
 mechacon
 mediatek
 mednafen
@@ -1710,6 +1719,7 @@ pkgdev
 pkgmetadata
 pkgs
 pklite
+plac
 platformdirs
 plocale
 plocales
@@ -1727,7 +1737,6 @@ pocketcdg
 pokemini
 polkit
 polm
-popcnt
 portaudio
 porttree
 postinst
@@ -1929,6 +1938,7 @@ removegrain
 remsky
 renderbag
 renderutil
+reqparse's
 reqs
 rerunfailures
 resampy
@@ -2109,7 +2119,6 @@ srxfixup
 sslkeylogfile
 sslvpn
 ssource
-ssse
 starkits
 starlette
 starslayer
@@ -2273,6 +2282,7 @@ unalz
 unarr
 uncc
 uncompromisable
+unconfigured
 underthesea
 undertheseanlp
 undmg
@@ -2467,7 +2477,6 @@ yajsw
 yamls
 yapf
 yasm
-yata
 ycmd
 yetmorecode
 ytarchive
