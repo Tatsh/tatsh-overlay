@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit autotools
+inherit autotools flag-o-matic
 
 DESCRIPTION="Embedded SSL library"
 HOMEPAGE="https://www.wolfssl.com/ https://github.com/wolfSSL/wolfssl"
@@ -26,6 +26,9 @@ src_prepare() {
 }
 
 src_configure() {
+	# The x86_64 SipHash assembly fails the wolfCrypt known-answer test when GCC 16
+	# optimises it (passes at -O0); the C implementation passes.
+	append-cppflags -DWC_SIPHASH_NO_ASM
 	econf \
 		"$(use_enable cpu_flags_x86_aes aesni)" \
 		"$(use_enable sniffer)" \
@@ -33,4 +36,11 @@ src_configure() {
 		--enable-distro \
 		"$(use_enable jni)" \
 		"$(use_enable writedup)"
+}
+
+src_test() {
+	# The test scripts re-exec under bwrap --unshare-net, which cannot map users
+	# inside the Portage sandbox.
+	local -x AM_BWRAPPED=yes
+	default
 }
