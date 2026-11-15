@@ -16,8 +16,6 @@ LICENSE="AGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="standalone"
-# Tests require a working GPU and a large model — not runnable in Portage.
-RESTRICT="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 	# shellcheck disable=SC2016
@@ -68,10 +66,11 @@ src_prepare() {
 	mv backends common endpoints main.py tabbyapi/ || die
 	find tabbyapi -type d -exec touch {}/__init__.py \; || die
 	# Rewrite every import of the moved packages, including the ones inside
-	# functions.
-	find tabbyapi -name '*.py' -type f -exec sed -i -E \
+	# functions, and the module names the tests give mock.patch().
+	find tabbyapi tests -name '*.py' -type f -exec sed -i -E \
 		-e 's/^(\s*)(from|import) (common|endpoints|backends)\b/\1\2 tabbyapi.\3/' \
 		{} + || die
+	sed -i -E 's/(["'"'"'])(common|endpoints|backends)\./\1tabbyapi.\2./g' tests/*.py || die
 	distutils-r1_src_prepare
 }
 
@@ -109,3 +108,6 @@ pkg_postinst() {
 	elog "Please copy config_sample.yml to /etc/tabbyapi/config.yml and modify it as needed."
 	elog
 }
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
