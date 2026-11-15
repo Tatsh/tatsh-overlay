@@ -697,11 +697,16 @@ declare -A GIT_CRATES=(
 	[winprint]='https://github.com/storytold/winprint.rs;5f80b9baf6b58937c401656634e42d33f00ddf49;winprint.rs-%commit%'
 )
 
-inherit cargo desktop xdg
+inherit cargo desktop xdg virtualx
 
 DESCRIPTION="Clean-room reimplementation of Microsoft Word in pure Rust"
 HOMEPAGE="https://getartcraft.com/apps/wordcraft https://github.com/storytold/wordcraft"
+# Interface catalogs and craft-proof's Language data (hyphenation, spelling), at the commit in
+# craft-i18n.rev. Without them the build embeds no translations and no hyphenation.
+CRAFT_I18N_COMMIT="059cbf95c2a3eb95d637ca8584faca1129d17f48"
 SRC_URI="https://github.com/storytold/wordcraft/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz
+	https://github.com/storytold/craft-i18n/archive/${CRAFT_I18N_COMMIT}.tar.gz
+		-> craft-i18n-${CRAFT_I18N_COMMIT}.gh.tar.gz
 	${CARGO_CRATE_URIS}"
 
 LICENSE="|| ( Apache-2.0 MIT )"
@@ -710,6 +715,8 @@ LICENSE+="
 	Apache-2.0 BSD-2 BSD Boost-1.0 CDLA-Permissive-2.0 ISC MIT MPL-2.0 OFL-1.1 UbuntuFontLicense-1.0
 	Unicode-3.0 ZLIB
 "
+# Embedded Language data
+LICENSE+=" BSD CC0-1.0 Ispell MIT myspell-en_CA-KevinAtkinson public-domain"
 SLOT="0"
 KEYWORDS="~amd64"
 
@@ -735,8 +742,18 @@ src_prepare() {
 	done
 }
 
+src_configure() {
+	export CRAFT_I18N_DIR="${WORKDIR}/craft-i18n-${CRAFT_I18N_COMMIT}" CRAFT_I18N_REQUIRED=1
+	cargo_src_configure
+}
+
 src_compile() {
 	cargo_src_compile -p wordcraft -p wordcraft-cli
+}
+
+src_test() {
+	# The egui crate's tests open windows and crash without a display.
+	virtx cargo_src_test
 }
 
 src_install() {
