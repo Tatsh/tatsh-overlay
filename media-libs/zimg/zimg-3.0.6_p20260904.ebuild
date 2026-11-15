@@ -31,6 +31,9 @@ IUSE="debug static-libs test"
 RESTRICT="!test? ( test )"
 DEPEND="test? ( dev-cpp/gtest )"
 
+# Build the unit tests against dev-cpp/gtest instead of the googletest submodule.
+PATCHES=( "${FILESDIR}/${PN}-system-gtest.patch" )
+
 src_prepare() {
 	if [[ ${PV} != *9999* ]]; then
 		rmdir graphengine || die
@@ -44,7 +47,7 @@ multilib_src_configure() {
 	ECONF_SOURCE="${S}" econf \
 		"$(use_enable debug)" \
 		"$(use_enable static-libs static)" \
-		"$(use_enable test unit-test)"
+		"$(multilib_native_use_enable test unit-test)"
 }
 
 multilib_src_install_all() {
