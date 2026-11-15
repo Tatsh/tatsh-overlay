@@ -50,8 +50,16 @@ inherit cargo desktop distutils-r1
 
 DESCRIPTION="Software defined VHS decoder"
 HOMEPAGE="https://github.com/oyvindln/vhs-decode"
+# The unit tests read tests/data, a submodule pinned to this commit.
+TESTDATA_COMMIT="c907cd02f3a84aafe661232e0e64721841964043"
+TESTDATA_RAW="https://raw.githubusercontent.com/eshaz/vhs-decode-testdata-ci/${TESTDATA_COMMIT}"
 SRC_URI="https://github.com/oyvindln/vhs-decode/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-	${CARGO_CRATE_URIS}"
+	${CARGO_CRATE_URIS}
+	test? (
+		${TESTDATA_RAW}/PAL_GOOD.txt.gz -> ${PN}-testdata-${TESTDATA_COMMIT:0:7}-PAL_GOOD.txt.gz
+		${TESTDATA_RAW}/PAL_NOISY.txt.gz -> ${PN}-testdata-${TESTDATA_COMMIT:0:7}-PAL_NOISY.txt.gz
+		${TESTDATA_RAW}/hilbert_data.npz -> ${PN}-testdata-${TESTDATA_COMMIT:0:7}-hilbert_data.npz
+	)"
 LICENSE="GPL-3 Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD-2 MIT Unicode-3.0"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -84,6 +92,12 @@ BDEPEND="dev-python/cython:0[${PYTHON_USEDEP}]
 QA_FLAGS_IGNORED=".*/_rust.*"
 
 src_prepare() {
+	if use test; then
+		local f
+		for f in PAL_GOOD.txt.gz PAL_NOISY.txt.gz hilbert_data.npz; do
+			cp "${DISTDIR}/${PN}-testdata-${TESTDATA_COMMIT:0:7}-${f}" "tests/data/${f}" || die
+		done
+	fi
 	eapply "${FILESDIR}/${PN}-remove-cc-hardcodes.patch"
 	distutils-r1_src_prepare
 }
@@ -101,3 +115,12 @@ src_install() {
 	fi
 	rm -rf "${D}/usr/lib/python"*"/site-packages/UNKNOWN"*.dist-info || die
 }
+
+src_test() {
+	# Import the built extensions rather than the source-tree vhsdecode/.
+	rm -r vhsdecode || die
+	distutils-r1_src_test
+}
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
