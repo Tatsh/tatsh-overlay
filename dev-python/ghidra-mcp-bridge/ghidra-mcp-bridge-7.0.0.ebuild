@@ -31,3 +31,25 @@ pkg_postinst() {
 	elog "runs inside Ghidra, so install that as well and have Ghidra open"
 	elog "before starting bridge-mcp-ghidra."
 }
+
+src_test() {
+	local EPYTEST_IGNORE=(
+		# Needs a live Ghidra on port 8089; the read-only file runs below
+		# against the offline fake, like upstream CI.
+		tests/integration
+		# Runs the Gradle wrapper, which downloads Gradle.
+		tests/unit/test_gradle_tasks.py
+	)
+	local EPYTEST_DESELECT=(
+		# Runs git ls-files on the release tarball.
+		tests/unit/test_published_counts.py::TestPublishedTextIsNotCorrupted::test_no_control_characters
+	)
+	# Upstream addopts force pytest-cov.
+	local EPYTEST_FLAGS="-o addopts="
+	distutils-r1_src_test
+	EPYTEST_IGNORE=() EPYTEST_DESELECT=() python_foreach_impl epytest \
+		-p tests.offline.replay_plugin tests/integration/test_readonly_endpoints.py
+}
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
