@@ -1,0 +1,53 @@
+--- a/src/crypto/detail/RsaImpl.cpp	2026-11-15 03:22:59.715730613 -0500
++++ b/src/crypto/detail/RsaImpl.cpp	2026-11-15 03:24:47.770004096 -0500
+@@ -1,6 +1,30 @@
+ #include <tc/crypto/detail/RsaImpl.h>
+ #include <mbedtls/rsa.h>
+ 
++#include <cerrno>
++#include <sys/random.h>
++
++namespace {
++
++// mbedtls 2.28+ requires an RNG for private-key operations (it blinds them).
++int rsa_blinding_rng(void*, unsigned char* out, size_t len)
++{
++	while (len > 0)
++	{
++		ssize_t got = getrandom(out, len, 0);
++		if (got < 0)
++		{
++			if (errno == EINTR) { continue; }
++			return MBEDTLS_ERR_RSA_RNG_FAILED;
++		}
++		out += got;
++		len -= static_cast<size_t>(got);
++	}
++	return 0;
++}
++
++}
++
+ struct tc::crypto::detail::RsaImpl::ImplCtx
+ {
+ 	mbedtls_rsa_context mContext;
+@@ -40,6 +64,10 @@
+ 	mImplCtx->mContext.len = key_bit_size / 8;
+ 
+ 	int ret = mbedtls_rsa_import_raw(&(mImplCtx->mContext), n, n_size, p, p_size, q, q_size, d, d_size, e, e_size);
++	// mbedtls 2.28+ rejects private-key operations on a context that was never
++	// completed (it also derives P and Q when only N, D and E are given).
++	if (ret == 0)
++		ret = mbedtls_rsa_complete(&(mImplCtx->mContext));
+ 
+ 	// TODO: Confirm these error codes
+ 	if (ret != 0)
+@@ -101,7 +129,7 @@
+ 	if (dst == nullptr) { throw tc::ArgumentNullException("RsaImpl::privateTransform()", "dst was null."); }
+ 	if (src == nullptr) { throw tc::ArgumentNullException("RsaImpl::privateTransform()", "src was null."); }
+ 
+-	int ret = mbedtls_rsa_private(&(mImplCtx->mContext), nullptr, nullptr, src, dst);
++	int ret = mbedtls_rsa_private(&(mImplCtx->mContext), rsa_blinding_rng, nullptr, src, dst);
+ 
+ 	switch (ret)
+ 	{

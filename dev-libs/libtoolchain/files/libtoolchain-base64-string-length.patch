@@ -1,0 +1,29 @@
+--- a/src/encode/Base64Util.cpp	2026-11-15 03:22:59.715928345 -0500
++++ b/src/encode/Base64Util.cpp	2026-11-15 03:23:45.898048067 -0500
+@@ -10,7 +10,7 @@
+ 	
+ 	if (data.size() > 0)
+ 	{
+-		str = std::string((const char*)data.data());
++		str = std::string((const char*)data.data(), data.size());
+ 	}
+ 
+ 	for (size_t i = 0; i < str.size(); i++)
+@@ -41,6 +41,8 @@
+ 	int mbedtls_ret = mbedtls_base64_encode(enc_data.data(), enc_data.size(), &enc_len, data, size);
+ 	if (mbedtls_ret != 0)
+ 		enc_data = tc::ByteData();
++	else if (enc_len < enc_data.size())
++		enc_data = tc::ByteData(enc_data.data(), enc_len);
+ 
+ 	return byteDataAsString(enc_data);
+ }
+@@ -76,6 +78,8 @@
+ 	int mbedtls_ret = mbedtls_base64_decode(dec_data.data(), dec_data.size(), &dec_len, (const byte_t*)str, size);
+ 	if (mbedtls_ret != 0)
+ 		dec_data = tc::ByteData();
++	else if (dec_len < dec_data.size())
++		dec_data = tc::ByteData(dec_data.data(), dec_len);
+ 
+ 	return dec_data;
+ }
