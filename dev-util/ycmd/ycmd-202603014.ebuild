@@ -17,9 +17,14 @@ S="${WORKDIR}/${PN}-${SHA}/cpp"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
+IUSE="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+RESTRICT="!test? ( test )"
 
-DEPEND="dev-cpp/abseil-cpp"
+DEPEND="
+	dev-cpp/abseil-cpp
+	test? ( dev-cpp/gtest )
+"
 # shellcheck disable=SC2016
 RDEPEND="
 	${DEPEND}
@@ -53,7 +58,15 @@ src_configure() {
 		-DUSE_CLANG_TIDY=OFF
 		-DUSE_SYSTEM_ABSEIL=ON
 	)
+	if use test; then
+		mycmakeargs+=( -DUSE_SYSTEM_GMOCK=ON )
+		local -x YCM_TESTRUN=1
+	fi
 	cmake_src_configure
+}
+
+src_test() {
+	"${BUILD_DIR}/ycm/tests/ycm_core_tests" || die
 }
 
 src_install() {
