@@ -14,7 +14,9 @@ S="${WORKDIR}/${MY_PN}-${SHA}"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64 ~x86"
+IUSE="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+RESTRICT="!test? ( test )"
 
 DEPEND="|| ( >=app-editors/vim-7.3[python] >=app-editors/gvim-7.3[python] )"
 # shellcheck disable=SC2016
@@ -24,16 +26,36 @@ RDEPEND="${DEPEND}
 	$(python_gen_cond_dep 'dev-python/requests-futures[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	$(python_gen_cond_dep 'dev-python/requests[${PYTHON_USEDEP}]' "${PYTHON_COMPAT[@]}")
 	$(python_gen_cond_dep 'dev-util/ycmd[${PYTHON_SINGLE_USEDEP}]' "${PYTHON_COMPAT[@]}")"
+# shellcheck disable=SC2016
+BDEPEND="test? (
+	${RDEPEND}
+	$(python_gen_cond_dep '
+		dev-python/pyhamcrest[${PYTHON_USEDEP}]
+		dev-python/pytest[${PYTHON_USEDEP}]
+	')
+)"
 
 src_prepare() {
-	rm -fR third_party/ python/ycm/tests/ || die
+	rm -fR third_party/ || die
 	eapply -p0 "${FILESDIR}"
 	sed -e "s:@PYTHON_SITE_PACKAGES_DIR@:$(python_get_sitedir):" \
 		-i python/ycm/paths.py || die
 	default
 }
 
+src_test() {
+	local EPYTEST_DESELECT=(
+		# Need PYTHON_USED_DURING_BUILDING, which ycmd's build.py writes but the
+		# ycmd package does not install.
+		python/ycm/tests/youcompleteme_test.py::YouCompleteMeTest::test_YouCompleteMe_InvalidPythonInterpreterPath
+		python/ycm/tests/youcompleteme_test.py::YouCompleteMeTest::test_YouCompleteMe_NoPythonInterpreterFound
+	)
+	local -x PYTHONPATH="${S}/python"
+	epytest python/ycm/tests
+}
+
 src_install() {
+	rm -r python/ycm/tests || die
 	python_domodule python/ycm
 	insinto /usr/share/vim/vimfiles
 	doins -r autoload plugin
