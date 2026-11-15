@@ -24,6 +24,10 @@ src_compile() {
 		-ldflags "-X github.com/glanceapp/glance/internal/glance.buildVersion=v${PV}" .
 }
 
+src_test() {
+	ego test ./...
+}
+
 src_install() {
 	dobin "${PN}"
 	einstalldocs
