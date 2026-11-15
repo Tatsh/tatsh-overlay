@@ -31,8 +31,8 @@ src_test() {
 	# Import the built extension rather than the source-tree package, which holds the tests.
 	mv "${PN}/tests" tests || die
 	rm -r "${PN}" || die
-	# Tagger() prefers the unidic module, whose dictionary is only present after
-	# "python -m unidic download"; point it at unidic-lite's.
+	# Tagger() prefers the unidic module if one is installed; point it at
+	# unidic-lite's dictionary so the tests use the one fetched for them.
 	mkdir -p "${T}/unidic-shim/unidic" || die
 	echo 'from unidic_lite import DICDIR' > "${T}/unidic-shim/unidic/__init__.py" || die
 	local -x PYTHONPATH="${T}/unidic-shim:${WORKDIR}/unidic-lite-1.0.8${PYTHONPATH:+:${PYTHONPATH}}"
