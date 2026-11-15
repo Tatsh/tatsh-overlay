@@ -1,0 +1,19 @@
+--- a/pytest_examples/lint.py	2020-02-01 19:00:00.000000000 -0500
++++ b/pytest_examples/lint.py	2026-11-15 03:46:44.118510522 -0500
+@@ -7,7 +7,15 @@
+ 
+ from black import format_str as black_format_str
+ from black.output import diff as black_diff
+-from ruff.__main__ import find_ruff_bin
++import shutil
++
++
++def find_ruff_bin() -> str:
++    # ruff is a standalone binary here, not the PyPI wheel's ruff module.
++    ruff = shutil.which('ruff')
++    if ruff is None:
++        raise FileNotFoundError('ruff')
++    return ruff
+ 
+ from .config import ExamplesConfig
+ 
