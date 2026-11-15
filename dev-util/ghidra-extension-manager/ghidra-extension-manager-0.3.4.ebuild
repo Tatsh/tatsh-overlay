@@ -5,6 +5,8 @@ EAPI=8
 
 GHIDRA_EXT_NAME="GhidraExtensionManager"
 
+GHIDRA_EXT_TESTS=1
+
 inherit ghidra-extension
 
 DESCRIPTION="Ghidra extension that installs and updates other Ghidra extensions"
