@@ -6,7 +6,7 @@ EAPI=8
 LIBRETRO_REPO_NAME="libretro/beetle-psx-libretro"
 LIBRETRO_COMMIT_SHA="71ee81e77acd49296ecf4a683f5a61568ba80bf9"
 
-inherit libretro-core
+inherit libretro-core toolchain-funcs
 
 DESCRIPTION="Standalone port/fork of Mednafen PSX to the Libretro API"
 HOMEPAGE="https://github.com/libretro/beetle-psx-libretro"
@@ -15,3 +15,26 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
 
 RDEPEND="games-emulation/libretro-info"
+
+src_test() {
+	# Each tools/*/run.sh builds a harness against the core. Not run here:
+	# chd needs chdman (games-emulation/mame); core_options checks the HDR option
+	# only the hardware renderer (libretro-mednafen-psx-hw) registers; hdr_display
+	# and lightrec need a PlayStation BIOS.
+	# The harnesses also rerun under ASan, which objects to the sandbox's LD_PRELOAD;
+	# some set their own ASAN_OPTIONS.
+	sed -i -e 's/ -Werror\b//' -e 's/ASAN_OPTIONS=/&verify_asan_link_order=0:/g' \
+		tools/*/run.sh || die
+	local -x ASAN_OPTIONS=verify_asan_link_order=0
+	local harness name
+	for harness in tools/*/run.sh; do
+		name=${harness#tools/}
+		name=${name%/run.sh}
+		case ${name} in
+			chd|core_options|hdr_display|lightrec) continue ;;
+		esac
+		einfo "Running ${name}"
+		CC="$(tc-getCC)" sh "${harness}" "${LIBRETRO_CORE_LIB_FILE[0]}" ||
+			die "${name} failed"
+	done
+}
