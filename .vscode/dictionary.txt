@@ -899,6 +899,7 @@ httptools
 httpx
 huggingface
 humanify
+hungoff
 huskyrc
 hustcc
 hwinfo
