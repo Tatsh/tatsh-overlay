@@ -24,6 +24,8 @@ SRC_URI="https://github.com/microsoft/${PN}/archive/refs/tags/v${PV}.tar.gz -> $
 LICENSE="Apache-2.0-with-LLVM-exceptions UoI-NCSA BSD public-domain rc"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 RDEPEND="dev-libs/libffi:=
 	virtual/zlib:="
@@ -52,19 +54,25 @@ src_prepare() {
 src_configure() {
 	# The LLVM 3.7 base punned types in ways GCC flags as breaking strict aliasing.
 	append-flags -fno-strict-aliasing
+	# User::operator new sets up hung-off operands before the constructor runs;
+	# GCC's lifetime DSE drops those stores, and allocHungoffUses then asserts.
+	# Newer LLVM adds this flag itself; this 3.7 base predates that.
+	tc-is-gcc && append-flags -fno-lifetime-dse
 	local mycmakeargs=(
 		-C "${S}/cmake/caches/PredefinedParams.cmake"
 		-DBUILD_SHARED_LIBS=OFF
+		# Without git the generated version is 1.9.0.0; use the release's
+		# version.inc so __DXC_VERSION_RELEASE and --version report 2609.
+		-DHLSL_ENABLE_FIXED_VER=ON
 		-DCMAKE_INSTALL_PREFIX="${EPREFIX}/usr/lib/llvm/dxc"
 		# Regenerated sources are run through the system clang-format, whose output differs from
 		# the checked-in copies, and the build then fails comparing them. Use the release's copies.
 		-DHLSL_DISABLE_SOURCE_GENERATION=ON
-		# The tests need the googletest submodule.
-		-DHLSL_INCLUDE_TESTS=OFF
+		"-DHLSL_INCLUDE_TESTS=$(usex test)"
 		-DLLVM_BUILD_DOCS=OFF
 		-DLLVM_BUILD_TOOLS=OFF
 		-DLLVM_ENABLE_WERROR=OFF
-		-DLLVM_INCLUDE_TESTS=OFF
+		"-DLLVM_INCLUDE_TESTS=$(usex test)"
 		-DLLVM_VERSION_SUFFIX=dxc
 		-DSPIRV_BUILD_TESTS=OFF
 		-DSPIRV_WARN_EVERYTHING=OFF
@@ -72,6 +80,11 @@ src_configure() {
 		-Wno-dev
 	)
 	cmake_src_configure
+}
+
+src_test() {
+	# What upstream's Linux CI runs.
+	cmake_build check-all
 }
 
 src_install() {
