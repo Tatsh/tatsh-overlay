@@ -153,6 +153,12 @@ src_compile() {
 	cargo_src_compile --package procdump-cli --bin procdump
 }
 
+src_test() {
+	# The test build compiles the profiler too; see src_compile.
+	local -x CXX="${CHOST}-clang++"
+	cargo_src_test
+}
+
 src_install() {
 	dobin "$(cargo_target_dir)/procdump"
 	doman procdump.1
