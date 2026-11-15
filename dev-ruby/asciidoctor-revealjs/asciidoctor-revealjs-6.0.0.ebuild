@@ -19,11 +19,9 @@ RUBY_S="asciidoctor-reveal.js-${PV}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-# Tests require asciidoctor/doctest, colorize, tilt — not packaged as Gentoo
-# ruby gems. The ebuild scrubs add_development_dependency from the gemspec.
-RESTRICT="test"
 
 ruby_add_rdepend ">=dev-ruby/asciidoctor-2.0.0 <dev-ruby/asciidoctor-3"
+ruby_add_bdepend "test? ( dev-ruby/minitest dev-ruby/slim dev-ruby/tilt )"
 
 all_ruby_prepare() {
 	rm -f Gemfile || die
@@ -34,4 +32,11 @@ all_ruby_prepare() {
 	# Remove development dependencies from gemspec
 	sed -e '/add_development_dependency/d' \
 		-i "${RUBY_FAKEGEM_GEMSPEC}" || die
+}
+
+each_ruby_test() {
+	# test/converter-testkit needs asciidoctor-doctest, which is not packaged; the
+	# minitest suite does not.
+	${RUBY} -Ilib:test -e 'Dir["test/asciidoctor_revealjs/*_test.rb"].each { |f| require File.expand_path(f) }' \
+		|| die "Tests failed with ${RUBY}"
 }
