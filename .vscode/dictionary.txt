@@ -790,6 +790,7 @@ geovis
 gerbilsoft
 gerror
 getjar
+getjars
 getmoto
 getrandom
 gevent
