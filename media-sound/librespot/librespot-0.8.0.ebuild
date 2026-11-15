@@ -81,6 +81,12 @@ src_compile() {
 	fi
 }
 
+src_test() {
+	# test_connection logs in to Spotify.
+	local CARGO_SKIP_TESTS=( test_connection )
+	cargo_src_test --workspace
+}
+
 src_install() {
 	debug-print-function "${FUNCNAME[*]}" "$@"
 
