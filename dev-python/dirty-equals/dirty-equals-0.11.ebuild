@@ -19,5 +19,18 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-# Tests need pytest-examples and pytest-pretty which are not yet packaged.
-RESTRICT="test"
+BDEPEND="
+	test? (
+		dev-python/packaging[${PYTHON_USEDEP}]
+		>=dev-python/pytest-examples-0.0.18-r1[${PYTHON_USEDEP}]
+	)
+"
+
+src_test() {
+	# The unix timestamp tests compare against naive datetimes in UTC.
+	local -x TZ=UTC
+	distutils-r1_src_test
+}
+
+EPYTEST_PLUGINS=( pytest-examples pytest-pretty )
+distutils_enable_tests pytest
