@@ -26,8 +26,7 @@ LICENSE+="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-RESTRICT="mirror
-	test"
+RESTRICT="mirror"
 
 src_compile() {
 	# The crate in lychee-bin/ is itself named "lychee".
