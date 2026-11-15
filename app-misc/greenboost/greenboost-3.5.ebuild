@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit linux-mod-r1 systemd udev
+inherit linux-mod-r1 systemd toolchain-funcs udev
 
 DESCRIPTION="Hacky thing for Ollama"
 HOMEPAGE="https://gitlab.com/IsolatedOctopi/greenboost"
@@ -23,6 +23,19 @@ src_compile() {
 	# and link steps. The tree is freshly unpacked anyway.
 	local modargs=( KDIR="${KERNEL_DIR}" all )
 	linux-mod-r1_src_compile
+}
+
+src_test() {
+	# The host-only C unit tests cover headers built into what is installed. The pytest
+	# suite exercises the Python tooling, which this package does not install. "make
+	# test-c" writes the test binaries to /tmp, so build them here.
+	local t
+	for t in expert_tier thp_verify; do
+		# shellcheck disable=SC2086
+		"$(tc-getCC)" -std=c99 ${CFLAGS} ${LDFLAGS} -o "${T}/test_gb_${t}" \
+			"tests/c/test_gb_${t}.c" || die
+		"${T}/test_gb_${t}" || die "test_gb_${t} failed"
+	done
 }
 
 src_install() {
