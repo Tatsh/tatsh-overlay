@@ -823,6 +823,7 @@ glsl
 glslang
 glui
 gmailctl
+gmock
 gnomovision
 gnudiff
 gnutls
@@ -1881,6 +1882,7 @@ qpack
 qpxtool
 qrcode
 qrencode
+qskip
 qtbase
 qtdeclarative
 qtkeychain
@@ -2214,6 +2216,7 @@ testdata
 testfloat
 testkit
 testout
+testrun
 testrunner
 texinfo
 tgbdual
