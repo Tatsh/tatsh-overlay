@@ -33,7 +33,8 @@ S="${WORKDIR}/${MY_PN}-${MY_PV}"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~ppc64 ~x86"
-IUSE="libretro vulkan"
+IUSE="libretro test vulkan"
+RESTRICT="!test? ( test )"
 
 DEPEND="app-arch/bzip2
 	app-arch/zstd:=
@@ -95,6 +96,7 @@ src_configure() {
 	# -DENABLE_AMAZON_S3=$(usex s3) currently broken, must be left ON
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS=OFF
+		"-DBUILD_TESTS=$(usex test)"
 		"-DBUILD_LIBRETRO_CORE=$(usex libretro)"
 		"-DUSE_GSH_VULKAN=$(usex vulkan)"
 		"-DPROJECT_Version=${PV}"
