@@ -20,7 +20,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
 # As of R78 upstream always builds vspipe, libvsscript and the Python module;
 # the options that used to gate them no longer exist.
-IUSE="asm guard-pattern"
+IUSE="asm guard-pattern test"
+RESTRICT="!test? ( test )"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
 	asm? ( || ( amd64 arm64 x86 ) )"
 
@@ -33,7 +34,10 @@ DEPEND=">=media-libs/zimg-3.0.6_p20260721
 RDEPEND="${DEPEND}"
 # shellcheck disable=SC2016
 BDEPEND="${PYTHON_DEPS}
-	$(python_gen_cond_dep 'dev-python/cython[${PYTHON_USEDEP}]')"
+	$(python_gen_cond_dep '
+		dev-python/cython[${PYTHON_USEDEP}]
+		test? ( dev-python/pytest[${PYTHON_USEDEP}] )
+	')"
 
 PATCHES=( "${FILESDIR}/${PN}-system-glslang.patch" )
 
@@ -57,6 +61,25 @@ src_configure() {
 		emesonargs+=( -Denable_arm_asm=false )
 	fi
 	meson_src_configure
+}
+
+src_test() {
+	# The tests import the Python module, which loads libvapoursynth from the
+	# library directory, so run them against a staged install.
+	local root="${T}/test-root"
+	DESTDIR="${root}" meson install -C "${BUILD_DIR}" --no-rebuild --quiet || die
+	local -x PYTHONPATH LD_LIBRARY_PATH
+	PYTHONPATH="${root}$(python_get_sitedir)" || die
+	LD_LIBRARY_PATH="${root}/usr/$(get_libdir)" || die
+	# The GPU resize tests skip without a usable Vulkan device.
+	local dev
+	for dev in /dev/dri /dev/nvidia*; do
+		[[ -e ${dev} ]] && addwrite "${dev}"
+	done
+	# The NVIDIA driver also (re)creates /dev/char links and writes per-thread state.
+	addpredict /dev/char
+	addwrite /proc/self/task
+	epytest test
 }
 
 src_install() {
