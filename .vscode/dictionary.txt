@@ -211,6 +211,7 @@ chailove
 chakma
 cham
 changedetection
+changedetectionio
 changeme
 chaoticgd
 chardet
