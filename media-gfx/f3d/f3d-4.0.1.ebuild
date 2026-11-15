@@ -5,17 +5,22 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{11..15} )
 
-inherit cmake python-single-r1 xdg
+inherit cmake python-single-r1 virtualx xdg
 
 DESCRIPTION="Fast and minimalist 3D viewer"
 HOMEPAGE="https://f3d.app/ https://github.com/f3d-app/f3d"
-SRC_URI="https://github.com/f3d-app/f3d/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz"
+# Test data and baselines are in Git LFS, so the tag archive has only pointers.
+SRC_URI="https://github.com/f3d-app/f3d/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz
+	test? (
+		https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-testing.tar.xz
+	)"
 S="${WORKDIR}/${PN}-${PV}"
 
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="alembic assimp exr +hdf occt pdal python vdb webp"
+IUSE="alembic assimp exr +hdf occt pdal python test vdb webp"
+RESTRICT="!test? ( test )"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 # shellcheck disable=SC2016
@@ -44,13 +49,21 @@ DEPEND="${RDEPEND}"
 # for a CMake config providing WebP::webp. Patch it to use pkg-config instead.
 PATCHES=( "${FILESDIR}/${PN}-webp-pkgconfig.patch" )
 
+src_prepare() {
+	if use test; then
+		rm -r testing/{baselines,data} || die
+		mv "${WORKDIR}/${P}-testing/testing/"{baselines,data} testing/ || die
+	fi
+	cmake_src_prepare
+}
+
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-DBUILD_TESTING=OFF
+		"-DBUILD_TESTING=$(usex test ON OFF)"
 		-DF3D_BINDINGS_C=OFF
 		-DF3D_BINDINGS_JAVA=OFF
 		"-DF3D_BINDINGS_PYTHON=$(usex python)"
@@ -68,5 +81,17 @@ src_configure() {
 		-DF3D_USE_EXTERNAL_NLOHMANN_JSON=ON
 	)
 	use python && mycmakeargs+=( -DPython_EXECUTABLE="${PYTHON}" )
+	if use test; then
+		# Rendering tests run on Xvfb; headless EGL would need the GPU.
+		mycmakeargs+=( -DF3D_TESTING_ENABLE_EGL_TESTS=OFF )
+	fi
 	cmake_src_configure
+}
+
+src_test() {
+	local myctestargs=(
+		# Pastes from an X clipboard that has no owner under Xvfb.
+		-E 'f3d::TestInteractionCopyPaste$'
+	)
+	virtx cmake_src_test
 }
