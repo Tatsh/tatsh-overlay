@@ -17,7 +17,7 @@ HOMEPAGE="https://pypi.org/project/underthesea/"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-# Tests use legacy `nose` test runner which is not packaged.
+# The only test (tests/test_data_fetcher.py) downloads a corpus.
 RESTRICT="test"
 
 # shellcheck disable=SC2016
