@@ -170,6 +170,8 @@ buhid
 buildonly
 builtinzlib
 bulkedit
+bwrap
+bwrapped
 byteshuf
 byteswap
 byteswapped
@@ -2041,6 +2043,7 @@ simonlindholm
 simpleini
 simplier
 sinhala
+siphash
 sirit
 sitedir
 slangp
