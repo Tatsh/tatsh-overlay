@@ -507,7 +507,7 @@ ghidra-extension_src_test() {
 
 	local classpath junit
 	classpath="$(_ghidra-extension_classpath)" || die
-	junit="$(java-pkg_getjars --build-only junit-4)" || die
+	junit="$(java-pkg_getjars --build-only --with-dependencies junit-4)" || die
 	classpath="lib/${GHIDRA_EXT_NAME}.jar:${junit}:${classpath}"
 
 	local sources=() source exclude excluded
