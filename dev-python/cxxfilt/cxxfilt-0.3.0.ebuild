@@ -14,6 +14,7 @@ HOMEPAGE="https://github.com/afq984/python-cxxfilt"
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
+# The sdist ships no tests.
 RESTRICT="test"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
