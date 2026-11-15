@@ -36,6 +36,8 @@ SRC_URI="https://github.com/Kenix3/${PN}/archive/refs/tags/${PV}.tar.gz
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 RDEPEND="
 	dev-cpp/nlohmann_json
@@ -45,7 +47,8 @@ RDEPEND="
 	media-libs/libglvnd
 	media-libs/libsdl3
 "
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	test? ( dev-cpp/gtest )"
 BDEPEND="${PYTHON_DEPS}"
 
 PATCHES=( "${FILESDIR}/${PN}-shared-install.patch" )
@@ -64,6 +67,13 @@ src_prepare() {
 	grep -q 'file(COPY_FILE' cmake/dependencies/common.cmake ||
 		die "failed to redirect the stb_image.h download"
 
+	if use test; then
+		# The tests fetch googletest; build them against dev-cpp/gtest.
+		sed -i -e '/^FetchContent_Declare(/,/^)/d' \
+			-e 's/^FetchContent_MakeAvailable(googletest)$/find_package(GTest REQUIRED)/' \
+			tests/CMakeLists.txt || die
+	fi
+
 	cmake_src_prepare
 }
 
@@ -78,8 +88,14 @@ src_configure() {
 		-DFETCHCONTENT_SOURCE_DIR_MONOCYPHER="${WORKDIR}/Monocypher-${MONOCYPHER_COMMIT}"
 		-DFETCHCONTENT_SOURCE_DIR_PRISM="${WORKDIR}/prism-processor-${PRISM_COMMIT}"
 		-DFETCHCONTENT_SOURCE_DIR_THREADPOOL="${WORKDIR}/thread-pool-${THREADPOOL_PV}"
-		-DLUS_BUILD_TESTS=OFF
+		-DLUS_BUILD_TESTS="$(usex test)"
 	)
 
 	cmake_src_configure
+}
+
+src_test() {
+	# Tests share fixed paths under the temporary directory; running them in
+	# parallel lets them trample each other's archives.
+	cmake_src_test -j1
 }
