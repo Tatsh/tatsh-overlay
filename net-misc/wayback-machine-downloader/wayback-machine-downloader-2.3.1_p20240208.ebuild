@@ -19,4 +19,5 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 PROPERTIES="test_network"
+# The tests query the Wayback Machine CDX API.
 RESTRICT="test"
