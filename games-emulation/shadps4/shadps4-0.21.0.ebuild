@@ -43,7 +43,8 @@ S="${WORKDIR}/shadPS4-${MY_PV}"
 LICENSE="GPL-2+ BSD Boost-1.0 CC0-1.0 FraunhoferFDK MIT OFL-1.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+gui cpu_flags_x86_sse4_1"
+IUSE="+gui cpu_flags_x86_sse4_1 test"
+RESTRICT="!test? ( test )"
 REQUIRED_USE="cpu_flags_x86_sse4_1"
 
 RDEPEND="app-arch/zarchive
@@ -71,6 +72,7 @@ RDEPEND="app-arch/zarchive
 		dev-qt/qtmultimedia:6
 	)"
 DEPEND="${RDEPEND}
+	test? ( dev-cpp/gtest )
 	>=dev-cpp/cli11-2.6.1
 	>=dev-cpp/magic_enum-0.9.7
 	>=dev-cpp/nlohmann_json-3.12
@@ -107,6 +109,12 @@ src_prepare() {
 		rmdir "externals/${d}" || die
 		mv "${WORKDIR}/${ext[${d}]}" "externals/${d}" || die
 	done
+	if use test; then
+		# The tests fetch googletest; build them against dev-cpp/gtest.
+		sed -i -e '/FetchContent_Declare(/,/^)/d' \
+			-e 's/^FetchContent_MakeAvailable(googletest)$/find_package(GTest REQUIRED)/' \
+			tests/CMakeLists.txt || die
+	fi
 	cmake_src_prepare
 
 	if use gui; then
@@ -136,6 +144,11 @@ src_configure() {
 		-DSIRIT_USE_SYSTEM_SPIRV_HEADERS=ON
 	)
 	cmake_src_configure
+	# ENABLE_TESTS drops the emulator itself, so the tests get a build of their own.
+	if use test; then
+		mycmakeargs+=( -DENABLE_TESTS=ON )
+		BUILD_DIR="${WORKDIR}/${P}_test_build" cmake_src_configure
+	fi
 
 	if use gui; then
 		local launcher="${WORKDIR}/shadps4-qtlauncher-${QTLAUNCHER_SHA}"
@@ -159,6 +172,16 @@ src_compile() {
 	if use gui; then
 		BUILD_DIR="${WORKDIR}/shadps4-qtlauncher-${QTLAUNCHER_SHA}_build" cmake_src_compile
 	fi
+}
+
+src_test() {
+	local BUILD_DIR="${WORKDIR}/${P}_test_build"
+	# shadps4_http_test compiles http.cpp against the bundled, header-only httplib;
+	# the system one is a compiled library it does not link.
+	cmake_build shadps4_settings_test shadps4_ngs2_test shadps4_net_test \
+		shadps4_net_interop_test shadps4_net_lib_test shadps4_net_kernel_test
+	# Upstream CI excludes the GCN shader tests too; on NVIDIA they return garbage.
+	cmake_src_test -E 'GcnTest|_NOT_BUILT$'
 }
 
 src_install() {
