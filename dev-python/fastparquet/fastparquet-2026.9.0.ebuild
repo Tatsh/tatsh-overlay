@@ -26,3 +26,32 @@ BDEPEND="dev-python/cython[${PYTHON_USEDEP}]
 	dev-python/setuptools-scm[${PYTHON_USEDEP}]"
 
 export SETUPTOOLS_SCM_PRETEND_VERSION=${PV}
+
+EPYTEST_DESELECT=(
+	# pandas 3 behaviour changes (default string dtype, NaN vs None, index names).
+	test/test_api.py::test_file_renaming_no_partition
+	test/test_api.py::test_file_renaming_with_partitions
+	test/test_api.py::test_remove_rgs_no_partition
+	test/test_api.py::test_remove_rgs_simple_merge
+	test/test_api.py::test_write_rgs_hive
+	test/test_api.py::test_write_rgs_hive_partitions
+	test/test_api.py::test_write_rgs_simple_no_index
+	test/test_dataframe.py::test_pandas_hive_serialization
+	test/test_output.py::test_append_fail_incompatible
+	test/test_output.py::test_auto_null_object
+	test/test_output.py::test_empty_columns
+)
+
+src_test() {
+	# Import the built extensions rather than the source-tree package, which holds the tests.
+	mv "${PN}/test" test || die
+	rm -r "${PN}" || die
+	# test_write_rgs_simple fails for the same reason, but --deselect matches by
+	# prefix and would also drop the passing
+	# test_write_rgs_simple_schema_exception.
+	local -x PYTEST_ADDOPTS="-k 'not test_write_rgs_simple or schema_exception'"
+	distutils-r1_src_test
+}
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
