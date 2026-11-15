@@ -44,6 +44,7 @@ anari
 andyjsmith
 angelscript
 aniso
+antlr
 antoniovazquezblanco
 antonmedv
 anyio
@@ -256,6 +257,7 @@ codeclimate
 codegen
 codeman
 codspeed
+cognitoidp
 coinhsl
 coleco
 color
@@ -405,6 +407,7 @@ demangle
 demanglegnu
 demangler
 demucs
+demuxer
 denable
 dengine
 denoise
@@ -736,10 +739,12 @@ fprintd
 frameserver
 freeband
 freechaf
+freedoom
 freeglut
 freeintv
 freemkv
 freetype
+freezegun
 frida
 frob
 frozendict
@@ -783,6 +788,7 @@ geoip
 georgkrause
 geovis
 gerbilsoft
+gerror
 getjar
 getmoto
 getrandom
@@ -903,6 +909,7 @@ iges
 iinclude
 ijknabla
 ilcs
+ilib
 imageio
 imaplib
 imex
@@ -967,6 +974,7 @@ isystem
 itertools
 itsdangerous
 iuse
+iwad
 iwholename
 ixwebsocket
 jackaudio
@@ -1324,6 +1332,7 @@ lsdvd
 lssecret
 lstdc
 luabridge
+luacov
 luajit
 lunasvg
 lutro
@@ -1482,6 +1491,7 @@ mwcap
 mwilliamson
 mycmakeargs
 myconf
+myctestargs
 myeconfargs
 myemakeargs
 myfeatures
@@ -1664,6 +1674,7 @@ panzi
 papertrail
 paramiko
 parrado
+partiql
 passwordserver
 patchelf
 patchfile
@@ -1784,6 +1795,7 @@ pulseaudiosimple
 puremagic
 pvrtc
 pvxe
+pwads
 pwilkin
 pyaaf
 pyargs
@@ -1794,6 +1806,7 @@ pybind
 pycairo
 pycargoebuild
 pychoco
+pycognito
 pycparser
 pydantic
 pydbus
@@ -1820,6 +1833,7 @@ pyobjc
 pyopencl
 pyopenjtalk
 pyopenssl
+pyotp
 pypamtest
 pyparsing
 pypdfium
@@ -1841,6 +1855,7 @@ pyside
 pysocks
 pytest
 pytest's
+pytester's
 pythonpath
 pythonpycacheprefix
 pytimeparse
@@ -1951,6 +1966,7 @@ retroarch
 retrodream
 revanced
 revc
+revealjs
 rewx
 rgui
 richgel
@@ -2116,6 +2132,7 @@ srmd
 srsly
 srstevenson
 srxfixup
+sshpubkeys
 sslkeylogfile
 sslvpn
 ssource
@@ -2194,6 +2211,8 @@ terak
 termcolor
 testdata
 testfloat
+testkit
+testout
 testrunner
 texinfo
 tgbdual
@@ -2347,6 +2366,7 @@ virtualx
 virtx
 viskores
 vitaquake
+vitc
 vite
 vladikcomper
 volk
