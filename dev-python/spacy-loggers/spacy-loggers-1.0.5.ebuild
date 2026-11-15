@@ -17,3 +17,14 @@ S="${WORKDIR}/${PN}-${PV}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+# The tests import spacy, which depends on this package.
+BDEPEND="test? ( dev-python/spacy[${PYTHON_USEDEP}] )"
+
+EPYTEST_DESELECT=(
+	# The test config passes progress_bar = "true", which current confection rejects as not a bool.
+	spacy_loggers/tests/test_chain.py::test_load_from_config
+)
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
