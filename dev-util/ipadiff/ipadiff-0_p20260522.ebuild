@@ -26,6 +26,10 @@ src_compile() {
 	ego build -o "${PN}" ./cmd/"${PN}"
 }
 
+src_test() {
+	ego test ./...
+}
+
 src_install() {
 	dobin "${PN}"
 	einstalldocs
