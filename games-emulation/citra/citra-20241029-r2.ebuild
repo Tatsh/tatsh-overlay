@@ -28,7 +28,8 @@ S="${WORKDIR}/${PN}-${SHA}"
 LICENSE="ZLIB BSD GPL-2 LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="openal +qt6 scripting web-service"
+IUSE="openal +qt6 scripting test web-service"
+RESTRICT="!test? ( test )"
 
 # System xbyak is still used by Dynarmic, but not Citra itself
 DEPEND="app-arch/zstd:=
@@ -109,7 +110,7 @@ src_configure() {
 		-DENABLE_LTO=OFF # Do not enable their way of doing this.
 		-DDISABLE_SUBMODULE_CHECK=ON
 		-DENABLE_QT_UPDATER=OFF
-		-DENABLE_TESTS=OFF
+		"-DENABLE_TESTS=$(usex test)"
 		-DUSE_SYSTEM_BOOST=ON
 		-DUSE_SYSTEM_CATCH2=ON
 		-DUSE_SYSTEM_CRYPTOPP=ON
