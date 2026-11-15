@@ -13,7 +13,17 @@ SRC_URI="https://github.com/Tatsh/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc64"
+IUSE="test"
+RESTRICT="!test? ( test )"
+
+# The spec stubs out mpv's API.
+BDEPEND="test? ( dev-lua/busted )"
 
 MPV_PLUGIN_FILES=(
 	"${PN:4}.lua"
 )
+
+src_test() {
+	# .busted turns on coverage, which would need luacov.
+	busted --no-coverage || die
+}
