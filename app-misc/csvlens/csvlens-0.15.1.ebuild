@@ -278,7 +278,7 @@ CRATES="ahash@0.8.12
 	zerocopy-derive@0.8.27
 	zerocopy@0.8.27"
 RUST_MIN_VER="1.85.0"
-inherit cargo
+inherit cargo virtualx
 
 DESCRIPTION="Command line csv viewer"
 HOMEPAGE="https://github.com/YS-L/csvlens"
@@ -292,3 +292,8 @@ LICENSE="MIT"
 LICENSE+=" Apache-2.0 Boost-1.0 CC0-1.0 ISC MIT Unicode-3.0 ZLIB"
 SLOT="0"
 KEYWORDS="~amd64"
+
+src_test() {
+	# test_copy_selection_crlf copies to the X clipboard.
+	virtx cargo_src_test
+}
