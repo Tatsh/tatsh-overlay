@@ -19,3 +19,13 @@ RDEPEND="<dev-python/cymem-2.1.0[${PYTHON_USEDEP}]
 	>=dev-python/cymem-2.0.2[${PYTHON_USEDEP}]
 	<dev-python/murmurhash-1.1.0[${PYTHON_USEDEP}]
 	>=dev-python/murmurhash-0.28.0[${PYTHON_USEDEP}]"
+
+src_test() {
+	# Run the installed tests: they use relative imports into the built extensions.
+	rm -r "${PN}" || die
+	local EPYTEST_FLAGS="--pyargs ${PN}"
+	distutils-r1_src_test
+}
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
