@@ -23,6 +23,8 @@ THREAD_POOL_SHA="6790920f61ab3e928ddaea835ab6a803d467f41d"
 TINYSOUNDFONT_SHA="e86d986ed6ccb93b4ee41d2de656c49c721b18db"
 UPSCALE_SHADERS_SHA="49dd304cb97e7c0871256f2bafba7b6fd41511cb"
 UVW_SHA="cf0f8c6fd4084900646b7c83b4682a12be76f10e"
+# The tests use the Catch2 v2 submodule; ::gentoo only has Catch2 v3.
+CATCH2_PV="2.13.8"
 SRC_URI="https://github.com/EKA2L1/EKA2L1/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/capstone-engine/capstone/archive/${CAPSTONE_SHA}.tar.gz -> ${PN}-capstone-${CAPSTONE_SHA:0:7}.tar.gz
 	https://github.com/EKA2L1/dynarmic/archive/${_DYNARMIC_SHA}.tar.gz -> ${PN}-dynarmic-${_DYNARMIC_SHA:0:7}.tar.gz
@@ -37,7 +39,11 @@ SRC_URI="https://github.com/EKA2L1/EKA2L1/archive/${SHA}.tar.gz -> ${P}.tar.gz
 	https://github.com/bshoshany/thread-pool/archive/${THREAD_POOL_SHA}.tar.gz -> ${PN}-thread-pool-${THREAD_POOL_SHA:0:7}.tar.gz
 	https://github.com/schellingb/TinySoundFont/archive/${TINYSOUNDFONT_SHA}.tar.gz -> ${PN}-TinySoundFont-${TINYSOUNDFONT_SHA:0:7}.tar.gz
 	https://github.com/EKA2L1/upscale-shaders/archive/${UPSCALE_SHADERS_SHA}.tar.gz -> ${PN}-upscale-shaders-${UPSCALE_SHADERS_SHA:0:7}.tar.gz
-	https://github.com/skypjack/uvw/archive/${UVW_SHA}.tar.gz -> ${PN}-uvw-${UVW_SHA:0:7}.tar.gz"
+	https://github.com/skypjack/uvw/archive/${UVW_SHA}.tar.gz -> ${PN}-uvw-${UVW_SHA:0:7}.tar.gz
+	test? (
+		https://github.com/catchorg/Catch2/archive/refs/tags/v${CATCH2_PV}.tar.gz
+			-> ${PN}-Catch2-${CATCH2_PV}.tar.gz
+	)"
 S="${WORKDIR}/EKA2L1-${SHA}"
 
 # EKA2L1 GPL-3+, capstone BSD, dynarmic 0BSD, FFmpeg (with opencore-amr) LGPL-3+,
@@ -46,6 +52,8 @@ S="${WORKDIR}/EKA2L1-${SHA}"
 LICENSE="0BSD BSD GPL-2+ GPL-3+ LGPL-3+ MIT SGI-B-2.0 ZLIB public-domain"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 DEPEND="app-arch/libarchive:=
 	dev-cpp/yaml-cpp:=
@@ -91,7 +99,18 @@ src_prepare() {
 	mv "${WORKDIR}/libfat16-${LIBFAT_SHA}" "${ext}/libfat" || die
 	rmdir "${S}/src/emu/drivers/resources/upscale" || die
 	mv "${WORKDIR}/upscale-shaders-${UPSCALE_SHADERS_SHA}" "${S}/src/emu/drivers/resources/upscale" || die
+	if use test; then
+		rmdir "${ext}/Catch2" || die
+		mv "${WORKDIR}/Catch2-${CATCH2_PV}" "${ext}/Catch2" || die
+	fi
+	# The bundled mbedcrypto target is gone, so the bare name links the system
+	# mbedtls 2 libmbedcrypto next to mbedtls 3, and its symbols win at runtime.
+	sed -i 's/^\(\s*\)mbedcrypto)$/\1mbedtls)/' src/emu/services/CMakeLists.txt || die
 	cmake_src_prepare
+	if use test; then
+		# The system-libs patch drops the bundled Catch2, which only the tests use.
+		echo 'add_subdirectory(Catch2)' >> src/external/CMakeLists.txt || die
+	fi
 }
 
 src_configure() {
@@ -99,7 +118,7 @@ src_configure() {
 		# The emulator's internal libraries depend on each other cyclically.
 		-DBUILD_SHARED_LIBS=OFF
 		-DCCACHE_PROGRAM=CCACHE_PROGRAM-NOTFOUND
-		-DEKA2L1_BUILD_TESTS=OFF
+		"-DEKA2L1_BUILD_TESTS=$(usex test)"
 		-DEKA2L1_BUILD_TOOLS=OFF
 		-DEKA2L1_ENABLE_QT_CAMERA=ON
 		-DEKA2L1_FFMPEG_CACHE_DIR="${BUILD_DIR}/ffmpeg-cache"
@@ -122,4 +141,10 @@ src_install() {
 	domenu src/emu/qt/eka2l1.desktop
 	doicon -s 128 src/emu/qt/assets/duck_tank.png
 	einstalldocs
+}
+
+src_test() {
+	# The tests open their assets relative to the build directory.
+	cd "${BUILD_DIR}/src/tests" || die
+	./ekatests || die
 }

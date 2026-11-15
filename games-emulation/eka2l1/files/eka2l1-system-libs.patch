@@ -296,7 +296,7 @@ index 7f4e28f72..afd335955 100644
 -set(ENABLE_PROGRAMS OFF CACHE BOOL "Build mbed TLS programs." FORCE)
 -set(MBEDTLS_FATAL_WARNINGS OFF CACHE BOOL "Compiler warnings treated as errors" FORCE)
 -add_subdirectory(mbedtls EXCLUDE_FROM_ALL)
-+pkg_check_modules(MBEDTLS REQUIRED IMPORTED_TARGET mbedtls-3)
++pkg_check_modules(MBEDTLS REQUIRED IMPORTED_TARGET mbedtls-3 mbedx509-3 mbedcrypto-3)
 +add_library(mbedtls INTERFACE)
 +target_link_libraries(mbedtls INTERFACE PkgConfig::MBEDTLS)
  
