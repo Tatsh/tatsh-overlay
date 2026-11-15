@@ -18,6 +18,7 @@ IMGUI_SHA="4806a1924ff6181180bf5e4b8b79ab4394118875"
 RAPIDCSV_SHA="a98b85e663114b8fdc9c0dc03abf22c296f38241"
 TABULATE_SHA="3a58301067bbc03da89ae5a51b3e05b7da719d38"
 XBYAK_SHA="4e44f4614ddbf038f2a6296f5b906d5c72691e0f"
+CATCH_SHA="ee1450f268dfd5c13aa8670ba97e93cabaf2e15d"
 SRC_URI="https://github.com/xenia-canary/xenia-canary/archive/${SHA}.tar.gz
 		-> ${P}-${SHA:0:7}.tar.gz
 	https://github.com/openluopworld/aes_128/archive/${AES_128_SHA}.tar.gz
@@ -39,14 +40,19 @@ SRC_URI="https://github.com/xenia-canary/xenia-canary/archive/${SHA}.tar.gz
 	https://github.com/p-ranav/tabulate/archive/${TABULATE_SHA}.tar.gz
 		-> ${PN}-tabulate-${TABULATE_SHA:0:7}.tar.gz
 	https://github.com/herumi/xbyak/archive/${XBYAK_SHA}.tar.gz
-		-> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz"
+		-> ${PN}-xbyak-${XBYAK_SHA:0:7}.tar.gz
+	test? (
+		https://github.com/catchorg/Catch2/archive/${CATCH_SHA}.tar.gz
+			-> ${PN}-Catch2-${CATCH_SHA:0:7}.tar.gz
+	)"
 S="${WORKDIR}/xenia-canary-${SHA}"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cpu_flags_x86_avx discord"
+IUSE="cpu_flags_x86_avx discord test"
 REQUIRED_USE="cpu_flags_x86_avx"
+RESTRICT="!test? ( test )"
 
 DEPEND="app-arch/brotli
 	app-arch/bzip2
@@ -129,6 +135,10 @@ src_prepare() {
 	mv "${WORKDIR}/rapidcsv-${RAPIDCSV_SHA}" "${S}/third_party/rapidcsv" || die
 	mv "${WORKDIR}/tabulate-${TABULATE_SHA}" "${S}/third_party/tabulate" || die
 	mv "${WORKDIR}/xbyak-${XBYAK_SHA}" "${S}/third_party/xbyak" || die
+	if use test; then
+		rm -rf "${S}/third_party/catch" || die
+		mv "${WORKDIR}/Catch2-${CATCH_SHA}" "${S}/third_party/catch" || die
+	fi
 
 	# version.h is normally written by xenia-build.py; generate it directly.
 	# ${S} is on the include path, so #include "version.h" resolves here.
@@ -164,7 +174,7 @@ src_configure() {
 		filter-flags -march=* -mtune=*
 	fi
 	local mycmakeargs=(
-		-DXENIA_BUILD_TESTS=OFF
+		"-DXENIA_BUILD_TESTS=$(usex test ON OFF)"
 		"-DXENIA_BUILD_DISCORD=$(usex discord ON OFF)"
 		-DUSE_SYSTEM_CAPSTONE=ON
 		-DUSE_SYSTEM_CXXOPTS=ON
@@ -184,6 +194,16 @@ src_configure() {
 		-DUSE_SYSTEM_ZSTD=ON
 	)
 	cmake_src_configure
+}
+
+src_test() {
+	local myctestargs=(
+		# Expects a 64 KiB-aligned AllocRange in vE0000000 to succeed. The Alloc
+		# case before it expects that alignment to be rejected there, and
+		# AllocRange rejects it here as well. Upstream CI does not run the tests.
+		-E '^PhysicalHeap vE0000000 AllocRange alignment$'
+	)
+	cmake_src_test
 }
 
 src_install() {
