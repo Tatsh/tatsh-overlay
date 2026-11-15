@@ -22,7 +22,8 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="alsa cpu_flags_x86_sse4_1 +clang jack pulseaudio sndio wayland"
+IUSE="alsa cpu_flags_x86_sse4_1 +clang jack pulseaudio sndio test wayland"
+RESTRICT="!test? ( test )"
 REQUIRED_USE="amd64? ( cpu_flags_x86_sse4_1 )"
 
 COMMON_DEPEND="
@@ -126,7 +127,7 @@ src_configure() {
 		# keeps every resource clear of games-emulation/pcsx2.
 		-DCMAKE_INSTALL_DATADIR="share/${PN}"
 		-DDISABLE_ADVANCE_SIMD=yes
-		-DENABLE_TESTS=no
+		"-DENABLE_TESTS=$(usex test)"
 		-DPACKAGE_MODE=yes
 		-DUSE_BACKTRACE=no
 		-DUSE_LINKED_FFMPEG=yes
@@ -144,6 +145,11 @@ src_configure() {
 	)
 
 	cmake_src_configure
+}
+
+src_test() {
+	# The test binaries are EXCLUDE_FROM_ALL; this target builds them and runs ctest.
+	cmake_build unittests
 }
 
 src_install() {
