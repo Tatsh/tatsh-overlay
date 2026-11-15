@@ -16,3 +16,13 @@ HOMEPAGE="https://github.com/explosion/murmurhash"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+src_test() {
+	# Import the built extensions rather than the source-tree package, which holds the tests.
+	mv "${PN}/tests" tests || die
+	rm -r "${PN}" || die
+	distutils-r1_src_test
+}
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
