@@ -92,4 +92,22 @@ python_install_all() {
 	systemd_dounit "${FILESDIR}/${PN}.service"
 }
 
-# Tests need a running server and network access.
+changedetection_test() {
+	# What upstream CI runs without its service containers. The rest need a
+	# test HTTP server, browsers, SMTP and proxy containers.
+	local EPYTEST_IGNORE=(
+		# pyppeteer and litellm are not packaged.
+		tests/unit/test_puppeteer_page_crash.py
+		tests/unit/test_llm_client_gemini.py
+	)
+	pushd changedetectionio >/dev/null || die
+	epytest tests/unit tests/llm
+	popd >/dev/null || die
+}
+
+src_test() {
+	python_foreach_impl changedetection_test
+}
+
+EPYTEST_PLUGINS=( pytest-{flask,mock} )
+distutils_enable_tests pytest
