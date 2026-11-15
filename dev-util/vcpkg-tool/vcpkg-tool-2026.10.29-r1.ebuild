@@ -32,7 +32,8 @@ src_configure() {
 		"-DVCPKG_STANDALONE_BUNDLE_SHA=$(grep -E 'VCPKG_STANDALONE_BUNDLE_SHA"' CMakePresets.json | cut '-d"' -f4)"
 		-DCMAKE_POLICY_VERSION_MINIMUM=3.5
 		-DBUILD_SHARED_LIBS=OFF
-		-DVCPKG_BASE_VERSION=2024-01-11
+		# What "vcpkg version" reports.
+		-DVCPKG_BASE_VERSION="${PV//./-}"
 		-DVCPKG_BUILD_TLS12_DOWNLOADER=OFF
 		-DVCPKG_LIBCURL_DLSYM=OFF
 		-DVCPKG_DEPENDENCY_CMAKERC=ON
@@ -52,4 +53,11 @@ pkg_postinst() {
 	einfo 'or another root somewhere and point to it with the VCPKG_ROOT environment'
 	einfo 'variable or by passing --vcpkg-root=<path>.'
 	einfo
+}
+
+src_test() {
+	# The SPDX tests expect the version of an unconfigured build, 2999-12-31. With only
+	# exclusions given, Catch also runs hidden ([.]) tests unless they are excluded too.
+	LC_ALL=C "${BUILD_DIR}/vcpkg-test" "~[.]" \
+		"~spdx maximum serialization" "~spdx minimum serialization" || die "Tests failed"
 }
