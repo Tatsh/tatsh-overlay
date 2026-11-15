@@ -321,6 +321,8 @@ cudahostld
 cugan
 cuid
 cunet
+cuobjdump
+cupti
 curlcffi
 cuse
 cuyler
@@ -932,6 +934,7 @@ instafail
 installdir
 installkernel
 instr
+integ
 intellivision
 interconverter
 interp
@@ -1447,6 +1450,7 @@ mknod
 mkorenkov
 mkwineprefix
 mlabbe
+mlir
 mnamer
 mnsg
 mobilephone
@@ -1598,6 +1602,7 @@ numpydoc
 nurio
 nusb
 nvcc
+nvdisasm
 nvidiactl
 nvlink
 nvme
@@ -1789,6 +1794,7 @@ psvpfstools
 pthread
 pthreadglue
 pthreads
+ptxas
 puae
 pugh
 pugixml
@@ -1822,6 +1828,7 @@ pyghidra
 pygments
 pygobject
 pygtrie
+pyhamcrest
 pyinput
 pyinstrument
 pyjwt
@@ -2502,7 +2509,9 @@ yamls
 yapf
 yasm
 ycmd
+ycmd's
 yetmorecode
+youcompleteme
 ytarchive
 yubi
 yuzu
