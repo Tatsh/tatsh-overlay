@@ -52,6 +52,23 @@ src_prepare() {
 	find . -name build.rs -exec sed -re '/.*build_utils::store_git.*;$/d' -i {} ';'
 }
 
+# The expected query strings are only pretty-printed with debug_assertions.
+CARGO_SKIP_TESTS=( query_strings::tests )
+
+src_test() {
+	# These need live PostgreSQL, MySQL, SQL Server or MongoDB servers.
+	local db_crates=(
+		mongodb-schema-connector
+		quaint
+		query-engine-tests
+		schema-engine-cli
+		sql-introspection-tests
+		sql-migration-tests
+		sql-schema-describer
+	)
+	cargo_src_test --workspace "${db_crates[@]/#/--exclude=}"
+}
+
 src_install() {
 	dobin target/release/{prisma-fmt,query-compiler-playground,schema-engine}
 }
