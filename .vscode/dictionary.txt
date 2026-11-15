@@ -1409,7 +1409,9 @@ meetei
 megadrive
 melonds
 membarrier
+memcpy
 memkind
+memmove
 memset
 mende
 menelkir
@@ -2175,6 +2177,7 @@ subclassing
 sublicensable
 sublicenseable
 submitit
+subobject
 subprocessors
 subslot
 suidsgid
