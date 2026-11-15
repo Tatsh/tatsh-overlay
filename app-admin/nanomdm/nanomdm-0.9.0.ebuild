@@ -20,6 +20,10 @@ src_compile() {
 	ego build -o nano2nano ./cmd/nano2nano
 }
 
+src_test() {
+	ego test ./...
+}
+
 src_install() {
 	dobin "${PN}" nano2nano
 	einstalldocs
