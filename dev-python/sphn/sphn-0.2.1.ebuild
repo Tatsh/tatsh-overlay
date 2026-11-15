@@ -157,7 +157,34 @@ LICENSE="MIT"
 LICENSE+=" Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 DEPEND="media-libs/opus"
-RDEPEND="${DEPEND}"
-BDEPEND="virtual/pkgconfig"
+RDEPEND="
+	${DEPEND}
+	dev-python/numpy[${PYTHON_USEDEP}]
+"
+BDEPEND="
+	virtual/pkgconfig
+	test? ( media-sound/lame )
+"
+
+python_test() {
+	# Upstream's test/ scripts decode bria.mp3, which is not in the repository.
+	# Any mono MP3 works, so encode a short sine wave.
+	cd "${T}" || die
+	"${EPYTHON}" - <<-EOF || die
+		import math, struct, wave
+		with wave.open("sine.wav", "wb") as w:
+		    w.setnchannels(1)
+		    w.setsampwidth(2)
+		    w.setframerate(24000)
+		    w.writeframes(b"".join(
+		        struct.pack("<h", int(16000 * math.sin(2 * math.pi * 440 * i / 24000)))
+		        for i in range(24000 * 2)))
+	EOF
+	lame --quiet -m m sine.wav bria.mp3 || die
+	"${EPYTHON}" "${S}/test/basic.py" || die "basic.py failed with ${EPYTHON}"
+	"${EPYTHON}" "${S}/test/stream.py" || die "stream.py failed with ${EPYTHON}"
+}
