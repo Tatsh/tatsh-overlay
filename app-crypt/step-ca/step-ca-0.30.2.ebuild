@@ -30,6 +30,10 @@ src_compile() {
 		./cmd/"${PN}"
 }
 
+src_test() {
+	ego test ./...
+}
+
 src_install() {
 	dobin "${PN}"
 	einstalldocs
