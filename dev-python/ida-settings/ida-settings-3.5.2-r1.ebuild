@@ -15,6 +15,12 @@ S="${WORKDIR}/${P}"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
-RESTRICT="test"
+RDEPEND="
+	>=dev-python/ida-hcli-0.14.2[${PYTHON_USEDEP}]
+	dev-python/ida-netnode[${PYTHON_USEDEP}]
+"
+# The legacy API needs a Qt binding (PyQt5 or PySide6) once QtCore is used.
+BDEPEND="test? ( dev-python/pyside[${PYTHON_USEDEP}] )"
 
-RDEPEND="dev-python/ida-netnode[${PYTHON_USEDEP}]"
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
