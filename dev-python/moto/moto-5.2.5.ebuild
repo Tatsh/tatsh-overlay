@@ -31,3 +31,42 @@ RDEPEND=">=dev-python/boto3-1.9.201[${PYTHON_USEDEP}]
 	dev-python/xmltodict[${PYTHON_USEDEP}]
 	>=dev-python/werkzeug-0.5[${PYTHON_USEDEP}]
 	>=dev-python/responses-0.15.0[${PYTHON_USEDEP}]"
+BDEPEND="
+	test? (
+		dev-python/antlr4-python3-runtime[${PYTHON_USEDEP}]
+		dev-python/aws-xray-sdk[${PYTHON_USEDEP}]
+		dev-python/cfn-lint[${PYTHON_USEDEP}]
+		dev-python/docker[${PYTHON_USEDEP}]
+		dev-python/flask-cors[${PYTHON_USEDEP}]
+		dev-python/freezegun[${PYTHON_USEDEP}]
+		dev-python/joserfc[${PYTHON_USEDEP}]
+		dev-python/jsonpath-ng[${PYTHON_USEDEP}]
+		dev-python/jsonschema[${PYTHON_USEDEP}]
+		dev-python/openapi-spec-validator[${PYTHON_USEDEP}]
+		dev-python/pyotp[${PYTHON_USEDEP}]
+		dev-python/pyparsing[${PYTHON_USEDEP}]
+		dev-python/pyyaml[${PYTHON_USEDEP}]
+		dev-python/sshpubkeys[${PYTHON_USEDEP}]
+	)
+"
+
+EPYTEST_IGNORE=(
+	# Need py-partiql-parser, which is not packaged.
+	tests/test_dynamodb/test_dynamodb_import_table.py
+	tests/test_dynamodb/test_dynamodb_statements.py
+	tests/test_s3/test_s3_select.py
+	# Needs pycognito, which is not packaged.
+	tests/test_cognitoidp/test_cognitoidp.py
+	# Needs graphql-core, which currently cannot be installed alongside this tree.
+	tests/test_appsync/test_appsync_schema.py
+)
+
+src_test() {
+	# Tests marked requires_docker drive the host's Docker daemon.
+	local -x TESTS_SKIP_REQUIRES_DOCKER=true
+	distutils-r1_src_test
+}
+
+EPYTEST_PLUGINS=()
+EPYTEST_XDIST=1
+distutils_enable_tests pytest
