@@ -593,6 +593,10 @@ RDEPEND="${DEPEND}
 	)"
 BDEPEND="gui? ( virtual/pkgconfig )"
 
+# Checks Cargo.lock still pins the optical crates by git rev; patching them to
+# the vendored sources rewrites those entries.
+CARGO_SKIP_TESTS=( optical_dependencies_stay_content_pinned )
+
 src_prepare() {
 	# Leave stripping and LTO to the user's flags and Portage.
 	sed -i '/^\[profile.release\]/,/^$/{/^strip\|^lto\|^codegen-units/d}' Cargo.toml || die
@@ -603,6 +607,12 @@ src_compile() {
 	local pkg pkgs=( freemkv-flash freemkv-fw )
 	use gui && pkgs+=( freemkv-flash-gui freemkv-fw-gui )
 	cargo_src_compile "${pkgs[@]/#/--package=}"
+}
+
+src_test() {
+	# The style tests expect plain text; a COLORTERM leaking from the caller turns colour on.
+	local -x NO_COLOR=1
+	cargo_src_test
 }
 
 src_install() {
