@@ -29,3 +29,13 @@ RDEPEND=">=dev-python/click-8.0.0[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
 	>=dev-python/typer-0.3.0[${PYTHON_USEDEP}]
 	>=dev-python/wasabi-0.9.1[${PYTHON_USEDEP}]"
+
+EPYTEST_DESELECT=(
+	# Expects ConfigValidationError for a missing variable; current confection lets
+	# configparser.InterpolationMissingOptionError through instead.
+	"weasel/tests/test_validation.py::test_project_config_interpolation[10_0]"
+	"weasel/tests/test_validation.py::test_project_config_interpolation[10_1]"
+)
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
