@@ -113,7 +113,7 @@ if [[ ! ${_GHIDRA_EXTENSION_ECLASS} ]]; then
 
 inherit edo java-pkg-2 java-utils-2
 
-EXPORT_FUNCTIONS src_prepare src_compile src_install
+EXPORT_FUNCTIONS src_prepare src_compile src_test src_install
 
 # @ECLASS_VARIABLE: GHIDRA_HOME
 # @DESCRIPTION:
@@ -148,6 +148,12 @@ _ghidra-extension_set_globals() {
 	JAVA_PKG_NV_DEPEND=">=virtual/jdk-25:*"
 	JAVA_PKG_WANT_SOURCE=25
 	JAVA_PKG_WANT_TARGET=25
+
+	if [[ ${GHIDRA_EXT_TESTS} ]]; then
+		IUSE+=" test"
+		RESTRICT+=" !test? ( test )"
+		DEPEND+=" test? ( dev-java/junit:4 )"
+	fi
 }
 _ghidra-extension_set_globals
 
@@ -310,6 +316,9 @@ _ghidra-extension_build_module() {
 	mkdir -p lib || die
 	jar --create --file "lib/${GHIDRA_EXT_NAME}.jar" -C "${classes}" . || die
 
+	if [[ ${GHIDRA_EXT_TESTS} ]] && use test && [[ -d src/test/java ]]; then
+		mv src/test "${WORKDIR}/ghidra-extension-tests" || die
+	fi
 	# Upstream's own archives contain everything but the sources.
 	rm -r src || die
 }
@@ -473,6 +482,68 @@ ghidra-extension_src_compile() {
 	for spec in "${specs[@]}"; do
 		[[ -f ${spec%.slaspec}.sla ]] || die "sleigh produced no .sla for ${spec}"
 	done
+}
+
+# @ECLASS_VARIABLE: GHIDRA_EXT_TESTS
+# @PRE_INHERIT
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# If set, the extension's JUnit 4 tests under src/test/java are compiled against
+# the installed Ghidra and the built extension and run in src_test.
+
+# @ECLASS_VARIABLE: GHIDRA_EXT_TEST_EXCLUDE
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# Paths under src/test/java of test sources not to compile, for example tests
+# built on Ghidra's integration test framework, which releases do not ship.
+
+# @FUNCTION: ghidra-extension_src_test
+# @DESCRIPTION:
+# Runs the extension's JUnit 4 tests when GHIDRA_EXT_TESTS is set.
+ghidra-extension_src_test() {
+	[[ ${GHIDRA_EXT_TESTS} ]] || return 0
+	local tests="${WORKDIR}/ghidra-extension-tests"
+	[[ -d ${tests}/java ]] || die "${ECLASS}: no tests under src/test/java"
+
+	local classpath junit
+	classpath="$(_ghidra-extension_classpath)" || die
+	junit="$(java-pkg_getjars --build-only junit-4)" || die
+	classpath="lib/${GHIDRA_EXT_NAME}.jar:${junit}:${classpath}"
+
+	local sources=() source exclude excluded
+	readarray -d '' sources < <(find "${tests}/java" -name '*.java' -print0)
+	local kept=()
+	for source in "${sources[@]}"; do
+		excluded=
+		for exclude in "${GHIDRA_EXT_TEST_EXCLUDE[@]}"; do
+			[[ ${source} == "${tests}/java/${exclude}" ]] && excluded=1
+		done
+		[[ ${excluded} ]] || kept+=( "${source}" )
+	done
+	(( ${#kept[@]} )) || die "${ECLASS}: no test sources left to compile"
+
+	local -x JAVA_PKG_WANT_SOURCE JAVA_PKG_WANT_TARGET
+	JAVA_PKG_WANT_SOURCE="$(sed -n 's/^application\.java\.compiler=//p' \
+		"${ESYSROOT}${GHIDRA_HOME}/Ghidra/application.properties")" || die
+	JAVA_PKG_WANT_TARGET="${JAVA_PKG_WANT_SOURCE}"
+	local classes="${T}/test-classes"
+	ejavac -d "${classes}" -encoding UTF-8 -proc:none -classpath "${classpath}" "${kept[@]}"
+	[[ -d ${tests}/resources ]] && { cp -r "${tests}/resources/." "${classes}" || die; }
+
+	# The test classes are the sources that declare a @Test method.
+	local test_classes=() name
+	for source in "${kept[@]}"; do
+		grep -q '@Test' "${source}" || continue
+		name=${source#"${tests}/java/"}
+		name=${name%.java}
+		test_classes+=( "${name//\//.}" )
+	done
+
+	local -x JAVA_HOME XDG_CONFIG_HOME="${T}/config"
+	local -x _JAVA_OPTIONS="-Djava.io.tmpdir=${T} -Djava.awt.headless=true"
+	JAVA_HOME="$(java-config -O)" || die
+	mkdir -p "${XDG_CONFIG_HOME}" || die
+	edo java -cp "${classes}:${classpath}" org.junit.runner.JUnitCore "${test_classes[@]}"
 }
 
 # @FUNCTION: ghidra-extension_src_install
