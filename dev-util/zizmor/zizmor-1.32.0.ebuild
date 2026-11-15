@@ -470,6 +470,10 @@ LICENSE+="
 SLOT="0"
 KEYWORDS="~amd64"
 
+# The snapshot's version filter rewrites "1.32.0" inside the build directory
+# (zizmor-1.32.0/temp) before the workspace path filter can match it.
+CARGO_SKIP_TESTS=( config::test_config_ignores_workflow_named_zizmor )
+
 src_compile() {
 	cargo_src_compile -p "${PN}"
 }
