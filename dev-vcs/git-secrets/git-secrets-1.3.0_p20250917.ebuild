@@ -25,6 +25,13 @@ src_compile () {
 	emake man
 }
 
+src_test() {
+	# The bats tests commit to throwaway repositories.
+	local -x HOME="${T}" GIT_AUTHOR_NAME=test GIT_AUTHOR_EMAIL=test@example.com
+	local -x GIT_COMMITTER_NAME=test GIT_COMMITTER_EMAIL=test@example.com
+	emake test
+}
+
 src_install () {
 	emake DESTDIR="${D}" PREFIX=/usr install
 	doman "${PN}.1"
