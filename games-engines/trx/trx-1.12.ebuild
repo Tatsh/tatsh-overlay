@@ -45,6 +45,16 @@ src_configure() {
 	meson_src_configure
 }
 
+src_test() {
+	# The unit tests are their own meson project and need none of the engine's dependencies.
+	local EMESON_SOURCE="${S}/src/tests" BUILD_DIR="${WORKDIR}/tests-build"
+	# lua.trx.api needs Lua 5.4; find_program() would take an older default lua.
+	printf "[binaries]\nlua = 'lua5.4'\n" > "${T}/tests-native.ini" || die
+	meson_src_configure --native-file="${T}/tests-native.ini"
+	meson_src_compile
+	meson_src_test
+}
+
 src_install() {
 	meson_src_install
 
