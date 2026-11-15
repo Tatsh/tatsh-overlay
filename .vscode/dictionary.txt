@@ -48,6 +48,7 @@ antlr
 antoniovazquezblanco
 antonmedv
 anyio
+anyps
 apfs
 appdirs
 appico
@@ -426,6 +427,7 @@ devtype
 dexamples
 dfetchcontent
 dfilter
+dflash
 dfmderainbow
 dggml
 dgit
@@ -555,6 +557,7 @@ dtrellis
 dtype
 dubhatervapoursynth
 dudev
+dunittest
 dunix
 duployan
 duser
@@ -1053,6 +1056,7 @@ kethsar
 keycodemapdb
 keym
 keymgr
+keyset
 keysources
 keysyms
 kfilemetadata
@@ -1307,6 +1311,7 @@ lide
 lightrec
 lighttpd
 limbu
+linears
 linecast
 linjackson
 linkernsbypass
@@ -1332,6 +1337,7 @@ loadspec
 localsearch
 localsend
 lodepng
+logit
 loguru
 longdescription
 loong
@@ -1591,6 +1597,7 @@ noisereduce
 noncommercial
 nonrenewal
 nontransferability
+noreplace
 nosetests
 notgit
 noto
@@ -1878,6 +1885,7 @@ pythonpath
 pythonpycacheprefix
 pytimeparse
 pytorch
+pytries
 pytz
 pyudev
 pyusb
@@ -1893,6 +1901,7 @@ qcustomplot
 qdbus
 qfile
 qlist
+qmerge
 qmldir
 qpack
 qpxtool
@@ -1924,6 +1933,7 @@ quicknes
 quiqua
 quot
 quse
+qwen
 rabbitizer
 randers
 ranlib
@@ -2116,6 +2126,7 @@ snesrev
 sniffio
 snowflakedb
 socketio
+softcap
 softfloat
 softmmu
 sompeng
@@ -2393,6 +2404,7 @@ vitc
 vite
 vladikcomper
 volk
+vorbisenc
 vosf
 vpic
 vpnc
