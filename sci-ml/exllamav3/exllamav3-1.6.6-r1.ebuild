@@ -5,7 +5,7 @@ EAPI=8
 
 DISTUTILS_SINGLE_IMPL=1
 DISTUTILS_EXT=1
-PYTHON_COMPAT=( python3_{11..15} )
+PYTHON_COMPAT=( python3_{12..14} )
 DISTUTILS_USE_PEP517=setuptools
 
 inherit distutils-r1 pypi
@@ -30,6 +30,7 @@ RDEPEND="${PYTHON_DEPS}
 		>=sci-ml/safetensors-0.3.2[${PYTHON_USEDEP}]
 		dev-python/typing-extensions[${PYTHON_USEDEP}]
 		dev-libs/marisa[${PYTHON_USEDEP}]
+		sci-ml/triton-bin[${PYTHON_USEDEP}]
 	')
 	>=sci-ml/pytorch-2.13.0[flash,${PYTHON_SINGLE_USEDEP}]
 	sci-ml/flash-attn[${PYTHON_SINGLE_USEDEP}]
