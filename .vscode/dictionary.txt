@@ -156,6 +156,7 @@ brahmi
 breakpad
 brep
 bretello
+bria
 broot
 browserchooser
 browserslist
@@ -259,6 +260,7 @@ colored
 colorful
 colorlog
 colorspace
+colorterm
 commandlines
 commitizen
 commitlintrc
@@ -1473,6 +1475,7 @@ mymakeargs
 mynpmargs
 mynpmargstype
 mypy
+myspell
 mytree
 mywave
 nabataean
@@ -1541,6 +1544,7 @@ nlzy
 nnedi
 noaccess
 nodedir
+nodetest
 noextract
 nofetch
 noisereduce
@@ -1582,6 +1586,7 @@ occt
 ocornut
 octopi
 octree
+offscreen
 ogham
 olchiki
 oldhungarian
@@ -1948,6 +1953,7 @@ romaji
 romio
 rommy
 roni
+rootdir
 rpcli
 rssh
 rstcheck
@@ -2003,9 +2009,12 @@ sentencepiece
 seregonwar
 setc
 setfcap
+setframerate
 setgid
+setnchannels
 setpcap
 setproctitle
+setsampwidth
 setuid
 setuptools
 sezanzeb
@@ -2396,6 +2405,7 @@ wrapt
 writable
 writedup
 writeedits
+writeframes
 wslpath
 wswan
 wtforms
