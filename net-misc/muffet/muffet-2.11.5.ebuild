@@ -14,10 +14,13 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 # Tests require network access to crawl real URLs.
-RESTRICT="test"
 
 src_compile() {
 	go build . || die
+}
+
+src_test() {
+	ego test ./...
 }
 
 src_install() {
