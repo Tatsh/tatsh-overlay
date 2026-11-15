@@ -60,6 +60,11 @@ src_install() {
 		rm -r "${MY_PN}"/{instrumentation,plugins} || die
 		# Backends are found through the entry points in the dist-info.
 		python_domodule "${MY_PN}" "${MY_PN}-${PV}.dist-info"
+		# python_domodule installs everything 0644; Triton runs these.
+		local exe
+		for exe in FileCheck backends/nvidia/bin/{cuobjdump,nvdisasm,ptxas,ptxas-blackwell}; do
+			fperms +x "$(python_get_sitedir)/${MY_PN}/${exe}"
+		done
 	}
 	python_foreach_impl triton_install
 }
