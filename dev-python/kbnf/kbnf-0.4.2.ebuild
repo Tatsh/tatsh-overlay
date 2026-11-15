@@ -154,5 +154,19 @@ SRC_URI+=" ${CARGO_CRATE_URIS}"
 LICENSE="MIT Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 RDEPEND="dev-python/numpy[${PYTHON_USEDEP}]"
+
+# Debug-format snapshots escape U+FF9F, which newer Rust (updated Unicode tables)
+# prints literally.
+CARGO_SKIP_TESTS=(
+	tests::test_json_string
+	tests::test_regex_complement
+)
+
+src_test() {
+	# Upstream ships only Rust tests.
+	cargo_src_test
+}
