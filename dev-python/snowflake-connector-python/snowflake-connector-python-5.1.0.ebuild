@@ -603,7 +603,13 @@ inherit cargo distutils-r1 pypi
 DESCRIPTION="Snowflake database connector for Python"
 HOMEPAGE="https://pypi.org/project/snowflake-connector-python/"
 
-SRC_URI+=" ${CARGO_CRATE_URIS}"
+# The sdist leaves out the Python tests.
+SRC_URI+="
+	${CARGO_CRATE_URIS}
+	test? (
+		https://github.com/Tatsh/tatsh-overlay/releases/download/__distfiles__/${P}-tests.tar.xz
+	)
+"
 
 LICENSE="Apache-2.0"
 # Dependent crate licenses
@@ -631,11 +637,21 @@ BDEPEND="
 	dev-libs/protobuf
 	>=dev-python/cython-3.1[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
+	test? (
+		dev-python/numpy[${PYTHON_USEDEP}]
+		dev-python/requests[${PYTHON_USEDEP}]
+		dev-python/tzdata[${PYTHON_USEDEP}]
+	)
 "
 
 python_prepare_all() {
 	# Protobuf modules are already generated in the sdist.
 	sed -i 's/, "mypy-protobuf~=5.0"//' pyproject.toml || die
+	if use test; then
+		# The sdist ships only tests/README.md.
+		rm -r tests || die
+		mv "${WORKDIR}/${P}-tests/tests" . || die
+	fi
 	distutils-r1_python_prepare_all
 }
 
@@ -654,3 +670,23 @@ python_compile() {
 	RUSTFLAGS="$(cargo_env printenv "CARGO_TARGET_${triple^^}_RUSTFLAGS")" || die
 	distutils-r1_python_compile
 }
+
+src_test() {
+	local EPYTEST_IGNORE=(
+		# Need a Snowflake account or a WireMock server.
+		tests/e2e
+		tests/integ
+		# Builds and installs the sdist.
+		tests/packaging
+	)
+	# Upstream addopts load a junit plugin from outside the sdist.
+	local EPYTEST_FLAGS="-o addopts="
+	# Keep upstream's marker filter; pytest shell-splits this variable.
+	local -x PYTEST_ADDOPTS="-m 'not flaky and not requires_no_mfa'"
+	distutils-r1_src_test
+}
+
+EPYTEST_PLUGINS=()
+# conftest.py implements an xdist hook.
+EPYTEST_XDIST=1
+distutils_enable_tests pytest
