@@ -3,6 +3,8 @@
 
 EAPI=8
 
+inherit toolchain-funcs
+
 DESCRIPTION="A small, 0BSD-licensed metaprogramming library for C++17"
 HOMEPAGE="https://github.com/merryhime/mp"
 SHA="b50053cef50385419c59fb3aebb78974547318bc"
@@ -16,6 +18,14 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 
 DEPEND="dev-libs/gmp dev-libs/mpfr"
 RDEPEND="${DEPEND}"
+
+src_test() {
+	# The tests are static_asserts; building the program is the check.
+	# shellcheck disable=SC2086
+	"$(tc-getCXX)" ${CPPFLAGS} ${CXXFLAGS} -std=c++17 -Iinclude ${LDFLAGS} \
+		tests/all_tests.cpp -o "${T}/all_tests" || die
+	"${T}/all_tests" || die
+}
 
 src_install() {
 	insinto /usr/include
