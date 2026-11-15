@@ -26,3 +26,9 @@ src_configure() {
 	)
 	cmake_src_configure
 }
+
+src_test() {
+	# nodetest creates a QApplication, which aborts without a display.
+	local -x QT_QPA_PLATFORM=offscreen
+	cmake_src_test
+}
