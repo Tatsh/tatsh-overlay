@@ -14,9 +14,16 @@ HOMEPAGE="https://github.com/dzhu/rstfmt https://pypi.org/project/rstfmt/"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 RDEPEND="
 	>=dev-python/black-22.1.0[${PYTHON_USEDEP}]
 	>=dev-python/docutils-0.12[${PYTHON_USEDEP}]
 	>=dev-python/sphinx-2.4.0[${PYTHON_USEDEP}]
 "
+
+python_test() {
+	# Upstream's suite: format each sample and check the result round-trips.
+	"${EPYTHON}" -m rstfmt --test tests || die "Tests failed with ${EPYTHON}"
+}
