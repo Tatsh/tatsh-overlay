@@ -156,3 +156,8 @@ LICENSE+="
 "
 SLOT="0"
 KEYWORDS="~amd64"
+
+BDEPEND="test? ( dev-python/dirty-equals[${PYTHON_USEDEP}] )"
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
