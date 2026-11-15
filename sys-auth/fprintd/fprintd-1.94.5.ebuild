@@ -41,6 +41,9 @@ BDEPEND="test? (
 
 DOCS=( pam/README )
 
+# The tests raise GLib.GError with bytes, which PyGObject 3.58 can no longer format.
+PATCHES=( "${FILESDIR}/${PN}-tests-gerror-str.patch" )
+
 src_prepare() {
 	# Remove test dep checks
 	if ! use test; then

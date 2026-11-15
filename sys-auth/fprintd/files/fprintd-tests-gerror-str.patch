@@ -1,0 +1,33 @@
+--- a/tests/fprintd.py	2026-11-15 03:53:37.379499338 -0500
++++ b/tests/fprintd.py	2026-11-15 03:55:21.834428045 -0500
+@@ -592,10 +592,10 @@
+             proc = self.gdbus_device_method_call_process(method, args)
+             proc.wait(timeout=5)
+             if proc.returncode != 0:
+-                raise GLib.GError(proc.stdout.read())
++                raise GLib.GError(proc.stdout.read().decode())
+             return proc.stdout.read()
+         except subprocess.TimeoutExpired as e:
+-            raise GLib.GError(e.output)
++            raise GLib.GError(e.output.decode() if e.output else '')
+ 
+ 
+ class FPrintdVirtualImageDeviceBaseTests(FPrintdTest):
+@@ -2990,7 +2990,7 @@
+ 
+         gdbus.wait()
+         with self.assertFprintError('AlreadyInUse'):
+-            raise GLib.GError(gdbus.stdout.read())
++            raise GLib.GError(gdbus.stdout.read().decode())
+ 
+         self.device.Release()
+ 
+@@ -3032,7 +3032,7 @@
+ 
+         gdbus.wait()
+         with self.assertFprintError('AlreadyInUse'):
+-            raise GLib.GError(gdbus.stdout.read())
++            raise GLib.GError(gdbus.stdout.read().decode())
+ 
+         self.device.Release()
+ 
