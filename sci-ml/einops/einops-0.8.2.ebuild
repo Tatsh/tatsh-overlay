@@ -14,3 +14,13 @@ HOMEPAGE="https://github.com/arogozhnikov/einops"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+BDEPEND="test? ( dev-python/numpy[${PYTHON_USEDEP}] )"
+
+src_test() {
+	local -x EINOPS_TEST_BACKENDS=numpy
+	distutils-r1_src_test
+}
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
