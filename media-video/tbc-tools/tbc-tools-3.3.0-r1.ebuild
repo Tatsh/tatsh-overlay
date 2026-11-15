@@ -53,6 +53,8 @@ RDEPEND="${DEPEND}
 PATCHES=(
 	"${FILESDIR}/${PN}-no-install-cache-update.patch"
 	"${FILESDIR}/${PN}-vendor-datadir.patch"
+	# PAL-M is a 30-frame system; VITC frames 25-29 were rejected.
+	"${FILESDIR}/${PN}-vitc-pal-m-30-frame.patch"
 )
 
 pkg_setup() {
@@ -89,6 +91,14 @@ src_configure() {
 		"-DONNXRUNTIME_ROOT=${EPREFIX}/usr"
 	)
 	cmake_src_configure
+}
+
+src_test() {
+	local myctestargs=()
+	# The bundled vhs-teletext it drives is removed without USE=teletext.
+	use teletext || myctestargs+=( -E '^tbc-process-vbi-teletext-runtime$' )
+	# Tests share fixed output paths under testout/, so they cannot run in parallel.
+	cmake_src_test -j1
 }
 
 src_install() {
