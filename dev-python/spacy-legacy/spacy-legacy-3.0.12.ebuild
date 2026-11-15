@@ -14,3 +14,17 @@ S="${WORKDIR}/${PN}-${PV}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
+
+# The tests import spacy, which depends on this package.
+BDEPEND="test? ( dev-python/spacy[${PYTHON_USEDEP}] )"
+
+EPYTEST_DESELECT=(
+	# CharacterEmbed in current thinc takes different arguments than the v1 layer expects.
+	"spacy_legacy/tests/pipeline/test_tok2vec.py::test_tok2vec[8-CharacterEmbed_v1-embed_config2-MaxoutWindowEncoder_v1-encode_config2]"
+	"spacy_legacy/tests/pipeline/test_tok2vec.py::test_tok2vec[8-CharacterEmbed_v1-embed_config3-MishWindowEncoder_v1-encode_config3]"
+	# Needs wandb.
+	spacy_legacy/tests/test_logger.py::test_logger
+)
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
