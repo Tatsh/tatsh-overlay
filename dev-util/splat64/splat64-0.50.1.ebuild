@@ -11,11 +11,19 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="MIPS instruction decoder"
 HOMEPAGE="https://github.com/ethteck/splat"
+# The sdist omits the basic_app test inputs.
+SPLAT_RAW="https://raw.githubusercontent.com/ethteck/splat/${PV}/test/basic_app"
+SRC_URI+="
+	test? (
+		${SPLAT_RAW}/splat.yaml -> ${P}-basic_app-splat.yaml
+		${SPLAT_RAW}/basic_app.ld -> ${P}-basic_app.ld
+		${SPLAT_RAW}/expected/basic_app.ld -> ${P}-basic_app-expected.ld
+	)
+"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-RESTRICT="test"
 
 RDEPEND="dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/pylibyaml[${PYTHON_USEDEP}]
@@ -27,3 +35,24 @@ RDEPEND="dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/pygfxd[${PYTHON_USEDEP}]
 	dev-python/n64img[${PYTHON_USEDEP}]
 	dev-python/crunch64[${PYTHON_USEDEP}]"
+
+src_prepare() {
+	if use test; then
+		cp "${DISTDIR}/${P}-basic_app-splat.yaml" test/basic_app/splat.yaml || die
+		cp "${DISTDIR}/${P}-basic_app.ld" test/basic_app/basic_app.ld || die
+		cp "${DISTDIR}/${P}-basic_app-expected.ld" test/basic_app/expected/basic_app.ld || die
+	fi
+	distutils-r1_src_prepare
+}
+
+src_test() {
+	# Rodata reads the global symbol list, which the other tests populate, so it
+	# gets a run of its own. test.py does not match pytest's default glob.
+	local EPYTEST_FLAGS="test.py::Rodata"
+	distutils-r1_src_test
+	EPYTEST_FLAGS="--deselect test.py::Rodata test.py test_n64_entrypoints.py"
+	distutils-r1_src_test
+}
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
