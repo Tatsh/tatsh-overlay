@@ -215,6 +215,7 @@ chaoticgd
 chardet
 chatnet
 chatnets
+chdman
 checkconfig
 checkpath
 checkreqs
