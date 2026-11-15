@@ -107,6 +107,7 @@ barbieri
 bascom
 basepack
 baserom
+basetest
 basiliskii
 bassa
 bassavah
@@ -430,6 +431,7 @@ dhlsl
 dhwview
 dialog
 dialogs
+dicdir
 didix
 dilger
 dinothawr
@@ -945,6 +947,7 @@ ioss
 iostoragefamily
 iousd
 ioxml
+ipadic
 ipadiff
 ipython
 ircama
@@ -2003,6 +2006,7 @@ sdist
 sdksrc
 seatools
 seccomp
+segfaults
 segno
 sekrit
 semctl
@@ -2041,6 +2045,7 @@ siedit
 sigsegv
 simonlindholm
 simpleini
+simpletap
 simplier
 sinhala
 siphash
