@@ -267,6 +267,7 @@ comtypes
 concurrentqueue
 confd
 configd
+configparser
 configura
 configurator
 conftest
@@ -341,12 +342,12 @@ dasbus
 dask
 dataclass
 dataclasses
+dataframe
 dataserv
 datetimes
 dateutil
 davidjo
 dbeaver
-dbfile
 dbgeng
 dbgmodel
 dbuild
@@ -478,7 +479,6 @@ dncine
 dndebug
 dnfd
 dnfile
-dnsmasq
 dnspython
 dobin
 docdir
@@ -538,6 +538,7 @@ dtrace
 dtracker
 dtracy
 dtrellis
+dtype
 dubhatervapoursynth
 dudev
 dunix
@@ -830,7 +831,6 @@ grafx
 grantha
 graphengine
 graphviz
-gravitydb
 grayed
 greenboost
 greenpy
@@ -884,6 +884,7 @@ hustcc
 hwinfo
 hwview
 icudt
+idaapi
 idevice
 idna
 ifndef
@@ -1072,7 +1073,6 @@ ldlibs
 ldmakit
 ldpath
 ldsp
-leasetime
 lepcha
 leveladj
 levelmon
@@ -1293,7 +1293,6 @@ llvmlite
 lmod
 loaderwv
 loadspec
-localmount
 localsearch
 localsend
 lodepng
@@ -1325,14 +1324,12 @@ lzvn
 macbookpro
 macemu
 macvendor
-macvendordb
 madler
 madpah
 magewell
 magika
 magnavox
 mahajani
-mainpid
 makeandplay
 makeopts
 malloc
@@ -1358,6 +1355,7 @@ matplotlib
 matthewbauer
 mawen
 maxcountryman
+maxout
 maxperfwiz
 mbed
 mbedcrypto
@@ -1415,6 +1413,7 @@ mipsdisasm
 mipsel
 misaki
 miscfilters
+mish
 mizo
 mknod
 mkorenkov
@@ -1490,6 +1489,7 @@ naskh
 nasm
 nativeaot
 nativefiledialog
+nbconvert
 ncnn
 ndebug
 ndejong
@@ -1544,7 +1544,6 @@ nodedir
 noextract
 nofetch
 noisereduce
-nolegacy
 noncommercial
 nonrenewal
 nontransferability
@@ -1686,7 +1685,6 @@ pickability
 picodrive
 pidfile
 pietendo
-piftl
 pihole
 pilrc
 pipewire
@@ -1720,7 +1718,6 @@ polkit
 polm
 popcnt
 portaudio
-portfile
 porttree
 postinst
 postrm
@@ -1769,6 +1766,7 @@ pvrtc
 pvxe
 pwilkin
 pyaaf
+pyargs
 pyarrow
 pyasn
 pybag
@@ -1822,6 +1820,7 @@ pyserial
 pyside
 pysocks
 pytest
+pytest's
 pythonpath
 pythonpycacheprefix
 pytimeparse
@@ -1941,6 +1940,7 @@ riverwalk
 rizu
 rmull
 rocm
+rodata
 rogdham
 rollup
 romain
@@ -2052,7 +2052,6 @@ snes
 snesrev
 sniffio
 snowflakedb
-socketfile
 socketio
 softfloat
 softmmu
@@ -2166,6 +2165,7 @@ teletextviewerdialog
 temasek
 terak
 termcolor
+testdata
 testfloat
 testrunner
 texinfo
@@ -2306,6 +2306,7 @@ vgmstream
 vgmtrans
 vgpu
 vgpuctl
+vhsdecode
 videobuf
 videocore
 videodec
@@ -2350,6 +2351,7 @@ wakatime
 wakelock
 wakepy
 waker
+wandb
 warang
 warangciti
 warnflags
@@ -2367,10 +2369,7 @@ webengine
 webhome
 weblyzard
 webp
-webpassword
 webroot
-webtheme
-webuiboxedlayout
 werkzeug
 werror
 wextra
