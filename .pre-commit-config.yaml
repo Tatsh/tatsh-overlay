@@ -43,7 +43,7 @@ repos:
         files: '^scripts/'
         id: 'ruff-check'
     repo: 'https://github.com/astral-sh/ruff-pre-commit'
-    rev: 'v0.17.4'
+    rev: 'v0.17.5'
   - hooks:
       - files: '^scripts/'
         id: 'yapf'
@@ -90,4 +90,4 @@ repos:
         id: 'markdownlint-cli2'
         language_version: 'system'
     repo: 'https://github.com/DavidAnson/markdownlint-cli2'
-    rev: 'v0.24.0'
+    rev: 'v0.24.1'
