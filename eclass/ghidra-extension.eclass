@@ -10,9 +10,12 @@
 # @BLURB: install Ghidra extensions
 # @DESCRIPTION:
 # Installs a Ghidra extension into the installation-wide extension directory,
-# /usr/share/ghidra/Ghidra/Extensions/, where Ghidra picks it up for every user
-# of the installation. See "Ghidra Extension Notes" in
-# /usr/share/ghidra/GettingStarted.md.
+# /opt/ghidra/Ghidra/Extensions/, where Ghidra picks it up for every user of the
+# installation. See "Ghidra Extension Notes" in /opt/ghidra/GettingStarted.md.
+#
+# The layout is ::guru's dev-util/ghidra, which installs the upstream
+# distribution under /opt/ghidra and uses SLOT="0/${PV}", so the := dependency
+# below rebuilds extensions on every Ghidra upgrade.
 #
 # Upstreams publish one prebuilt archive per Ghidra release and present them as
 # if each only worked with the exact Ghidra version it was built against. That
@@ -118,7 +121,7 @@ EXPORT_FUNCTIONS src_prepare src_compile src_test src_install
 # @ECLASS_VARIABLE: GHIDRA_HOME
 # @DESCRIPTION:
 # Directory dev-util/ghidra installs into.
-GHIDRA_HOME="/usr/share/ghidra"
+GHIDRA_HOME="/opt/ghidra"
 
 # @ECLASS_VARIABLE: KOTLIN_HOME
 # @DESCRIPTION:
