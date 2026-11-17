@@ -1,5 +1,4 @@
 aacdec
-aarch
 aatl
 aboood
 acinclude
@@ -33,7 +32,6 @@ aliftype
 allarches
 allenc
 alloca
-allprojects
 alsa
 altserver
 altsign
@@ -273,7 +271,6 @@ commandlines
 commitizen
 commitlintrc
 commoncrypto
-comtypes
 concurrentqueue
 confd
 configd
@@ -361,8 +358,6 @@ datetimes
 dateutil
 davidjo
 dbeaver
-dbgeng
-dbgmodel
 dbuild
 dbundle
 dbus
@@ -410,7 +405,6 @@ deka
 dekrain
 demangle
 demanglegnu
-demangler
 demucs
 demuxer
 denable
@@ -560,7 +554,6 @@ dudev
 dunittest
 dunix
 duployan
-duser
 dusing
 dvapoursynth
 dvcpkg
@@ -703,7 +696,6 @@ felis
 fetchcontent
 ffms
 fftw
-fidb
 fidelityfx
 fides
 filecaps
@@ -829,6 +821,7 @@ glfw
 glibcxx
 glsl
 glslang
+glslang's
 glui
 gmailctl
 gmock
@@ -885,7 +878,6 @@ heimdal
 helpuri
 hephaest
 hetelek
-hfsexplorer
 hidraw
 higan
 hinterwaeldlers
@@ -999,12 +991,10 @@ javac
 javahelp
 jawah
 jazzband
-jcenter
 jdeps
 jeepney
 jehna
 jetpytools
-jflex
 jiaaro
 jieba
 jinja
@@ -1583,6 +1573,7 @@ nihui
 ninjaopts
 niquests
 njpgdsp
+nkwebkit
 nlohmann
 nlohmannjson
 nltk
@@ -1597,7 +1588,6 @@ noisereduce
 noncommercial
 nonrenewal
 nontransferability
-noreplace
 nosetests
 notgit
 noto
@@ -1783,7 +1773,6 @@ prboom
 prcbuild
 preempted
 preinst
-prepdev
 prerm
 preshed
 prestart
@@ -1825,7 +1814,6 @@ pyaaf
 pyargs
 pyarrow
 pyasn
-pybag
 pybind
 pycairo
 pycargoebuild
@@ -1890,7 +1878,6 @@ pytz
 pyudev
 pyusb
 pyvboxmanage
-pywin
 pyxdg
 pyyaml
 pyzmq
@@ -1901,7 +1888,6 @@ qcustomplot
 qdbus
 qfile
 qlist
-qmerge
 qmldir
 qpack
 qpxtool
@@ -2038,7 +2024,6 @@ samuelcolvin
 sandflow
 saraiki
 saramibreak
-sarif
 sasl
 saurashtra
 savoirfairelinux
@@ -2362,6 +2347,7 @@ usbkill
 usbmuxd
 usedep
 usemove
+userpriv
 userspace
 usertemplate
 usex
@@ -2528,7 +2514,6 @@ xvic
 xvideo
 xxhash
 yabause
-yajsw
 yamls
 yapf
 yasm
