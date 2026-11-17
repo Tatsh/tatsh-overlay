@@ -16,8 +16,8 @@ S="${WORKDIR}"/ppsspp-${PV}
 LICENSE="Apache-2.0 BSD BSD-2 GPL-2 JSON MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
-IUSE="opengl gles2 vulkan X +wayland gbm system-ffmpeg"
-RESTRICT="test"
+IUSE="opengl gles2 test vulkan X +wayland gbm system-ffmpeg"
+RESTRICT="!test? ( test )"
 REQUIRED_USE="
 	|| ( gbm wayland X )
 	gbm? ( !X )
@@ -57,24 +57,9 @@ src_prepare() {
 	cmake_src_prepare
 }
 
-src_configure() {
-	# -DBUILD_SHARED_LIBS=OFF is required for using internal glslang instead of system glslang.
-	# ppsspp-libretro is sometimes incompatible with system glslang.
-	local mycmakeargs=(
-		-DBUILD_SHARED_LIBS=OFF
-		-DCMAKE_SKIP_RPATH=ON
-		-DHEADLESS=false
-		-DUSE_MINIUPNPC=OFF
-		-DUSE_SYSTEM_FFMPEG="$(usex system-ffmpeg)"
-		-DUSE_SYSTEM_LIBZIP=ON
-		-DUSE_SYSTEM_SNAPPY=ON
-		-DUSE_SYSTEM_ZSTD=ON
-		-DUSE_DISCORD=OFF
-		-DUSING_QT_UI=OFF
-		-DUSING_GLES2="$(usex gles2)"
-		-DLIBRETRO=ON
-	)
-
+# Appends the FFmpeg options to mycmakeargs.
+ppsspp_ffmpeg_args() {
+	mycmakeargs+=( -DUSE_SYSTEM_FFMPEG="$(usex system-ffmpeg)" )
 	if use system-ffmpeg; then
 		# FindFFmpeg searches /usr before pkg-config, which would pick up the
 		# newer system FFmpeg, so point it at ffmpeg-compat:6 directly.
@@ -87,6 +72,26 @@ src_configure() {
 			)
 		done
 	fi
+}
+
+src_configure() {
+	# -DBUILD_SHARED_LIBS=OFF is required for using internal glslang instead of system glslang.
+	# ppsspp-libretro is sometimes incompatible with system glslang.
+	local mycmakeargs=(
+		-DBUILD_SHARED_LIBS=OFF
+		-DCMAKE_SKIP_RPATH=ON
+		-DHEADLESS=false
+		-DUSE_MINIUPNPC=OFF
+		-DUSE_SYSTEM_LIBZIP=ON
+		-DUSE_SYSTEM_SNAPPY=ON
+		-DUSE_SYSTEM_ZSTD=ON
+		-DUSE_DISCORD=OFF
+		-DUSING_QT_UI=OFF
+		-DUSING_GLES2="$(usex gles2)"
+		-DLIBRETRO=ON
+	)
+
+	ppsspp_ffmpeg_args
 
 	if use wayland; then
 		mycmakeargs+=( -DUSE_WAYLAND_WSI=ON )
@@ -101,6 +106,32 @@ src_configure() {
 	fi
 
 	cmake_src_configure
+}
+
+src_test() {
+	# The unit tests do not build against the libretro core's sources, so
+	# build them from a separate standalone tree.
+	local BUILD_DIR="${WORKDIR}/${P}_test"
+	local mycmakeargs=(
+		-DBUILD_SHARED_LIBS=OFF
+		-DHEADLESS=OFF
+		-DUNITTEST=ON
+		-DUSE_DISCORD=OFF
+		-DUSE_MINIUPNPC=OFF
+		-DUSE_SYSTEM_LIBZIP=ON
+		-DUSE_SYSTEM_SNAPPY=ON
+		-DUSE_SYSTEM_ZSTD=ON
+		-DUSING_QT_UI=OFF
+	)
+	ppsspp_ffmpeg_args
+	cmake_src_configure
+	cmake_build PPSSPPUnitTest
+	local myctestargs=(
+		# The bundled glslang's own suite; it needs glslang's tools, which are
+		# not built.
+		-E '^glslang-testsuite$'
+	)
+	cmake_src_test
 }
 
 src_compile() {
