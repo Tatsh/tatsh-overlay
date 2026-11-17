@@ -39,9 +39,11 @@
 # methods, changed behaviour or reflective lookups, and Ghidra discovers plugins
 # reflectively. Ghidra patch releases have been safe in practice (upstream
 # builds of the same tag against 12.1.2 and 12.1.3 are byte-identical
-# bytecode). The Ghidra package uses its major.minor version as a subslot,
-# and := dependencies rebuild extensions when that subslot changes. Raise
-# GHIDRA_PV_MAX after checking extensions against each new minor release.
+# bytecode). ::guru's dev-util/ghidra uses its version as a subslot, so the :=
+# dependency rebuilds every extension when Ghidra is upgraded, and that rebuild
+# runs the jdeps check. There is no default upper bound: one would block every
+# Ghidra upgrade until each extension ebuild raised it. Set GHIDRA_PV_MAX only
+# for an extension known not to work with a newer Ghidra.
 #
 # An ebuild that fetches upstream's sources instead of one of those archives
 # gets the whole build for free: if the unpacked tree has a src/main/java
@@ -91,10 +93,10 @@ esac
 
 # @ECLASS_VARIABLE: GHIDRA_PV_MAX
 # @PRE_INHERIT
+# @DEFAULT_UNSET
 # @DESCRIPTION:
-# First dev-util/ghidra the extension is not known to work with, exclusive.
-# Defaults to 12.3, covering the checked 12.2 series. Raise
-# it only after checking the extension against the newer Ghidra.
+# First dev-util/ghidra the extension is known not to work with, exclusive.
+# Unset by default, so upgrading Ghidra only rebuilds extensions.
 
 # @ECLASS_VARIABLE: GHIDRA_EXT_NAME
 # @REQUIRED
@@ -136,11 +138,10 @@ KOTLIN_HOME="/usr/share/kotlin-bin"
 # in global scope.
 _ghidra-extension_set_globals() {
 	: "${GHIDRA_PV_MIN:=12.2}"
-	: "${GHIDRA_PV_MAX:=12.3}"
 
 	SLOT="0"
-	RDEPEND=">=dev-util/ghidra-${GHIDRA_PV_MIN}:0=
-		<dev-util/ghidra-${GHIDRA_PV_MAX}"
+	RDEPEND=">=dev-util/ghidra-${GHIDRA_PV_MIN}:0="
+	[[ ${GHIDRA_PV_MAX} ]] && RDEPEND+=" <dev-util/ghidra-${GHIDRA_PV_MAX}"
 	# Ghidra's sleigh compiler and its jars are used at build time, so it is
 	# needed in DEPEND as well as RDEPEND.
 	DEPEND="${RDEPEND}"
