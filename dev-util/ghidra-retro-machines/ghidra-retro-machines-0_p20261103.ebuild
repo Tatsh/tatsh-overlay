@@ -5,7 +5,6 @@ EAPI=8
 
 GHIDRA_EXT_NAME="ghidra-retro-machines"
 GHIDRA_PV_MIN=12.2
-GHIDRA_PV_MAX=12.3
 
 inherit java-utils-2 ghidra-extension
 
