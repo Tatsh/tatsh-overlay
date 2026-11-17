@@ -14,8 +14,6 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="cuda rocm"
-# Tests require a GPU (CUDA or ROCm) — not runnable in Portage.
-RESTRICT="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 # shellcheck disable=SC2016
@@ -31,6 +29,7 @@ BDEPEND="${PYTHON_DEPS}
 	dev-build/ninja
 	$(python_gen_cond_dep '
 		dev-python/psutil[${PYTHON_USEDEP}]
+		test? ( sci-ml/triton-bin[${PYTHON_USEDEP}] )
 	')"
 
 PATCHES=(
@@ -78,3 +77,35 @@ src_compile() {
 	use rocm && export BUILD_TARGET=rocm
 	distutils-r1_src_compile
 }
+
+src_test() {
+	# The tests run on the GPU.
+	local dev
+	for dev in /dev/nvidia* /dev/kfd /dev/dri; do
+		[[ -e ${dev} ]] && addwrite "${dev}"
+	done
+	addpredict /dev/char
+	addwrite /proc/self/task
+	local EPYTEST_IGNORE=(
+		# ROCm backends.
+		tests/test_flash_attn_ck.py
+		tests/test_flash_attn_triton_amd.py
+	)
+	local EPYTEST_DESELECT=(
+		# Uses JITFunction.cache_hook, which Triton 3.8 removed.
+		tests/test_rotary.py::test_compilation_count
+	)
+	# Many cases are sized for 80 GB GPUs; report out-of-memory as a skip.
+	mkdir -p "${T}/pytest-plugins" || die
+	cp "${FILESDIR}/${PN}-oom-skip.py" "${T}/pytest-plugins/flash_attn_oom_skip.py" || die
+	local -x PYTHONPATH="${T}/pytest-plugins${PYTHONPATH:+:${PYTHONPATH}}"
+	# Only tests/; without a path pytest also collects csrc/cutlass's scripts.
+	local EPYTEST_FLAGS="-p flash_attn_oom_skip tests"
+	# The installed package, not the source tree, has the built extension.
+	mv flash_attn flash_attn.src || die
+	distutils-r1_src_test
+	mv flash_attn.src flash_attn || die
+}
+
+EPYTEST_PLUGINS=()
+distutils_enable_tests pytest
