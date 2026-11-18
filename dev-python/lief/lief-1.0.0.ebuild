@@ -7,7 +7,7 @@ DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=standalone
 PYTHON_COMPAT=( python3_{10..15} )
 
-inherit distutils-r1 flag-o-matic
+inherit distutils-r1 flag-o-matic toolchain-funcs
 
 MY_PN="LIEF"
 
