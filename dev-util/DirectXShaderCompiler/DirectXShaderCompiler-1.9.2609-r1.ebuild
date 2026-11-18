@@ -5,7 +5,7 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{12..14} )
 
-inherit check-reqs cmake flag-o-matic python-any-r1
+inherit check-reqs cmake flag-o-matic python-any-r1 toolchain-funcs
 
 DESCRIPTION="Microsoft DirectX Shader Compiler which is based on LLVM/Clang"
 HOMEPAGE="https://github.com/microsoft/DirectXShaderCompiler"
