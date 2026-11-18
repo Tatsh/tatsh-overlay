@@ -18,11 +18,10 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 # yt-dlp hardcodes the range of curl_cffi versions it will import and silently
-# disables --impersonate when the installed version is outside it. Support for
-# 0.16.x landed in yt-dlp 2026.08.19; older yt-dlp degrades with no error.
-# Re-check this bound against yt_dlp/networking/_curlcffi.py on every bump.
-RDEPEND="!<net-misc/yt-dlp-2026.08.19
-	>=dev-python/cffi-2.1.1[${PYTHON_USEDEP}]
+# disables --impersonate when the installed version is outside it. Check
+# yt_dlp/networking/_curlcffi.py on every bump, and block older yt-dlp here
+# when a bump needs a newer one than the oldest in ::gentoo.
+RDEPEND=">=dev-python/cffi-2.1.1[${PYTHON_USEDEP}]
 	>=dev-python/certifi-2026.10.19[${PYTHON_USEDEP}]
 	>=net-misc/curl-impersonate-1.0.0"
 
