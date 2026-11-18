@@ -7,7 +7,7 @@ LLVM_COMPAT=( {18..23} )
 
 inherit cmake llvm-r2
 
-SHA="d9456c221e1f462e17c0b3297748bc089d5a861e"
+SHA="7269579e16d0107af4a255ed01a9785edc5d3c54"
 DESCRIPTION="Darling's fork of cctools and ld64 (Mach-O linker, ar, ranlib, lipo)"
 HOMEPAGE="https://github.com/darlinghq/cctools-port https://www.darlinghq.org/"
 SRC_URI="https://github.com/darlinghq/cctools-port/archive/${SHA}.tar.gz -> ${P}.tar.gz"
@@ -23,7 +23,6 @@ RDEPEND="${DEPEND}"
 BDEPEND="$(llvm_gen_dep 'llvm-core/clang:${LLVM_SLOT}')"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-0001-ld64-never-emit-chained-fixups-for-deltas.patch"
 	"${FILESDIR}/${PN}-0002-ld64-add-USE_SYSTEM_BLOCKSRUNTIME-option.patch"
 	"${FILESDIR}/${PN}-0003-Add-a-standalone-CMake-build-for-the-tools-Darling-u.patch"
 )
