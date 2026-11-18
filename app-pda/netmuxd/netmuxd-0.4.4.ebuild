@@ -8,15 +8,15 @@ EAPI=8
 RUST_MIN_VER="1.85.0"
 CRATES="
 	aead@0.5.2
-	aes@0.8.4
 	aes-gcm@0.10.3
+	aes@0.8.4
 	aho-corasick@1.1.4
 	android_system_properties@0.1.5
 	anstream@1.0.0
-	anstyle@1.0.14
 	anstyle-parse@1.0.0
 	anstyle-query@1.1.5
 	anstyle-wincon@3.0.11
+	anstyle@1.0.14
 	autocfg@1.5.1
 	aws-lc-rs@1.17.3
 	aws-lc-sys@0.43.0
@@ -28,7 +28,7 @@ CRATES="
 	block-buffer@0.10.4
 	bumpalo@3.20.3
 	bytes@1.12.1
-	cc@1.4.0
+	cc@1.3.0
 	cfg-if@1.0.4
 	chacha20@0.10.1
 	chacha20@0.9.1
@@ -39,8 +39,8 @@ CRATES="
 	colorchoice@1.0.5
 	colored@3.1.1
 	const-oid@0.9.6
-	core-foundation@0.10.1
 	core-foundation-sys@0.8.7
+	core-foundation@0.10.1
 	cpufeatures@0.2.17
 	cpufeatures@0.3.0
 	crossbeam-queue@0.3.13
@@ -49,19 +49,19 @@ CRATES="
 	crypto-bigint@0.5.5
 	crypto-common@0.1.7
 	ctr@0.9.2
-	curve25519-dalek@4.1.3
 	curve25519-dalek-derive@0.1.1
-	defmt@1.1.1
+	curve25519-dalek@4.1.3
 	defmt-macros@1.1.1
 	defmt-parser@1.0.0
+	defmt@1.1.1
 	der@0.7.10
 	der_derive@0.7.3
 	deranged@0.5.8
 	digest@0.10.7
 	dunce@1.0.5
 	ecdsa@0.16.9
-	ed25519@2.2.3
 	ed25519-dalek@2.2.0
+	ed25519@2.2.3
 	elliptic-curve@0.13.8
 	enum_dispatch@0.3.13
 	env_filter@2.0.0
@@ -73,9 +73,8 @@ CRATES="
 	fiat-crypto@0.2.9
 	find-msvc-tools@0.1.9
 	flagset@0.4.7
-	flume@0.11.1
+	flume@0.12.0
 	fs_extra@1.3.0
-	futures@0.3.33
 	futures-channel@0.3.33
 	futures-core@0.3.33
 	futures-executor@0.3.33
@@ -84,25 +83,27 @@ CRATES="
 	futures-sink@0.3.33
 	futures-task@0.3.33
 	futures-util@0.3.33
+	futures@0.3.33
 	generic-array@0.14.7
 	getrandom@0.2.17
 	getrandom@0.4.3
 	ghash@0.5.1
+	gloo-timers@0.3.0
 	group@0.13.0
 	hashbrown@0.17.1
 	hkdf@0.12.4
 	hmac@0.12.1
-	iana-time-zone@0.1.65
 	iana-time-zone-haiku@0.1.2
+	iana-time-zone@0.1.65
 	idevice@0.1.65
 	if-addrs@0.15.0
 	indexmap@2.14.0
 	inout@0.1.4
 	io-kit-sys@0.5.0
 	is_terminal_polyfill@1.70.2
-	jiff@0.2.35
 	jiff-core@0.1.0
-	jiff-static@0.2.35
+	jiff-static@0.2.34
+	jiff@0.2.34
 	jobserver@0.1.35
 	js-sys@0.3.103
 	lazy_static@1.5.0
@@ -112,7 +113,7 @@ CRATES="
 	lock_api@0.4.14
 	log@0.4.33
 	mach2@0.5.0
-	mdns-sd@0.19.2
+	mdns-sd@0.21.7
 	memchr@2.8.3
 	mio@1.2.2
 	num-bigint-dig@0.8.6
@@ -135,12 +136,12 @@ CRATES="
 	pkcs5@0.7.1
 	pkcs8@0.10.2
 	pkg-config@0.3.33
-	plist@1.10.0
 	plist-macro@0.1.6
+	plist@1.10.0
 	poly1305@0.8.0
 	polyval@0.6.2
-	portable-atomic@1.14.0
 	portable-atomic-util@0.2.7
+	portable-atomic@1.14.0
 	powerfmt@0.2.0
 	ppv-lite86@0.2.21
 	primeorder@0.13.6
@@ -154,19 +155,19 @@ CRATES="
 	rand_core@0.10.1
 	rand_core@0.6.4
 	redox_syscall@0.5.18
-	regex@1.13.1
 	regex-automata@0.4.16
 	regex-syntax@0.8.11
+	regex@1.13.1
 	rfc6979@0.4.0
 	ring@0.17.14
 	rsa@0.9.10
 	rustc_version@0.4.1
 	rustix@1.1.4
-	rustls@0.23.43
-	rustls-pki-types@1.15.1
+	rustls-pki-types@1.15.0
 	rustls-rustcrypto@0.0.2-alpha
 	rustls-webpki@0.102.8
 	rustls-webpki@0.103.13
+	rustls@0.23.42
 	rustversion@1.0.23
 	scopeguard@1.2.0
 	sec1@0.7.3
@@ -181,26 +182,26 @@ CRATES="
 	signature@2.2.0
 	slab@0.4.12
 	smallvec@1.15.2
-	socket-pktinfo@0.3.2
+	socket-pktinfo@0.4.2
 	socket2@0.6.5
 	spin@0.9.9
 	spki@0.7.3
 	subtle@2.6.1
 	syn@2.0.119
 	syn@3.0.3
-	thiserror@2.0.19
 	thiserror-impl@2.0.19
-	time@0.3.55
+	thiserror@2.0.19
 	time-core@0.1.9
 	time-macros@0.2.32
+	time@0.3.54
 	tls_codec@0.4.2
 	tls_codec_derive@0.4.2
-	tokio@1.53.1
-	tokio-macros@2.7.2
+	tokio-macros@2.7.1
 	tokio-rustls@0.26.4
-	tracing@0.1.44
+	tokio@1.53.1
 	tracing-attributes@0.1.31
 	tracing-core@0.1.36
+	tracing@0.1.44
 	typenum@1.20.1
 	unicode-ident@1.0.24
 	universal-hash@0.5.1
@@ -209,11 +210,11 @@ CRATES="
 	uuid@1.24.0
 	version_check@0.9.5
 	wasi@0.11.1+wasi-snapshot-preview1
-	wasm-bindgen@0.2.126
 	wasm-bindgen-futures@0.4.76
-	wasm-bindgen-macro@0.2.126
 	wasm-bindgen-macro-support@0.2.126
+	wasm-bindgen-macro@0.2.126
 	wasm-bindgen-shared@0.2.126
+	wasm-bindgen@0.2.126
 	wasmtimer@0.4.3
 	web-sys@0.3.103
 	web-time@1.1.0
@@ -224,37 +225,27 @@ CRATES="
 	windows-result@0.4.1
 	windows-strings@0.5.1
 	windows-sys@0.52.0
-	windows-sys@0.60.2
 	windows-sys@0.61.2
 	windows-targets@0.52.6
-	windows-targets@0.53.5
 	windows_aarch64_gnullvm@0.52.6
-	windows_aarch64_gnullvm@0.53.1
 	windows_aarch64_msvc@0.52.6
-	windows_aarch64_msvc@0.53.1
 	windows_i686_gnu@0.52.6
-	windows_i686_gnu@0.53.1
 	windows_i686_gnullvm@0.52.6
-	windows_i686_gnullvm@0.53.1
 	windows_i686_msvc@0.52.6
-	windows_i686_msvc@0.53.1
 	windows_x86_64_gnu@0.52.6
-	windows_x86_64_gnu@0.53.1
 	windows_x86_64_gnullvm@0.52.6
-	windows_x86_64_gnullvm@0.53.1
 	windows_x86_64_msvc@0.52.6
-	windows_x86_64_msvc@0.53.1
 	x25519-dalek@2.0.1
 	x509-cert@0.2.5
-	zerocopy@0.8.55
 	zerocopy-derive@0.8.55
+	zerocopy@0.8.55
 	zeroize@1.9.0
 	zeroize_derive@1.5.0
 "
 
 # Upstream depends on a fork of nusb rather than the crates.io release.
 declare -A GIT_CRATES=(
-	[nusb]="https://github.com/jkcoxson/nusb;13800decd9451e54cc9b46906b83b74eab83879e"
+	[nusb]='https://github.com/jkcoxson/nusb;d63ffb05e7cb4b463568640bdd49eb8ff0096aed;nusb-%commit%'
 )
 
 inherit cargo systemd
@@ -266,7 +257,7 @@ SRC_URI="https://github.com/jkcoxson/${PN}/archive/refs/tags/v${PV}.tar.gz -> ${
 
 LICENSE="MIT"
 # Dependent crate licenses
-LICENSE+=" Apache-2.0 BSD ISC MIT MPL-2.0 openssl Unicode-3.0"
+LICENSE+=" Apache-2.0 BSD ISC MIT MPL-2.0 Unicode-3.0"
 SLOT="0"
 KEYWORDS="~amd64"
 
