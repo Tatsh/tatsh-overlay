@@ -298,10 +298,10 @@ _ghidra-extension_build_module() {
 	[[ -d src/main/resources ]] && { cp -r src/main/resources/. "${classes}" || die; }
 
 	if [[ -d src/main/help/help ]]; then
-		local -x JAVA_HOME XDG_CONFIG_HOME="${T}/config"
+		local -x JAVA_HOME XDG_CACHE_HOME="${T}/cache" XDG_CONFIG_HOME="${T}/config" XDG_STATE_HOME="${T}/state"
 		local -x _JAVA_OPTIONS="-Djava.io.tmpdir=${T}"
 		JAVA_HOME="$(java-config -O)" || die
-		mkdir -p "${XDG_CONFIG_HOME}" || die
+		mkdir -p "${XDG_CACHE_HOME}" "${XDG_CONFIG_HOME}" "${XDG_STATE_HOME}" || die
 
 		# Generates the help set, map and table of contents.
 		edo java -cp "${classpath}" help.GHelpBuilder \
@@ -475,9 +475,11 @@ ghidra-extension_src_compile() {
 
 	local -x JAVA_HOME
 	JAVA_HOME="$(java-config -O)" || die
-	local -x XDG_CONFIG_HOME="${T}/config"
+	# Ghidra 12.2 writes logs and caches under these; unset, it uses the
+	# passwd home directory rather than ${HOME}, which the sandbox denies.
+	local -x XDG_CACHE_HOME="${T}/cache" XDG_CONFIG_HOME="${T}/config" XDG_STATE_HOME="${T}/state"
 	local -x _JAVA_OPTIONS="-Djava.io.tmpdir=${T}"
-	mkdir -p "${XDG_CONFIG_HOME}" || die
+	mkdir -p "${XDG_CACHE_HOME}" "${XDG_CONFIG_HOME}" "${XDG_STATE_HOME}" || die
 
 	# dev-util/ghidra does not install support/sleigh executable.
 	edo bash "${BROOT}${GHIDRA_HOME}/support/sleigh" -a "${langdir}"
@@ -543,10 +545,10 @@ ghidra-extension_src_test() {
 		test_classes+=( "${name//\//.}" )
 	done
 
-	local -x JAVA_HOME XDG_CONFIG_HOME="${T}/config"
+	local -x JAVA_HOME XDG_CACHE_HOME="${T}/cache" XDG_CONFIG_HOME="${T}/config" XDG_STATE_HOME="${T}/state"
 	local -x _JAVA_OPTIONS="-Djava.io.tmpdir=${T} -Djava.awt.headless=true"
 	JAVA_HOME="$(java-config -O)" || die
-	mkdir -p "${XDG_CONFIG_HOME}" || die
+	mkdir -p "${XDG_CACHE_HOME}" "${XDG_CONFIG_HOME}" "${XDG_STATE_HOME}" || die
 	edo java -cp "${classes}:${classpath}" org.junit.runner.JUnitCore "${test_classes[@]}"
 }
 
