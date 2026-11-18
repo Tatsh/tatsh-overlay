@@ -436,6 +436,7 @@ dfmderainbow
 dggml
 dgit
 dglslang
+dgrm
 dgtk
 dgtlmoon
 dhave
@@ -840,6 +841,7 @@ glslang
 glslang's
 glui
 gmailctl
+gmap
 gmock
 gnomovision
 gnudiff
@@ -1743,6 +1745,7 @@ pehrson
 perfare
 permuter
 petsafe
+petscii
 pexpect
 pfsshell
 pfzy
@@ -2019,6 +2022,7 @@ retargetable
 retroachievements
 retroarch
 retrodream
+retromachines
 revanced
 revc
 revealjs
@@ -2082,6 +2086,7 @@ scopt
 scrapinghub
 scrapy
 screamf
+screencode
 scribam
 scrn
 scumm
