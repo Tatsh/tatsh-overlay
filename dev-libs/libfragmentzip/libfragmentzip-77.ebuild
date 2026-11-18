@@ -7,7 +7,7 @@ inherit autotools
 
 DESCRIPTION="A library allowing to download single files from a remote zip archive"
 HOMEPAGE="https://github.com/tihmstar/libfragmentzip"
-SHA="92f184e631c7156113850afdb9c68a2d892e35b6"
+SHA="9f3ece6eda898d5f24888767fda548c8b6cdb06f"
 SRC_URI="https://github.com/tihmstar/libfragmentzip/archive/${SHA}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}-${SHA}"
 
@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~ppc64 ~x86"
 
 DEPEND="dev-libs/libzip:=
 	net-misc/curl
-	dev-libs/tihmstar-libgeneral
+	>=dev-libs/tihmstar-libgeneral-80
 	virtual/zlib:="
 RDEPEND="${DEPEND}"
 
