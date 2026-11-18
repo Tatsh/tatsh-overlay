@@ -74,7 +74,6 @@ CRATES="
 	hex@0.4.3
 	iana-time-zone-haiku@0.1.2
 	iana-time-zone@0.1.65
-	indoc@2.0.8
 	inflate@0.4.5
 	is-terminal@0.4.17
 	is_terminal_polyfill@1.70.2
@@ -89,7 +88,6 @@ CRATES="
 	log@0.4.35
 	memchr@2.8.3
 	memmap2@0.5.10
-	memoffset@0.9.1
 	minimal-lexical@0.2.1
 	miniz_oxide@0.9.1
 	nom@7.1.3
@@ -113,13 +111,12 @@ CRATES="
 	proc-macro2@1.0.107
 	prost-derive@0.13.5
 	prost@0.13.5
-	pyo3-build-config@0.27.2
-	pyo3-ffi@0.27.2
+	pyo3-build-config@0.29.3
+	pyo3-ffi@0.29.3
 	pyo3-log@0.13.5
-	pyo3-macros-backend@0.27.2
-	pyo3-macros@0.27.2
-	pyo3@0.27.2
-	python3-dll-a@0.2.15
+	pyo3-macros-backend@0.29.3
+	pyo3-macros@0.29.3
+	pyo3@0.29.3
 	quote@1.0.47
 	radium@0.7.0
 	rayon-core@1.13.0
@@ -160,7 +157,6 @@ CRATES="
 	unicode-ident@1.0.27
 	unicorn-engine-sys@2.1.5
 	unicorn-engine@2.1.5
-	unindent@0.2.4
 	utf8parse@0.2.2
 	version_check@0.9.5
 	walkdir@2.5.0
@@ -224,6 +220,12 @@ BDEPEND="test? (
 
 python_prepare_all() {
 	sed -re 's/^ar =.*/ar = "0.9"/' -i ../bin/Cargo.toml || die
+	# PyO3 before 0.29 has an out-of-bounds read in PyList/PyTuple iterators
+	# (GHSA-36hh-v3qg-5jq4) and a missing Sync bound on closures
+	# (GHSA-chgr-c6px-7xpp); 0.29 builds unchanged. Both workspace members
+	# must agree, since only one PyO3 may link Python.
+	sed -i 's/^pyo3 = { version = "0.27",/pyo3 = { version = "0.29",/' \
+		Cargo.toml ../pylancelot/Cargo.toml || die
 	cp "${FILESDIR}/Cargo.lock" ../Cargo.lock || die
 	distutils-r1_python_prepare_all
 }
