@@ -243,6 +243,14 @@ _ghidra-extension_classpath() {
 	echo "${classpath}"
 }
 
+# @FUNCTION: ghidra-extension_get_classpath
+# @DESCRIPTION:
+# Prints the classpath extension code builds against: the installed Ghidra's
+# jars followed by the ones in lib/.
+ghidra-extension_get_classpath() {
+	_ghidra-extension_classpath
+}
+
 # @FUNCTION: _ghidra-extension_build_module
 # @INTERNAL
 # @DESCRIPTION:
@@ -516,6 +524,12 @@ ghidra-extension_src_compile() {
 # Java packages (java-config names) whose jars the tests also need on their
 # classpath. Add the matching test? ( dev-java/... ) to DEPEND in the ebuild.
 
+# @ECLASS_VARIABLE: GHIDRA_EXT_TEST_CLASSPATH
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# Extra colon-separated classpath entries for the tests, such as classes of a
+# build-time tool the ebuild compiled itself.
+
 # @FUNCTION: ghidra-extension_src_test
 # @DESCRIPTION:
 # Runs the extension's JUnit tests when GHIDRA_EXT_TESTS is set.
@@ -538,6 +552,7 @@ ghidra-extension_src_test() {
 		extra="$(java-pkg_getjars --build-only --with-dependencies "$(IFS=,; echo "${GHIDRA_EXT_TEST_JARS[*]}")")" || die
 		classpath="${extra}:${classpath}"
 	fi
+	[[ ${GHIDRA_EXT_TEST_CLASSPATH} ]] && classpath="${GHIDRA_EXT_TEST_CLASSPATH}:${classpath}"
 
 	local dirs=() dir
 	for dir in java kotlin; do
