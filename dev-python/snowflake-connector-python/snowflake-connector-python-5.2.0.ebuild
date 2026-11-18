@@ -190,7 +190,7 @@ CRATES="
 	getrandom@0.3.3
 	gimli@0.32.3
 	glob@0.3.3
-	h2@0.4.12
+	h2@0.4.18
 	half@2.6.0
 	hashbrown@0.14.5
 	hashbrown@0.15.5
@@ -598,7 +598,7 @@ CRATES="
 	zstd@0.13.3
 "
 
-inherit cargo distutils-r1 pypi
+inherit cargo distutils-r1 flag-o-matic pypi rust-toolchain toolchain-funcs
 
 DESCRIPTION="Snowflake database connector for Python"
 HOMEPAGE="https://pypi.org/project/snowflake-connector-python/"
@@ -629,7 +629,6 @@ RDEPEND="
 	>=dev-python/tomlkit-0.13[${PYTHON_USEDEP}]
 	pandas? (
 		>=dev-python/pandas-2.1.2[${PYTHON_USEDEP}]
-		<dev-python/pandas-3[${PYTHON_USEDEP}]
 		>=dev-python/pyarrow-14.0.1[${PYTHON_USEDEP}]
 	)
 "
@@ -638,6 +637,7 @@ BDEPEND="
 	>=dev-python/cython-3.1[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	test? (
+		dev-python/mypy[${PYTHON_USEDEP}]
 		dev-python/numpy[${PYTHON_USEDEP}]
 		dev-python/requests[${PYTHON_USEDEP}]
 		dev-python/tzdata[${PYTHON_USEDEP}]
