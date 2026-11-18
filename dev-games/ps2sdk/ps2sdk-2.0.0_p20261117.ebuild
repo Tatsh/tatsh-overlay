@@ -5,7 +5,7 @@ EAPI=8
 
 DESCRIPTION="Open source SDK for the PlayStation 2"
 HOMEPAGE="https://github.com/ps2dev/ps2sdk"
-SHA="f1ca58a468ead937155ab818d9a38e52c8adf861"
+SHA="cf9557d3c931544c6940c0f5e1ad24fe7d2ac596"
 LWIP_TAG="STABLE-2_2_1_RELEASE"
 FATFS_SHA="18cc3d9e07473a6aa3d783a66224b243a7b4974c"
 SRC_URI="
