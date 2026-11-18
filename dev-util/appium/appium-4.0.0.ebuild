@@ -25,7 +25,7 @@ RESTRICT="strip"
 # npm is not just a build tool here: `appium driver install` shells out to it at
 # run time. The version floor is Appium's own engines.node, which it enforces
 # on startup.
-RDEPEND=">=net-libs/nodejs-20.19.0:=[npm]"
+RDEPEND=">=net-libs/nodejs-22.22.2:=[npm]"
 
 src_prepare() {
 	nodejs-mod_src_prepare
