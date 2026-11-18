@@ -39,9 +39,11 @@ amiiboc
 amiri
 analyzer
 anari
+andrivet
 andyjsmith
 angelscript
 aniso
+ansilogs
 antlr
 antoniovazquezblanco
 antonmedv
@@ -57,6 +59,7 @@ aprip
 aras
 arduino
 argcomplete
+argn
 argparse
 armv
 arogozhnikov
@@ -66,6 +69,9 @@ asciidoctor
 asciinema
 asflags
 asgi
+asgimiddlewarestaticfile
+asgiref
+asgiwebdav
 ashutosh
 ashuttl
 asio
@@ -118,6 +124,7 @@ beartype
 beautifulsoup
 beautysh
 beenje
+benjy
 bethington
 bfcodec
 bhaiksuki
@@ -127,6 +134,7 @@ binchecks
 bincomp
 bincookie
 bincue
+bindgen
 bindir
 bindist
 binhost
@@ -153,6 +161,7 @@ botan
 boto
 botocore
 boykopovar
+bpylist
 brahmi
 breakpad
 brep
@@ -174,6 +183,7 @@ bulkedit
 bwrap
 bwrapped
 byteshuf
+bytestruct
 byteswap
 byteswapped
 cacerts
@@ -514,6 +524,7 @@ doman
 domenu
 domodule
 donnxruntime
+doronz
 dorules
 dosbin
 dosbox
@@ -620,6 +631,7 @@ emeson
 emesonargs
 emotionengine
 emutype
+endfunction
 energytrace
 enet
 engineio
@@ -900,12 +912,15 @@ huskyrc
 hustcc
 hwinfo
 hwview
+hyperframe
+icecream
 icudt
 idaapi
 idalib
 idapro
 idevice
 idna
+ifaddr
 ifndef
 ifup
 iges
@@ -964,6 +979,7 @@ iousd
 ioxml
 ipadic
 ipadiff
+ipsw
 ipython
 ircama
 irecovery
@@ -1032,6 +1048,7 @@ kbnf
 kcompletion
 kcoreaddons
 kddockwidgets
+kdebug
 kdialog
 kdir
 kdotool
@@ -1209,6 +1226,7 @@ libpit
 libplatform
 libplist
 libproj
+libprotobuf
 libpsl
 libpthread
 libpulse
@@ -1323,6 +1341,7 @@ lmbedtls
 lmbedx
 lmod
 loaderwv
+loadexec
 loadspec
 localsearch
 localsend
@@ -1353,6 +1372,7 @@ lzfse
 lzham
 lzkn
 lzma
+lzss
 lzvn
 macbookpro
 macemu
@@ -1381,6 +1401,7 @@ markitdown
 markreidvfx
 marzer
 masp
+matan
 matedialog
 materialui
 math
@@ -1581,6 +1602,7 @@ nlzy
 nnedi
 noaccess
 nodedir
+nodeps
 nodetest
 noextract
 nofetch
@@ -1641,6 +1663,7 @@ onmomo
 onnx
 onnxruntime
 onroerend
+opack
 openal
 opencascade
 opencore
@@ -1685,6 +1708,7 @@ palmyrene
 pango
 panzi
 papertrail
+parabolala
 paramiko
 parrado
 partiql
@@ -1761,6 +1785,7 @@ pocketcdg
 pokemini
 polkit
 polm
+portageq
 portaudio
 porttree
 postinst
@@ -1820,6 +1845,8 @@ pycargoebuild
 pychoco
 pycognito
 pycparser
+pycrashreport
+pycryptodome
 pydantic
 pydbus
 pydub
@@ -1830,15 +1857,20 @@ pyftdi
 pygfxd
 pyghidra
 pygments
+pygnuutils
 pygobject
 pygtrie
 pyhamcrest
+pyimg
 pyinput
 pyinstrument
+pyiosbackup
 pyjwt
 pykakasi
+pykdebugparser
 pylibyaml
 pylzham
+pylzss
 pymatting
 pymobiledevice
 pynput
@@ -1866,6 +1898,7 @@ pyrescene
 pyserial
 pyside
 pysocks
+pytcp
 pytest
 pytest's
 pytester's
@@ -1874,6 +1907,7 @@ pythonpycacheprefix
 pytimeparse
 pytorch
 pytries
+pytun
 pytz
 pyudev
 pyusb
@@ -1963,6 +1997,7 @@ relw
 relwithdebinfo
 remapper
 rembg
+remotezip
 removefile
 removegrain
 remsky
@@ -1983,6 +2018,7 @@ revanced
 revc
 revealjs
 rewx
+rexzhang
 rgui
 richgel
 rightsholder
@@ -1991,6 +2027,7 @@ riscv
 riverwalk
 rizu
 rmull
+rnag
 rocm
 rodata
 rogdham
@@ -2002,6 +2039,7 @@ rommy
 roni
 rootdir
 rpcli
+rshk
 rssh
 rstcheck
 rstfmt
@@ -2149,8 +2187,10 @@ srstevenson
 srxfixup
 sshpubkeys
 sslkeylogfile
+sslpsk
 sslvpn
 ssource
+stadev
 starkits
 starlette
 starslayer
@@ -2347,6 +2387,7 @@ usbkill
 usbmuxd
 usedep
 usemove
+userfaultfd
 userpriv
 userspace
 usertemplate
@@ -2433,8 +2474,10 @@ wchar
 wcurl
 wcwidth
 wdio
+webdav
 webdriverio
 webengine
+webhdfs
 webhome
 weblyzard
 webp
@@ -2453,6 +2496,7 @@ wineshell
 wingetty
 winit
 winprint
+wintun
 wireshark
 wiswa
 wlto
@@ -2467,6 +2511,7 @@ writedup
 writeedits
 writeframes
 wslpath
+wsproto
 wswan
 wtforms
 wweula
