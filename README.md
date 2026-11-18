@@ -22,13 +22,12 @@ If you find a bug, please [file an issue](https://github.com/Tatsh/tatsh-overlay
 
 ## Installation
 
-This overlay builds on the [GURU](https://wiki.gentoo.org/wiki/Project:GURU) and
-[Pentoo](https://www.pentoo.org/) overlays, and some packages here depend on packages only they
-provide, so enable all three:
+This overlay builds on the [GURU](https://wiki.gentoo.org/wiki/Project:GURU) overlay, and some
+packages here depend on packages only it provides, so enable both:
 
 ```shell
 emerge app-eselect/eselect-repository
-eselect repository enable guru pentoo tatsh-overlay
+eselect repository enable guru tatsh-overlay
 emaint sync -a
 ```
 
@@ -41,7 +40,6 @@ parents) by default:
 
 ```plain
 */*::guru
-*/*::pentoo
 */*::tatsh-overlay
 ```
 
