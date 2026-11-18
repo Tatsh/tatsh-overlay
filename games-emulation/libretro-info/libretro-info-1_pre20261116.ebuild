@@ -3,7 +3,7 @@
 
 EAPI=8
 
-LIBRETRO_COMMIT_SHA="d63d696656b70a5e4924448fe86e06091deb2bec"
+LIBRETRO_COMMIT_SHA="1b988c491e31f1cc768572f3d68f45e69d194e5b"
 
 DESCRIPTION="Libretro info files required for libretro cores"
 HOMEPAGE="https://github.com/libretro/libretro-super"
