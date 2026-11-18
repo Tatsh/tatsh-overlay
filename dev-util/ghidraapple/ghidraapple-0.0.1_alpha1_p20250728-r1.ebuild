@@ -4,6 +4,8 @@
 EAPI=8
 
 GHIDRA_EXT_NAME="GhidraApple"
+GHIDRA_EXT_TESTS=junit5
+GHIDRA_EXT_TEST_JARS=( json )
 
 inherit ghidra-extension
 
@@ -23,5 +25,14 @@ KEYWORDS="~amd64"
 
 # 56 of the module's 57 sources are Kotlin.
 BDEPEND+=" dev-lang/kotlin-bin"
+DEPEND+=" test? ( dev-java/json:0 )"
 
 PATCHES=( "${FILESDIR}/${PN}-ghidra-12.2.patch"  "${FILESDIR}/${PN}-ghidra-12.patch" )
+
+src_prepare() {
+	ghidra-extension_src_prepare
+
+	# ProgramBuilder.createEmptyFunction takes an int body size.
+	sed -i -e 's/0x100008c6c - 0x100008c34,/(0x100008c6c - 0x100008c34).toInt(),/' \
+		src/test/java/lol/fairplay/ghidraapple/core/typeinference/ObjcAllocationInitializationTest.kt || die
+}
