@@ -156,7 +156,11 @@ _ghidra-extension_set_globals() {
 	if [[ ${GHIDRA_EXT_TESTS} ]]; then
 		IUSE+=" test"
 		RESTRICT+=" !test? ( test )"
-		DEPEND+=" test? ( dev-java/junit:4 )"
+		if [[ ${GHIDRA_EXT_TESTS} == junit5 ]]; then
+			DEPEND+=" test? ( dev-java/junit:5 )"
+		else
+			DEPEND+=" test? ( dev-java/junit:4 )"
+		fi
 	fi
 }
 _ghidra-extension_set_globals
@@ -320,7 +324,7 @@ _ghidra-extension_build_module() {
 	mkdir -p lib || die
 	jar --create --file "lib/${GHIDRA_EXT_NAME}.jar" -C "${classes}" . || die
 
-	if [[ ${GHIDRA_EXT_TESTS} ]] && use test && [[ -d src/test/java ]]; then
+	if [[ ${GHIDRA_EXT_TESTS} ]] && use test && [[ -d src/test ]]; then
 		mv src/test "${WORKDIR}/ghidra-extension-tests" || die
 	fi
 	# Upstream's own archives contain everything but the sources.
@@ -494,37 +498,70 @@ ghidra-extension_src_compile() {
 # @PRE_INHERIT
 # @DEFAULT_UNSET
 # @DESCRIPTION:
-# If set, the extension's JUnit 4 tests under src/test/java are compiled against
-# the installed Ghidra and the built extension and run in src_test.
+# If set, the extension's tests under src/test are compiled against the
+# installed Ghidra and the built extension and run in src_test. Any value runs
+# JUnit 4 tests from src/test/java. "junit5" runs JUnit 5 (Jupiter) tests
+# instead, written in Java or Kotlin (src/test/java and src/test/kotlin); Kotlin
+# tests also need dev-lang/kotlin-bin in BDEPEND.
 
 # @ECLASS_VARIABLE: GHIDRA_EXT_TEST_EXCLUDE
 # @DEFAULT_UNSET
 # @DESCRIPTION:
-# Paths under src/test/java of test sources not to compile, for example tests
+# Paths under src/test/java (or src/test/kotlin) of test sources not to compile, for example tests
 # built on Ghidra's integration test framework, which releases do not ship.
+
+# @ECLASS_VARIABLE: GHIDRA_EXT_TEST_JARS
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# Java packages (java-config names) whose jars the tests also need on their
+# classpath. Add the matching test? ( dev-java/... ) to DEPEND in the ebuild.
 
 # @FUNCTION: ghidra-extension_src_test
 # @DESCRIPTION:
-# Runs the extension's JUnit 4 tests when GHIDRA_EXT_TESTS is set.
+# Runs the extension's JUnit tests when GHIDRA_EXT_TESTS is set.
 ghidra-extension_src_test() {
 	[[ ${GHIDRA_EXT_TESTS} ]] || return 0
 	local tests="${WORKDIR}/ghidra-extension-tests"
-	[[ -d ${tests}/java ]] || die "${ECLASS}: no tests under src/test/java"
+	local junit5=
+	[[ ${GHIDRA_EXT_TESTS} == junit5 ]] && junit5=1
 
 	local classpath junit
 	classpath="$(_ghidra-extension_classpath)" || die
-	junit="$(java-pkg_getjars --build-only --with-dependencies junit-4)" || die
+	if [[ ${junit5} ]]; then
+		junit="$(java-pkg_getjars --build-only --with-dependencies junit-5)" || die
+	else
+		junit="$(java-pkg_getjars --build-only --with-dependencies junit-4)" || die
+	fi
 	classpath="lib/${GHIDRA_EXT_NAME}.jar:${junit}:${classpath}"
+	if (( ${#GHIDRA_EXT_TEST_JARS[@]} )); then
+		local extra
+		extra="$(java-pkg_getjars --build-only --with-dependencies "$(IFS=,; echo "${GHIDRA_EXT_TEST_JARS[*]}")")" || die
+		classpath="${extra}:${classpath}"
+	fi
+
+	local dirs=() dir
+	for dir in java kotlin; do
+		[[ -d ${tests}/${dir} ]] && dirs+=( "${tests}/${dir}" )
+	done
+	(( ${#dirs[@]} )) || die "${ECLASS}: no tests under src/test"
 
 	local sources=() source exclude excluded
-	readarray -d '' sources < <(find "${tests}/java" -name '*.java' -print0)
-	local kept=()
+	readarray -d '' sources < <(find "${dirs[@]}" \( -name '*.java' -o -name '*.kt' \) -print0)
+	local kept=() java_sources=() kt_sources=()
 	for source in "${sources[@]}"; do
 		excluded=
 		for exclude in "${GHIDRA_EXT_TEST_EXCLUDE[@]}"; do
-			[[ ${source} == "${tests}/java/${exclude}" ]] && excluded=1
+			for dir in "${dirs[@]}"; do
+				[[ ${source} == "${dir}/${exclude}" ]] && excluded=1
+			done
 		done
-		[[ ${excluded} ]] || kept+=( "${source}" )
+		[[ ${excluded} ]] && continue
+		kept+=( "${source}" )
+		if [[ ${source} == *.kt ]]; then
+			kt_sources+=( "${source}" )
+		else
+			java_sources+=( "${source}" )
+		fi
 	done
 	(( ${#kept[@]} )) || die "${ECLASS}: no test sources left to compile"
 
@@ -533,22 +570,40 @@ ghidra-extension_src_test() {
 		"${ESYSROOT}${GHIDRA_HOME}/Ghidra/application.properties")" || die
 	JAVA_PKG_WANT_TARGET="${JAVA_PKG_WANT_SOURCE}"
 	local classes="${T}/test-classes"
-	ejavac -d "${classes}" -encoding UTF-8 -proc:none -classpath "${classpath}" "${kept[@]}"
+	if (( ${#kt_sources[@]} )); then
+		local kotlin_lib="${ESYSROOT}${KOTLIN_HOME}/lib"
+		classpath="${kotlin_lib}/kotlin-stdlib.jar:${kotlin_lib}/kotlin-test.jar:${classpath}"
+		[[ ${junit5} ]] && classpath="${kotlin_lib}/kotlin-test-junit5.jar:${classpath}"
+		# As for the main sources, kotlinc reads the Java tests too.
+		edo kotlinc -classpath "${classpath}" -d "${classes}" -nowarn \
+			"${kt_sources[@]}" "${java_sources[@]}"
+		classpath="${classes}:${classpath}"
+	fi
+	if (( ${#java_sources[@]} )); then
+		ejavac -d "${classes}" -encoding UTF-8 -proc:none -classpath "${classpath}" \
+			"${java_sources[@]}"
+	fi
 	[[ -d ${tests}/resources ]] && { cp -r "${tests}/resources/." "${classes}" || die; }
-
-	# The test classes are the sources that declare a @Test method.
-	local test_classes=() name
-	for source in "${kept[@]}"; do
-		grep -q '@Test' "${source}" || continue
-		name=${source#"${tests}/java/"}
-		name=${name%.java}
-		test_classes+=( "${name//\//.}" )
-	done
 
 	local -x JAVA_HOME XDG_CACHE_HOME="${T}/cache" XDG_CONFIG_HOME="${T}/config" XDG_STATE_HOME="${T}/state"
 	local -x _JAVA_OPTIONS="-Djava.io.tmpdir=${T} -Djava.awt.headless=true"
 	JAVA_HOME="$(java-config -O)" || die
 	mkdir -p "${XDG_CACHE_HOME}" "${XDG_CONFIG_HOME}" "${XDG_STATE_HOME}" || die
+
+	if [[ ${junit5} ]]; then
+		edo java -cp "${classes}:${classpath}" org.junit.platform.console.ConsoleLauncher \
+			execute --disable-banner --fail-if-no-tests --scan-classpath "${classes}"
+		return
+	fi
+
+	# The test classes are the sources that declare a @Test method.
+	local test_classes=() name
+	for source in "${java_sources[@]}"; do
+		grep -q '@Test' "${source}" || continue
+		name=${source#"${tests}/java/"}
+		name=${name%.java}
+		test_classes+=( "${name//\//.}" )
+	done
 	edo java -cp "${classes}:${classpath}" org.junit.runner.JUnitCore "${test_classes[@]}"
 }
 
