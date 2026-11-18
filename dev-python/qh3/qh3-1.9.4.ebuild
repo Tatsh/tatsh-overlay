@@ -7,87 +7,87 @@ DISTUTILS_EXT=1
 DISTUTILS_USE_PEP517=maturin
 PYPI_VERIFY_REPO=https://github.com/jawah/qh3
 PYTHON_COMPAT=( python3_{11..15} )
+LLVM_COMPAT=( {19..22} )
 RUST_MIN_VER="1.88.0"
 
 CRATES="
 	aes@0.8.4
-	aho-corasick@1.1.5
+	aho-corasick@1.1.4
 	asn1-rs-derive@0.6.0
 	asn1-rs-impl@0.2.0
 	asn1-rs@0.7.2
 	autocfg@1.5.1
-	aws-lc-fips-sys@0.14.3
-	aws-lc-rs@1.18.2
-	aws-lc-sys@0.46.0
+	aws-lc-fips-sys@0.13.15
+	aws-lc-rs@1.17.1
+	aws-lc-sys@0.42.0
 	base64ct@1.8.3
 	bincode@1.3.3
 	bindgen@0.72.1
-	bindgen@0.73.2
-	bitflags@2.13.2
+	bitflags@2.13.0
 	block-buffer@0.10.4
 	block-padding@0.3.3
 	cbc@0.1.2
-	cc@1.10.0
+	cc@1.2.67
 	cexpr@0.6.0
-	cfg-if@1.0.5
-	cfg_aliases@0.2.2
+	cfg-if@1.0.4
+	cfg_aliases@0.2.1
 	cipher@0.4.4
-	clang-sys@1.9.1
+	clang-sys@1.8.1
 	cmake@0.1.58
 	const-oid@0.9.6
 	cpufeatures@0.2.17
 	crypto-common@0.1.7
 	curve25519-dalek-derive@0.1.1
 	curve25519-dalek@4.1.3
-	data-encoding@2.11.1
+	data-encoding@2.11.0
 	der-parser@10.0.0
 	der@0.7.10
 	der_derive@0.7.3
-	deranged@0.5.9
+	deranged@0.5.8
 	digest@0.10.7
-	displaydoc@0.2.7
+	displaydoc@0.2.6
 	dsa@0.6.3
 	dunce@1.0.5
 	ed25519-dalek@2.2.0
 	ed25519@2.2.3
-	either@1.19.0
+	either@1.16.0
 	fiat-crypto@0.2.9
-	find-msvc-tools@0.1.15
+	find-msvc-tools@0.1.9
 	flagset@0.4.7
 	fs_extra@1.3.0
 	generic-array@0.14.7
 	getrandom@0.2.17
 	getrandom@0.4.3
-	glob@0.3.4
+	glob@0.3.3
 	heck@0.5.0
 	hmac@0.12.1
-	icu_collections@2.4.0
-	icu_locale_core@2.4.0
-	icu_normalizer@2.4.0
-	icu_normalizer_data@2.4.0
-	icu_properties@2.4.0
-	icu_properties_data@2.4.0
-	icu_provider@2.4.0
+	icu_collections@2.2.0
+	icu_locale_core@2.2.0
+	icu_normalizer@2.2.0
+	icu_normalizer_data@2.2.0
+	icu_properties@2.2.0
+	icu_properties_data@2.2.0
+	icu_provider@2.2.0
 	idna@1.1.0
 	idna_adapter@1.2.2
 	inout@0.1.4
 	itertools@0.13.0
 	jobserver@0.1.35
-	lazy_static@1.5.1
-	libc@0.2.191
+	lazy_static@1.5.0
+	libc@0.2.186
 	libloading@0.8.9
 	libm@0.2.16
-	litemap@0.8.3
-	log@0.4.34
-	ls-qpack-rs-sys@0.3.3
-	ls-qpack-rs@0.3.3
+	litemap@0.8.2
+	log@0.4.33
+	ls-qpack-rs-sys@0.3.2
+	ls-qpack-rs@0.3.2
 	memchr@2.8.3
 	minimal-lexical@0.2.1
 	nom@7.1.3
 	num-bigint-dig@0.8.6
 	num-bigint@0.4.8
 	num-conv@0.2.2
-	num-integer@0.1.47
+	num-integer@0.1.46
 	num-iter@0.1.46
 	num-traits@0.2.19
 	oid-registry@0.8.1
@@ -98,29 +98,28 @@ CRATES="
 	pkcs1@0.7.5
 	pkcs5@0.7.1
 	pkcs8@0.10.2
-	pkg-config@0.3.34
-	portable-atomic@1.15.0
-	potential_utf@0.1.6
-	powerfmt@0.2.1
+	pkg-config@0.3.33
+	portable-atomic@1.13.1
+	potential_utf@0.1.5
+	powerfmt@0.2.0
 	ppv-lite86@0.2.21
 	prettyplease@0.2.37
-	prettyplease@0.3.0
-	proc-macro2@1.0.107
+	proc-macro2@1.0.106
 	pyo3-build-config@0.28.3
 	pyo3-ffi@0.28.3
 	pyo3-macros-backend@0.28.3
 	pyo3-macros@0.28.3
 	pyo3@0.28.3
 	python3-dll-a@0.2.15
-	quinn-udp@0.6.3
-	quote@1.0.47
+	quinn-udp@0.6.1
+	quote@1.0.46
 	r-efi@6.0.0
 	rand@0.8.5
 	rand_chacha@0.3.1
 	rand_core@0.6.4
-	regex-automata@0.4.18
+	regex-automata@0.4.15
 	regex-syntax@0.8.11
-	regex@1.13.1
+	regex@1.13.0
 	rfc6979@0.4.0
 	ring@0.17.14
 	rsa@0.9.10
@@ -128,43 +127,41 @@ CRATES="
 	rustc_version@0.4.1
 	rusticata-macros@4.1.0
 	rustls-pemfile@2.2.0
-	rustls-pki-types@1.15.1
-	rustls-webpki@0.103.16
-	rustls@0.23.46
+	rustls-pki-types@1.15.0
+	rustls-webpki@0.103.13
+	rustls@0.23.41
 	salsa20@0.10.2
 	scrypt@0.11.0
 	semver@1.0.28
-	serde@1.0.229
-	serde_core@1.0.229
-	serde_derive@1.0.229
+	serde@1.0.228
+	serde_core@1.0.228
+	serde_derive@1.0.228
 	sha1@0.10.7
 	sha2@0.10.9
 	shlex@1.3.0
 	shlex@2.0.1
 	signature@2.2.0
-	smallvec@1.16.4
-	socket2@0.6.5
-	spin@0.9.9
+	smallvec@1.15.2
+	socket2@0.6.4
+	spin@0.9.8
 	spki@0.7.3
 	stable_deref_trait@1.2.1
 	subtle@2.6.1
-	syn@2.0.119
-	syn@3.0.9
+	syn@2.0.118
 	synstructure@0.13.2
-	synstructure@0.14.0
 	target-lexicon@0.13.5
-	thiserror-impl@2.0.21
-	thiserror@2.0.21
+	thiserror-impl@2.0.18
+	thiserror@2.0.18
 	time-core@0.1.9
-	time-macros@0.2.32
-	time@0.3.55
-	tinystr@0.8.5
+	time-macros@0.2.31
+	time@0.3.53
+	tinystr@0.8.3
 	tls_codec@0.4.2
 	tls_codec_derive@0.4.2
 	tracing-core@0.1.36
 	tracing@0.1.44
 	typenum@1.20.1
-	unicode-ident@1.0.27
+	unicode-ident@1.0.24
 	untrusted@0.9.0
 	utf8_iter@1.0.4
 	version_check@0.9.5
@@ -181,24 +178,24 @@ CRATES="
 	windows_x86_64_gnu@0.52.6
 	windows_x86_64_gnullvm@0.52.6
 	windows_x86_64_msvc@0.52.6
-	writeable@0.6.4
+	writeable@0.6.3
 	x509-cert@0.2.5
 	x509-ocsp@0.2.1
 	x509-parser@0.18.1
-	yoke-derive@0.8.4
-	yoke@0.8.4
-	zerocopy-derive@0.8.63
-	zerocopy@0.8.63
-	zerofrom-derive@0.1.8
+	yoke-derive@0.8.2
+	yoke@0.8.3
+	zerocopy-derive@0.8.54
+	zerocopy@0.8.54
+	zerofrom-derive@0.1.7
 	zerofrom@0.1.8
-	zeroize@1.9.1
+	zeroize@1.9.0
 	zeroize_derive@1.5.0
-	zerotrie@0.2.5
-	zerovec-derive@0.11.7
-	zerovec@0.11.9
+	zerotrie@0.2.4
+	zerovec-derive@0.11.3
+	zerovec@0.11.6
 "
 
-inherit cargo distutils-r1 pypi
+inherit cargo distutils-r1 llvm-r2 pypi
 
 DESCRIPTION="A lightweight and fast implementation of QUIC and HTTP/3"
 HOMEPAGE="
@@ -218,7 +215,11 @@ LICENSE+="
 SLOT="0"
 KEYWORDS="~amd64"
 
+# aws-lc-rs is built with its bindgen feature.
+# shellcheck disable=SC2016
 BDEPEND="
+	dev-build/cmake
+	$(llvm_gen_dep 'llvm-core/clang:${LLVM_SLOT}')
 	test? (
 		dev-python/cryptography[${PYTHON_USEDEP}]
 		dev-python/dnspython[${PYTHON_USEDEP}]
