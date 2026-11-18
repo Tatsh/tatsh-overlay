@@ -138,6 +138,8 @@ CRATES="
 	either@1.19.0
 	encoding_rs@0.8.42
 	endi@1.1.1
+	enum-map-derive@1.0.1
+	enum-map@3.1.0
 	enumflags2@0.7.12
 	enumflags2_derive@0.7.12
 	equivalent@1.0.2
@@ -671,28 +673,27 @@ declare -A GIT_CRATES=(
 	[craft-font-store]='https://github.com/storytold/craft-libs;762a06a4c6b48b522b7d4de84a87917ef90265e6;craft-libs-%commit%/crates/font-store'
 	[craft-fonts-build]='https://github.com/storytold/craft-libs;92d392cff132eaf53e13afff77f38b5c11b73aa0;craft-libs-%commit%/crates/fonts-build'
 	[craft-i18n]='https://github.com/storytold/craft-libs;92d392cff132eaf53e13afff77f38b5c11b73aa0;craft-libs-%commit%/crates/i18n'
-	[craft-pdf]='https://github.com/storytold/craft-libs;92d392cff132eaf53e13afff77f38b5c11b73aa0;craft-libs-%commit%/crates/pdf'
-	[craft-print]='https://github.com/storytold/craft-libs;92d392cff132eaf53e13afff77f38b5c11b73aa0;craft-libs-%commit%/crates/print'
-	[craft-proof]='https://github.com/storytold/craft-libs;89fa1559e94378ecef85cd7e4681400f4df053e0;craft-libs-%commit%/crates/proof'
+	[craft-pdf]='https://github.com/storytold/craft-libs;6e03f65bf45181db77ba6229716e6624db9eb25b;craft-libs-%commit%/crates/pdf'
+	[craft-print]='https://github.com/storytold/craft-libs;a3e0b5a9440d18f19422a9dca13516747b7d3181;craft-libs-%commit%/crates/print'
+	[craft-proof]='https://github.com/storytold/craft-libs;01315d9c92b5b0e69082d35ca56099461a1efd45;craft-libs-%commit%/crates/proof'
 	[craft-ui]='https://github.com/storytold/craft-libs;92d392cff132eaf53e13afff77f38b5c11b73aa0;craft-libs-%commit%/crates/ui'
-	[craft-update]='https://github.com/storytold/craft-libs;c5a1cbfb5f9049f9270955caffb5bee5997aebf7;craft-libs-%commit%/crates/update'
+	[craft-update]='https://github.com/storytold/craft-libs;6e03f65bf45181db77ba6229716e6624db9eb25b;craft-libs-%commit%/crates/update'
+	[craft-web-api]='https://github.com/storytold/craft-libs;fd5e2feff6ea25bed371a99cc732b3968d621505;craft-libs-%commit%/crates/web-api'
+	[craft-web-host]='https://github.com/storytold/craft-libs;fd5e2feff6ea25bed371a99cc732b3968d621505;craft-libs-%commit%/crates/web-host'
 	[craft-window]='https://github.com/storytold/craft-libs;92d392cff132eaf53e13afff77f38b5c11b73aa0;craft-libs-%commit%/crates/window'
 	[craft-winprint-gdi]='https://github.com/storytold/winprint.rs;417ac3c4d14d3da5485a99c7d5ce8f05664ec312;winprint.rs-%commit%/crates/gdi'
 	[ecolor]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/ecolor'
 	[eframe]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/eframe'
-	[egui]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/egui'
 	[egui-wgpu]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/egui-wgpu'
 	[egui-winit]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/egui-winit'
-	[egui_demo_lib]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/egui_demo_lib'
+	[egui]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/egui'
 	[egui_extras]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/egui_extras'
 	[egui_glow]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/egui_glow'
-	[egui_inspection]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/egui_inspection'
 	[egui_kittest]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/egui_kittest'
-	[egui_system_font_provider]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/egui_system_font_provider'
 	[emath]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/emath'
 	[epaint]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/epaint'
 	[epaint_default_fonts]='https://github.com/storytold/egui;6d518fc799681571963842f95b55a6b68431b15a;egui-%commit%/crates/epaint_default_fonts'
-	[krilla]='https://github.com/storytold/craft-libs;92d392cff132eaf53e13afff77f38b5c11b73aa0;craft-libs-%commit%/vendor/krilla'
+	[krilla]='https://github.com/storytold/craft-libs;6e03f65bf45181db77ba6229716e6624db9eb25b;craft-libs-%commit%/vendor/krilla'
 	[winit]='https://github.com/storytold/winit;a517b3846ee8457d84ee4975110bfda6797c44dc;winit-%commit%'
 	[winprint]='https://github.com/storytold/winprint.rs;5f80b9baf6b58937c401656634e42d33f00ddf49;winprint.rs-%commit%'
 )
@@ -703,7 +704,7 @@ DESCRIPTION="Clean-room reimplementation of Microsoft Word in pure Rust"
 HOMEPAGE="https://getartcraft.com/apps/wordcraft https://github.com/storytold/wordcraft"
 # Interface catalogs and craft-proof's Language data (hyphenation, spelling), at the commit in
 # craft-i18n.rev. Without them the build embeds no translations and no hyphenation.
-CRAFT_I18N_COMMIT="059cbf95c2a3eb95d637ca8584faca1129d17f48"
+CRAFT_I18N_COMMIT="1e515422afdda2f317af430c1f9d68a5f83935b4"
 SRC_URI="https://github.com/storytold/wordcraft/archive/refs/tags/v${PV}.tar.gz -> ${P}.gh.tar.gz
 	https://github.com/storytold/craft-i18n/archive/${CRAFT_I18N_COMMIT}.tar.gz
 		-> craft-i18n-${CRAFT_I18N_COMMIT}.gh.tar.gz
@@ -712,7 +713,7 @@ SRC_URI="https://github.com/storytold/wordcraft/archive/refs/tags/v${PV}.tar.gz 
 LICENSE="|| ( Apache-2.0 MIT )"
 # Dependent crate licenses
 LICENSE+="
-	Apache-2.0 BSD-2 BSD Boost-1.0 CDLA-Permissive-2.0 ISC MIT MPL-2.0 OFL-1.1 UbuntuFontLicense-1.0
+	Apache-2.0 BSD-2 BSD Boost-1.0 CDLA-Permissive-2.0 ISC MIT MPL-2.0
 	Unicode-3.0 ZLIB
 "
 # Embedded Language data
@@ -730,9 +731,14 @@ src_prepare() {
 	default
 	# Keep upstream crates.io overrides local for an offline build.
 	local crate uri commit directory
+	# Overrides nothing in the build uses ([[patch.unused]] in Cargo.lock); offline Cargo
+	# cannot load their git sources.
+	for crate in egui_demo_lib egui_inspection egui_system_font_provider; do
+		sed -i "/^${crate} = { git = /d" Cargo.toml || die
+	done
+	sed -i '/^\[\[patch\.unused\]\]$/,/^$/d' Cargo.lock || die
 	for crate in krilla ecolor emath epaint epaint_default_fonts egui egui-winit \
-		egui-wgpu egui_glow egui_extras egui_kittest egui_system_font_provider \
-		eframe egui_demo_lib egui_inspection winit; do
+		egui-wgpu egui_glow egui_extras egui_kittest eframe winit; do
 		IFS=';' read -r uri commit directory <<< "${GIT_CRATES[${crate}]}"
 		directory=${directory//%commit%/${commit}}
 		sed -i "s|^${crate} = { git = .*|${crate} = { path = \"${WORKDIR}/${directory}\" }|" \
@@ -752,8 +758,16 @@ src_compile() {
 }
 
 src_test() {
+	local skip=(
+		# Arabic labels need the optional craft-fonts bundle, which a build from
+		# source does not have; the test only allows for that with CJK.
+		panes::tests::navigation_tabs_fit_the_narrowest_pane_in_every_language
+		# Counts the CJK full stop in the test sources' own string literals as an
+		# interface symbol.
+		theme::tests::interface_symbols_have_glyphs
+	)
 	# The egui crate's tests open windows and crash without a display.
-	virtx cargo_src_test
+	virtx cargo_src_test -- "${skip[@]/#/--skip=}"
 }
 
 src_install() {
