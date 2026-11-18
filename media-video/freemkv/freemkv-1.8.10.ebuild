@@ -153,7 +153,7 @@ CRATES="
 	ring@0.17.14
 	roxmltree@0.21.1
 	rustc_version@0.4.1
-	rustix@1.1.5
+	rustix@1.1.6
 	rustls-pki-types@1.15.1
 	rustls-webpki@0.103.16
 	rustls@0.23.46
@@ -258,11 +258,11 @@ CRATES="
 
 # The freemkv crates are not on crates.io; upstream pulls them from git tags.
 declare -A GIT_CRATES=(
-	[freemkv-engine]='https://github.com/freemkv/freemkv-engine;564de784d06b3052dd85fec95e9a43bf9b7158da;freemkv-engine-%commit%'
-	[freemkv-i18n]='https://github.com/freemkv/freemkv-i18n;4b37db08599b07f0cf654b1e5c6c7cddd1d8688f;freemkv-i18n-%commit%'
-	[freemkv-keysources]='https://github.com/freemkv/freemkv-keysources;275fefac617d1f0b8e74a9cc6dc8d3531f42da2a;freemkv-keysources-%commit%'
-	[freemkv-unlock]='https://github.com/freemkv/freemkv-unlock;57df3649643689ab97e6ea54c8319b72d30b2d11;freemkv-unlock-%commit%'
-	[libfreemkv]='https://github.com/freemkv/libfreemkv;927b301c73ece1be151cca3187fd68039e4192e8;libfreemkv-%commit%'
+	[freemkv-engine]='https://github.com/freemkv/freemkv-engine;2c2b426c058a03d2140576f891d655eeb5fce6b1;freemkv-engine-%commit%'
+	[freemkv-i18n]='https://github.com/freemkv/freemkv-i18n;47568fa990a5699815654397bbe00a453bfb7d4b;freemkv-i18n-%commit%'
+	[freemkv-keysources]='https://github.com/freemkv/freemkv-keysources;96cf993c36f6143345c9fe00821ac303238b8602;freemkv-keysources-%commit%'
+	[freemkv-unlock]='https://github.com/freemkv/freemkv-unlock;03933fc05ea6c97751b79f44eb19a274d3441c1f;freemkv-unlock-%commit%'
+	[libfreemkv]='https://github.com/freemkv/libfreemkv;c0c5fffbc0a2fff8c8f1d8e75279b73f855ab3f5;libfreemkv-%commit%'
 )
 
 RUST_MIN_VER="1.98.1"
