@@ -131,6 +131,23 @@ GHIDRA_HOME="/opt/ghidra"
 # Kotlin sources.
 KOTLIN_HOME="/usr/share/kotlin-bin"
 
+# @ECLASS_VARIABLE: JAVA_PKG_NV_DEPEND
+# @INTERNAL
+# @DESCRIPTION:
+# Set to the JDK in BDEPEND, so that java-utils-2 selects the VM from it rather
+# than from DEPEND, which lists only Ghidra.
+
+# @ECLASS_VARIABLE: JAVA_PKG_WANT_SOURCE
+# @INTERNAL
+# @DESCRIPTION:
+# Set to the Java release Ghidra 12 is built for. The build and test phases
+# override it with the value Ghidra's application.properties records.
+
+# @ECLASS_VARIABLE: JAVA_PKG_WANT_TARGET
+# @INTERNAL
+# @DESCRIPTION:
+# Set together with JAVA_PKG_WANT_SOURCE.
+
 # @FUNCTION: _ghidra-extension_set_globals
 # @INTERNAL
 # @DESCRIPTION:
