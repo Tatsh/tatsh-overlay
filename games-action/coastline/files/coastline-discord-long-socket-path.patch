@@ -1,0 +1,11 @@
+--- a/src/sdl/discordpresence.cpp	2026-11-18 19:48:01.839471272 -0500
++++ b/src/sdl/discordpresence.cpp	2026-11-18 19:48:01.945839143 -0500
+@@ -105,7 +105,7 @@
+                 const auto path = fmt::format("{}{}/discord-ipc-{}", root, suffix, index);
+                 sockaddr_un address{};
+                 if (path.size() >= sizeof(address.sun_path)) {
+-                    return false;
++                    continue;
+                 }
+                 address.sun_family = AF_UNIX;
+                 std::memcpy(address.sun_path, path.c_str(), path.size() + 1);
