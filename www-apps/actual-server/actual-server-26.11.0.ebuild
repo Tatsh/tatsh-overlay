@@ -17,7 +17,7 @@ RESTRICT="strip"
 
 RDEPEND="acct-group/actual
 	acct-user/actual
-	>=net-libs/nodejs-22:="
+	>=net-libs/nodejs-22.19.0:="
 DEPEND="${RDEPEND}"
 
 src_prepare() {
@@ -25,6 +25,12 @@ src_prepare() {
 	# Gentoo's compiler already defines _FORTIFY_SOURCE, which argon2 redefines; drop -Werror.
 	sed -e 's/, "-Werror"//' -i node_modules/argon2/binding.gyp || die
 	grep -q -- '-Werror' node_modules/argon2/binding.gyp && die "failed to remove -Werror"
+	# better-sqlite3 skips compiling when it ships a prebuild for the host, and
+	# adds -flto on top of the user's flags.
+	rm -r node_modules/better-sqlite3/prebuilds || die
+	sed -e "s/, '-flto'//g; s/'-flto', //g; s/\['-flto'\]/[]/g" \
+		-i node_modules/better-sqlite3/binding.gyp || die
+	grep -q -- '-flto' node_modules/better-sqlite3/binding.gyp && die "failed to remove -flto"
 }
 
 src_compile() {
