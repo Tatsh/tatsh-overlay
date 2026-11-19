@@ -17,5 +17,11 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-EPYTEST_PLUGINS=()
+python_prepare_all() {
+	# Coverage options, including a 100% threshold.
+	sed -e '/"--cov/d' -i pyproject.toml || die
+	distutils-r1_python_prepare_all
+}
+
+EPYTEST_PLUGINS=( pytest-asyncio pytest-timeout )
 distutils_enable_tests pytest
