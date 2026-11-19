@@ -4,7 +4,7 @@
 EAPI=8
 
 LIBRETRO_REPO_NAME="libretro/beetle-psx-libretro"
-LIBRETRO_COMMIT_SHA="71ee81e77acd49296ecf4a683f5a61568ba80bf9"
+LIBRETRO_COMMIT_SHA="cb4577ab8b2171d8c838e777bbd863e46e1815c4"
 
 inherit libretro-core toolchain-funcs
 
@@ -39,7 +39,7 @@ src_test() {
 	# Each tools/*/run.sh builds a harness against the core. Not run here: chd needs
 	# chdman (games-emulation/mame); hdr_display and lightrec need a PlayStation BIOS;
 	# core_options checks the HDR option, which only the Vulkan renderer registers;
-	# crop_window and deinterlace target the software core (libretro-mednafen-psx).
+	# crop_window, deinterlace and gpu_span target the software core (libretro-mednafen-psx).
 	# The harnesses also rerun under ASan, which objects to the sandbox's LD_PRELOAD;
 	# some set their own ASAN_OPTIONS.
 	sed -i -e 's/ -Werror\b//' -e 's/ASAN_OPTIONS=/&verify_asan_link_order=0:/g' \
@@ -50,7 +50,7 @@ src_test() {
 		name=${harness#tools/}
 		name=${name%/run.sh}
 		case ${name} in
-			chd|crop_window|deinterlace|hdr_display|lightrec) continue ;;
+			chd|crop_window|deinterlace|gpu_span|hdr_display|lightrec) continue ;;
 			core_options) use vulkan || continue ;;
 		esac
 		einfo "Running ${name}"
