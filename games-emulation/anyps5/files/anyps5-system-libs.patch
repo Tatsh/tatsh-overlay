@@ -1,5 +1,109 @@
-Use system libraries and avoid forced static linking.
-
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -247,8 +247,6 @@ elseif(ANYPS5_ENABLE_TSAN)
+     add_compile_options(-fsanitize=thread -fno-omit-frame-pointer)
+     add_link_options(-fsanitize=thread)
+     add_compile_definitions(ANYPS5_ENABLE_TSAN=1)
+-elseif(NOT APPLE)
+-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
+ endif()
+ 
+ if(APPLE AND NOT ANYPS5_RELINKER_ONLY)
+@@ -1025,13 +1023,16 @@ if(NOT ANYPS5_USE_SYSTEM_DEPS)
+         endif()
+     endif()
+ endif()
+-set(ARCHITECTURE x86_64)
+-add_subdirectory(3rdparty/ffmpeg-core)
+-if(MINGW)
+-    target_link_libraries(ffmpeg INTERFACE bcrypt ole32 user32 ws2_32)
+-elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-    target_link_options(ffmpeg INTERFACE LINKER:--exclude-libs,ALL)
+-endif()
++find_package(PkgConfig REQUIRED)
++find_package(ZLIB REQUIRED)
++find_path(STB_INCLUDE_DIR stb_image.h PATH_SUFFIXES stb REQUIRED)
++pkg_check_modules(FFMPEG REQUIRED IMPORTED_TARGET
++    libavcodec libavfilter libavformat libavutil libswresample libswscale)
++add_library(ffmpeg INTERFACE)
++target_link_libraries(ffmpeg INTERFACE PkgConfig::FFMPEG)
++pkg_check_modules(TURBOJPEG REQUIRED IMPORTED_TARGET libjpeg libturbojpeg)
++add_library(jpeg_turbo INTERFACE)
++target_link_libraries(jpeg_turbo INTERFACE PkgConfig::TURBOJPEG ZLIB::ZLIB)
+ 
+ if(APS5_ENABLE_TRACY)
+     include(cmake/Tracy.cmake)
+@@ -1057,16 +1058,9 @@ endif()
+ 
+ include(cmake/Jxr.cmake)
+ 
+-set(LIBUSB_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+-set(LIBUSB_INSTALL_TARGETS OFF CACHE BOOL "" FORCE)
+-set(LIBUSB_BUILD_TESTING OFF CACHE BOOL "" FORCE)
+-set(LIBUSB_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+-set(LIBUSB_ENABLE_UDEV OFF CACHE BOOL "" FORCE)
+-if(APPLE)
+-    set(HAVE_PIPE2 "" CACHE INTERNAL "")
+-endif()
+-add_subdirectory(3rdparty/libusb-cmake EXCLUDE_FROM_ALL)
+-set_target_properties(usb-1.0 PROPERTIES POSITION_INDEPENDENT_CODE ON)
++pkg_check_modules(LIBUSB REQUIRED IMPORTED_TARGET libusb-1.0)
++add_library(usb-1.0 INTERFACE)
++target_link_libraries(usb-1.0 INTERFACE PkgConfig::LIBUSB)
+ 
+ include(cmake/ZArchive.cmake)
+ include(cmake/Opus.cmake)
+@@ -1097,3 +1091,14 @@ add_subdirectory(core/Decoder/Png)
+ add_subdirectory(core/libs)
+ add_subdirectory(core/relinker)
+ add_subdirectory(tools/library-oracle)
++
++message(STATUS "<<< Gentoo configuration >>>
++Build type      ${CMAKE_BUILD_TYPE}
++Install path    ${CMAKE_INSTALL_PREFIX}
++Compiler flags:
++C               ${CMAKE_C_FLAGS}
++C++             ${CMAKE_CXX_FLAGS}
++Linker flags:
++Executable      ${CMAKE_EXE_LINKER_FLAGS}
++Module          ${CMAKE_MODULE_LINKER_FLAGS}
++Shared          ${CMAKE_SHARED_LINKER_FLAGS}\n")
+diff --git a/cmake/Opus.cmake b/cmake/Opus.cmake
+--- a/cmake/Opus.cmake
++++ b/cmake/Opus.cmake
+@@ -1,26 +1,4 @@
+-function(add_bundled_opus)
+-    set(BUILD_SHARED_LIBS OFF)
+-    set(BUILD_TESTING OFF)
+-    set(OPUS_BUILD_SHARED_LIBRARY OFF)
+-    set(OPUS_BUILD_TESTING OFF)
+-    set(OPUS_BUILD_PROGRAMS OFF)
+-    set(OPUS_INSTALL_PKG_CONFIG_MODULE OFF)
+-    set(OPUS_INSTALL_CMAKE_CONFIG_MODULE OFF)
+-    set(OPUS_STACK_PROTECTOR OFF)
+-    set(OPUS_FORTIFY_SOURCE OFF)
+-    add_subdirectory(3rdparty/opus EXCLUDE_FROM_ALL)
+-    set_target_properties(opus PROPERTIES POSITION_INDEPENDENT_CODE ON C_VISIBILITY_PRESET hidden)
+-    target_compile_definitions(opus PRIVATE OPUS_EXPORT=)
+-    if(MINGW AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
+-        include(CheckCCompilerFlag)
+-        check_c_compiler_flag("-Wa,-muse-unaligned-vector-move" ANYPS5_ASM_UNALIGNED_VECTOR_MOVE)
+-        if(ANYPS5_ASM_UNALIGNED_VECTOR_MOVE)
+-            target_compile_options(opus PRIVATE -Wa,-muse-unaligned-vector-move)
+-        endif()
+-    endif()
+-    if(MINGW OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-        target_link_options(opus INTERFACE LINKER:--exclude-libs,libopus.a)
+-    endif()
+-endfunction()
+-
+-add_bundled_opus()
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(OPUS REQUIRED IMPORTED_TARGET opus)
++add_library(opus INTERFACE)
++target_link_libraries(opus INTERFACE PkgConfig::OPUS)
+diff --git a/cmake/ZArchive.cmake b/cmake/ZArchive.cmake
 --- a/cmake/ZArchive.cmake
 +++ b/cmake/ZArchive.cmake
 @@ -1,25 +1,6 @@
@@ -34,81 +138,44 @@ Use system libraries and avoid forced static linking.
 +pkg_check_modules(ZARCHIVE REQUIRED IMPORTED_TARGET zarchive)
 +add_library(zarchive INTERFACE)
 +target_link_libraries(zarchive INTERFACE PkgConfig::ZARCHIVE)
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -123,8 +123,6 @@
-     add_compile_options(-fsanitize=thread -fno-omit-frame-pointer)
-     add_link_options(-fsanitize=thread)
-     add_compile_definitions(ANYPS5_ENABLE_TSAN=1)
--elseif(NOT APPLE)
--    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static -static-libgcc -static-libstdc++")
- endif()
- 
- if(APPLE AND NOT ANYPS5_RELINKER_ONLY)
-@@ -614,13 +612,16 @@
-         endif()
-     endif()
- endif()
--set(ARCHITECTURE x86_64)
--add_subdirectory(3rdparty/ffmpeg-core)
--if(MINGW)
--    target_link_libraries(ffmpeg INTERFACE bcrypt ole32 user32 ws2_32)
--elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
--    target_link_options(ffmpeg INTERFACE LINKER:--exclude-libs,ALL)
--endif()
-+find_package(PkgConfig REQUIRED)
-+find_package(ZLIB REQUIRED)
-+find_path(STB_INCLUDE_DIR stb_image.h PATH_SUFFIXES stb REQUIRED)
-+pkg_check_modules(FFMPEG REQUIRED IMPORTED_TARGET
-+    libavcodec libavfilter libavformat libavutil libswresample libswscale)
-+add_library(ffmpeg INTERFACE)
-+target_link_libraries(ffmpeg INTERFACE PkgConfig::FFMPEG)
-+pkg_check_modules(TURBOJPEG REQUIRED IMPORTED_TARGET libturbojpeg)
-+add_library(jpeg_turbo INTERFACE)
-+target_link_libraries(jpeg_turbo INTERFACE PkgConfig::TURBOJPEG ZLIB::ZLIB)
- 
- if(APS5_ENABLE_TRACY)
-     include(cmake/Tracy.cmake)
-@@ -645,13 +646,9 @@
- 
- include(cmake/Jxr.cmake)
- 
--set(LIBUSB_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
--set(LIBUSB_INSTALL_TARGETS OFF CACHE BOOL "" FORCE)
--set(LIBUSB_BUILD_TESTING OFF CACHE BOOL "" FORCE)
--set(LIBUSB_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
--set(LIBUSB_ENABLE_UDEV OFF CACHE BOOL "" FORCE)
--add_subdirectory(3rdparty/libusb-cmake EXCLUDE_FROM_ALL)
--set_target_properties(usb-1.0 PROPERTIES POSITION_INDEPENDENT_CODE ON)
-+pkg_check_modules(LIBUSB REQUIRED IMPORTED_TARGET libusb-1.0)
-+add_library(usb-1.0 INTERFACE)
-+target_link_libraries(usb-1.0 INTERFACE PkgConfig::LIBUSB)
- 
- include(cmake/ZArchive.cmake)
- include(cmake/Opus.cmake)
-@@ -677,3 +674,14 @@
- add_subdirectory(core/Decoder/Png)
- add_subdirectory(core/libs)
- add_subdirectory(core/relinker)
-+
-+message(STATUS "<<< Gentoo configuration >>>
-+Build type      ${CMAKE_BUILD_TYPE}
-+Install path    ${CMAKE_INSTALL_PREFIX}
-+Compiler flags:
-+C               ${CMAKE_C_FLAGS}
-+C++             ${CMAKE_CXX_FLAGS}
-+Linker flags:
-+Executable      ${CMAKE_EXE_LINKER_FLAGS}
-+Module          ${CMAKE_MODULE_LINKER_FLAGS}
-+Shared          ${CMAKE_SHARED_LINKER_FLAGS}\n")
+diff --git a/cmake/Zlib.cmake b/cmake/Zlib.cmake
+--- a/cmake/Zlib.cmake
++++ b/cmake/Zlib.cmake
+@@ -1,14 +1,5 @@
+-function(add_bundled_zlib)
+-    if(TARGET zlibstatic)
+-        return()
+-    endif()
+-
+-    set(ZLIB_BUILD_TESTING OFF)
+-    set(ZLIB_BUILD_SHARED OFF)
+-    set(ZLIB_BUILD_STATIC ON)
+-    set(ZLIB_INSTALL OFF)
+-    add_subdirectory(${CMAKE_SOURCE_DIR}/3rdparty/zlib ${CMAKE_BINARY_DIR}/3rdparty/zlib EXCLUDE_FROM_ALL)
+-    set_target_properties(zlibstatic PROPERTIES POSITION_INDEPENDENT_CODE ON C_VISIBILITY_PRESET hidden)
+-endfunction()
+-
+-add_bundled_zlib()
++if(NOT TARGET zlibstatic)
++    find_package(ZLIB REQUIRED)
++    add_library(zlibstatic INTERFACE)
++    target_link_libraries(zlibstatic INTERFACE ZLIB::ZLIB)
++endif()
+diff --git a/core/Decoder/Jpeg/CMakeLists.txt b/core/Decoder/Jpeg/CMakeLists.txt
 --- a/core/Decoder/Jpeg/CMakeLists.txt
 +++ b/core/Decoder/Jpeg/CMakeLists.txt
-@@ -3,62 +3,9 @@
+@@ -3,74 +3,9 @@ function(add_jpeg_decoder target runtimeTarget)
          message(FATAL_ERROR "JPEG decoder requires an existing runtime target: ${runtimeTarget}")
      endif()
  
 -    include(ExternalProject)
 -    if(NOT TARGET jpeg_turbo_external)
+-        if(BUILD_TESTING AND Python3_EXECUTABLE)
+-            add_test(NAME jpeg_external_toolchain COMMAND ${Python3_EXECUTABLE}
+-                ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/tests/test_toolchain.py)
+-            set_tests_properties(jpeg_external_toolchain PROPERTIES TIMEOUT 30
+-                ENVIRONMENT "CMAKE_GENERATOR=${CMAKE_GENERATOR}")
+-        endif()
 -        set(jpeg_turbo_prefix "${CMAKE_BINARY_DIR}/libjpeg-turbo")
 -        if(WIN32)
 -            if(MSVC)
@@ -121,6 +188,9 @@ Use system libraries and avoid forced static linking.
 -        endif()
 -        file(MAKE_DIRECTORY "${jpeg_turbo_prefix}/include")
 -        set(jpeg_turbo_platform_args)
+-        if(CMAKE_TOOLCHAIN_FILE)
+-            list(APPEND jpeg_turbo_platform_args "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
+-        endif()
 -        if(APPLE)
 -            list(APPEND jpeg_turbo_platform_args
 -                -DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}
@@ -157,6 +227,9 @@ Use system libraries and avoid forced static linking.
 -            IMPORTED_LOCATION "${jpeg_turbo_library}"
 -            INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/3rdparty/libjpeg-turbo/src;${jpeg_turbo_prefix}/include"
 -        )
+-        if(MINGW OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-            target_link_options(jpeg_turbo INTERFACE "LINKER:--exclude-libs,$<TARGET_FILE_NAME:jpeg_turbo>")
+-        endif()
 -        add_dependencies(jpeg_turbo jpeg_turbo_external)
 -    endif()
 -
@@ -167,18 +240,23 @@ Use system libraries and avoid forced static linking.
      target_link_libraries(${target} PRIVATE ${runtimeTarget} jpeg_turbo)
      set_target_properties(${target} PROPERTIES
          CXX_EXTENSIONS OFF
+diff --git a/core/Decoder/Png/CMakeLists.txt b/core/Decoder/Png/CMakeLists.txt
 --- a/core/Decoder/Png/CMakeLists.txt
 +++ b/core/Decoder/Png/CMakeLists.txt
-@@ -5,7 +5,7 @@
+@@ -7,11 +7,8 @@ function(add_png_decoder target runtimeTarget)
  
      add_library(${target} STATIC ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/src/Png.cpp)
      target_include_directories(${target} PUBLIC ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/include)
 -    target_include_directories(${target} SYSTEM PRIVATE ${PROJECT_SOURCE_DIR}/3rdparty/stb)
 +    target_include_directories(${target} SYSTEM PRIVATE ${STB_INCLUDE_DIR})
-     target_link_libraries(${target} PRIVATE ${runtimeTarget})
+     target_link_libraries(${target} PRIVATE ${runtimeTarget} zlibstatic)
+-    if(MINGW OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-        target_link_options(${target} INTERFACE "LINKER:--exclude-libs,$<TARGET_FILE_NAME:zlibstatic>")
+-    endif()
      set_target_properties(${target} PROPERTIES
          CXX_EXTENSIONS OFF
-@@ -16,7 +16,7 @@
+         CXX_VISIBILITY_PRESET hidden
+@@ -21,7 +18,7 @@ function(add_png_decoder target runtimeTarget)
  
      if(BUILD_TESTING)
          add_test_executable(${target}_tests ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/tests/Png.cpp)
@@ -187,49 +265,19 @@ Use system libraries and avoid forced static linking.
          target_link_libraries(${target}_tests PRIVATE ${target})
          configure_windows_unwind(${target}_tests)
          add_test(NAME ${target} COMMAND ${target}_tests)
---- a/core/libs/prx/libSceZlib/CMakeLists.txt
-+++ b/core/libs/prx/libSceZlib/CMakeLists.txt
-@@ -1,6 +1,5 @@
- add_library(libSceZlib SHARED EXCLUDE_FROM_ALL ${CMAKE_CURRENT_SOURCE_DIR}/Export.cpp ${CMAKE_CURRENT_SOURCE_DIR}/../libkernel/Time/TimedWait.cpp)
--target_include_directories(libSceZlib PRIVATE ${LIBS_INCLUDE_DIR}
--    ${CMAKE_SOURCE_DIR}/3rdparty/libjpeg-turbo/src/spng/zlib)
-+target_include_directories(libSceZlib PRIVATE ${LIBS_INCLUDE_DIR})
- set_target_properties(libSceZlib PROPERTIES CXX_EXTENSIONS OFF)
- configure_windows_unwind(libSceZlib)
- target_link_libraries(libSceZlib PRIVATE jpeg_turbo)
---- a/cmake/Opus.cmake
-+++ b/cmake/Opus.cmake
-@@ -1,26 +1,4 @@
--function(add_bundled_opus)
--    set(BUILD_SHARED_LIBS OFF)
--    set(BUILD_TESTING OFF)
--    set(OPUS_BUILD_SHARED_LIBRARY OFF)
--    set(OPUS_BUILD_TESTING OFF)
--    set(OPUS_BUILD_PROGRAMS OFF)
--    set(OPUS_INSTALL_PKG_CONFIG_MODULE OFF)
--    set(OPUS_INSTALL_CMAKE_CONFIG_MODULE OFF)
--    set(OPUS_STACK_PROTECTOR OFF)
--    set(OPUS_FORTIFY_SOURCE OFF)
--    add_subdirectory(3rdparty/opus EXCLUDE_FROM_ALL)
--    set_target_properties(opus PROPERTIES POSITION_INDEPENDENT_CODE ON C_VISIBILITY_PRESET hidden)
--    target_compile_definitions(opus PRIVATE OPUS_EXPORT=)
--    if(MINGW AND CMAKE_C_COMPILER_ID STREQUAL "GNU")
--        include(CheckCCompilerFlag)
--        check_c_compiler_flag("-Wa,-muse-unaligned-vector-move" ANYPS5_ASM_UNALIGNED_VECTOR_MOVE)
--        if(ANYPS5_ASM_UNALIGNED_VECTOR_MOVE)
--            target_compile_options(opus PRIVATE -Wa,-muse-unaligned-vector-move)
--        endif()
--    endif()
--    if(MINGW OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
--        target_link_options(opus INTERFACE LINKER:--exclude-libs,libopus.a)
--    endif()
--endfunction()
--
--add_bundled_opus()
-+find_package(PkgConfig REQUIRED)
-+pkg_check_modules(OPUS REQUIRED IMPORTED_TARGET opus)
-+add_library(opus INTERFACE)
-+target_link_libraries(opus INTERFACE PkgConfig::OPUS)
+diff --git a/core/libs/prx/libSceAudioOut/CMakeLists.txt b/core/libs/prx/libSceAudioOut/CMakeLists.txt
+--- a/core/libs/prx/libSceAudioOut/CMakeLists.txt
++++ b/core/libs/prx/libSceAudioOut/CMakeLists.txt
+@@ -330,7 +330,7 @@ if(BUILD_TESTING)
+     add_test_executable(audio_out2_timing_tests tests/AudioOut2Timing.cpp)
+     target_include_directories(audio_out2_timing_tests PRIVATE ${LIBS_INCLUDE_DIR} ${ANYPS5_SDL2_INCLUDE_DIR})
+     target_compile_definitions(audio_out2_timing_tests PRIVATE SDL_MAIN_HANDLED)
+-    target_link_libraries(audio_out2_timing_tests PRIVATE libSceAudioOut libc)
++    target_link_libraries(audio_out2_timing_tests PRIVATE libSceAudioOut libc SDL2-static)
+     configure_windows_unwind(audio_out2_timing_tests)
+     add_test(NAME audio_out2_timing COMMAND audio_out2_timing_tests)
+     if(WIN32)
+diff --git a/core/libs/prx/libSceHttp2/CMakeLists.txt b/core/libs/prx/libSceHttp2/CMakeLists.txt
 --- a/core/libs/prx/libSceHttp2/CMakeLists.txt
 +++ b/core/libs/prx/libSceHttp2/CMakeLists.txt
 @@ -1,37 +1,12 @@
@@ -265,10 +313,10 @@ Use system libraries and avoid forced static linking.
 -    ${http2ZlibDir}/adler32.c ${http2ZlibDir}/crc32.c ${http2ZlibDir}/inffast.c
 -    ${http2ZlibDir}/inflate.c ${http2ZlibDir}/inftrees.c ${http2ZlibDir}/zutil.c)
 -target_include_directories(anyps5_http2_transport PRIVATE ${LIBS_INCLUDE_DIR} ${http2ZlibDir})
--target_link_libraries(anyps5_http2_transport PRIVATE libSceNet libSceSsl libkernel libc nghttp2_static)
+-target_link_libraries(anyps5_http2_transport PRIVATE libSceHttp libSceNet libSceSsl libkernel libc nghttp2_static)
 +add_library(anyps5_http2_transport STATIC EXCLUDE_FROM_ALL Transport.cpp)
 +target_include_directories(anyps5_http2_transport PRIVATE ${LIBS_INCLUDE_DIR})
-+target_link_libraries(anyps5_http2_transport PRIVATE libSceNet libSceSsl libkernel libc nghttp2_static ZLIB::ZLIB)
++target_link_libraries(anyps5_http2_transport PRIVATE libSceHttp libSceNet libSceSsl libkernel libc nghttp2_static ZLIB::ZLIB)
  set_target_properties(anyps5_http2_transport PROPERTIES POSITION_INDEPENDENT_CODE ON CXX_VISIBILITY_PRESET hidden C_VISIBILITY_PRESET hidden)
 -if(MINGW OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
 -    target_link_options(anyps5_http2_transport INTERFACE LINKER:--exclude-libs,libanyps5_http2_transport.a)
@@ -276,7 +324,8 @@ Use system libraries and avoid forced static linking.
 +
  add_library(libSceHttp2 SHARED EXCLUDE_FROM_ALL Export.cpp Cookies.cpp InventoryExports.cpp)
  target_include_directories(libSceHttp2 PRIVATE ${LIBS_INCLUDE_DIR})
- target_link_libraries(libSceHttp2 PRIVATE libc libkernel anyps5_http2_transport)
+ target_link_libraries(libSceHttp2 PRIVATE libc libkernel libSceHttp anyps5_http2_transport)
+diff --git a/core/libs/prx/libSceNKWebKit/CMakeLists.txt b/core/libs/prx/libSceNKWebKit/CMakeLists.txt
 --- a/core/libs/prx/libSceNKWebKit/CMakeLists.txt
 +++ b/core/libs/prx/libSceNKWebKit/CMakeLists.txt
 @@ -1,21 +1,8 @@
@@ -306,6 +355,19 @@ Use system libraries and avoid forced static linking.
  
  file(GLOB nkWebKitSources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
  add_library(libSceNKWebKit SHARED EXCLUDE_FROM_ALL Export.cpp DateParsing.cpp CharactersToNumber.cpp ${nkWebKitSources})
+diff --git a/core/libs/prx/libSceNKWebKit/src/Jsc.hpp b/core/libs/prx/libSceNKWebKit/src/Jsc.hpp
+--- a/core/libs/prx/libSceNKWebKit/src/Jsc.hpp
++++ b/core/libs/prx/libSceNKWebKit/src/Jsc.hpp
+@@ -1,7 +1,7 @@
+ #pragma once
+ 
+ #include "prx/libSceNKWebKit/src/JscApi.hpp"
+-#include "../../../../../3rdparty/quickjs/quickjs.h"
++#include <quickjs.h>
+ #include <atomic>
+ #include <chrono>
+ #include <cstddef>
+diff --git a/core/libs/prx/libSceVorbisDec/CMakeLists.txt b/core/libs/prx/libSceVorbisDec/CMakeLists.txt
 --- a/core/libs/prx/libSceVorbisDec/CMakeLists.txt
 +++ b/core/libs/prx/libSceVorbisDec/CMakeLists.txt
 @@ -1,64 +1,8 @@
@@ -378,14 +440,35 @@ Use system libraries and avoid forced static linking.
  
  add_library(libSceVorbisDec SHARED EXCLUDE_FROM_ALL Export.cpp)
  target_include_directories(libSceVorbisDec PRIVATE ${LIBS_INCLUDE_DIR})
---- a/core/libs/prx/libSceNKWebKit/src/Jsc.hpp
-+++ b/core/libs/prx/libSceNKWebKit/src/Jsc.hpp
-@@ -1,7 +1,7 @@
- #pragma once
+diff --git a/core/libs/prx/libSceZlib/CMakeLists.txt b/core/libs/prx/libSceZlib/CMakeLists.txt
+--- a/core/libs/prx/libSceZlib/CMakeLists.txt
++++ b/core/libs/prx/libSceZlib/CMakeLists.txt
+@@ -1,6 +1,5 @@
+ add_library(libSceZlib SHARED EXCLUDE_FROM_ALL ${CMAKE_CURRENT_SOURCE_DIR}/Export.cpp ${CMAKE_CURRENT_SOURCE_DIR}/../libkernel/Time/TimedWait.cpp)
+-target_include_directories(libSceZlib PRIVATE ${LIBS_INCLUDE_DIR}
+-    ${CMAKE_SOURCE_DIR}/3rdparty/libjpeg-turbo/src/spng/zlib)
++target_include_directories(libSceZlib PRIVATE ${LIBS_INCLUDE_DIR})
+ set_target_properties(libSceZlib PROPERTIES CXX_EXTENSIONS OFF)
+ configure_windows_unwind(libSceZlib)
+ target_link_libraries(libSceZlib PRIVATE jpeg_turbo)
+diff --git a/core/libs/prx/libcurl/CMakeLists.txt b/core/libs/prx/libcurl/CMakeLists.txt
+--- a/core/libs/prx/libcurl/CMakeLists.txt
++++ b/core/libs/prx/libcurl/CMakeLists.txt
+@@ -1,4 +1,6 @@
+ include(ExternalProject)
++find_package(PkgConfig REQUIRED)
++pkg_check_modules(CURL_NGHTTP2 REQUIRED libnghttp2)
  
- #include "prx/libSceNKWebKit/src/JscApi.hpp"
--#include "../../../../../3rdparty/quickjs/quickjs.h"
-+#include <quickjs.h>
- #include <atomic>
- #include <chrono>
- #include <cstddef>
+ get_filename_component(curlRepositoryRoot "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
+ set(curlSourceDir ${curlRepositoryRoot}/3rdparty/curl)
+@@ -35,8 +37,8 @@ set(curlBackendOptions
+     -DMBEDX509_LIBRARY:FILEPATH=$<TARGET_FILE:mbedx509>
+     -DMBEDCRYPTO_LIBRARY:FILEPATH=$<TARGET_FILE:mbedcrypto>
+     -DUSE_NGHTTP2:BOOL=ON
+-    -DNGHTTP2_INCLUDE_DIR:PATH=${curlRepositoryRoot}/3rdparty/nghttp2/lib/includes
+-    -DNGHTTP2_LIBRARY:FILEPATH=$<TARGET_FILE:nghttp2_static>
++    -DNGHTTP2_INCLUDE_DIR:PATH=${CURL_NGHTTP2_INCLUDEDIR}
++    -DNGHTTP2_LIBRARY:FILEPATH=${CURL_NGHTTP2_LINK_LIBRARIES}
+     -DCMAKE_DISABLE_FIND_PACKAGE_Perl:BOOL=ON
+     -DCMAKE_DISABLE_FIND_PACKAGE_ZLIB:BOOL=ON
+     -DCURL_ZLIB:BOOL=OFF

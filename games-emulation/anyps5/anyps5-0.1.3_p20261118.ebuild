@@ -5,7 +5,7 @@ EAPI=8
 
 inherit cmake flag-o-matic linux-info
 
-EGIT_COMMIT="f6232fcfda70644495273f6b8dd88cf0603463d6"
+EGIT_COMMIT="973026d9b0d68b4f6e163b493fcc112430a1fb06"
 JXRLIB_SHA="f7521879862b9085318e814c6157490dd9dbbdb4"
 VGMSTREAM_SHA="7c520e8f9b078dfde2f84f1b5bcbad0c6c415806"
 LIBFVAD_SHA="532ab666c20d3cfda38bca63abbb0f152706c369"
@@ -13,10 +13,26 @@ LIBATRAC9_SHA="946e05a9212976626a9f5e52f29c0a7202871f29"
 MBEDTLS_PV="3.6.7"
 # The LibreSSL tests generate their error strings from this tree.
 LIBRESSL_OPENBSD_SHA="078b3d1df8ca2011c1605cd40418c58fa0f5b143"
+# The WebKit and Cairo PRX libraries build these from source with their own
+# configuration: "<3rdparty dir> <host> <owner/repo> <commit>".
+ANYPS5_BUNDLED=(
+	"cairo gitlab.freedesktop.org cairo/cairo 3909090108bb2db55330e3eb148aebe664735363"
+	"curl github.com curl/curl 801bd5138ce31aa0d906fa4e2eabfc599d74e793"
+	"fontconfig github.com fontconfig/fontconfig 72b9a48f57de6204d99ce1c217b5609ee92ece9b"
+	"harfbuzz github.com harfbuzz/harfbuzz a1d9bfe62818ef0fa9cf63b6e6d51436b1c93cbc"
+	"icu github.com unicode-org/icu 049e0d6a420629ac7db77256987d083a563287b5"
+	"libpng github.com pnggroup/libpng cd952f49f95bb27154ae77dbb103032d95f6e580"
+	"libpsl github.com rockdaboot/libpsl ba4c49a205408845834b1648ad23c15ee09f722b"
+	"libpsl/list github.com publicsuffix/list 5db9b65997e3c9230ac4353b01994c2ae9667cb9"
+	"libwpe github.com WebPlatformForEmbedded/libwpe b90a8396864c9824a43838a5879f6ab01420c69e"
+	"libxml2 github.com GNOME/libxml2 7846b0a677f8d3ce72486125fa281e92ac9970e8"
+	"pixman gitlab.freedesktop.org pixman/pixman 37216a32839f59e8dcaa4c3951b3fcfc3f07852c"
+	"sqlite github.com sqlite/sqlite 57520227c95396ce39ba6ecaac8d475b78dd3964"
+)
 
 DESCRIPTION="Tool for automatic porting of PlayStation 5 executables to Linux"
 HOMEPAGE="https://boykopovar.github.io/AnyPS5/ https://github.com/boykopovar/AnyPS5"
-SRC_URI="https://github.com/boykopovar/AnyPS5/archive/${EGIT_COMMIT}.tar.gz -> ${P}.tar.gz
+SRC_URI="https://github.com/boykopovar/AnyPS5/archive/${EGIT_COMMIT}.tar.gz -> ${P}-${EGIT_COMMIT:0:7}.tar.gz
 	https://github.com/shadps4-emu/ext-LibAtrac9/archive/${LIBATRAC9_SHA}.tar.gz
 		-> ${PN}-LibAtrac9-${LIBATRAC9_SHA}.tar.gz
 	https://github.com/dpirch/libfvad/archive/${LIBFVAD_SHA}.tar.gz -> ${PN}-libfvad-${LIBFVAD_SHA}.tar.gz
@@ -27,9 +43,19 @@ SRC_URI="https://github.com/boykopovar/AnyPS5/archive/${EGIT_COMMIT}.tar.gz -> $
 		https://github.com/libressl/openbsd/archive/${LIBRESSL_OPENBSD_SHA}.tar.gz
 			-> ${PN}-libressl-openbsd-${LIBRESSL_OPENBSD_SHA:0:7}.tar.gz
 	)"
+for _b in "${ANYPS5_BUNDLED[@]}"; do
+	# shellcheck disable=SC2206
+	_f=( ${_b} )
+	if [[ ${_f[1]} == github.com ]]; then
+		SRC_URI+=" https://github.com/${_f[2]}/archive/${_f[3]}.tar.gz -> ${PN}-${_f[0]//\//-}-${_f[3]}.tar.gz"
+	else
+		SRC_URI+=" https://${_f[1]}/${_f[2]}/-/archive/${_f[3]}/${_f[2]#*/}-${_f[3]}.tar.gz -> ${PN}-${_f[0]//\//-}-${_f[3]}.tar.gz"
+	fi
+done
+unset _b _f
 S="${WORKDIR}/AnyPS5-${EGIT_COMMIT}"
 
-LICENSE="BSD BSD-2 GPL-2 ISC MIT || ( Apache-2.0 GPL-2+ )"
+LICENSE="BSD BSD-2 curl GPL-2 ISC LGPL-2.1 libpng2 MIT MPL-1.1 public-domain Unicode-3.0 || ( Apache-2.0 GPL-2+ )"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
@@ -81,10 +107,23 @@ src_prepare() {
 	mv "${WORKDIR}/libfvad-${LIBFVAD_SHA}" 3rdparty/libfvad || die
 	mv "${WORKDIR}/ext-LibAtrac9-${LIBATRAC9_SHA}" 3rdparty/LibAtrac9 || die
 	mv "${WORKDIR}/mbedtls-${MBEDTLS_PV}" 3rdparty/mbedtls || die
+	local b f
+	for b in "${ANYPS5_BUNDLED[@]}"; do
+		# shellcheck disable=SC2206
+		f=( ${b} )
+		if [[ -d 3rdparty/${f[0]} ]]; then
+			rmdir "3rdparty/${f[0]}" || die
+		fi
+		mv "${WORKDIR}/${f[2]#*/}-${f[3]}" "3rdparty/${f[0]}" || die
+	done
 	if use test; then
 		rmdir 3rdparty/libressl-openbsd || die
 		mv "${WORKDIR}/openbsd-${LIBRESSL_OPENBSD_SHA}" 3rdparty/libressl-openbsd || die
 	fi
+	# mimalloc is an opt-in (APS5_MIMALLOC) LD_PRELOAD allocator for titles and is only
+	# shipped as a submodule; build without it, as upstream does for sanitizer builds.
+	sed -e 's/ OR (CMAKE_SYSTEM_NAME STREQUAL "Linux" AND NOT ANYPS5_ENABLE_ASAN AND NOT ANYPS5_ENABLE_TSAN))/)/' \
+		-i CMakeLists.txt || die
 	cmake_src_prepare
 	if use test; then
 		# The Vorbis tests build the bundled encoder; use the system one.
@@ -149,6 +188,8 @@ src_test() {
 	local exclude=(
 		# Need a git checkout; the release tarball is not one.
 		conventions_git_errors
+		title_run
+		title_run_identity
 		test_script_registration
 		web_library_assets
 		# Compares a child's terminal output, which differs without a TTY.
@@ -163,6 +204,14 @@ src_test() {
 		pad_input
 		loadexec_arguments
 		exec_arguments
+		exec_sys_ve_arguments
+		exec_sys_vpe_arguments
+		# Expect the PS5 FreeType's missing bzip2 support; media-libs/freetype[bzip2]
+		# implements it.
+		guest_legacy_freetype_bzip2
+		# Upstream bug: a lock-order assertion fires in the multisample color unwatch
+		# hook (fails outside the sandbox too).
+		agc_driver_msaa_dcc_clear_{2,4,8}
 	)
 	local IFS='|'
 	local myctestargs=( --output-on-failure -E "^(${exclude[*]})\$" )
