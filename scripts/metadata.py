@@ -8,9 +8,8 @@ import portage
 
 GLOBAL_CACHE: dict[str, bool] = {}
 P = portage.db[portage.root]['porttree'].dbapi
-USE_EXPAND_PREFIXES = tuple(
-    x.lower() + '_'
-    for x in portage.settings.get('USE_EXPAND', '').split())  # type: ignore[attr-defined]
+USE_EXPAND = portage.settings.get('USE_EXPAND', '')  # type: ignore[attr-defined,unused-ignore]
+USE_EXPAND_PREFIXES = tuple(x.lower() + '_' for x in USE_EXPAND.split())
 TEMPLATE = '''<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
