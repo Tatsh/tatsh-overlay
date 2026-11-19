@@ -7,7 +7,7 @@ inherit linux-mod-r1
 
 DESCRIPTION="Patched Cirrus Logic CS8409 HDA driver for MacBook Pro internal audio"
 HOMEPAGE="https://github.com/davidjo/snd_hda_macbookpro"
-SHA="89b22ff90b86468b186706861dd18663562defa7"
+SHA="1931615d723899f64b352e9e7ed2368c21c49728"
 SRC_URI="https://github.com/davidjo/snd_hda_macbookpro/archive/${SHA}.tar.gz -> ${P}-${SHA:0:7}.tar.gz"
 S="${WORKDIR}/snd_hda_macbookpro-${SHA}"
 
