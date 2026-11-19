@@ -78,11 +78,14 @@ NUGETS="avalonia.angle.windows.natives@2.1.27548.20260419
 	xunit.extensibility.core@2.9.3
 	xunit.extensibility.execution@2.9.3
 	xunit.runner.visualstudio@3.1.1
-	xunit@2.9.3"
+	xunit@2.9.3
+	zstdsharp.port@0.8.5
+"
 
 inherit desktop dotnet-pkg xdg
 
-MY_PV="${PV/_p/-nexus-release.}"
+# Upstream tags each release with a codename.
+MY_PV="${PV}-pulse"
 
 DESCRIPTION="Experimental PlayStation 5 emulator written in C#"
 HOMEPAGE="https://sharpemu.app/ https://github.com/sharpemu/sharpemu"
