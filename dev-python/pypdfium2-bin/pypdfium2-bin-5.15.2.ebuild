@@ -17,7 +17,7 @@ HOMEPAGE="https://github.com/pypdfium2-team/pypdfium2"
 # time and needs a newer GN than any distribution ships. There is no system
 # PDFium to link against either. The wheel is a zip; renaming it lets the
 # default src_unpack handle it.
-SRC_URI="https://files.pythonhosted.org/packages/d3/7c/74a2fb48e5b0d2402d9ca64b39074c722d67e9a8a2c58449a843a8c2329a/${MY_PN}-${PV}-${MY_TAG}.whl
+SRC_URI="https://files.pythonhosted.org/packages/c8/e5/2e668bc1bc6fe22f9006694b5571a2dd2c9b874d6a21d16ee839c8f7f6ea/${MY_PN}-${PV}-${MY_TAG}.whl
 	-> ${P}.zip"
 S="${WORKDIR}"
 
