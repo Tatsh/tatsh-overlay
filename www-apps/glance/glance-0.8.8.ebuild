@@ -17,7 +17,7 @@ KEYWORDS="~amd64"
 
 RDEPEND="acct-group/glance
 	acct-user/glance"
-BDEPEND=">=dev-lang/go-1.27.1:="
+BDEPEND=">=dev-lang/go-1.27.3:="
 
 src_compile() {
 	ego build -o "${PN}" \
