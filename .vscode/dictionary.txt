@@ -156,6 +156,7 @@ bluez
 bmcfee
 bnes
 bomberman
+bomutils
 boringssl
 botan
 boto
@@ -232,6 +233,7 @@ checkpath
 checkreqs
 cheevos
 cheke
+chgr
 chishm
 chkconfig
 chlumsky
@@ -257,6 +259,7 @@ cloudpathlib
 cmakelibs
 cmakelists
 cmakerc
+cmark
 cmdpack
 cmocka
 cmrc
@@ -284,6 +287,7 @@ commoncrypto
 concurrentqueue
 confd
 configd
+configobj
 configparser
 configura
 configurator
@@ -357,7 +361,6 @@ darlin
 darlinghq
 darlingserver
 darm
-darpath
 dasbus
 dask
 dataclass
@@ -382,6 +385,7 @@ dcitra
 dclang
 dcli
 dcmake
+dcoastline
 dcompile
 dconfig
 dcpp
@@ -431,6 +435,7 @@ devtype
 dexamples
 dfetchcontent
 dfilter
+dflac
 dflash
 dfmderainbow
 dggml
@@ -493,6 +498,7 @@ dlzfse
 dlzma
 dmakeandplay
 dman
+dmeshopt
 dmio
 dmupenplusapi
 dncil
@@ -555,6 +561,7 @@ dspirv
 dsplit
 dstaticdeps
 dsystemd
+dtgr
 dtiff
 dtrace
 dtracker
@@ -720,7 +727,6 @@ findpegtl
 fireweapon
 fium
 fixbaserom
-fixups
 flacted
 flakefinder
 flashplayer
@@ -1009,6 +1015,7 @@ jaconv
 jakcron
 jamo
 janestreet
+jaraco
 jardir
 javac
 javahelp
@@ -1109,6 +1116,7 @@ kyutai
 labbe's
 labeled
 lameenc
+lancedb
 langcodes
 langdir
 lapack
@@ -1233,7 +1241,6 @@ libpit
 libplatform
 libplist
 libproj
-libprotobuf
 libpsl
 libpthread
 libpulse
@@ -1309,6 +1316,7 @@ libweaver
 libwebp
 libwebrtc
 libwebsockets
+libwpe
 libxcb
 libxkbcommon
 libxkbfile
@@ -1427,7 +1435,6 @@ mdutils
 mecab
 mecabrc
 mechacon
-mediatek
 mednafen
 meetei
 megadrive
@@ -1445,6 +1452,7 @@ merrion
 merryhime
 mesen
 mesens
+meshoptimizer
 metaflac
 metainfo
 metapackage
@@ -1462,6 +1470,7 @@ migueletto
 miguelgrinberg
 mikke
 mildsunrise
+mimalloc
 minchoc
 miniaudio
 minibae
@@ -1503,10 +1512,12 @@ mpfr
 mqtt
 mrboom
 mrlotfi
+msaa
 msdf
 msdfgen
 msgspec
 msiemens
+mslc
 msmoosh
 msplit
 msse
@@ -1516,6 +1527,7 @@ muety
 muffet
 multani
 multilib
+multisample
 munt
 mupen
 murmurhash
@@ -1609,7 +1621,6 @@ nlzy
 nnedi
 noaccess
 nodedir
-nodeps
 nodetest
 noextract
 nofetch
@@ -1794,7 +1805,6 @@ pokemini
 polkit
 polm
 popcount
-portageq
 portaudio
 porttree
 postinst
@@ -1835,6 +1845,7 @@ pthreadglue
 pthreads
 ptxas
 puae
+publicsuffix
 pugh
 pugixml
 pulseaudio
@@ -1877,6 +1888,7 @@ pyiosbackup
 pyjwt
 pykakasi
 pykdebugparser
+pylancelot
 pylibyaml
 pylzham
 pylzss
@@ -2038,6 +2050,7 @@ riverwalk
 rizu
 rmull
 rnag
+rockdaboot
 rocm
 rodata
 rogdham
@@ -2099,8 +2112,6 @@ seccomp
 segfaults
 segno
 sekrit
-semctl
-semget
 sentencepiece
 seregonwar
 setc
@@ -2159,6 +2170,7 @@ snes
 snesrev
 sniffio
 snowflakedb
+snowpark
 socketio
 softcap
 softfloat
@@ -2220,6 +2232,8 @@ stiefel
 stormlib
 storytold
 strawgate
+streamlit
+strequal
 subclassing
 sublicensable
 sublicenseable
@@ -2328,6 +2342,7 @@ tomlplusplus
 tommath
 tomnomnom
 toolbelt
+toplevel
 torchvision
 tqdm
 trac
@@ -2339,6 +2354,7 @@ trollrestore
 trollstore
 trustme
 truststore
+tsan
 tscache
 tsschecker
 ttconv
@@ -2400,7 +2416,6 @@ usbmuxd
 usedep
 usemove
 userfaultfd
-userpriv
 userspace
 usertemplate
 usex
