@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 # go.mod requires a newer toolchain than go-module.eclass depends on.
-BDEPEND+=" >=dev-lang/go-1.26.6"
+BDEPEND+=" >=dev-lang/go-1.27.3"
 
 src_compile() {
 	local mygoargs=(
@@ -33,7 +33,7 @@ src_compile() {
 }
 
 src_test() {
-	go test -v -work -x || die
+	ego test ./...
 }
 
 src_install() {
