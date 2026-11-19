@@ -27,6 +27,8 @@ src_install() {
 }
 
 src_test() {
-	env CGO_ENABLED=0 go test "$(go list ./... | grep -v 'github.com/muety/wakapi/scripts')" \
-		-run ./...
+	local pkgs
+	# scripts/ is a separate module of helper programs.
+	mapfile -t pkgs < <(go list ./... | grep -v 'github.com/muety/wakapi/scripts') || die
+	CGO_ENABLED=0 ego test "${pkgs[@]}"
 }
