@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-RDEPEND="net-libs/nodejs:= ${PYTHON_DEPS}"
+RDEPEND=">=net-libs/nodejs-22.22.2:= ${PYTHON_DEPS}"
 DEPEND="${RDEPEND}"
 
 src_install() {
