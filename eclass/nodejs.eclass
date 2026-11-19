@@ -76,6 +76,15 @@ NODEJS_FILES="babel.config.js babel.config.json bin cli.js dist index.js lib nod
 # installed. Note that enpm_clean still runs the package manager's own
 # production prune when this is set.
 
+# @ECLASS_VARIABLE: NODEJS_SKIP_PRUNE
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# If set to a non-empty value, enpm_clean skips the package manager's
+# production prune. Set this when the vendored node_modules is already a
+# production install made by a different package manager: npm prune
+# re-resolves such a tree and tries to fetch whatever it would have chosen
+# differently, which fails offline.
+
 # @VARIABLE: MYNPMARGS
 # @DEFAULT_UNSET
 # @DESCRIPTION:
@@ -345,7 +354,10 @@ enpm_clean() {
 
     einfo "Cleaning up unnecessary files"
 
-    case ${NODEJS_MANAGER} in
+    case ${NODEJS_SKIP_PRUNE:+skip}${NODEJS_MANAGER} in
+        skip*)
+            einfo "NODEJS_SKIP_PRUNE is set, skipping the production prune"
+            ;;
         npm)
             enpm prune --omit=dev || die "npm prune failed"
             ;;
