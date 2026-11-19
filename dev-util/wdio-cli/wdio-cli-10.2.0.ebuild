@@ -22,7 +22,7 @@ KEYWORDS="~amd64"
 RESTRICT="strip"
 
 # The floor is @wdio/cli's own engines.node.
-RDEPEND=">=net-libs/nodejs-18.20.0:="
+RDEPEND=">=net-libs/nodejs-22.23.4:="
 
 src_prepare() {
 	nodejs-mod_src_prepare
