@@ -17,12 +17,7 @@ placeholder directory is replaced.
 
 Signed-off-by: Andrew Udvare <audvare@gmail.com>
 ---
- src/startup/darling.c | 56 +++++++++++++++++++++++++++++++++++++++++++
- src/startup/darling.h |  4 ++++
- 2 files changed, 60 insertions(+)
-
 diff --git a/src/startup/darling.c b/src/startup/darling.c
-index 0452c685d..d5f0786e4 100644
 --- a/src/startup/darling.c
 +++ b/src/startup/darling.c
 @@ -26,6 +26,7 @@ along with Darling.  If not, see <http://www.gnu.org/licenses/>.
@@ -33,9 +28,9 @@ index 0452c685d..d5f0786e4 100644
  #include <signal.h>
  #include <stdbool.h>
  #include <sched.h>
-@@ -196,6 +197,11 @@ int main(int argc, char ** argv)
- 
- 	seteuid(g_originalUid);
+@@ -548,6 +549,11 @@ int main(int argc, char ** argv)
+ 	if (!resolveProgramArgument(argc, argv))
+ 		return 1;
  
 +#if USE_LINUX_4_11_HACK
 +	// in the container's mount namespace, the prefix path is the merged view of the prefix
@@ -45,7 +40,7 @@ index 0452c685d..d5f0786e4 100644
  	if (strcmp(argv[1], "shell") == 0)
  	{
  		// Spawn the shell
-@@ -1213,3 +1219,53 @@ void checkPrefixOwner()
+@@ -2241,3 +2247,53 @@ void checkPrefixOwner()
  		exit(1);
  	}
  }
@@ -100,7 +95,6 @@ index 0452c685d..d5f0786e4 100644
 +	}
 +}
 diff --git a/src/startup/darling.h b/src/startup/darling.h
-index 1a49e2f50..f584abeba 100644
 --- a/src/startup/darling.h
 +++ b/src/startup/darling.h
 @@ -40,6 +40,10 @@ int checkPrefixDir(void);
