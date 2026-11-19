@@ -8,6 +8,10 @@ inherit nodejs-mod systemd
 # The Node application lives in the server subdirectory of the upstream tree,
 # and the node_modules archive is unpacked alongside it.
 NODEJS_MOD_PREFIX="server"
+# The archive is already a yarn production install. npm prune re-resolves
+# yarn's tree and wants packages it cannot fetch offline, apache-arrow among
+# them (upstream pins it past the range @lancedb/lancedb accepts).
+NODEJS_SKIP_PRUNE=1
 
 DESCRIPTION="Server endpoints to process or create content for chatting"
 HOMEPAGE="https://anythingllm.com/"
