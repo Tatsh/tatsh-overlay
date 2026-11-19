@@ -20,7 +20,7 @@ inherit edo java-utils-2 ghidra-extension
 
 # Upstream has never tagged a release, so this is a snapshot of the default
 # branch.
-MY_COMMIT="da7aebc7b6b3c54b388b40253b15f84670d4b088"
+MY_COMMIT="3aeb76c6de507427dc989f2be39bf60eb0c6d453"
 
 DESCRIPTION="Ghidra processor modules and loaders for retro home computers"
 HOMEPAGE="https://github.com/CBongo/ghidra-retro-machines"
