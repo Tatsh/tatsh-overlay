@@ -21,10 +21,10 @@ diff --git a/vita3k/modules/SceGxm/SceGxm.cpp b/vita3k/modules/SceGxm/SceGxm.cpp
 index ac1b4b10..cc2b7f08 100644
 --- a/vita3k/modules/SceGxm/SceGxm.cpp
 +++ b/vita3k/modules/SceGxm/SceGxm.cpp
-@@ -21,7 +21,9 @@
+@@ -22,7 +22,9 @@
  
- #include <span>
  #include <stack>
+ #include <string_view>
 -#if defined(__x86_64__) && !defined(__APPLE__)
 +// xxh_x86dispatch.h is an internal xxHash header that isn't installed by
 +// every distribution. Fall back to inline-all mode when it isn't available.

@@ -57,10 +57,11 @@ index 5aaa1150..9d7b80ff 100644
  	)
  
  	foreach(module ${gitmodules})
-@@ -194,7 +195,9 @@ target_include_directories(vita-toolchain INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}
+@@ -194,8 +195,10 @@ target_include_directories(vita-toolchain INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}
  
  option(YAML_CPP_BUILD_TOOLS "Enable parse tools" OFF)
  option(YAML_CPP_BUILD_CONTRIB "Enable contrib stuff in library" OFF)
+ option(BUILD_TESTING "Build tests" OFF)
 -add_subdirectory(yaml-cpp EXCLUDE_FROM_ALL)
 +if(NOT USE_SYSTEM_YAML_CPP)
 +	add_subdirectory(yaml-cpp EXCLUDE_FROM_ALL)
