@@ -80,6 +80,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0006-fix-use-of-nullptr-with-std-.patch"
 	"${FILESDIR}/${PN}-0007-fix-for-qt-6.10-qpa-change.patch"
 	"${FILESDIR}/${PN}-0008-gcc-16-const-member-init.patch"
+	"${FILESDIR}/${PN}-0009-missing-cstring.patch"
 	"${FILESDIR}/${PN}-sdl-pipewire.patch"
 )
 
@@ -101,7 +102,10 @@ src_prepare() {
 	sed -e '/enable_testing.*/d' \
 		-e 's/add_subdirectory(externals\/SPIRV-Headers.*/find_package(SPIRV-Headers REQUIRED)/' \
 		-i externals/sirit/CMakeLists.txt || die
-	sed -e '/-Werror=missing-declarations/d' -i src/CMakeLists.txt || die
+	find src -name CMakeLists.txt -exec sed -e 's/-Werror=/-W/g' -i {} + || die
+	sed -e 's/-Werror)/)/' -i externals/sirit/CMakeLists.txt || die
+	sed -e 's/"-Werror=declaration-after-statement"/"-Wdeclaration-after-statement"/' \
+		-i externals/SDL/CMakeLists.txt || die
 	sed -re 's/(find_package\(Vulkan ).*/\1)/' \
 		-e 's/VulkanMemoryAllocator/VulkanMemoryAllocator REQUIRED/' -i CMakeLists.txt || die
 	sed -re 's/set\(CAN_BUILD_NX_TZDB.*/set(CAN_BUILD_NX_TZDB false)/' \

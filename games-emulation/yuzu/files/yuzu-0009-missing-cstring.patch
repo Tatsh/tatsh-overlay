@@ -1,0 +1,126 @@
+--- a/src/audio_core/renderer/command/mix/copy_mix.cpp
++++ b/src/audio_core/renderer/command/mix/copy_mix.cpp
+@@ -1,6 +1,8 @@
+ // SPDX-FileCopyrightText: Copyright 2022 yuzu Emulator Project
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++#include <cstring>
++
+ #include "audio_core/adsp/apps/audio_renderer/command_list_processor.h"
+ #include "audio_core/renderer/command/mix/copy_mix.h"
+ 
+--- a/src/audio_core/renderer/command/mix/volume.cpp
++++ b/src/audio_core/renderer/command/mix/volume.cpp
+@@ -1,6 +1,8 @@
+ // SPDX-FileCopyrightText: Copyright 2022 yuzu Emulator Project
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++#include <cstring>
++
+ #include "audio_core/adsp/apps/audio_renderer/command_list_processor.h"
+ #include "audio_core/renderer/command/mix/volume.h"
+ #include "common/fixed_point.h"
+--- a/src/audio_core/renderer/command/mix/volume_ramp.cpp
++++ b/src/audio_core/renderer/command/mix/volume_ramp.cpp
+@@ -1,6 +1,8 @@
+ // SPDX-FileCopyrightText: Copyright 2022 yuzu Emulator Project
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++#include <cstring>
++
+ #include "audio_core/adsp/apps/audio_renderer/command_list_processor.h"
+ #include "audio_core/renderer/command/mix/volume_ramp.h"
+ #include "common/fixed_point.h"
+--- a/src/audio_core/renderer/command/resample/downmix_6ch_to_2ch.cpp
++++ b/src/audio_core/renderer/command/resample/downmix_6ch_to_2ch.cpp
+@@ -1,6 +1,8 @@
+ // SPDX-FileCopyrightText: Copyright 2022 yuzu Emulator Project
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++#include <cstring>
++
+ #include "audio_core/adsp/apps/audio_renderer/command_list_processor.h"
+ #include "audio_core/renderer/command/resample/downmix_6ch_to_2ch.h"
+ 
+--- a/src/common/dynamic_library.cpp
++++ b/src/common/dynamic_library.cpp
+@@ -1,6 +1,7 @@
+ // SPDX-FileCopyrightText: 2019 Dolphin Emulator Project
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++#include <cstring>
+ #include <string>
+ #include <utility>
+ 
+--- a/src/common/host_memory.cpp
++++ b/src/common/host_memory.cpp
+@@ -1,6 +1,8 @@
+ // SPDX-FileCopyrightText: Copyright 2021 yuzu Emulator Project
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++#include <cstring>
++
+ #ifdef _WIN32
+ 
+ #include <iterator>
+--- a/src/common/tiny_mt.h
++++ b/src/common/tiny_mt.h
+@@ -4,6 +4,7 @@
+ #pragma once
+ 
+ #include <array>
++#include <cstring>
+ 
+ #include "common/alignment.h"
+ #include "common/common_types.h"
+--- a/src/common/uuid.cpp
++++ b/src/common/uuid.cpp
+@@ -2,6 +2,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ #include <bit>
++#include <cstring>
+ #include <optional>
+ #include <random>
+ 
+--- a/src/input_common/drivers/sdl_driver.cpp
++++ b/src/input_common/drivers/sdl_driver.cpp
+@@ -1,6 +1,8 @@
+ // SPDX-FileCopyrightText: 2018 Citra Emulator Project
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++#include <cstring>
++
+ #include "common/logging/log.h"
+ #include "common/math_util.h"
+ #include "common/param_package.h"
+--- a/src/video_core/renderer_opengl/gl_shader_util.cpp
++++ b/src/video_core/renderer_opengl/gl_shader_util.cpp
+@@ -1,6 +1,7 @@
+ // SPDX-FileCopyrightText: 2014 Citra Emulator Project
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++#include <cstring>
+ #include <string_view>
+ #include <vector>
+ #include <glad/glad.h>
+--- a/src/video_core/vulkan_common/vulkan_instance.cpp
++++ b/src/video_core/vulkan_common/vulkan_instance.cpp
+@@ -1,6 +1,7 @@
+ // SPDX-FileCopyrightText: Copyright 2020 yuzu Emulator Project
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++#include <cstring>
+ #include <future>
+ #include <optional>
+ #include <span>
+--- a/src/video_core/vulkan_common/vulkan_wrapper.cpp
++++ b/src/video_core/vulkan_common/vulkan_wrapper.cpp
+@@ -2,6 +2,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ #include <algorithm>
++#include <cstring>
+ #include <memory>
+ #include <optional>
+ #include <utility>
