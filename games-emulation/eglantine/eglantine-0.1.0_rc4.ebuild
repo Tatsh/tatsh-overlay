@@ -89,7 +89,6 @@ src_configure() {
 		-DENABLE_WERROR=OFF
 		-DENABLE_WIFI_SCAN="$(usex wifi)"
 		-DUSE_DISCORD_PRESENCE="$(usex discord)"
-		-DUSE_FASTER_LINKER=OFF
 		-DYUZU_CMD="$(usex sdl)"
 		-DYUZU_DISABLE_LLVM=ON
 		-DYUZU_ROOM="$(usex room)"
