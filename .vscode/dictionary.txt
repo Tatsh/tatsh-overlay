@@ -486,6 +486,7 @@ dlibc
 dlibdeflate
 dlibretro
 dlibrw
+dlichii
 dlinfo
 dlith
 dllexport
@@ -591,6 +592,7 @@ dxbox
 dxemu
 dxenia
 dxil
+dxxhash
 dyld
 dynaconf
 dynarmic
@@ -1334,6 +1336,7 @@ libzstd
 libzstdwapper
 libzvbi
 licensedir
+lichii
 lide
 lightrec
 lighttpd
@@ -2622,6 +2625,7 @@ zizmorcore
 zlibwrapper
 znedi
 zoneinfo
+zortos
 zsign
 zstd
 zstd's
