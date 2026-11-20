@@ -325,6 +325,7 @@ crossflash
 cryptopp
 cscs
 cstdint
+cstring
 csvlens
 csvw
 ctest
@@ -806,6 +807,7 @@ gearsystem
 gekkio
 genconfig
 gendisc
+genout
 gentoolkit
 geny
 geoip
@@ -2501,6 +2503,7 @@ watchfiles
 wchar
 wcurl
 wcwidth
+wdeclaration
 wdio
 webdav
 webdriverio
