@@ -1,0 +1,66 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -299,7 +299,7 @@
+ cmake_dependent_option(LICHII_ROOM "Enable dedicated room functionality" ON "NOT ANDROID" OFF)
+ cmake_dependent_option(LICHII_ROOM_STANDALONE "Enable standalone room executable" ON "LICHII_ROOM" OFF)
+ 
+-cmake_dependent_option(LICHII_CMD "Compile the eden-cli executable" ON "NOT ANDROID" OFF)
++cmake_dependent_option(LICHII_CMD "Compile the lichii-cli executable" ON "NOT ANDROID" OFF)
+ 
+ cmake_dependent_option(LICHII_CRASH_DUMPS "Compile crash dump (Minidump) support" OFF "WIN32 OR LINUX" OFF)
+ 
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -291,7 +291,7 @@
+ 
+ if (LICHII_ROOM_STANDALONE)
+     add_subdirectory(lichii_room_standalone)
+-    set_target_properties(lichii-room PROPERTIES OUTPUT_NAME "eden-room")
++    set_target_properties(lichii-room PROPERTIES OUTPUT_NAME "lichii-room")
+ endif()
+ 
+ if (LICHII_STATIC_ROOM)
+@@ -336,8 +336,8 @@
+ 
+ if (LICHII_CMD)
+     add_subdirectory(lichii_cmd)
+-    set_target_properties(lichii-cmd PROPERTIES OUTPUT_NAME "eden-cli")
+-    lichii_add_version_info(lichii-cmd "Lichii command line" eden-cli.exe)
++    set_target_properties(lichii-cmd PROPERTIES OUTPUT_NAME "lichii-cli")
++    lichii_add_version_info(lichii-cmd "Lichii command line" lichii-cli.exe)
+ endif()
+ 
+ if (ENABLE_QT)
+--- a/src/dedicated_room/lichii_room.cpp
++++ b/src/dedicated_room/lichii_room.cpp
+@@ -187,7 +187,7 @@
+     std::string token;
+     std::string web_api_url;
+     std::string ban_list_file;
+-    std::string log_file = "eden-room.log";
++    std::string log_file = "lichii-room.log";
+     std::string bind_address;
+     u64 preferred_game_id = 0;
+     u32 port = Network::DefaultRoomPort;
+--- a/src/frontend_common/profile_import.cpp
++++ b/src/frontend_common/profile_import.cpp
+@@ -53,7 +53,7 @@
+     if (NeedsLegacyProfileImport()) {
+         throw std::runtime_error("Legacy emulator data or an unfinished import was found. "
+                                  "Open the Lichii GUI to import it or explicitly start fresh "
+-                                 "before using eden-cli. No configuration was created.");
++                                 "before using lichii-cli. No configuration was created.");
+     }
+ }
+ 
+--- a/src/lichii_room_standalone/CMakeLists.txt
++++ b/src/lichii_room_standalone/CMakeLists.txt
+@@ -3,7 +3,7 @@
+ 
+ add_executable(lichii_room_standalone lichii_room_standalone.cpp)
+ 
+-set_target_properties(lichii_room_standalone PROPERTIES OUTPUT_NAME "eden-room")
++set_target_properties(lichii_room_standalone PROPERTIES OUTPUT_NAME "lichii-room")
+ 
+ target_link_libraries(lichii_room_standalone PRIVATE lichii-room)
+ 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person" proxied="yes">
+		<email>audvare@gmail.com</email>
+		<name>Andrew Udvare</name>
+	</maintainer>
+	<use>
+		<flag name="camera">Enable camera emulation via <pkg>dev-qt/qtmultimedia</pkg></flag>
+		<flag name="cubeb">Enable the <pkg>media-libs/cubeb</pkg> audio backend</flag>
+		<flag name="discord">Enable Discord Rich Presence via <pkg>dev-libs/discord-rpc</pkg></flag>
+		<flag name="room">Build the dedicated multiplayer room server (lichii-room)</flag>
+		<flag name="sdl">Build the SDL command-line frontend (lichii-cli)</flag>
+		<flag name="web-applet">Use <pkg>dev-qt/qtwebengine</pkg> for the web applet</flag>
+		<flag name="web-service">Enable web services (telemetry, etc.)</flag>
+		<flag name="wifi">Enable Wi-Fi scanning via <pkg>net-wireless/wireless-tools</pkg></flag>
+	</use>
+	<upstream>
+		<remote-id type="github">zortos293/Lichii</remote-id>
+	</upstream>
+</pkgmetadata>
