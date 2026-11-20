@@ -1,0 +1,16 @@
+--- a/scripts/cmake/genout.cmake.in	2026-11-20 05:20:11.543219447 -0500
++++ b/scripts/cmake/genout.cmake.in	2026-11-20 05:20:11.557967596 -0500
+@@ -69,11 +69,11 @@
+   endif()
+ 
+   execute_process(COMMAND "${CMAKE_C_COMPILER}" "-E"
+-                          ${CMAKE_C_FLAGS}
+-                          ${PLATFORM_C_FLAGS}
+                           "-I${SRCDIR}"
+                           "-I${BINDIR}"
+                           ${INCLUDES}
++                          ${CMAKE_C_FLAGS}
++                          ${PLATFORM_C_FLAGS}
+                           "-DPNGLIB_LIBNAME=PNG${PNGLIB_MAJOR}${PNGLIB_MINOR}_0"
+                           "-DPNGLIB_VERSION=${PNGLIB_VERSION}"
+                           "-DSYMBOL_PREFIX=${SYMBOL_PREFIX}"

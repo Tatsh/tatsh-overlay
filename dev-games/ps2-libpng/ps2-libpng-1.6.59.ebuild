@@ -17,6 +17,8 @@ KEYWORDS="~amd64"
 DEPEND="dev-games/ps2-zlib"
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${PN}-genout-include-order.patch" )
+
 src_configure() {
 	local mycmakeargs=(
 		-DPNG_SHARED=OFF
