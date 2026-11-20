@@ -388,6 +388,7 @@ dcmake
 dcoastline
 dcompile
 dconfig
+dcpmutil
 dcpp
 dcrc
 ddaedalus
@@ -400,6 +401,7 @@ ddocdir
 ddownload
 ddrivers
 ddspp
+ddynarmic
 deark
 deathkiller
 deband
@@ -467,7 +469,6 @@ disruptorplus
 distdir
 distfile
 distfiles
-distill
 distname
 distutils
 djava
@@ -548,6 +549,7 @@ dproject
 dpulseaudio
 dreamcast
 drelcs
+dreshade
 drevc
 drhelius
 driftyz
@@ -593,6 +595,7 @@ dynaconf
 dynarmic
 dynrec
 dyuzu
+dzbic
 dzhu
 dzlib
 dzstd
@@ -668,7 +671,6 @@ esysroot
 ethteck
 evalex
 evdev
-evidentiary
 evins
 ewarn
 exceptiongroup
@@ -788,6 +790,7 @@ gailly
 gambatte
 gamecontrollerdb
 gamecube
+gamemode
 gccdir
 gccprefix
 gcflags
@@ -939,7 +942,6 @@ ifup
 iges
 iinclude
 ijknabla
-ilcs
 ilib
 imageio
 imaplib
@@ -1448,7 +1450,6 @@ mende
 menelkir
 meowpc
 meroitic
-merrion
 merryhime
 mesen
 mesens
@@ -1457,7 +1458,6 @@ metaflac
 metainfo
 metapackage
 mgba
-mgpt
 mgree
 miao
 miasm
@@ -1815,7 +1815,6 @@ pppps
 ppsspp
 prboom
 prcbuild
-preempted
 preinst
 prerm
 preshed
@@ -1950,6 +1949,7 @@ qrcode
 qrencode
 qskip
 qtbase
+qtcharts
 qtdeclarative
 qtkeychain
 qtlauncher
@@ -1968,6 +1968,7 @@ qtwebkit
 qtwebsockets
 quassel
 quasselc
+quazip
 quic
 quickjs
 quicknes
@@ -2004,6 +2005,7 @@ redumper
 reent
 referer
 refractoring
+refspec
 regdump
 regextype
 regjar
@@ -2028,6 +2030,7 @@ reqparse's
 reqs
 rerunfailures
 resampy
+reshade
 resp
 respawn
 respx
@@ -2043,7 +2046,6 @@ rewx
 rexzhang
 rgui
 richgel
-rightsholder
 ripcd
 riscv
 riverwalk
@@ -2239,7 +2241,6 @@ sublicensable
 sublicenseable
 submitit
 subobject
-subprocessors
 subslot
 suidsgid
 suntec
@@ -2515,6 +2516,7 @@ wextra
 wfuse
 wgpu
 wiedenbauer
+wifi
 wiimm
 wiimms
 williballenthin
@@ -2600,6 +2602,7 @@ zarchive
 zarchivecommon
 zarchivereader
 zaufi
+zbic
 zeldaret
 zenity
 zenkaku
