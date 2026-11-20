@@ -1,0 +1,48 @@
+diff --git a/src/audio_core/cubeb_input.cpp b/src/audio_core/cubeb_input.cpp
+index baee263..d3c6d0e 100644
+--- a/src/audio_core/cubeb_input.cpp
++++ b/src/audio_core/cubeb_input.cpp
+@@ -2,6 +2,7 @@
+ // Licensed under GPLv2 or any later version
+ // Refer to the license.txt file included.
+ 
++#include <cstring>
+ #include <utility>
+ #include <vector>
+ #include <cubeb/cubeb.h>
+diff --git a/src/audio_core/cubeb_sink.cpp b/src/audio_core/cubeb_sink.cpp
+index 4a42d32..9916a60 100644
+--- a/src/audio_core/cubeb_sink.cpp
++++ b/src/audio_core/cubeb_sink.cpp
+@@ -3,6 +3,7 @@
+ // Refer to the license.txt file included.
+ 
+ #include <cstdarg>
++#include <cstring>
+ #include <mutex>
+ #include <vector>
+ #include <cubeb/cubeb.h>
+diff --git a/src/core/frontend/image_interface.cpp b/src/core/frontend/image_interface.cpp
+index 90b5a63..82e2128 100644
+--- a/src/core/frontend/image_interface.cpp
++++ b/src/core/frontend/image_interface.cpp
+@@ -3,6 +3,7 @@
+ // Refer to the license.txt file included.
+ 
+ #define DDSKTX_IMPLEMENT
++#include <cstring>
+ #include <dds-ktx.h>
+ #include <lodepng.h>
+ #include "common/file_util.h"
+diff --git a/src/video_core/renderer_opengl/gl_driver.cpp b/src/video_core/renderer_opengl/gl_driver.cpp
+index 1e110fd..97bd2b8 100644
+--- a/src/video_core/renderer_opengl/gl_driver.cpp
++++ b/src/video_core/renderer_opengl/gl_driver.cpp
+@@ -2,6 +2,7 @@
+ // Licensed under GPLv2 or any later version
+ // Refer to the license.txt file included.
+ 
++#include <cstring>
+ #include <glad/glad.h>
+ #include "common/assert.h"
+ #include "common/settings.h"

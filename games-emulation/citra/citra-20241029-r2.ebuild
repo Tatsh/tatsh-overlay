@@ -66,6 +66,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-0007-update-teakra-usage.patch"
 	"${FILESDIR}/${PN}-0008-fix-find-cryptopp.patch"
 	"${FILESDIR}/${PN}-0009-qt-gui-private.patch"
+	"${FILESDIR}/${PN}-0010-missing-cstring.patch"
 )
 
 src_prepare() {
