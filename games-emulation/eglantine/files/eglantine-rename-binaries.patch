@@ -1,0 +1,90 @@
+diff -ru a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2026-11-14 20:07:05.000000000 -0500
++++ b/CMakeLists.txt	2026-11-19 20:55:15.231750344 -0500
+@@ -300,7 +300,7 @@
+ cmake_dependent_option(YUZU_ROOM "Enable dedicated room functionality" ON "NOT ANDROID" OFF)
+ cmake_dependent_option(YUZU_ROOM_STANDALONE "Enable standalone room executable" ON "YUZU_ROOM" OFF)
+ 
+-cmake_dependent_option(YUZU_CMD "Compile the eden-cli executable" ON "NOT ANDROID" OFF)
++cmake_dependent_option(YUZU_CMD "Compile the eglantine-cli executable" ON "NOT ANDROID" OFF)
+ 
+ cmake_dependent_option(YUZU_CRASH_DUMPS "Compile crash dump (Minidump) support" OFF "WIN32 OR LINUX" OFF)
+ 
+diff -ru a/dist/dev.eglantine.eglantine.metainfo.xml b/dist/dev.eglantine.eglantine.metainfo.xml
+--- a/dist/dev.eglantine.eglantine.metainfo.xml	2026-11-14 20:07:05.000000000 -0500
++++ b/dist/dev.eglantine.eglantine.metainfo.xml	2026-11-19 20:55:15.232072143 -0500
+@@ -38,7 +38,7 @@
+   <launchable type="desktop-id">dev.eglantine.eglantine.desktop</launchable>
+   <provides>
+     <binary>eglantine</binary>
+-    <binary>eden-cli</binary>
++    <binary>eglantine-cli</binary>
+   </provides>
+   <supports>
+     <control>pointing</control>
+diff -ru a/src/CMakeLists.txt b/src/CMakeLists.txt
+--- a/src/CMakeLists.txt	2026-11-14 20:07:05.000000000 -0500
++++ b/src/CMakeLists.txt	2026-11-19 20:55:15.230399522 -0500
+@@ -275,7 +275,7 @@
+ 
+ if(YUZU_ROOM_STANDALONE)
+     add_subdirectory(yuzu_room_standalone)
+-    set_target_properties(yuzu-room PROPERTIES OUTPUT_NAME "eden-room")
++    set_target_properties(yuzu-room PROPERTIES OUTPUT_NAME "eglantine-room")
+ endif()
+ 
+ if(YUZU_STATIC_ROOM)
+@@ -300,7 +300,7 @@
+ 
+ if(YUZU_CMD)
+     add_subdirectory(yuzu_cmd)
+-    set_target_properties(yuzu-cmd PROPERTIES OUTPUT_NAME "eden-cli")
++    set_target_properties(yuzu-cmd PROPERTIES OUTPUT_NAME "eglantine-cli")
+ endif()
+ 
+ if(ENABLE_QT)
+diff -ru a/src/dedicated_room/yuzu_room.cpp b/src/dedicated_room/yuzu_room.cpp
+--- a/src/dedicated_room/yuzu_room.cpp	2026-11-14 20:07:05.000000000 -0500
++++ b/src/dedicated_room/yuzu_room.cpp	2026-11-19 20:55:15.234587040 -0500
+@@ -188,7 +188,7 @@
+     std::string token;
+     std::string web_api_url;
+     std::string ban_list_file;
+-    std::string log_file = "eden-room.log";
++    std::string log_file = "eglantine-room.log";
+     std::string bind_address;
+     u64 preferred_game_id = 0;
+     u32 port = Network::DefaultRoomPort;
+diff -ru a/src/yuzu_cmd/mcp_host_cli.cpp b/src/yuzu_cmd/mcp_host_cli.cpp
+--- a/src/yuzu_cmd/mcp_host_cli.cpp	2026-11-14 20:07:05.000000000 -0500
++++ b/src/yuzu_cmd/mcp_host_cli.cpp	2026-11-19 20:55:15.233351844 -0500
+@@ -25,7 +25,7 @@
+     : system{system_}, input{input_} {}
+ 
+ std::string CliMcpHost::FrontendName() const {
+-    return "eden-cli";
++    return "eglantine-cli";
+ }
+ 
+ Mcp::PerfSnapshot CliMcpHost::GetPerfSnapshot() {
+@@ -38,7 +38,7 @@
+ }
+ 
+ std::string CliMcpHost::BootGame(const std::string&) {
+-    return "eden-cli runs the game given on its command line; relaunch it with another game";
++    return "eglantine-cli runs the game given on its command line; relaunch it with another game";
+ }
+ 
+ /// Queues fn for the main thread and waits up to 30 s for its result.
+diff -ru a/src/yuzu_room_standalone/CMakeLists.txt b/src/yuzu_room_standalone/CMakeLists.txt
+--- a/src/yuzu_room_standalone/CMakeLists.txt	2026-11-14 20:07:05.000000000 -0500
++++ b/src/yuzu_room_standalone/CMakeLists.txt	2026-11-19 20:55:15.228945569 -0500
+@@ -3,7 +3,7 @@
+ 
+ add_executable(yuzu_room_standalone yuzu_room_standalone.cpp)
+ 
+-set_target_properties(yuzu_room_standalone PROPERTIES OUTPUT_NAME "eden-room")
++set_target_properties(yuzu_room_standalone PROPERTIES OUTPUT_NAME "eglantine-room")
+ 
+ target_link_libraries(yuzu_room_standalone PRIVATE yuzu-room)
+ 
