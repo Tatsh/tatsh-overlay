@@ -10,13 +10,16 @@ MY_COMMIT="cf6cfe9caa6e160d3562742308a38eb3c9014789"
 TZDB_VER="230326"
 ZBIC_COMMIT="11b08f2712264bbed731545085cbd9702096ceb7"
 RESHADE_VER="6.8.0"
+# Pinned upstream so NUP archives compress byte-identically everywhere.
+ZSTD_COMMIT="33618c89e511637f8a6ef955b3501766d71feb53"
 
 DESCRIPTION="Experimental Nintendo Switch 2 emulator based on Eden"
 HOMEPAGE="https://eglantine-emu.org/ https://github.com/Eglantine-Community/Eglantine"
 SRC_URI="https://github.com/Eglantine-Community/Eglantine/archive/refs/tags/v${MY_PV}.tar.gz -> ${P}.tar.gz
 	https://git.eden-emu.dev/eden-emu/tzdb_to_nx/releases/download/${TZDB_VER}/${TZDB_VER}.tar.gz -> nx-tzdb-${TZDB_VER}.tar.gz
 	https://github.com/kinnay/zbic/archive/${ZBIC_COMMIT}.tar.gz -> zbic-${ZBIC_COMMIT}.tar.gz
-	https://github.com/crosire/reshade/archive/v${RESHADE_VER}.tar.gz -> reshade-${RESHADE_VER}.tar.gz"
+	https://github.com/crosire/reshade/archive/v${RESHADE_VER}.tar.gz -> reshade-${RESHADE_VER}.tar.gz
+	https://github.com/facebook/zstd/archive/${ZSTD_COMMIT}.tar.gz -> zstd-${ZSTD_COMMIT}.tar.gz"
 S="${WORKDIR}/Eglantine-${MY_PV}"
 
 LICENSE="GPL-3+ BSD-2 MIT LGPL-3+ MPL-2.0 Apache-2.0-with-LLVM-exceptions BSD"
@@ -25,7 +28,6 @@ KEYWORDS="~amd64"
 IUSE="camera +cubeb discord +opengl room sdl +usb web-applet web-service wifi"
 
 RDEPEND="app-arch/lz4
-	app-arch/zstd
 	dev-cpp/cpp-httplib:=[ssl]
 	dev-libs/libfmt:=
 	dev-libs/openssl:=
@@ -100,6 +102,7 @@ src_configure() {
 		-Dreshade_FORCE_BUNDLED=ON
 		-Dzbic_CUSTOM_DIR="${WORKDIR}/zbic-${ZBIC_COMMIT}"
 		-Dzbic_FORCE_BUNDLED=ON
+		-Dzstd_CUSTOM_DIR="${WORKDIR}/zstd-${ZSTD_COMMIT}"
 		-Wno-dev
 	)
 	cmake_src_configure
